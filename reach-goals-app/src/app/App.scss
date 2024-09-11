@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 /* DEFAULT COLORS (DON'T FINISHED YET) */
 
 //SHADOWS
@@ -23,3 +25,19 @@
 #7B7B7B - complementary sencodary
 #171717 - complementary accent
 */
+
+:root {
+    --color-primary: #172B4D;
+
+    --color-complementary-p: #EAEAEA;
+}
+
+body {
+    margin: 0;
+}
+
+.app {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
