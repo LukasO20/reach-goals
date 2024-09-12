@@ -27,17 +27,58 @@
 */
 
 :root {
+    //Light mode
     --color-primary: #172B4D;
 
     --color-complementary-p: #EAEAEA;
+
+    //Dark mode
+
+    //Icon size
+    --icon-size-st: 1.5em;
 }
 
 body {
     margin: 0;
-}
 
-.app {
-    height: 100vh;
-    margin: 0;
-    padding: 0;
+    .app {
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+
+        .container-navigate {
+
+            .nav {
+                display: flex;
+                flex-direction: column;
+
+                .item-nav {
+                    display: flex;
+                    justify-content: center;
+                    margin: 0.5em 0.15em;
+    
+                    a {
+                        color: inherit;
+
+                        .button-nav {
+    
+                            .icon-st {
+                                font-size: var(--icon-size-st);
+                                margin: 0.25em auto;
+                            }
+                        }
+                    }
+
+                    &:not(:first-child) {
+                        border-radius: 0.5em;
+                        padding: 0.35em;
+                    }
+
+                    &:last-child {
+                        margin: auto 0.15em 2em 0.15em;
+                    }
+                }
+            }
+        }
+    }
 }

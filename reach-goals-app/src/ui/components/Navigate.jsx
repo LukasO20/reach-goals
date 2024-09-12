@@ -13,17 +13,17 @@ export default props =>
             </div>
             <div className="item-nav">
                 <Link to="/calendar">
-                    <span className="calendar button-nav"><i className="fa fa-regular fa-calendar"></i></span>
+                    <span className="calendar button-nav"><i className="icon-st fa fa-regular fa-calendar"></i></span>
                 </Link>
             </div>
             <div className="item-nav">
                 <Link to="/objectives">
-                    <span className="objectives button-nav"><i className='fa fa-regular fa-pen-to-square'></i></span>
+                    <span className="objectives button-nav"><i className='icon-st fa fa-regular fa-pen-to-square'></i></span>
                 </Link>
             </div>
             <div className="item-nav">
                 <Link to="/config">
-                    <span className="config button-nav"><i className="fa fa-solid fa-sliders"></i></span>
+                    <span className="config button-nav"><i className="icon-st fa fa-solid fa-sliders"></i></span>
                 </Link>
             </div>
         </div>

@@ -1,7 +1,8 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 
-import Routes from './Routes'
+import ContainerM from '../ui/components/ContainerMain'
+import ContainerH from '../ui/components/ContainerHeader'
 import Navigate from '../ui/components/Navigate'
 
 import './App.scss'
@@ -9,7 +10,8 @@ import './App.scss'
 export default props => 
     <BrowserRouter>
         <div className="app">
+            <ContainerH />
             <Navigate />
-            <Routes />        
+            <ContainerM />
         </div>
     </BrowserRouter>
