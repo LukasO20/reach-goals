@@ -10,8 +10,8 @@ import './App.scss'
 export default props => 
     <BrowserRouter>
         <div className="app">
-            <ContainerH />
             <Navigate />
+            <ContainerH />
             <ContainerM />
         </div>
     </BrowserRouter>

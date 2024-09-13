@@ -9,22 +9,22 @@ export default props =>
         <div className="nav">
             <div className='item-nav'>
                 <Link to="/">
-                    {/* <span className="theme button-header"><i className="icon-st fa fa-solid fa-pallete"></i></span> */}
+                    <span className="theme button-header"><i className="icon-st fa-solid fa-palette"></i></span>
                 </Link>
             </div>
             <div className="item-nav">
-                <Link to="/calendar">
-                    {/* <span className="tags button-header"><i className="icon-st fa fa-regular fa-calendar"></i></span> */}
+                <Link to="/">
+                    <span className="tags button-header"><i className="icon-st fa-solid fa-tag"></i></span>
                 </Link>
             </div>
             <div className="item-nav">
-                <Link to="/objectives">
-                    {/* <span className="notification button-header"><i className='icon-st fa fa-regular fa-pen-to-square'></i></span> */}
+                <Link to="/">
+                    <span className="notification button-header"><i className='icon-st fa-solid fa-bell'></i></span>
                 </Link>
             </div>
             <div className="item-nav">
-                <Link to="/config">
-                    {/* <span className="profile button-header"><i className="icon-st fa fa-solid fa-sliders"></i></span> */}
+                <Link to="/">
+                    <span className="profile button-header"><i className="icon-st fa-solid fa-user"></i></span>
                 </Link>
             </div>
         </div>

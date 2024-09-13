@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
 
 /* DEFAULT COLORS (DON'T FINISHED YET) */
 
@@ -40,13 +41,54 @@
 
 body {
     margin: 0;
+    font-family: 'Quicksand', 'Gill Sans', 'Segoe UI', 'sans-serif';
 
     .app {
         height: 100vh;
         margin: 0;
         padding: 0;
 
+        display: grid;
+        grid-template-columns: 3.5vw 1fr;
+        grid-template-rows: auto 1fr auto;
+        grid-template-areas: 
+            "container-navigate container-header"
+            "container-navigate container-main";
+
+        .container-header {
+            grid-area: container-header;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 0em 1.5em 0.5em 1.5em;
+
+            .nav {
+                display: flex;
+
+                .item-nav {
+                    display: flex;
+                    justify-content: center;
+                    padding: 0.35em 0.5em;
+                    margin: 0.5em;
+    
+                    a {
+                        color: inherit;
+
+                        .button-header {
+    
+                            .icon-st {
+                                font-size: var(--icon-size-st);
+                                margin: 0.25em auto;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         .container-navigate {
+            grid-area: container-navigate;
 
             .nav {
                 display: flex;
@@ -79,6 +121,12 @@ body {
                     }
                 }
             }
+        }
+
+        .container-main {
+            grid-area: container-main;
+
+            margin: 0em 1.5em 1em 1.5em;
         }
     }
 }
