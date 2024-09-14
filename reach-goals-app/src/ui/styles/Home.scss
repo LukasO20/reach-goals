@@ -1,0 +1,39 @@
+.container-home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    
+    .itens {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        flex: 2;
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--color-complementary-p);
+            flex: 1;
+            border-radius: 0.35em;
+
+            &:nth-child(2) {
+                margin: 0em 1em;
+            }
+
+            .head-column {
+                height: 3em;
+            }
+
+            .body-column {
+                padding: 0.75em;
+            }
+        }
+    }
+
+    .chart-line {
+        flex: 1;
+        display: flex;
+        align-items: center;
+    }
+}

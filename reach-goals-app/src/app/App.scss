@@ -32,16 +32,29 @@
     --color-primary: #172B4D;
 
     --color-complementary-p: #EAEAEA;
+    --color-complementary-s: #5E5850;
 
     //Dark mode
 
+
+    //Opacity Light
+    --color-complementary-s: #5E585050;
+
     //Icon size
     --icon-size-st: 1.5em;
+
+    //Font size
+    --font-size-st: 1em;
+    --font-size-mini: 0.85em;
+    --font-size-m: 1.2em;
+}
+
+* {
+    font-family: 'Quicksand', 'Gill Sans', 'Segoe UI', 'sans-serif';
 }
 
 body {
     margin: 0;
-    font-family: 'Quicksand', 'Gill Sans', 'Segoe UI', 'sans-serif';
 
     .app {
         height: 100vh;
@@ -54,6 +67,31 @@ body {
         grid-template-areas: 
             "container-navigate container-header"
             "container-navigate container-main";
+
+            .checkbox {
+                border: 0.125em solid black;
+                width: 0.78em;
+                height: 0.7em;
+                border-radius: 0.2em;
+            }
+
+            .button-st {
+                padding: 0.1em 0.35em;
+                font-weight: 600;
+                border-radius: 0.35em;
+
+                .icon-st {
+                    margin-right: 0.35em;
+                    font-size: var(--font-size-mini);
+                }
+            }
+
+            .search-content {
+                border: none;
+                font-weight: 600;
+                margin: 0em 0.35em;
+                font-size: var(--font-size-st);
+            }
 
         .container-header {
             grid-area: container-header;
@@ -126,7 +164,77 @@ body {
         .container-main {
             grid-area: container-main;
 
+            display: flex;
+            flex-direction: column;
             margin: 0em 1.5em 1em 1.5em;
+
+            .head {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+
+                .line-p {
+                    display: flex;
+                    justify-content: space-between;
+                    border-bottom: 0.1em solid var(--color-complementary-p);
+
+                    .button-m {
+                        margin: 0em 1em;
+                        font-size: var(--font-size-m);
+
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+
+                    .options-m {
+                        display: flex;
+                        align-items: center;
+
+                        .visibility-m {
+
+                            .visibility.button-m {
+                                font-weight: 600;
+                            }
+                        }
+                    }
+                }
+
+                .line-s {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    height: 3.5em;
+
+                    .button-filter-m,
+                    .button-action-m {
+                        margin: 0em 0.5em;
+                        font-size: var(--font-size-m);
+
+                        &:hover {
+                            cursor: pointer;
+                        }
+
+                        &:first-child {
+                            margin-left: 0em;
+                        }
+                    }
+
+                    .filter {
+                        display: flex;
+                        align-items: center;
+
+                        .search {
+                            display: flex;
+                            align-items: center;
+                        }
+                    }
+                }
+            }
+
+            .body {
+                flex: 5;
+            }
         }
     }
 }
