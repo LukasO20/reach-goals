@@ -1,17 +1,25 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 
-import ContainerM from '../ui/components/ContainerMain'
+import ContainerN from '../ui/components/Navigate'
 import ContainerH from '../ui/components/ContainerHeader'
-import Navigate from '../ui/components/Navigate'
+import ContainerM from '../ui/components/ContainerMain'
+import AppRoutes from './Routes'
 
 import './App.scss'
 
-export default props => 
-    <BrowserRouter>
-        <div className="app">
-            <Navigate />
-            <ContainerH />
-            <ContainerM />
-        </div>
-    </BrowserRouter>
+const App = (props) => {
+    return (
+        <BrowserRouter>
+            <div className="app">
+                <ContainerN />
+                <ContainerH />
+                <ContainerM>
+                    <AppRoutes />    
+                </ContainerM>              
+            </div>
+        </BrowserRouter>
+    )
+}
+
+export default App
