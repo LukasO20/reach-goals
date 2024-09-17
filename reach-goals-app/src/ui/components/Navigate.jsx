@@ -5,8 +5,8 @@ import '../styles/Navigate.scss'
 
 const Navigate = (props) => {
     const location = useLocation()
-    const currentLocation = location.pathname.includes('/objectives') ? '/objectives' : '/home'
-
+    const currentLocation = location.pathname.includes('/objectives') ? '/objectives' : location.pathname.includes('/home') ? '/home' : '/calendar'
+    
     return (
         <div className="container-navigate aside-content">
             <div className="nav">
