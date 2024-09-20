@@ -5,7 +5,7 @@ import '../styles/Navigate.scss'
 
 const Navigate = (props) => {
     const location = useLocation()
-    const currentLocation = location.pathname.includes('/objectives') ? '/objectives' : location.pathname.includes('/home') ? '/home' : '/calendar'
+    const currentLocation = location.pathname
     
     return (
         <div className="container-navigate aside-content">
@@ -26,7 +26,7 @@ const Navigate = (props) => {
                     </Link>
                 </div>
                 <div className="item-nav">
-                    <Link to={`${currentLocation}/config`}>
+                    <Link to={ currentLocation.includes('/config') ? currentLocation : `${currentLocation}/config` }>
                         <span className="config button-nav"><i className="icon-st fa-solid fa-sliders"></i></span>
                     </Link>
                 </div>

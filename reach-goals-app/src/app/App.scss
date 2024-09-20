@@ -56,7 +56,7 @@
 body {
     margin: 0;
 
-    .app {
+    .container-app {
         height: 100vh;
         margin: 0;
         padding: 0;
@@ -65,33 +65,33 @@ body {
         grid-template-columns: 3.5vw 1fr;
         grid-template-rows: auto 1fr auto;
         grid-template-areas: 
-            "container-navigate container-header"
-            "container-navigate container-main";
+        "container-navigate container-header"
+        "container-navigate container-main";
 
-            .checkbox {
-                border: 0.125em solid black;
-                width: 0.78em;
-                height: 0.7em;
-                border-radius: 0.2em;
+        .checkbox {
+            border: 0.125em solid black;
+            width: 0.78em;
+            height: 0.7em;
+            border-radius: 0.2em;
+        }
+
+        .button-st {
+            padding: 0.1em 0.35em;
+            font-weight: 600;
+            border-radius: 0.35em;
+
+            .icon-st {
+                margin-right: 0.35em;
+                font-size: var(--font-size-mini);
             }
+        }
 
-            .button-st {
-                padding: 0.1em 0.35em;
-                font-weight: 600;
-                border-radius: 0.35em;
-
-                .icon-st {
-                    margin-right: 0.35em;
-                    font-size: var(--font-size-mini);
-                }
-            }
-
-            .search-content {
-                border: none;
-                font-weight: 600;
-                margin: 0em 0.35em;
-                font-size: var(--font-size-st);
-            }
+        .search-content {
+            border: none;
+            font-weight: 600;
+            margin: 0em 0.35em;
+            font-size: var(--font-size-st);
+        }
 
         .container-header {
             grid-area: container-header;
@@ -234,6 +234,10 @@ body {
 
             .body {
                 flex: 5;
+
+                .container-dynamic {
+                    height: 100%;
+                }
             }
         }
     }

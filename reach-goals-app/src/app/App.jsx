@@ -11,12 +11,14 @@ import './App.scss'
 const App = (props) => {
     return (
         <BrowserRouter>
-            <div className="app">
+            <div className="container-app">
                 <ContainerN />
                 <ContainerH />
                 <ContainerM>
                     <AppRoutes />    
-                </ContainerM>              
+                </ContainerM>
+                <div className='content-center'></div>
+                <div className='content-aside-r'></div>
             </div>
         </BrowserRouter>
     )

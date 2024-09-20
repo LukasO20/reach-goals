@@ -22,7 +22,6 @@ const Home = () => {
             <div className="chart-line">
                 <h1>Representation chart line here...</h1>
             </div>
-            <Outlet/>
         </div>
     )
 }

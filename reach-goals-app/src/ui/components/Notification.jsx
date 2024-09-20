@@ -1,10 +1,13 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
+import { Outlet } from 'react-router-dom'
 
 const Notification = (props) => {
-    return (
+    return ReactDOM.createPortal (
         <div className='container-notification aside-content'>
             <h1>I'm notification</h1>
-        </div>
+            <Outlet/>
+        </div>, document.querySelector('.content-aside-r')
     )
 }
 
