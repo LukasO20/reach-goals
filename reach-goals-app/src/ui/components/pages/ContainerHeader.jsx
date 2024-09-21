@@ -1,6 +1,12 @@
 import React from "react"
 import { Link, useLocation } from 'react-router-dom'
 
+//Helper functions
+const getTitleHead = (title) => {
+    return title ?? `Welcome. Let's produce?`
+}
+
+//Main function
 const ContainerH = (props) => {
     const location = useLocation()
     const currentLocation = location.pathname.includes('/objectives') ? '/objectives' : location.pathname.includes('/home') ? '/home' : '/calendar'
@@ -8,7 +14,7 @@ const ContainerH = (props) => {
     return (
         <div className="container-header main-content">
             <div className="titles-header">
-                <h1>Welcome. Let's produce?</h1>
+                <h1>{getTitleHead(props.titleHead)}</h1>
             </div>
             <div className="nav">
                 <div className='item-nav'>

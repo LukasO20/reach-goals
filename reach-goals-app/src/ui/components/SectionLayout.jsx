@@ -1,9 +1,9 @@
 import React from 'react'
 import { useParams, Outlet } from 'react-router-dom'
 
-import Home from './Home'
-import Calendar from './Calendar'
-import Objectives from './Objectives'
+import Home from './pages/Home'
+import Calendar from './pages/Calendar'
+import Objectives from './pages/Objectives'
 
 const Sections = (props) => {
     const { section } = useParams()

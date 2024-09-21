@@ -1,6 +1,5 @@
 import React from 'react'
-import '../styles/Home.scss'
-import { Outlet } from 'react-router-dom'
+import '../../styles/Home.scss'
 
 const Home = () => {
     return (

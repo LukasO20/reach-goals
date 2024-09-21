@@ -1,9 +1,9 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, useLocation } from 'react-router-dom'
 
-import ContainerN from '../ui/components/Navigate'
-import ContainerH from '../ui/components/ContainerHeader'
-import ContainerM from '../ui/components/ContainerMain'
+import ContainerN from '../ui/components/navigation/Navigate'
+import ContainerH from '../ui/components/pages/ContainerHeader'
+import ContainerM from '../ui/components/pages/ContainerMain'
 import AppRoutes from './Routes'
 
 import './App.scss'

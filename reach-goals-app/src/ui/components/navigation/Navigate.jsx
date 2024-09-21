@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
-import '../styles/Navigate.scss'
+import '../../styles/Navigate.scss'
 
 const Navigate = (props) => {
     const location = useLocation()
