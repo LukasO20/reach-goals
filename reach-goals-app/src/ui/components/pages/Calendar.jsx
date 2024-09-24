@@ -1,6 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { TitleContext } from '../../../provider/components/TitleProvider'
 
-const Calendar = (props) => {
+const Calendar = () => {
+    const { update } = useContext(TitleContext)
+
+    React.useEffect(() => {
+        update('Manage your goals and assingments')
+    }, [update])
+
     return (
         <div className="container-calendar">
             <h1>Hi, I'm calendar mode</h1>

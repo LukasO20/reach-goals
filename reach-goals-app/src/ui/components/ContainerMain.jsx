@@ -1,7 +1,7 @@
 import React from 'react'
-import Routes from '../../../app/Routes'
+import Routes from '../../app/Routes'
 
-const ContainerM = (props) => {
+const ContainerM = () => {
     return (
         <div className="container-main">
             <div className="head">

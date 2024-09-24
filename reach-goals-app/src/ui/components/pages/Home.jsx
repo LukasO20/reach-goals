@@ -1,7 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { TitleContext } from '../../../provider/components/TitleProvider'
+
 import '../../styles/Home.scss'
 
 const Home = () => {
+    const { update } = useContext(TitleContext)
+
+    React.useEffect(() => {
+        update(`Welcome. Let's produce?`)
+    }, [update])
+
     return (
         <div className="container-home">
             <div className="itens">

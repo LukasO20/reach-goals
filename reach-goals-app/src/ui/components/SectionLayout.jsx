@@ -5,7 +5,7 @@ import Home from './pages/Home'
 import Calendar from './pages/Calendar'
 import Objectives from './pages/Objectives'
 
-const Sections = (props) => {
+const Sections = () => {
     const { section } = useParams()
 
     let componentRender

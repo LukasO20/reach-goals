@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { TitleContext } from '../../provider/components/TitleProvider'
 
-import '../../styles/Navigate.scss'
+import '../styles/Navigate.scss'
 
-const Navigate = (props) => {
+const Navigate = () => {
     const location = useLocation()
     const currentLocation = location.pathname
-    
+
     return (
         <div className="container-navigate aside-content">
             <div className="nav">

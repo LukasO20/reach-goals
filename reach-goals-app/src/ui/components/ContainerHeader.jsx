@@ -1,20 +1,17 @@
-import React from "react"
+import React, { useContext } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-
-//Helper functions
-const getTitleHead = (title) => {
-    return title ?? `Welcome. Let's produce?`
-}
+import { TitleContext } from '../../provider/components/TitleProvider'
 
 //Main function
-const ContainerH = (props) => {
+const ContainerH = () => {
     const location = useLocation()
     const currentLocation = location.pathname.includes('/objectives') ? '/objectives' : location.pathname.includes('/home') ? '/home' : '/calendar'
+    const { title } = useContext(TitleContext)
 
     return (
         <div className="container-header main-content">
             <div className="titles-header">
-                <h1>{getTitleHead(props.titleHead)}</h1>
+                <h1>{ title }</h1>
             </div>
             <div className="nav">
                 <div className='item-nav'>
