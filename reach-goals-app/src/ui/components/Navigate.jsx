@@ -1,6 +1,5 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { TitleContext } from '../../provider/components/TitleProvider'
 
 import '../styles/Navigate.scss'
 

@@ -38,7 +38,7 @@
 
 
     //Opacity Light
-    --color-complementary-s: #5E585050;
+    --color-complementary-s-o: #5E585050;
 
     //Icon size
     --icon-size-st: 1.5em;
@@ -68,35 +68,6 @@ body {
         grid-template-areas: 
         "container-navigate container-header"
         "container-navigate container-main";
-
-        .checkbox {
-            border: 0.125em solid black;
-            width: 0.78em;
-            height: 0.7em;
-            border-radius: 0.2em;
-        }
-
-        .button-st {
-            padding: 0.1em 0.35em;
-            font-weight: 600;
-            border-radius: 0.35em;
-
-            .icon-st {
-                margin-right: 0.35em;
-                font-size: var(--font-size-mini);
-            }
-        }
-
-        .search-content {
-            border: none;
-            font-weight: 600;
-            margin: 0em 0.35em;
-            font-size: var(--font-size-st);
-        }
-
-        .dropdown {
-            
-        }
 
         .container-header {
             grid-area: container-header;
@@ -212,6 +183,7 @@ body {
                     height: 3.5em;
 
                     .button-filter-m,
+                    .button-show-m,
                     .button-action-m {
                         margin: 0em 0.5em;
                         font-size: var(--font-size-m);
@@ -223,6 +195,11 @@ body {
                         &:first-child {
                             margin-left: 0em;
                         }
+                    }
+
+                    .action {
+                        display: flex;
+                        align-items: center;
                     }
 
                     .filter {

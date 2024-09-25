@@ -1,10 +1,11 @@
-import React from 'react-dom'
+import React from 'react'
+import ReactDOM from 'react-dom'
 
 const Dropdown = (title, option, description, style) => {
-    return (
-        <div className='dropdown'>
+    return  ReactDOM.createPortal(
+        <div className='dropdown-item item-element'>
             {title !== undefined ? `<span>${title}</span>` : ''}
-        </div>
+        </div>, document.querySelector('.dropdown')
     )
 }
 

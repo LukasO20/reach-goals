@@ -1,7 +1,10 @@
 import React from 'react'
 import Routes from '../../app/Routes'
 
+import ButtonDropdown from './items/elements/ButtonDropdown'
+
 const ContainerM = () => {
+
     return (
         <div className="container-main">
             <div className="head">
@@ -20,16 +23,19 @@ const ContainerM = () => {
                 </div>
                 <div className="line-s">
                     <div className="filter">
-                        <label className="checkbox button-filter-m"></label>
-                        <label className="filter-content button-filter-m"><i className="icon-st fa-solid fa-filter"></i></label>
-                        <label className="line-chart button-filter-m"><i className="icon-st fa-solid fa-chart-line"></i></label>
-                        <label className="search button-filter-m"><i className="icon-st fa-solid fa-magnifying-glass"></i><input type="text" placeholder="search" id="search-content-m" className="search-content" /></label>
-                        <label className="goal button-filter-m button-st">goals</label>
-                        <label className="assignment button-filter-m button-st">unfocused assignments</label>
+                        <label className="button-filter-m checkbox"></label>
+                        <label className="button-filter-m filter-content"><i className="icon-st fa-solid fa-filter"></i></label>
+                        <label className="button-show-m line-chart"><i className="icon-st fa-solid fa-chart-line"></i></label>
+                        <label className="button-filter-m search"><i className="icon-st fa-solid fa-magnifying-glass"></i><input type="text" placeholder="search" id="search-content-m" className="search-content" /></label>
+                        <label className="button-show-m button-st goal">goals</label>
+                        <label className="button-show-m button-st assignment">unfocused assignments</label>
                     </div>
                     <div className="action">
-                        <label className="goal button-action-m button-st"><i className="icon-st fa-solid fa-sort"></i>order</label>
-                        <label className="goal button-action-m button-st"><i className="icon-st fa-solid fa-plus"></i>create</label>
+                        {/* <label className="button-action-m button-st"><i className="icon-st fa-solid fa-sort"></i>order
+                            <div className='dropdown'></div>
+                        </label> */}
+                        <ButtonDropdown classBtn='button-action-m' iconFa='fa-solid fa-sort' title='order' />
+                        <label className="button-action-m button-st"><i className="icon-st fa-solid fa-plus"></i>create</label>
                     </div>
                 </div>
             </div>
