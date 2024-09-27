@@ -15,7 +15,7 @@
         font-size: var(--font-size-mini);
     }
 
-    .dropdown {
+    .dropdown-menu {
         display: none;
         background-color: var(--color-complementary-p);
         box-shadow: 0.01em 0.01em 0.35em 0.01em var(--color-complementary-s-o);
@@ -25,7 +25,7 @@
 
     &.show {
 
-        .dropdown {
+        .dropdown-menu {
             display: flex;
             flex-direction: column;
         }

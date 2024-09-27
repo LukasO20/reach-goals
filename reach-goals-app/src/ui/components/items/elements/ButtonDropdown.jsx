@@ -2,13 +2,13 @@ import React, { useContext } from 'react'
 import { VisibilityContext } from '../../../../provider/components/VisibilityProvider'
 
 const ButtonDropdown = (props) => {
-    const { isVisible } = useContext(VisibilityContext)
-    const { toggleVisibility } = useContext(VisibilityContext)
+    const { elementID, setElement } = useContext(VisibilityContext)
+    const handleClick = () => { setElement(props.id) }
 
     return (
-        <label className={`${props.classBtn} button-st ${ isVisible ? 'show' : ''}`} onClick={toggleVisibility}>
+        <label className={`${props.classBtn} button-st ${ elementID === props.id ? 'show' : ''}`} onClick={handleClick}>
             <i className={`icon-st ${props.iconFa}`}></i>{props.title}
-            <div className='dropdown'></div>
+            <div className='dropdown-menu'></div>
         </label>
     )
 }

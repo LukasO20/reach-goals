@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { TitleProvider } from '../provider/components/TitleProvider'
-import { VisibilityProvider } from '../provider/components/VisibilityProvider'
+import { VisibilityProvider, VisibilityContext } from '../provider/components/VisibilityProvider'
 
 import ContainerN from '../ui/components/Navigate'
 import ContainerH from '../ui/components/ContainerHeader'
@@ -11,7 +11,11 @@ import AppRoutes from './Routes'
 import './App.scss'
 import '../ui/styles/items/Elements.scss'
 
-const App = () => {  
+
+const App = (props) => {
+    //const { elementID, setElement } = useContext(VisibilityContext)
+    //const HideItemElements = () => { setElement(props.id) }
+    
     return (
         <BrowserRouter>
             <TitleProvider>

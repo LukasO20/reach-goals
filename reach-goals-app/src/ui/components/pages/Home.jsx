@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { TitleContext } from '../../../provider/components/TitleProvider'
 
-import '../../styles/Home.scss'
+import '../../styles/pages/Home.scss'
 
 const Home = () => {
     const { update } = useContext(TitleContext)

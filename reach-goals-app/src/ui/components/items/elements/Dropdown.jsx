@@ -5,7 +5,7 @@ const Dropdown = (title, option, description, style) => {
     return  ReactDOM.createPortal(
         <div className='dropdown-item item-element'>
             {title !== undefined ? `<span>${title}</span>` : ''}
-        </div>, document.querySelector('.dropdown')
+        </div>, document.querySelector('.dropdown-menu')
     )
 }
 

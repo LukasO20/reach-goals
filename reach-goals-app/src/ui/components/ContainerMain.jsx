@@ -31,11 +31,8 @@ const ContainerM = () => {
                         <label className="button-show-m button-st assignment">unfocused assignments</label>
                     </div>
                     <div className="action">
-                        {/* <label className="button-action-m button-st"><i className="icon-st fa-solid fa-sort"></i>order
-                            <div className='dropdown'></div>
-                        </label> */}
-                        <ButtonDropdown classBtn='button-action-m' iconFa='fa-solid fa-sort' title='order' />
-                        <label className="button-action-m button-st"><i className="icon-st fa-solid fa-plus"></i>create</label>
+                        <ButtonDropdown id='btn-action1' classBtn='button-action-m' iconFa='fa-solid fa-sort' title='order' />
+                        <ButtonDropdown id='btn-action2' classBtn='button-action-m' iconFa='fa-solid fa-plus' title='create' />
                     </div>
                 </div>
             </div>
