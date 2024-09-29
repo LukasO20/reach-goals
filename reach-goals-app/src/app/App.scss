@@ -58,6 +58,7 @@ body {
     margin: 0;
 
     .container-app {
+        position: relative;
         height: 100vh;
         margin: 0;
         padding: 0;
@@ -84,18 +85,10 @@ body {
                     display: flex;
                     justify-content: center;
                     padding: 0.35em 0.5em;
-                    margin: 0.5em;
-    
+                    margin: 0.25em;
+
                     a {
                         color: inherit;
-
-                        .button-header {
-    
-                            .icon-st {
-                                font-size: var(--icon-size-st);
-                                margin: 0.25em auto;
-                            }
-                        }
                     }
                 }
             }
@@ -220,6 +213,19 @@ body {
                 .container-dynamic {
                     height: 100%;
                 }
+            }
+        }
+
+        .content-aside-r {
+            display: none;
+            position: absolute;
+            right: 0;
+            height: 100%;
+            width: 30em;
+
+            &.show {
+                display: flex;
+                flex-direction: column;
             }
         }
     }

@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Routes from '../../app/Routes'
+import { VisibilityContext } from '../../provider/components/VisibilityProvider'
 
 import ButtonDropdown from './items/elements/ButtonDropdown'
 
 const ContainerM = () => {
+    const { toggleVisibility } = useContext(VisibilityContext)
 
     return (
-        <div className="container-main">
+        <div className="container-main" onClick={(e) => toggleVisibility(null, e)}>
             <div className="head">
                 <div className="line-p">
                     <div className="title-m">

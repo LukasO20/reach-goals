@@ -1,38 +1,35 @@
 import React, { useContext } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { TitleContext } from '../../provider/components/TitleProvider'
+import { VisibilityContext } from '../../provider/components/VisibilityProvider'
+
+import ButtonLink from './items/elements/ButtonLink'
 
 //Main function
 const ContainerH = () => {
     const location = useLocation()
     const currentLocation = location.pathname.includes('/objectives') ? '/objectives' : location.pathname.includes('/home') ? '/home' : '/calendar'
+    
     const { title } = useContext(TitleContext)
+    const { toggleVisibility } = useContext(VisibilityContext)
 
     return (
-        <div className="container-header main-content">
+        <div className="container-header main-content" onClick={(e) => toggleVisibility(null, e)}>
             <div className="titles-header">
                 <h1>{ title }</h1>
             </div>
             <div className="nav">
                 <div className='item-nav'>
-                    <Link to="/">
-                        <span className="theme button-header"><i className="icon-st fa-solid fa-palette"></i></span>
-                    </Link>
+                    <ButtonLink id="btn-theme" classBtn="button-h theme" iconFa="fa-solid fa-palette"/>
                 </div>
                 <div className="item-nav">
-                    <Link to={`${currentLocation}/tag`}>
-                        <span className="tags button-header"><i className="icon-st fa-solid fa-tag"></i></span>
-                    </Link>
+                    <ButtonLink link={`${currentLocation}/tag`} id="btn-tag" classBtn="button-h tag" iconFa="fa-solid fa-tag"/>
                 </div>
                 <div className="item-nav">
-                    <Link to={`${currentLocation}/notification`}>
-                        <span className="notification button-header"><i className='icon-st fa-solid fa-bell'></i></span>
-                    </Link>
+                    <ButtonLink link={`${currentLocation}/notification`} id="btn-notification" classBtn="button-h notification" iconFa="fa-solid fa-bell"/>
                 </div>
                 <div className="item-nav">
-                    <Link to="/">
-                        <span className="profile button-header"><i className="icon-st fa-solid fa-user"></i></span>
-                    </Link>
+                    <ButtonLink id="btn-profile" classBtn="button-h profile" iconFa="fa-solid fa-user"/>
                 </div>
             </div>
         </div>

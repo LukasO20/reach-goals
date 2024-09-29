@@ -11,8 +11,7 @@ import AppRoutes from './Routes'
 import './App.scss'
 import '../ui/styles/items/Elements.scss'
 
-
-const App = () => {    
+const App = () => { 
     return (
         <BrowserRouter>
             <TitleProvider>

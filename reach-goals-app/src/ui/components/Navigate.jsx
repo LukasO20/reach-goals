@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { VisibilityContext } from '../../provider/components/VisibilityProvider'
 
 import '../styles/Navigate.scss'
 
@@ -7,8 +8,10 @@ const Navigate = () => {
     const location = useLocation()
     const currentLocation = location.pathname
 
+    const { toggleVisibility } = useContext(VisibilityContext)
+
     return (
-        <div className="container-navigate aside-content">
+        <div className="container-navigate aside-content" onClick={(e) => toggleVisibility(null, e)}>
             <div className="nav">
                 <div className='item-nav'>
                     <Link to="/home">

@@ -40,6 +40,15 @@
             font-size: var(--font-size-mini);
         }
     }
+
+    &.button-h {
+        color: inherit;
+
+        .icon-st {
+            font-size: var(--icon-size-st);
+            margin: 0.25em auto;
+        }
+    }
 }
 
 .search-content {

@@ -5,7 +5,9 @@ const VisibilityContext = React.createContext()
 const VisibilityProvider = ({children}) => {
     const [visibleElements, setVisibleElement] = useState([])
 
-    const toggleVisibility = (id) => {
+    const toggleVisibility = (id, event) => {
+        event.stopPropagation()
+
         const isVisible = visibleElements.includes(id)
 
         if (isVisible) {
