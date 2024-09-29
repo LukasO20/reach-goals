@@ -12,10 +12,7 @@ import './App.scss'
 import '../ui/styles/items/Elements.scss'
 
 
-const App = (props) => {
-    //const { elementID, setElement } = useContext(VisibilityContext)
-    //const HideItemElements = () => { setElement(props.id) }
-    
+const App = () => {    
     return (
         <BrowserRouter>
             <TitleProvider>

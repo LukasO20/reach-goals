@@ -14,25 +14,25 @@ const ContainerM = () => {
                     </div>
                     <div className="options-m">
                         <div className="visibility-m">
-                            <label className="visibility button-m">visibility</label>
+                            <ButtonDropdown id="btn-visibility" classBtn="button-m visibility" title="visibility"/>
                         </div>
                         <div className="more-m">
-                            <label className="more button-m"><i className="fa-solid fa-ellipsis-vertical"></i></label>
+                            <ButtonDropdown id="btn-more" classBtn="button-m more" iconFa="fa-solid fa-ellipsis-vertical"/>
                         </div>
                     </div>
                 </div>
                 <div className="line-s">
                     <div className="filter">
                         <label className="button-filter-m checkbox"></label>
-                        <label className="button-filter-m filter-content"><i className="icon-st fa-solid fa-filter"></i></label>
+                        <ButtonDropdown id="btn-filter-content" classBtn="button-filter-m filter-content" iconFa="fa-solid fa-filter"/>
                         <label className="button-show-m line-chart"><i className="icon-st fa-solid fa-chart-line"></i></label>
                         <label className="button-filter-m search"><i className="icon-st fa-solid fa-magnifying-glass"></i><input type="text" placeholder="search" id="search-content-m" className="search-content" /></label>
                         <label className="button-show-m button-st goal">goals</label>
                         <label className="button-show-m button-st assignment">unfocused assignments</label>
                     </div>
                     <div className="action">
-                        <ButtonDropdown id='btn-action1' classBtn='button-action-m' iconFa='fa-solid fa-sort' title='order' />
-                        <ButtonDropdown id='btn-action2' classBtn='button-action-m' iconFa='fa-solid fa-plus' title='create' />
+                        <ButtonDropdown id="btn-action1" classBtn="button-action-m" iconFa="fa-solid fa-sort" title="order" />
+                        <ButtonDropdown id="btn-action2" classBtn="button-action-m" iconFa="fa-solid fa-plus" title="create" />
                     </div>
                 </div>
             </div>

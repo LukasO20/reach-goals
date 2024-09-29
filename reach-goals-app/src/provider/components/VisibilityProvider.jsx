@@ -3,10 +3,20 @@ import React, { useState } from 'react'
 const VisibilityContext = React.createContext()
 
 const VisibilityProvider = ({children}) => {
-    const [elementID, setElement] = useState(null)
+    const [visibleElements, setVisibleElement] = useState([])
+
+    const toggleVisibility = (id) => {
+        const isVisible = visibleElements.includes(id)
+
+        if (isVisible) {
+            setVisibleElement([])
+        } else {
+            setVisibleElement([id])
+        }
+    }
 
     return (
-        <VisibilityContext.Provider value={{ elementID, setElement }}>
+        <VisibilityContext.Provider value={{ visibleElements, toggleVisibility }}>
             {children} 
         </VisibilityContext.Provider>
     )

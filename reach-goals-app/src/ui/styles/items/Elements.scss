@@ -6,28 +6,38 @@
 }
 
 .button-st {
+    position: relative;
     padding: 0.1em 0.35em;
     font-weight: 600;
     border-radius: 0.35em;
+    user-select: none;
 
     .icon-st {
         margin-right: 0.35em;
-        font-size: var(--font-size-mini);
+        font-size: var(--font-size-st);
     }
 
     .dropdown-menu {
+        position: absolute;
         display: none;
         background-color: var(--color-complementary-p);
         box-shadow: 0.01em 0.01em 0.35em 0.01em var(--color-complementary-s-o);
         padding: 0.5em;
+        margin: 0.5em;
         border-radius: 0.2em;
-    }
+        max-height: 20em;
+        right: 0;
 
-    &.show {
-
-        .dropdown-menu {
+        &.show {
             display: flex;
             flex-direction: column;
+        }
+    }
+
+    &.button-action-m {
+
+        .icon-st {
+            font-size: var(--font-size-mini);
         }
     }
 }
