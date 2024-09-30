@@ -28,7 +28,7 @@ const Navigate = () => {
                         <span className="objectives button-nav"><i className='icon-st fa-regular fa-pen-to-square'></i></span>
                     </Link>
                 </div>
-                <div className="item-nav">
+                <div className="item-nav" onClick={(e) => toggleVisibility('panel-center', e)}>
                     <Link to={ currentLocation.includes('/config') ? currentLocation : `${currentLocation}/config` }>
                         <span className="config button-nav"><i className="icon-st fa-solid fa-sliders"></i></span>
                     </Link>

@@ -7,7 +7,7 @@ const VisibilityProvider = ({children}) => {
 
     const toggleVisibility = (id, event) => {
         event.stopPropagation()
-
+        
         const isVisible = visibleElements.includes(id)
 
         if (isVisible) {

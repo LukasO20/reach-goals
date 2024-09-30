@@ -22,11 +22,11 @@ const ContainerH = () => {
                 <div className='item-nav'>
                     <ButtonLink id="btn-theme" classBtn="button-h theme" iconFa="fa-solid fa-palette"/>
                 </div>
-                <div className="item-nav">
-                    <ButtonLink link={`${currentLocation}/tag`} id="btn-tag" classBtn="button-h tag" iconFa="fa-solid fa-tag"/>
+                <div className="item-nav" onClick={(e) => toggleVisibility('panel-left', e)}>
+                    <ButtonLink id="btn-tag" link={`${currentLocation}/tag`} classBtn="button-h tag" iconFa="fa-solid fa-tag"/>
                 </div>
-                <div className="item-nav">
-                    <ButtonLink link={`${currentLocation}/notification`} id="btn-notification" classBtn="button-h notification" iconFa="fa-solid fa-bell"/>
+                <div className="item-nav" onClick={(e) => toggleVisibility('panel-left', e)}>
+                    <ButtonLink id="btn-notification" link={`${currentLocation}/notification`} classBtn="button-h notification" iconFa="fa-solid fa-bell"/>
                 </div>
                 <div className="item-nav">
                     <ButtonLink id="btn-profile" classBtn="button-h profile" iconFa="fa-solid fa-user"/>

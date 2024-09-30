@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 
 const Tag = (props) => {
     return ReactDOM.createPortal(
-        <div className='container-tag aside-content'>
+        <div className='container-tag aside-content' onClick={(e) => e.stopPropagation()}>
             <h1>I'm tag</h1>
             <Outlet/>
         </div>, document.querySelector('.content-aside-r')
