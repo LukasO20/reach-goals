@@ -47,6 +47,9 @@
     --font-size-st: 1em;
     --font-size-mini: 0.85em;
     --font-size-m: 1.2em;
+
+    //Others
+    --box-shadow-st: 0.01em 0.01em 0.45em 0.01em var(--color-complementary-s-o);
 }
 
 * {
@@ -217,30 +220,42 @@ body {
         }
 
         .content-center {
-            display: none;
+            display: flex;
+            flex-direction: column;
             position: absolute;
+            background-color: var(--color-complementary-p);
+            border-radius: 0.5em;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             height: 40em;
             width: 50em;
+            opacity: 0;
+            z-index: -1;
+            box-shadow: var(--box-shadow-st);
 
             &.show {
-                display: flex;
-                flex-direction: column;
+                opacity: 1;
+                z-index: 1;
             }
         }
 
         .content-aside-r {
-            display: none;
+            display: flex;
+            flex-direction: column;
             position: absolute;
+            overflow: hidden;
             right: 0;
             height: 100%;
             width: 30em;
+            background-color: var(--color-complementary-p);
+            box-shadow: var(--box-shadow-st);
+            opacity: 0;
+            z-index: -1;
 
             &.show {
-                display: flex;
-                flex-direction: column;
+                opacity: 1;
+                z-index: 1;
             }
         }
     }
