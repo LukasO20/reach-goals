@@ -8,7 +8,18 @@ const VisibilityProvider = ({children}) => {
     const toggleVisibility = (id, event) => {
         event.stopPropagation()
         
-        const isVisible = visibleElements.includes(id)
+        //const isVisible = visibleElements.includes(id)
+
+        const isVisible = visibleElements.some(item => {
+            if (Array.isArray(id)) {
+                console.log('IS ARRAY', id.includes(item))
+                return id.includes(item)
+
+            } else {
+                console.log('IS OBJECT', id === item)
+                return id === item
+            }
+        })
 
         if (isVisible) {
             setVisibleElement([])

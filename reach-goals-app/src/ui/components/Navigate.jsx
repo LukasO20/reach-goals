@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { VisibilityContext } from '../../provider/components/VisibilityProvider'
 
 import '../styles/Navigate.scss'
+import Button from './items/elements/Button'
 
 const Navigate = () => {
     const location = useLocation()
@@ -28,10 +29,11 @@ const Navigate = () => {
                         <span className="objectives button-nav"><i className='icon-st fa-regular fa-pen-to-square'></i></span>
                     </Link>
                 </div>
-                <div className="item-nav" onClick={(e) => toggleVisibility('panel-center', e)}>
-                    <Link to={ currentLocation.includes('/config') ? currentLocation : `${currentLocation}/config` }>
+                <div className="item-nav">
+                    {/* <Link to={currentLocation.includes('/config') ? currentLocation : `${currentLocation}/config` }>
                         <span className="config button-nav"><i className="icon-st fa-solid fa-sliders"></i></span>
-                    </Link>
+                    </Link> */}
+                    <Button id={['btn-config', 'panel-center']} classBtn='btn-action-config button-nav' iconFa='fa-solid fa-sliders' /*onClick={(e) => toggleVisibility('panel-center', e)}*//>
                 </div>
             </div>
         </div>

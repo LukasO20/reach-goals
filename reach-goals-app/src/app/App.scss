@@ -99,38 +99,6 @@ body {
 
         .container-navigate {
             grid-area: container-navigate;
-
-            .nav {
-                display: flex;
-                flex-direction: column;
-
-                .item-nav {
-                    display: flex;
-                    justify-content: center;
-                    margin: 0.5em 0.15em;
-    
-                    a {
-                        color: inherit;
-
-                        .button-nav {
-    
-                            .icon-st {
-                                font-size: var(--icon-size-st);
-                                margin: 0.25em auto;
-                            }
-                        }
-                    }
-
-                    &:not(:first-child) {
-                        border-radius: 0.5em;
-                        padding: 0.35em;
-                    }
-
-                    &:last-child {
-                        margin: auto 0.15em 2em 0.15em;
-                    }
-                }
-            }
         }
 
         .container-main {
@@ -233,6 +201,7 @@ body {
             opacity: 0;
             z-index: -1;
             box-shadow: var(--box-shadow-st);
+            transition: 0.1s ease-in-out;
 
             &.show {
                 opacity: 1;
@@ -252,6 +221,7 @@ body {
             box-shadow: var(--box-shadow-st);
             opacity: 0;
             z-index: -1;
+            transition: 0.1s ease-in-out;
 
             &.show {
                 opacity: 1;

@@ -2,20 +2,45 @@
     background-color: var(--color-complementary-p);
 
     .nav {
+        display: flex;
+        flex-direction: column;
         height: 100%;
 
         .item-nav {
+            margin: 0.5em 0.15em;
+
+            &:not(:first-child) {
+                border-radius: 0.5em;
+                padding: 0.35em;
+            }
+
+            &:last-child {
+                margin: auto 0.15em 2em 0.15em;
+            }
+
+            a {
+                color: inherit;
+            }
 
             .button-nav {
+                display: flex;
+                justify-content: center;
+                
+                &:hover {
+                    cursor: pointer;
+                }
 
                 &.home {
-                    display: flex;
-                    justify-content: center;
 
                     img {
-                        width: 2vw;
+                        width: 2.5vw;
                         margin: 1em 0em;
                     }
+                }
+
+                .icon-st {
+                    font-size: var(--icon-size-st);
+                    margin: 0.25em auto;
                 }
             }
         }
