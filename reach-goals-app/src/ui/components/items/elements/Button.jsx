@@ -5,7 +5,7 @@ const Button = (props) => {
      const { toggleVisibility } = useContext(VisibilityContext)
 
     return (
-        <label className={`${props.classBtn}`} onClick={(e) => toggleVisibility(props.id, e)}>
+        <label className={`${props.classBtn}`} onClick={(e) => toggleVisibility(props.id, props.classBtn, e)}>
             <i className={`icon-st ${props.iconFa}`}></i>{props.title}
         </label>
     )

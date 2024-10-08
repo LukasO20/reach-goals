@@ -203,9 +203,27 @@ body {
             box-shadow: var(--box-shadow-st);
             transition: 0.1s ease-in-out;
 
+            .container-form-modal, .container-config {
+                display: none;
+            }
+
             &.show {
                 opacity: 1;
                 z-index: 1;
+            }
+
+            &.btn-action-config {
+
+                .container-config {
+                    display: flex;
+                }
+            }
+
+            &.form-goal, &.form-assignment {
+             
+                .container-form-modal {
+                    display: flex;
+                }
             }
         }
 

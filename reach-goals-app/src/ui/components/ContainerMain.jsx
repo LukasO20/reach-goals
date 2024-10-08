@@ -8,7 +8,7 @@ const ContainerM = () => {
     const { toggleVisibility } = useContext(VisibilityContext)
 
     return (
-        <div className="container-main" onClick={(e) => toggleVisibility(null, e)}>
+        <div className="container-main" onClick={(e) => toggleVisibility(null, null, e)}>
             <div className="head">
                 <div className="line-p">
                     <div className="title-m">

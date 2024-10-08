@@ -18,10 +18,9 @@ const Dropdown = (props) => {
                     props.options.map((option, index) => {                      
                         return (
                             <div className={`option ${option.op}`} key={`op-${index}`}>
-                                <div className='item-option'>
-                                    
+                                <div className='item-option'>                                  
                                     <div className='item-title'>
-                                        <label><i className={`${option.iconFa}`}></i><span className='title'>{option.title}</span></label>
+                                        <Button id='panel-center' classBtn={`form-${option.op} button-st`} iconFa='icon-st fa-solid fa-plus' title={`${option.title}`}/>
                                     </div> 
                                     <div className='item-details'>
 

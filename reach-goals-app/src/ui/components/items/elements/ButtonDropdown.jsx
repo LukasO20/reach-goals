@@ -15,10 +15,12 @@ const ButtonDropdown = (props) => {
                 titleDropdown = 'Create objectives'
                 optionsDropdown = [
                     {
+                        op: 'goal',
                         iconFa: 'fa-solid fa-plus',
                         title: 'goal'
                     },
                     {
+                        op: 'assignment',
                         iconFa: 'fa-solid fa-plus',
                         title: 'assignment'
                     }
@@ -28,7 +30,7 @@ const ButtonDropdown = (props) => {
     }
 
     return (
-        <label className={`${props.classBtn} button-st`} onClick={(e) => toggleVisibility(props.id, e)}>
+        <label className={`${props.classBtn} button-st`} onClick={(e) => toggleVisibility(props.id, null, e)}>
             <i className={`icon-st ${props.iconFa}`}></i>{props.title}
             <div className={`dropdown-menu ${ visibleElements.includes(props.id) ? 'show' : '' }`} onClick={(e) => e.stopPropagation()}>
                 {defineDropdown()}
