@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Button from '../../components/items/elements/Button'
+import ButtonDropdown from '../../components/items/elements/ButtonDropdown'
 
 import '../../styles/items/Elements.scss'
 
@@ -58,6 +59,7 @@ const ModalForm = (props) => {
                         <input id={`${typeForm}-end-date`} className='input-form' type="text" placeholder='set end date' />
                     </label>
                     {/* DROPDOWN BUTTON HERE */}
+                    <ButtonDropdown id='btn-action-objective1' target='123' classBtn='dropdown-form' title='choose an option' />
                     <label className='field-forms reminder-date'>
                         <input id={`${typeForm}-reminder-date`} className='input-form' type="text" placeholder='set reminder date' />
                     </label>
