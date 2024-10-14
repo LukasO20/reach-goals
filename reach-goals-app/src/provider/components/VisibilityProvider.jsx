@@ -5,20 +5,22 @@ const VisibilityContext = React.createContext()
 const VisibilityProvider = ({children}) => {
     const [visibleElements, setVisibleElement] = useState([])
 
-    const addVisibility = (id, target) => {
-        setVisibleElement([id, target])
+    const addVisibility = (id, type) => {
+        setVisibleElement([id, type.id])
     }
 
     const removeVisibility = () => {
         setVisibleElement([])
     }
 
-    const toggleVisibility = (id, target, event) => {
-        event.stopPropagation()   
+    const toggleVisibility = (id, type, event) => {
+        event.stopPropagation()
+
         const isVisible = visibleElements.includes(id)
-    
+        const parameterType = type ?? {id: null, idHelper: null}
+
         if (isVisible) { removeVisibility() } 
-        else { addVisibility(id, target) }
+        else { addVisibility(id, parameterType) }
 
         console.log(visibleElements)
     }

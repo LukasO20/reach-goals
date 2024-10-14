@@ -212,14 +212,14 @@ body {
                 z-index: 1;
             }
 
-            &.btn-action-config {
+            &.config {
 
                 .container-config {
                     display: flex;
                 }
             }
 
-            &.form-goal, &.form-assignment {
+            &.goal, &.assignment {
              
                 .container-form-modal {
                     display: flex;

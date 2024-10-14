@@ -38,7 +38,7 @@ const ButtonDropdown = (props) => {
     }
 
     return (
-        <label className={`${props.classBtn} button-st`} onClick={(e) => toggleVisibility(props.id, props.target, e)}>
+        <label className={`${props.classBtn} button-st`} onClick={(e) => toggleVisibility(props.id, props.type, e)}>
             <i className={`icon-st ${props.iconFa}`}></i>{props.title}
             <div className={`dropdown-menu ${ visibleElements.includes(props.id) ? 'show' : '' }`} onClick={(e) => e.stopPropagation()}>
                 {defineDropdown()}

@@ -26,7 +26,7 @@ const formsMap = (typeForm) => {
 }
 
 const ModalForm = (props) => {
-    const typeForm = props.type.split('-')[1]
+    const typeForm = props.type
     const icon = iconMap[typeForm] || 'fa-solid fa-triangle-exclamation'
     const titleForm = titleMap[typeForm] || 'Create your objective'
 
@@ -50,18 +50,18 @@ const ModalForm = (props) => {
                 <h2>{titleForm}</h2>
                 <div className='objective-forms'>
                     <label className='field-forms name'>
-                        <input id={`${typeForm}-name`} className='input-form' type="text" placeholder={`${typeForm} name...`} />
+                        <input id={`${typeForm}-name`} className='input-form' type='text' placeholder={`${typeForm} name...`} />
                     </label>
                     <label className='field-forms start-date'>
-                        <input id={`${typeForm}-start-date`} className='input-form' type="text" placeholder='set start date' />
+                        <input id={`${typeForm}-start-date`} className='input-form' type='text' placeholder='set start date' />
                     </label>
                     <label className='field-forms end-date'>
-                        <input id={`${typeForm}-end-date`} className='input-form' type="text" placeholder='set end date' />
+                        <input id={`${typeForm}-end-date`} className='input-form' type='text' placeholder='set end date' />
                     </label>
                     {/* DROPDOWN BUTTON HERE */}
-                    <ButtonDropdown id='btn-action-objective1' target='123' classBtn='dropdown-form' title='choose an option' />
+                    <ButtonDropdown id='btn-action-objective1' classBtn='dropdown-form' title='choose an option' />
                     <label className='field-forms reminder-date'>
-                        <input id={`${typeForm}-reminder-date`} className='input-form' type="text" placeholder='set reminder date' />
+                        <input id={`${typeForm}-reminder-date`} className='input-form' type='text' placeholder='set reminder date' />
                     </label>
                     {formsMap(typeForm)}
                 </div>
