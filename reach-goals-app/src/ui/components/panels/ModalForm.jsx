@@ -59,7 +59,7 @@ const ModalForm = (props) => {
                         <input id={`${typeForm}-end-date`} className='input-form' type='text' placeholder='set end date' />
                     </label>
                     {/* DROPDOWN BUTTON HERE */}
-                    <ButtonDropdown id='btn-action-objective1' classBtn='dropdown-form' title='choose an option' />
+                    <ButtonDropdown classBtn='dropdown-form' title='choose an option' />
                     <label className='field-forms reminder-date'>
                         <input id={`${typeForm}-reminder-date`} className='input-form' type='text' placeholder='set reminder date' />
                     </label>

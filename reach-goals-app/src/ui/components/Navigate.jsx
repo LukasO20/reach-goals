@@ -27,7 +27,7 @@ const Navigate = () => {
                     </Link>
                 </div>
                 <div className="item-nav">
-                    <Button id='panel-center' type={{id: 'config', idHelper: null }} classBtn='btn-action-config button-nav' iconFa='fa-solid fa-sliders'/>
+                    <Button target={{idTarget: 'panel-center', typeTarget: 'config'}} helper={{id: 'config', itself: true }} classBtn='btn-action-config button-nav' iconFa='fa-solid fa-sliders'/>
                 </div>
             </div>
         </div>

@@ -33,8 +33,8 @@ const ContainerM = () => {
                         <label className="button-show-m button-st assignment">unfocused assignments</label>
                     </div>
                     <div className="action">
-                        <ButtonDropdown id='btn-action1' type={{id: 'form-goal', idHelper: null}} classBtn="button-action-m" iconFa="fa-solid fa-sort" title="order" />
-                        <ButtonDropdown id='btn-action2' type={{id: 'form-assignment', idHelper: null}} classBtn="button-action-m" iconFa="fa-solid fa-plus" title="create" />
+                        <ButtonDropdown id='btn-action1' helper={{id: 'form-goal', idHelper: null}} classBtn="button-action-m" iconFa="fa-solid fa-sort" title="order" />
+                        <ButtonDropdown id='btn-action2' helper={{id: 'form-assignment', idHelper: null}} classBtn="button-action-m" iconFa="fa-solid fa-plus" title="create" />
                     </div>
                 </div>
             </div>
