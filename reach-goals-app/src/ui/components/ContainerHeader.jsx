@@ -12,9 +12,12 @@ const ContainerH = () => {
     
     const { title } = useContext(TitleContext)
     const { toggleVisibility } = useContext(VisibilityContext)
+    const target = {
+        idTarget: 'panel-left'
+    }
 
     return (
-        <div className="container-header main-content" onClick={(e) => toggleVisibility(null, null, e)}>
+        <div className="container-header main-content" onClick={(e) => toggleVisibility(null, e)}>
             <div className="titles-header">
                 <h1>{ title }</h1>
             </div>
@@ -22,10 +25,10 @@ const ContainerH = () => {
                 <div className='item-nav'>
                     <ButtonLink id="btn-theme" classBtn="button-h theme" iconFa="fa-solid fa-palette"/>
                 </div>
-                <div className="item-nav" onClick={(e) => toggleVisibility('panel-left', null, e)}>
+                <div className="item-nav" onClick={(e) => toggleVisibility(target, e)}>
                     <ButtonLink id="btn-tag" link={`${currentLocation}/tag`} classBtn="button-h tag" iconFa="fa-solid fa-tag"/>
                 </div>
-                <div className="item-nav" onClick={(e) => toggleVisibility('panel-left', null, e)}>
+                <div className="item-nav" onClick={(e) => toggleVisibility(target, e)}>
                     <ButtonLink id="btn-notification" link={`${currentLocation}/notification`} classBtn="button-h notification" iconFa="fa-solid fa-bell"/>
                 </div>
                 <div className="item-nav">

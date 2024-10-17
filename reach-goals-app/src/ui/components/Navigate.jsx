@@ -9,7 +9,7 @@ const Navigate = () => {
     const { toggleVisibility } = useContext(VisibilityContext)
 
     return (
-        <div className="container-navigate aside-content" onClick={(e) => toggleVisibility(null, null, e)}>
+        <div className="container-navigate aside-content" onClick={(e) => toggleVisibility(null, e)}>
             <div className="nav">
                 <div className='item-nav'>
                     <Link to="/home">
@@ -27,7 +27,7 @@ const Navigate = () => {
                     </Link>
                 </div>
                 <div className="item-nav">
-                    <Button target={{idTarget: 'panel-center', typeTarget: 'config'}} helper={{id: 'config', itself: true }} classBtn='btn-action-config button-nav' iconFa='fa-solid fa-sliders'/>
+                    <Button target={{idTarget: 'panel-center', typeTarget: 'config'}} classBtn='btn-action-config button-nav' iconFa='fa-solid fa-sliders'/>
                 </div>
             </div>
         </div>

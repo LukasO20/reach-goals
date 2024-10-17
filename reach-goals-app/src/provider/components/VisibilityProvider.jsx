@@ -9,24 +9,31 @@ const VisibilityContext = React.createContext()
 const VisibilityProvider = ({children}) => {
     const [visibleElements, setVisibleElement] = useState([])
 
-    const addVisibility = (target, helper) => {
-        setVisibleElement((prev) => [...prev, target.idTarget, target.typeTarget])
+    const addVisibility = (target) => {
+        if (target.itself === true) {
+            setVisibleElement((prev) => [...prev, target.idTarget, target.typeTarget])
+        } else {
+            setVisibleElement([target.idTarget, target.typeTarget])
+        }
     }
 
-    const removeVisibility = (id) => {
-        setVisibleElement((prev) => prev.filter(idActually => idActually !== id))
+    const removeVisibility = (target) => {
+        if (target.itself === true) {
+            setVisibleElement((prev) => prev.filter(id => id !== target.idTarget))
+        } else {
+            setVisibleElement([])
+        }
     }
 
-    const toggleVisibility = (target, helper, event) => {
+    const toggleVisibility = (target, event) => {
         event.stopPropagation()
-        const parameterHelper = helper ?? {id: null, itself: null}
-        const parameterTarget = target ?? {idTarget: null, typeTarget: null}
+        const parameterTarget = target ?? {idTarget: null, typeTarget: null, itself: false}
         const isVisible = visibleElements.includes(parameterTarget.idTarget);
 
         if (isVisible) {
             removeVisibility(parameterTarget.idTarget)
         } else {
-            addVisibility(parameterTarget, parameterHelper)
+            addVisibility(parameterTarget)
         }
     }
 

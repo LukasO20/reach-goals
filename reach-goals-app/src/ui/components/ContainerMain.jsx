@@ -4,11 +4,20 @@ import { VisibilityContext } from '../../provider/components/VisibilityProvider'
 
 import ButtonDropdown from './items/elements/ButtonDropdown'
 
+const mapTarget = (id, type) => {
+    const attributes = {
+        idTarget: id,
+        typeTarget: type
+    }
+
+    return attributes
+}
+
 const ContainerM = () => {
     const { toggleVisibility } = useContext(VisibilityContext)
 
     return (
-        <div className="container-main" onClick={(e) => toggleVisibility(null, null, e)}>
+        <div className="container-main" onClick={(e) => toggleVisibility(null, e)}>
             <div className="head">
                 <div className="line-p">
                     <div className="title-m">
@@ -32,9 +41,9 @@ const ContainerM = () => {
                         <label className="button-show-m button-st goal">goals</label>
                         <label className="button-show-m button-st assignment">unfocused assignments</label>
                     </div>
-                    <div className="action">
-                        <ButtonDropdown id='btn-action1' helper={{id: 'form-goal', idHelper: null}} classBtn="button-action-m" iconFa="fa-solid fa-sort" title="order" />
-                        <ButtonDropdown id='btn-action2' helper={{id: 'form-assignment', idHelper: null}} classBtn="button-action-m" iconFa="fa-solid fa-plus" title="create" />
+                    <div className="action">           
+                        <ButtonDropdown target={mapTarget('btn-action1', 'form-goal')} classBtn="button-action-m" iconFa="fa-solid fa-sort" title="order" />
+                        <ButtonDropdown target={mapTarget('btn-action2', 'form-goal')} classBtn="button-action-m" iconFa="fa-solid fa-plus" title="create" />
                     </div>
                 </div>
             </div>
