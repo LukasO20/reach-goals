@@ -5,13 +5,14 @@ import Dropdown from '../../items/elements/Dropdown'
 
 const ButtonDropdown = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
+    const target = props.target ?? { idTarget: '', typeTarget: ''}
 
     let titleDropdown = undefined
-    let parentDropdown = props.id
+    let parentDropdown = target.idTarget
     let optionsDropdown = undefined
 
     const defineDropdown = () => {
-        switch (props.id) {
+        switch (target.idTarget) {
             case 'btn-action2':
                 titleDropdown = 'Create objectives'
                 optionsDropdown = [
@@ -37,11 +38,11 @@ const ButtonDropdown = (props) => {
                 ]
         }
     }
-
+    
     return (
-        <label className={`${props.classBtn} button-st`} onClick={(e) => toggleVisibility(props.target, e)}>
+        <label className={`${props.classBtn} button-st`} onClick={(e) => toggleVisibility(target, e)}>
             <i className={`icon-st ${props.iconFa}`}></i>{props.title}
-            <div className={`dropdown-menu ${ visibleElements.includes(props.id) ? 'show' : '' }`} onClick={(e) => e.stopPropagation()}>
+            <div className={`dropdown-menu ${ visibleElements.includes(target.idTarget) ? 'show' : '' }`} onClick={(e) => e.stopPropagation()}>
                 {defineDropdown()}
                 <Dropdown title={titleDropdown} parent={parentDropdown} options={optionsDropdown}/>
             </div>

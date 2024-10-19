@@ -2,27 +2,26 @@ import React, { useState } from 'react'
 
 const VisibilityContext = React.createContext()
 
-//NOTA
-//QUANDO POSSUIR UM HELPER ELE SERÁ RESPONSÁVEL POR APLICAR AÇÕES NELE MESMO, ASSIM SERÁ USADO O ...(spread)
-//QUANDO NÃO POSSUIR O HELPER É UMA OPÇÃO SEM ...(spread)
-
 const VisibilityProvider = ({children}) => {
     const [visibleElements, setVisibleElement] = useState([])
 
-    const addVisibility = (target) => {
-        if (target.itself === true) {
-            setVisibleElement((prev) => [...prev, target.idTarget, target.typeTarget])
-        } else {
-            setVisibleElement([target.idTarget, target.typeTarget])
-        }
+    const updateVisibility = (target) => {
+        setVisibleElement((prev) => {
+            if (target.itself) {
+                const filter = [...prev.filter(id => id)].slice(0, 2)
+                return [...filter, target.idTarget, target.typeTarget]
+            }
+            return [target.idTarget, target.typeTarget]
+        })
     }
 
     const removeVisibility = (target) => {
-        if (target.itself === true) {
-            setVisibleElement((prev) => prev.filter(id => id !== target.idTarget))
-        } else {
-            setVisibleElement([])
-        }
+        setVisibleElement((prev) => {
+            if (target.itself) {
+                return prev.filter(id => id !== target.idTarget && id)
+            }
+            return []
+        })
     }
 
     const toggleVisibility = (target, event) => {
@@ -30,11 +29,7 @@ const VisibilityProvider = ({children}) => {
         const parameterTarget = target ?? {idTarget: null, typeTarget: null, itself: false}
         const isVisible = visibleElements.includes(parameterTarget.idTarget);
 
-        if (isVisible) {
-            removeVisibility(parameterTarget.idTarget)
-        } else {
-            addVisibility(parameterTarget)
-        }
+        isVisible ? removeVisibility(parameterTarget) : updateVisibility(parameterTarget)
     }
 
     console.log('VISIBLES - ', visibleElements)

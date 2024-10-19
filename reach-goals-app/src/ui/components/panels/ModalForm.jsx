@@ -15,6 +15,16 @@ const titleMap = {
     goal: 'Create your goal'
 }
 
+const targetMap = (id, type, itself) => {
+    const attributes = {
+        idTarget: id ?? '',
+        typeTarget: type ?? '',
+        itself: itself ?? false
+    }
+
+    return attributes
+}
+
 const formsMap = (typeForm) => {
     const form = typeForm === 'assignment' ?
         <label className='field-forms timer'>
@@ -58,10 +68,11 @@ const ModalForm = (props) => {
                     <label className='field-forms end-date'>
                         <input id={`${typeForm}-end-date`} className='input-form' type='text' placeholder='set end date' />
                     </label>
-                    {/* DROPDOWN BUTTON HERE */}
-                    <ButtonDropdown classBtn='dropdown-form' title='choose an option' />
+                    <label className='field-forms status'>
+                        <ButtonDropdown target={targetMap(`${typeForm}-status`, '', true)} classBtn='dropdown-form' title='choose an option' />
+                    </label>
                     <label className='field-forms reminder-date'>
-                        <input id={`${typeForm}-reminder-date`} className='input-form' type='text' placeholder='set reminder date' />
+                        <ButtonDropdown target={targetMap(`${typeForm}-reminder-date`, '', true)} classBtn='dropdown-form' title='choose an option' />
                     </label>
                     {formsMap(typeForm)}
                 </div>

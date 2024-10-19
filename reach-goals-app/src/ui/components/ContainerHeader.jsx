@@ -5,16 +5,21 @@ import { VisibilityContext } from '../../provider/components/VisibilityProvider'
 
 import ButtonLink from './items/elements/ButtonLink'
 
-//Main function
+const targetMap = (id, type) => {
+    const attributes = {
+        idTarget: id ?? '',
+    }
+
+    return attributes
+}
+
 const ContainerH = () => {
-    const location = useLocation()
-    const currentLocation = location.pathname.includes('/objectives') ? '/objectives' : location.pathname.includes('/home') ? '/home' : '/calendar'
-    
     const { title } = useContext(TitleContext)
     const { toggleVisibility } = useContext(VisibilityContext)
-    const target = {
-        idTarget: 'panel-left'
-    }
+    
+    const location = useLocation()
+    const currentLocation = location.pathname.includes('/objectives') ? '/objectives' : location.pathname.includes('/home') ? '/home' : '/calendar'
+    const target = targetMap('panel-left')
 
     return (
         <div className="container-header main-content" onClick={(e) => toggleVisibility(null, e)}>

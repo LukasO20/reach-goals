@@ -5,6 +5,15 @@ import { VisibilityContext } from '../../provider/components/VisibilityProvider'
 import '../styles/Navigate.scss'
 import Button from './items/elements/Button'
 
+const targetMap = (id, type) => {
+    const attributes = {
+        idTarget: id ?? '',
+        typeTarget: type ?? ''
+    }
+
+    return attributes
+}
+
 const Navigate = () => {
     const { toggleVisibility } = useContext(VisibilityContext)
 
@@ -27,7 +36,7 @@ const Navigate = () => {
                     </Link>
                 </div>
                 <div className="item-nav">
-                    <Button target={{idTarget: 'panel-center', typeTarget: 'config'}} classBtn='btn-action-config button-nav' iconFa='fa-solid fa-sliders'/>
+                    <Button target={targetMap('panel-center', 'config')} classBtn='btn-action-config button-nav' iconFa='fa-solid fa-sliders'/>
                 </div>
             </div>
         </div>
