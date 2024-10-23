@@ -3,6 +3,31 @@ import { VisibilityContext } from '../../../../provider/components/VisibilityPro
 
 import Dropdown from '../../items/elements/Dropdown'
 
+const mapOptionDropdown = (type) => {
+    if (type === 'status') {
+        return [
+            {
+                op: 'progress',
+                title: 'in progress'
+            },
+            {
+                op: 'conclude',
+                title: 'concluded'
+            },
+            {
+                op: 'cancel',
+                title: 'canceled'
+            },
+        ]
+    } else if (type === 'reminder') {
+        return Array.from({ length: 30 }, (_, index) => ({
+            op: `day-${index + 1}`,
+            title: `${index + 1} day`
+        }))
+    }
+
+}
+
 const ButtonDropdown = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const target = props.target ?? { idTarget: '', typeTarget: ''}
@@ -28,14 +53,22 @@ const ButtonDropdown = (props) => {
                     }
                 ]
                 break
-            case 'btn-action-objective1':
+            case 'goal-status':
                 titleDropdown = 'Select status'
-                optionsDropdown = [
-                    {
-                        op: 'progress',
-                        title: 'in progress'
-                    }
-                ]
+                optionsDropdown = mapOptionDropdown('status')
+                break
+            case 'assignment-status':
+                titleDropdown = 'Select status'
+                optionsDropdown = mapOptionDropdown('status')
+                break
+            case 'goal-reminder-date':
+                titleDropdown = 'Select the day'
+                optionsDropdown = mapOptionDropdown('reminder')
+                break
+            case 'assignment-reminder-date':
+                titleDropdown = 'Select the day'
+                optionsDropdown = mapOptionDropdown('reminder')
+                break
         }
     }
     
