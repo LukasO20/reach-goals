@@ -18,7 +18,6 @@ const VisibilityProvider = ({children}) => {
     const removeVisibility = (target) => {
         setVisibleElement((prev) => {
             let idsTarget = Array.isArray(target.idTarget)
-
             if (target.itself) {
                 return prev.filter(id => id !== target.idTarget && id)
             }
@@ -33,8 +32,8 @@ const VisibilityProvider = ({children}) => {
 
     const toggleVisibility = (target, event) => {
         event.stopPropagation()
-        const parameterTarget = target ?? {idTarget: null, typeTarget: null, itself: false}
-        const isVisible = visibleElements.some(ids => {
+        const parameterTarget = target ?? {idTarget: null, typeTarget: null, itself: false, maintain: false}
+        let isVisible = visibleElements.some(ids => {
             if (Array.isArray(parameterTarget.idTarget)) {
                 return parameterTarget.idTarget.includes(ids)
             } else {
