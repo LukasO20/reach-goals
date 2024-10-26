@@ -15,12 +15,11 @@ const titleMap = {
     goal: 'Create your goal'
 }
 
-const targetMap = (id, type, itself, maintain) => {
+const targetMap = (id, type, itself) => {
     const attributes = {
         idTarget: id ?? '',
         typeTarget: type ?? '',
         itself: itself ?? false,
-        maintain: maintain ?? false
     }
 
     return attributes
@@ -74,8 +73,8 @@ const ModalForm = (props) => {
                 </div>
                 <div className='objective-options'> 
                     <div className='objective-op'>
-                        <Button target={targetMap('panel-center', 'assingment', false, true)} classBtn='op-form-assignment button-st' title='assingments'/>
-                        <Button target={targetMap('panel-center', '')} classBtn='op-form-goal button-st' title='goals'/>
+                        <Button target={targetMap('panel-center', 'assignment')} classBtn='op-form-assignment button-st' title='assingments'/>
+                        <Button target={targetMap('panel-center', 'goal')} classBtn='op-form-goal button-st' title='goals'/>
                     </div>
                     <div className='objective-color'>
                         <label className='color'></label>

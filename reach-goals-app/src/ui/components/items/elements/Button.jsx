@@ -3,7 +3,7 @@ import { VisibilityContext } from '../../../../provider/components/VisibilityPro
 
 const Button = (props) => {
     const { toggleVisibility } = useContext(VisibilityContext)
-    
+
     return (
         <label className={`${props.classBtn}`} onClick={(e) => toggleVisibility(props.target, e)}>
             <i className={`icon-st ${props.iconFa}`}></i>{props.title}

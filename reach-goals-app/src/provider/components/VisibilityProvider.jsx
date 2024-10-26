@@ -32,15 +32,15 @@ const VisibilityProvider = ({children}) => {
 
     const toggleVisibility = (target, event) => {
         event.stopPropagation()
-        const parameterTarget = target ?? {idTarget: null, typeTarget: null, itself: false, maintain: false}
-        let isVisible = visibleElements.some(ids => {
+        const parameterTarget = target ?? {idTarget: null, typeTarget: null, itself: false}  
+        const isVisible = visibleElements.some(ids => {
             if (Array.isArray(parameterTarget.idTarget)) {
                 return parameterTarget.idTarget.includes(ids)
             } else {
-                return ids === parameterTarget.idTarget
+                return ids === parameterTarget.idTarget && ids === parameterTarget.typeTarget
             }
         })
-
+        console.log('ISVISIBLE?? - ', isVisible)
         isVisible ? removeVisibility(parameterTarget) : updateVisibility(parameterTarget)
     }
 
