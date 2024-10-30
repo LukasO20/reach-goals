@@ -3,16 +3,24 @@ import { VisibilityContext } from '../../../provider/components/VisibilityProvid
 import ModalForm from './ModalForm'
 import Config from './Config'
 
+const targetMap = (classes) => {
+    const data = Array.isArray(classes) ? classes : [classes]
+    const attributes = {
+        class: data
+    }
+    return attributes
+}
+
 const PanelCenter = (props) => {
-    const { visibleElements = [], toggleVisibility } = useContext(VisibilityContext)
+    const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
 
     const btnCurrent = visibleElements[1] ?? ''
     const typeForm = btnCurrent.split(' ')[0]
-    const otherTarget = visibleElements.slice(0, 2) // Used to remove other children without 
-    const target = { idTarget: otherTarget, typeTarget: '' }
-
+    
+    // Used to remove target childrens
+    const classRemove = visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
     return (
-        <div className={`content-center ${visibleElements.includes(props.id) ? 'show' :  ''} ${typeForm}`} onClick={(e) => toggleVisibility(target, e)}>
+        <div  className={`content-center ${visibleElements.includes(props.id) ? 'show' :  ''} ${typeForm}`} onClick={(e) => toggleVisibility(targetMap(classRemove), e)}>
             <Config />
             <ModalForm type={typeForm} />
         </div>

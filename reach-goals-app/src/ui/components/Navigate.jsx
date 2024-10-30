@@ -1,16 +1,15 @@
 import React, { useContext } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { VisibilityContext } from '../../provider/components/VisibilityProvider'
 
 import '../styles/Navigate.scss'
 import Button from './items/elements/Button'
 
-const targetMap = (id, type) => {
+const targetMap = (classes) => {
+    const data = Array.isArray(classes) ? classes : [classes]
     const attributes = {
-        idTarget: id ?? '',
-        typeTarget: type ?? ''
+        class: data,
     }
-
     return attributes
 }
 
@@ -18,7 +17,7 @@ const Navigate = () => {
     const { toggleVisibility } = useContext(VisibilityContext)
 
     return (
-        <div className="container-navigate aside-content" onClick={(e) => toggleVisibility(null, e)}>
+        <div className="container-navigate aside-content" onClick={(e) => toggleVisibility(targetMap(), e)}>
             <div className="nav">
                 <div className='item-nav'>
                     <Link to="/home">
@@ -36,7 +35,7 @@ const Navigate = () => {
                     </Link>
                 </div>
                 <div className="item-nav">
-                    <Button target={targetMap('panel-center', 'config')} classBtn='btn-action-config button-nav' iconFa='fa-solid fa-sliders'/>
+                    <Button target={targetMap(['panel-center', 'config'])} classBtn='btn-action-config button-nav' iconFa='fa-solid fa-sliders'/>
                 </div>
             </div>
         </div>

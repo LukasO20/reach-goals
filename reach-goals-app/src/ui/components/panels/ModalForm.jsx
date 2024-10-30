@@ -15,13 +15,12 @@ const titleMap = {
     goal: 'Create your goal'
 }
 
-const targetMap = (id, type, itself) => {
+const targetMap = (classes, operator = {}) => {
+    const data = Array.isArray(classes) ? classes : [classes]
     const attributes = {
-        idTarget: id ?? '',
-        typeTarget: type ?? '',
-        itself: itself ?? false,
+        class: data,
+        operator: operator
     }
-
     return attributes
 }
 
@@ -73,8 +72,8 @@ const ModalForm = (props) => {
                 </div>
                 <div className='objective-options'> 
                     <div className='objective-op'>
-                        <Button target={targetMap('panel-center', 'assignment')} classBtn='op-form-assignment button-st' title='assingments'/>
-                        <Button target={targetMap('panel-center', 'goal')} classBtn='op-form-goal button-st' title='goals'/>
+                        <Button target={targetMap(['panel-center', 'assignment'], { maintain: true })} classBtn='op-form-assignment button-st' title='assingments'/>
+                        <Button target={targetMap(['panel-center', 'goal'], { maintain: true })} classBtn='op-form-goal button-st' title='goals'/>
                     </div>
                     <div className='objective-color'>
                         <label className='color'></label>
@@ -94,10 +93,10 @@ const ModalForm = (props) => {
                         <input id={`${typeForm}-end-date`} className='input-form' type='text' placeholder='set end date' />
                     </div>
                     <div className='field-forms status'>
-                        <ButtonDropdown target={targetMap(`${typeForm}-status`, '', true)} classBtn='dropdown-form' title='choose an option' />
+                        <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })} classBtn='dropdown-form' title='choose an option' />
                     </div>
                     <div className='field-forms reminder-date'>
-                        <ButtonDropdown target={targetMap(`${typeForm}-reminder-date`, '', true)} classBtn='dropdown-form' title='choose an option' />
+                        <ButtonDropdown target={targetMap(`${typeForm}-reminder-date`, { add: true })} classBtn='dropdown-form' title='choose an option' />
                     </div>
                     {formsInputMap(typeForm)}
                     <div className='item-forms tag'>

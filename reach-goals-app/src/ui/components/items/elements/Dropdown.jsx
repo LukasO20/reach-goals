@@ -9,12 +9,11 @@ const NullObject = (props) => {
     } else { return false }
 }
 
-const targetMap = (id, type) => {
+const targetMap = (classes) => {
+    const data = Array.isArray(classes) ? classes : [classes]
     const attributes = {
-        idTarget: id ?? '',
-        typeTarget: type ?? ''
+        class: data,
     }
-
     return attributes
 }
 
@@ -29,7 +28,7 @@ const Dropdown = (props) => {
                             <div className={`option ${option.op}`} key={`op-${index}`}>
                                 <div className='item-option'>                                  
                                     <div className='item-title'>
-                                        <Button target={targetMap('panel-center', `${option.op}`)} classBtn={`form-${option.op} button-st`} iconFa='icon-st fa-solid fa-plus' title={`${option.title}`}/>
+                                        <Button target={targetMap(['panel-center', `${option.op}`])} classBtn={`form-${option.op} button-st`} iconFa='icon-st fa-solid fa-plus' title={`${option.title}`}/>
                                     </div> 
                                     <div className='item-details'>
 

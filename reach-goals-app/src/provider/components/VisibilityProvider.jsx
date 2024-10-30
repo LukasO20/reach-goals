@@ -7,40 +7,47 @@ const VisibilityProvider = ({children}) => {
 
     const updateVisibility = (target) => {
         setVisibleElement((prev) => {
-            if (target.itself) {
-                const filter = [...prev.filter(id => id)].slice(0, 2)
-                return [...filter, target.idTarget, target.typeTarget]
+            const classType = Array.isArray(target.class)
+
+            if (classType) {
+                if (target.operator.add) {
+                    const filter = [...prev.filter(classPrevious => classPrevious)].slice(0, 2)
+                    filter.push(...target.class)
+                    return filter
+                }
+                return target.class
             }
-            return [target.idTarget, target.typeTarget]
         })
     }
 
     const removeVisibility = (target) => {
         setVisibleElement((prev) => {
-            let idsTarget = Array.isArray(target.idTarget)
-            if (target.itself) {
-                return prev.filter(id => id !== target.idTarget && id)
+            const classType = Array.isArray(target.class)      
+            if (classType) { 
+                if (target.operator.maintain) {
+                    return target.class
+                }
+                return prev.filter(classPrevious => target.class.some(el => el !== classPrevious))
             }
-
-            if (idsTarget) {
-                return prev.filter(id => target.idTarget.some(el => el === id))
-            }
-
-            return []
         })
     }
 
     const toggleVisibility = (target, event) => {
         event.stopPropagation()
-        const parameterTarget = target ?? {idTarget: null, typeTarget: null, itself: false}  
-        const isVisible = visibleElements.some(ids => {
-            if (Array.isArray(parameterTarget.idTarget)) {
-                return parameterTarget.idTarget.includes(ids)
-            } else {
-                return ids === parameterTarget.idTarget && ids === parameterTarget.typeTarget
+        const parameterTarget = {
+            class: target?.class ?? null,
+            operator: {
+                add: target?.operator?.add ?? false,
+                maintain: target?.operator?.maintain ?? false
+            }
+        }
+        const isVisible = visibleElements.some(classes => {
+            const classType = Array.isArray(parameterTarget.class)
+
+            if (classType) {
+                return parameterTarget.class.includes(classes)
             }
         })
-        console.log('ISVISIBLE?? - ', isVisible)
         isVisible ? removeVisibility(parameterTarget) : updateVisibility(parameterTarget)
     }
 

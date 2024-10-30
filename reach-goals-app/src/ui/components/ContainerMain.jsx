@@ -4,12 +4,11 @@ import { VisibilityContext } from '../../provider/components/VisibilityProvider'
 
 import ButtonDropdown from './items/elements/ButtonDropdown'
 
-const targetMap = (id, type) => {
+const targetMap = (classes) => {
+    const data = Array.isArray(classes) ? classes : [classes]
     const attributes = {
-        idTarget: id ?? '',
-        typeTarget: type ?? '',
+        class: data,
     }
-
     return attributes
 }
 
@@ -17,7 +16,7 @@ const ContainerM = () => {
     const { toggleVisibility } = useContext(VisibilityContext)
 
     return (
-        <div className="container-main" onClick={(e) => toggleVisibility(null, e)}>
+        <div className="container-main" onClick={(e) => toggleVisibility(targetMap(null), e)}>
             <div className="head">
                 <div className="line-p">
                     <div className="title-m">
