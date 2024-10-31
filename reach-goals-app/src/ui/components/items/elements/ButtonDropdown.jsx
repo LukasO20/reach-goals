@@ -30,7 +30,6 @@ const mapOptionDropdown = (type) => {
 
 const ButtonDropdown = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
-    //const target = props.target ?? { class: '', typeTarget: ''} OLD VERSION
     const target = props.target ?? { class : [] }
     const typeClass = target.class !== undefined ? target.class[0] : null
     
@@ -39,7 +38,7 @@ const ButtonDropdown = (props) => {
     let optionsDropdown = undefined
 
     const defineDropdown = () => {
-        switch (typeClass/*target.idTarget OLD VERSION*/) {
+        switch (typeClass) {
             case 'btn-action2':
                 titleDropdown = 'Create objectives'
                 optionsDropdown = [
@@ -77,7 +76,7 @@ const ButtonDropdown = (props) => {
     return (
         <label className={`${props.classBtn} button-st`} onClick={(e) => toggleVisibility(target, e)}>
             <i className={`icon-st ${props.iconFa}`}></i>{props.title}
-            <div className={`dropdown-menu ${ visibleElements.includes(typeClass/*target.idTarget OLD VERSION*/) ? 'show' : '' }`} onClick={(e) => e.stopPropagation()}>
+            <div className={`dropdown-menu ${ visibleElements.includes(typeClass) ? 'show' : '' }`} onClick={(e) => e.stopPropagation()}>
                 {defineDropdown()}
                 <Dropdown title={titleDropdown} parent={parentDropdown} options={optionsDropdown}/>
             </div>

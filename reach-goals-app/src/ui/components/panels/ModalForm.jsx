@@ -79,6 +79,9 @@ const ModalForm = (props) => {
                         <label className='color'></label>
                     </div>
                 </div>
+                <div className='objective-buttons-options'>
+                    <Button target={targetMap(null)} classBtn='button-action-p close-modal button-st' iconFa='fa-solid fa-xmark'/>
+                </div>
             </div>
             <div className='body'>
                 <h2>{titleForm}</h2>

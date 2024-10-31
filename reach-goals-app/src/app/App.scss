@@ -30,7 +30,7 @@
 :root {
     //Light mode
     --color-primary: #172B4D;
-
+    --color-white: #fff;
     --color-complementary-p: #EAEAEA;
     --color-complementary-s: #5E5850;
 
@@ -41,6 +41,8 @@
     --color-complementary-s-o: #5E585050;
 
     //Icon size
+    --icon-size-mini: 0.85em;
+    --icon-size-small: 1em;
     --icon-size-st: 1.5em;
 
     //Font size
@@ -205,6 +207,22 @@ body {
 
             .container-form-modal, .container-config {
                 display: none;
+                height: 100%;
+
+                .head {
+                    display: flex;
+                    align-items: center;
+                    flex: 1;
+
+                    h2, .objective-options
+                    {
+                        flex: 2
+                    }
+                }
+    
+                .body {
+                    flex: 10;
+                }
             }
 
             &.show {
@@ -216,6 +234,7 @@ body {
 
                 .container-config {
                     display: flex;
+                    flex-direction: column;
                 }
             }
 
@@ -223,6 +242,7 @@ body {
              
                 .container-form-modal {
                     display: flex;
+                    flex-direction: column;
                 }
             }
         }

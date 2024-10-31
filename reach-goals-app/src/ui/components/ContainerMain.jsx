@@ -41,8 +41,8 @@ const ContainerM = () => {
                         <label className="button-show-m button-st assignment">unfocused assignments</label>
                     </div>
                     <div className="action">           
-                        <ButtonDropdown target={targetMap('btn-action1')} classBtn="button-action-m" iconFa="fa-solid fa-sort" title="order" />
-                        <ButtonDropdown target={targetMap('btn-action2')} classBtn="button-action-m" iconFa="fa-solid fa-plus" title="create" />
+                        <ButtonDropdown target={targetMap('btn-action1')} classBtn="button-action-m order" iconFa="fa-solid fa-sort" title="order" />
+                        <ButtonDropdown target={targetMap('btn-action2')} classBtn="button-action-m create" iconFa="fa-solid fa-plus" title="create" />
                     </div>
                 </div>
             </div>
