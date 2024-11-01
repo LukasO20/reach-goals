@@ -40,9 +40,13 @@
     //Opacity Light
     --color-complementary-s-o: #5E585050;
 
+    //Shadow
+    --color-complementary-p-sw: #C6C6C6;
+
     //Icon size
     --icon-size-mini: 0.85em;
     --icon-size-small: 1em;
+    --icon-size-st-small: 1.2em;
     --icon-size-st: 1.5em;
 
     //Font size
@@ -74,6 +78,8 @@ body {
         grid-template-areas: 
         "container-navigate container-header"
         "container-navigate container-main";
+
+
 
         .container-header {
             grid-area: container-header;
@@ -193,7 +199,7 @@ body {
             display: flex;
             flex-direction: column;
             position: absolute;
-            background-color: var(--color-complementary-p);
+            background-color: var(--color-white);
             border-radius: 0.5em;
             top: 50%;
             left: 50%;
@@ -209,10 +215,12 @@ body {
                 display: none;
                 height: 100%;
 
-                .head {
+                > .head {
                     display: flex;
                     align-items: center;
                     flex: 1;
+                    margin: 0em 0em 2em 0em;
+                    border-bottom: solid 1px var(--color-complementary-p);
 
                     h2, .objective-options
                     {
@@ -220,7 +228,7 @@ body {
                     }
                 }
     
-                .body {
+                > .body {
                     flex: 10;
                 }
             }
