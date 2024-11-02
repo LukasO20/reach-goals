@@ -44,6 +44,14 @@ body {
         }
     }
 
+    &.circ {
+        border-radius: 50%;
+    }
+
+    &.sq {
+        border-radius: 0em;
+    }
+
     &.button-action-m {
         background-color: var(--color-complementary-s);
         color: var(--color-white);
@@ -84,6 +92,54 @@ body {
             * {
                 color: var(--color-white);
             }
+        }
+    }
+
+    &.button-op-objective {
+        padding: 0.35em;
+        background-color: var(--color-primary-o2);
+        color: var(--color-primary);
+
+        &:first-child {
+            border-top-right-radius: 0em;
+            border-bottom-right-radius: 0em;
+        }
+
+        &:last-child {
+            border-top-left-radius: 0em;
+            border-bottom-left-radius: 0em;
+        }
+    }
+
+    &.button-action-config {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        color: var(--color-complementary-s-o8);
+        width: 60%;
+        padding: 0.5em;
+        margin: 0.7em;
+        border-right: solid transparent 0.15em;
+        justify-content: start;
+
+        .button-title {
+            display: inline-flex;
+        }
+
+        .icon-st {
+            margin: 0em 0.5em;
+            font-size: var(--icon-size-st-small);
+        }
+
+        &.on {
+            color: var(--color-complementary-s);
+            border-color: var(--color-complementary-s);
+        }
+
+        &:active {
+            background-color: var(--color-complementary-s-o3);
+            color: var(--color-complementary-s);
         }
     }
 

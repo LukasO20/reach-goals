@@ -16,9 +16,7 @@ const targetMap = (classes, operator = {}) => {
 
 const Config = () => {
     const { visibleElements } = useContext(VisibilityContext)
-
-    const btnCurrent = visibleElements[1] ?? ''
-    const typeSection = btnCurrent.split(' ')[0]
+    const typeSection = visibleElements[2] ?? ''
 
     return (
         <div className="container-config center-content">
@@ -35,10 +33,10 @@ const Config = () => {
                             </label>
                         </div>
                         <div className='body'>
-                            <Button classBtn='button-st button-action-m config-not' title='Notifications' iconFa='fa-solid fa-bell'/>
-                            <Button classBtn='button-st button-action-m config-theme' title='Themes' iconFa='fa-solid fa-palette'/>
-                            <Button classBtn='button-st button-action-m config-search' title='Searched items' iconFa='fa-solid fa-list'/>
-                            <Button classBtn='button-st button-action-m config-layout' title='Layout' iconFa='fa-solid fa-layer-group'/>
+                            <Button target={targetMap('config-notification', { add: true })} classBtn='button-st button-action-config config-notification sq' title='Notifications' iconFa='fa-solid fa-bell'/>
+                            <Button target={targetMap('config-theme', { add: true })} classBtn='button-st button-action-config config-theme sq' title='Themes' iconFa='fa-solid fa-palette'/>
+                            <Button target={targetMap('config-search', { add: true })} classBtn='button-st button-action-config config-search sq' title='Searched items' iconFa='fa-solid fa-list'/>
+                            <Button target={targetMap('config-layout', { add: true })} classBtn='button-st button-action-config config-layout sq' title='Layout' iconFa='fa-solid fa-layer-group'/>
                         </div>
                     </div>
                 </div>

@@ -4,6 +4,7 @@ import Button from '../../components/items/elements/Button'
 import ButtonDropdown from '../../components/items/elements/ButtonDropdown'
 
 import '../../styles/items/Elements.scss'
+import '../../styles/panels/Objectives.scss'
 
 const iconMap = {
     assignment: 'fa-solid fa-list-check',
@@ -68,12 +69,12 @@ const ModalForm = (props) => {
         <div className='container-form-modal center-content'>
             <div className='head'> 
                 <div className='objective-icon'>
-                    <i className={icon}></i>
+                    <i className={`icon-st ${icon}`}></i>
                 </div>
                 <div className='objective-options'> 
                     <div className='objective-op'>
-                        <Button target={targetMap(['panel-center', 'assignment'], { maintain: true })} classBtn='op-form-assignment button-st' title='assingments'/>
-                        <Button target={targetMap(['panel-center', 'goal'], { maintain: true })} classBtn='op-form-goal button-st' title='goals'/>
+                        <Button target={targetMap(['panel-center', 'assignment'], { maintain: true })} classBtn='op-form-assignment button-op-objective button-st' title='assingments'/>
+                        <Button target={targetMap(['panel-center', 'goal'], { maintain: true })} classBtn='op-form-goal button-op-objective button-st' title='goals'/>
                     </div>
                     <div className='objective-color'>
                         <label className='color'></label>

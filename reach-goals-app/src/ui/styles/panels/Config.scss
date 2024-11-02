@@ -31,22 +31,6 @@
                     flex-direction: column;
                     align-items: center;
                     padding: 2em 0em;
-
-                    .button-st {
-                        display: inline-flex;
-                        align-items: center;
-                        justify-content: center;
-                        background-color: transparent;
-                        color: var(--color-complementary-s);
-                        width: 60%;
-                        padding: 0.5em;
-                        margin: 0.7em;
-
-                        .icon-st {
-                            margin: 0em 0.5em;
-                            font-size: var(--icon-size-st-small);
-                        }
-                    }
                 }
             }
         }
