@@ -20,7 +20,7 @@ const PanelCenter = (props) => {
     // Used to remove target childrens
     const classRemove = visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
     return (
-        <div  className={`content-center ${visibleElements.includes(props.id) ? 'show' :  ''} ${typeForm}`} onClick={(e) => toggleVisibility(targetMap(classRemove), e)}>
+        <div className={`content-center ${visibleElements.includes(props.id) ? 'show' :  ''} ${typeForm}`} onClick={(e) => toggleVisibility(targetMap(classRemove), e)}>
             <Config />
             <ModalForm type={typeForm} />
         </div>

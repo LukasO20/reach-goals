@@ -1,5 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Button from '../items/elements/Button'
+import ModalConfigSection from '../items/config_components/ModalConfigSection'
+import { VisibilityContext } from '../../../provider/components/VisibilityProvider'
+
 import '../../styles/panels/Config.scss'
 
 const targetMap = (classes, operator = {}) => {
@@ -12,6 +15,11 @@ const targetMap = (classes, operator = {}) => {
 }
 
 const Config = () => {
+    const { visibleElements } = useContext(VisibilityContext)
+
+    const btnCurrent = visibleElements[1] ?? ''
+    const typeSection = btnCurrent.split(' ')[0]
+
     return (
         <div className="container-config center-content">
             <div className='head'>
@@ -35,7 +43,7 @@ const Config = () => {
                     </div>
                 </div>
                 <div className='section-options-config'>
-
+                    <ModalConfigSection type={typeSection} />
                 </div>
             </div>
         </div>
