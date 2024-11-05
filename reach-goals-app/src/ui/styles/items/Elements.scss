@@ -1,12 +1,18 @@
+@import '../../../app/App.scss';
+
 //Configurations primary
 body {
 
     .checkbox {
         border: 0.125em solid var(--color-complementary-s);
-        width: 0.78em;
-        height: 0.7em;
+        width: 0.67em;
+        height: 0.67em;
         border-radius: 0.2em;
         padding: 0.035em;
+    }
+
+    .icon-st {
+        font-size: $icon-size-st;
     }
 }
 
@@ -20,7 +26,7 @@ body {
 
     .icon-st {
         margin-right: 0.35em;
-        font-size: var(--icon-size-small);
+        font-size: $icon-size-st;
     }
 
     .dropdown-menu {
@@ -57,7 +63,7 @@ body {
         color: var(--color-white);
 
         .icon-st {
-            font-size: var(--icon-size-mini);
+            font-size: $icon-size-small;
         }
 
         &.create {
@@ -68,7 +74,7 @@ body {
     &.button-h {
 
         .icon-st {
-            font-size: var(--icon-size-st);
+            font-size: $icon-size-st;
             margin: 0.25em auto;
         }
     }
@@ -82,7 +88,7 @@ body {
         .icon-st {
 
             &.fa-xmark {
-                font-size: var(--icon-size-st);
+                font-size: $icon-size-st;
             }
         }
 
@@ -129,7 +135,7 @@ body {
 
         .icon-st {
             margin: 0em 0.5em;
-            font-size: var(--icon-size-st-small);
+            font-size: $icon-size-st;
         }
 
         &.on {

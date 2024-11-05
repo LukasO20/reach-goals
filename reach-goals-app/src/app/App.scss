@@ -27,6 +27,10 @@
 #171717 - complementary accent
 */
 
+//NEW VERSION
+$icon-size-st: 1.25rem;
+$icon-size-small: 1rem;
+
 :root {
     //Light mode
     --color-primary: #172B4D;
@@ -78,8 +82,6 @@ body {
         grid-template-areas: 
         "container-navigate container-header"
         "container-navigate container-main";
-
-
 
         .container-header {
             grid-area: container-header;
