@@ -4,7 +4,7 @@
 body {
 
     .checkbox {
-        border: 0.125em solid var(--color-complementary-s);
+        border: 0.125em solid $color-complementary-s;
         width: 0.67em;
         height: 0.67em;
         border-radius: 0.2em;
@@ -22,18 +22,18 @@ body {
     font-weight: 600;
     border-radius: 0.35em;
     user-select: none;
-    color: var(--color-complementary-s);
+    color: $color-complementary-s;
+    cursor: pointer;
 
     .icon-st {
         margin-right: 0.35em;
-        font-size: $icon-size-st;
     }
 
     .dropdown-menu {
         position: absolute;
         display: none;
-        background-color: var(--color-complementary-p);
-        box-shadow: var(--box-shadow-st);
+        background-color: $color-complementary-p;
+        box-shadow: $box-shadow-st;
         padding: 0.5em;
         margin: 0.5em;
         border-radius: 0.2em;
@@ -46,7 +46,7 @@ body {
         }
 
         .button-st {
-            color: var(--color-complementary-s);
+            color: $color-complementary-s;
         }
     }
 
@@ -59,22 +59,21 @@ body {
     }
 
     &.button-action-m {
-        background-color: var(--color-complementary-s);
-        color: var(--color-white);
+        background-color: $color-complementary-s;
+        color: $color-white;
 
         .icon-st {
             font-size: $icon-size-small;
         }
 
         &.create {
-            background-color: var(--color-primary);
+            background-color: $color-primary;
         }
     }
 
     &.button-h {
 
         .icon-st {
-            font-size: $icon-size-st;
             margin: 0.25em auto;
         }
     }
@@ -82,29 +81,22 @@ body {
     &.button-action-p {
        
         * {
-            color: var(--color-complementary-s);
-        }
-
-        .icon-st {
-
-            &.fa-xmark {
-                font-size: $icon-size-st;
-            }
+            color: $color-complementary-s;
         }
 
         &.bg-circle {
-            background-color: var(--color-complementary-s);
+            background-color: $color-complementary-s;
 
             * {
-                color: var(--color-white);
+                color: $color-white;
             }
         }
     }
 
     &.button-op-objective {
         padding: 0.35em;
-        background-color: var(--color-primary-o2);
-        color: var(--color-primary);
+        background-color: $color-primary-o2;
+        color: $color-primary;
 
         &:first-child {
             border-top-right-radius: 0em;
@@ -122,7 +114,7 @@ body {
         align-items: center;
         justify-content: center;
         background-color: transparent;
-        color: var(--color-complementary-s-o8);
+        color: $color-complementary-s-o8;
         width: 60%;
         padding: 0.5em;
         margin: 0.7em;
@@ -135,22 +127,17 @@ body {
 
         .icon-st {
             margin: 0em 0.5em;
-            font-size: $icon-size-st;
         }
 
         &.on {
-            color: var(--color-complementary-s);
-            border-color: var(--color-complementary-s);
+            color: $color-complementary-s;
+            border-color: $color-complementary-s;
         }
 
         &:active {
-            background-color: var(--color-complementary-s-o3);
-            color: var(--color-complementary-s);
+            background-color: $color-complementary-s-o12;
+            color: $color-complementary-s;
         }
-    }
-
-    &:hover {
-        cursor: pointer;
     }
 }
 
@@ -161,11 +148,12 @@ body {
     padding: 0.1em;
 
     &.search {
-        color: var(--color-complementary-s);
-        background-color: var(--color-complementary-p);
+        color: $color-complementary-s;
+        background-color: $color-complementary-p;
 
         .icon-st {
             margin: 0em 0em 0em 0.25em;
+            font-size: $icon-size-mini;
         }
 
         .search-content {

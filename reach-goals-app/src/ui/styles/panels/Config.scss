@@ -1,3 +1,5 @@
+@import '../../../app/App.scss';
+
 .container-config {
 
     .head {
@@ -15,7 +17,7 @@
 
         .aside-config {
             flex: 2;
-            border-right: solid 1px var(--color-complementary-p);
+            border-right: solid 1px $color-complementary-p;
             margin: 0em 0em 2em 0em;
 
             .nav-itens {

@@ -1,7 +1,7 @@
 @import '../../app/App.scss';
 
 .container-navigate {
-    background-color: var(--color-complementary-p);
+    background-color: $color-complementary-p;
 
     .nav {
         display: flex;
