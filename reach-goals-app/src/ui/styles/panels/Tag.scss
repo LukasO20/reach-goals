@@ -1,0 +1,51 @@
+@import '../../../app/App.scss';
+
+.container-tag {
+
+    .header {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: $color-complementary-s-o25;
+        padding: 0.25em 0em;
+
+        * {
+            color: $color-complementary-s;
+        }
+
+        h2 {
+            margin: 0.83em 0.5em;
+        }
+
+        .button-st {
+            padding: 0em;
+
+            &.close-modal {
+                position: absolute;
+                left: -3em;
+            }
+        }
+
+        .options {
+            margin: 0em 2em;
+            display: flex;
+            align-items: center;
+
+            .btn-option-r {
+                margin: 0em 0.5em;
+
+                &.checkbox  {
+                    
+                }
+
+                &.create {
+
+                    .icon-st {
+                        font-size: $font-size-st;
+                    }
+                }
+            }
+        }
+    }
+}

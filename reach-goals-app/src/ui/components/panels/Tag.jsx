@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { Outlet } from 'react-router-dom'
 
 import Button from '../items/elements/Button'
+import ButtonDropdown from '../items/elements/ButtonDropdown'
 
 const targetMap = (classes, operator = {}) => {
     const data = Array.isArray(classes) ? classes : [classes]
@@ -16,9 +17,19 @@ const targetMap = (classes, operator = {}) => {
 const Tag = () => {
     return ReactDOM.createPortal(
         <div className='container-tag aside-content' onClick={(e) => e.stopPropagation()}>
-            <h1>Tags</h1>
-            <Button target={targetMap(null)} classBtn='button-action-p close-modal button-st' iconFa='fa-solid fa-xmark'/>
-            <Outlet/>
+            <div className='header'>
+                <h2>Tags</h2>
+                <Button target={targetMap(null)} classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark'/>
+                <div className='options'>
+                    <Button target={targetMap(null)} classBtn='btn-option-r create' iconFa="fa-solid fa-plus" title='create'/>
+                    <label className="btn-option-r checkbox"></label>
+                    <ButtonDropdown target={targetMap('btn-filter-content')} classBtn="btn-option-r filter-content" iconFa="fa-solid fa-filter"/>
+                    <Button target={targetMap(['panel-center', 'config'])} classBtn='btn-option-r config-content' iconFa='fa-solid fa-sliders'/>
+                </div>
+            </div>
+            <div className='body'>
+                <Outlet/>
+            </div>
         </div>, document.querySelector('.content-aside-r')
     )
 }

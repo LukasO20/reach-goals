@@ -11,7 +11,7 @@ const Button = (props) => {
     const isOn = statusButton(classBtn, visibleElements)
     
     return (
-        <label className={`${props.classBtn} ${isOn ? 'on' : ''}`} onClick={(e) => toggleVisibility(props.target, e)}>
+        <label className={`${props.classBtn} button-st ${isOn ? 'on' : ''}`} onClick={(e) => toggleVisibility(props.target, e)}>
             <i className={`icon-st ${props.iconFa}`}></i><span className='button-title'>{props.title}</span>
         </label>
     )
