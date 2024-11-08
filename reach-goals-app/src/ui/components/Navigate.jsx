@@ -26,12 +26,12 @@ const Navigate = () => {
                 </div>
                 <div className="item-nav">
                     <Link to="/calendar">
-                        <span className="calendar button-nav"><i className="icon-st fa-regular fa-calendar"></i></span>
+                        <span className="calendar button-nav button-st"><i className="icon-st fa-regular fa-calendar"></i></span>
                     </Link>
                 </div>
                 <div className="item-nav">
                     <Link to="/objectives">
-                        <span className="objectives button-nav"><i className='icon-st fa-regular fa-pen-to-square'></i></span>
+                        <span className="objectives button-nav button-st"><i className='icon-st fa-regular fa-pen-to-square'></i></span>
                     </Link>
                 </div>
                 <div className="item-nav">

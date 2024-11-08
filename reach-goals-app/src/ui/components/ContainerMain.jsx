@@ -3,6 +3,7 @@ import Routes from '../../app/Routes'
 import { VisibilityContext } from '../../provider/components/VisibilityProvider'
 
 import ButtonDropdown from './items/elements/ButtonDropdown'
+import ButtonCheckbox from './items/elements/ButtonCheckbox'
 
 const targetMap = (classes) => {
     const data = Array.isArray(classes) ? classes : [classes]
@@ -33,9 +34,9 @@ const ContainerM = () => {
                 </div>
                 <div className="line-s">
                     <div className="filter">
-                        <label className="button-filter-m checkbox"></label>
+                        <ButtonCheckbox target={targetMap('btn-checkbox', { add: true })} classBtn='btn-option-r btn-checkbox'/>
                         <ButtonDropdown target={targetMap('btn-filter-content')} classBtn="button-filter-m filter-content" iconFa="fa-solid fa-filter"/>
-                        <label className="button-show-m line-chart"><i className="icon-st fa-solid fa-chart-line"></i></label>
+                        <label className="button-show-m button-st line-chart"><i className="icon-st fa-solid fa-chart-line"></i></label>
                         <label className="button-filter-m search"><i className="icon-st fa-solid fa-magnifying-glass"></i><input type="text" placeholder="search" id="search-content-m" className="search-content" /></label>
                         <label className="button-show-m button-st goal">goals</label>
                         <label className="button-show-m button-st assignment">unfocused assignments</label>

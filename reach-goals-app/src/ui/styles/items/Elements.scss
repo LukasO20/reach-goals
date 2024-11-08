@@ -3,14 +3,6 @@
 //Configurations primary
 body {
 
-    .checkbox {
-        border: 0.125rem solid $color-complementary-s;
-        width: 0.85rem;
-        height: 0.85rem;
-        border-radius: 0.2rem;
-        padding: 0.035rem;
-    }
-
     .icon-st {
         font-size: $icon-size-st;
     }
@@ -67,6 +59,27 @@ body {
 
     &.sq {
         border-radius: 0em;
+    }
+
+    &.btn-checkbox {
+
+        .checkbox-container {
+            display: flex;
+            border: 0.125em solid $color-complementary-s;
+            width: 0.95em;
+            height: 0.95em;
+            border-radius: 0.25em;
+            padding: 0.035em;
+            cursor: pointer;
+
+            .icon-st {
+                display: inline-flex;
+                justify-content: center;
+                font-size: 1em;
+                width: 1em;
+                margin: 0em;
+            }
+        }
     }
 
     &.button-action-m {
