@@ -13,9 +13,21 @@ const targetMap = (classes) => {
     return attributes
 }
 
-const ContainerM = () => {
-    const { toggleVisibility } = useContext(VisibilityContext)
+const checkboxMap = (checkbox) => {
+    const data = typeof checkbox === 'object' && checkbox !== null ? true : false  
+    if (data) {
+        const attributes = {
+            id: checkbox.id,
+            value: checkbox.value
+        }
 
+        return attributes
+    }
+    return null
+}
+
+const ContainerM = () => {
+    const { toggleVisibility } = useContext(VisibilityContext)    
     return (
         <div className="container-main" onClick={(e) => toggleVisibility(targetMap(null), e)}>
             <div className="head">
@@ -34,7 +46,7 @@ const ContainerM = () => {
                 </div>
                 <div className="line-s">
                     <div className="filter">
-                        <ButtonCheckbox target={targetMap('btn-checkbox', { add: true })} classBtn='btn-option-r btn-checkbox'/>
+                        <ButtonCheckbox checkbox={checkboxMap({ id: 'checkbox01', value: false })} classBtn='btn-option-r btn-checkbox'/>
                         <ButtonDropdown target={targetMap('btn-filter-content')} classBtn="button-filter-m filter-content" iconFa="fa-solid fa-filter"/>
                         <label className="button-show-m button-st line-chart"><i className="icon-st fa-solid fa-chart-line"></i></label>
                         <label className="button-filter-m search"><i className="icon-st fa-solid fa-magnifying-glass"></i><input type="text" placeholder="search" id="search-content-m" className="search-content" /></label>
