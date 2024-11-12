@@ -1,24 +1,19 @@
-import React, { useContext } from 'react'
-import { VisibilityContext } from '../../../../provider/components/VisibilityProvider'
-import { CheckboxProvider, useBool } from '../../../../provider/components/CheckboxProvider'
+import React from 'react'
+import { useBool } from '../../../../provider/components/CheckboxProvider'
 
-const statusButton = (classBtn, providervisibleElements) => {
-    return providervisibleElements.includes(classBtn)
+const statusButton = (classBtn, dataCheckboxProvider) => {
+    return dataCheckboxProvider.some(item => item.id === classBtn && item.value)
 }
 
 const ButtonCheckbox = (props) => {
-    //const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
-    // const classBtn = props.classBtn.split(' ')[1]
-    // const isOn = statusButton(classBtn, visibleElements)
-    // ${isOn ? 'checked' : 'no-checked'}
-    // ${isOn ? 'fa-check' : ''}
-    const { toggleValueByID } = useBool()
-
+    const { valuesCheckbox, toggleValueByID } = useBool()
+    const classBtn = props.classBtn.split(' ')[0]
+    const isChecked = statusButton(classBtn, valuesCheckbox)
 
     return (
-        <label className={`${props.classBtn} button-st `} onClick={(e) => toggleValueByID(props.checkbox)}>
+        <label className={`${props.classBtn} button-st ${isChecked ? 'checked' : ''}`} onClick={(e) => toggleValueByID(props.checkbox)}>
             <label className='checkbox-container'>
-                <i className={`icon-st fa-solid `}></i>
+                <i className={`icon-st fa-solid ${isChecked ? 'fa-check' : ''}`}></i>
             </label>
         </label>
     )

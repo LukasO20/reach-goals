@@ -15,6 +15,19 @@ const targetMap = (classes, operator = {}) => {
     return attributes
 }
 
+const checkboxMap = (checkbox) => {
+    const data = typeof checkbox === 'object' && checkbox !== null ? true : false  
+    if (data) {
+        const attributes = {
+            id: checkbox.id,
+            value: checkbox.value ?? false
+        }
+
+        return attributes
+    }
+    return null
+}
+
 const Notification = () => {
     return ReactDOM.createPortal (
         <div className='container-notification aside-content' onClick={(e) => e.stopPropagation()}>
@@ -22,7 +35,7 @@ const Notification = () => {
                 <h2>Notifications</h2>
                 <Button target={targetMap(null)} classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark'/>
                 <div className='options'>
-                    <ButtonCheckbox target={targetMap('btn-checkbox', { add: true })} classBtn='btn-option-r btn-checkbox'/>
+                    <ButtonCheckbox checkbox={checkboxMap({ id: 'checkbox-r-noti', value: false })} classBtn='checkbox-r-noti btn-checkbox'/>
                     <ButtonDropdown target={targetMap('btn-filter-content')} classBtn="btn-option-r filter-content" iconFa="fa-solid fa-filter"/>
                     <Button target={targetMap(['panel-center', 'config'])} classBtn='btn-option-r config-content' iconFa='fa-solid fa-sliders'/>
                 </div>

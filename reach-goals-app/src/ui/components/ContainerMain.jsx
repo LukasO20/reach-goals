@@ -18,7 +18,7 @@ const checkboxMap = (checkbox) => {
     if (data) {
         const attributes = {
             id: checkbox.id,
-            value: checkbox.value
+            value: checkbox.value ?? false
         }
 
         return attributes
@@ -46,7 +46,7 @@ const ContainerM = () => {
                 </div>
                 <div className="line-s">
                     <div className="filter">
-                        <ButtonCheckbox checkbox={checkboxMap({ id: 'checkbox01', value: false })} classBtn='btn-option-r btn-checkbox'/>
+                        <ButtonCheckbox checkbox={checkboxMap({ id: 'checkbox-m', value: false })} classBtn='checkbox-m btn-checkbox'/>
                         <ButtonDropdown target={targetMap('btn-filter-content')} classBtn="button-filter-m filter-content" iconFa="fa-solid fa-filter"/>
                         <label className="button-show-m button-st line-chart"><i className="icon-st fa-solid fa-chart-line"></i></label>
                         <label className="button-filter-m search"><i className="icon-st fa-solid fa-magnifying-glass"></i><input type="text" placeholder="search" id="search-content-m" className="search-content" /></label>

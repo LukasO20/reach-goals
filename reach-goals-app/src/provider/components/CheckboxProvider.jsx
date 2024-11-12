@@ -19,8 +19,6 @@ const CheckboxProvider = ({ children }) => {
         })
     }
 
-    console.log('VALUES DO CHECKBOX - ', valuesCheckbox)
-
     return (
         <CheckboxContext.Provider value={{valuesCheckbox, toggleValueByID}}>
             {children}
