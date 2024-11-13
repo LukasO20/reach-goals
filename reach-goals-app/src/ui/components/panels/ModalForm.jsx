@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { VisibilityContext } from '../../../provider/components/VisibilityProvider'
 
 import Button from '../../components/items/elements/Button'
 import ButtonDropdown from '../../components/items/elements/ButtonDropdown'
@@ -61,12 +62,15 @@ return form
 }
 
 const ModalForm = (props) => {
+    const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
+
     const typeForm = props.type
     const icon = iconMap[typeForm] || 'fa-solid fa-triangle-exclamation'
     const titleForm = titleMap[typeForm] || 'Create your objective'
+    const classRemove = visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
 
     return (
-        <div className='container-form-modal center-content'>
+        <div className='container-form-modal center-content' onClick={(e) => toggleVisibility(targetMap(classRemove), e)}>
             <div className='head'> 
                 <div className='objective-icon'>
                     <i className={`icon-st ${icon}`}></i>

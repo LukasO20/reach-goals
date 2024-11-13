@@ -39,7 +39,7 @@ const ButtonDropdown = (props) => {
 
     const defineDropdown = () => {
         switch (typeClass) {
-            case 'btn-action2':
+            case 'btn-action-create':
                 titleDropdown = 'Create objectives'
                 optionsDropdown = [
                     {

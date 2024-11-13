@@ -37,7 +37,7 @@ const Tag = () => {
                 <div className='options'>
                     <Button target={targetMap(null)} classBtn='btn-option-r create' iconFa='fa-solid fa-plus' title='create'/>
                     <ButtonCheckbox checkbox={checkboxMap({ id: 'checkbox-r-tag', value: false })} classBtn='checkbox-r-tag btn-checkbox'/>
-                    <ButtonDropdown target={targetMap('btn-filter-content')} classBtn='btn-option-r filter-content' iconFa='fa-solid fa-filter'/>
+                    <ButtonDropdown target={targetMap('btn-filter-tag', { add: true })} classBtn='btn-option-r filter-content' iconFa='fa-solid fa-filter'/>
                     <Button target={targetMap(['panel-center', 'config'])} classBtn='btn-option-r config-content' iconFa='fa-solid fa-sliders'/>
                 </div>
             </div>

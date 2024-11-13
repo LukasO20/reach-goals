@@ -36,7 +36,7 @@ const Notification = () => {
                 <Button target={targetMap(null)} classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark'/>
                 <div className='options'>
                     <ButtonCheckbox checkbox={checkboxMap({ id: 'checkbox-r-noti', value: false })} classBtn='checkbox-r-noti btn-checkbox'/>
-                    <ButtonDropdown target={targetMap('btn-filter-content')} classBtn="btn-option-r filter-content" iconFa="fa-solid fa-filter"/>
+                    <ButtonDropdown target={targetMap('btn-filter-notification', { add: true })} classBtn='btn-option-r filter-content' iconFa='fa-solid fa-filter'/>
                     <Button target={targetMap(['panel-center', 'config'])} classBtn='btn-option-r config-content' iconFa='fa-solid fa-sliders'/>
                 </div>
             </div>

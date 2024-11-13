@@ -17,7 +17,7 @@ const targetMap = (classes, operator = {}) => {
 const Config = () => {
     const { visibleElements } = useContext(VisibilityContext)
     const typeSection = visibleElements[2] ?? ''
-
+    if (typeSection === '') { visibleElements.push('config-notification') }
     return (
         <div className="container-config center-content">
             <div className='head'>
