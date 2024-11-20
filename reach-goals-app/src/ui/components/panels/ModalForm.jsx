@@ -1,5 +1,6 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { VisibilityContext } from '../../../provider/components/VisibilityProvider'
+import { addMeta } from '../../../provider/meta/metaAction'
 
 import Button from '../../components/items/elements/Button'
 import ButtonDropdown from '../../components/items/elements/ButtonDropdown'
@@ -68,6 +69,22 @@ const ModalForm = (props) => {
     const icon = iconMap[typeForm] || 'fa-solid fa-triangle-exclamation'
     const titleForm = titleMap[typeForm] || 'Create your objective'
     const classRemove = visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
+
+    const [name] = useState('')
+    const [error, setError] = useState(null)
+    const [sucsess, setSucess] = useState(false)
+
+    const handleSubmit = async (e) => {
+        setError(null)
+        setSucess(false)
+
+        // try {
+        //     const newMeta = await 
+
+        // } catch {
+
+        // }
+    }
 
     return (
         <div className='container-form-modal center-content' onClick={(e) => toggleVisibility(targetMap(classRemove), e)}>
