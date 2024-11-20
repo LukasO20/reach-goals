@@ -5,7 +5,7 @@ const statusButton = (classBtn, providervisibleElements) => {
     return providervisibleElements.includes(classBtn)
 }
 
-const Button = (props) => {
+const ButtonVisibility = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const classBtn = props.classBtn.split(' ')[2]
     const isOn = statusButton(classBtn, visibleElements)
@@ -17,4 +17,4 @@ const Button = (props) => {
     )
 }
 
-export default Button
+export default ButtonVisibility

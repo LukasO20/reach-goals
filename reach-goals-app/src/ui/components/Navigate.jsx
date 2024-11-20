@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { VisibilityContext } from '../../provider/components/VisibilityProvider'
 
 import '../styles/Navigate.scss'
-import Button from './items/elements/Button'
+import ButtonVisibility from './items/elements/ButtonVisibility'
 
 const targetMap = (classes) => {
     const data = Array.isArray(classes) ? classes : [classes]
@@ -35,7 +35,7 @@ const Navigate = () => {
                     </Link>
                 </div>
                 <div className="item-nav">
-                    <Button target={targetMap(['panel-center', 'config'])} classBtn='btn-action-config button-nav' iconFa='fa-solid fa-sliders'/>
+                    <ButtonVisibility target={targetMap(['panel-center', 'config'])} classBtn='btn-action-config button-nav' iconFa='fa-solid fa-sliders'/>
                 </div>
             </div>
         </div>

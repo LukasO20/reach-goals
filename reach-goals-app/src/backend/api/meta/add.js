@@ -1,6 +1,7 @@
 import prisma from '../../connectdb'
 
-export const handler = async (req, res) => {
+export default async function handler(req, res) {
+    console.log('SENDED TO ME ')
     if (req.method === 'POST') {
         const { name } = req.body
     

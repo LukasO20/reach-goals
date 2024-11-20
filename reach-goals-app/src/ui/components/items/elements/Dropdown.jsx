@@ -1,5 +1,5 @@
 import React from 'react'
-import Button from '../../items/elements/Button'
+import ButtonVisibility from './ButtonVisibility'
 
 const NullObject = (props) => {
     if (props !== undefined) {
@@ -28,7 +28,7 @@ const Dropdown = (props) => {
                             <div className={`option ${option.op}`} key={`op-${index}`}>
                                 <div className='item-option'>                                  
                                     <div className='item-title'>
-                                        <Button target={targetMap(['panel-center', `${option.op}`])} classBtn={`form-${option.op} button-st`} iconFa='icon-st fa-solid fa-plus' title={`${option.title}`}/>
+                                        <ButtonVisibility target={targetMap(['panel-center', `${option.op}`])} classBtn={`form-${option.op} button-st`} iconFa='icon-st fa-solid fa-plus' title={`${option.title}`}/>
                                     </div> 
                                     <div className='item-details'>
 

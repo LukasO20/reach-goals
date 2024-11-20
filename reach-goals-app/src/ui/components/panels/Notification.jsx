@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Outlet } from 'react-router-dom'
 
-import Button from '../items/elements/Button'
+import ButtonVisibility from '../items/elements/ButtonVisibility'
 import ButtonDropdown from '../items/elements/ButtonDropdown'
 import ButtonCheckbox from '../items/elements/ButtonCheckbox'
 
@@ -33,11 +33,11 @@ const Notification = () => {
         <div className='container-notification aside-content' onClick={(e) => e.stopPropagation()}>
             <div className='header'>
                 <h2>Notifications</h2>
-                <Button target={targetMap(null)} classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark'/>
+                <ButtonVisibility target={targetMap(null)} classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark'/>
                 <div className='options'>
                     <ButtonCheckbox checkbox={checkboxMap({ id: 'checkbox-r-noti', value: false })} classBtn='checkbox-r-noti btn-checkbox'/>
                     <ButtonDropdown target={targetMap('btn-filter-notification', { add: true })} classBtn='btn-option-r filter-content' iconFa='fa-solid fa-filter'/>
-                    <Button target={targetMap(['panel-center', 'config'])} classBtn='btn-option-r config-content' iconFa='fa-solid fa-sliders'/>
+                    <ButtonVisibility target={targetMap(['panel-center', 'config'])} classBtn='btn-option-r config-content' iconFa='fa-solid fa-sliders'/>
                 </div>
             </div>
             <div className='body'>

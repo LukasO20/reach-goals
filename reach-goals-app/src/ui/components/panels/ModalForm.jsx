@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { VisibilityContext } from '../../../provider/components/VisibilityProvider'
-import { addMeta } from '../../../provider/meta/metaAction'
-
-import Button from '../../components/items/elements/Button'
+import * as metaAction from '../../../provider/meta/metaAction'
+import Button from '../items/elements/ButtonVisibility'
 import ButtonDropdown from '../../components/items/elements/ButtonDropdown'
 
 import '../../styles/items/Elements.scss'
@@ -70,20 +69,32 @@ const ModalForm = (props) => {
     const titleForm = titleMap[typeForm] || 'Create your objective'
     const classRemove = visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
 
-    const [name] = useState('')
+    const [meta, setMeta] = useState({
+        name: '',
+    })
     const [error, setError] = useState(null)
-    const [sucsess, setSucess] = useState(false)
+    const [sucess, setSucess] = useState(false)
+
+    const handleChange = async (e) => {
+        const { name, value } = e.target
+        setMeta((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }))
+    }
 
     const handleSubmit = async (e) => {
         setError(null)
         setSucess(false)
 
-        // try {
-        //     const newMeta = await 
+        try {
+            const newMeta = await metaAction.addMeta(meta)  
+            setSucess(true)
+            setMeta({name: ''})
 
-        // } catch {
-
-        // }
+        } catch (error) {
+            console.log(error, e)
+        }
     }
 
     return (
@@ -108,35 +119,41 @@ const ModalForm = (props) => {
             <div className='body'>
                 <h2>{titleForm}</h2>
                 <div className='objective-forms'>
-                    <div className='field-forms name'>
-                        <input id={`${typeForm}-name`} className='input-form' type='text' placeholder={`${typeForm} name...`} />
-                    </div>
-                    <div className='field-forms start-date'>
-                        <input id={`${typeForm}-start-date`} className='input-form' type='text' placeholder='set start date' />
-                    </div>
-                    <div className='field-forms end-date'>
-                        <input id={`${typeForm}-end-date`} className='input-form' type='text' placeholder='set end date' />
-                    </div>
-                    <div className='field-forms status'>
-                        <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })} classBtn='dropdown-form' title='choose an option' />
-                    </div>
-                    <div className='field-forms reminder-date'>
-                        <ButtonDropdown target={targetMap(`${typeForm}-reminder-date`, { add: true })} classBtn='dropdown-form' title='choose an option' />
-                    </div>
-                    {formsInputMap(typeForm)}
-                    <div className='item-forms tag'>
-                        <div className='item-forms head'>
-                            <div className='item-head-1'>tags</div>
-                            <div className='item-head-2'></div>
+                    <form>
+                        <div className='field-forms name'>
+                            <input id={`${typeForm}-name`} className='input-form' type='text' placeholder={`${typeForm} name...`}
+                                name='name' value={meta.name} onChange={handleChange} />
                         </div>
-                        <div className='item-forms body'>
+                        <div className='field-forms start-date'>
+                            <input id={`${typeForm}-start-date`} className='input-form' type='text' placeholder='set start date' />
+                        </div>
+                        <div className='field-forms end-date'>
+                            <input id={`${typeForm}-end-date`} className='input-form' type='text' placeholder='set end date' />
+                        </div>
+                        <div className='field-forms status'>
+                            <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })} classBtn='dropdown-form' title='choose an option' />
+                        </div>
+                        <div className='field-forms reminder-date'>
+                            <ButtonDropdown target={targetMap(`${typeForm}-reminder-date`, { add: true })} classBtn='dropdown-form' title='choose an option' />
+                        </div>
+                        {formsInputMap(typeForm)}
+                        <div className='item-forms tag'>
+                            <div className='item-forms head'>
+                                <div className='item-head-1'>tags</div>
+                                <div className='item-head-2'></div>
+                            </div>
+                            <div className='item-forms body'>
 
+                            </div>
                         </div>
-                    </div>
-                    {formsItemMap(typeForm)}
-                    <div className='field-forms details'>
-                        <textarea id={`${typeForm}-details`} className='input-form' placeholder='details here...'></textarea>
-                    </div>
+                        {formsItemMap(typeForm)}
+                        <div className='field-forms details'>
+                            <textarea id={`${typeForm}-details`} className='input-form' placeholder='details here...'></textarea>
+                        </div>
+                        <div className='bottom-form'>
+                            <label onClick={handleSubmit}>save</label>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

@@ -1,12 +1,14 @@
+const apiURL = process.env.REACHGOALS_URL || 'http://localhost:3000/api'
+
 export const addMeta = async (meta) => {
     try {
-        const response = await fetch('/api/meta/add', {
+        const response = await fetch(`${apiURL}/meta/add`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(meta)
-        })
+        })  
 
         if (!response.ok) {
             const error  = await response.json()
