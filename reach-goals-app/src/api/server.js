@@ -1,14 +1,17 @@
-import express from 'express'
-import bodyParser from 'body-parser'
+const express = require('express')
+const cors = require('cors')
+const bodyParser = require('body-parser')
 
 const app = express()
-const PORT = process.env.REACHGOALS_URL || 3000
+const PORT = process.env.REACHGOALS_URL || 5000
 
+app.use(cors())
+app.use(express.json())
 app.use(bodyParser.json())
 
-import addMetaHandler from './meta/add'
+const addMetaHandler = require('../api/meta/add')
 
-app.post('./api/meta/add', addMetaHandler)
+app.post('/api/meta/add', addMetaHandler)
 app.get('/', (req, res) => {
     res.send('Server is running!')
 })

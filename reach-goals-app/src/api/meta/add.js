@@ -1,4 +1,4 @@
-import prisma from '../connectdb'
+const prisma = require('../connectdb')
 
 module.exports = async(req, res) => {
     console.log('SENDED TO ME ')

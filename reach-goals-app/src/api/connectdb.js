@@ -1,4 +1,4 @@
-import PrismaClient from '@prisma/client'
+const { PrismaClient } = require('@prisma/client')
 
 let prisma = undefined
 if (process.env.REACHGOALS_URL === 'production') {
@@ -11,4 +11,4 @@ if (process.env.REACHGOALS_URL === 'production') {
     prisma = global.prisma;
 }
 
-export default prisma
+module.exports = prisma
