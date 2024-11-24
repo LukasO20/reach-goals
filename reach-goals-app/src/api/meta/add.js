@@ -1,18 +1,18 @@
 const prisma = require('../connectdb')
 
 module.exports = async(req, res) => {
-    console.log('SENDED TO ME ')
     if (req.method === 'POST') {
-        const { name } = req.body
+        const { name, description } = req.body
     
         if (!name) {
-            return res.status(400).json({ error: 'Name is required'})
+            return res.status(400).json({ error: 'Name is required.'})
         }
 
         try {
             const meta = await prisma.meta.create({
                 data: { 
                     name,
+                    description
                 },
             })
     

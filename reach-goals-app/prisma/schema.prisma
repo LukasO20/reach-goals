@@ -17,6 +17,14 @@ datasource db {
 model Meta {
   id  Int @id @default(autoincrement())
   name String
-  description String
+  description String?
+  create DateTime @default(now())
+}
+
+model Assignment {
+  id  Int @id @default(autoincrement())
+  name String
+  description String?
+  duration Int?
   create DateTime @default(now())
 }

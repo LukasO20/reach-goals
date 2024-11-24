@@ -28,8 +28,8 @@ const targetMap = (classes, operator = {}) => {
 
 const formsInputMap = (typeForm) => {
     const form = typeForm === 'assignment' ?
-        <div className='field-forms timer'>
-            <input id={`${typeForm}-timer`} className='input-form' type="text" placeholder='set timer' />
+        <div className='field-forms duration'>
+            <input id={`${typeForm}-duration`} className='input-form' type="text" placeholder='set duration' />
         </div>  
         : undefined
 
@@ -71,6 +71,7 @@ const ModalForm = (props) => {
 
     const [meta, setMeta] = useState({
         name: '',
+        description: ''
     })
     const [error, setError] = useState(null)
     const [sucess, setSucess] = useState(false)
@@ -90,10 +91,14 @@ const ModalForm = (props) => {
         try {
             const newMeta = await metaAction.addMeta(meta)  
             setSucess(true)
-            setMeta({name: ''})
+            setMeta({
+                name: '',
+                description: ''
+            })
 
         } catch (error) {
-            console.log(error, e)
+            setError(error.message)
+            //console.log(error.message)
         }
     }
 
@@ -148,10 +153,25 @@ const ModalForm = (props) => {
                         </div>
                         {formsItemMap(typeForm)}
                         <div className='field-forms details'>
-                            <textarea id={`${typeForm}-details`} className='input-form' placeholder='details here...'></textarea>
+                            <textarea id={`${typeForm}-details`} className='input-form' placeholder='details here...'
+                                name='description' value={meta.description} onChange={handleChange}></textarea>
                         </div>
                         <div className='bottom-form'>
                             <label onClick={handleSubmit}>save</label>
+                        </div>
+                        <div className='bottom-form-messagae'>
+                            {
+                                sucess &&                             
+                                <p className='message successfull'>
+                                    <label>{'Meta saved'}</label>
+                                </p>
+                            }
+                            {
+                                error &&
+                                <p className='message error'>
+                                    <label>{`Ops, something went wrong: ${error}`}</label>
+                                </p>
+                            }
                         </div>
                     </form>
                 </div>
