@@ -9,9 +9,14 @@ app.use(cors())
 app.use(express.json())
 app.use(bodyParser.json())
 
-const addMetaHandler = require('../api/meta/add')
+// routes set
+const { addMeta } = require('../api/meta/actions')
+const { getMeta } = require('../api/meta/actions')
 
-app.post('/api/meta/add', addMetaHandler)
+app.post('/api/meta/actions', addMeta)
+app.get('/api/meta/actions', getMeta)
+
+// server status
 app.get('/', (req, res) => {
     res.send('Server is running!')
 })
