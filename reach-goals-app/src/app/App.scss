@@ -111,7 +111,7 @@ body {
             flex-direction: column;
             margin: 0em 1.5em 1em 1.5em;
 
-            .head {
+            > .head {
                 display: flex;
                 flex-direction: column;
                 flex: 1;
@@ -179,7 +179,7 @@ body {
                 }
             }
 
-            .body {
+            > .body {
                 flex: 5;
 
                 .container-dynamic {
