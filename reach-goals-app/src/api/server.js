@@ -10,11 +10,13 @@ app.use(express.json())
 app.use(bodyParser.json())
 
 // routes set
-const { addMeta } = require('../api/meta/actions')
-const { getMeta } = require('../api/meta/actions')
+const { addMeta, updateMeta, getMeta, deleteMeta } = require('../api/meta/actions')
+// const { getMeta } = require('../api/meta/actions')
 
 app.post('/api/meta/actions', addMeta)
 app.get('/api/meta/actions', getMeta)
+app.put('/api/meta/actions', updateMeta)
+app.delete('/api/meta/actions', deleteMeta)
 
 // server status
 app.get('/', (req, res) => {
