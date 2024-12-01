@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { VisibilityContext } from '../../../provider/components/VisibilityProvider'
 import * as metaAction from '../../../provider/meta/metaAction'
 import Button from '../items/elements/ButtonVisibility'
@@ -73,6 +73,9 @@ const ModalForm = (props) => {
         name: '',
         description: ''
     })
+    const [metaID, setMetaID] = useState(null)
+    const [metaData, setMetaData] = useState(null)
+
     const [error, setError] = useState(null)
     const [sucess, setSucess] = useState(false)
 
@@ -101,6 +104,16 @@ const ModalForm = (props) => {
             //console.log(error.message)
         }
     }
+
+    const loadMeta = async (id) => {
+        try {
+            const getMeta = await metaAction.getMeta(id)
+            console.log('THIS GETED - ', getMeta)
+        }
+        catch (error) {
+            setError('Ops, something wrong: ', error)
+        }
+    } 
 
     return (
         <div className='container-form-modal center-content' onClick={(e) => toggleVisibility(targetMap(classRemove), e)}>

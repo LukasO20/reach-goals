@@ -11,7 +11,6 @@ app.use(bodyParser.json())
 
 // routes set
 const { addMeta, updateMeta, getMeta, deleteMeta } = require('../api/meta/actions')
-// const { getMeta } = require('../api/meta/actions')
 
 app.post('/api/meta/actions', addMeta)
 app.get('/api/meta/actions', getMeta)
