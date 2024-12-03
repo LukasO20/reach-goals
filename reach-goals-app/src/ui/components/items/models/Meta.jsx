@@ -1,4 +1,7 @@
-import { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { ManageModelContext } from '../../../../provider/components/ManageModelProvider'
+import { Link } from 'react-router-dom'
+
 import * as metaAction from '../../../../provider/meta/metaAction'
 
 import '../../../styles/items/models/Meta.scss'
@@ -6,6 +9,8 @@ import '../../../styles/items/models/Meta.scss'
 const Meta = () => {
     const [meta, setMeta] = useState([])
     const [erro, setErro] = useState(false)
+
+    const { setSelectModelID } = useContext(ManageModelContext)
 
     useEffect(() => {
         const fetchMeta = async () => {
@@ -22,12 +27,14 @@ const Meta = () => {
 
     return (
         meta.map(meta => (
-            <div className='meta' key={meta.id}>
-                <div className='head'>
-                    <i className='icon-st fa-solid fa-bullseye'></i><label>{meta.name}</label>
+            <Link>
+                <div className='meta' id={meta.id} key={meta.id} onClick={(e) => setSelectModelID(e.currentTarget.id)}>
+                    <div className='head'>
+                        <i className='icon-st fa-solid fa-bullseye'></i><label>{meta.name}</label>
+                    </div>
+                    <div className='body'></div>
                 </div>
-                <div className='body'></div>
-            </div>
+            </Link>
         ))
     )
 }

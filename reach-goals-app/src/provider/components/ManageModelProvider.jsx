@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 
 const ManageModelContext = React.createContext()
 
-const ManageModel = () => {
+const ManageModelProvider = ({ children }) => {
     const [selectModelID, setSelectModelID] = useState(null)
-    
+
     return (
         <ManageModelContext.Provider value={{ selectModelID, setSelectModelID }}>
             {children} 
@@ -12,4 +12,4 @@ const ManageModel = () => {
     )
 }
 
-export { ManageModelContext, ManageModel }
+export { ManageModelContext, ManageModelProvider }

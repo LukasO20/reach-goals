@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { TitleProvider } from '../provider/components/TitleProvider'
 import { VisibilityProvider } from '../provider/components/VisibilityProvider'
 import { CheckboxProvider } from '../provider/components/CheckboxProvider'
+import { ManageModelProvider } from '../provider/components/ManageModelProvider'
 
 import ContainerN from '../ui/components/Navigate'
 import ContainerH from '../ui/components/ContainerHeader'
@@ -20,15 +21,17 @@ const App = () => {
             <TitleProvider>
                 <VisibilityProvider>     
                     <CheckboxProvider>
-                        <div className="container-app">
-                            <ContainerN />
-                            <ContainerH />
-                            <ContainerM>
-                                <AppRoutes />  
-                            </ContainerM>
-                            <PanelCenter id="panel-center" />
-                            <PanelLeft id="panel-left" />
-                        </div>
+                        <ManageModelProvider>
+                            <div className="container-app">
+                                <ContainerN />
+                                <ContainerH />
+                                <ContainerM>
+                                    <AppRoutes />  
+                                </ContainerM>
+                                <PanelCenter id="panel-center" />
+                                <PanelLeft id="panel-left" />
+                            </div>
+                        </ManageModelProvider>
                     </CheckboxProvider>              
                 </VisibilityProvider>
             </TitleProvider>
