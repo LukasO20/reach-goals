@@ -73,7 +73,7 @@ const getMeta = async (req, res) => {
         try {
             let meta = undefined
             const { id } = req.params
-
+            
             if (id !== undefined) {
                 meta = await prisma.meta.findUnique({
                     where: { id: Number(id) }

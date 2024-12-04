@@ -59,9 +59,10 @@ export const deleteMeta = async (meta) => {
     }
 }
 
-export const getMeta = async () => {
+export const getMeta = async (id) => {
     try {
-        const response = await fetch(`${apiURL}/api/meta/actions`, {
+        const url = id ? `${apiURL}/api/meta/actions/${id}` : `${apiURL}/api/meta/actions`
+        const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         })  

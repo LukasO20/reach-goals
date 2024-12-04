@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { Outlet } from 'react-router-dom'
 import { ManageModelContext } from '../../../provider/components/ManageModelProvider'
@@ -6,22 +6,33 @@ import * as metaAction from '../../../provider/meta/metaAction'
 
 const ModalDetails = () => {
     const [error, setError] = useState(null)
-    const { selectModelID, setSelectModelID } = useContext(ManageModelContext)
+    const [meta, setMeta] = useState({
+        name: '',
+        description: ''
+    })
 
-    const loadMeta = async (id) => {
-        try {
-            const getMeta = await metaAction.getMeta(id)
-            console.log('THIS GETED - ', getMeta)
-        }
-        catch (error) {
-            setError('Ops, something wrong: ', error)
-        }
-    } 
+    const { selectModelID } = useContext(ManageModelContext)
+
+    useEffect(() => {
+        const loadMeta = async (id) => {
+            if (id === null) { return }
+
+            try {
+                const getMeta = await metaAction.getMeta(id)
+                setMeta(getMeta)
+            }
+            catch (error) {
+                setError('Ops, something wrong: ', error)
+            }
+        } 
+
+        loadMeta(selectModelID)
+    }, [selectModelID])
 
     return ReactDOM.createPortal (
         <div className='container-modaldetails aside-content'>
             <div className='header'>
-                <h1>TEST...</h1>
+                <h1>{meta.name}</h1>
             </div>
             <div className='body'>
 

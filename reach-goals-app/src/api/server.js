@@ -13,7 +13,7 @@ app.use(bodyParser.json())
 const { addMeta, updateMeta, getMeta, deleteMeta } = require('../api/meta/actions')
 
 app.post('/api/meta/actions', addMeta)
-app.get('/api/meta/actions', getMeta)
+app.get('/api/meta/actions/:id?', getMeta)
 app.put('/api/meta/actions', updateMeta)
 app.delete('/api/meta/actions', deleteMeta)
 
