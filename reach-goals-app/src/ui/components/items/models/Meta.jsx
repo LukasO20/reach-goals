@@ -36,19 +36,30 @@ const Meta = () => {
                 setErro(`Failed to load meta: ${error.message}`)
             }
         }
-
         fetchMeta()
     }, [])
+
+    const deleteMeta = async (id) => {
+        try {
+            await metaAction.deleteMeta(id)
+            setMeta((prevMeta) => prevMeta.filter((meta) => meta.id != id))
+        } catch (error) {
+            setErro(`Failed to delete meta: ${erro.message}`)
+        }
+    }
 
     return (
         meta.map(meta => (       
             <div className='meta' id={meta.id} key={meta.id} onClick={(e) => (setSelectModelID(e.currentTarget.id), toggleVisibility(target, e))}>
                 <Link to={`${currentLocation}/details`}>
                     <div className='head'>
-                        <i className='icon-st fa-solid fa-bullseye'></i><label>{meta.name}</label>
+                        <label className='line-info'><i className='icon-st fa-solid fa-bullseye'></i><label>{meta.name}</label></label>
                     </div>
                     <div className='body'></div>
                 </Link>
+                <div className='side-actions'>
+                    <label className='line-info'><i className='icon-st fa-regular fa-trash-can' onClick={(e) => (deleteMeta(meta.id), e.stopPropagation())}></i></label>
+                </div>
             </div>
         ))
     )

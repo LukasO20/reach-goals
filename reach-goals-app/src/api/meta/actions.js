@@ -62,7 +62,7 @@ const deleteMeta = async (req, res) => {
             
         } catch (error) {
             console.error(error)
-            return res.status(500).json({ error: 'Failed updating metas'})
+            return res.status(500).json({ error: 'Failed to delete this meta'})
         }
 
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }

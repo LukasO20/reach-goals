@@ -23,7 +23,8 @@ export const addMeta = async (meta) => {
 
 export const updateMeta = async (meta) => {
     try {
-        const response = await fetch(`${apiURL}/api/meta/actions`, {
+        const url = `${apiURL}/api/meta/actions/${meta}`
+        const response = await fetch(url, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(meta)
@@ -33,26 +34,24 @@ export const updateMeta = async (meta) => {
             const error  = await response.json()
             throw new Error(error.error || 'Failed to add meta.')
         }
-
     } catch (error) {
         console.error('Error update meta: ', error.message)
         throw error
     }
 }
 
-export const deleteMeta = async (meta) => {
+export const deleteMeta = async (id) => {
     try {
-        const response = await fetch(`${apiURL}/api/meta/actions`, {
+        const url = `${apiURL}/api/meta/actions/${id}`
+        const response = await fetch(url, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(meta)
         })  
 
         if (!response.ok) {
             const error  = await response.json()
-            throw new Error(error.error || 'Failed to add meta.')
+            throw new Error(error.error || 'Failed to delete meta.')
         }
-
     } catch (error) {
         console.error('Error delete meta: ', error.message)
         throw error

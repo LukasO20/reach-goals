@@ -92,7 +92,7 @@ const ModalForm = (props) => {
         setSucess(false)
 
         try {
-            const newMeta = await metaAction.addMeta(meta)  
+            await metaAction.addMeta(meta)  
             setSucess(true)
             setMeta({
                 name: '',
