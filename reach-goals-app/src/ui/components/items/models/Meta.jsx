@@ -21,7 +21,7 @@ const Meta = () => {
     const [erro, setErro] = useState(false)
     
     const { toggleVisibility } = useContext(VisibilityContext)
-    const { setSelectModelID } = useContext(ManageModelContext)
+    const { setSelectModel } = useContext(ManageModelContext)
 
     const location = useLocation()
     const currentLocation = location.pathname.includes('/objectives') ? '/objectives' : location.pathname.includes('/home') ? '/home' : '/calendar'
@@ -48,9 +48,19 @@ const Meta = () => {
         }
     }
 
+    const editMeta = async (id) => {
+        try {
+            const fetched = await metaAction.getMeta(id)
+            setSelectModel(fetched)
+
+        } catch (error) {
+            setErro(`Failed to edit this meta: ${erro.message}`)
+        }
+    }
+
     return (
         meta.map(meta => (       
-            <div className='meta' id={meta.id} key={meta.id} onClick={(e) => (setSelectModelID(e.currentTarget.id), toggleVisibility(target, e))}>
+            <div className='meta' id={meta.id} key={meta.id} onClick={(e) => (setSelectModel(e.currentTarget.id), toggleVisibility(target, e))}>
                 <Link to={`${currentLocation}/details`}>
                     <div className='head'>
                         <label className='line-info'><i className='icon-st fa-solid fa-bullseye'></i><label>{meta.name}</label></label>
@@ -59,6 +69,7 @@ const Meta = () => {
                 </Link>
                 <div className='side-actions'>
                     <label className='line-info'><i className='icon-st fa-regular fa-trash-can' onClick={(e) => (deleteMeta(meta.id), e.stopPropagation())}></i></label>
+                    <label className='line-info'><i className='icon-st fa-regular fa-pen-to-square' onClick={(e) => (editMeta(meta.id), e.stopPropagation())}></i></label>
                 </div>
             </div>
         ))

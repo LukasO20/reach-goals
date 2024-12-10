@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { VisibilityContext } from '../../../provider/components/VisibilityProvider'
+import { ManageModelContext } from '../../../provider/components/ManageModelProvider'
 import * as metaAction from '../../../provider/meta/metaAction'
 import Button from '../items/elements/ButtonVisibility'
 import ButtonDropdown from '../../components/items/elements/ButtonDropdown'
@@ -63,6 +64,7 @@ return form
 
 const ModalForm = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
+    const { selectModel } = useContext(ManageModelContext)
 
     const typeForm = props.type
     const icon = iconMap[typeForm] || 'fa-solid fa-triangle-exclamation'
@@ -73,8 +75,6 @@ const ModalForm = (props) => {
         name: '',
         description: ''
     })
-    const [metaID, setMetaID] = useState(null)
-    const [metaData, setMetaData] = useState(null)
 
     const [error, setError] = useState(null)
     const [sucess, setSucess] = useState(false)
@@ -101,14 +101,15 @@ const ModalForm = (props) => {
 
         } catch (error) {
             setError(error.message)
-            //console.log(error.message)
         }
     }
 
     const loadMeta = async (id) => {
         try {
-            const getMeta = await metaAction.getMeta(id)
-            console.log('THIS GETED - ', getMeta)
+            if (id) {
+                const getMeta = await metaAction.getMeta(id)     
+                setMeta(getMeta)
+            }
         }
         catch (error) {
             setError('Ops, something wrong: ', error)

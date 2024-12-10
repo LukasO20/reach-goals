@@ -11,7 +11,7 @@ const ModalDetails = () => {
         description: ''
     })
 
-    const { selectModelID } = useContext(ManageModelContext)
+    const { selectModel } = useContext(ManageModelContext)
 
     useEffect(() => {
         const loadMeta = async (id) => {
@@ -26,8 +26,8 @@ const ModalDetails = () => {
             }
         } 
 
-        loadMeta(selectModelID)
-    }, [selectModelID])
+        loadMeta(selectModel)
+    }, [selectModel])
 
     return ReactDOM.createPortal (
         <div className='container-modaldetails aside-content'>
