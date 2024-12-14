@@ -104,17 +104,21 @@ const ModalForm = (props) => {
         }
     }
 
-    const loadMeta = async (id) => {
-        try {
-            if (id) {
-                const getMeta = await metaAction.getMeta(id)     
+    useEffect(() => {
+        const loadMeta = async (id) => {
+            if (id === null ) { return } 
+
+            try {
+                const getMeta = await metaAction.getMeta(id)
                 setMeta(getMeta)
             }
-        }
-        catch (error) {
-            setError('Ops, something wrong: ', error)
-        }
-    } 
+            catch (error) {
+                setError('Ops, something wrong: ', error)
+            }
+        } 
+
+        loadMeta(selectModel)
+    }, [selectModel])
 
     return (
         <div className='container-form-modal center-content' onClick={(e) => toggleVisibility(targetMap(classRemove), e)}>

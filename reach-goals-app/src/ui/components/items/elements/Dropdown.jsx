@@ -28,7 +28,7 @@ const Dropdown = (props) => {
                             <div className={`option ${option.op}`} key={`op-${index}`}>
                                 <div className='item-option'>                                  
                                     <div className='item-title'>
-                                        <ButtonVisibility target={targetMap(['panel-center', `${option.op}`])} classBtn={`form-${option.op} button-st`} iconFa='icon-st fa-solid fa-plus' title={`${option.title}`}/>
+                                        <ButtonVisibility target={targetMap(['panel-center', `${option.op}`])} classBtn={`form-${option.op} button-st`} iconFa='fa-solid fa-plus' title={`${option.title}`}/>
                                     </div> 
                                     <div className='item-details'>
 

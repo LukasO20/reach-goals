@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 const ManageModelContext = React.createContext()
 
 const ManageModelProvider = ({ children }) => {
-    const [selectModel, setSelectModel] = useState({})
+    const [selectModel, setSelectModel] = useState(null)
 
     return (
         <ManageModelContext.Provider value={{ selectModel, setSelectModel }}>
