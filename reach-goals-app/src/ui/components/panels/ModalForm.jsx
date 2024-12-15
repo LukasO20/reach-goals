@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { VisibilityContext } from '../../../provider/components/VisibilityProvider'
 import { ManageModelContext } from '../../../provider/components/ManageModelProvider'
 import * as metaAction from '../../../provider/meta/metaAction'
-import Button from '../items/elements/ButtonVisibility'
+import Button from '../items/elements/ButtonAction'
 import ButtonDropdown from '../../components/items/elements/ButtonDropdown'
 
 import '../../styles/items/Elements.scss'
@@ -77,7 +77,7 @@ const ModalForm = (props) => {
     })
 
     const [error, setError] = useState(null)
-    const [sucess, setSucess] = useState(false)
+    const [success, setSucess] = useState(false)
 
     const handleChange = async (e) => {
         const { name, value } = e.target
@@ -87,12 +87,12 @@ const ModalForm = (props) => {
         }))
     }
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async () => {
         setError(null)
         setSucess(false)
 
         try {
-            await metaAction.addMeta(meta)  
+            meta.id ? await metaAction.updateMeta(meta) : await metaAction.addMeta()  
             setSucess(true)
             setMeta({
                 name: '',
@@ -107,7 +107,7 @@ const ModalForm = (props) => {
     useEffect(() => {
         const loadMeta = async (id) => {
             if (id === null ) { return } 
-
+            
             try {
                 const getMeta = await metaAction.getMeta(id)
                 setMeta(getMeta)
@@ -179,7 +179,7 @@ const ModalForm = (props) => {
                         </div>
                         <div className='bottom-form-messagae'>
                             {
-                                sucess &&                             
+                                success &&                             
                                 <p className='message successfull'>
                                     <label>{'Meta saved'}</label>
                                 </p>

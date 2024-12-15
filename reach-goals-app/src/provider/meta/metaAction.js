@@ -23,7 +23,7 @@ export const addMeta = async (meta) => {
 
 export const updateMeta = async (meta) => {
     try {
-        const url = `${apiURL}/api/meta/actions/${meta}`
+        const url = `${apiURL}/api/meta/actions/${meta.id}`
         const response = await fetch(url, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },

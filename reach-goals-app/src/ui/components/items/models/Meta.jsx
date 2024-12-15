@@ -4,7 +4,7 @@ import { ManageModelContext } from '../../../../provider/components/ManageModelP
 import { VisibilityContext } from '../../../../provider/components/VisibilityProvider'
 import { Link } from 'react-router-dom'
 
-import ButtonVisibility from '../elements/ButtonVisibility'
+import ButtonAction from '../elements/ButtonAction'
 import * as metaAction from '../../../../provider/meta/metaAction'
 
 import '../../../styles/items/models/Meta.scss'
@@ -77,8 +77,8 @@ const Meta = () => {
                     <div className='body'></div>
                 </Link>
                 <div className='side-actions'>
-                    <ButtonVisibility onClick={() => editMeta(meta.id)} target={targetMap(['panel-center', 'goal'])} classBtn='edit-meta' iconFa='fa-regular fa-pen-to-square'/>
-                    <ButtonVisibility onClick={() => deleteMeta(meta.id)} classBtn='remove-meta' iconFa='fa-regular fa-trash-can'/>
+                    <ButtonAction onClick={() => editMeta(meta.id)} target={targetMap(['panel-center', 'goal'])} classBtn='edit-meta' iconFa='fa-regular fa-pen-to-square'/>
+                    <ButtonAction onClick={() => deleteMeta(meta.id)} target={targetMap(null)} classBtn='remove-meta' iconFa='fa-regular fa-trash-can'/>
                 </div>
             </div>
         ))
