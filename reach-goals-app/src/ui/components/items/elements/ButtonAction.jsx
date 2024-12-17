@@ -12,7 +12,7 @@ const ButtonAction = (props) => {
 
     const handleCLick = (e) => {
         if (typeof props.onClick === 'function') {
-            props.onClick() // execute edit function (meta or assingment)
+            props.onClick() // execute external function from 'onClick' attribute
         }  
         toggleVisibility(props.target, e)
     }

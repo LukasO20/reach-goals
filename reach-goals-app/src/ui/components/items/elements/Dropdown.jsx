@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import ButtonAction from './ButtonAction'
+import { ManageModelContext } from '../../../../provider/components/ManageModelProvider'
 
 const NullObject = (props) => {
     if (props !== undefined) {
@@ -18,6 +19,12 @@ const targetMap = (classes) => {
 }
 
 const Dropdown = (props) => {
+    const { setSelectModel } = useContext(ManageModelContext)
+
+    const nullModal = () => {
+        setSelectModel(null)
+    }
+
     return (
         <div className='dropdown-item item-element'>
             <div className='section-options'>
@@ -28,7 +35,7 @@ const Dropdown = (props) => {
                             <div className={`option ${option.op}`} key={`op-${index}`}>
                                 <div className='item-option'>                                  
                                     <div className='item-title'>
-                                        <ButtonAction target={targetMap(['panel-center', `${option.op}`])} classBtn={`form-${option.op} button-st`} iconFa='fa-solid fa-plus' title={`${option.title}`}/>
+                                        <ButtonAction onClick={nullModal} target={targetMap(['panel-center', `${option.op}`])} classBtn={`form-${option.op} button-st`} iconFa='fa-solid fa-plus' title={`${option.title}`}/>
                                     </div> 
                                     <div className='item-details'>
 

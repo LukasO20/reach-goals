@@ -14,7 +14,7 @@ const { addMeta, updateMeta, getMeta, deleteMeta } = require('../api/meta/action
 
 app.post('/api/meta/actions', addMeta)
 app.get('/api/meta/actions/:id?', getMeta)
-app.put('/api/meta/actions', updateMeta)
+app.put('/api/meta/actions/:id', updateMeta)
 app.delete('/api/meta/actions/:id', deleteMeta)
 
 // server status
