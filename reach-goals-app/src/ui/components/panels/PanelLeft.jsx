@@ -3,6 +3,8 @@ import { VisibilityContext } from '../../../provider/components/VisibilityProvid
 
 import '../../styles/panels/Tag.scss'
 import '../../styles/panels/Notification.scss'
+import '../../styles/panels/ModalDetails.scss'
+import '../../styles/panels/PanelLeft.scss'
 
 const PanelLeft = (props) => {
     const { visibleElements } = useContext(VisibilityContext)

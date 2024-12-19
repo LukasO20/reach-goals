@@ -33,7 +33,7 @@ const Notification = () => {
         <div className='container-notification aside-content' onClick={(e) => e.stopPropagation()}>
             <div className='header'>
                 <h2>Notifications</h2>
-                <ButtonAction target={targetMap(null)} classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark'/>
+                <ButtonAction target={targetMap(null)} standardRoute="true" classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark'/>
                 <div className='options'>
                     <ButtonCheckbox checkbox={checkboxMap({ id: 'checkbox-r-noti', value: false })} classBtn='checkbox-r-noti btn-checkbox'/>
                     <ButtonDropdown target={targetMap('btn-filter-notification', { add: true })} classBtn='btn-option-r filter-content' iconFa='fa-solid fa-filter'/>

@@ -69,6 +69,8 @@ const ModalForm = (props) => {
     const typeForm = props.type
     const icon = iconMap[typeForm] || 'fa-solid fa-triangle-exclamation'
     const titleForm = titleMap[typeForm] || 'Create your objective'
+    const currentFormFilter = ['goal', 'assignment'] 
+    const currentForm = visibleElements.filter(item => currentFormFilter.includes(item))
     const classRemove = visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
 
     const metaEmpty = {
@@ -77,7 +79,6 @@ const ModalForm = (props) => {
     }
 
     const [meta, setMeta] = useState(metaEmpty)
-
     const [error, setError] = useState(null)
     const [success, setSucess] = useState(false)
 
@@ -134,8 +135,8 @@ const ModalForm = (props) => {
                 </div>
                 <div className='objective-options'> 
                     <div className='objective-op'>
-                        <ButtonAction onClick={nullModal} target={targetMap(['panel-center', 'assignment'], { maintain: true })} classBtn='op-form-assignment button-op-objective button-st' title='assingments'/>
-                        <ButtonAction onClick={nullModal} target={targetMap(['panel-center', 'goal'], { maintain: true })} classBtn='op-form-goal button-op-objective button-st' title='goals'/>
+                        <ButtonAction onClick={currentForm[0] === 'goal' ? nullModal : true} target={targetMap(['panel-center', 'assignment'], { maintain: true })} classBtn='op-form-assignment button-op-objective button-st' title='assingments'/>
+                        <ButtonAction onClick={currentForm[0] === 'assignment' ? nullModal : true} target={targetMap(['panel-center', 'goal'], { maintain: true })} classBtn='op-form-goal button-op-objective button-st' title='goals'/>
                     </div>
                     <div className='objective-color'>
                         <label className='color'></label>

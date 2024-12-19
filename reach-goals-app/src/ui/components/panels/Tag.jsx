@@ -33,7 +33,7 @@ const Tag = () => {
         <div className='container-tag aside-content' onClick={(e) => e.stopPropagation()}>
             <div className='header'>
                 <h2>Tags</h2>
-                <ButtonAction target={targetMap(null)} classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark'/>
+                <ButtonAction target={targetMap(null)} standardRoute="true" classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark'/>
                 <div className='options'>
                     <ButtonAction target={targetMap(null)} classBtn='btn-option-r create' iconFa='fa-solid fa-plus' title='create'/>
                     <ButtonCheckbox checkbox={checkboxMap({ id: 'checkbox-r-tag', value: false })} classBtn='checkbox-r-tag btn-checkbox'/>

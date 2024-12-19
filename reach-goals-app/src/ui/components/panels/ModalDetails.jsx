@@ -4,6 +4,17 @@ import { Outlet } from 'react-router-dom'
 import { ManageModelContext } from '../../../provider/components/ManageModelProvider'
 import * as metaAction from '../../../provider/meta/metaAction'
 
+import ButtonAction from '../../components/items/elements/ButtonAction'
+
+const targetMap = (classes, operator = {}) => {
+    const data = Array.isArray(classes) ? classes : [classes]
+    const attributes = {
+        class: data,
+        operator: operator
+    }
+    return attributes
+}
+
 const ModalDetails = () => {
     const [error, setError] = useState(null)
     const [meta, setMeta] = useState({
@@ -32,7 +43,8 @@ const ModalDetails = () => {
     return ReactDOM.createPortal (
         <div className='container-modaldetails aside-content'>
             <div className='header'>
-                <h1>{meta.name}</h1>
+                <h2>{meta.name}</h2>
+                <ButtonAction target={targetMap(null)} standardRoute="true" classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark'/>
             </div>
             <div className='body'>
 
