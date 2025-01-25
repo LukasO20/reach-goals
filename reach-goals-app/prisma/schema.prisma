@@ -13,6 +13,12 @@ model Meta {
   name        String
   description String?
   create      DateTime @default(now())
+  start       DateTime @default(now())
+  end         DateTime?
+  remember    DateTime?
+  status      String?
+  assignments Assignment[]
+  tags        TagOnMeta[]
 }
 
 model Assignment {
@@ -21,4 +27,39 @@ model Assignment {
   description String?
   duration    Int?
   create      DateTime @default(now())
+  start       DateTime @default(now())
+  end         DateTime?
+  remember    DateTime?
+  status      String?
+  metaID      Int
+  meta        Meta @relation(fields: [metaID], references: [id])
+  tags        TagOnAssignment[]
+}
+
+model Tag {
+  id          Int      @id @default(autoincrement())
+  name        String?
+  color       String?
+  metas       TagOnMeta[]
+  assignments TagOnAssignment[]
+}
+
+model TagOnMeta {
+  id      Int   @id @default(autoincrement())
+  metaID  Int
+  tagID   Int
+  meta    Meta  @relation(fields: [metaID], references: [id])
+  tag     Tag   @relation(fields: [tagID], references: [id])
+
+  @@unique([metaID, tagID])
+}
+
+model TagOnAssignment {
+  id      Int   @id @default(autoincrement())
+  assignmentID  Int
+  tagID   Int
+  assignment    Assignment  @relation(fields: [assignmentID], references: [id])
+  tag     Tag   @relation(fields: [tagID], references: [id])
+
+  @@unique([assignmentID, tagID])
 }
