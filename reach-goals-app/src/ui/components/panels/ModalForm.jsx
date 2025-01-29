@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { VisibilityContext } from '../../../provider/components/VisibilityProvider'
 import { ManageModelContext } from '../../../provider/components/ManageModelProvider'
 import * as metaAction from '../../../provider/meta/metaAction'
+import * as assignmentAction from '../../../provider/assignment/assignmentAction'
 import ButtonAction from '../items/elements/ButtonAction'
 import ButtonDropdown from '../../components/items/elements/ButtonDropdown'
 
@@ -77,8 +78,14 @@ const ModalForm = (props) => {
         name: '',
         description: ''
     }
+    const assingmentEmpty = {
+        name: '',
+        description: ''
+    }
 
     const [meta, setMeta] = useState(metaEmpty)
+    const [assingment, setAssignment] = useState(assingmentEmpty)
+
     const [error, setError] = useState(null)
     const [success, setSucess] = useState(false)
 
@@ -88,10 +95,18 @@ const ModalForm = (props) => {
 
     const handleChange = async (e) => {
         const { name, value } = e.target
-        setMeta((prevData) => ({
-          ...prevData,
-          [name]: value,
-        }))
+
+        if (typeForm === 'goal') {
+            setMeta((prevData) => ({
+                ...prevData,
+                [name]: value,
+            }))
+        } else {
+            setAssignment((prevData) => ({
+                ...prevData,
+                [name]: value,
+            }))
+        }
     }
 
     const handleSubmit = async () => {
@@ -99,12 +114,30 @@ const ModalForm = (props) => {
         setSucess(false)
 
         try {
-            meta.id ? await metaAction.updateMeta(meta) : await metaAction.addMeta(meta)  
+            if (typeForm === 'goal') {
+                meta.id ? await metaAction.updateMeta(meta) : await metaAction.addMeta(meta)  
+                setMeta(metaEmpty)
+            } else {
+                assingment.id? await assignmentAction.updateAssignment(assingment) : await assignmentAction.addAssignment(assingment)
+                setAssignment(assingmentEmpty)
+            }
             setSucess(true)
-            setMeta(metaEmpty)
-
+        
         } catch (error) {
             setError(error.message)
+        }
+    }
+
+    const handleTarget = (typeForm) => {
+        if (typeForm) {
+            switch (typeForm) {
+                case 'goal':
+                    return meta
+                case 'assignment':
+                    return assingment
+                default:
+                    return null
+            }
         }
     }
 
@@ -126,6 +159,8 @@ const ModalForm = (props) => {
 
         loadMeta(selectModel)
     }, [selectModel])
+
+    const modelTarget = handleTarget(typeForm)
 
     return (
         <div className='container-form-modal center-content' onClick={(e) => toggleVisibility(targetMap(classRemove), e)}>
@@ -152,7 +187,7 @@ const ModalForm = (props) => {
                     <form>
                         <div className='field-forms name'>
                             <input id={`${typeForm}-name`} className='input-form' type='text' placeholder={`${typeForm} name...`}
-                                name='name' value={meta.name} onChange={handleChange} />
+                                name='name' value={modelTarget?.name} onChange={handleChange} />
                         </div>
                         <div className='field-forms start-date'>
                             <input id={`${typeForm}-start-date`} className='input-form' type='text' placeholder='set start date' />
@@ -179,7 +214,7 @@ const ModalForm = (props) => {
                         {formsItemMap(typeForm)}
                         <div className='field-forms details'>
                             <textarea id={`${typeForm}-details`} className='input-form' placeholder='details here...'
-                                name='description' value={meta.description} onChange={handleChange}></textarea>
+                                name='description' value={modelTarget?.description} onChange={handleChange}></textarea>
                         </div>
                         <div className='bottom-form'>
                             <label onClick={handleSubmit}>save</label>
@@ -188,7 +223,7 @@ const ModalForm = (props) => {
                             {
                                 success &&                             
                                 <p className='message successfull'>
-                                    <label>{'Meta saved'}</label>
+                                    <label>{typeForm === 'goal' ? 'Meta saved' : 'Assignment saved'}</label>
                                 </p>
                             }
                             {

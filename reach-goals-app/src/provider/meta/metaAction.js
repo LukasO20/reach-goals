@@ -1,6 +1,8 @@
 const apiURL = process.env.REACHGOALS_URL || 'http://localhost:5000'
 
 export const addMeta = async (meta) => {
+    console.log('META RECEIVED - ', meta)
+
     try {
         const response = await fetch(`${apiURL}/api/meta/actions`, {
             method: 'POST',

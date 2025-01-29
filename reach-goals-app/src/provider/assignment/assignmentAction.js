@@ -1,6 +1,7 @@
 const apiURL = process.env.REACHGOALS_URL || 'http://localhost:5000'
 
 export const addAssignment = async (assignment) => {
+    console.log('ASSIGNMENT RECEIVED - ', assignment)
     try {
         const response = await fetch(`${apiURL}/api/assignment/actions`, {
             method: 'POST',
@@ -16,7 +17,7 @@ export const addAssignment = async (assignment) => {
         const data = await response.json()
         return data
     } catch (error) {
-        console.error('Error adding meta: ', error.message)
+        console.error('Error adding assignment: ', error.message)
         throw error
     }
 }

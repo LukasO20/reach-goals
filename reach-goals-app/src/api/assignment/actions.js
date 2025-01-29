@@ -1,6 +1,6 @@
 const prisma = require('../connectdb')
 
-const addAssingment = async (req, res) => {
+const addAssignment = async (req, res) => {
     if (req.method === 'POST') {
         const { name, description } = req.body
         if (!name) { return res.status(400).json({ error: 'Name is required.'}) }
@@ -22,7 +22,7 @@ const addAssingment = async (req, res) => {
     }
 }
 
-const updateAssingment = async (req, res) => {
+const updateAssignment = async (req, res) => {
     if (req.method === 'PUT') {
         const { id } = req.params
         const { name, description } = req.body
@@ -46,7 +46,7 @@ const updateAssingment = async (req, res) => {
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }
 }
 
-const deleteAssingment = async (req, res) => {
+const deleteAssignment = async (req, res) => {
     if (req.method === 'DELETE') {
 
         const { id } = req.params
@@ -66,7 +66,7 @@ const deleteAssingment = async (req, res) => {
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }
 }
 
-const getAssingment = async (req, res) => {
+const getAssignment = async (req, res) => {
     if (req.method === 'GET') {
         try {
             let assignment = undefined
@@ -90,4 +90,4 @@ const getAssingment = async (req, res) => {
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }
 }
 
-module.exports = { addAssingment, updateAssingment, deleteAssingment, getAssingment }
+module.exports = { addAssignment, updateAssignment, deleteAssignment, getAssignment }
