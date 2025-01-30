@@ -31,8 +31,8 @@ model Assignment {
   end         DateTime?
   remember    DateTime?
   status      String?
-  metaID      Int
-  meta        Meta @relation(fields: [metaID], references: [id])
+  metaID      Int?
+  meta        Meta? @relation(fields: [metaID], references: [id])
   tags        TagOnAssignment[]
 }
 

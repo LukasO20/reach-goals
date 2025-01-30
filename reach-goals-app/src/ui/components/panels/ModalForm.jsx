@@ -45,9 +45,7 @@ const formsItemMap = (typeForm) => {
             <div className='item-head-1'>goals</div>
             <div className='item-head-2'></div>
         </div>
-        <div className='item-forms body'>
-
-        </div>
+        <div className='item-forms body'></div>
     </div>
     : 
     <div className='item-forms assignment'>
@@ -55,9 +53,7 @@ const formsItemMap = (typeForm) => {
             <div className='item-head-1'>assignments</div>
             <div className='item-head-2'></div>
         </div>
-        <div className='item-forms body'>
-
-        </div>
+        <div className='item-forms body'></div>
     </div>
 
 return form
@@ -70,17 +66,17 @@ const ModalForm = (props) => {
     const typeForm = props.type
     const icon = iconMap[typeForm] || 'fa-solid fa-triangle-exclamation'
     const titleForm = titleMap[typeForm] || 'Create your objective'
-    const currentFormFilter = ['goal', 'assignment'] 
-    const currentForm = visibleElements.filter(item => currentFormFilter.includes(item))
     const classRemove = visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
 
     const metaEmpty = {
         name: '',
-        description: ''
+        description: '',
+        status: null
     }
     const assingmentEmpty = {
         name: '',
-        description: ''
+        description: '',
+        status: null
     }
 
     const [meta, setMeta] = useState(metaEmpty)
@@ -170,8 +166,8 @@ const ModalForm = (props) => {
                 </div>
                 <div className='objective-options'> 
                     <div className='objective-op'>
-                        <ButtonAction onClick={currentForm[0] === 'goal' ? nullModal : true} target={targetMap(['panel-center', 'assignment'], { maintain: true })} classBtn='op-form-assignment button-op-objective button-st' title='assingments'/>
-                        <ButtonAction onClick={currentForm[0] === 'assignment' ? nullModal : true} target={targetMap(['panel-center', 'goal'], { maintain: true })} classBtn='op-form-goal button-op-objective button-st' title='goals'/>
+                        <ButtonAction onClick={typeForm === 'goal' ? nullModal : true} target={targetMap(['panel-center', 'assignment'], { maintain: true })} classBtn='op-form-assignment button-op-objective button-st' title='assingments'/>
+                        <ButtonAction onClick={typeForm === 'assignment' ? nullModal : true} target={targetMap(['panel-center', 'goal'], { maintain: true })} classBtn='op-form-goal button-op-objective button-st' title='goals'/>
                     </div>
                     <div className='objective-color'>
                         <label className='color'></label>
@@ -196,10 +192,10 @@ const ModalForm = (props) => {
                             <input id={`${typeForm}-end-date`} className='input-form' type='text' placeholder='set end date' />
                         </div>
                         <div className='field-forms status'>
-                            <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })} classBtn='dropdown-form' title='choose an option' />
+                            <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })} classBtn='dropdown-form' title='choose an option' valueSelect={true} />
                         </div>
                         <div className='field-forms reminder-date'>
-                            <ButtonDropdown target={targetMap(`${typeForm}-reminder-date`, { add: true })} classBtn='dropdown-form' title='choose an option' />
+                            <ButtonDropdown target={targetMap(`${typeForm}-reminder-date`, { add: true })} classBtn='dropdown-form' title='choose an option' valueSelect={true} />
                         </div>
                         {formsInputMap(typeForm)}
                         <div className='item-forms tag'>
@@ -207,9 +203,7 @@ const ModalForm = (props) => {
                                 <div className='item-head-1'>tags</div>
                                 <div className='item-head-2'></div>
                             </div>
-                            <div className='item-forms body'>
-
-                            </div>
+                            <div className='item-forms body'></div>
                         </div>
                         {formsItemMap(typeForm)}
                         <div className='field-forms details'>
@@ -223,7 +217,7 @@ const ModalForm = (props) => {
                             {
                                 success &&                             
                                 <p className='message successfull'>
-                                    <label>{typeForm === 'goal' ? 'Meta saved' : 'Assignment saved'}</label>
+                                    <label>{typeForm === 'goal' ? 'Meta save with success!' : 'Assignment save with success!'}</label>
                                 </p>
                             }
                             {
