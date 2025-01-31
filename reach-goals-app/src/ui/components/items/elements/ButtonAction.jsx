@@ -22,7 +22,7 @@ const ButtonAction = (props) => {
     }
 
     return (
-        <label className={`${props.classBtn} button-st ${isOn ? 'on' : ''}`} onClick={handleCLick}>
+        <label className={`${props.classBtn} button-st ${isOn ? 'on' : ''}`} datavalue={props.datavalue} onClick={handleCLick}>
             <i className={`icon-st ${props.iconFa}`}></i><span className='button-title'>{props.title}</span>
         </label>
     )

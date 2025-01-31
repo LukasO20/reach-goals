@@ -73,8 +73,8 @@ const ButtonDropdown = (props) => {
     }
     
     return (
-        <label className={`${props.classBtn} button-st`} onClick={(e) => toggleVisibility(target, e)}>
-            {props.valueSelect ? <input id={''} name='status' type='text' hidden /> : undefined }
+        <label className={`${props.classBtn} button-st`} onClick={(e) => toggleVisibility(target, e)}> 
+            {props.valueSelect ? <input id={props.target.class} name='status' type='text' disabled hidden /> : undefined }    
             <i className={`icon-st ${props.iconFa}`}></i>{props.title}
             <div className={`dropdown-menu ${ visibleElements.includes(typeClass) ? 'show' : '' }`} onClick={(e) => e.stopPropagation()}>
                 {defineDropdown()}
