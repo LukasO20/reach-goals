@@ -13,16 +13,16 @@ const ButtonAction = (props) => {
     const navigate = useNavigate()
     const standardRoute = props.standardRoute ?? false
 
-    const handleCLick = (e) => {
+    const handleClick = (e) => {
         if (typeof props.onClick === 'function') {
-            props.onClick() // execute external function from 'onClick' attribute
+            props.onClick({props, e}) // execute external function from 'onClick' attribute
         }
         if (standardRoute) { navigate('/home') } // return standard route if true  
         toggleVisibility(props.target, e)
     }
 
     return (
-        <label className={`${props.classBtn} button-st ${isOn ? 'on' : ''}`} datavalue={props.datavalue} onClick={handleCLick}>
+        <label className={`${props.classBtn} button-st ${isOn ? 'on' : ''}`} datavalue={props.datavalue} onClick={handleClick}>
             <i className={`icon-st ${props.iconFa}`}></i><span className='button-title'>{props.title}</span>
         </label>
     )
