@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import ButtonAction from './ButtonAction'
 import { ManageModelContext } from '../../../../provider/components/ManageModelProvider'
 
@@ -20,21 +20,32 @@ const targetMap = (classes) => {
 
 const Dropdown = (props) => {
     const [selectedValue, setSelectedValue] = useState(null)
-    const { setSelectModel } = useContext(ManageModelContext)
+    const [eventTarget, setEventTarget] = useState(null)
+
+    //const { setSelectModel } = useContext(ManageModelContext)
     //const nullModal = () => { setSelectModel(null) } útil para exibir o MODAL (conferir novo método dentro dos button do dropdown)
-    const dropdownStatus = props.parent.includes('goal-status') || props.parent.includes('assignment-status')
- 
+    const dropdownStatus = props.parent.includes('goal-status') || props.parent.includes('assignment-status') 
     const handleAction = (event) => {
         if (event.props) {
             const datavalue = event.props.datavalue
             setSelectedValue(datavalue)
-        }
-
-        if (event.e && selectedValue) {
-            const dropdownClosest = event.e.target.closest('.dropdown-form')
-            const inputClosest = dropdownClosest.querySelector('#goal-status')
+            setEventTarget(event)
         }
     }
+
+    useEffect(() => {
+        if (eventTarget && selectedValue) {
+            const dropdownClosest = eventTarget.e.target.closest('.dropdown-form')
+            const inputClosest = dropdownClosest.querySelector('#goal-status')
+
+            console.log('EVENT ', eventTarget, ' SELECT ', selectedValue)
+
+            if (inputClosest) {
+                inputClosest.value = selectedValue
+                console.log('VALUE DO INPUT - ', inputClosest.value)
+            }
+        }
+    })
 
     return (
         <div className='dropdown-item item-element'>
