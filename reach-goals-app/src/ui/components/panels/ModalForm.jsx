@@ -71,12 +71,13 @@ const ModalForm = (props) => {
     const metaEmpty = {
         name: '',
         description: '',
-        status: null
+        status: undefined
     }
+    
     const assingmentEmpty = {
         name: '',
         description: '',
-        status: null
+        status: undefined
     }
 
     const [meta, setMeta] = useState(metaEmpty)
@@ -125,16 +126,7 @@ const ModalForm = (props) => {
     }
 
     const handleTarget = (typeForm) => {
-        if (typeForm) {
-            switch (typeForm) {
-                case 'goal':
-                    return meta
-                case 'assignment':
-                    return assingment
-                default:
-                    return null
-            }
-        }
+        return typeForm === 'goal' ? meta : assingment
     }
 
     useEffect(() => {
@@ -183,7 +175,7 @@ const ModalForm = (props) => {
                     <form>
                         <div className='field-forms name'>
                             <input id={`${typeForm}-name`} className='input-form' type='text' placeholder={`${typeForm} name...`}
-                                name='name' value={modelTarget?.name} onChange={handleChange} />
+                                name='name' value={modelTarget?.name || ''} onChange={handleChange} />
                         </div>
                         <div className='field-forms start-date'>
                             <input id={`${typeForm}-start-date`} className='input-form' type='text' placeholder='set start date' />
@@ -192,10 +184,10 @@ const ModalForm = (props) => {
                             <input id={`${typeForm}-end-date`} className='input-form' type='text' placeholder='set end date' />
                         </div>
                         <div className='field-forms status'>
-                            <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })} classBtn='dropdown-form' title='choose an option' valueSelect={true} />
+                            <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })} classBtn='dropdown-form' title='choose an option' valueSelect={modelTarget?.status || ''} />
                         </div>
                         <div className='field-forms reminder-date'>
-                            <ButtonDropdown target={targetMap(`${typeForm}-reminder-date`, { add: true })} classBtn='dropdown-form' title='choose an option' valueSelect={true} />
+                            <ButtonDropdown target={targetMap(`${typeForm}-reminder-date`, { add: true })} classBtn='dropdown-form' title='choose an option' valueSelect={modelTarget?.status || ''} />
                         </div>
                         {formsInputMap(typeForm)}
                         <div className='item-forms tag'>
@@ -208,7 +200,7 @@ const ModalForm = (props) => {
                         {formsItemMap(typeForm)}
                         <div className='field-forms details'>
                             <textarea id={`${typeForm}-details`} className='input-form' placeholder='details here...'
-                                name='description' value={modelTarget?.description} onChange={handleChange}></textarea>
+                                name='description' value={modelTarget?.description || ''} onChange={handleChange}></textarea>
                         </div>
                         <div className='bottom-form'>
                             <label onClick={handleSubmit}>save</label>

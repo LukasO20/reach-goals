@@ -19,12 +19,11 @@ const targetMap = (classes) => {
 }
 
 const Dropdown = (props) => {
-    const [selectedValue, setSelectedValue] = useState(null)
+    const [selectedValue, setSelectedValue] = useState('')
     const [eventTarget, setEventTarget] = useState(null)
 
-    //const { setSelectModel } = useContext(ManageModelContext)
-    //const nullModal = () => { setSelectModel(null) } útil para exibir o MODAL (conferir novo método dentro dos button do dropdown)
     const dropdownStatus = props.parent.includes('goal-status') || props.parent.includes('assignment-status') 
+
     const handleAction = (event) => {
         if (event.props) {
             const datavalue = event.props.datavalue
@@ -34,15 +33,14 @@ const Dropdown = (props) => {
     }
 
     useEffect(() => {
-        if (eventTarget && selectedValue) {
+        if (eventTarget) {
             const dropdownClosest = eventTarget.e.target.closest('.dropdown-form')
-            const inputClosest = dropdownClosest.querySelector('#goal-status')
-
-            console.log('EVENT ', eventTarget, ' SELECT ', selectedValue)
+            const inputClosest = dropdownClosest.querySelectorAll('#goal-status, #assignment-status')
 
             if (inputClosest) {
-                inputClosest.value = selectedValue
-                console.log('VALUE DO INPUT - ', inputClosest.value)
+                inputClosest.forEach(item => {
+                    item.value = selectedValue
+                })
             }
         }
     })

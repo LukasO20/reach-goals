@@ -4,6 +4,7 @@ const ManageModelContext = React.createContext()
 
 const ManageModelProvider = ({ children }) => {
     const [selectModel, setSelectModel] = useState(null)
+    console.log('MODEL SELECTED - ', selectModel)
 
     return (
         <ManageModelContext.Provider value={{ selectModel, setSelectModel }}>
