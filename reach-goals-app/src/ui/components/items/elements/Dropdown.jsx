@@ -33,14 +33,17 @@ const Dropdown = (props) => {
     }
 
     useEffect(() => {
-        if (eventTarget) {
+        if (eventTarget?.e?.target) {
             const dropdownClosest = eventTarget.e.target.closest('.dropdown-form')
-            const inputClosest = dropdownClosest.querySelectorAll('#goal-status, #assignment-status')
 
-            if (inputClosest) {
-                inputClosest.forEach(item => {
-                    item.value = selectedValue
-                })
+            if (dropdownClosest) {
+                const inputClosest = dropdownClosest.querySelectorAll('#goal-status, #assignment-status')
+            
+                if (inputClosest) {
+                    inputClosest.forEach(item => {
+                        item.value = selectedValue
+                    })
+                }
             }
         }
     })
