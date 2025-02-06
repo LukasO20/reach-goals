@@ -8,7 +8,7 @@ datasource db {
   directUrl = env("REACHGOALS_URL_NON_POOLING")
 }
 
-model Meta {
+model Goal {
   id          Int      @id @default(autoincrement())
   name        String
   description String?
@@ -18,7 +18,7 @@ model Meta {
   remember    DateTime?
   status      String?
   assignments Assignment[]
-  tags        TagOnMeta[]
+  tags        TagOnGoal[]
 }
 
 model Assignment {
@@ -31,8 +31,8 @@ model Assignment {
   end         DateTime?
   remember    DateTime?
   status      String?
-  metaID      Int?
-  meta        Meta? @relation(fields: [metaID], references: [id])
+  goalID      Int?
+  goal        Goal? @relation(fields: [goalID], references: [id])
   tags        TagOnAssignment[]
 }
 
@@ -40,18 +40,18 @@ model Tag {
   id          Int      @id @default(autoincrement())
   name        String?
   color       String?
-  metas       TagOnMeta[]
+  goals       TagOnGoal[]
   assignments TagOnAssignment[]
 }
 
-model TagOnMeta {
+model TagOnGoal {
   id      Int   @id @default(autoincrement())
-  metaID  Int
+  goalID  Int
   tagID   Int
-  meta    Meta  @relation(fields: [metaID], references: [id])
+  goal    Goal  @relation(fields: [goalID], references: [id])
   tag     Tag   @relation(fields: [tagID], references: [id])
 
-  @@unique([metaID, tagID])
+  @@unique([goalID, tagID])
 }
 
 model TagOnAssignment {

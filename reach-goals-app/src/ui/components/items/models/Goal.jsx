@@ -5,9 +5,9 @@ import { VisibilityContext } from '../../../../provider/components/VisibilityPro
 import { Link } from 'react-router-dom'
 
 import ButtonAction from '../elements/ButtonAction'
-import * as metaAction from '../../../../provider/meta/metaAction'
+import * as goalAction from '../../../../provider/goal/goalAction'
 
-import '../../../styles/items/models/Meta.scss'
+import '../../../styles/items/models/Goal.scss'
 
 const targetMap = (classes) => {
     const data = Array.isArray(classes) ? classes : [classes]
@@ -15,8 +15,8 @@ const targetMap = (classes) => {
     return attributes
 }
 
-const Meta = () => {
-    const [meta, setMeta] = useState([])
+const Goal = () => {
+    const [goal, setGoal] = useState([])
     const [erro, setErro] = useState(false)
     
     const { toggleVisibility } = useContext(VisibilityContext)
@@ -30,36 +30,36 @@ const Meta = () => {
     const target = useMemo(() => targetMap('panel-left'), []) 
 
     useEffect(() => {
-        const fetchMeta = async () => {
+        const fetchGoal = async () => {
             try {
-                const fetched = await metaAction.getMeta()
-                setMeta(fetched)
+                const fetched = await goalAction.getGoal()
+                setGoal(fetched)
             } catch (error) {
-                setErro(`Failed to load meta: ${error.message}`)
+                setErro(`Failed to load goal: ${error.message}`)
             }
         }
-        fetchMeta()
+        fetchGoal()
     }, [])
 
-    const deleteMeta = async (id) => {
+    const deleteGoal = async (id) => {
         try {
-            await metaAction.deleteMeta(id)
-            setMeta((prevMeta) => prevMeta.filter((meta) => meta.id != id))
+            await goalAction.deleteGoal(id)
+            setGoal((prevGoal) => prevGoal.filter((goal) => goal.id != id))
         } catch (error) {
-            setErro(`Failed to delete meta: ${erro.message}`)
+            setErro(`Failed to delete goal: ${erro.message}`)
         }
     }
 
-    const editMeta = useCallback(async (id) => {
+    const editGoal = useCallback(async (id) => {
         try {
-            const fetched = await metaAction.getMeta(id)
+            const fetched = await goalAction.getGoal(id)
             setSelectModel(fetched.id)
         } catch (error) {
-            setErro(`Failed to edit this meta: ${erro.message}`)
+            setErro(`Failed to edit this goal: ${erro.message}`)
         }
     }, [setSelectModel])
 
-    const handleMetaClick = useCallback(
+    const handleGoalClick = useCallback(
         (id, e) => {
             setSelectModel(id)
             toggleVisibility(target, e)
@@ -68,21 +68,21 @@ const Meta = () => {
     )
 
     return (
-        meta.map(meta => (       
-            <div className='meta' id={meta.id} key={meta.id} onClick={(e) => handleMetaClick(meta.id, e)}>
+        goal.map(goal => (       
+            <div className='goal card' id={goal.id} key={goal.id} onClick={(e) => handleGoalClick(goal.id, e)}>
                 <Link to={`${currentLocation}/details`}>
                     <div className='head'>
-                        <label className='line-info'><i className='icon-st fa-solid fa-bullseye'></i><label>{meta.name}</label></label>
+                        <label className='line-info'><i className='icon-st fa-solid fa-bullseye'></i><label>{goal.name}</label></label>
                     </div>
                     <div className='body'></div>
                 </Link>
                 <div className='side-actions'>
-                    <ButtonAction onClick={() => editMeta(meta.id)} target={targetMap(['panel-center', 'goal'])} classBtn='edit-meta' iconFa='fa-regular fa-pen-to-square'/>
-                    <ButtonAction onClick={() => deleteMeta(meta.id)} target={targetMap(null)} classBtn='remove-meta' iconFa='fa-regular fa-trash-can'/>
+                    <ButtonAction onClick={() => editGoal(goal.id)} target={targetMap(['panel-center', 'goal'])} classBtn='edit-goal' iconFa='fa-regular fa-pen-to-square'/>
+                    <ButtonAction onClick={() => deleteGoal(goal.id)} target={targetMap(null)} classBtn='remove-goal' iconFa='fa-regular fa-trash-can'/>
                 </div>
             </div>
         ))
     )
 }
 
-export default Meta
+export default Goal

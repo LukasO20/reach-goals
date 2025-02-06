@@ -1,0 +1,24 @@
+@import '../../../../app/App.scss';
+
+.goal {
+
+    &.card {
+        padding: 1em;
+        border-radius: 0.5em;
+        background-color: $color-white;
+        margin: 0.5em 0em;
+    
+        .head {
+            display: inline-flex;
+            align-items: center;
+    
+            .icon-st {
+                font-size: $icon-size-small;
+            }
+    
+            label {
+                margin: 0em 0.5em; 
+            }
+        }
+    }
+}

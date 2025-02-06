@@ -1,50 +1,50 @@
 const apiURL = process.env.REACHGOALS_URL || 'http://localhost:5000'
 
-export const addMeta = async (meta) => {
-    console.log('META RECEIVED - ', meta)
+export const addGoal = async (goal) => {
+    console.log('GOAL RECEIVED - ', goal)
 
     try {
-        const response = await fetch(`${apiURL}/api/meta/actions`, {
+        const response = await fetch(`${apiURL}/api/goal/actions`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(meta)
+            body: JSON.stringify(goal)
         })  
 
         if (!response.ok) {
             const error  = await response.json()
-            throw new Error(error.error || 'Failed to add meta.')
+            throw new Error(error.error || 'Failed to add goal.')
         }
 
         const data = await response.json()
         return data
     } catch (error) {
-        console.error('Error adding meta: ', error.message)
+        console.error('Error adding goal: ', error.message)
         throw error
     }
 }
 
-export const updateMeta = async (meta) => {
+export const updateGoal = async (goal) => {
     try {
-        const url = `${apiURL}/api/meta/actions/${meta.id}`
+        const url = `${apiURL}/api/goal/actions/${goal.id}`
         const response = await fetch(url, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(meta)
+            body: JSON.stringify(goal)
         })  
 
         if (!response.ok) {
             const error  = await response.json()
-            throw new Error(error.error || 'Failed to add meta.')
+            throw new Error(error.error || 'Failed to add goal.')
         }
     } catch (error) {
-        console.error('Error update meta: ', error.message)
+        console.error('Error update goal: ', error.message)
         throw error
     }
 }
 
-export const deleteMeta = async (id) => {
+export const deleteGoal = async (id) => {
     try {
-        const url = `${apiURL}/api/meta/actions/${id}`
+        const url = `${apiURL}/api/goal/actions/${id}`
         const response = await fetch(url, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
@@ -52,17 +52,17 @@ export const deleteMeta = async (id) => {
 
         if (!response.ok) {
             const error  = await response.json()
-            throw new Error(error.error || 'Failed to delete meta.')
+            throw new Error(error.error || 'Failed to delete goal.')
         }
     } catch (error) {
-        console.error('Error delete meta: ', error.message)
+        console.error('Error delete goal: ', error.message)
         throw error
     }
 }
 
-export const getMeta = async (id) => {
+export const getGoal = async (id) => {
     try {
-        const url = id ? `${apiURL}/api/meta/actions/${id}` : `${apiURL}/api/meta/actions`
+        const url = id ? `${apiURL}/api/goal/actions/${id}` : `${apiURL}/api/goal/actions`
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
@@ -70,13 +70,13 @@ export const getMeta = async (id) => {
 
         if (!response.ok) {
             const error  = await response.json()
-            throw new Error(error.error || 'Failed to fetch metas.')
+            throw new Error(error.error || 'Failed to fetch goals.')
         }
 
         const data = await response.json()
         return data
     } catch (error) {
-        console.error('Error get meta: ', error.message)
+        console.error('Error get goal: ', error.message)
         throw error
     }
 }

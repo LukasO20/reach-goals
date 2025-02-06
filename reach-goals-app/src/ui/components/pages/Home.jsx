@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { TitleContext } from '../../../provider/components/TitleProvider'
 
-import Meta from '../items/models/Meta'
+import Goal from '../items/models/Goal'
 
 import '../../styles/pages/Home.scss'
 
@@ -21,7 +21,7 @@ const Home = () => {
                     </div>
                     <div className="body-column">
                         <div className='list'>
-                            <Meta/>
+                            <Goal/>
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { VisibilityContext } from '../../../provider/components/VisibilityProvider'
 import { ManageModelContext } from '../../../provider/components/ManageModelProvider'
-import * as metaAction from '../../../provider/meta/metaAction'
+import * as goalAction from '../../../provider/goal/goalAction'
 import * as assignmentAction from '../../../provider/assignment/assignmentAction'
 import ButtonAction from '../items/elements/ButtonAction'
 import ButtonDropdown from '../../components/items/elements/ButtonDropdown'
@@ -68,7 +68,7 @@ const ModalForm = (props) => {
     const titleForm = titleMap[typeForm] || 'Create your objective'
     const classRemove = visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
 
-    const metaEmpty = {
+    const goalEmpty = {
         name: '',
         description: '',
         status: undefined
@@ -80,7 +80,7 @@ const ModalForm = (props) => {
         status: undefined
     }
 
-    const [meta, setMeta] = useState(metaEmpty)
+    const [goal, setGoal] = useState(goalEmpty)
     const [assingment, setAssignment] = useState(assingmentEmpty)
 
     const [error, setError] = useState(null)
@@ -94,7 +94,7 @@ const ModalForm = (props) => {
         const { name, value } = e.target
 
         if (typeForm === 'goal') {
-            setMeta((prevData) => ({
+            setGoal((prevData) => ({
                 ...prevData,
                 [name]: value,
             }))
@@ -112,8 +112,8 @@ const ModalForm = (props) => {
 
         try {
             if (typeForm === 'goal') {
-                meta.id ? await metaAction.updateMeta(meta) : await metaAction.addMeta(meta)  
-                setMeta(metaEmpty)
+                goal.id ? await goalAction.updateGoal(goal) : await goalAction.addGoal(goal)  
+                setGoal(goalEmpty)
             } else {
                 assingment.id? await assignmentAction.updateAssignment(assingment) : await assignmentAction.addAssignment(assingment)
                 setAssignment(assingmentEmpty)
@@ -126,26 +126,26 @@ const ModalForm = (props) => {
     }
 
     const handleTarget = (typeForm) => {
-        return typeForm === 'goal' ? meta : assingment
+        return typeForm === 'goal' ? goal : assingment
     }
 
     useEffect(() => {
-        const loadMeta = async (id) => {
+        const loadGoal = async (id) => {
             if (id === null ) { 
-                setMeta(metaEmpty)
+                setGoal(goalEmpty)
                 return
             } 
             
             try {
-                const getMeta = await metaAction.getMeta(id)
-                setMeta(getMeta)
+                const getGoal = await goalAction.getGoal(id)
+                setGoal(getGoal)
             }
             catch (error) {
                 setError('Ops, something wrong: ', error)
             }
         } 
 
-        loadMeta(selectModel)
+        loadGoal(selectModel)
     }, [selectModel])
 
     const modelTarget = handleTarget(typeForm)
@@ -209,7 +209,7 @@ const ModalForm = (props) => {
                             {
                                 success &&                             
                                 <p className='message successfull'>
-                                    <label>{typeForm === 'goal' ? 'Meta save with success!' : 'Assignment save with success!'}</label>
+                                    <label>{typeForm === 'goal' ? 'Goal save with success!' : 'Assignment save with success!'}</label>
                                 </p>
                             }
                             {

@@ -10,13 +10,13 @@ app.use(express.json())
 app.use(bodyParser.json())
 
 // routes set
-const { addMeta, updateMeta, getMeta, deleteMeta } = require('./meta/actions')
+const { addGoal, updateGoal, getGoal, deleteGoal } = require('./goal/actions')
 const { addAssignment, updateAssignment, getAssignment, deleteAssignment } = require('./assignment/actions')
 
-app.post('/api/meta/actions', addMeta)
-app.get('/api/meta/actions/:id?', getMeta)
-app.put('/api/meta/actions/:id', updateMeta)
-app.delete('/api/meta/actions/:id', deleteMeta)
+app.post('/api/goal/actions', addGoal)
+app.get('/api/goal/actions/:id?', getGoal)
+app.put('/api/goal/actions/:id', updateGoal)
+app.delete('/api/goal/actions/:id', deleteGoal)
 
 app.post('/api/assignment/actions', addAssignment)
 app.get('/api/assignment/actions/:id?', getAssignment)
