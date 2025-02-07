@@ -150,6 +150,8 @@ const ModalForm = (props) => {
 
     const modelTarget = handleTarget(typeForm)
 
+    console.log('OBJECT modal target - ', modelTarget)
+
     return (
         <div className='container-form-modal center-content' onClick={(e) => toggleVisibility(targetMap(classRemove), e)}>
             <div className='head'> 
@@ -184,10 +186,10 @@ const ModalForm = (props) => {
                             <input id={`${typeForm}-end-date`} className='input-form' type='text' placeholder='set end date' />
                         </div>
                         <div className='field-forms status'>
-                            <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })} classBtn='dropdown-form' title='choose an option' valueSelect={modelTarget?.status || ''} />
+                            <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })} classBtn='dropdown-form' title='choose an option' dropdownValue={modelTarget?.status || undefined} dataSelectable={true} />
                         </div>
                         <div className='field-forms reminder-date'>
-                            <ButtonDropdown target={targetMap(`${typeForm}-reminder-date`, { add: true })} classBtn='dropdown-form' title='choose an option' valueSelect={modelTarget?.status || ''} />
+                            <ButtonDropdown target={targetMap(`${typeForm}-reminder-date`, { add: true })} classBtn='dropdown-form' title='choose an option' dataSelectable={true} />
                         </div>
                         {formsInputMap(typeForm)}
                         <div className='item-forms tag'>

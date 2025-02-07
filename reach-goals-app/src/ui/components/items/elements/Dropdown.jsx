@@ -25,6 +25,8 @@ const Dropdown = (props) => {
     const dropdownStatus = props.parent.includes('goal-status') || props.parent.includes('assignment-status') 
 
     const handleAction = (event) => {
+        console.log('EVENT - ', event)
+
         if (event.props) {
             const datavalue = event.props.datavalue
             setSelectedValue(datavalue)
@@ -39,9 +41,12 @@ const Dropdown = (props) => {
             if (dropdownClosest) {
                 const inputClosest = dropdownClosest.querySelectorAll('#goal-status, #assignment-status')
             
+                console.log(inputClosest)
                 if (inputClosest) {
                     inputClosest.forEach(item => {
                         item.value = selectedValue
+
+                        console.log('VALUE OF DROPDOWN INPUT - ', item.value)
                     })
                 }
             }

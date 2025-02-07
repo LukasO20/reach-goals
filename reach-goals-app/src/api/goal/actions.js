@@ -2,7 +2,7 @@ const prisma = require('../connectdb')
 
 const addGoal = async (req, res) => {
     if (req.method === 'POST') {
-        const { name, description } = req.body
+        const { name, description, status } = req.body
         if (!name) {
             return res.status(400).json({ error: 'Name is required.'})
         }
@@ -10,7 +10,8 @@ const addGoal = async (req, res) => {
             const goal = await prisma.goal.create({
                 data: { 
                     name,
-                    description
+                    description,
+                    status
                 },
             })
     
@@ -27,14 +28,15 @@ const addGoal = async (req, res) => {
 const updateGoal = async (req, res) => {
     if (req.method === 'PUT') {
         const { id } = req.params
-        const { name, description } = req.body
+        const { name, description, status } = req.body
 
         try {
             const goal = await prisma.goal.update({
                 where: { id: Number(id) },
                 data: {
                     name: name || null,
-                    description: description || null
+                    description: description || null,
+                    status: status || null
                 }
             })
 
