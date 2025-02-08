@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { VisibilityContext } from '../../../../provider/components/VisibilityProvider'
 
-import Dropdown from '../../items/elements/Dropdown'
+import ButtonAction from './ButtonAction'
 
 const mapOptionDropdown = (type) => {
     if (type === 'status') {
@@ -27,14 +27,58 @@ const mapOptionDropdown = (type) => {
     }
 }
 
+const NullObject = (value) => {
+    return (Array.isArray(value) || typeof value === "string") && value.length !== 0
+}
+
+const targetMap = (classes) => {
+    const data = Array.isArray(classes) ? classes : [classes]
+    const attributes = {
+        class: data,
+    }
+    return attributes
+}
+
 const ButtonDropdown = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const target = props.target ?? { class : [] }
     const typeClass = target.class !== undefined ? target.class[0] : null
-    
+    const dropdownStatus = typeClass.includes('goal-status') || typeClass.includes('assignment-status') 
+
     let titleDropdown = undefined
-    let parentDropdown = typeClass
     let optionsDropdown = undefined
+
+    // const [selectedValue, setSelectedValue] = useState('')
+    // const [eventTarget, setEventTarget] = useState(null)
+
+    const handleAction = (event) => {
+        // console.log('EVENT - ', event)
+
+        // if (event.props) {
+        //     const datavalue = event.props.datavalue
+        //     setSelectedValue(datavalue)
+        //     setEventTarget(event)
+        // }
+    }
+
+    // useEffect(() => {
+    //     if (eventTarget?.e?.target) {
+    //         const dropdownClosest = eventTarget.e.target.closest('.dropdown-form')
+
+    //         if (dropdownClosest) {
+    //             const inputClosest = dropdownClosest.querySelectorAll('#goal-status, #assignment-status')
+            
+    //             console.log(inputClosest)
+    //             if (inputClosest) {
+    //                 inputClosest.forEach(item => {
+    //                     item.value = selectedValue
+
+    //                     console.log('VALUE OF DROPDOWN INPUT - ', item.value)
+    //                 })
+    //             }
+    //         }
+    //     }
+    // })
 
     const defineDropdown = () => {
         switch (typeClass) {
@@ -72,15 +116,38 @@ const ButtonDropdown = (props) => {
         }
     }
     
-    console.log('PROPS - ', props)
+    console.log('PROPS - ', props.dropdownValue)
 
-    return (
+    return (        
         <label className={`${props.classBtn} button-st`} onClick={(e) => toggleVisibility(target, e)}> 
-            {props.dataSelectable ? <input id={props.target.class} value={props.dropdownValue} name='status' type='text' hidden /> : undefined }    
+            {props.dataSelectable ? <input id={props.target.class} name='status' type='text' hidden /> : undefined }    
             <i className={`icon-st ${props.iconFa}`}></i>{props.title}
             <div className={`dropdown-menu ${ visibleElements.includes(typeClass) ? 'show' : '' }`} onClick={(e) => e.stopPropagation()}>
                 {defineDropdown()}
-                <Dropdown title={titleDropdown} parent={parentDropdown} options={optionsDropdown}/>
+                <div className='dropdown-item item-element'>
+                    <div className='section-options'>
+                        { NullObject(titleDropdown) ? <span>{titleDropdown}</span> : ''}
+                        { NullObject(optionsDropdown) ?
+                            optionsDropdown.map((option, index) => {                      
+                                return (
+                                    <div className={`option ${option.op}`} key={`op-${index}`}>
+                                        <div className='item-option'>                                  
+                                            <div className='item-title'>
+                                                <ButtonAction onClick={handleAction} datavalue={dropdownStatus ? option.op : null} target={targetMap(['panel-center', `${option.op}`])} classBtn={`form-${option.op} button-st`} iconFa='fa-solid fa-plus' title={`${option.title}`}/>
+                                            </div> 
+                                            <div className='item-details'>
+
+                                            </div>
+                                        </div>   
+                                        <div className='item-option-style'>
+
+                                        </div>
+                                    </div>
+                                )
+                            }) : undefined
+                        }
+                    </div>
+                </div>
             </div>
         </label>
     )
