@@ -91,7 +91,7 @@ const ModalForm = (props) => {
     }
 
     const handleChange = async (e) => {
-        const { name, value } = e.target
+        const { name, value } = e.target ? e.target : e
 
         if (typeForm === 'goal') {
             setGoal((prevData) => ({
@@ -186,7 +186,7 @@ const ModalForm = (props) => {
                             <input id={`${typeForm}-end-date`} className='input-form' type='text' placeholder='set end date' />
                         </div>
                         <div className='field-forms status'>
-                            <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })} classBtn='dropdown-form' title='choose an option' dropdownValue={modelTarget?.status || undefined} dataSelectable={true} />
+                            <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })} classBtn='dropdown-form' title='choose an option' dropdownValue={modelTarget?.status || undefined} changeDropdownValue={handleChange} dataSelectable={true} />
                         </div>
                         <div className='field-forms reminder-date'>
                             <ButtonDropdown target={targetMap(`${typeForm}-reminder-date`, { add: true })} classBtn='dropdown-form' title='choose an option' dataSelectable={true} />

@@ -41,8 +41,6 @@ const targetMap = (classes) => {
 
 const ButtonDropdown = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
-    const [selectedValue, setSelectedValue] = useState('')
-    const [eventTarget, setEventTarget] = useState(null)
 
     const target = props.target ?? { class : [] }
     const typeClass = target.class !== undefined ? target.class[0] : null
@@ -52,12 +50,11 @@ const ButtonDropdown = (props) => {
     let optionsDropdown = undefined
 
     const handleAction = (event) => {
-        console.log('EVENT - ', event)
-
         if (event.props) {
             const datavalue = event.props.datavalue
-            setSelectedValue(datavalue)
-            setEventTarget(event)
+            if (typeof props.changeDropdownValue === 'function' && dropdownStatus) {
+                props.changeDropdownValue({ name: 'status', value: datavalue })
+            }
         }
     }
 
@@ -97,30 +94,8 @@ const ButtonDropdown = (props) => {
         }
     }
 
-    useEffect(() => {
-        if (eventTarget?.e?.target) {
-            const dropdownClosest = eventTarget.e.target.closest('.dropdown-form')
-
-            if (dropdownClosest) {
-                const inputClosest = dropdownClosest.querySelectorAll('#goal-status, #assignment-status')
-            
-                console.log(inputClosest)
-                if (inputClosest) {
-                    inputClosest.forEach(item => {
-                        item.value = selectedValue
-
-                        console.log('VALUE OF DROPDOWN INPUT - ', item.value)
-                    })
-                }
-            }
-        }
-    })
-
-    console.log('PROPS - ', props.dropdownValue)
-
     return (        
         <span className={`${props.classBtn} button-st`} onClick={(e) => toggleVisibility(target, e)} onKeyDown={(e) => e.key === 'Enter' ? toggleVisibility(target, e) : ''} role='button' tabIndex='0'> 
-            {props.dataSelectable ? <input id={props.target.class} name='status' type='text' hidden /> : undefined }    
             <i className={`icon-st ${props.iconFa}`}></i>{props.title}
             <div className={`dropdown-menu ${ visibleElements.includes(typeClass) ? 'show' : '' }`} onClick={(e) => e.stopPropagation()}>
                 {defineDropdown()}
