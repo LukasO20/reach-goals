@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { VisibilityContext } from '../../../../provider/components/VisibilityProvider'
 
 import ButtonAction from './ButtonAction'
@@ -41,6 +41,9 @@ const targetMap = (classes) => {
 
 const ButtonDropdown = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
+    const [selectedValue, setSelectedValue] = useState('')
+    const [eventTarget, setEventTarget] = useState(null)
+
     const target = props.target ?? { class : [] }
     const typeClass = target.class !== undefined ? target.class[0] : null
     const dropdownStatus = typeClass.includes('goal-status') || typeClass.includes('assignment-status') 
@@ -48,37 +51,15 @@ const ButtonDropdown = (props) => {
     let titleDropdown = undefined
     let optionsDropdown = undefined
 
-    // const [selectedValue, setSelectedValue] = useState('')
-    // const [eventTarget, setEventTarget] = useState(null)
-
     const handleAction = (event) => {
-        // console.log('EVENT - ', event)
+        console.log('EVENT - ', event)
 
-        // if (event.props) {
-        //     const datavalue = event.props.datavalue
-        //     setSelectedValue(datavalue)
-        //     setEventTarget(event)
-        // }
+        if (event.props) {
+            const datavalue = event.props.datavalue
+            setSelectedValue(datavalue)
+            setEventTarget(event)
+        }
     }
-
-    // useEffect(() => {
-    //     if (eventTarget?.e?.target) {
-    //         const dropdownClosest = eventTarget.e.target.closest('.dropdown-form')
-
-    //         if (dropdownClosest) {
-    //             const inputClosest = dropdownClosest.querySelectorAll('#goal-status, #assignment-status')
-            
-    //             console.log(inputClosest)
-    //             if (inputClosest) {
-    //                 inputClosest.forEach(item => {
-    //                     item.value = selectedValue
-
-    //                     console.log('VALUE OF DROPDOWN INPUT - ', item.value)
-    //                 })
-    //             }
-    //         }
-    //     }
-    // })
 
     const defineDropdown = () => {
         switch (typeClass) {
@@ -115,11 +96,30 @@ const ButtonDropdown = (props) => {
                 break
         }
     }
-    
+
+    useEffect(() => {
+        if (eventTarget?.e?.target) {
+            const dropdownClosest = eventTarget.e.target.closest('.dropdown-form')
+
+            if (dropdownClosest) {
+                const inputClosest = dropdownClosest.querySelectorAll('#goal-status, #assignment-status')
+            
+                console.log(inputClosest)
+                if (inputClosest) {
+                    inputClosest.forEach(item => {
+                        item.value = selectedValue
+
+                        console.log('VALUE OF DROPDOWN INPUT - ', item.value)
+                    })
+                }
+            }
+        }
+    })
+
     console.log('PROPS - ', props.dropdownValue)
 
     return (        
-        <label className={`${props.classBtn} button-st`} onClick={(e) => toggleVisibility(target, e)}> 
+        <span className={`${props.classBtn} button-st`} onClick={(e) => toggleVisibility(target, e)} onKeyDown={(e) => e.key === 'Enter' ? toggleVisibility(target, e) : ''} role='button' tabIndex='0'> 
             {props.dataSelectable ? <input id={props.target.class} name='status' type='text' hidden /> : undefined }    
             <i className={`icon-st ${props.iconFa}`}></i>{props.title}
             <div className={`dropdown-menu ${ visibleElements.includes(typeClass) ? 'show' : '' }`} onClick={(e) => e.stopPropagation()}>
@@ -133,7 +133,7 @@ const ButtonDropdown = (props) => {
                                     <div className={`option ${option.op}`} key={`op-${index}`}>
                                         <div className='item-option'>                                  
                                             <div className='item-title'>
-                                                <ButtonAction onClick={handleAction} datavalue={dropdownStatus ? option.op : null} target={targetMap(['panel-center', `${option.op}`])} classBtn={`form-${option.op} button-st`} iconFa='fa-solid fa-plus' title={`${option.title}`}/>
+                                                <ButtonAction onClick={handleAction} datavalue={dropdownStatus ? option.op : null}  target={targetMap(['panel-center', `${option.op}`])} classBtn={`form-${option.op} button-st`} iconFa='fa-solid fa-plus' title={`${option.title}`}/>
                                             </div> 
                                             <div className='item-details'>
 
@@ -149,7 +149,7 @@ const ButtonDropdown = (props) => {
                     </div>
                 </div>
             </div>
-        </label>
+        </span>
     )
 }
 

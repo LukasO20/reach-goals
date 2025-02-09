@@ -11,7 +11,7 @@ const ButtonCheckbox = (props) => {
     const isChecked = statusButton(classBtn, valuesCheckbox)
 
     return (
-        <label className={`${props.classBtn} button-st ${isChecked ? 'checked' : ''}`} onClick={(e) => toggleValueByID(props.checkbox)}>
+        <label className={`${props.classBtn} button-st ${isChecked ? 'checked' : ''}`} onClick={(e) => toggleValueByID(props.checkbox)} onKeyDown={(e) => e.key === 'Enter' ? toggleValueByID(props.checkbox) : ''} role='button' tabIndex='0'>
             <label className='checkbox-container'>
                 <i className={`icon-st fa-solid ${isChecked ? 'fa-check' : ''}`}></i>
             </label>
