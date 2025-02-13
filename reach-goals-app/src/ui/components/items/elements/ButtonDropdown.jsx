@@ -31,10 +31,11 @@ const NullObject = (value) => {
     return (Array.isArray(value) || typeof value === "string") && value.length !== 0
 }
 
-const targetMap = (classes) => {
+const targetMap = (classes, operator = {}) => {
     const data = Array.isArray(classes) ? classes : [classes]
     const attributes = {
         class: data,
+        operator: operator
     }
     return attributes
 }
@@ -45,9 +46,11 @@ const ButtonDropdown = (props) => {
     const target = props.target ?? { class : [] }
     const typeClass = target.class !== undefined ? target.class[0] : null
     const dropdownStatus = typeClass.includes('goal-status') || typeClass.includes('assignment-status') 
+    const opening = props?.opening
 
     let titleDropdown = undefined
     let optionsDropdown = undefined
+    let classTargetDropdown = undefined
 
     const handleAction = (event) => {
         if (event.props) {
@@ -103,12 +106,18 @@ const ButtonDropdown = (props) => {
                     <div className='section-options'>
                         { NullObject(titleDropdown) ? <span>{titleDropdown}</span> : ''}
                         { NullObject(optionsDropdown) ?
-                            optionsDropdown.map((option, index) => {                      
+                            optionsDropdown.map((option, index) => {     
+                                if (opening === 'internal') {
+                                    classTargetDropdown = [`${option.op}`, { remove: true }]
+                                } else {
+                                    classTargetDropdown = [['panel-center', `${option.op}`]]
+                                }
+
                                 return (
                                     <div className={`option ${option.op}`} key={`op-${index}`}>
                                         <div className='item-option'>                                  
                                             <div className='item-title'>
-                                                <ButtonAction onClick={handleAction} datavalue={dropdownStatus ? option.op : null}  target={targetMap(['panel-center', `${option.op}`])} classBtn={`form-${option.op} button-st`} iconFa='fa-solid fa-plus' title={`${option.title}`}/>
+                                                <ButtonAction onClick={handleAction} datavalue={dropdownStatus ? option.op : null}  target={targetMap(...classTargetDropdown)} classBtn={`form-${option.op} button-st`} iconFa='fa-solid fa-plus' title={`${option.title}`}/>
                                             </div> 
                                             <div className='item-details'>
 

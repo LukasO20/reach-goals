@@ -68,6 +68,7 @@ const ModalForm = (props) => {
     const titleForm = titleMap[typeForm] || 'Create your objective'
     const classRemove = visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
 
+    console.log('TYPE - ', typeForm)
     const goalEmpty = {
         name: '',
         description: '',
@@ -150,7 +151,7 @@ const ModalForm = (props) => {
 
     const modelTarget = handleTarget(typeForm)
 
-    console.log('OBJECT modal target - ', modelTarget)
+    //console.log('OBJECT modal target - ', modelTarget)
 
     return (
         <div className='container-form-modal center-content' onClick={(e) => toggleVisibility(targetMap(classRemove), e)}>
@@ -186,7 +187,7 @@ const ModalForm = (props) => {
                             <input id={`${typeForm}-end-date`} className='input-form' type='text' placeholder='set end date' />
                         </div>
                         <div className='field-forms status'>
-                            <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })} classBtn='dropdown-form' title='choose an option' dropdownValue={modelTarget?.status || undefined} changeDropdownValue={handleChange} dataSelectable={true} />
+                            <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })} classBtn='dropdown-form' title='choose an option' opening='internal' dropdownValue={modelTarget?.status || undefined} changeDropdownValue={handleChange} dataSelectable={true} />
                         </div>
                         <div className='field-forms reminder-date'>
                             <ButtonDropdown target={targetMap(`${typeForm}-reminder-date`, { add: true })} classBtn='dropdown-form' title='choose an option' dataSelectable={true} />

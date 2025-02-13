@@ -6,8 +6,10 @@ import Config from './Config'
 const PanelCenter = (props) => {
     const { visibleElements } = useContext(VisibilityContext)
 
-    const btnCurrent = visibleElements[1] ?? ''
-    const typeForm = btnCurrent.split(' ')[0]
+    // const btnCurrent = visibleElements[1] ?? ''
+    // const typeForm = btnCurrent.split(' ')[0]
+
+    const typeForm = visibleElements.includes('goal') ? 'goal' : visibleElements.includes('assignment') ? 'assignment' : ''
 
     return (
         <div className={`content-center ${visibleElements.includes(props.id) ? 'show' :  ''} ${typeForm}`}>

@@ -27,17 +27,24 @@ const VisibilityProvider = ({children}) => {
                 if (target.operator.maintain) {
                     return target.class
                 }
+                if (target.operator.remove) {
+                    console.log('TO REMOVE ', prev)
+                }
+
                 return prev.filter(classPrevious => target.class.some(el => el !== classPrevious))
             }
         })
     }
 
     const toggleVisibility = (target, event) => {
+        console.log('ALVO - ', target)
+
         event.stopPropagation()
         const parameterTarget = {
             class: target?.class ?? null,
             operator: {
                 add: target?.operator?.add ?? false,
+                remove: target?.operator?.remove ?? false,
                 maintain: target?.operator?.maintain ?? false
             }
         }
