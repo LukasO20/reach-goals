@@ -19,12 +19,12 @@ const mapOptionDropdown = (type) => {
                 title: 'canceled'
             },
         ]
-    } else if (type === 'reminder') {
+    } /*else if (type === 'reminder') {
         return Array.from({ length: 30 }, (_, index) => ({
             op: `day-${index + 1}`,
             title: `${index + 1} day`
         }))
-    }
+    }*/
 }
 
 const NullObject = (value) => {
@@ -86,14 +86,14 @@ const ButtonDropdown = (props) => {
                 titleDropdown = 'Select status'
                 optionsDropdown = mapOptionDropdown('status')
                 break
-            case 'goal-reminder-date':
+            /*case 'goal-reminder-date':
                 titleDropdown = 'Select the day'
                 optionsDropdown = mapOptionDropdown('reminder')
                 break
             case 'assignment-reminder-date':
                 titleDropdown = 'Select the day'
                 optionsDropdown = mapOptionDropdown('reminder')
-                break
+                break*/
         }
     }
 

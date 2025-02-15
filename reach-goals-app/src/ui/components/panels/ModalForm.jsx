@@ -87,6 +87,9 @@ const ModalForm = (props) => {
     const [error, setError] = useState(null)
     const [success, setSucess] = useState(false)
 
+    const [dateStart, setDateStart] = useState('')
+    const [dateEnd, setDateEnd] = useState('')
+
     const nullModal = () => {
         setSelectModel(null)
     }
@@ -105,6 +108,15 @@ const ModalForm = (props) => {
                 [name]: value,
             }))
         }
+    }
+
+    const handleChangeDate = (e) => {
+        let value = e.target.value.replace(/\D/g, '')
+
+        if (value.length > 2) value = value.slice(0, 2) + "/" + value.slice(2)
+        if (value.length > 5) value = value.slice(0, 5) + "/" + value.slice(5, 9) 
+            
+        e.target.name === 'start' ? setDateStart(value) : setDateEnd(value)
     }
 
     const handleSubmit = async () => {
@@ -181,17 +193,19 @@ const ModalForm = (props) => {
                                 name='name' value={modelTarget?.name || ''} onChange={handleChange} />
                         </div>
                         <div className='field-forms start-date'>
-                            <input id={`${typeForm}-start-date`} className='input-form' type='text' placeholder='set start date' />
+                            <input id={`${typeForm}-start-date`} className='input-form' type='text' placeholder='set start date'
+                                name='start' value={dateStart} onChange={handleChangeDate} />
                         </div>
                         <div className='field-forms end-date'>
-                            <input id={`${typeForm}-end-date`} className='input-form' type='text' placeholder='set end date' />
+                            <input id={`${typeForm}-end-date`} className='input-form' type='text' placeholder='set end date'
+                                name='end' value={dateEnd} onChange={handleChangeDate} />
                         </div>
                         <div className='field-forms status'>
                             <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })} classBtn='dropdown-form' title='choose an option' opening='modal-form' dropdownValue={modelTarget?.status || undefined} changeDropdownValue={handleChange} dataSelectable={true} />
                         </div>
-                        <div className='field-forms reminder-date'>
+                        {/* <div className='field-forms reminder-date'>
                             <ButtonDropdown target={targetMap(`${typeForm}-reminder-date`, { add: true })} classBtn='dropdown-form' title='choose an option' dataSelectable={true} />
-                        </div>
+                        </div> */}
                         {formsInputMap(typeForm)}
                         <div className='item-forms tag'>
                             <div className='item-forms head'>
