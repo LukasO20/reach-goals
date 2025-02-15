@@ -46,7 +46,7 @@ const ButtonDropdown = (props) => {
     const target = props.target ?? { class : [] }
     const typeClass = target.class !== undefined ? target.class[0] : null
     const dropdownStatus = typeClass.includes('goal-status') || typeClass.includes('assignment-status') 
-    const opening = props?.opening
+    const reference = props?.reference
 
     let titleDropdown = undefined
     let optionsDropdown = undefined
@@ -106,11 +106,14 @@ const ButtonDropdown = (props) => {
                     <div className='section-options'>
                         { NullObject(titleDropdown) ? <span>{titleDropdown}</span> : ''}
                         { NullObject(optionsDropdown) ?
-                            optionsDropdown.map((option, index) => {     
-                                if (opening === 'internal') {
-                                    classTargetDropdown = [`${option.op}`, { remove: true }]
-                                } else {
-                                    classTargetDropdown = [['panel-center', `${option.op}`]]
+                            optionsDropdown.map((option, index) => {  
+                                switch(reference) {
+                                    case 'panel-center':
+                                        classTargetDropdown = [['panel-center', `${option.op}`]]
+                                        break
+                                    default:
+                                        classTargetDropdown = [null, { remove: true }]
+                                        break
                                 }
 
                                 return (

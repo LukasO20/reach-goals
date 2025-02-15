@@ -10,11 +10,23 @@ const VisibilityProvider = ({children}) => {
             const classType = Array.isArray(target.class)
 
             if (classType) {
+                let filter = [...prev]
+
                 if (target.operator.add) {
-                    const filter = [...prev.filter(classPrevious => classPrevious)].slice(0, 2)
+                    filter = filter.slice(0, 2)
                     filter.push(...target.class)
                     return filter
                 }
+
+                if (target.operator.remove) {
+                    if (target.class) {
+                        filter = filter.filter(classPrevious => target.class.some(el => el !== classPrevious))
+                    } 
+
+                    filter.pop()
+                    return filter
+                }
+
                 return target.class
             }
         })
@@ -26,9 +38,6 @@ const VisibilityProvider = ({children}) => {
             if (classType) { 
                 if (target.operator.maintain) {
                     return target.class
-                }
-                if (target.operator.remove) {
-                    console.log('TO REMOVE ', prev)
                 }
 
                 return prev.filter(classPrevious => target.class.some(el => el !== classPrevious))
