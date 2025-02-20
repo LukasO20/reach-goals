@@ -72,13 +72,17 @@ const ModalForm = (props) => {
     const goalEmpty = {
         name: '',
         description: '',
-        status: undefined
+        status: undefined,
+        start: '',
+        end: ''
     }
     
     const assingmentEmpty = {
         name: '',
         description: '',
-        status: undefined
+        status: undefined,
+        start: '',
+        end: ''
     }
 
     const [goal, setGoal] = useState(goalEmpty)
@@ -87,15 +91,24 @@ const ModalForm = (props) => {
     const [error, setError] = useState(null)
     const [success, setSucess] = useState(false)
 
-    const [dateStart, setDateStart] = useState('')
-    const [dateEnd, setDateEnd] = useState('')
-
     const nullModal = () => {
         setSelectModel(null)
     }
 
+    const formatData = async (modalObject) => {
+        if (typeof modalObject === 'object') {
+            const date = new Date(modalObject.start)
+            modalObject.start = `${String(date.getDate()).padStart(2, "0")}/${String(date.getMonth() + 1).padStart(2, "0")}/${date.getFullYear()}`      
+        }
+    }
+
     const handleChange = async (e) => {
-        const { name, value } = e.target ? e.target : e
+        const { name } = e.target ? e.target : e
+        let { value } = e.target ? e.target : e
+
+        if (name === 'start' ||  name === 'end') {
+            value = `${String(value.getDate()).padStart(2, "0")}/${String(value.getMonth() + 1).padStart(2, "0")}/${date.getFullYear()}`
+        }
 
         if (typeForm === 'goal') {
             setGoal((prevData) => ({
@@ -108,15 +121,6 @@ const ModalForm = (props) => {
                 [name]: value,
             }))
         }
-    }
-
-    const handleChangeDate = (e) => {
-        let value = e.target.value.replace(/\D/g, '')
-
-        if (value.length > 2) value = value.slice(0, 2) + "/" + value.slice(2)
-        if (value.length > 5) value = value.slice(0, 5) + "/" + value.slice(5, 9) 
-            
-        e.target.name === 'start' ? setDateStart(value) : setDateEnd(value)
     }
 
     const handleSubmit = async () => {
@@ -139,6 +143,7 @@ const ModalForm = (props) => {
     }
 
     const handleTarget = (typeForm) => {
+        formatData(goal)
         return typeForm === 'goal' ? goal : assingment
     }
 
@@ -194,11 +199,11 @@ const ModalForm = (props) => {
                         </div>
                         <div className='field-forms start-date'>
                             <input id={`${typeForm}-start-date`} className='input-form' type='text' placeholder='set start date'
-                                name='start' value={dateStart} onChange={handleChangeDate} />
+                                name='start' value={modelTarget?.start || ''} onChange={handleChange} />
                         </div>
                         <div className='field-forms end-date'>
                             <input id={`${typeForm}-end-date`} className='input-form' type='text' placeholder='set end date'
-                                name='end' value={dateEnd} onChange={handleChangeDate} />
+                                name='end' value={modelTarget?.end || ''} onChange={handleChange} />
                         </div>
                         <div className='field-forms status'>
                             <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })} classBtn='dropdown-form' title='choose an option' opening='modal-form' dropdownValue={modelTarget?.status || undefined} changeDropdownValue={handleChange} dataSelectable={true} />
