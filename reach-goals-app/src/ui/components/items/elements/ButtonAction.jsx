@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { VisibilityContext } from '../../../../provider/components/VisibilityProvider'
+import { VisibilityContext } from '../../../../hooks/VisibilityProvider'
 
 const statusButton = (classBtn, providervisibleElements) => {
     return providervisibleElements.includes(classBtn)

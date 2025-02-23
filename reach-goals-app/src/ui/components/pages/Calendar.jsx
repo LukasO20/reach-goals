@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { TitleContext } from '../../../provider/components/TitleProvider'
+import { TitleContext } from '../../../hooks/TitleProvider'
 
 const Calendar = () => {
     const { update } = useContext(TitleContext)

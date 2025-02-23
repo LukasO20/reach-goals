@@ -1,9 +1,9 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import { TitleProvider } from '../provider/components/TitleProvider'
-import { VisibilityProvider } from '../provider/components/VisibilityProvider'
-import { CheckboxProvider } from '../provider/components/CheckboxProvider'
-import { ManageModelProvider } from '../provider/components/ManageModelProvider'
+import { TitleProvider } from '../hooks/TitleProvider'
+import { VisibilityProvider } from '../hooks/VisibilityProvider'
+import { CheckboxProvider } from '../hooks/CheckboxProvider'
+import { ManageModelProvider } from '../hooks/ManageModelProvider'
 
 import ContainerN from '../ui/components/Navigate'
 import ContainerH from '../ui/components/ContainerHeader'

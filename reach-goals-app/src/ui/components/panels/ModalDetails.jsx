@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { Outlet } from 'react-router-dom'
-import { ManageModelContext } from '../../../provider/components/ManageModelProvider'
+import { ManageModelContext } from '../../../hooks/ManageModelProvider'
 import * as goalAction from '../../../provider/goal/goalAction'
 
 import ButtonAction from '../../components/items/elements/ButtonAction'

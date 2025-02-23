@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { VisibilityContext } from '../../../provider/components/VisibilityProvider'
-import { ManageModelContext } from '../../../provider/components/ManageModelProvider'
+import { VisibilityContext } from '../../../hooks/VisibilityProvider'
+import { ManageModelContext } from '../../../hooks/ManageModelProvider'
 import * as goalAction from '../../../provider/goal/goalAction'
 import * as assignmentAction from '../../../provider/assignment/assignmentAction'
 import ButtonAction from '../items/elements/ButtonAction'
 import ButtonDropdown from '../../components/items/elements/ButtonDropdown'
+
+import moment from 'moment'
 
 import '../../styles/items/Elements.scss'
 import '../../styles/panels/Objectives.scss'
@@ -68,7 +70,6 @@ const ModalForm = (props) => {
     const titleForm = titleMap[typeForm] || 'Create your objective'
     const classRemove = visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
 
-    console.log('TYPE - ', typeForm)
     const goalEmpty = {
         name: '',
         description: '',
@@ -91,24 +92,44 @@ const ModalForm = (props) => {
     const [error, setError] = useState(null)
     const [success, setSucess] = useState(false)
 
-    const nullModal = () => {
-        setSelectModel(null)
-    }
+    const nullModal = () => { setSelectModel(null) }
 
-    const formatData = async (modalObject) => {
-        if (typeof modalObject === 'object') {
-            const date = new Date(modalObject.start)
-            modalObject.start = `${String(date.getDate()).padStart(2, "0")}/${String(date.getMonth() + 1).padStart(2, "0")}/${date.getFullYear()}`      
+    const formatDate = async ({ start, end }) => {
+
+        const formatInput = (input) => {
+            if (moment(input, moment.ISO_8601, true).isValid()) {
+                return moment(input).format('DD-MM-YYYY')
+            } 
+
+            const cleanedInput = input.replace(/\D/g, '')  
+            if (isNaN(Number(cleanedInput))) { return '' }
+       
+            if (cleanedInput.length <= 2) { return cleanedInput } 
+            else if (cleanedInput.length <= 4) {
+                return `${cleanedInput.slice(0, 2)}-${cleanedInput.slice(2)}`
+            } 
+            else {
+                return  `${cleanedInput.slice(0, 2)}-${cleanedInput.slice(2, 4)}-${cleanedInput.slice(4)}`
+            }
+        }
+
+        if (start || end) {
+            console.log(' START DATE ', start, ' END DATE ', end)
+
+            const formatStart = start ? formatInput(start) : undefined
+            const formatEnd = end ? formatInput(end) : undefined
+
+            const dateFormat = {
+                start: formatStart? moment(formatStart).format('DD/MM/YYYY') : undefined,
+                end: formatEnd ? moment(formatEnd).format('DD/MM/YYYY') : undefined
+            }
+
+            //handleChange()
         }
     }
 
     const handleChange = async (e) => {
-        const { name } = e.target ? e.target : e
-        let { value } = e.target ? e.target : e
-
-        if (name === 'start' ||  name === 'end') {
-            value = `${String(value.getDate()).padStart(2, "0")}/${String(value.getMonth() + 1).padStart(2, "0")}/${date.getFullYear()}`
-        }
+        const { name, value } = e.target ? e.target : e
 
         if (typeForm === 'goal') {
             setGoal((prevData) => ({
@@ -143,8 +164,17 @@ const ModalForm = (props) => {
     }
 
     const handleTarget = (typeForm) => {
-        formatData(goal)
-        return typeForm === 'goal' ? goal : assingment
+        let objectTarget = undefined
+
+        if (typeForm === 'goal') {
+            objectTarget = goal
+            formatDate(goal)
+        } else {
+            objectTarget = assingment
+            formatDate(assingment)
+        }
+        
+        return objectTarget
     }
 
     useEffect(() => {

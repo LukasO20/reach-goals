@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import Routes from '../../app/Routes'
-import { VisibilityContext } from '../../provider/components/VisibilityProvider'
+import { VisibilityContext } from '../../hooks/VisibilityProvider'
 
 import ButtonDropdown from './items/elements/ButtonDropdown'
 import ButtonCheckbox from './items/elements/ButtonCheckbox'
