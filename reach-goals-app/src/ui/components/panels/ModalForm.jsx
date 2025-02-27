@@ -94,7 +94,8 @@ const ModalForm = (props) => {
 
     const nullModal = () => { setSelectModel(null) }
 
-    const formatDate = async ({ start, end }) => {
+    const formatDate = (modalForm) => {
+        const { start, end } = modalForm
 
         const formatInput = (input) => {
             if (moment(input, moment.ISO_8601, true).isValid()) {
@@ -113,18 +114,12 @@ const ModalForm = (props) => {
             }
         }
 
-        if (start || end) {
-            console.log(' START DATE ', start, ' END DATE ', end)
+        const formatStart = start ? formatInput(start) : undefined
+        const formatEnd = end ? formatInput(end) : undefined
 
-            const formatStart = start ? formatInput(start) : undefined
-            const formatEnd = end ? formatInput(end) : undefined
-
-            const dateFormat = {
-                start: formatStart? moment(formatStart).format('DD/MM/YYYY') : undefined,
-                end: formatEnd ? moment(formatEnd).format('DD/MM/YYYY') : undefined
-            }
-
-            //handleChange()
+        return {
+            start: formatStart? moment(formatStart).format('DD/MM/YYYY') : undefined,
+            end: formatEnd ? moment(formatEnd).format('DD/MM/YYYY') : undefined
         }
     }
 
@@ -164,16 +159,9 @@ const ModalForm = (props) => {
     }
 
     const handleTarget = (typeForm) => {
-        let objectTarget = undefined
-
-        if (typeForm === 'goal') {
-            objectTarget = goal
-            formatDate(goal)
-        } else {
-            objectTarget = assingment
-            formatDate(assingment)
-        }
-        
+        let objectTarget = typeForm === 'goal' ? goal : assingment
+        const fotmatedDate = formatDate(objectTarget)
+        objectTarget = { ...objectTarget, ...fotmatedDate }
         return objectTarget
     }
 
