@@ -97,29 +97,40 @@ const ModalForm = (props) => {
     const formatDate = (modalForm) => {
         const { start, end } = modalForm
 
-        const formatInput = (input) => {
+        const formatInputISO = (input) => {
             if (moment(input, moment.ISO_8601, true).isValid()) {
-                return moment(input).format('DD-MM-YYYY')
+                return input ? moment(input).format('DD/MM/YYYY') : null
             } 
+        }
 
-            const cleanedInput = input.replace(/\D/g, '')  
-            if (isNaN(Number(cleanedInput))) { return '' }
-       
-            if (cleanedInput.length <= 2) { return cleanedInput } 
-            else if (cleanedInput.length <= 4) {
-                return `${cleanedInput.slice(0, 2)}-${cleanedInput.slice(2)}`
-            } 
-            else {
-                return  `${cleanedInput.slice(0, 2)}-${cleanedInput.slice(2, 4)}-${cleanedInput.slice(4)}`
+        const formatInput = (input) => {            
+            if (input && !moment(input, moment.ISO_8601, true).isValid()) {
+
+                const cleanedInput = input.replace(/\D/g, '')  
+                if (isNaN(Number(cleanedInput))) { return '' }
+        
+                const limitedInput = cleanedInput.slice(0, 8)
+    
+                if (limitedInput.length <= 2) { 
+                    return limitedInput
+                } 
+                else if (limitedInput.length <= 4) {
+                    return `${limitedInput.slice(0, 2)}/${limitedInput.slice(2)}`
+                } 
+                else if (limitedInput.length === 8) {
+                    return `${limitedInput.slice(0, 2)}/${limitedInput.slice(2, 4)}/${limitedInput.slice(4)}`
+                } else {
+                    return limitedInput
+                }
             }
         }
 
-        const formatStart = start ? formatInput(start) : undefined
-        const formatEnd = end ? formatInput(end) : undefined
+        const formatStart = start ? formatInput(start) || formatInputISO(start) : undefined
+        const formatEnd = end ? formatInput(end) || formatInputISO(end) : undefined
 
         return {
-            start: formatStart? moment(formatStart).format('DD/MM/YYYY') : undefined,
-            end: formatEnd ? moment(formatEnd).format('DD/MM/YYYY') : undefined
+            start: formatStart/*? moment(formatStart).format('DD/MM/YYYY') : undefined*/,
+            end: formatEnd /*? moment(formatEnd).format('DD/MM/YYYY') : undefined*/
         }
     }
 
