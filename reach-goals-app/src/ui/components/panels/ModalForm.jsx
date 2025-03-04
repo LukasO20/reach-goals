@@ -110,18 +110,24 @@ const ModalForm = (props) => {
                 if (isNaN(Number(cleanedInput))) { return '' }
         
                 const limitedInput = cleanedInput.slice(0, 8)
-    
+                let formattedInput = ''
+
                 if (limitedInput.length <= 2) { 
-                    return limitedInput
+                    formattedInput = limitedInput
                 } 
                 else if (limitedInput.length <= 4) {
-                    return `${limitedInput.slice(0, 2)}/${limitedInput.slice(2)}`
+                    formattedInput = `${limitedInput.slice(0, 2)}/${limitedInput.slice(2)}`
                 } 
-                else if (limitedInput.length === 8) {
-                    return `${limitedInput.slice(0, 2)}/${limitedInput.slice(2, 4)}/${limitedInput.slice(4)}`
-                } else {
-                    return limitedInput
+                else {
+                    formattedInput = `${limitedInput.slice(0, 2)}/${limitedInput.slice(2, 4)}/${limitedInput.slice(4)}`
                 }
+
+                const validDate = moment(formattedInput, 'DD/MM/YYYY')
+                if (!validDate.isValid()) {
+                    console.error('THIS IS IS INVALID DATE (put an indicator input date error to users see)')
+                }
+
+                return formattedInput
             }
         }
 
