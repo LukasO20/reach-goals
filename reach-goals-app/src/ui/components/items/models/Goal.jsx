@@ -15,7 +15,7 @@ const targetMap = (classes) => {
     return attributes
 }
 
-const Goal = () => {
+const Goal = (props) => {
     const [goal, setGoal] = useState([])
     const [erro, setErro] = useState(false)
     
@@ -28,6 +28,7 @@ const Goal = () => {
     }, [location.pathname])
 
     const target = useMemo(() => targetMap('panel-left'), []) 
+    const typeGoal = props
 
     useEffect(() => {
         const fetchGoal = async () => {
@@ -68,7 +69,7 @@ const Goal = () => {
     )
 
     return (
-        goal.map(goal => (       
+        goal.map(goal => ( 
             <div className='goal card' id={goal.id} key={goal.id} onClick={(e) => handleGoalClick(goal.id, e)}>
                 <Link to={`${currentLocation}/details`}>
                     <div className='head'>

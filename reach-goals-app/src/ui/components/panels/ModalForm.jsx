@@ -5,6 +5,7 @@ import * as goalAction from '../../../provider/goal/goalAction'
 import * as assignmentAction from '../../../provider/assignment/assignmentAction'
 import ButtonAction from '../items/elements/ButtonAction'
 import ButtonDropdown from '../../components/items/elements/ButtonDropdown'
+import ModalList from '../panels/ModalList'
 
 import moment from 'moment'
 
@@ -52,13 +53,16 @@ const formsItemMap = (typeForm) => {
     : 
     <div className='item-forms assignment'>
         <div className='item-forms head'>
-            <div className='item-head-1'>assignments</div>
+            <div className='item-head-1'>
+                <label>assignments</label>
+                <ButtonAction onClick={<ModalList />} classBtn={`form-add-assignment button-st`} iconFa='fa-solid fa-plus' title='Add'/>
+            </div>
             <div className='item-head-2'></div>
         </div>
         <div className='item-forms body'></div>
     </div>
 
-return form
+    return form
 }
 
 const ModalForm = (props) => {

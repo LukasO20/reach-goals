@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { VisibilityContext } from '../../../../hooks/VisibilityProvider'
 
 const statusButton = (classBtn, providervisibleElements) => {
-    return providervisibleElements.includes(classBtn)
+    return providervisibleElements?.includes(classBtn)
 }
 
 const ButtonAction = (props) => {
