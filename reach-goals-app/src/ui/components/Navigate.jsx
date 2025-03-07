@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { VisibilityContext } from '../../hooks/VisibilityProvider'
+import { VisibilityContext } from '../../provider/VisibilityProvider'
 
 import '../styles/Navigate.scss'
 import ButtonAction from './items/elements/ButtonAction'

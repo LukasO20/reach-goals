@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { VisibilityContext } from '../../../hooks/VisibilityProvider'
+import { VisibilityContext } from '../../../provider/VisibilityProvider'
 import ModalForm from './ModalForm'
 import Config from './Config'
 

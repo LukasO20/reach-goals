@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { VisibilityContext } from '../../../../hooks/VisibilityProvider'
+import { VisibilityContext } from '../../../../provider/VisibilityProvider'
 
 const statusButton = (classBtn, providervisibleElements) => {
     return providervisibleElements?.includes(classBtn)
@@ -15,7 +15,7 @@ const ButtonAction = (props) => {
 
     const handleClick = (e) => {
         if (typeof props.onClick === 'function') {
-            props.onClick({props, e}) // execute external function from 'onClick' attribute
+            props.onClick({props, e}) // execute external function from 'onClick' attribute    
         }
         if (standardRoute) { navigate('/home') } // return standard route if true  
         toggleVisibility(props.target, e)

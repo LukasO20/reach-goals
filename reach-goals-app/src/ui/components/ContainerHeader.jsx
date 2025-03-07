@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { useLocation } from 'react-router-dom'
-import { TitleContext } from '../../hooks/TitleProvider'
-import { VisibilityContext } from '../../hooks/VisibilityProvider'
+import { TitleContext } from '../../provider/TitleProvider'
+import { VisibilityContext } from '../../provider/VisibilityProvider'
 
 import ButtonLink from './items/elements/ButtonLink'
 

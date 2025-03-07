@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { VisibilityContext } from '../../../hooks/VisibilityProvider'
-import { ManageModelContext } from '../../../hooks/ManageModelProvider'
+import { VisibilityContext } from '../../../provider/VisibilityProvider'
+import { ManageModelContext } from '../../../provider/ManageModelProvider'
 import { Goal } from '../items/models/Goal'
 import { Assignment } from '../items/models/Assignment'
 

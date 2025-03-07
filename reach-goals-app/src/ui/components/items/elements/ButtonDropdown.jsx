@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { VisibilityContext } from '../../../../hooks/VisibilityProvider'
+import { VisibilityContext } from '../../../../provider/VisibilityProvider'
 
 import ButtonAction from './ButtonAction'
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useBool } from '../../../../hooks/CheckboxProvider'
+import { useBool } from '../../../../provider/CheckboxProvider'
 
 const statusButton = (classBtn, dataCheckboxProvider) => {
     return dataCheckboxProvider.some(item => item.id === classBtn && item.value)

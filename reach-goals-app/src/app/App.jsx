@@ -1,9 +1,10 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import { TitleProvider } from '../hooks/TitleProvider'
-import { VisibilityProvider } from '../hooks/VisibilityProvider'
-import { CheckboxProvider } from '../hooks/CheckboxProvider'
-import { ManageModelProvider } from '../hooks/ManageModelProvider'
+import { TitleProvider } from '../provider/TitleProvider'
+import { VisibilityProvider } from '../provider/VisibilityProvider'
+import { CheckboxProvider } from '../provider/CheckboxProvider'
+import { ManageModelProvider } from '../provider/ManageModelProvider'
+import { ModalListProvider } from '../provider/ModalListProvider'
 
 import ContainerN from '../ui/components/Navigate'
 import ContainerH from '../ui/components/ContainerHeader'
@@ -22,15 +23,17 @@ const App = () => {
                 <VisibilityProvider>     
                     <CheckboxProvider>
                         <ManageModelProvider>
-                            <div className="container-app">
-                                <ContainerN />
-                                <ContainerH />
-                                <ContainerM>
-                                    <AppRoutes />  
-                                </ContainerM>
-                                <PanelCenter id="panel-center" />
-                                <PanelLeft id="panel-left" />
-                            </div>
+                            <ModalListProvider>
+                                <div className="container-app">
+                                    <ContainerN />
+                                    <ContainerH />
+                                    <ContainerM>
+                                        <AppRoutes />  
+                                    </ContainerM>
+                                    <PanelCenter id="panel-center" />
+                                    <PanelLeft id="panel-left" />
+                                </div>
+                            </ModalListProvider>
                         </ManageModelProvider>
                     </CheckboxProvider>              
                 </VisibilityProvider>

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { TitleContext } from '../../../hooks/TitleProvider'
+import { TitleContext } from '../../../provider/TitleProvider'
 
 import Goal from '../items/models/Goal'
 

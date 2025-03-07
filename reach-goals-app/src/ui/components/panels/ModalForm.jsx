@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { VisibilityContext } from '../../../hooks/VisibilityProvider'
-import { ManageModelContext } from '../../../hooks/ManageModelProvider'
+import { VisibilityContext } from '../../../provider/VisibilityProvider'
+import { ManageModelContext } from '../../../provider/ManageModelProvider'
+import { ModalListContext } from '../../../provider/ModalListProvider'
 import * as goalAction from '../../../provider/goal/goalAction'
 import * as assignmentAction from '../../../provider/assignment/assignmentAction'
 import ButtonAction from '../items/elements/ButtonAction'
@@ -41,7 +42,7 @@ const formsInputMap = (typeForm) => {
     return form
 }
 
-const formsItemMap = (typeForm) => {
+const formsItemMap = (typeForm, extHandleModalList) => {
     const form = typeForm === 'assignment' ?
     <div className='item-forms goal'>
         <div className='item-forms head'>
@@ -55,7 +56,7 @@ const formsItemMap = (typeForm) => {
         <div className='item-forms head'>
             <div className='item-head-1'>
                 <label>assignments</label>
-                <ButtonAction onClick={<ModalList />} classBtn={`form-add-assignment button-st`} iconFa='fa-solid fa-plus' title='Add'/>
+                <ButtonAction onClick={extHandleModalList} classBtn={`form-modallist-assignment button-st`} iconFa='fa-solid fa-plus' title='Add'/>
             </div>
             <div className='item-head-2'></div>
         </div>
@@ -68,6 +69,7 @@ const formsItemMap = (typeForm) => {
 const ModalForm = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { selectModel, setSelectModel } = useContext(ManageModelContext)
+    const { modalList, handleModalList } = useContext(ModalListContext)
 
     const typeForm = props.type
     const icon = iconMap[typeForm] || 'fa-solid fa-triangle-exclamation'
@@ -95,6 +97,7 @@ const ModalForm = (props) => {
 
     const [error, setError] = useState(null)
     const [success, setSucess] = useState(false)
+
 
     const nullModal = () => { setSelectModel(null) }
 
@@ -258,7 +261,7 @@ const ModalForm = (props) => {
                             </div>
                             <div className='item-forms body'></div>
                         </div>
-                        {formsItemMap(typeForm)}
+                        {formsItemMap(typeForm, handleModalList)}
                         <div className='field-forms details'>
                             <textarea id={`${typeForm}-details`} className='input-form' placeholder='details here...'
                                 name='description' value={modelTarget?.description || ''} onChange={handleChange}></textarea>
@@ -283,6 +286,9 @@ const ModalForm = (props) => {
                     </form>
                 </div>
             </div>
+            {modalList && (
+                <ModalList/>
+            )}
         </div>
     )
 }

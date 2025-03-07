@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom' 
-import { ManageModelContext } from '../../../../hooks/ManageModelProvider'
-import { VisibilityContext } from '../../../../hooks/VisibilityProvider'
+import { ManageModelContext } from '../../../../provider/ManageModelProvider'
+import { VisibilityContext } from '../../../../provider/VisibilityProvider'
 import { Link } from 'react-router-dom'
 
 import ButtonAction from '../elements/ButtonAction'
