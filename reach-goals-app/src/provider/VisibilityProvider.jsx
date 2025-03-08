@@ -5,8 +5,15 @@ const VisibilityContext = React.createContext()
 const VisibilityProvider = ({children}) => {
     const [visibleElements, setVisibleElement] = useState([])
 
-    const updateVisibility = (target) => {
+    const setSafeVisibleElement = (updateFn) => {
         setVisibleElement((prev) => {
+            const safeValue = updateFn(prev) ?? []
+            return Array.isArray(safeValue) ? safeValue : []
+        })
+    }
+
+    const updateVisibility = (target) => {
+        setSafeVisibleElement((prev) => {
             const classType = Array.isArray(target.class)
 
             if (classType) {
@@ -33,7 +40,7 @@ const VisibilityProvider = ({children}) => {
     }
 
     const removeVisibility = (target) => {
-        setVisibleElement((prev) => {
+        setSafeVisibleElement((prev) => {
             const classType = Array.isArray(target.class)      
             if (classType) { 
                 if (target.operator.maintain) {

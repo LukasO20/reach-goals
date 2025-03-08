@@ -7,13 +7,15 @@ const ModalListProvider = ({children}) => {
 
     const handleModalList = (modalList, event) => {
         //event.stopPropagation()
-        console.log('HE CALL ME')
+
         const parameterTarget = {
             open: modalList?.open,
             type: modalList?.type
         }
         setModalList(parameterTarget)
     }
+
+    console.log('LISTS - ', modalList)
 
     return (
         <ModalListContext.Provider value={{modalList, handleModalList}}>

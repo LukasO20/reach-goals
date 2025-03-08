@@ -1,13 +1,17 @@
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider'
+import { ModalListContext } from '../../../../provider/ModalListProvider'
 
 const statusButton = (classBtn, providervisibleElements) => {
-    return providervisibleElements?.includes(classBtn)
+    if (!providervisibleElements) { return false }
+    return providervisibleElements.includes(classBtn)
 }
 
 const ButtonAction = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
+    const { handleModalList } = useContext(ModalListContext)
+
     const classBtn = props.classBtn.split(' ')[2]
     const isOn = statusButton(classBtn, visibleElements)
     const navigate = useNavigate()
@@ -19,6 +23,7 @@ const ButtonAction = (props) => {
         }
         if (standardRoute) { navigate('/home') } // return standard route if true  
         toggleVisibility(props.target, e)
+        
     }
 
     return (

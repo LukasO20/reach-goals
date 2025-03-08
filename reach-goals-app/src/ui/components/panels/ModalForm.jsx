@@ -42,11 +42,14 @@ const formsInputMap = (typeForm) => {
     return form
 }
 
-const formsItemMap = (typeForm, extHandleModalList) => {
+const formsItemMap = (typeForm) => {
     const form = typeForm === 'assignment' ?
     <div className='item-forms goal'>
         <div className='item-forms head'>
-            <div className='item-head-1'>goals</div>
+            <div className='item-head-1'>
+                <label>goals</label>
+                <ButtonAction target={targetMap(`modal-list-${typeForm}`, { add: true })} classBtn={`form-modallist-assignment button-st`} iconFa='fa-solid fa-plus' title='Add'/>
+            </div>
             <div className='item-head-2'></div>
         </div>
         <div className='item-forms body'></div>
@@ -56,7 +59,7 @@ const formsItemMap = (typeForm, extHandleModalList) => {
         <div className='item-forms head'>
             <div className='item-head-1'>
                 <label>assignments</label>
-                <ButtonAction onClick={extHandleModalList} classBtn={`form-modallist-assignment button-st`} iconFa='fa-solid fa-plus' title='Add'/>
+                <ButtonAction target={targetMap(`modal-list-${typeForm}`, { add: true })} classBtn={`form-modallist-assignment button-st`} iconFa='fa-solid fa-plus' title='Add'/>
             </div>
             <div className='item-head-2'></div>
         </div>
@@ -69,7 +72,7 @@ const formsItemMap = (typeForm, extHandleModalList) => {
 const ModalForm = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { selectModel, setSelectModel } = useContext(ManageModelContext)
-    const { modalList, handleModalList } = useContext(ModalListContext)
+    const { modalList } = useContext(ModalListContext)
 
     const typeForm = props.type
     const icon = iconMap[typeForm] || 'fa-solid fa-triangle-exclamation'
@@ -97,7 +100,6 @@ const ModalForm = (props) => {
 
     const [error, setError] = useState(null)
     const [success, setSucess] = useState(false)
-
 
     const nullModal = () => { setSelectModel(null) }
 
@@ -261,7 +263,7 @@ const ModalForm = (props) => {
                             </div>
                             <div className='item-forms body'></div>
                         </div>
-                        {formsItemMap(typeForm, handleModalList)}
+                        {formsItemMap(typeForm)}
                         <div className='field-forms details'>
                             <textarea id={`${typeForm}-details`} className='input-form' placeholder='details here...'
                                 name='description' value={modelTarget?.description || ''} onChange={handleChange}></textarea>
