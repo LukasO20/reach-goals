@@ -22,8 +22,9 @@ const ButtonAction = (props) => {
             props.onClick({props, e}) // execute external function from 'onClick' attribute    
         }
         if (standardRoute) { navigate('/home') } // return standard route if true  
+
         toggleVisibility(props.target, e)
-        
+        handleModalList(props.modalList, e)
     }
 
     return (

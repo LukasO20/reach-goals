@@ -32,6 +32,14 @@ const targetMap = (classes, operator = {}) => {
     return attributes
 }
 
+const modalListMap = (open, type) => {
+    const attributes = {
+        open: open,
+        type: type
+    }
+    return attributes
+}
+
 const formsInputMap = (typeForm) => {
     const form = typeForm === 'assignment' ?
         <div className='field-forms duration'>
@@ -48,7 +56,7 @@ const formsItemMap = (typeForm) => {
         <div className='item-forms head'>
             <div className='item-head-1'>
                 <label>goals</label>
-                <ButtonAction target={targetMap(`modal-list-${typeForm}`, { add: true })} classBtn={`form-modallist-assignment button-st`} iconFa='fa-solid fa-plus' title='Add'/>
+                <ButtonAction target={targetMap(`modal-list-${typeForm}`, { add: true })} modalList={modalListMap(true, typeForm)} classBtn={`form-modallist-assignment button-st`} iconFa='fa-solid fa-plus' title='Add'/>
             </div>
             <div className='item-head-2'></div>
         </div>
@@ -59,7 +67,7 @@ const formsItemMap = (typeForm) => {
         <div className='item-forms head'>
             <div className='item-head-1'>
                 <label>assignments</label>
-                <ButtonAction target={targetMap(`modal-list-${typeForm}`, { add: true })} classBtn={`form-modallist-assignment button-st`} iconFa='fa-solid fa-plus' title='Add'/>
+                <ButtonAction target={targetMap(`modal-list-${typeForm}`, { add: true })} modalList={modalListMap(true, typeForm)} classBtn={`form-modallist-assignment button-st`} iconFa='fa-solid fa-plus' title='Add'/>
             </div>
             <div className='item-head-2'></div>
         </div>
@@ -289,7 +297,7 @@ const ModalForm = (props) => {
                 </div>
             </div>
             {modalList && (
-                <ModalList/>
+                <ModalList title={`Complementing ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} type={typeForm} />
             )}
         </div>
     )
