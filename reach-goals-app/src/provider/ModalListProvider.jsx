@@ -11,10 +11,9 @@ const ModalListProvider = ({children}) => {
     }
 
     const handleModalList = (modalList, event) => {
+        event.stopPropagation()
 
-        if (!hasValidProperties(modalList)) {
-            return setModalList(false)
-        }
+        if (!hasValidProperties(modalList)) { return console.error(`The object (${modalList}) is invalid.`) }
 
         const parameterTarget = {
             open: modalList?.open,

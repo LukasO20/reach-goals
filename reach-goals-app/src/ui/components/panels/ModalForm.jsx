@@ -56,7 +56,7 @@ const formsItemMap = (typeForm) => {
         <div className='item-forms head'>
             <div className='item-head-1'>
                 <label>goals</label>
-                <ButtonAction target={targetMap(`modal-list-${typeForm}`, { add: true })} modalList={modalListMap(true, typeForm)} classBtn={`form-modallist-assignment button-st`} iconFa='fa-solid fa-plus' title='Add'/>
+                <ButtonAction modalList={modalListMap(true, typeForm)} classBtn={`form-modallist-assignment button-st`} iconFa='fa-solid fa-plus' title='Add'/>
             </div>
             <div className='item-head-2'></div>
         </div>
@@ -67,7 +67,7 @@ const formsItemMap = (typeForm) => {
         <div className='item-forms head'>
             <div className='item-head-1'>
                 <label>assignments</label>
-                <ButtonAction target={targetMap(`modal-list-${typeForm}`, { add: true })} modalList={modalListMap(true, typeForm)} classBtn={`form-modallist-assignment button-st`} iconFa='fa-solid fa-plus' title='Add'/>
+                <ButtonAction modalList={modalListMap(true, typeForm)} classBtn={`form-modallist-assignment button-st`} iconFa='fa-solid fa-plus' title='Add'/>
             </div>
             <div className='item-head-2'></div>
         </div>
@@ -80,7 +80,7 @@ const formsItemMap = (typeForm) => {
 const ModalForm = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { selectModel, setSelectModel } = useContext(ManageModelContext)
-    const { modalList } = useContext(ModalListContext)
+    const { modalList, handleModalList } = useContext(ModalListContext)
 
     const typeForm = props.type
     const icon = iconMap[typeForm] || 'fa-solid fa-triangle-exclamation'
@@ -223,7 +223,7 @@ const ModalForm = (props) => {
     //console.log('OBJECT modal target - ', modelTarget)
 
     return (
-        <div className='container-form-modal center-content' onClick={(e) => toggleVisibility(targetMap(classRemove), e)}>
+        <div className='container-form-modal center-content' onClick={(e) => { handleModalList(modalListMap(false), e); toggleVisibility(targetMap(classRemove), e) }}>
             <div className='head'> 
                 <div className='objective-icon'>
                     <i className={`icon-st ${icon}`}></i>
@@ -296,7 +296,7 @@ const ModalForm = (props) => {
                     </form>
                 </div>
             </div>
-            {modalList && (
+            {modalList.open && (
                 <ModalList title={`Complementing ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} type={typeForm} />
             )}
         </div>

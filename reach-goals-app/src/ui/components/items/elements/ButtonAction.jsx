@@ -23,8 +23,8 @@ const ButtonAction = (props) => {
         }
         if (standardRoute) { navigate('/home') } // return standard route if true  
 
-        toggleVisibility(props.target, e)
-        handleModalList(props.modalList, e)
+        if (props.target) { toggleVisibility(props.target, e) }
+        if (props.modalList) { handleModalList(props.modalList, e) }
     }
 
     return (

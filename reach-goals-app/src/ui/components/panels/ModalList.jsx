@@ -13,6 +13,14 @@ const getAssignmentList = () => {
     return
 } 
 
+const modalListMap = (open, type) => {
+    const attributes = {
+        open: open,
+        type: type
+    }
+    return attributes
+}
+
 const targetMap = (classes, operator = {}) => {
     const data = Array.isArray(classes) ? classes : [classes]
     const attributes = {
@@ -24,13 +32,12 @@ const targetMap = (classes, operator = {}) => {
 
 const ModalList = (props) => {
     const title = props?.title
-    const closeModalListTarget = `modal-list-${props?.type}`
 
     return (
         <div className='container-list-modal'>
             <div className='head'>
                 <h3>{title}</h3>
-                <ButtonAction target={targetMap(closeModalListTarget, { remove: true })} standardRoute="true" classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark'/>
+                <ButtonAction modalList={modalListMap(false)} standardRoute="true" classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark'/>
             </div>
             <div className='body'>
                 
