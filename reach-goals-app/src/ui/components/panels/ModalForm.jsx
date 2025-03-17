@@ -51,30 +51,20 @@ const formsInputMap = (typeForm) => {
 }
 
 const formsItemMap = (typeForm) => {
-    const form = typeForm === 'assignment' ?
-    <div className='item-forms goal'>
-        <div className='item-forms head'>
-            <div className='item-head-1'>
-                <label>goals</label>
-                <ButtonAction modalList={modalListMap(true, typeForm)} classBtn={`form-modallist-assignment button-st`} iconFa='fa-solid fa-plus' title='Add'/>
+    const refenceformItem = typeForm === 'goal' ? 'assignments' : 'goals'
+    const formItem = 
+        <div className={`item-forms ${refenceformItem}`}>
+            <div className='item-forms head'>
+                <div className='item-head-1'>
+                    <label>{refenceformItem}</label>
+                    <ButtonAction modalList={modalListMap(true, typeForm)} classBtn={`form-modallist-${typeForm} button-st`} iconFa='fa-solid fa-plus' title='Add'/>
+                </div>
+                <div className='item-head-2'></div>
             </div>
-            <div className='item-head-2'></div>
+            <div className='item-forms body'></div>
         </div>
-        <div className='item-forms body'></div>
-    </div>
-    : 
-    <div className='item-forms assignment'>
-        <div className='item-forms head'>
-            <div className='item-head-1'>
-                <label>assignments</label>
-                <ButtonAction modalList={modalListMap(true, typeForm)} classBtn={`form-modallist-assignment button-st`} iconFa='fa-solid fa-plus' title='Add'/>
-            </div>
-            <div className='item-head-2'></div>
-        </div>
-        <div className='item-forms body'></div>
-    </div>
 
-    return form
+    return formItem
 }
 
 const ModalForm = (props) => {
@@ -297,7 +287,7 @@ const ModalForm = (props) => {
                 </div>
             </div>
             {modalList.open && (
-                <ModalList title={`Complementing ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} type={typeForm} />
+                <ModalList title={`Complementing ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} complement={typeForm === 'goal' ? 'assignment' : 'goal'} />
             )}
         </div>
     )

@@ -1,17 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { VisibilityContext } from '../../../provider/VisibilityProvider'
 import { ManageModelContext } from '../../../provider/ManageModelProvider'
-import { Goal } from '../items/models/Goal'
-import { Assignment } from '../items/models/Assignment'
+import Goal from '../items/models/Goal'
+import Assignment from '../items/models/Assignment'
 import ButtonAction from '../items/elements/ButtonAction'
-
-const getGoalList = () => {
-    return 
-} 
-
-const getAssignmentList = () => {
-    return
-} 
 
 const modalListMap = (open, type) => {
     const attributes = {
@@ -21,17 +13,9 @@ const modalListMap = (open, type) => {
     return attributes
 }
 
-const targetMap = (classes, operator = {}) => {
-    const data = Array.isArray(classes) ? classes : [classes]
-    const attributes = {
-        class: data,
-        operator: operator
-    }
-    return attributes
-}
-
 const ModalList = (props) => {
     const title = props?.title
+    const complement = props?.complement //This is a complement modal (goal is a complement of assingment and vice versa)
 
     return (
         <div className='container-list-modal'>
@@ -40,7 +24,7 @@ const ModalList = (props) => {
                 <ButtonAction modalList={modalListMap(false)} standardRoute="true" classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark'/>
             </div>
             <div className='body'>
-                
+                {complement === 'goal' ? <Goal/> : <Assignment/>}
             </div>
         </div>
     )
