@@ -28,8 +28,10 @@ const Goal = (props) => {
     }, [location.pathname])
 
     const target = useMemo(() => targetMap('panel-left'), []) 
-    const typeGoal = props
-
+    const display = props.display ?? {
+        sideAction: false, 
+        type: 'mini-list'
+    }
     useEffect(() => {
         const fetchGoal = async () => {
             try {
@@ -70,17 +72,27 @@ const Goal = (props) => {
 
     return (
         goal.map(goal => ( 
-            <div className='goal card' id={goal.id} key={goal.id} onClick={(e) => handleGoalClick(goal.id, e)}>
-                <Link to={`${currentLocation}/details`}>
+            <div className={`goal ${display.type}`} id={goal.id} key={goal.id} onClick={(e) => handleGoalClick(goal.id, e)}>
+                {
+                    display.type === 'card' ?
+                    <Link to={`${currentLocation}/details`}>
+                        <div className='head'>
+                            <label className='line-info'><i className='icon-st fa-solid fa-bullseye'></i><label>{goal.name}</label></label>
+                        </div>
+                        <div className='body'></div>
+                    </Link>
+                    :
                     <div className='head'>
-                        <label className='line-info'><i className='icon-st fa-solid fa-bullseye'></i><label>{goal.name}</label></label>
+                        <label className='line-info'><i className='icon-st fa-solid fa-list-check'></i><label>{goal.name}</label></label>
                     </div>
-                    <div className='body'></div>
-                </Link>
-                <div className='side-actions'>
-                    <ButtonAction onClick={() => editGoal(goal.id)} target={targetMap(['panel-center', 'goal'])} classBtn='edit-goal' iconFa='fa-regular fa-pen-to-square'/>
-                    <ButtonAction onClick={() => deleteGoal(goal.id)} target={targetMap(null)} classBtn='remove-goal' iconFa='fa-regular fa-trash-can'/>
-                </div>
+                }
+                {
+                    display.sideAction && 
+                    <div className='side-actions'>
+                        <ButtonAction onClick={() => editGoal(goal.id)} target={targetMap(['panel-center', 'goal'])} classBtn='edit-goal' iconFa='fa-regular fa-pen-to-square'/>
+                        <ButtonAction onClick={() => deleteGoal(goal.id)} target={targetMap(null)} classBtn='remove-goal' iconFa='fa-regular fa-trash-can'/>
+                    </div>
+                }
             </div>
         ))
     )

@@ -21,7 +21,7 @@ const Home = () => {
                     </div>
                     <div className="body-column">
                         <div className='list'>
-                            <Goal/>
+                            <Goal display={ {sideAction: true, type: 'card'} }/>
                         </div>
                     </div>
                 </div>

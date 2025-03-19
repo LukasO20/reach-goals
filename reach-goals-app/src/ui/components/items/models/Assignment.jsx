@@ -28,7 +28,10 @@ const Assignment = (props) => {
     }, [location.pathname])
 
     const target = useMemo(() => targetMap('panel-left'), []) 
-    const typeAssignment = props
+    const display = props.display ?? {
+        sideAction: false, 
+        type: 'mini-list'
+    }
 
     useEffect(() => {
         const fetchAssignment = async () => {
@@ -70,23 +73,28 @@ const Assignment = (props) => {
 
     return (
         assignment.map(assignment => ( 
-            <div className='assignment mini-list' id={assignment.id} key={assignment.id} /*onClick={(e) => handleAssignmentClick(assignment.id, e)}*/>
-                <div className='head'>
-                    <label className='line-info'><i className='icon-st fa-solid fa-list-check'></i><label>{assignment.name}</label></label>
-                </div>
+            <div className={`assignment ${display.type}`} id={assignment.id} key={assignment.id} onClick={(e) => handleAssignmentClick(assignment.id, e)}>
+                {
+                    display.type === 'card' ?
+                    <Link to={`${currentLocation}/details`}>
+                        <div className='head'>
+                            <label className='line-info'><i className='icon-st fa-solid fa-list-check'></i><label>{assignment.name}</label></label>
+                        </div>
+                        <div className='body'></div>
+                    </Link>
+                    :
+                    <div className='head'>
+                        <label className='line-info'><i className='icon-st fa-solid fa-list-check'></i><label>{assignment.name}</label></label>
+                    </div>
+                }
+                {
+                    display.sideAction && 
+                    <div className='side-actions'>
+                        <ButtonAction onClick={() => editAssignment(assignment.id)} target={targetMap(['panel-center', 'assignment'])} classBtn='edit-assignment' iconFa='fa-regular fa-pen-to-square'/>
+                        <ButtonAction onClick={() => deleteAssignment(assignment.id)} target={targetMap(null)} classBtn='remove-assignment' iconFa='fa-regular fa-trash-can'/>
+                    </div>
+                }
             </div>
-            // <div className='assignment card' id={assignment.id} key={assignment.id} onClick={(e) => handleAssignmentClick(assignment.id, e)}>
-            //     <Link to={`${currentLocation}/details`}>
-            //         <div className='head'>
-            //             <label className='line-info'><i className='icon-st fa-solid fa-list-check'></i><label>{assignment.name}</label></label>
-            //         </div>
-            //         <div className='body'></div>
-            //     </Link>
-            //     <div className='side-actions'>
-            //         <ButtonAction onClick={() => editAssignment(assignment.id)} target={targetMap(['panel-center', 'assignment'])} classBtn='edit-assignment' iconFa='fa-regular fa-pen-to-square'/>
-            //         <ButtonAction onClick={() => deleteAssignment(assignment.id)} target={targetMap(null)} classBtn='remove-assignment' iconFa='fa-regular fa-trash-can'/>
-            //     </div>
-            // </div>
         ))
     )
 }

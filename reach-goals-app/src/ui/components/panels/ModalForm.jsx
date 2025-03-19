@@ -142,8 +142,8 @@ const ModalForm = (props) => {
         const formatEnd = end ? formatInput(end) || formatInputISO(end) : undefined
 
         return {
-            start: formatStart/*? moment(formatStart).format('DD/MM/YYYY') : undefined*/,
-            end: formatEnd /*? moment(formatEnd).format('DD/MM/YYYY') : undefined*/
+            start: formatStart,
+            end: formatEnd
         }
     }
 
