@@ -4,6 +4,7 @@ import { TitleContext } from '../../../provider/TitleProvider'
 import Goal from '../items/models/Goal'
 
 import '../../styles/pages/Home.scss'
+import Assignment from '../items/models/Assignment'
 
 const Home = () => {
     const { update } = useContext(TitleContext)
@@ -21,7 +22,8 @@ const Home = () => {
                     </div>
                     <div className="body-column">
                         <div className='list'>
-                            <Goal display={ {sideAction: true, type: 'card'} }/>
+                            <Goal display={{sideAction: true, type: 'card'}}/>
+                            <Assignment display={{sideAction: true, type: 'card'}} />
                         </div>
                     </div>
                 </div>
@@ -31,9 +33,9 @@ const Home = () => {
                     </div>
                     <div className="body-column"></div>
                 </div>
-                <div className="itens-finished column">
+                <div className="itens-conclude column">
                     <div className="head-column">
-                        <label>finished</label>
+                        <label>conclude</label>
                     </div>
                     <div className="body-column"></div>
                 </div>

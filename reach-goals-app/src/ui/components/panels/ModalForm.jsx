@@ -88,6 +88,7 @@ const ModalForm = (props) => {
     const assingmentEmpty = {
         name: '',
         description: '',
+        duration: '',
         status: undefined,
         start: '',
         end: ''
