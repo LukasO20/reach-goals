@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import Routes from '../../app/Routes'
 import { VisibilityContext } from '../../provider/VisibilityProvider'
 
+import ButtonAction from './items/elements/ButtonAction'
 import ButtonDropdown from './items/elements/ButtonDropdown'
 import ButtonCheckbox from './items/elements/ButtonCheckbox'
 
@@ -9,6 +10,15 @@ const targetMap = (classes) => {
     const data = Array.isArray(classes) ? classes : [classes]
     const attributes = {
         class: data,
+    }
+    return attributes
+}
+
+const switchLayoutMap = (nameComponent, nameLayout, value) => {
+    const attributes = {
+        nameComponent: nameComponent,
+        nameLayout: nameLayout,
+        value: value
     }
     return attributes
 }
@@ -27,7 +37,8 @@ const checkboxMap = (checkbox) => {
 }
 
 const ContainerM = () => {
-    const { toggleVisibility } = useContext(VisibilityContext)    
+    const { toggleVisibility } = useContext(VisibilityContext)   
+    
     return (
         <div className="container-main" onClick={(e) => toggleVisibility(targetMap(null), e)}>
             <div className="head">
@@ -50,8 +61,8 @@ const ContainerM = () => {
                         <ButtonDropdown target={targetMap('btn-filter-content')} classBtn="button-filter-m filter-content" iconFa="fa-solid fa-filter"/>
                         <label className="button-show-m button-st line-chart"><i className="icon-st fa-solid fa-chart-line"></i></label>
                         <label className="button-filter-m search"><i className="icon-st fa-solid fa-magnifying-glass"></i><input type="text" placeholder="search" id="search-content-m" className="search-content" /></label>
-                        <label className="button-show-m button-st goal">goals</label>
-                        <label className="button-show-m button-st assignment">unfocused assignments</label>
+                        <ButtonAction classBtn='button-show-m goals' title='goals' switchLayout={switchLayoutMap('home', 'layout', 'goal')} />
+                        <ButtonAction classBtn='button-show-m assignment' title='unfocused assignments' switchLayout={switchLayoutMap('home', 'layout', 'assignment')} />
                     </div>
                     <div className="action">           
                         <ButtonDropdown target={targetMap('btn-action-order')} classBtn="button-action-m order" iconFa="fa-solid fa-sort" title="order" />

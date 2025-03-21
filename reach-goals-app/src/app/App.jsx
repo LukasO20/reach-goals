@@ -5,6 +5,7 @@ import { VisibilityProvider } from '../provider/VisibilityProvider'
 import { CheckboxProvider } from '../provider/CheckboxProvider'
 import { ManageModelProvider } from '../provider/ManageModelProvider'
 import { ModalListProvider } from '../provider/ModalListProvider'
+import { SwitchLayoutProvider } from '../provider/SwitchLayoutProvider'
 
 import ContainerN from '../ui/components/Navigate'
 import ContainerH from '../ui/components/ContainerHeader'
@@ -24,15 +25,17 @@ const App = () => {
                     <CheckboxProvider>
                         <ManageModelProvider>
                             <ModalListProvider>
-                                <div className="container-app">
-                                    <ContainerN />
-                                    <ContainerH />
-                                    <ContainerM>
-                                        <AppRoutes />  
-                                    </ContainerM>
-                                    <PanelCenter id="panel-center" />
-                                    <PanelLeft id="panel-left" />
-                                </div>
+                                <SwitchLayoutProvider>
+                                    <div className="container-app">
+                                        <ContainerN />
+                                        <ContainerH />
+                                        <ContainerM>
+                                            <AppRoutes />  
+                                        </ContainerM>
+                                        <PanelCenter id="panel-center" />
+                                        <PanelLeft id="panel-left" />
+                                    </div>
+                                </SwitchLayoutProvider>
                             </ModalListProvider>
                         </ManageModelProvider>
                     </CheckboxProvider>              

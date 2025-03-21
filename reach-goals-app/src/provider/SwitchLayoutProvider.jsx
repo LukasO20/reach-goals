@@ -5,14 +5,14 @@ const SwitchLayoutContext = React.createContext()
 const SwitchLayoutProvider = ({children}) => {
 
     const standardSwitchLayout = () => {
-        return [
-            home = {
+        return {
+            home: {
                 layout: 'goal'
             },
-            configModal = {
+            configModal: {
                 layout: 'config-theme'
-            }
-        ]
+            },
+        }
     }
 
     const [layoutComponent, setLayoutComponent] = useState(standardSwitchLayout)
@@ -21,31 +21,24 @@ const SwitchLayoutProvider = ({children}) => {
 
     }
 
-    const setSafeLayoutComponent = (updateFn) => {
-        setLayoutComponent((prev) => {
-            const safeValue = updateFn(prev) ?? []
-            return Array.isArray(safeValue) ? safeValue : []
-        })
-    }
-
     const updateLayoutComponent = (switchLayout) => {
-        setSafeLayoutComponent((prev) => {
-
-            if (switchLayout) {
-                let filter = [...prev]
-                filter.push(switchLayout)
-
-                return switchLayout
-            }
-        })
+        if (switchLayout) {
+            setLayoutComponent({
+                ...layoutComponent,
+                [switchLayout.nameComponent]: {
+                    ...layoutComponent[switchLayout.nameComponent],
+                    [switchLayout.nameLayout]: switchLayout.value 
+                }
+            })
+        }
     }
 
     const switchLayoutComponent = (switchLayout, event) => {
-        console.log('ALVO - ', target)
-
-        event.stopPropagation()
+        event?.stopPropagation()
         updateLayoutComponent(switchLayout)
     }
+
+    console.log('LAYPROVIDER - ', layoutComponent)
 
     return (
         <SwitchLayoutContext.Provider value={{layoutComponent, switchLayoutComponent}}>
