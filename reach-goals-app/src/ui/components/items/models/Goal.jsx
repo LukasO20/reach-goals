@@ -37,6 +37,7 @@ const Goal = (props) => {
             try {
                 const fetched = await goalAction.getGoal()
                 setGoal(fetched)
+
             } catch (error) {
                 setErro(`Failed to load goal: ${error.message}`)
             }

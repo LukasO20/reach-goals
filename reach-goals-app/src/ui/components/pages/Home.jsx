@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { TitleContext } from '../../../provider/TitleProvider'
+import { useSwitchLayout } from '../../../hook/useSwitchLayout'
 
 import Goal from '../items/models/Goal'
 
@@ -8,6 +9,7 @@ import Assignment from '../items/models/Assignment'
 
 const Home = () => {
     const { update } = useContext(TitleContext)
+    const { layoutComponent } = useSwitchLayout()
 
     React.useEffect(() => {
         update(`Welcome. Let's produce?`)
@@ -22,8 +24,11 @@ const Home = () => {
                     </div>
                     <div className="body-column">
                         <div className='list'>
-                            <Goal display={{sideAction: true, type: 'card'}}/>
-                            <Assignment display={{sideAction: true, type: 'card'}} />
+                            {
+                                layoutComponent.home.layout === 'goal' ?
+                                <Goal display={{sideAction: true, type: 'card'}}/> :
+                                <Assignment display={{sideAction: true, type: 'card'}} />
+                            }
                         </div>
                     </div>
                 </div>

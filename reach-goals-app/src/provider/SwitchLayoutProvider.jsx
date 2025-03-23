@@ -17,10 +17,6 @@ const SwitchLayoutProvider = ({children}) => {
 
     const [layoutComponent, setLayoutComponent] = useState(standardSwitchLayout)
 
-    const storageElement = () => {
-
-    }
-
     const updateLayoutComponent = (switchLayout) => {
         if (switchLayout) {
             setLayoutComponent({

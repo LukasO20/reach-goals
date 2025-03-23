@@ -22,7 +22,7 @@ const ModalListProvider = ({children}) => {
         setModalList(parameterTarget)
     }
 
-    console.log('LISTS - ', modalList)
+    console.log('MODALLIST - ', modalList)
 
     return (
         <ModalListContext.Provider value={{modalList, handleModalList}}>
