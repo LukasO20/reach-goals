@@ -82,7 +82,8 @@ const ModalForm = (props) => {
         description: '',
         status: undefined,
         start: '',
-        end: ''
+        end: '',
+        //assignments: undefined
     }
     
     const assingmentEmpty = {
@@ -96,6 +97,8 @@ const ModalForm = (props) => {
 
     const [goal, setGoal] = useState(goalEmpty)
     const [assingment, setAssignment] = useState(assingmentEmpty)
+
+    const [selectedAssignments, setSelectedAssignments] = useState([])
 
     const [error, setError] = useState(null)
     const [success, setSucess] = useState(false)

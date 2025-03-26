@@ -2,7 +2,7 @@ const prisma = require('../connectdb')
 
 const addGoal = async (req, res) => {
     if (req.method === 'POST') {
-        const { name, description, status, start, end } = req.body
+        const { name, description, status, start, end, /*assignment*/ } = req.body
 
         if (!name) {
             return res.status(400).json({ error: 'Name is required.'})
@@ -18,7 +18,8 @@ const addGoal = async (req, res) => {
                     description,
                     status,
                     start: startDate,
-                    end: endDate
+                    end: endDate,
+                    // assignment
                 },
             })
     

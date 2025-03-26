@@ -15,6 +15,13 @@ const targetMap = (classes) => {
     return attributes
 }
 
+const toggleSelectAssignment = (props, action, domTarget) => {
+    console.log('HE CALLME')
+    if (action?.setForm) {
+
+    }
+}
+
 const Assignment = (props) => {
     const [assignment, setAssignment] = useState([])
     const [erro, setErro] = useState(false)
@@ -32,6 +39,7 @@ const Assignment = (props) => {
         sideAction: false, 
         type: 'mini-list'
     }
+    const isSelectableModel = props.selectableModel ?? false
 
     useEffect(() => {
         const fetchAssignment = async () => {
@@ -67,6 +75,7 @@ const Assignment = (props) => {
         (id, e) => {
             setSelectModel(id)
             toggleVisibility(target, e)
+            if (isSelectableModel) { toggleSelectAssignment() }
         },
         [setSelectModel, toggleVisibility, target]
     )
