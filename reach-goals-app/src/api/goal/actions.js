@@ -1,26 +1,29 @@
 const prisma = require('../connectdb')
+const moment = require('moment')
+
+const formatObject = (objectData) => {
+    return Object.fromEntries(
+        Object.entries(objectData).filter(([_, value]) => value !== undefined && value !== "")
+    )
+}
 
 const addGoal = async (req, res) => {
     if (req.method === 'POST') {
-        const { name, description, status, start, end, /*assignment*/ } = req.body
+        const { name, description, status, start, end, assignment } = req.body
 
         if (!name) {
             return res.status(400).json({ error: 'Name is required.'})
         }
 
-        const startDate = start ? new Date(start).toISOString() : start
-        const endDate = end ? new Date(end).toISOString() : end
+        const startDate = start ? moment(start, 'DD/MM/YYYY').toISOString() : new Date()  
+        const endDate = end ?? moment(end, 'DD/MM/YYYY').toISOString()
+
+        const rawObject = { name, description, status, startDate, endDate, assignment }
+        const formattedData = formatObject(rawObject)
 
         try {
             const goal = await prisma.goal.create({
-                data: { 
-                    name,
-                    description,
-                    status,
-                    start: startDate,
-                    end: endDate,
-                    // assignment
-                },
+                data: formattedData,
             })
     
             return res.status(201).json(goal)

@@ -81,9 +81,9 @@ const ModalForm = (props) => {
         name: '',
         description: '',
         status: undefined,
-        start: '',
-        end: '',
-        //assignments: undefined
+        start: undefined,
+        end: undefined,
+        assignments: undefined
     }
     
     const assingmentEmpty = {
@@ -213,8 +213,6 @@ const ModalForm = (props) => {
     }, [selectModel])
 
     const modelTarget = handleTarget(typeForm)
-
-    //console.log('OBJECT modal target - ', modelTarget)
 
     return (
         <div className='container-form-modal center-content' onClick={(e) => { handleModalList(modalListMap(false), e); toggleVisibility(targetMap(classRemove), e) }}>
