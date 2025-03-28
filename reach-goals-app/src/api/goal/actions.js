@@ -7,18 +7,28 @@ const formatObject = (objectData) => {
     )
 }
 
+const isISODateString = (date) => {
+    return moment(date, moment.ISO_8601, true).isValid()
+}
+
 const addGoal = async (req, res) => {
     if (req.method === 'POST') {
         const { name, description, status, start, end, assignment } = req.body
 
-        if (!name) {
-            return res.status(400).json({ error: 'Name is required.'})
+        if (!name) { return res.status(400).json({ error: 'Name is required.'}) }
+
+        const startDate = start ? moment(start, 'DD/MM/YYYY').toISOString() : new Date().toISOString()  
+        const endDate = end ? moment(end, 'DD/MM/YYYY').toISOString() : null
+
+        const rawObject = { 
+            name,
+            description, 
+            status, 
+            start: startDate,
+            end: endDate, 
+            assignment 
         }
 
-        const startDate = start ? moment(start, 'DD/MM/YYYY').toISOString() : new Date()  
-        const endDate = end ?? moment(end, 'DD/MM/YYYY').toISOString()
-
-        const rawObject = { name, description, status, startDate, endDate, assignment }
         const formattedData = formatObject(rawObject)
 
         try {
@@ -39,21 +49,26 @@ const addGoal = async (req, res) => {
 const updateGoal = async (req, res) => {
     if (req.method === 'PUT') {
         const { id } = req.params
-        const { name, description, status, start, end } = req.body
+        const { name, description, status, start, end, assignment } = req.body
 
-        const startDate = new Date(start).toISOString()
-        const endDate = new Date(end).toISOString()
+        let startDate = start ? moment(start, 'DD/MM/YYYY').toISOString() : new Date().toISOString()
+        let endDate = end ? moment(end, 'DD/MM/YYYY').toISOString() : null
+
+        const rawObject = { 
+            name,
+            description, 
+            status, 
+            start: startDate,
+            end: endDate, 
+            assignment 
+        }
+
+        const formattedData = formatObject(rawObject)
 
         try {
             const goal = await prisma.goal.update({
                 where: { id: Number(id) },
-                data: {
-                    name: name || null,
-                    description: description || null,
-                    status: status || null,
-                    start: startDate || null,
-                    end: endDate || null
-                }
+                data: formattedData
             })
 
             return res.status(200).json(goal)
