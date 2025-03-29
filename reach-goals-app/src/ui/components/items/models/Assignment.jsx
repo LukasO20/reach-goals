@@ -16,9 +16,10 @@ const targetMap = (classes) => {
 }
 
 const toggleSelectAssignment = (props, action, domTarget) => {
-    console.log('HE CALLME')
-    if (action?.setForm) {
+    console.log('PROPS FROM ASSIGNMENT - ', props)
 
+    if (action?.setForm) {
+        console.log('HE CALLME')
     }
 }
 
@@ -75,7 +76,7 @@ const Assignment = (props) => {
         (id, e) => {
             setSelectModel(id)
             toggleVisibility(target, e)
-            if (isSelectableModel) { toggleSelectAssignment() }
+            if (isSelectableModel) { toggleSelectAssignment(props) }
         },
         [setSelectModel, toggleVisibility, target]
     )

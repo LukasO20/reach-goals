@@ -59,7 +59,7 @@ const ModalDetails = () => {
                 {
                     <div className='modaldetails assignment-list'>
                         <div className='header-assignment-list'>
-                            <i class="icon-st fa-solid fa-list-check"></i>
+                            <i className="icon-st fa-solid fa-list-check"></i>
                             <h4>Assignments</h4>
                         </div>
                         <div className='body-assignment-list'>

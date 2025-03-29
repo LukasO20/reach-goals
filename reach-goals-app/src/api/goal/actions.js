@@ -7,10 +7,6 @@ const formatObject = (objectData) => {
     )
 }
 
-const isISODateString = (date) => {
-    return moment(date, moment.ISO_8601, true).isValid()
-}
-
 const addGoal = async (req, res) => {
     if (req.method === 'POST') {
         const { name, description, status, start, end, assignment } = req.body
@@ -25,15 +21,20 @@ const addGoal = async (req, res) => {
             description, 
             status, 
             start: startDate,
-            end: endDate, 
-            assignment 
+            end: endDate 
+            // assignment: {
+            //     connect: assignment.map((id) => ({ id }))
+            // }
         }
 
         const formattedData = formatObject(rawObject)
 
         try {
             const goal = await prisma.goal.create({
-                data: formattedData,
+                data: formattedData
+                // include: {
+                //     assignment: true
+                // }
             })
     
             return res.status(201).json(goal)
@@ -51,8 +52,8 @@ const updateGoal = async (req, res) => {
         const { id } = req.params
         const { name, description, status, start, end, assignment } = req.body
 
-        let startDate = start ? moment(start, 'DD/MM/YYYY').toISOString() : new Date().toISOString()
-        let endDate = end ? moment(end, 'DD/MM/YYYY').toISOString() : null
+        const startDate = start ? moment(start).toISOString() : new Date().toISOString()
+        const endDate = end ? moment(end).toISOString() : null
 
         const rawObject = { 
             name,
