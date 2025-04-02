@@ -15,11 +15,37 @@ const targetMap = (classes) => {
     return attributes
 }
 
-const toggleSelectAssignment = (props, action, domTarget) => {
-    console.log('PROPS FROM ASSIGNMENT - ', props)
+const toggleSelectAssignment = (props, e) => {
+    console.log('PROPS - ', props)
+    console.log('EVENT - ', e)
 
-    if (action?.setForm) {
-        console.log('HE CALLME')
+    const checkElementContainer = (elementTarget, container) => {
+        if (!elementTarget || !container) { console.error(`Parameter ${elementTarget ?? container} reference is null! Check parameter sended.`) }
+        
+        const valueChecked = container.children.length >= 1 ? Array.from(container.children).some(child => child.id !== elementTarget.getAttribute('id')) : true
+        return valueChecked
+    }
+
+    if (props?.selectableModel) {
+        if (!props?.action?.setForm) { return console.error('This model is selectable but parameter "typeModal" is needed!') }
+        
+        if (props.action.setForm) {
+            const formGoal = document.querySelector('.content-center.goal form')
+            const setAssignment = e.currentTarget       
+            const containerAssignment = formGoal.querySelector('.item-forms.assignments .body')  
+            const isDefinable = checkElementContainer(setAssignment, containerAssignment)
+
+            console.log('FORM - ', formGoal)
+            console.log('setAssignment', setAssignment)
+
+            if (isDefinable) {
+                const labelAssignment = document.createElement('label')
+                labelAssignment.id = setAssignment.getAttribute('id')
+                labelAssignment.textContent = setAssignment.querySelector('.line-info label').textContent
+                
+                containerAssignment.appendChild(labelAssignment)
+            }
+        }
     }
 }
 
@@ -40,7 +66,6 @@ const Assignment = (props) => {
         sideAction: false, 
         type: 'mini-list'
     }
-    const isSelectableModel = props.selectableModel ?? false
 
     useEffect(() => {
         const fetchAssignment = async () => {
@@ -74,9 +99,15 @@ const Assignment = (props) => {
 
     const handleAssignmentClick = useCallback(
         (id, e) => {
+            const isSelectableModel = props.selectableModel ?? false
+
+            if (isSelectableModel) { 
+                e.stopPropagation()
+                return toggleSelectAssignment(props, e)
+            }
+
             setSelectModel(id)
             toggleVisibility(target, e)
-            if (isSelectableModel) { toggleSelectAssignment(props) }
         },
         [setSelectModel, toggleVisibility, target]
     )
