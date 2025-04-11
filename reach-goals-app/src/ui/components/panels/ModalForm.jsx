@@ -50,18 +50,19 @@ const formsInputMap = (typeForm) => {
     return form
 }
 
-const formsItemMap = (typeForm) => {
-    const refenceformItem = typeForm === 'goal' ? 'assignments' : 'goals'
+const formsItemMap = (typeForm, modelObject, auxFunction) => {
+    const refFormItem = typeForm === 'goal' ? 'assignment' : 'goal'
     const formItem = 
-        <div className={`item-forms ${refenceformItem}`}>
+        <div className={`item-forms ${refFormItem}`}>
             <div className='item-forms head'>
                 <div className='item-head-1'>
-                    <label>{refenceformItem}</label>
+                    <label>{`${refFormItem}s`}</label>
                     <ButtonAction modalList={modalListMap(true, typeForm)} classBtn={`form-modallist-${typeForm} button-st`} iconFa='fa-solid fa-plus' title='Add'/>
                 </div>
                 <div className='item-head-2'></div>
             </div>
             <div className='item-forms body'></div>
+            <input type='text' id={`${refFormItem}-selectable`} name={refFormItem} value={modelObject?.model || ''} onChange={auxFunction}/>
         </div>
 
     return formItem
@@ -83,7 +84,7 @@ const ModalForm = (props) => {
         status: undefined,
         start: undefined,
         end: undefined,
-        assignments: undefined
+        assignment: undefined
     }
     
     const assingmentEmpty = {
@@ -92,7 +93,8 @@ const ModalForm = (props) => {
         duration: '',
         status: undefined,
         start: '',
-        end: ''
+        end: '', 
+        goal: undefined
     }
 
     const [goal, setGoal] = useState(goalEmpty)
@@ -263,7 +265,7 @@ const ModalForm = (props) => {
                             </div>
                             <div className='item-forms body'></div>
                         </div>
-                        {formsItemMap(typeForm)}
+                        {formsItemMap(typeForm, { model: typeForm === 'goal' ? modelTarget?.assignment : modelTarget?.goal }, handleChange)}
                         <div className='field-forms details'>
                             <textarea id={`${typeForm}-details`} className='input-form' placeholder='details here...'
                                 name='description' value={modelTarget?.description || ''} onChange={handleChange}></textarea>

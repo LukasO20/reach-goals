@@ -21,8 +21,9 @@ const toggleSelectAssignment = (props, e) => {
 
     const checkElementContainer = (elementTarget, container) => {
         if (!elementTarget || !container) { console.error(`Parameter ${elementTarget ?? container} reference is null! Check parameter sended.`) }
-        
-        const valueChecked = container.children.length >= 1 ? Array.from(container.children).some(child => child.id !== elementTarget.getAttribute('id')) : true
+
+        const childrenContainer = Array.from(container.children)
+        const valueChecked = childrenContainer.length === 0 ? true : !childrenContainer.some(child => child.id === elementTarget.id)
         return valueChecked
     }
 
@@ -32,17 +33,16 @@ const toggleSelectAssignment = (props, e) => {
         if (props.action.setForm) {
             const formGoal = document.querySelector('.content-center.goal form')
             const setAssignment = e.currentTarget       
-            const containerAssignment = formGoal.querySelector('.item-forms.assignments .body')  
+            const containerAssignment = formGoal.querySelector('.item-forms.assignment .body')  
             const isDefinable = checkElementContainer(setAssignment, containerAssignment)
-
-            console.log('FORM - ', formGoal)
-            console.log('setAssignment', setAssignment)
+            const assignmentSelectable = formGoal.querySelector('.item-forms.assignment input[name="assignment"]')
 
             if (isDefinable) {
                 const labelAssignment = document.createElement('label')
                 labelAssignment.id = setAssignment.getAttribute('id')
                 labelAssignment.textContent = setAssignment.querySelector('.line-info label').textContent
-                
+                assignmentSelectable.value = labelAssignment.id
+
                 containerAssignment.appendChild(labelAssignment)
             }
         }

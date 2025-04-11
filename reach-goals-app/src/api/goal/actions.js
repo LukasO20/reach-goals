@@ -21,20 +21,22 @@ const addGoal = async (req, res) => {
             description, 
             status, 
             start: startDate,
-            end: endDate 
-            // assignment: {
-            //     connect: assignment.map((id) => ({ id }))
-            // }
+            end: endDate, 
+            assignment: {
+                connect: assignment.map((id) => ({ id }))
+            }
         }
 
         const formattedData = formatObject(rawObject)
 
+        console.log('DATA FORMAT TO SEND - ', formattedData)
+
         try {
             const goal = await prisma.goal.create({
-                data: formattedData
-                // include: {
-                //     assignment: true
-                // }
+                data: formattedData,
+                include: {
+                    assignment: true
+                }
             })
     
             return res.status(201).json(goal)
