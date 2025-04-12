@@ -16,8 +16,6 @@ const targetMap = (classes) => {
 }
 
 const toggleSelectAssignment = (props, e) => {
-    console.log('PROPS - ', props)
-    console.log('EVENT - ', e)
 
     const checkElementContainer = (elementTarget, container) => {
         if (!elementTarget || !container) { console.error(`Parameter ${elementTarget ?? container} reference is null! Check parameter sended.`) }
@@ -35,15 +33,29 @@ const toggleSelectAssignment = (props, e) => {
             const setAssignment = e.currentTarget       
             const containerAssignment = formGoal.querySelector('.item-forms.assignment .body')  
             const isDefinable = checkElementContainer(setAssignment, containerAssignment)
-            const assignmentSelectable = formGoal.querySelector('.item-forms.assignment input[name="assignment"]')
 
             if (isDefinable) {
+                //Create a container assignment to add
                 const labelAssignment = document.createElement('label')
                 labelAssignment.id = setAssignment.getAttribute('id')
                 labelAssignment.textContent = setAssignment.querySelector('.line-info label').textContent
-                assignmentSelectable.value = labelAssignment.id
 
+                //Create a input assignment to add
+                const inputAssignment = document.createElement('input')
+                inputAssignment.type = 'hidden'
+                inputAssignment.name = 'assignment[]'
+                inputAssignment.id = setAssignment.getAttribute('id')
+                inputAssignment.value = setAssignment.getAttribute('id')
+
+                containerAssignment.appendChild(inputAssignment)
                 containerAssignment.appendChild(labelAssignment)
+
+                //IS NOT WORKING 100% NOW. Try to create "external props: exProps.props". Then will be able to share functions and components props
+                if (typeof props.exFunction === 'function') {
+                    Array.from(containerAssignment?.children).forEach(assignmentEl => {
+                        props.exFunction(assignmentEl)
+                    })
+                }
             }
         }
     }
@@ -82,7 +94,7 @@ const Assignment = (props) => {
     const deleteAssignment = async (id) => {
         try {
             await assignmentAction.deleteAssignment(id)
-            setAssignment((prevAssignment) => prevAssignment.filter((assignment) => assignment.id != id))
+            setAssignment((prevAssignment) => prevAssignment.filter((assignment) => assignment.id !== id))
         } catch (error) {
             setErro(`Failed to delete assignment: ${erro.message}`)
         }

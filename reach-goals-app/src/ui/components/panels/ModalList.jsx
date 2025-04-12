@@ -17,6 +17,7 @@ const ModalList = (props) => {
     const title = props?.title
     const complement = props?.complement //This is a complement modal (goal is a complement of assingment and vice versa)
     const typeModalList = props?.type
+    const externalFunction = props?.exFunction
 
     return (
         <div className='container-list-modal'>
@@ -25,7 +26,7 @@ const ModalList = (props) => {
                 <ButtonAction modalList={modalListMap(false)} standardRoute="true" classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark'/>
             </div>
             <div className='body'>
-                {complement === 'goal' ? <Goal selectableModel={true} /> : <Assignment selectableModel={true} action={{ setForm: true }} />}
+                {complement === 'goal' ? <Goal selectableModel={true} /> : <Assignment selectableModel={true} action={{ setForm: true }} exFunction={externalFunction}/>}
             </div>
         </div>
     )

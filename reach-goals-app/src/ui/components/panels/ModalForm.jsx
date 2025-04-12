@@ -50,7 +50,8 @@ const formsInputMap = (typeForm) => {
     return form
 }
 
-const formsItemMap = (typeForm, modelObject, auxFunction) => {
+const formsItemMap = (typeForm, modelObject) => {
+    console.log('MODEL OBJECT - ', modelObject)
     const refFormItem = typeForm === 'goal' ? 'assignment' : 'goal'
     const formItem = 
         <div className={`item-forms ${refFormItem}`}>
@@ -62,7 +63,7 @@ const formsItemMap = (typeForm, modelObject, auxFunction) => {
                 <div className='item-head-2'></div>
             </div>
             <div className='item-forms body'></div>
-            <input type='text' id={`${refFormItem}-selectable`} name={refFormItem} value={modelObject?.model || ''} onChange={auxFunction}/>
+            {/* <input type='text' id={`${refFormItem}-selectable`} name={refFormItem}  value={modelObject?.model || ''} onChange={auxFunction}/> */}
         </div>
 
     return formItem
@@ -99,8 +100,6 @@ const ModalForm = (props) => {
 
     const [goal, setGoal] = useState(goalEmpty)
     const [assingment, setAssignment] = useState(assingmentEmpty)
-
-    const [selectedAssignments, setSelectedAssignments] = useState([])
 
     const [error, setError] = useState(null)
     const [success, setSucess] = useState(false)
@@ -291,7 +290,7 @@ const ModalForm = (props) => {
                 </div>
             </div>
             {modalList.open && (
-                <ModalList title={`Complementing ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} complement={typeForm === 'goal' ? 'assignment' : 'goal'} />
+                <ModalList title={`Complementing ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} complement={typeForm === 'goal' ? 'assignment' : 'goal'} exFunction={handleChange} />
             )}
         </div>
     )
