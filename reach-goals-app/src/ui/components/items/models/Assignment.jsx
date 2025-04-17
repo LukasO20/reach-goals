@@ -43,18 +43,24 @@ const toggleSelectAssignment = (props, e) => {
                 //Create a input assignment to add
                 const inputAssignment = document.createElement('input')
                 inputAssignment.type = 'hidden'
-                inputAssignment.name = 'assignment[]'
                 inputAssignment.id = setAssignment.getAttribute('id')
                 inputAssignment.value = setAssignment.getAttribute('id')
 
                 containerAssignment.appendChild(inputAssignment)
                 containerAssignment.appendChild(labelAssignment)
 
-                //IS NOT WORKING 100% NOW. Try to create "external props: exProps.props". Then will be able to share functions and components props
                 if (typeof props.exFunction === 'function') {
+                    const assignmentSelectableArray = []
                     Array.from(containerAssignment?.children).forEach(assignmentEl => {
-                        props.exFunction(assignmentEl)
+                        if (assignmentEl.value) {
+                            assignmentSelectableArray.push(assignmentEl.value)
+                        }
                     })
+
+                    const assignmentSelectable = {
+                        assignments: assignmentSelectableArray
+                    }
+                    props.exFunction(assignmentSelectable)
                 }
             }
         }
@@ -77,6 +83,9 @@ const Assignment = (props) => {
     const display = props.display ?? {
         sideAction: false, 
         type: 'mini-list'
+    }
+    const utilsAssignment = {
+        unfocused: props.unfocused ?? false
     }
 
     useEffect(() => {
@@ -125,7 +134,10 @@ const Assignment = (props) => {
     )
 
     return (
-        assignment.map(assignment => ( 
+        assignment.filter((assignment) => {
+            if (utilsAssignment.unfocused) { return !assignment.goalID }
+            return true
+        }).map(assignment => ( 
             <div className={`assignment ${display.type}`} id={assignment.id} key={assignment.id} onClick={(e) => handleAssignmentClick(assignment.id, e)}>
                 {
                     display.type === 'card' ?

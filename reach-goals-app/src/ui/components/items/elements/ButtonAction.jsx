@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider'
 import { ModalListContext } from '../../../../provider/ModalListProvider'
 import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider'
+
 const statusButton = (classBtn, providervisibleElements) => {
     if (!providervisibleElements) { return false }
     return providervisibleElements.includes(classBtn)

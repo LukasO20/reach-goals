@@ -85,7 +85,7 @@ const ModalForm = (props) => {
         status: undefined,
         start: undefined,
         end: undefined,
-        assignment: undefined
+        assignments: []
     }
     
     const assingmentEmpty = {
@@ -153,12 +153,15 @@ const ModalForm = (props) => {
     }
 
     const handleChange = async (e) => {
-        const { name, value } = e.target ? e.target : e
-
+        const { name, value } = e?.target || e
+    
         if (typeForm === 'goal') {
+            const assignmentsRelation = e.assignments ?? goal.assignments
+
             setGoal((prevData) => ({
                 ...prevData,
                 [name]: value,
+                assignments: [...assignmentsRelation]
             }))
         } else {
             setAssignment((prevData) => ({
@@ -167,6 +170,8 @@ const ModalForm = (props) => {
             }))
         }
     }
+
+    console.log('DEPOIS DA ATT- ', goal)
 
     const handleSubmit = async () => {
         setError(null)
@@ -203,6 +208,7 @@ const ModalForm = (props) => {
             
             try {
                 const getGoal = await goalAction.getGoal(id)
+                console.log('GOAL GETED - ', getGoal)
                 setGoal(getGoal)
             }
             catch (error) {

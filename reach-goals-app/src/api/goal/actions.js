@@ -9,7 +9,7 @@ const formatObject = (objectData) => {
 
 const addGoal = async (req, res) => {
     if (req.method === 'POST') {
-        const { name, description, status, start, end, assignment } = req.body
+        const { name, description, status, start, end, assignments } = req.body
 
         if (!name) { return res.status(400).json({ error: 'Name is required.'}) }
 
@@ -22,21 +22,18 @@ const addGoal = async (req, res) => {
             status, 
             start: startDate,
             end: endDate, 
-            assignment: {
-                connect: assignment.map((id) => ({ id }))
+            assignments: {
+                connect: assignments.map((id) => ({ id: Number(id) }))
             }
         }
 
         const formattedData = formatObject(rawObject)
-
-        console.log('DATA FORMAT TO SEND - ', formattedData)
+        console.log('Goal TO ADD - ', formattedData)
 
         try {
             const goal = await prisma.goal.create({
                 data: formattedData,
-                include: {
-                    assignment: true
-                }
+                include: { assignments: true }
             })
     
             return res.status(201).json(goal)
@@ -52,7 +49,7 @@ const addGoal = async (req, res) => {
 const updateGoal = async (req, res) => {
     if (req.method === 'PUT') {
         const { id } = req.params
-        const { name, description, status, start, end, assignment } = req.body
+        const { name, description, status, start, end, assignments } = req.body
 
         const startDate = start ? moment(start).toISOString() : new Date().toISOString()
         const endDate = end ? moment(end).toISOString() : null
@@ -63,15 +60,19 @@ const updateGoal = async (req, res) => {
             status, 
             start: startDate,
             end: endDate, 
-            assignment 
+            assignments: {
+                connect: assignments.map((id) => ({ id: Number(id) }))
+            } 
         }
 
         const formattedData = formatObject(rawObject)
+        console.log('Goal TO UPDATE - ', formattedData)
 
         try {
             const goal = await prisma.goal.update({
                 where: { id: Number(id) },
-                data: formattedData
+                data: formattedData,
+                include: { assignments: true }
             })
 
             return res.status(200).json(goal)
@@ -112,7 +113,8 @@ const getGoal = async (req, res) => {
             
             if (id !== undefined) {
                 goal = await prisma.goal.findUnique({
-                    where: { id: Number(id) }
+                    where: { id: Number(id) },
+                    include: { assignments: true }
                 })
             } else {
                 goal = await prisma.goal.findMany()

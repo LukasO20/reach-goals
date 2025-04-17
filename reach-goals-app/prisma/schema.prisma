@@ -9,11 +9,11 @@ datasource db {
 }
 
 model Goal {
-  id          Int      @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   name        String
   description String?
-  create      DateTime @default(now())
-  start       DateTime @default(now())
+  create      DateTime     @default(now())
+  start       DateTime     @default(now())
   end         DateTime?
   remember    DateTime?
   status      String?
@@ -22,44 +22,44 @@ model Goal {
 }
 
 model Assignment {
-  id          Int      @id @default(autoincrement())
+  id          Int               @id @default(autoincrement())
   name        String
   description String?
   duration    Int?
-  create      DateTime @default(now())
-  start       DateTime @default(now())
+  create      DateTime          @default(now())
   end         DateTime?
   remember    DateTime?
+  start       DateTime          @default(now())
   status      String?
   goalID      Int?
-  goal        Goal? @relation(fields: [goalID], references: [id])
+  goal        Goal?             @relation(fields: [goalID], references: [id])
   tags        TagOnAssignment[]
 }
 
 model Tag {
-  id          Int      @id @default(autoincrement())
+  id          Int               @id @default(autoincrement())
   name        String?
   color       String?
-  goals       TagOnGoal[]
   assignments TagOnAssignment[]
+  goals       TagOnGoal[]
 }
 
 model TagOnGoal {
-  id      Int   @id @default(autoincrement())
-  goalID  Int
-  tagID   Int
-  goal    Goal  @relation(fields: [goalID], references: [id])
-  tag     Tag   @relation(fields: [tagID], references: [id])
+  id     Int  @id @default(autoincrement())
+  goalID Int
+  tagID  Int
+  goal   Goal @relation(fields: [goalID], references: [id])
+  tag    Tag  @relation(fields: [tagID], references: [id])
 
   @@unique([goalID, tagID])
 }
 
 model TagOnAssignment {
-  id      Int   @id @default(autoincrement())
-  assignmentID  Int
-  tagID   Int
-  assignment    Assignment  @relation(fields: [assignmentID], references: [id])
-  tag     Tag   @relation(fields: [tagID], references: [id])
+  id           Int        @id @default(autoincrement())
+  assignmentID Int
+  tagID        Int
+  assignment   Assignment @relation(fields: [assignmentID], references: [id])
+  tag          Tag        @relation(fields: [tagID], references: [id])
 
   @@unique([assignmentID, tagID])
 }
