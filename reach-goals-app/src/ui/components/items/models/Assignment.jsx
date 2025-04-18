@@ -15,6 +15,11 @@ const targetMap = (classes) => {
     return attributes
 }
 
+const createElement = (region, parent, html) => {
+    if (!parent && !html) { return console.error('parent/html parameter is undefined. Check them value.') } 
+    parent.insertAdjacentHTML(region, html)
+}
+
 const toggleSelectAssignment = (props, e) => {
 
     const checkElementContainer = (elementTarget, container) => {
@@ -35,19 +40,16 @@ const toggleSelectAssignment = (props, e) => {
             const isDefinable = checkElementContainer(setAssignment, containerAssignment)
 
             if (isDefinable) {
-                //Create a container assignment to add
-                const labelAssignment = document.createElement('label')
-                labelAssignment.id = setAssignment.getAttribute('id')
-                labelAssignment.textContent = setAssignment.querySelector('.line-info label').textContent
-
-                //Create a input assignment to add
-                const inputAssignment = document.createElement('input')
-                inputAssignment.type = 'hidden'
-                inputAssignment.id = setAssignment.getAttribute('id')
-                inputAssignment.value = setAssignment.getAttribute('id')
-
-                containerAssignment.appendChild(inputAssignment)
-                containerAssignment.appendChild(labelAssignment)
+                createElement('beforeend', containerAssignment, 
+                    `<input hidden id="${setAssignment.getAttribute('id')}" value="${setAssignment.getAttribute('id')}" />`)
+                createElement('beforeend', containerAssignment, 
+                    `<div class="assignment mini-list" id="${setAssignment.getAttribute('id')}">
+                        <div class="head">
+                            <label class="line-info">
+                                <i class="icon-st fa-solid fa-list-check"></i><label>${setAssignment.querySelector('.line-info label').textContent}</label>
+                            </label>
+                        </div>
+                    </div>`)
 
                 if (typeof props.exFunction === 'function') {
                     const assignmentSelectableArray = []
@@ -85,7 +87,8 @@ const Assignment = (props) => {
         type: 'mini-list'
     }
     const utilsAssignment = {
-        unfocused: props.unfocused ?? false
+        unfocused: props.unfocused ?? false,
+        focused: props.focused ?? null
     }
 
     useEffect(() => {
@@ -136,6 +139,7 @@ const Assignment = (props) => {
     return (
         assignment.filter((assignment) => {
             if (utilsAssignment.unfocused) { return !assignment.goalID }
+            if (utilsAssignment.focused) { return assignment.goalID === utilsAssignment.focused.id }
             return true
         }).map(assignment => ( 
             <div className={`assignment ${display.type}`} id={assignment.id} key={assignment.id} onClick={(e) => handleAssignmentClick(assignment.id, e)}>

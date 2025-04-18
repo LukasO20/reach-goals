@@ -2,11 +2,15 @@ import React, { useContext, useEffect, useState } from 'react'
 import { VisibilityContext } from '../../../provider/VisibilityProvider'
 import { ManageModelContext } from '../../../provider/ManageModelProvider'
 import { ModalListContext } from '../../../provider/ModalListProvider'
+
 import * as goalAction from '../../../provider/goal/goalAction'
 import * as assignmentAction from '../../../provider/assignment/assignmentAction'
+
 import ButtonAction from '../items/elements/ButtonAction'
 import ButtonDropdown from '../../components/items/elements/ButtonDropdown'
 import ModalList from '../panels/ModalList'
+import Assignment from '../items/models/Assignment'
+import Goal from '../items/models/Goal'
 
 import moment from 'moment'
 
@@ -51,7 +55,6 @@ const formsInputMap = (typeForm) => {
 }
 
 const formsItemMap = (typeForm, modelObject) => {
-    console.log('MODEL OBJECT - ', modelObject)
     const refFormItem = typeForm === 'goal' ? 'assignment' : 'goal'
     const formItem = 
         <div className={`item-forms ${refFormItem}`}>
@@ -62,8 +65,13 @@ const formsItemMap = (typeForm, modelObject) => {
                 </div>
                 <div className='item-head-2'></div>
             </div>
-            <div className='item-forms body'></div>
-            {/* <input type='text' id={`${refFormItem}-selectable`} name={refFormItem}  value={modelObject?.model || ''} onChange={auxFunction}/> */}
+            <div className='item-forms body'>
+                {typeForm === 'goal' ? 
+                    <Assignment focused={modelObject.model} />
+                    : 
+                    undefined
+                }
+            </div>
         </div>
 
     return formItem
@@ -270,7 +278,7 @@ const ModalForm = (props) => {
                             </div>
                             <div className='item-forms body'></div>
                         </div>
-                        {formsItemMap(typeForm, { model: typeForm === 'goal' ? modelTarget?.assignment : modelTarget?.goal }, handleChange)}
+                        {formsItemMap(typeForm, { model: modelTarget })}
                         <div className='field-forms details'>
                             <textarea id={`${typeForm}-details`} className='input-form' placeholder='details here...'
                                 name='description' value={modelTarget?.description || ''} onChange={handleChange}></textarea>
