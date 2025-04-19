@@ -96,6 +96,7 @@ const Assignment = (props) => {
             try {
                 const fetched = await assignmentAction.getAssignment()
                 setAssignment(fetched)
+
             } catch (error) {
                 setErro(`Failed to load assignment: ${error.message}`)
             }
@@ -115,7 +116,7 @@ const Assignment = (props) => {
     const editAssignment = useCallback(async (id) => {
         try {
             const fetched = await assignmentAction.getAssignment(id)
-            setSelectModel(fetched.id)
+            setSelectModel(fetched.id)        
         } catch (error) {
             setErro(`Failed to edit this assignment: ${erro.message}`)
         }
@@ -124,7 +125,6 @@ const Assignment = (props) => {
     const handleAssignmentClick = useCallback(
         (id, e) => {
             const isSelectableModel = props.selectableModel ?? false
-
             if (isSelectableModel) { 
                 e.stopPropagation()
                 return toggleSelectAssignment(props, e)

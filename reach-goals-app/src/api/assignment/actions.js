@@ -1,18 +1,40 @@
 const prisma = require('../connectdb')
+const moment = require('moment')
+
+const formatObject = (objectData) => { //CREATE AN UNIQUE "formatObject" function and share it
+    return Object.fromEntries(
+        Object.entries(objectData).filter(([_, value]) => value !== undefined && value !== null && value !== "")
+    )
+}
 
 const addAssignment = async (req, res) => {
     if (req.method === 'POST') {
-        const { name, description } = req.body
+        const { name, description, status, duration, start, end, goalID } = req.body
         if (!name) { return res.status(400).json({ error: 'Name is required.'}) }
   
+        const startDate = start ? moment(start, 'DD/MM/YYYY').toISOString() : new Date().toISOString()  
+        const endDate = end ? moment(end, 'DD/MM/YYYY').toISOString() : null
+        const durationFormat = duration ? parseInt(duration) : null
+
+        const rawObject = { 
+            name,
+            description, 
+            status, 
+            duration: durationFormat,
+            start: startDate,
+            end: endDate, 
+            goal: goalID ? { connect: goalID } : null
+        }
+
+        const formattedData = formatObject(rawObject)
+        console.log('ASSIGN TO ADD - ', formattedData)
+
         try {
             const assignment = await prisma.assignment.create({
-                data: { 
-                    name,
-                    description
-                },
-            })
-    
+                data: formattedData,
+                include: { goal: true }
+            })  
+
             return res.status(201).json(assignment)
         
         } catch (error) {
@@ -25,15 +47,30 @@ const addAssignment = async (req, res) => {
 const updateAssignment = async (req, res) => {
     if (req.method === 'PUT') {
         const { id } = req.params
-        const { name, description } = req.body
+        const { name, description, status, duration, start, end, goalID } = req.body
+
+        const startDate = start ? moment(start, 'DD/MM/YYYY').toISOString() : new Date().toISOString()  
+        const endDate = end ? moment(end, 'DD/MM/YYYY').toISOString() : null
+        const durationFormat = duration ? parseInt(duration) : null
+
+        const rawObject = { 
+            name,
+            description, 
+            status, 
+            duration: durationFormat,
+            start: startDate,
+            end: endDate, 
+            goal: goalID ? { connect: goalID } : null
+        }
+
+        const formattedData = formatObject(rawObject)
+        console.log('ASSIGN TO ADD - ', formattedData)
 
         try {
             const assignment = await prisma.assignment.update({
                 where: { id: Number(id) },
-                data: {
-                    name: name || null,
-                    description: description || null
-                }
+                data: formattedData,
+                include: { goal: true }
             })
 
             return res.status(200).json(assignment)

@@ -27,7 +27,7 @@ const titleMap = {
     goal: 'Create your goal'
 }
 
-const targetMap = (classes, operator = {}) => {
+const targetMap = (classes, operator = {}) => { //CREATE AN UNIQUE "targetMap" function and share it
     const data = Array.isArray(classes) ? classes : [classes]
     const attributes = {
         class: data,
@@ -44,10 +44,10 @@ const modalListMap = (open, type) => {
     return attributes
 }
 
-const formsInputMap = (typeForm) => {
+const formsInputMap = (typeForm, exFunction) => {
     const form = typeForm === 'assignment' ?
         <div className='field-forms duration'>
-            <input id={`${typeForm}-duration`} className='input-form' type="text" placeholder='set duration' />
+            <input id={`${typeForm}-duration`} className='input-form' type="text" placeholder='set duration' name='duration' onChange={exFunction} />
         </div>  
         : undefined
 
@@ -103,7 +103,7 @@ const ModalForm = (props) => {
         status: undefined,
         start: '',
         end: '', 
-        goal: undefined
+        goal: null
     }
 
     const [goal, setGoal] = useState(goalEmpty)
@@ -179,7 +179,7 @@ const ModalForm = (props) => {
         }
     }
 
-    console.log('DEPOIS DA ATT- ', goal)
+    console.log('DEPOIS DA ATT- ', assingment)
 
     const handleSubmit = async () => {
         setError(null)
@@ -270,7 +270,7 @@ const ModalForm = (props) => {
                         {/* <div className='field-forms reminder-date'>
                             <ButtonDropdown target={targetMap(`${typeForm}-reminder-date`, { add: true })} classBtn='dropdown-form' title='choose an option' dataSelectable={true} />
                         </div> */}
-                        {formsInputMap(typeForm)}
+                        {formsInputMap(typeForm, handleChange)}
                         <div className='item-forms tag'>
                             <div className='item-forms head'>
                                 <div className='item-head-1'>tags</div>

@@ -1,6 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { VisibilityContext } from '../../../provider/VisibilityProvider'
-import { ManageModelContext } from '../../../provider/ManageModelProvider'
+import React from 'react'
 import Goal from '../items/models/Goal'
 import Assignment from '../items/models/Assignment'
 import ButtonAction from '../items/elements/ButtonAction'
