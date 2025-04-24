@@ -117,7 +117,9 @@ const getGoal = async (req, res) => {
                     include: { assignments: true }
                 })
             } else {
-                goal = await prisma.goal.findMany()
+                goal = await prisma.goal.findMany({
+                    include: { assignments: true }
+                })
             }
 
             return res.status(200).json(goal)

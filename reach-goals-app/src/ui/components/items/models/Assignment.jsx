@@ -84,7 +84,8 @@ const Assignment = (props) => {
     const target = useMemo(() => targetMap('panel-left'), []) 
     const display = props.display ?? {
         sideAction: false, 
-        type: 'mini-list'
+        type: 'mini-list',
+        formMode: props?.formMode ?? false
     }
     const utilsAssignment = {
         unfocused: props.unfocused ?? false,
@@ -141,7 +142,7 @@ const Assignment = (props) => {
             if (utilsAssignment.unfocused) { return !assignment.goalID }
             if (utilsAssignment.focused) { return assignment.goalID === utilsAssignment.focused.id }
             return true
-        }).map(assignment => ( 
+        }).map(assignment => (
             <div className={`assignment ${display.type}`} id={assignment.id} key={assignment.id} onClick={(e) => handleAssignmentClick(assignment.id, e)}>
                 {
                     display.type === 'card' ?
@@ -163,6 +164,7 @@ const Assignment = (props) => {
                         <ButtonAction onClick={() => deleteAssignment(assignment.id)} target={targetMap(null)} classBtn='remove-assignment' iconFa='fa-regular fa-trash-can'/>
                     </div>
                 }
+                {display.formMode && <input hidden readOnly={true} value={assignment.id} id={assignment.id} />}
             </div>
         ))
     )

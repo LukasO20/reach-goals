@@ -111,7 +111,8 @@ const getAssignment = async (req, res) => {
             
             if (id !== undefined) {
                 assignment = await prisma.assignment.findUnique({
-                    where: { id: Number(id) }
+                    where: { id: Number(id) },
+                    include: { goal: true }
                 })
             } else {
                 assignment = await prisma.assignment.findMany()

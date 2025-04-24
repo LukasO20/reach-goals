@@ -32,6 +32,10 @@ const Goal = (props) => {
         sideAction: false, 
         type: 'mini-list'
     }
+    const utilsGoal = {
+        idAssignment: props.idAssignment ?? null
+    }
+
     useEffect(() => {
         const fetchGoal = async () => {
             try {
@@ -48,7 +52,7 @@ const Goal = (props) => {
     const deleteGoal = async (id) => {
         try {
             await goalAction.deleteGoal(id)
-            setGoal((prevGoal) => prevGoal.filter((goal) => goal.id != id))
+            setGoal((prevGoal) => prevGoal.filter((goal) => goal.id !== id))
         } catch (error) {
             setErro(`Failed to delete goal: ${erro.message}`)
         }
@@ -65,6 +69,12 @@ const Goal = (props) => {
 
     const handleGoalClick = useCallback(
         (id, e) => {
+            const isSelectableModel = props.selectableModel ?? false
+            if (isSelectableModel) { 
+                e.stopPropagation()
+                //return toggleSelectGoal(props, e)
+            }
+
             setSelectModel(id)
             toggleVisibility(target, e)
         },
@@ -72,6 +82,7 @@ const Goal = (props) => {
     )
 
     return (
+        !goal.some(goal => goal.assignments.filter(assignment => assignment.id === utilsGoal.idAssignment).length) ?
         goal.map(goal => ( 
             <div className={`goal ${display.type}`} id={goal.id} key={goal.id} onClick={(e) => handleGoalClick(goal.id, e)}>
                 {
@@ -95,7 +106,11 @@ const Goal = (props) => {
                     </div>
                 }
             </div>
-        ))
+        )) 
+        : 
+        <div className='box-message alert'>
+            <label className='label-message'>This activity is already linked to a goal.</label>
+        </div>
     )
 }
 

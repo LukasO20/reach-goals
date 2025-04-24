@@ -13,9 +13,10 @@ const modalListMap = (open, type) => {
 
 const ModalList = (props) => {
     const title = props?.title
-    const complement = props?.complement //This is a complement modal (goal is a complement of assingment and vice versa)
+    const complement = props?.complement //This is a complement value (goal is a complement of assingment and vice versa)
     const typeModalList = props?.type
     const externalFunction = props?.exFunction
+    const externalID = props?.externalID
 
     return (
         <div className='container-list-modal'>
@@ -24,7 +25,7 @@ const ModalList = (props) => {
                 <ButtonAction modalList={modalListMap(false)} standardRoute="true" classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark'/>
             </div>
             <div className='body'>
-                {complement === 'goal' ? <Goal selectableModel={true} /> : <Assignment selectableModel={true} action={{ setForm: true }} unfocused={true} exFunction={externalFunction}/>}
+                {complement === 'goal' ? <Goal selectableModel={true} idAssignment={externalID} /> : <Assignment selectableModel={true} action={{ setForm: true }} unfocused={true} exFunction={externalFunction}/>}
             </div>
         </div>
     )

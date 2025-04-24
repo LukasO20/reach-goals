@@ -67,7 +67,7 @@ const formsItemMap = (typeForm, modelObject) => {
             </div>
             <div className='item-forms body'>
                 {typeForm === 'goal' ? 
-                    <Assignment focused={modelObject.model} />
+                    <Assignment focused={modelObject.model} formMode={true} />
                     : 
                     undefined
                 }
@@ -179,7 +179,8 @@ const ModalForm = (props) => {
         }
     }
 
-    console.log('DEPOIS DA ATT- ', assingment)
+    console.log('DEPOIS DO ATT GOAL - ', goal)
+    console.log('DEPOIS DO ATT ASSIGNMENT - ', assingment)
 
     const handleSubmit = async () => {
         setError(null)
@@ -208,23 +209,22 @@ const ModalForm = (props) => {
     }
 
     useEffect(() => {
-        const loadGoal = async (id) => {
-            if (id === null ) { 
-                setGoal(goalEmpty)
+        const loadModel = async (id) => {
+            if (id === null ) {
+                typeForm === 'goal' ? setGoal(goalEmpty) : setAssignment(assingmentEmpty)
                 return
             } 
-            
+
             try {
-                const getGoal = await goalAction.getGoal(id)
-                console.log('GOAL GETED - ', getGoal)
-                setGoal(getGoal)
+                const getModel = typeForm === 'goal' ? await goalAction.getGoal(id) : await assignmentAction.getAssignment(id)
+                typeForm === 'goal' ? setGoal(getModel) : setAssignment(getModel)
             }
             catch (error) {
                 setError('Ops, something wrong: ', error)
-            }
-        } 
+            }  
+        }
 
-        loadGoal(selectModel)
+        loadModel(selectModel)
     }, [selectModel])
 
     const modelTarget = handleTarget(typeForm)
@@ -304,7 +304,7 @@ const ModalForm = (props) => {
                 </div>
             </div>
             {modalList.open && (
-                <ModalList title={`Complementing ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} complement={typeForm === 'goal' ? 'assignment' : 'goal'} exFunction={handleChange} />
+                <ModalList title={`Complementing ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} complement={typeForm === 'goal' ? 'assignment' : 'goal'} externalID={modelTarget?.id} exFunction={handleChange} />
             )}
         </div>
     )
