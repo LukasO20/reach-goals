@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 import { ManageModelContext } from '../../../../provider/ManageModelProvider'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider'
 import { Link } from 'react-router-dom'
+import { insertModelComponent } from '../../../utils/layout/layout'
 
 import ButtonAction from '../elements/ButtonAction'
 import * as assignmentAction from '../../../../provider/assignment/assignmentAction'
@@ -13,60 +14,6 @@ const targetMap = (classes) => {
     const data = Array.isArray(classes) ? classes : [classes]
     const attributes = { class: data }
     return attributes
-}
-
-const createElement = (region, parent, html) => {
-    if (!parent && !html) { return console.error('parent/html parameter is undefined. Check them value.') } 
-    parent.insertAdjacentHTML(region, html)
-}
-
-const toggleSelectAssignment = (props, e) => {
-
-    const checkElementContainer = (elementTarget, container) => {
-        if (!elementTarget || !container) { console.error(`Parameter ${elementTarget ?? container} reference is null! Check parameter sended.`) }
-
-        const childrenContainer = Array.from(container.children)
-        const valueChecked = childrenContainer.length === 0 ? true : !childrenContainer.some(child => child.id === elementTarget.id)
-        return valueChecked
-    }
-
-    if (props?.selectableModel) {
-        if (!props?.action?.setForm) { return console.error('This model is selectable but parameter "typeModal" is needed!') }
-        
-        if (props.action.setForm) {
-            const formGoal = document.querySelector('.content-center.goal form')
-            const setAssignment = e.currentTarget       
-            const containerAssignment = formGoal.querySelector('.item-forms.assignment .body')  
-            const isDefinable = checkElementContainer(setAssignment, containerAssignment)
-
-            if (isDefinable) {
-                createElement('beforeend', containerAssignment, 
-                    `<input hidden id="${setAssignment.getAttribute('id')}" value="${setAssignment.getAttribute('id')}" />`)
-                createElement('beforeend', containerAssignment, 
-                    `<div class="assignment mini-list" id="${setAssignment.getAttribute('id')}">
-                        <div class="head">
-                            <label class="line-info">
-                                <i class="icon-st fa-solid fa-list-check"></i><label>${setAssignment.querySelector('.line-info label').textContent}</label>
-                            </label>
-                        </div>
-                    </div>`)
-
-                if (typeof props.exFunction === 'function') {
-                    const assignmentSelectableArray = []
-                    Array.from(containerAssignment?.children).forEach(assignmentEl => {
-                        if (assignmentEl.value) {
-                            assignmentSelectableArray.push(assignmentEl.value)
-                        }
-                    })
-
-                    const assignmentSelectable = {
-                        assignments: assignmentSelectableArray
-                    }
-                    props.exFunction(assignmentSelectable)
-                }
-            }
-        }
-    }
 }
 
 const Assignment = (props) => {
@@ -128,7 +75,7 @@ const Assignment = (props) => {
             const isSelectableModel = props.selectableModel ?? false
             if (isSelectableModel) { 
                 e.stopPropagation()
-                return toggleSelectAssignment(props, e)
+                return insertModelComponent(props, 'assignment', e)
             }
 
             setSelectModel(id)

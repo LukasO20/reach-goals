@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 import { ManageModelContext } from '../../../../provider/ManageModelProvider'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider'
 import { Link } from 'react-router-dom'
+import { insertModelComponent } from '../../../utils/layout/layout'
 
 import ButtonAction from '../elements/ButtonAction'
 import * as goalAction from '../../../../provider/goal/goalAction'
@@ -72,7 +73,7 @@ const Goal = (props) => {
             const isSelectableModel = props.selectableModel ?? false
             if (isSelectableModel) { 
                 e.stopPropagation()
-                //return toggleSelectGoal(props, e)
+                return insertModelComponent(props, 'goal', e)
             }
 
             setSelectModel(id)

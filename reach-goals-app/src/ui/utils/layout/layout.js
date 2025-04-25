@@ -3,4 +3,61 @@ const createElement = (region, parent, html) => {
     parent.insertAdjacentHTML(region, html)
 }
 
-export { createElement }
+const insertModelComponent = (props, type, e) => {
+    const checkElementContainer = (elementTarget, container) => {
+        if (!elementTarget || !container) { console.error(`Parameter ${elementTarget ?? container} reference is null! Check parameter sended.`) }
+
+        const childrenContainer = Array.from(container.children)
+        const valueChecked = childrenContainer.length === 0 ? true : !childrenContainer.some(child => child.id === elementTarget.id)
+        return valueChecked
+    }
+
+    if (props?.selectableModel) {
+        if (!props?.action?.setForm) { return console.error('This model is selectable but parameter "typeModal" is needed!') }
+        
+        const modelReference = type === 'assignment' ? 'goal' : 'assignment'
+        if (props.action.setForm) {
+            const form = document.querySelector(`.content-center.${modelReference} form`)
+            const setModel = e.currentTarget       
+            const containerModel = form.querySelector(`.item-forms.${type} .body`)  
+            const isDefinable = checkElementContainer(setModel, containerModel)
+
+            if (isDefinable) {
+                createElement('beforeend', containerModel, 
+                    `<input hidden id="${setModel.getAttribute('id')}" value="${setModel.getAttribute('id')}" />`)
+                createElement('beforeend', containerModel, 
+                    `<div class="${type} mini-list" id="${setModel.getAttribute('id')}">
+                        <div class="head">
+                            <label class="line-info">
+                                <i class="icon-st fa-solid ${type === 'goal' ? 'fa-bullseye' : 'fa-list-check'}"></i>
+                                <label>${setModel.querySelector('.line-info label').textContent}</label>
+                            </label>
+                        </div>
+                    </div>`)
+
+                if (typeof props.exFunction === 'function') {
+                    let modelSelectableReference = type === 'assignment' ? [] : undefined
+                    if (type === 'assignment') {
+                        Array.from(containerModel?.children).forEach(el => {
+                            if (el.value) {
+                                modelSelectableReference.push(el.value)
+                            }
+                        })
+                    } else {
+                        modelSelectableReference = setModel.getAttribute('id')
+                    }
+
+                    const keyAssignment = 'assignments'
+                    const keyGoal = 'goal'
+                    
+                    const modelSelectable = {
+                        [type === 'assignment' ? keyAssignment : keyGoal]: modelSelectableReference
+                    }
+                    props.exFunction(modelSelectable)
+                }
+            }
+        }
+    }
+}
+
+export { createElement, insertModelComponent }

@@ -162,7 +162,7 @@ const ModalForm = (props) => {
 
     const handleChange = async (e) => {
         const { name, value } = e?.target || e
-    
+
         if (typeForm === 'goal') {
             const assignmentsRelation = e.assignments ?? goal.assignments
 
@@ -175,12 +175,12 @@ const ModalForm = (props) => {
             setAssignment((prevData) => ({
                 ...prevData,
                 [name]: value,
+                goal: e?.target === undefined ? Object.values(e)[0] : null
             }))
         }
     }
 
-    console.log('DEPOIS DO ATT GOAL - ', goal)
-    console.log('DEPOIS DO ATT ASSIGNMENT - ', assingment)
+    console.log('DEPOIS DO ATT - ', type === 'goal'? goal : assingment)
 
     const handleSubmit = async () => {
         setError(null)

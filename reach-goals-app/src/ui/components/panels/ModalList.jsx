@@ -25,7 +25,8 @@ const ModalList = (props) => {
                 <ButtonAction modalList={modalListMap(false)} standardRoute="true" classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark'/>
             </div>
             <div className='body'>
-                {complement === 'goal' ? <Goal selectableModel={true} idAssignment={externalID} /> : <Assignment selectableModel={true} action={{ setForm: true }} unfocused={true} exFunction={externalFunction}/>}
+                {complement === 'goal' ? <Goal selectableModel={true} idAssignment={externalID} action={{ setForm: true }} exFunction={externalFunction} /> 
+                : <Assignment selectableModel={true} action={{ setForm: true }} unfocused={true} exFunction={externalFunction}/>}
             </div>
         </div>
     )

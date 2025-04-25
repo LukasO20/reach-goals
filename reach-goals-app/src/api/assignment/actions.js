@@ -9,7 +9,7 @@ const formatObject = (objectData) => { //CREATE AN UNIQUE "formatObject" functio
 
 const addAssignment = async (req, res) => {
     if (req.method === 'POST') {
-        const { name, description, status, duration, start, end, goalID } = req.body
+        const { name, description, status, duration, start, end, goal } = req.body
         if (!name) { return res.status(400).json({ error: 'Name is required.'}) }
   
         const startDate = start ? moment(start, 'DD/MM/YYYY').toISOString() : new Date().toISOString()  
@@ -23,7 +23,7 @@ const addAssignment = async (req, res) => {
             duration: durationFormat,
             start: startDate,
             end: endDate, 
-            goal: goalID ? { connect: goalID } : null
+            goal: goal ? { connect: { id: Number(goal) } } : null
         }
 
         const formattedData = formatObject(rawObject)
@@ -47,7 +47,7 @@ const addAssignment = async (req, res) => {
 const updateAssignment = async (req, res) => {
     if (req.method === 'PUT') {
         const { id } = req.params
-        const { name, description, status, duration, start, end, goalID } = req.body
+        const { name, description, status, duration, start, end, goal } = req.body
 
         const startDate = start ? moment(start, 'DD/MM/YYYY').toISOString() : new Date().toISOString()  
         const endDate = end ? moment(end, 'DD/MM/YYYY').toISOString() : null
@@ -60,7 +60,7 @@ const updateAssignment = async (req, res) => {
             duration: durationFormat,
             start: startDate,
             end: endDate, 
-            goal: goalID ? { connect: goalID } : null
+            goal: goal ? { connect: { id: Number(goal) } } : null
         }
 
         const formattedData = formatObject(rawObject)
