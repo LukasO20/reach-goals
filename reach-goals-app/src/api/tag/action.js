@@ -1,0 +1,116 @@
+const prisma = require('../connectdb')
+const moment = require('moment')
+
+const formatObject = (objectData) => { //CREATE AN UNIQUE "formatObject" function and share it
+    return Object.fromEntries(
+        Object.entries(objectData).filter(([_, value]) => value !== undefined && value !== "")
+    )
+}
+
+const addTag = async (req, res) => {
+    if (req.method === 'POST') {
+        const { name, color } = req.body
+
+        if (!name) { return res.status(400).json({ error: 'Name is required.'}) }
+        if (!color) { return res.status(400).json({ error: 'Name is required.'}) }
+
+        const rawObject = { 
+            name,
+            color
+        }
+
+        const formattedData = formatObject(rawObject)
+        console.log('Tag TO ADD - ', formattedData)
+
+        try {
+            const tag = await prisma.tag.create({
+                data: formattedData
+            })
+    
+            return res.status(201).json(tag)
+        
+        } catch (error) {
+            console.error(error)
+            return res.status(500).json({ error: 'Failed to create tag'})
+        }
+
+    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }
+}
+
+const updateTag = async (req, res) => {
+    if (req.method === 'PUT') {
+        const { id } = req.params
+        const { name, color } = req.body
+
+        if (!name) { return res.status(400).json({ error: 'Name is required.'}) }
+        if (!color) { return res.status(400).json({ error: 'Name is required.'}) }
+
+        const rawObject = { 
+            name,
+            color
+        }
+
+        const formattedData = formatObject(rawObject)
+        console.log('Goal TO UPDATE - ', formattedData)
+
+        try {
+            const tag = await prisma.tag.update({
+                where: { id: Number(id) },
+                data: formattedData,
+            })
+
+            return res.status(200).json(tag)
+
+        } catch (error) {
+            console.error(error)
+            return res.status(500).json({ error: 'Failed updating tags'})
+        }
+
+    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }
+}
+
+const deleteTag = async (req, res) => {
+    if (req.method === 'DELETE') {
+
+        const { id } = req.params
+
+        try {
+            const tag = await prisma.tag.delete({
+                where: { id: Number(id) }
+            })
+
+            return res.status(200).json(tag)
+            
+        } catch (error) {
+            console.error(error)
+            return res.status(500).json({ error: 'Failed to delete this tag'})
+        }
+
+    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }
+}
+
+const getTag = async (req, res) => {
+    if (req.method === 'GET') {
+        try {
+            let tag = undefined
+            const { id } = req.params
+            
+            if (id !== undefined) {
+                tag = await prisma.tag.findUnique({
+                    where: { id: Number(id) }
+                })
+            } else {
+                tag = await prisma.tag.findMany()
+            }
+
+            return res.status(200).json(tag)
+
+        } catch (error) {
+            console.error(error)
+            return res.status(500).json({ error: 'Failed to fetch tags'})
+        }
+
+    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }
+}
+
+module.exports = { addTag, updateTag, deleteTag, getTag }

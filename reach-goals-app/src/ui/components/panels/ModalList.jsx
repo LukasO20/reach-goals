@@ -14,7 +14,6 @@ const modalListMap = (open, type) => {
 const ModalList = (props) => {
     const title = props?.title
     const complement = props?.complement //This is a complement value (goal is a complement of assingment and vice versa)
-    const typeModalList = props?.type
     const externalFunction = props?.exFunction
     const externalID = props?.externalID
 
