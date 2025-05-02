@@ -13,6 +13,7 @@ import ContainerM from '../ui/components/ContainerMain'
 import AppRoutes from './Routes'
 import PanelLeft from '../ui/components/panels/PanelLeft'
 import PanelCenter from '../ui/components/panels/PanelCenter'
+import Panel from '../ui/components/panels/Panel'
 
 import './App.scss'
 import '../ui/styles/items/Elements.scss'
@@ -32,8 +33,9 @@ const App = () => {
                                         <ContainerM>
                                             <AppRoutes />  
                                         </ContainerM>
-                                        <PanelCenter id="panel-center" />
-                                        <PanelLeft id="panel-left" />
+                                        {/* <PanelCenter id="panel-center" />
+                                        <PanelLeft id="panel-left" /> */}
+                                        <Panel />
                                     </div>
                                 </SwitchLayoutProvider>
                             </ModalListProvider>

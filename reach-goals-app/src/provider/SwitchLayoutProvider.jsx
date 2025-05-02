@@ -12,6 +12,9 @@ const SwitchLayoutProvider = ({children}) => {
             configModal: {
                 layout: 'config-theme'
             },
+            panel: {
+                layout: ''
+            }
         }
     }
 
