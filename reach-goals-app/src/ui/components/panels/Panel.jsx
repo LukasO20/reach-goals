@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { VisibilityContext } from '../../../provider/VisibilityProvider'
+import { useSwitchLayout } from '../../../hook/useSwitchLayout'
 
 import ModalForm from './ModalForm'
 import Config from './Config'
@@ -44,6 +45,7 @@ const Panel = (props) => {
     const btnCurrent = visibleElements[1] ?? ''
     const typeForm = btnCurrent.split(' ')[0]
 
+    //TRY TO USE SWITCHLAYOUTPROVIDER values here
     return (
         <div className={`content-center ${panelType.some(panel => visibleElements.includes(panel)) ? 'show' : ''} ${typeForm}`}>  
             {renderLayoutPanel(panelPosition, typeForm)}
