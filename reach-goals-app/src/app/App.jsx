@@ -11,8 +11,6 @@ import ContainerN from '../ui/components/Navigate'
 import ContainerH from '../ui/components/ContainerHeader'
 import ContainerM from '../ui/components/ContainerMain'
 import AppRoutes from './Routes'
-import PanelLeft from '../ui/components/panels/PanelLeft'
-import PanelCenter from '../ui/components/panels/PanelCenter'
 import Panel from '../ui/components/panels/Panel'
 
 import './App.scss'
@@ -33,8 +31,6 @@ const App = () => {
                                         <ContainerM>
                                             <AppRoutes />  
                                         </ContainerM>
-                                        {/* <PanelCenter id="panel-center" />
-                                        <PanelLeft id="panel-left" /> */}
                                         <Panel />
                                     </div>
                                 </SwitchLayoutProvider>

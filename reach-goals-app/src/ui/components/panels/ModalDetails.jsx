@@ -42,7 +42,7 @@ const ModalDetails = () => {
         loadGoal(selectModel)
     }, [selectModel])
 
-    return ReactDOM.createPortal (
+    return (
         <div className='container-modaldetails aside-content'>
             <div className='header'>
                 <h2>{goal.name}</h2>
@@ -50,26 +50,26 @@ const ModalDetails = () => {
                 <ButtonAction target={targetMap(null)} standardRoute="true" classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark'/>
             </div>
             <div className='body'>
-                {
-                    goal.description &&
-                    <div>
-                        {goal.description}
+            {
+                goal.description &&
+                <div>
+                    {goal.description}
+                </div>
+            }
+            {
+                <div className='modaldetails assignment-list'>
+                    <div className='header-assignment-list'>
+                        <i className="icon-st fa-solid fa-list-check"></i>
+                        <h4>Assignments</h4>
                     </div>
-                }
-                {
-                    <div className='modaldetails assignment-list'>
-                        <div className='header-assignment-list'>
-                            <i className="icon-st fa-solid fa-list-check"></i>
-                            <h4>Assignments</h4>
-                        </div>
-                        <div className='body-assignment-list'>
-                            <Assignment/>
-                        </div>
+                    <div className='body-assignment-list'>
+                        <Assignment/>
                     </div>
-                }
+                </div>
+            }
             </div>
             <Outlet/>
-        </div>, document.querySelector('.content-aside-r')
+        </div>
     )
 }
 

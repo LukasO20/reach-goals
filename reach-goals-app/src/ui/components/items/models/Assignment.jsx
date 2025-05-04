@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom'
 import { ManageModelContext } from '../../../../provider/ManageModelProvider'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider'
 import { Link } from 'react-router-dom'
-import { insertModelComponent } from '../../../utils/layout/layout'
+import { insertModelComponent } from '../../../utils/layout/uiLayout'
 
 import ButtonAction from '../elements/ButtonAction'
 import * as assignmentAction from '../../../../provider/assignment/assignmentAction'

@@ -1,20 +1,18 @@
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom' 
+import { Link } from 'react-router-dom'
+
 import { ManageModelContext } from '../../../../provider/ManageModelProvider'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider'
-import { Link } from 'react-router-dom'
-import { insertModelComponent } from '../../../utils/layout/layout'
+import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider'
+import { insertModelComponent } from '../../../utils/layout/uiLayout'
+
+import { targetMap, switchLayoutMap } from '../../../../utils/mappingUtils'
 
 import ButtonAction from '../elements/ButtonAction'
 import * as goalAction from '../../../../provider/goal/goalAction'
 
 import '../../../styles/items/models/Goal.scss'
-
-const targetMap = (classes) => {
-    const data = Array.isArray(classes) ? classes : [classes]
-    const attributes = { class: data }
-    return attributes
-}
 
 const Goal = (props) => {
     const [goal, setGoal] = useState([])
@@ -22,13 +20,14 @@ const Goal = (props) => {
     
     const { toggleVisibility } = useContext(VisibilityContext)
     const { setSelectModel } = useContext(ManageModelContext)
+    const { switchLayoutComponent } = useContext(SwitchLayoutContext)
 
     const location = useLocation()
     const currentLocation = useMemo(() => {
         return location.pathname.includes('/objectives') ? '/objectives' : location.pathname.includes('/home') ? '/home' : '/calendar'
     }, [location.pathname])
 
-    const target = useMemo(() => targetMap('panel-left'), []) 
+    const target = useMemo(() => targetMap(['panel-right', 'goal']), []) 
     const display = props.display ?? {
         sideAction: false, 
         type: 'mini-list'
@@ -78,6 +77,7 @@ const Goal = (props) => {
 
             setSelectModel(id)
             toggleVisibility(target, e)
+            switchLayoutComponent(switchLayoutMap('panel', 'layout', 'right'))
         },
         [setSelectModel, toggleVisibility, target]
     )
@@ -102,7 +102,7 @@ const Goal = (props) => {
                 {
                     display.sideAction && 
                     <div className='side-actions'>
-                        <ButtonAction onClick={() => editGoal(goal.id)} target={targetMap(['panel-center', 'goal'])} classBtn='edit-goal' iconFa='fa-regular fa-pen-to-square'/>
+                        <ButtonAction onClick={() => editGoal(goal.id)} target={targetMap(['panel-center', 'goal'])} switchLayout={switchLayoutMap('panel', 'layout', 'center')} classBtn='edit-goal' iconFa='fa-regular fa-pen-to-square'/>
                         <ButtonAction onClick={() => deleteGoal(goal.id)} target={targetMap(null)} classBtn='remove-goal' iconFa='fa-regular fa-trash-can'/>
                     </div>
                 }

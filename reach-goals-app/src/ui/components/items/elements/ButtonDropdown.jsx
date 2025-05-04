@@ -40,6 +40,15 @@ const targetMap = (classes, operator = {}) => {
     return attributes
 }
 
+const switchLayoutMap = (nameComponent, nameLayout, value) => {
+    const attributes = {
+        nameComponent: nameComponent,
+        nameLayout: nameLayout,
+        value: value
+    }
+    return attributes
+}
+
 const ButtonDropdown = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
 
@@ -120,7 +129,7 @@ const ButtonDropdown = (props) => {
                                     <div className={`option ${option.op}`} key={`op-${index}`}>
                                         <div className='item-option'>                                  
                                             <div className='item-title'>
-                                                <ButtonAction onClick={handleAction} datavalue={dropdownStatus ? option.op : null}  target={targetMap(...classTargetDropdown)} classBtn={`form-${option.op} button-st`} iconFa='fa-solid fa-plus' title={`${option.title}`}/>
+                                                <ButtonAction onClick={handleAction} datavalue={dropdownStatus ? option.op : null}  target={targetMap(...classTargetDropdown)} switchLayout={switchLayoutMap('panel', 'layout', 'center')} classBtn={`form-${option.op} button-st`} iconFa='fa-solid fa-plus' title={`${option.title}`}/>
                                             </div> 
                                             <div className='item-details'>
 

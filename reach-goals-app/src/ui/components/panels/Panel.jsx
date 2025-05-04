@@ -3,15 +3,16 @@ import { VisibilityContext } from '../../../provider/VisibilityProvider'
 import { useSwitchLayout } from '../../../hook/useSwitchLayout'
 
 import ModalForm from './ModalForm'
+import ModalDetails from './ModalDetails'
 import Config from './Config'
 import Tag from './Tag'
 
 import '../../styles/panels/Tag.scss'
 import '../../styles/panels/Notification.scss'
 import '../../styles/panels/ModalDetails.scss'
-import '../../styles/panels/PanelLeft.scss'
+import '../../styles/panels/Panel.scss'
 
-const renderLayoutPanel = (panelPosition, typeForm) => {
+const renderLayoutContentPanel = (panelPosition, typeForm) => {
     switch (panelPosition) {
         case 'center':
             return (
@@ -20,10 +21,11 @@ const renderLayoutPanel = (panelPosition, typeForm) => {
                     <Config />
                 </>
             ) 
-        case 'left':
+        case 'right':
             return (
                 <>
                     <Tag />
+                    <ModalDetails />
                 </>
             )
         case 'near':
@@ -39,16 +41,15 @@ const renderLayoutPanel = (panelPosition, typeForm) => {
 
 const Panel = (props) => {
     const { visibleElements } = useContext(VisibilityContext)
+    const { layoutComponent } = useSwitchLayout()
     
-    const panelPosition = props?.panelPosition ?? ''
-    const panelType = ['panel-left', 'panel-center']
+    const panelType = ['panel-left', 'panel-center', 'panel-right']
     const btnCurrent = visibleElements[1] ?? ''
     const typeForm = btnCurrent.split(' ')[0]
 
-    //TRY TO USE SWITCHLAYOUTPROVIDER values here
     return (
-        <div className={`content-center ${panelType.some(panel => visibleElements.includes(panel)) ? 'show' : ''} ${typeForm}`}>  
-            {renderLayoutPanel(panelPosition, typeForm)}
+        <div className={`content-${layoutComponent.panel.layout} ${panelType.some(panel => visibleElements.includes(panel)) ? 'show' : ''} ${typeForm}`}>  
+            {renderLayoutContentPanel(layoutComponent.panel.layout, typeForm)}
         </div>
     )
 } 

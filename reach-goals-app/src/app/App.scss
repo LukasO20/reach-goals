@@ -69,6 +69,7 @@ body {
         height: 100vh;
         margin: 0;
         padding: 0;
+        overflow: hidden;
 
         display: grid;
         grid-template-columns: 4.5em 1fr;
@@ -202,7 +203,7 @@ body {
             opacity: 0;
             z-index: -1;
             box-shadow: $box-shadow-st;
-            transition: 0.1s ease-in-out;
+            transition: 0.3s ease-in-out;
 
             .container-form-modal, .container-config {
                 display: none;
@@ -258,22 +259,45 @@ body {
             }
         }
 
-        .content-aside-r {
+        .content-right, .content-left {
             display: flex;
             flex-direction: column;
             position: absolute;
-            right: 0;
             height: 100%;
             width: 30em;
             background-color: $color-complementary-p;
             box-shadow: $box-shadow-st;
             opacity: 0;
             z-index: -1;
-            transition: 0.1s ease-in-out;
+            transition: 0.3s ease-in-out;
+
+            .container-tag, .container-modaldetails {
+                display: none;
+            }
+
+            &.tag {
+
+                .container-tag {
+                    display: flex;
+                    flex-direction: column;
+                }
+            }
+
+            &.goal {
+
+                .container-modaldetails {
+                    display: flex;
+                    flex-direction: column;
+                }
+            }
 
             &.show {
                 opacity: 1;
                 z-index: 1;
+            }
+
+            &.content-right {
+                right: 0;
             }
         }
     }

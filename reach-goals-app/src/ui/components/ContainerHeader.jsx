@@ -13,13 +13,21 @@ const targetMap = (classes) => {
     return attributes
 }
 
+const switchLayoutMap = (nameComponent, nameLayout, value) => {
+    const attributes = {
+        nameComponent: nameComponent,
+        nameLayout: nameLayout,
+        value: value
+    }
+    return attributes
+}
+
 const ContainerH = () => {
     const { title } = useContext(TitleContext)
     const { toggleVisibility } = useContext(VisibilityContext)
     
     const location = useLocation()
     const currentLocation = location.pathname.includes('/objectives') ? '/objectives' : location.pathname.includes('/home') ? '/home' : '/calendar'
-    const target = targetMap('panel-left')
 
     return (
         <div className="container-header main-content" onClick={(e) => toggleVisibility(targetMap(), e)}>
@@ -30,8 +38,8 @@ const ContainerH = () => {
                 <div className='item-nav'>
                     <ButtonLink id="btn-theme" classBtn="button-h theme" iconFa="fa-solid fa-palette"/>
                 </div>
-                <div className="item-nav" onClick={(e) => toggleVisibility(target, e)}>
-                    <ButtonLink id="btn-tag" link={`${currentLocation}/tag`} classBtn="button-h tag" iconFa="fa-solid fa-tag"/>
+                <div className="item-nav" onClick={(e) => toggleVisibility(targetMap(['panel-right', 'tag']), e)}>
+                    <ButtonLink id="btn-tag"  switchLayout={switchLayoutMap('panel', 'layout', 'right')} link={`${currentLocation}/tag`} classBtn="button-h tag" iconFa="fa-solid fa-tag"/>
                 </div>
                 {/* <div className="item-nav" onClick={(e) => toggleVisibility(target, e)}>
                     <ButtonLink id="btn-notification" link={`${currentLocation}/notification`} classBtn="button-h notification" iconFa="fa-solid fa-bell"/>
