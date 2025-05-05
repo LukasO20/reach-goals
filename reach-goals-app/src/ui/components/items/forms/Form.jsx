@@ -37,13 +37,28 @@ const Form = (props) => {
     switch (typeForm) {
         case 'tag':
             element = 
-                <div>
-                    RENDERED A TAG FORM
+            <div className='container-form-modal near tag'>
+                <div className='head'>
+                    <div className='objective-title'>
+                        <label>Create a tag</label>
+                    </div>
+                    <div className='objective-buttons-options'>
+                        <ButtonAction target={targetMap('near-modalForm', { remove: true })} classBtn='button-action-p close-modal button-st' iconFa='fa-solid fa-xmark'/>
+                    </div>
                 </div>
+                <div className='body'>
+                    <div className='objective-forms'>
+                        <div className='field-forms name'>
+                            <input id={`${typeForm}-name`} className='input-form' type='text' placeholder={`${typeForm} name here`}
+                                name='name' value={modelForm?.name || ''} onChange={functionsForm.mapHandleChange} />
+                        </div>
+                    </div>
+                </div>
+            </div>
             break
         default: 
             element = 
-                <div className='container-form-modal center-content' onClick={(e) => { functionsForm.mapHandleModalList(functionsForm.mapModalListMap(false), e); functionsForm.mapToggleVisibility(targetMap(booleanForm.mapClassRemove), e) }}>
+            <div className='container-form-modal center-content' onClick={(e) => { functionsForm.mapHandleModalList(functionsForm.mapModalListMap(false), e); functionsForm.mapToggleVisibility(targetMap(booleanForm.mapClassRemove), e) }}>
                 <div className='head'> 
                     <div className='objective-icon'>
                         <i className={`icon-st ${icon}`}></i>

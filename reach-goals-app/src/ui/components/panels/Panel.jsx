@@ -5,7 +5,7 @@ import { useSwitchLayout } from '../../../hook/useSwitchLayout'
 import ModalForm from './ModalForm'
 import ModalDetails from './ModalDetails'
 import Config from './Config'
-import Tag from './Tag'
+import ModalTag from './ModalTag'
 
 import '../../styles/panels/Tag.scss'
 import '../../styles/panels/Notification.scss'
@@ -24,14 +24,8 @@ const renderLayoutContentPanel = (panelPosition, typeForm) => {
         case 'right':
             return (
                 <>
-                    <Tag />
+                    <ModalTag />
                     <ModalDetails />
-                </>
-            )
-        case 'near':
-            return (
-                <>
-                    <ModalForm type={typeForm}/>
                 </>
             )
         default:

@@ -16,4 +16,17 @@ const switchLayoutMap = (nameComponent, nameLayout, value) => {
     return attributes
 }
 
-export { targetMap, switchLayoutMap }
+const checkboxMap = (checkbox) => {
+    const data = typeof checkbox === 'object' && checkbox !== null ? true : false  
+    if (data) {
+        const attributes = {
+            id: checkbox.id,
+            value: checkbox.value ?? false
+        }
+
+        return attributes
+    }
+    return null
+}
+
+export { targetMap, switchLayoutMap, checkboxMap }
