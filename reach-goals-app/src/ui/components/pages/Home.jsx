@@ -2,9 +2,9 @@ import React, { useContext } from 'react'
 import { TitleContext } from '../../../provider/TitleProvider'
 import { useSwitchLayout } from '../../../hook/useSwitchLayout'
 
-import Goal from '../items/models/Goal'
-
 import '../../styles/pages/Home.scss'
+
+import Goal from '../items/models/Goal'
 import Assignment from '../items/models/Assignment'
 
 const Home = () => {

@@ -47,12 +47,32 @@ const Form = (props) => {
                     </div>
                 </div>
                 <div className='body'>
-                    <div className='objective-forms'>
-                        <div className='field-forms name'>
-                            <input id={`${typeForm}-name`} className='input-form' type='text' placeholder={`${typeForm} name here`}
-                                name='name' value={modelForm?.name || ''} onChange={functionsForm.mapHandleChange} />
+                    <form>
+                        <div className='objective-forms'>
+                            <div className='field-forms name'>
+                                <input id={`${typeForm}-name`} className='input-form' type='text' placeholder={`${typeForm} name here`}
+                                    name='name' value={modelForm?.name || ''} onChange={functionsForm.mapHandleChange} />
+                                <input id={`${typeForm}-color`} name='color' type='color' onChange={functionsForm.mapHandleChange} />
+                            </div>
                         </div>
-                    </div>
+                        <div className='bottom-form'>
+                                <label onClick={functionsForm.mapHandleSubmit}>save</label>
+                            </div>
+                        <div className='bottom-form-messagae'>
+                                {
+                                    stateForm.mapStateSuccess &&                             
+                                    <p className='message successfull'>
+                                        <label>Tag save with success!'</label>
+                                    </p>
+                                }
+                                {
+                                    stateForm.mapStateError &&
+                                    <p className='message error'>
+                                        <label>{`Ops, something went wrong: ${stateForm.mapStateError}`}</label>
+                                    </p>
+                                }
+                            </div>
+                    </form>
                 </div>
             </div>
             break

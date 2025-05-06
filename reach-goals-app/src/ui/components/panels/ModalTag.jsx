@@ -2,12 +2,13 @@ import React, { useContext } from 'react'
 import { targetMap, checkboxMap } from '../../../utils/mappingUtils'
 import { VisibilityContext } from '../../../provider/VisibilityProvider'
 
+import Tag from '../items/models/Tag'
 import ModalForm from './ModalForm'
 import ButtonAction from '../items/elements/ButtonAction'
 import ButtonDropdown from '../items/elements/ButtonDropdown'
 import ButtonCheckbox from '../items/elements/ButtonCheckbox'
 
-const Tag = () => {
+const ModalTag = () => {
     const { visibleElements } = useContext(VisibilityContext)
 
     return (
@@ -26,9 +27,10 @@ const Tag = () => {
                 {
                     visibleElements.includes('near-modalForm') && <ModalForm type='tag' />
                 }
+                <Tag />
             </div>
         </div>
     )
 }
 
-export default Tag
+export default ModalTag

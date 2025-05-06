@@ -74,7 +74,7 @@ const ModalForm = (props) => {
         assignments: []
     }
     
-    const assingmentEmpty = {
+    const assignmentEmpty = {
         name: '',
         description: '',
         duration: '',
@@ -90,7 +90,7 @@ const ModalForm = (props) => {
     }
 
     const [goal, setGoal] = useState(goalEmpty)
-    const [assingment, setAssignment] = useState(assingmentEmpty)
+    const [assignment, setAssignment] = useState(assignmentEmpty)
     const [tag, setTag] = useState(tagEmpty)
 
     const [error, setError] = useState(null)
@@ -146,7 +146,7 @@ const ModalForm = (props) => {
     }
 
     const handleChange = async (e) => {
-        const { name, value } = e?.target || e
+        const { name, value } = e.target || e
 
         if (typeForm === 'goal') {
             const assignmentsRelation = e.assignments ?? goal.assignments
@@ -160,7 +160,7 @@ const ModalForm = (props) => {
             setAssignment((prevData) => ({
                 ...prevData,
                 [name]: value,
-                goal: e?.target === undefined ? Object.values(e)[0] : null
+                goal: e.target === undefined ? Object.values(e)[0] : null
             }))
         } else {
             setTag((prevData) => ({
@@ -171,7 +171,7 @@ const ModalForm = (props) => {
     }
 
     console.log('DEPOIS DO ATT TAG - ', tag)
-    console.log('DEPOIS DO ATT - ', typeForm === 'goal'? goal : assingment)
+    console.log('DEPOIS DO ATT - ', typeForm === 'goal'? goal : assignment)
 
     const handleSubmit = async () => {
         setError(null)
@@ -182,10 +182,11 @@ const ModalForm = (props) => {
                 goal.id ? await goalAction.updateGoal(goal) : await goalAction.addGoal(goal)  
                 setGoal(goalEmpty)
             } else if (typeForm === 'assignment') {
-                assingment.id? await assignmentAction.updateAssignment(assingment) : await assignmentAction.addAssignment(assingment)
-                setAssignment(assingmentEmpty)
+                assignment.id? await assignmentAction.updateAssignment(assignment) : await assignmentAction.addAssignment(assignment)
+                setAssignment(assignmentEmpty)
             } else {
                 tag.id? await tagAction.updateTag(tag) : await tagAction.addTag(tag)
+                setTag(tagEmpty)
             }
             setSucess(true)
         
@@ -195,7 +196,7 @@ const ModalForm = (props) => {
     }
 
     const handleTarget = (typeForm) => {
-        let objectTarget = typeForm === 'goal' ? goal : typeForm === 'assingment' ? assingment : tag
+        let objectTarget = typeForm === 'goal' ? goal : typeForm === 'assignment' ? assignment : tag
         const fotmatedDate = formatDate(objectTarget)
         objectTarget = { ...objectTarget, ...fotmatedDate }
         return objectTarget
@@ -204,7 +205,7 @@ const ModalForm = (props) => {
     useEffect(() => {
         const loadModel = async (id) => {
             if (id === null ) {
-                typeForm === 'goal' ? setGoal(goalEmpty) : setAssignment(assingmentEmpty)
+                typeForm === 'goal' ? setGoal(goalEmpty) : setAssignment(assignmentEmpty)
                 return
             } 
 
