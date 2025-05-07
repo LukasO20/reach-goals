@@ -10,6 +10,7 @@ import ButtonCheckbox from '../items/elements/ButtonCheckbox'
 
 const ModalTag = () => {
     const { visibleElements } = useContext(VisibilityContext)
+    const isModalForm = ['tag', 'near-modalForm']
 
     return (
         <div className='container-tag aside-content' onClick={(e) => e.stopPropagation()}>
@@ -25,7 +26,7 @@ const ModalTag = () => {
             </div>
             <div className='body'>
                 {
-                    visibleElements.includes('near-modalForm') && <ModalForm type='tag' />
+                    isModalForm.every(elements => visibleElements.includes(elements)) && <ModalForm type='tag' />
                 }
                 <Tag />
             </div>

@@ -96,7 +96,7 @@ const Goal = (props) => {
                     </Link>
                     :
                     <div className='head'>
-                        <label className='line-info'><i className='icon-st fa-solid fa-list-check'></i><label>{goal.name}</label></label>
+                        <label className='line-info'><i className='icon-st fa-solid fa-bullseye'></i><label>{goal.name}</label></label>
                     </div>
                 }
                 {

@@ -118,7 +118,10 @@ const Form = (props) => {
                             {functionsForm.mapFormsInputMap(typeForm, functionsForm.mapHandleChange)}
                             <div className='item-forms tag'>
                                 <div className='item-forms head'>
-                                    <div className='item-head-1'>tags</div>
+                                    <div className='item-head-1'>
+                                        <label>tags</label>
+                                        <ButtonAction modalList={functionsForm.mapModalListMap(true, 'tag')} classBtn={'form-modallist-tag button-st'} iconFa='fa-solid fa-plus' title='Add'/>
+                                    </div>
                                     <div className='item-head-2'></div>
                                 </div>
                                 <div className='item-forms body'></div>
@@ -148,9 +151,14 @@ const Form = (props) => {
                         </form>
                     </div>
                 </div>
-                {contextForm.mapModalList.open && (
-                    <ModalList title={`Complementing ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} complement={typeForm === 'goal' ? 'assignment' : 'goal'} externalID={modelForm?.id} exFunction={functionsForm.mapHandleChange} />
-                )}
+                {
+                    contextForm.mapModalList.open && contextForm.mapModalList.type !== 'tag' &&
+                    <ModalList title={`Complementing ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} complement={typeForm === 'goal' ? 'assignment' : 'goal'} externalID={modelForm?.id} exFunction={functionsForm.mapHandleChange}/>
+                }
+                {   
+                    contextForm.mapModalList.open && contextForm.mapModalList.type === 'tag' && 
+                    <ModalList title='Complementing a tag' complement='tag' externalID={modelForm?.id} exFunction={functionsForm.mapHandleChange}/>
+                }
             </div>
             break
     }

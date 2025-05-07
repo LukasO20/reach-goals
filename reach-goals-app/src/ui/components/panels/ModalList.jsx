@@ -1,6 +1,7 @@
 import React from 'react'
 import Goal from '../items/models/Goal'
 import Assignment from '../items/models/Assignment'
+import Tag from '../items/models/Tag'
 import ButtonAction from '../items/elements/ButtonAction'
 
 const modalListMap = (open, type) => {
@@ -18,14 +19,17 @@ const ModalList = (props) => {
     const externalID = props?.externalID
 
     return (
-        <div className='container-list-modal'>
+        <div className={`container-list-modal ${complement}`}>
             <div className='head'>
                 <h3>{title}</h3>
-                <ButtonAction modalList={modalListMap(false)} standardRoute="true" classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark'/>
+                <ButtonAction modalList={modalListMap(false)} standardRoute='true' classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark'/>
             </div>
             <div className='body'>
-                {complement === 'goal' ? <Goal selectableModel={true} idAssignment={externalID} action={{ setForm: true }} exFunction={externalFunction} /> 
-                : <Assignment selectableModel={true} action={{ setForm: true }} unfocused={true} exFunction={externalFunction}/>}
+                {
+                complement === 'tag' ? <Tag selectableModel={true} action={{ setForm: true }} exFunction={externalFunction}/> :
+                complement === 'goal' ? <Goal selectableModel={true} idAssignment={externalID} action={{ setForm: true }} exFunction={externalFunction}/> :
+                <Assignment selectableModel={true} action={{ setForm: true }} unfocused={true} exFunction={externalFunction}/>
+                }
             </div>
         </div>
     )

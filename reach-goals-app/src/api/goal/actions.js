@@ -9,7 +9,7 @@ const formatObject = (objectData) => { //CREATE AN UNIQUE "formatObject" functio
 
 const addGoal = async (req, res) => {
     if (req.method === 'POST') {
-        const { name, description, status, start, end, assignments } = req.body
+        const { name, description, status, start, end, assignments, tags } = req.body
 
         if (!name) { return res.status(400).json({ error: 'Name is required.'}) }
 
@@ -24,6 +24,11 @@ const addGoal = async (req, res) => {
             end: endDate, 
             assignments: {
                 connect: assignments.map((id) => ({ id: Number(id) }))
+            },
+            tags: {
+                create: tags?.map(tagID => {
+                    tag: { connect: { id: Number(tagID) }}
+                })
             }
         }
 
@@ -33,7 +38,10 @@ const addGoal = async (req, res) => {
         try {
             const goal = await prisma.goal.create({
                 data: formattedData,
-                include: { assignments: true }
+                include: { 
+                    assignments: true,
+                    tags: true
+                }
             })
     
             return res.status(201).json(goal)
@@ -49,7 +57,7 @@ const addGoal = async (req, res) => {
 const updateGoal = async (req, res) => {
     if (req.method === 'PUT') {
         const { id } = req.params
-        const { name, description, status, start, end, assignments } = req.body
+        const { name, description, status, start, end, assignments, tags } = req.body
 
         const startDate = start ? moment(start).toISOString() : new Date().toISOString()
         const endDate = end ? moment(end).toISOString() : null
@@ -62,7 +70,7 @@ const updateGoal = async (req, res) => {
             end: endDate, 
             assignments: {
                 connect: assignments.map((id) => ({ id: Number(id) }))
-            } 
+            }
         }
 
         const formattedData = formatObject(rawObject)

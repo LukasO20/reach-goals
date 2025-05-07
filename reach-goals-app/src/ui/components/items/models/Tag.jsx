@@ -1,6 +1,5 @@
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom' 
-import { Link } from 'react-router-dom'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider'
@@ -68,20 +67,34 @@ const Tag = (props) => {
         }
     }, [setSelectModel])
 
+    const handleTagClick = useCallback(
+        (id, e) => {
+            const isSelectableModel = props.selectableModel ?? false
+            if (isSelectableModel) { 
+                e.stopPropagation()
+                return insertModelComponent(props, 'tag', e)
+            }
+
+            setSelectModel(id)
+            toggleVisibility(target, e)
+        },
+        [setSelectModel, toggleVisibility, target]
+    )
+
     return (
         tag.map(tag => ( 
-            <div className={`tag ${display.type}`} id={tag.id} key={tag.id}>
+            <div className={`tag ${display.type}`} id={tag.id} key={tag.id} onClick={(e) => handleTagClick(tag.id, e)}>
                 {
                     display.type === 'card' ?
-                    <Link>
+                    <div>
                         <div className='head'>
-                            <label className='line-info'><i className='icon-st fa-solid fa-tag'></i><label>{tag.name}</label></label>
+                            <label className='line-info'><i className='icon-st fa-solid fa-tag' style={{backgroundColor: tag.color}}></i><label>{tag.name}</label></label>
                         </div>
                         <div className='body'></div>
-                    </Link>
+                    </div>
                     :
                     <div className='head'>
-                        <label className='line-info'><i className='icon-st fa-solid fa-list-check'></i><label>{tag.name}</label></label>
+                        <label className='line-info'><i className='icon-st fa-solid fa-tag' style={{backgroundColor: tag.color}}></i><label>{tag.name}</label></label>
                     </div>
                 }
                 {

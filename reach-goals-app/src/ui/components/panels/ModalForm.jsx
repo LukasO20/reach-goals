@@ -46,10 +46,8 @@ const formsItemMap = (typeForm, modelObject) => {
                 <div className='item-head-2'></div>
             </div>
             <div className='item-forms body'>
-                {typeForm === 'goal' ? 
-                    <Assignment focused={modelObject.model} formMode={true} />
-                    : 
-                    undefined
+                {   
+                    typeForm === 'goal' && <Assignment focused={modelObject.model} formMode={true} />
                 }
             </div>
         </div>
@@ -71,7 +69,8 @@ const ModalForm = (props) => {
         status: undefined,
         start: undefined,
         end: undefined,
-        assignments: []
+        assignments: [],
+        tags: []
     }
     
     const assignmentEmpty = {
@@ -81,7 +80,8 @@ const ModalForm = (props) => {
         status: undefined,
         start: '',
         end: '', 
-        goal: null
+        goal: null,
+        tags: []
     }
 
     const tagEmpty = {
@@ -170,8 +170,7 @@ const ModalForm = (props) => {
         }
     }
 
-    console.log('DEPOIS DO ATT TAG - ', tag)
-    console.log('DEPOIS DO ATT - ', typeForm === 'goal'? goal : assignment)
+    console.log('BEFORE TO ATT MODEL - ', typeForm === 'goal'? goal : typeForm === 'assignment' ? assignment : tag)
 
     const handleSubmit = async () => {
         setError(null)

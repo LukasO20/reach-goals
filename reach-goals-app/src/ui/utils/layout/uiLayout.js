@@ -16,6 +16,8 @@ const insertModelComponent = (props, type, e) => {
         if (!props?.action?.setForm) { return console.error('This model is selectable but parameter "typeModal" is needed!') }
         
         const modelReference = type === 'assignment' ? 'goal' : 'assignment'
+        const iconModelReference = type === 'assignment' ? 'fa-list-check' : type === 'goal' ? 'fa-bullseye' : 'fa-tag'
+
         if (props.action.setForm) {
             const form = document.querySelector(`.content-center.${modelReference} form`)
             const setModel = e.currentTarget       
@@ -29,29 +31,32 @@ const insertModelComponent = (props, type, e) => {
                     `<div class="${type} mini-list" id="${setModel.getAttribute('id')}">
                         <div class="head">
                             <label class="line-info">
-                                <i class="icon-st fa-solid ${type === 'goal' ? 'fa-bullseye' : 'fa-list-check'}"></i>
+                                <i class="icon-st fa-solid ${iconModelReference}"></i>
                                 <label>${setModel.querySelector('.line-info label').textContent}</label>
                             </label>
                         </div>
                     </div>`)
 
                 if (typeof props.exFunction === 'function') {
-                    let modelSelectableReference = type === 'assignment' ? [] : undefined
-                    if (type === 'assignment') {
+                    let modelSelectableReference = type === 'assignment' || type === 'tag' ? [] : undefined
+                    if (type === 'assignment' || type === 'tag') {
                         Array.from(containerModel?.children).forEach(el => {
                             if (el.value) {
                                 modelSelectableReference.push(el.value)
                             }
                         })
-                    } else {
+                    } 
+                    else {
                         modelSelectableReference = setModel.getAttribute('id')
                     }
 
+                    const keyTag = 'tags'
                     const keyAssignment = 'assignments'
                     const keyGoal = 'goal'
-                    
+    
+                    const currentKey = type === 'assignment' ? keyAssignment : type === 'goal' ? keyGoal : keyTag
                     const modelSelectable = {
-                        [type === 'assignment' ? keyAssignment : keyGoal]: modelSelectableReference
+                        [currentKey]: modelSelectableReference
                     }
                     props.exFunction(modelSelectable)
                 }
