@@ -15,11 +15,10 @@ const insertModelComponent = (props, type, e) => {
     if (props?.selectableModel) {
         if (!props?.action?.setForm) { return console.error('This model is selectable but parameter "typeModal" is needed!') }
         
-        const modelReference = type === 'assignment' ? 'goal' : 'assignment'
         const iconModelReference = type === 'assignment' ? 'fa-list-check' : type === 'goal' ? 'fa-bullseye' : 'fa-tag'
 
         if (props.action.setForm) {
-            const form = document.querySelector(`.content-center.${modelReference} form`)
+            const form = document.querySelector(`.content-center form`)
             const setModel = e.currentTarget       
             const containerModel = form.querySelector(`.item-forms.${type} .body`)  
             const isDefinable = checkElementContainer(setModel, containerModel)
@@ -58,6 +57,8 @@ const insertModelComponent = (props, type, e) => {
                     const modelSelectable = {
                         [currentKey]: modelSelectableReference
                     }
+
+                    console.log('ARRRRAY 0 ', modelSelectable)
                     props.exFunction(modelSelectable)
                 }
             }

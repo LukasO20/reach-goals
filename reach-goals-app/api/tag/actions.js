@@ -112,4 +112,28 @@ const getTag = async (req, res) => {
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }
 }
 
+const getTagWithGoal = async (req, res) => {
+    if (req.method === 'GET') {
+        try {
+            let tag = undefined
+            const { id } = req.params
+            
+            if (id !== undefined) {
+                tag = await prisma.tag.findUnique({
+                    where: { id: Number(id) }
+                })
+            } else {
+                tag = await prisma.tag.findMany()
+            }
+
+            return res.status(200).json(tag)
+
+        } catch (error) {
+            console.error(error)
+            return res.status(500).json({ error: 'Failed to fetch tags'})
+        }
+
+    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }
+}
+
 module.exports = { addTag, updateTag, deleteTag, getTag }

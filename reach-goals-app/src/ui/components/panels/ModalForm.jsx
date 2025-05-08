@@ -150,11 +150,13 @@ const ModalForm = (props) => {
 
         if (typeForm === 'goal') {
             const assignmentsRelation = e.assignments ?? goal.assignments
+            const tagsRelation = e.tags ?? goal.tags
 
             setGoal((prevData) => ({
                 ...prevData,
                 [name]: value,
-                assignments: [...assignmentsRelation]
+                assignments: [...assignmentsRelation],
+                tags: [...tagsRelation]
             }))
         } else if (typeForm === 'assignment') {
             setAssignment((prevData) => ({

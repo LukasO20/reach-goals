@@ -1,4 +1,5 @@
-const apiURL = process.env.REACHGOALS_URL || 'http://localhost:5000'
+const apiURL = window.location.origin.includes("localhost") ? "http://localhost:5000"
+: window.location.origin
 
 export const addGoal = async (goal) => {
     console.log('GOAL RECEIVED - ', goal)

@@ -82,6 +82,7 @@ const Tag = (props) => {
     )
 
     return (
+        //!tag.some(tag => tag.assignments.filter(assignment => assignment.id === utilsGoal.idAssignment).length) ?
         tag.map(tag => ( 
             <div className={`tag ${display.type}`} id={tag.id} key={tag.id} onClick={(e) => handleTagClick(tag.id, e)}>
                 {

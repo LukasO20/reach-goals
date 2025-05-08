@@ -26,9 +26,9 @@ const addGoal = async (req, res) => {
                 connect: assignments.map((id) => ({ id: Number(id) }))
             },
             tags: {
-                create: tags?.map(tagID => {
+                create: tags?.map(tagID => ({
                     tag: { connect: { id: Number(tagID) }}
-                })
+                }))
             }
         }
 
@@ -38,10 +38,7 @@ const addGoal = async (req, res) => {
         try {
             const goal = await prisma.goal.create({
                 data: formattedData,
-                include: { 
-                    assignments: true,
-                    tags: true
-                }
+                include: { assignments: true, tags: true }
             })
     
             return res.status(201).json(goal)
@@ -69,7 +66,10 @@ const updateGoal = async (req, res) => {
             start: startDate,
             end: endDate, 
             assignments: {
-                connect: assignments.map((id) => ({ id: Number(id) }))
+                connect: assignments?.map(assignment => ({ id: Number(assignment?.id ?? assignment) }))
+            },
+            tags: {
+                connect: tags?.map(tag => ({ id: Number(tag?.id ?? tag) }))
             }
         }
 
@@ -80,7 +80,7 @@ const updateGoal = async (req, res) => {
             const goal = await prisma.goal.update({
                 where: { id: Number(id) },
                 data: formattedData,
-                include: { assignments: true }
+                include: { assignments: true, tags: true }
             })
 
             return res.status(200).json(goal)
@@ -122,11 +122,11 @@ const getGoal = async (req, res) => {
             if (id !== undefined) {
                 goal = await prisma.goal.findUnique({
                     where: { id: Number(id) },
-                    include: { assignments: true }
+                    include: { assignments: true, tags: true }
                 })
             } else {
                 goal = await prisma.goal.findMany({
-                    include: { assignments: true }
+                    include: { assignments: true, tags: true }
                 })
             }
 

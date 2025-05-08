@@ -124,7 +124,9 @@ const Form = (props) => {
                                     </div>
                                     <div className='item-head-2'></div>
                                 </div>
-                                <div className='item-forms body'></div>
+                                <div className='item-forms body'>
+                                    {/* INSERT A TAGS HERE */}
+                                </div>
                             </div>
                             {functionsForm.mapFormsItemMap(typeForm, { model: modelForm })}
                             <div className='field-forms details'>
