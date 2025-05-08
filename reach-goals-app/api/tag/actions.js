@@ -1,5 +1,4 @@
 const prisma = require('../connectdb')
-const moment = require('moment')
 
 const formatObject = (objectData) => { //CREATE AN UNIQUE "formatObject" function and share it
     return Object.fromEntries(
