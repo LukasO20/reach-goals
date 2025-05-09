@@ -28,7 +28,7 @@ const ModalTag = () => {
                 {
                     isModalForm.every(elements => visibleElements.includes(elements)) && <ModalForm type='tag' />
                 }
-                <Tag />
+                <Tag getAll={true} />
             </div>
         </div>
     )

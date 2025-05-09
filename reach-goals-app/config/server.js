@@ -12,7 +12,7 @@ app.use(bodyParser.json())
 // routes set
 const { addGoal, updateGoal, getGoal, deleteGoal } = require('../api/goal/actions')
 const { addAssignment, updateAssignment, getAssignment, deleteAssignment } = require('../api/assignment/actions')
-const { addTag, updateTag, getTag, deleteTag } = require('../api/tag/actions')
+const { addTag, updateTag, getTag, deleteTag, getTagOnGoal } = require('../api/tag/actions')
 
 app.post('/api/goal/actions', addGoal)
 app.get('/api/goal/actions/:id?', getGoal)
@@ -26,6 +26,7 @@ app.delete('/api/assignment/actions/:id', deleteAssignment)
 
 app.post('/api/tag/actions', addTag)
 app.get('/api/tag/actions/:id?', getTag)
+app.get('/api/tag/actions/:id?', getTagOnGoal)
 app.put('/api/tag/actions/:id', updateTag)
 app.delete('/api/tag/actions/:id', deleteTag)
 

@@ -2,6 +2,8 @@ import ModalList from '../../panels/ModalList'
 import ButtonAction from '../elements/ButtonAction'
 import ButtonDropdown from '../elements/ButtonDropdown'
 
+import Tag from '../models/Tag'
+
 const targetMap = (classes, operator = {}) => { //CREATE AN UNIQUE "targetMap" function and share it
     const data = Array.isArray(classes) ? classes : [classes]
     const attributes = {
@@ -125,7 +127,7 @@ const Form = (props) => {
                                     <div className='item-head-2'></div>
                                 </div>
                                 <div className='item-forms body'>
-                                    {/* INSERT A TAGS HERE */}
+                                    <Tag goalID={typeForm === 'goal' && modelForm.id} assignmentID={typeForm === 'assignment' && modelForm.id} />
                                 </div>
                             </div>
                             {functionsForm.mapFormsItemMap(typeForm, { model: modelForm })}

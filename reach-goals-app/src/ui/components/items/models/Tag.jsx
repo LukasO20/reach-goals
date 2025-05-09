@@ -32,14 +32,29 @@ const Tag = (props) => {
         type: 'mini-list'
     }
     const utilsTag = {
-        //idAssignment: props.idAssignment ?? null
+        assignmentID: props.assignmentID ?? null,
+        goalID: props.goalID ?? null,
+        getAll: props.getAll ?? false
+    }
+
+    const handleGetTag = async (assignmentID, goalID, getAll) => {
+        let tagGetted = []
+        
+        if (goalID) {
+            tagGetted = tagAction.getTagOnGoal({ goalID: goalID})
+        } else if (assignmentID) {
+
+        } else if (getAll) {
+            tagGetted = tagAction.getTag()
+        }
+
+        return tagGetted
     }
 
     useEffect(() => {
         const fetchTag = async () => {
             try {
-                const fetched = await tagAction.getTag()
-                console.log('TAGS - ', fetched)
+                const fetched = await handleGetTag(utilsTag.assignmentID, utilsTag.goalID, utilsTag.getAll)
                 setTag(fetched)
 
             } catch (error) {
@@ -82,7 +97,6 @@ const Tag = (props) => {
     )
 
     return (
-        //!tag.some(tag => tag.assignments.filter(assignment => assignment.id === utilsGoal.idAssignment).length) ?
         tag.map(tag => ( 
             <div className={`tag ${display.type}`} id={tag.id} key={tag.id} onClick={(e) => handleTagClick(tag.id, e)}>
                 {

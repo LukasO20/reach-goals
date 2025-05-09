@@ -81,3 +81,24 @@ export const getTag = async (id) => {
         throw error
     }
 }
+
+export const getTagOnGoal = async (goalID) => {
+    try {
+        const url = goalID ? `${apiURL}/api/tag/actions/${goalID}` : `${apiURL}/api/tag/actions`
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        })  
+
+        if (!response.ok) {
+            const error  = await response.json()
+            throw new Error(error.error || 'Failed to fetch tags on goal.')
+        }
+
+        const data = await response.json()
+        return data
+    } catch (error) {
+        console.error('Error get tag on goal: ', error.message)
+        throw error
+    }
+}

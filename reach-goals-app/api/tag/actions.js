@@ -112,18 +112,18 @@ const getTag = async (req, res) => {
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }
 }
 
-const getTagWithGoal = async (req, res) => {
+const getTagOnGoal = async (req, res) => {
     if (req.method === 'GET') {
         try {
             let tag = undefined
-            const { id } = req.params
+            const { goalID } = req.params
             
-            if (id !== undefined) {
-                tag = await prisma.tag.findUnique({
-                    where: { id: Number(id) }
+            if (goalID !== undefined) {
+                tag = await prisma.tagOnGoal.findUnique({
+                    where: { goalID: Number(goalID) }
                 })
             } else {
-                tag = await prisma.tag.findMany()
+                return res.status(400).json({ error: 'Failed to fetch tags on goal. Check if "goalID" parameter has value.'})
             }
 
             return res.status(200).json(tag)
@@ -136,4 +136,4 @@ const getTagWithGoal = async (req, res) => {
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }
 }
 
-module.exports = { addTag, updateTag, deleteTag, getTag }
+module.exports = { addTag, updateTag, deleteTag, getTag, getTagOnGoal }
