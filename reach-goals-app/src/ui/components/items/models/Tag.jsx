@@ -1,12 +1,11 @@
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { useLocation } from 'react-router-dom' 
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider'
-import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider'
 import { insertModelComponent } from '../../../utils/layout/uiLayout'
 
 import { targetMap, switchLayoutMap } from '../../../../utils/mappingUtils'
+import { useRequestParamsModel } from '../../../../hook/useRequestParamsModel'
 
 import ButtonAction from '../elements/ButtonAction'
 import * as tagAction from '../../../../provider/tag/tagAction'
@@ -19,50 +18,46 @@ const Tag = (props) => {
     
     const { toggleVisibility } = useContext(VisibilityContext)
     const { setSelectModel } = useContext(ManageModelContext)
-    const { switchLayoutComponent } = useContext(SwitchLayoutContext)
-
-    const location = useLocation()
-    const currentLocation = useMemo(() => {
-        return location.pathname.includes('/objectives') ? '/objectives' : location.pathname.includes('/home') ? '/home' : '/calendar'
-    }, [location.pathname])
 
     const target = useMemo(() => targetMap(['panel-right', 'tag']), []) 
     const display = props.display ?? {
         sideAction: false, 
         type: 'mini-list'
     }
-    const utilsTag = {
-        assignmentID: props.assignmentID ?? null,
-        goalID: props.goalID ?? null,
-        getAll: props.getAll ?? false
+
+    const requestPropsTag = {
+        type: 'tag',
+        assignmentID: props?.assignmentID ?? null,
+        goalID: props?.goalID ?? null,
+        getAll: props?.getAll ?? false
     }
 
-    const handleGetTag = async (assignmentID, goalID, getAll) => {
-        let tagGetted = []
-        
-        if (goalID) {
-            tagGetted = tagAction.getTagOnGoal({ goalID: goalID})
-        } else if (assignmentID) {
-
-        } else if (getAll) {
-            tagGetted = tagAction.getTag()
-        }
-
-        return tagGetted
-    }
+    const { params } = useRequestParamsModel(requestPropsTag)
 
     useEffect(() => {
-        const fetchTag = async () => {
+        const handleGetTag = async (assignmentID, goalID, getAll) => {
+            let tagGetted = []
+            console.log('FETECHED TAG - ', params)
+
+            if (goalID) {
+                tagGetted = await tagAction.getTagOnGoal({ goalID: goalID})
+            } else if (assignmentID) {
+
+            } else if (getAll) {
+                tagGetted = await tagAction.getTag()
+            }
+            return tagGetted
+        }
+
+        const getTag = async () => {
             try {
-                const fetched = await handleGetTag(utilsTag.assignmentID, utilsTag.goalID, utilsTag.getAll)
+                const fetched = await handleGetTag()
                 setTag(fetched)
 
-            } catch (error) {
-                setErro(`Failed to load tag: ${error.message}`)
-            }
+            } catch (error) { setErro(`Failed to load tag: ${error.message}`) }
         }
-        fetchTag()
-    }, [])
+        getTag()
+    }, [params])
 
     const deleteTag = async (id) => {
         try {

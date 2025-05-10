@@ -122,6 +122,8 @@ const getTagOnGoal = async (req, res) => {
                 tag = await prisma.tagOnGoal.findUnique({
                     where: { goalID: Number(goalID) }
                 })
+
+                console.log('GETT - ', tag)
             } else {
                 return res.status(400).json({ error: 'Failed to fetch tags on goal. Check if "goalID" parameter has value.'})
             }
