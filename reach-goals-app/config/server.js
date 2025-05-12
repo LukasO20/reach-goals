@@ -1,13 +1,11 @@
 const express = require('express')
 const cors = require('cors')
-const bodyParser = require('body-parser')
 
 const app = express()
 const PORT = 5000
 
 app.use(cors())
 app.use(express.json())
-app.use(bodyParser.json())
 
 // routes set
 const { addGoal, updateGoal, getGoal, deleteGoal } = require('../api/goal/actions')
@@ -25,8 +23,8 @@ app.put('/api/assignment/actions/:id', updateAssignment)
 app.delete('/api/assignment/actions/:id', deleteAssignment)
 
 app.post('/api/tag/actions', addTag)
-app.get('/api/tag/actions/:id?', getTag)
-app.get('/api/tag/actions/:id?', getTagOnGoal)
+app.get('/api/tag/actions', getTag)
+app.get('/api/tag/actions/:goalID', getTagOnGoal)
 app.put('/api/tag/actions/:id', updateTag)
 app.delete('/api/tag/actions/:id', deleteTag)
 

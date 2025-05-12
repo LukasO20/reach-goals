@@ -115,20 +115,18 @@ const getTag = async (req, res) => {
 const getTagOnGoal = async (req, res) => {
     if (req.method === 'GET') {
         try {
-            let tag = undefined
             const { goalID } = req.params
             
-            if (goalID !== undefined) {
-                tag = await prisma.tagOnGoal.findUnique({
-                    where: { goalID: Number(goalID) }
-                })
-
-                console.log('GETT - ', tag)
-            } else {
-                return res.status(400).json({ error: 'Failed to fetch tags on goal. Check if "goalID" parameter has value.'})
+            if (!goalID || isNaN(goalID)) {
+                return res.status(400).json({ error: "Parameter 'goalID' invalid." });
             }
+ 
+            const tags = await prisma.tagOnGoal.findMany({
+                where: { goalID: Number(goalID) },
+                include: { tag: { select: { id: true, name: true, color: true } } }
+            })
 
-            return res.status(200).json(tag)
+            return res.status(200).json(tags.map(tagRelation => tagRelation.tag))
 
         } catch (error) {
             console.error(error)

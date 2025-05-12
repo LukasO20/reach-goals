@@ -15,7 +15,7 @@ import '../../../styles/items/models/Tag.scss'
 const Tag = (props) => {
     const [tag, setTag] = useState([])
     const [erro, setErro] = useState(false)
-    
+
     const { toggleVisibility } = useContext(VisibilityContext)
     const { setSelectModel } = useContext(ManageModelContext)
 
@@ -26,32 +26,28 @@ const Tag = (props) => {
     }
 
     const requestPropsTag = {
-        type: 'tag',
-        assignmentID: props?.assignmentID ?? null,
-        goalID: props?.goalID ?? null,
-        getAll: props?.getAll ?? false
+        tagsRelation: props?.goalID ?? props?.assignmentID ?? null,
+        tagSomeID: props?.tagSomeID
     }
 
     const { params } = useRequestParamsModel(requestPropsTag)
 
     useEffect(() => {
-        const handleGetTag = async (assignmentID, goalID, getAll) => {
+        const handleGetTag = async (params) => {
             let tagGetted = []
-            console.log('FETECHED TAG - ', params)
 
-            if (goalID) {
-                tagGetted = await tagAction.getTagOnGoal({ goalID: goalID})
-            } else if (assignmentID) {
-
-            } else if (getAll) {
-                tagGetted = await tagAction.getTag()
+            if (params.tagsRelation) {
+                tagGetted = await tagAction.getTagOnGoal(params.tagsRelation)
+            } else if (params.tagSomeID) {
+                tagGetted = await tagAction.getTag(params.tagSomeID)
             }
+
             return tagGetted
         }
 
         const getTag = async () => {
             try {
-                const fetched = await handleGetTag()
+                const fetched = await handleGetTag(params)
                 setTag(fetched)
 
             } catch (error) { setErro(`Failed to load tag: ${error.message}`) }
@@ -90,6 +86,8 @@ const Tag = (props) => {
         },
         [setSelectModel, toggleVisibility, target]
     )
+
+    console.log('TAG LOADED - ', tag)
 
     return (
         tag.map(tag => ( 

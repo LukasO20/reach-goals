@@ -2,8 +2,6 @@ const apiURL = window.location.origin.includes("localhost") ? "http://localhost:
 : window.location.origin
 
 export const addTag = async (tag) => {
-    console.log('TAG RECEIVED - ', tag)
-
     try {
         const response = await fetch(`${apiURL}/api/tag/actions`, {
             method: 'POST',
@@ -61,10 +59,9 @@ export const deleteTag = async (id) => {
     }
 }
 
-export const getTag = async (id) => {
+export const getTag = async (tags) => {
     try {
-        const url = id ? `${apiURL}/api/tag/actions/${id}` : `${apiURL}/api/tag/actions`
-        const response = await fetch(url, {
+        const response = await fetch((typeof tags?.tagSomeID === 'number' || /^\d+$/.test(tags?.tagSomeID)) ? `${apiURL}/api/tag/actions/${tags.tagSomeID}` : `${apiURL}/api/tag/actions`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         })  
@@ -84,8 +81,7 @@ export const getTag = async (id) => {
 
 export const getTagOnGoal = async (goalID) => {
     try {
-        const url = goalID ? `${apiURL}/api/tag/actions/${goalID}` : `${apiURL}/api/tag/actions`
-        const response = await fetch(url, {
+        const response = await fetch(`${apiURL}/api/tag/actions/${goalID}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         })  
