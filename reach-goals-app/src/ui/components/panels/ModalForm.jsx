@@ -95,6 +95,7 @@ const ModalForm = (props) => {
 
     const [error, setError] = useState(null)
     const [success, setSucess] = useState(false)
+    const [isLoading, setLoading] = useState(false)
 
     const nullModal = () => { setSelectModel(null) }
 
@@ -172,8 +173,6 @@ const ModalForm = (props) => {
         }
     }
 
-    console.log('BEFORE TO ATT MODEL - ', typeForm === 'goal'? goal : typeForm === 'assignment' ? assignment : tag)
-
     const handleSubmit = async () => {
         setError(null)
         setSucess(false)
@@ -205,8 +204,11 @@ const ModalForm = (props) => {
 
     useEffect(() => {
         const loadModel = async (id) => {
+            setLoading(true)
+
             if (id === null ) {
                 typeForm === 'goal' ? setGoal(goalEmpty) : setAssignment(assignmentEmpty)
+                setLoading(false)
                 return
             } 
 
@@ -216,7 +218,9 @@ const ModalForm = (props) => {
             }
             catch (error) {
                 setError('Ops, something wrong: ', error)
-            }  
+            } finally {
+                setLoading(false)
+            } 
         }
 
         loadModel(selectModel)
@@ -250,7 +254,11 @@ const ModalForm = (props) => {
         mapStateError: error
     }
 
-    return (
+    console.log('BEFORE TO ATT MODEL - ', typeForm === 'goal'? goal : typeForm === 'assignment' ? assignment : tag)
+    console.log('VALUE OF LOADING - ', isLoading)
+
+    return (    
+        isLoading ? <div className='loading-animation'></div> :
         <Form typeForm={typeForm} functionFormMap={functionFormMap} model={modelTarget} booleanFormMap={booleanFormMap} contextFormMap={contextFormMap} stateFormMap={stateFormMap} />
     )
 }

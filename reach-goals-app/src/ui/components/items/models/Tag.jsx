@@ -19,41 +19,29 @@ const Tag = (props) => {
     const { toggleVisibility } = useContext(VisibilityContext)
     const { setSelectModel } = useContext(ManageModelContext)
 
-    const target = useMemo(() => targetMap(['panel-right', 'tag']), []) 
+    const target = useMemo(() => targetMap(['panel-right', 'tag']), [])
     const display = props.display ?? {
-        sideAction: false, 
+        sideAction: false,
         type: 'mini-list'
     }
 
     const requestPropsTag = {
-        tagsRelation: props?.goalID ?? props?.assignmentID ?? null,
-        tagSomeID: props?.tagSomeID
+        type: 'tag',
+        tagsRelation: props.goalID ?? props.assignmentID ?? null,
+        tagSomeID: props.tagSomeID ?? null
     }
 
-    const { params } = useRequestParamsModel(requestPropsTag)
+    console.log('REQUEST PROPS TAG - ', requestPropsTag)
+    //const { params, data } = useRequestParamsModel(requestPropsTag)
 
-    useEffect(() => {
-        const handleGetTag = async (params) => {
-            let tagGetted = []
+    const getTag = async () => {
+        try {
+            const fetched = ''
+            //setTag(fetched)
 
-            if (params.tagsRelation) {
-                tagGetted = await tagAction.getTagOnGoal(params.tagsRelation)
-            } else if (params.tagSomeID) {
-                tagGetted = await tagAction.getTag(params.tagSomeID)
-            }
-
-            return tagGetted
-        }
-
-        const getTag = async () => {
-            try {
-                const fetched = await handleGetTag(params)
-                setTag(fetched)
-
-            } catch (error) { setErro(`Failed to load tag: ${error.message}`) }
-        }
-        getTag()
-    }, [params])
+        } catch (error) { setErro(`Failed to load tag: ${error.message}`) }
+    }
+    getTag()
 
     const deleteTag = async (id) => {
         try {
@@ -76,7 +64,7 @@ const Tag = (props) => {
     const handleTagClick = useCallback(
         (id, e) => {
             const isSelectableModel = props.selectableModel ?? false
-            if (isSelectableModel) { 
+            if (isSelectableModel) {
                 e.stopPropagation()
                 return insertModelComponent(props, 'tag', e)
             }
@@ -90,26 +78,26 @@ const Tag = (props) => {
     console.log('TAG LOADED - ', tag)
 
     return (
-        tag.map(tag => ( 
+        tag.map(tag => (
             <div className={`tag ${display.type}`} id={tag.id} key={tag.id} onClick={(e) => handleTagClick(tag.id, e)}>
                 {
                     display.type === 'card' ?
-                    <div>
-                        <div className='head'>
-                            <label className='line-info'><i className='icon-st fa-solid fa-tag' style={{backgroundColor: tag.color}}></i><label>{tag.name}</label></label>
+                        <div>
+                            <div className='head'>
+                                <label className='line-info'><i className='icon-st fa-solid fa-tag' style={{ backgroundColor: tag.color }}></i><label>{tag.name}</label></label>
+                            </div>
+                            <div className='body'></div>
                         </div>
-                        <div className='body'></div>
-                    </div>
-                    :
-                    <div className='head'>
-                        <label className='line-info'><i className='icon-st fa-solid fa-tag' style={{backgroundColor: tag.color}}></i><label>{tag.name}</label></label>
-                    </div>
+                        :
+                        <div className='head'>
+                            <label className='line-info'><i className='icon-st fa-solid fa-tag' style={{ backgroundColor: tag.color }}></i><label>{tag.name}</label></label>
+                        </div>
                 }
                 {
-                    display.sideAction && 
+                    display.sideAction &&
                     <div className='side-actions'>
-                        <ButtonAction onClick={() => editTag(tag.id)} target={targetMap(['panel-center', 'tag'])} switchLayout={switchLayoutMap('panel', 'layout', 'center')} classBtn='edit-tag' iconFa='fa-regular fa-pen-to-square'/>
-                        <ButtonAction onClick={() => deleteTag(tag.id)} target={targetMap(null)} classBtn='remove-tag' iconFa='fa-regular fa-trash-can'/>
+                        <ButtonAction onClick={() => editTag(tag.id)} target={targetMap(['panel-center', 'tag'])} switchLayout={switchLayoutMap('panel', 'layout', 'center')} classBtn='edit-tag' iconFa='fa-regular fa-pen-to-square' />
+                        <ButtonAction onClick={() => deleteTag(tag.id)} target={targetMap(null)} classBtn='remove-tag' iconFa='fa-regular fa-trash-can' />
                     </div>
                 }
             </div>
