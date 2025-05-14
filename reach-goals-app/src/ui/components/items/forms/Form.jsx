@@ -4,14 +4,7 @@ import ButtonDropdown from '../elements/ButtonDropdown'
 
 import Tag from '../models/Tag'
 
-const targetMap = (classes, operator = {}) => { //CREATE AN UNIQUE "targetMap" function and share it
-    const data = Array.isArray(classes) ? classes : [classes]
-    const attributes = {
-        class: data,
-        operator: operator
-    }
-    return attributes
-}
+import { targetMap } from '../../../../utils/mappingUtils'
 
 const iconMap = {
     assignment: 'fa-solid fa-list-check',
@@ -35,6 +28,11 @@ const Form = (props) => {
 
     const icon = iconMap[typeForm] || 'fa-solid fa-triangle-exclamation'
     const titleForm = titleMap[typeForm] || 'Create your objective'
+
+    const dynamicRequestPropsName = typeForm === 'goal' ? 'goalID' : 'assignmentID';
+    const dynamicRequestProps = {
+        [dynamicRequestPropsName]: modelForm.id
+    }
 
     switch (typeForm) {
         case 'tag':
@@ -127,7 +125,9 @@ const Form = (props) => {
                                     <div className='item-head-2'></div>
                                 </div>
                                 <div className='item-forms body'>
-                                    <Tag goalID={typeForm === 'goal' && modelForm.id} assignmentID={typeForm === 'assignment' && modelForm.id} />
+                                    {
+                                        modelForm.id && <Tag {...dynamicRequestProps} />
+                                    }
                                 </div>
                             </div>
                             {functionsForm.mapFormsItemMap(typeForm, { model: modelForm })}

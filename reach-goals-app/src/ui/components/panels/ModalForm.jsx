@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useMemo } from 'react'
 import { VisibilityContext } from '../../../provider/VisibilityProvider'
 import { ManageModelContext } from '../../../provider/ManageModelProvider'
 import { ModalListContext } from '../../../provider/ModalListProvider'
@@ -146,7 +146,7 @@ const ModalForm = (props) => {
         }
     }
 
-    const handleChange = async (e) => {
+    const handleChange = (e) => {
         const { name, value } = e.target || e
 
         if (typeForm === 'goal') {
@@ -226,7 +226,7 @@ const ModalForm = (props) => {
         loadModel(selectModel)
     }, [selectModel])
 
-    const modelTarget = handleTarget(typeForm)
+    const modelTarget = useMemo(() => handleTarget(typeForm), [typeForm, goal, assignment, tag])
 
     const functionFormMap = {
         mapHandleModalList: handleModalList,

@@ -1,50 +1,43 @@
-import { useEffect, useState } from 'react'
-import isEqual from 'lodash/isEqual'
+import { useEffect, useState, useMemo } from 'react'
 import * as tagAction from '../provider/tag/tagAction'
 
 const useRequestParamsModel = (requestProps) => {
-    const [params, setParams] = useState({
+    const params = useMemo(() => ({
         type: requestProps.type ?? null,
-        tagsRelation: requestProps.goalID ?? requestProps.assignmentID ?? null,
+        tagsRelation: requestProps.tagsRelation ?? null,        
         tagSomeID: requestProps.tagSomeID ?? null
-    })
-
-    console.log('PARAMETERS - ', params)
+    }), [requestProps.type, requestProps.tagsRelation, requestProps.tagSomeID])
 
     const [data, setData] = useState([])
 
-    // useEffect(() => {
-    //     setParams((prevParams) => {
-    //         const newParams = {
-    //             type: requestProps.type ?? null,
-    //             tagsRelation: requestProps.goalID ?? requestProps.assignmentID ?? null,
-    //             tagSomeID: requestProps.tagSomeID ?? null
-    //         }
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                switch (params.type) {
+                    case 'tag': {
+                        if (params.tagsRelation) {
+                            const result = await tagAction.getTagOnGoal(params.tagsRelation)
+                            setData(result)
+                        } else if (params.tagSomeID) {
+                            const result = await tagAction.getTag(params.tagSomeID)
+                            setData(result)
+                        } else {
+                            setData([])
+                        }
+                        break
+                    }
+                    default: {
+                        setData([])
+                    }
+                }
+            }
+            catch (error) {
+                console.error('Error fetching data:', error)
+            }
+        }
 
-    //         if (!isEqual(prevParams, newParams)) { return newParams }
-    //         return prevParams
-    //     })
-    // }, [requestProps])
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         let tagGetted = undefined
-
-    //         switch (params.type) {
-    //             case 'tag': {
-    //                 if (params.tagsRelation) {
-    //                     tagGetted = await tagAction.getTagOnGoal(params.tagsRelation)
-    //                 } else if (params.tagSomeID) {
-    //                     tagGetted = await tagAction.getTag(params.tagSomeID)
-    //                 }
-    //             }
-    //         }
-
-    //         setData(tagGetted)
-    //     }
-
-    //     fetchData()
-    // }, [params])
+        fetchData()
+    }, [params])
 
     return { params, data }
 }

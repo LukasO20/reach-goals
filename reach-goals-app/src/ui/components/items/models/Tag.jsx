@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider'
@@ -19,7 +19,7 @@ const Tag = (props) => {
     const { toggleVisibility } = useContext(VisibilityContext)
     const { setSelectModel } = useContext(ManageModelContext)
 
-    const target = useMemo(() => targetMap(['panel-right', 'tag']), [])
+    const target = targetMap(['panel-right', 'tag'])
     const display = props.display ?? {
         sideAction: false,
         type: 'mini-list'
@@ -31,8 +31,9 @@ const Tag = (props) => {
         tagSomeID: props.tagSomeID ?? null
     }
 
-    console.log('REQUEST PROPS TAG - ', requestPropsTag)
-    //const { params, data } = useRequestParamsModel(requestPropsTag)
+    const { params, data } = useRequestParamsModel(requestPropsTag)
+    console.log('REQUEST PROPS TAG - ', params)
+    console.log('REQUEST PROPS TAG DATA - ', data)
 
     const getTag = async () => {
         try {
