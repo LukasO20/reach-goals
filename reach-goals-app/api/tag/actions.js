@@ -136,4 +136,64 @@ const getTagOnGoal = async (req, res) => {
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }
 }
 
-module.exports = { addTag, updateTag, deleteTag, getTag, getTagOnGoal }
+const getTagNotGoal = async (req, res) => {
+    if (req.method === 'GET') {
+        try {
+            const { relationID } = req.params
+            
+            if (!relationID || isNaN(relationID)) {
+                return res.status(400).json({ error: "Parameter 'relationID' invalid." });
+            }
+ 
+            const tags = await prisma.tag.findMany({
+                where: { 
+                    tagOnGoal: {
+                        none: {
+                            goalID: Number(relationID),
+                        }
+                    }
+                },
+                select: { id: true, name: true, color: true }
+            })
+
+            return res.status(200).json(tags)
+
+        } catch (error) {
+            console.error(error)
+            return res.status(500).json({ error: 'Failed to fetch tags'})
+        }
+
+    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }
+}
+
+const getTagNotAssignment = async (req, res) => {
+    if (req.method === 'GET') {
+        try {
+            const { relationID } = req.params
+            
+            if (!relationID || isNaN(relationID)) {
+                return res.status(400).json({ error: "Parameter 'relationID' invalid." });
+            }
+ 
+            const tags = await prisma.tag.findMany({
+                where: { 
+                    tagOnAssignment: {
+                        none: {
+                            assignmentID: Number(relationID)
+                        }
+                    }, 
+                },
+                select: { id: true, name: true, color: true }
+            })
+
+            return res.status(200).json(tags.map(tagRelation => tagRelation.tag))
+
+        } catch (error) {
+            console.error(error)
+            return res.status(500).json({ error: 'Failed to fetch tags'})
+        }
+
+    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }
+}
+
+module.exports = { addTag, updateTag, deleteTag, getTag, getTagOnGoal, getTagNotGoal, getTagNotAssignment }

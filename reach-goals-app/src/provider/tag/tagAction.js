@@ -98,3 +98,47 @@ export const getTagOnGoal = async (goalID) => {
         throw error
     }
 }
+
+export const getTagOnAssignment = async (assignmentID) => {
+
+}
+
+export const getTagNotGoal = async (relationID) => {
+        try {
+        const response = await fetch(`${apiURL}/api/tag/actions/${relationID}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        })  
+
+        if (!response.ok) {
+            const error  = await response.json()
+            throw new Error(error.error || 'Failed to fetch tags.')
+        }
+
+        const data = await response.json()
+        return data
+    } catch (error) {
+        console.error('Error get tag without relation: ', error.message)
+        throw error
+    }
+}
+
+export const getTagNotAssignment = async (relationID) => {
+        try {
+        const response = await fetch(`${apiURL}/api/tag/actions/${relationID}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        })  
+
+        if (!response.ok) {
+            const error  = await response.json()
+            throw new Error(error.error || 'Failed to fetch tags.')
+        }
+
+        const data = await response.json()
+        return data
+    } catch (error) {
+        console.error('Error get tag without relation: ', error.message)
+        throw error
+    }
+}

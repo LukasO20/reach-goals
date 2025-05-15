@@ -29,9 +29,14 @@ const Form = (props) => {
     const icon = iconMap[typeForm] || 'fa-solid fa-triangle-exclamation'
     const titleForm = titleMap[typeForm] || 'Create your objective'
 
-    const dynamicRequestPropsName = typeForm === 'goal' ? 'goalID' : 'assignmentID';
-    const dynamicRequestProps = {
-        [dynamicRequestPropsName]: modelForm.id
+    const dynamicGetTagRelation = typeForm === 'goal' ? 'goalID' : 'assignmentID';
+    const dynamicGetTagProps = {
+        [dynamicGetTagRelation]: modelForm.id
+    }
+
+    const notRelationModel = {
+        notRelationID: modelForm.id,
+        notRelationModel: typeForm
     }
 
     switch (typeForm) {
@@ -126,7 +131,7 @@ const Form = (props) => {
                                 </div>
                                 <div className='item-forms body'>
                                     {
-                                        modelForm.id && <Tag {...dynamicRequestProps} />
+                                        modelForm.id && <Tag {...dynamicGetTagProps} />
                                     }
                                 </div>
                             </div>
@@ -161,7 +166,7 @@ const Form = (props) => {
                 }
                 {   
                     contextForm.mapModalList.open && contextForm.mapModalList.type === 'tag' && 
-                    <ModalList title='Complementing a tag' complement='tag' externalID={modelForm?.id} exFunction={functionsForm.mapHandleChange}/>
+                    <ModalList title='Complementing a tag' complement='tag' externalID={modelForm?.id} notRelationModel={notRelationModel} exFunction={functionsForm.mapHandleChange}/>
                 }
             </div>
             break

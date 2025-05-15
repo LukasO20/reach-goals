@@ -1,11 +1,11 @@
-import { useCallback, useContext, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider'
 import { insertModelComponent } from '../../../utils/layout/uiLayout'
 
 import { targetMap, switchLayoutMap } from '../../../../utils/mappingUtils'
-import { useRequestParamsModel } from '../../../../hook/useRequestParamsModel'
+import { useRequestGetModel } from '../../../../hook/useRequestGetModel'
 
 import ButtonAction from '../elements/ButtonAction'
 import * as tagAction from '../../../../provider/tag/tagAction'
@@ -25,24 +25,27 @@ const Tag = (props) => {
         type: 'mini-list'
     }
 
-    const requestPropsTag = {
+    const requestPropsTag = useMemo(() => ({
         type: 'tag',
         tagsRelation: props.goalID ?? props.assignmentID ?? null,
+        tagsNotRelation: {
+            notRelationID: props.notRelationID ?? null,
+            notRelationModel: props.notRelationModel ?? null
+        },
         tagSomeID: props.tagSomeID ?? null
-    }
+    }), [props.goalID, props.assignmentID, props.notRelationID, props.notRelationModel, props.tagSomeID]) 
 
-    const { params, data } = useRequestParamsModel(requestPropsTag)
-    console.log('REQUEST PROPS TAG - ', params)
-    console.log('REQUEST PROPS TAG DATA - ', data)
+    const { params, data } = useRequestGetModel(requestPropsTag)
 
     const getTag = async () => {
         try {
-            const fetched = ''
-            //setTag(fetched)
-
+            setTag(data)
         } catch (error) { setErro(`Failed to load tag: ${error.message}`) }
     }
-    getTag()
+
+    useEffect(() => {
+        getTag()
+    }, [data])
 
     const deleteTag = async (id) => {
         try {

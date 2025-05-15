@@ -14,9 +14,10 @@ const modalListMap = (open, type) => {
 
 const ModalList = (props) => {
     const title = props?.title
-    const complement = props?.complement //This is a complement value (goal is a complement of assingment and vice versa)
+    const complement = props?.complement 
     const externalFunction = props?.exFunction
     const externalID = props?.externalID
+    const externalNotRelationModel = props?.notRelationModel
 
     return (
         <div className={`container-list-modal ${complement}`}>
@@ -26,7 +27,7 @@ const ModalList = (props) => {
             </div>
             <div className='body'>
                 {
-                complement === 'tag' ? <Tag selectableModel={true} action={{ setForm: true }} exFunction={externalFunction}/> :
+                complement === 'tag' ? <Tag selectableModel={true} action={{ setForm: true }} {...externalNotRelationModel} exFunction={externalFunction}/> :
                 complement === 'goal' ? <Goal selectableModel={true} idAssignment={externalID} action={{ setForm: true }} exFunction={externalFunction}/> :
                 <Assignment selectableModel={true} action={{ setForm: true }} unfocused={true} exFunction={externalFunction}/>
                 }

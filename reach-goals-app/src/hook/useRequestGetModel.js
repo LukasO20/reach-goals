@@ -1,12 +1,16 @@
 import { useEffect, useState, useMemo } from 'react'
 import * as tagAction from '../provider/tag/tagAction'
 
-const useRequestParamsModel = (requestProps) => {
+const useRequestGetModel = (requestProps) => {
     const params = useMemo(() => ({
         type: requestProps.type ?? null,
-        tagsRelation: requestProps.tagsRelation ?? null,        
+        tagsRelation: requestProps.tagsRelation ?? null,     
+        tagsNotRelation: {
+            notRelationID: requestProps.tagsNotRelation.notRelationID ?? null,
+            notRelationModel: requestProps.tagsNotRelation.notRelationModel ?? null
+        },
         tagSomeID: requestProps.tagSomeID ?? null
-    }), [requestProps.type, requestProps.tagsRelation, requestProps.tagSomeID])
+    }), [requestProps.type, requestProps.tagsRelation, requestProps.tagSomeID, requestProps.tagsNotRelation])
 
     const [data, setData] = useState([])
 
@@ -20,6 +24,11 @@ const useRequestParamsModel = (requestProps) => {
                             setData(result)
                         } else if (params.tagSomeID) {
                             const result = await tagAction.getTag(params.tagSomeID)
+                            setData(result)
+                        } else if (params.tagsNotRelation.notRelationID && params.tagsNotRelation.notRelationModel !== '') {
+                            const result = params.tagsNotRelation.notRelationModel === 'goal' 
+                                ? await tagAction.getTagNotGoal(params.tagsNotRelation.notRelationID)
+                                : await tagAction.getTagNotAssignment(params.tagsNotRelation.notRelationID)
                             setData(result)
                         } else {
                             setData([])
@@ -42,4 +51,4 @@ const useRequestParamsModel = (requestProps) => {
     return { params, data }
 }
 
-export { useRequestParamsModel }
+export { useRequestGetModel }
