@@ -34,9 +34,13 @@ const Form = (props) => {
         [dynamicGetTagRelation]: modelForm.id
     }
 
-    const notRelationModel = {
+    const getNotRelationModel = {
         notRelationID: modelForm.id,
         notRelationModel: typeForm
+    }
+
+    const getAllModel = {
+        tagSomeID: true
     }
 
     switch (typeForm) {
@@ -166,7 +170,7 @@ const Form = (props) => {
                 }
                 {   
                     contextForm.mapModalList.open && contextForm.mapModalList.type === 'tag' && 
-                    <ModalList title='Complementing a tag' complement='tag' externalID={modelForm?.id} notRelationModel={notRelationModel} exFunction={functionsForm.mapHandleChange}/>
+                    <ModalList title='Complementing a tag' complement='tag' externalID={modelForm?.id} getAllModel={getAllModel} getNotRelationModel={getNotRelationModel} exFunction={functionsForm.mapHandleChange}/>
                 }
             </div>
             break

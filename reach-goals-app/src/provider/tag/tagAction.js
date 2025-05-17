@@ -105,7 +105,7 @@ export const getTagOnAssignment = async (assignmentID) => {
 
 export const getTagNotGoal = async (relationID) => {
         try {
-        const response = await fetch(`${apiURL}/api/tag/actions/${relationID}`, {
+        const response = await fetch(`${apiURL}/api/tag/actions/not-goal/${relationID}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         })  

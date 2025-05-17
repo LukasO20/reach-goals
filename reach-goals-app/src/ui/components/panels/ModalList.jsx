@@ -17,7 +17,12 @@ const ModalList = (props) => {
     const complement = props?.complement 
     const externalFunction = props?.exFunction
     const externalID = props?.externalID
-    const externalNotRelationModel = props?.notRelationModel
+    const externalGetNotRelationModel = props?.getNotRelationModel
+    const externalGetAllModel = props?.getAllModel
+
+    const typeGet = externalGetNotRelationModel?.notRelationID
+        ? { ...externalGetNotRelationModel }
+        : { ...externalGetAllModel }
 
     return (
         <div className={`container-list-modal ${complement}`}>
@@ -27,7 +32,7 @@ const ModalList = (props) => {
             </div>
             <div className='body'>
                 {
-                complement === 'tag' ? <Tag selectableModel={true} action={{ setForm: true }} {...externalNotRelationModel} exFunction={externalFunction}/> :
+                complement === 'tag' ? <Tag selectableModel={true} action={{ setForm: true }} {...typeGet} exFunction={externalFunction}/> :
                 complement === 'goal' ? <Goal selectableModel={true} idAssignment={externalID} action={{ setForm: true }} exFunction={externalFunction}/> :
                 <Assignment selectableModel={true} action={{ setForm: true }} unfocused={true} exFunction={externalFunction}/>
                 }

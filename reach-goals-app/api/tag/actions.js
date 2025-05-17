@@ -142,14 +142,14 @@ const getTagNotGoal = async (req, res) => {
             const { relationID } = req.params
             
             if (!relationID || isNaN(relationID)) {
-                return res.status(400).json({ error: "Parameter 'relationID' invalid." });
+                return res.status(400).json({ error: "Parameter 'relationID' invalid." })
             }
  
             const tags = await prisma.tag.findMany({
                 where: { 
-                    tagOnGoal: {
-                        none: {
-                            goalID: Number(relationID),
+                    NOT: {
+                        goals: {
+                            some: { goalID: Number(relationID) }
                         }
                     }
                 },

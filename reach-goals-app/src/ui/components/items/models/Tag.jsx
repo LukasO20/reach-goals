@@ -38,14 +38,11 @@ const Tag = (props) => {
     const { params, data } = useRequestGetModel(requestPropsTag)
 
     const getTag = async () => {
-        try {
-            setTag(data)
-        } catch (error) { setErro(`Failed to load tag: ${error.message}`) }
+        try { setTag(data) }
+        catch (error) { setErro(`Failed to load tag: ${error.message}`) }
     }
 
-    useEffect(() => {
-        getTag()
-    }, [data])
+    useEffect(() => { getTag() }, [data])
 
     const deleteTag = async (id) => {
         try {

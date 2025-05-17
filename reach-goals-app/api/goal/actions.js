@@ -26,7 +26,7 @@ const addGoal = async (req, res) => {
                 connect: assignments.map((id) => ({ id: Number(id) }))
             },
             tags: {
-                create: tags?.map(tagID => ({
+                create: tags.map(tagID => ({
                     tag: { connect: { id: Number(tagID) }}
                 }))
             }
@@ -38,7 +38,7 @@ const addGoal = async (req, res) => {
         try {
             const goal = await prisma.goal.create({
                 data: formattedData,
-                include: { assignments: true, tags: true }
+                include: { assignments: true, tags: { include: { tag: true } } }
             })
     
             return res.status(201).json(goal)
@@ -67,9 +67,6 @@ const updateGoal = async (req, res) => {
             end: endDate, 
             assignments: {
                 connect: assignments?.map(assignment => ({ id: Number(assignment?.id ?? assignment) }))
-            },
-            tags: {
-                connect: tags?.map(tag => ({ id: Number(tag?.id ?? tag) }))
             }
         }
 
@@ -77,10 +74,16 @@ const updateGoal = async (req, res) => {
         console.log('Goal TO UPDATE - ', formattedData)
 
         try {
+
+            await prisma.tagOnGoal.createMany({
+                data: tags?.map(tagID => ({ goalID: Number(id), tagID: Number(tagID) })) || [],
+                skipDuplicates: true
+            })
+
             const goal = await prisma.goal.update({
                 where: { id: Number(id) },
                 data: formattedData,
-                include: { assignments: true, tags: true }
+                include: { assignments: true, tags: { include: { tag: true } } }
             })
 
             return res.status(200).json(goal)
