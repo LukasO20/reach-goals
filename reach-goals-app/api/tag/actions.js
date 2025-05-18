@@ -136,6 +136,30 @@ const getTagOnGoal = async (req, res) => {
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }
 }
 
+const getTagOnAssignment = async (req, res) => {
+    if (req.method === 'GET') {
+        try {
+            const { assignmentID } = req.params
+            
+            if (!assignmentID || isNaN(assignmentID)) {
+                return res.status(400).json({ error: "Parameter 'assignmentID' invalid." });
+            }
+ 
+            const tags = await prisma.tagOnAssignment.findMany({
+                where: { assignmentID: Number(assignmentID) },
+                include: { tag: { select: { id: true, name: true, color: true } } }
+            })
+
+            return res.status(200).json(tags.map(tagRelation => tagRelation.tag))
+
+        } catch (error) {
+            console.error(error)
+            return res.status(500).json({ error: 'Failed to fetch tags'})
+        }
+
+    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }
+}
+
 const getTagNotGoal = async (req, res) => {
     if (req.method === 'GET') {
         try {
@@ -177,16 +201,16 @@ const getTagNotAssignment = async (req, res) => {
  
             const tags = await prisma.tag.findMany({
                 where: { 
-                    tagOnAssignment: {
-                        none: {
-                            assignmentID: Number(relationID)
+                    NOT: {
+                        assignments: {
+                            some: { assignmentID: Number(relationID) }
                         }
-                    }, 
+                    }
                 },
                 select: { id: true, name: true, color: true }
             })
 
-            return res.status(200).json(tags.map(tagRelation => tagRelation.tag))
+            return res.status(200).json(tags)
 
         } catch (error) {
             console.error(error)
@@ -196,4 +220,4 @@ const getTagNotAssignment = async (req, res) => {
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }
 }
 
-module.exports = { addTag, updateTag, deleteTag, getTag, getTagOnGoal, getTagNotGoal, getTagNotAssignment }
+module.exports = { addTag, updateTag, deleteTag, getTag, getTagOnGoal, getTagOnAssignment, getTagNotGoal, getTagNotAssignment }

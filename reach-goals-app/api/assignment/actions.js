@@ -9,7 +9,7 @@ const formatObject = (objectData) => { //CREATE AN UNIQUE "formatObject" functio
 
 const addAssignment = async (req, res) => {
     if (req.method === 'POST') {
-        const { name, description, status, duration, start, end, goal } = req.body
+        const { name, description, status, duration, start, end, goal, tags } = req.body
         if (!name) { return res.status(400).json({ error: 'Name is required.'}) }
   
         const startDate = start ? moment(start, 'DD/MM/YYYY').toISOString() : new Date().toISOString()  
@@ -23,16 +23,22 @@ const addAssignment = async (req, res) => {
             duration: durationFormat,
             start: startDate,
             end: endDate, 
-            goal: goal ? { connect: { id: Number(goal) } } : null
+            goal: goal ? { connect: { id: Number(goal) } } : null,
+            tags: {
+                create: tags.map(tagID => ({
+                    tag: { connect: { id: Number(tagID) }}
+                }))
+            }
         }
 
         const formattedData = formatObject(rawObject)
         console.log('ASSIGN TO ADD - ', formattedData)
 
         try {
+
             const assignment = await prisma.assignment.create({
                 data: formattedData,
-                include: { goal: true }
+                include: { goal: true, tags: { include: { tag: true } } }
             })  
 
             return res.status(201).json(assignment)
@@ -47,7 +53,7 @@ const addAssignment = async (req, res) => {
 const updateAssignment = async (req, res) => {
     if (req.method === 'PUT') {
         const { id } = req.params
-        const { name, description, status, duration, start, end, goal } = req.body
+        const { name, description, status, duration, start, end, goal, tags } = req.body
 
         const startDate = start ? moment(start, 'DD/MM/YYYY').toISOString() : new Date().toISOString()  
         const endDate = end ? moment(end, 'DD/MM/YYYY').toISOString() : null
@@ -67,10 +73,16 @@ const updateAssignment = async (req, res) => {
         console.log('ASSIGN TO ADD - ', formattedData)
 
         try {
+
+            await prisma.tagOnAssignment.createMany({
+                data: tags?.map(tagID => ({ assignmentID: Number(id), tagID: Number(tagID) })) || [],
+                skipDuplicates: true
+            })
+
             const assignment = await prisma.assignment.update({
                 where: { id: Number(id) },
                 data: formattedData,
-                include: { goal: true }
+                include: { goal: true, tags: { include: { tag: true } } }
             })
 
             return res.status(200).json(assignment)

@@ -1,20 +1,17 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom' 
+
 import { ManageModelContext } from '../../../../provider/ManageModelProvider'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider'
-import { Link } from 'react-router-dom'
+
 import { insertModelComponent } from '../../../utils/layout/uiLayout'
+import { targetMap, switchLayoutMap } from '../../../../utils/mappingUtils'
 
 import ButtonAction from '../elements/ButtonAction'
 import * as assignmentAction from '../../../../provider/assignment/assignmentAction'
 
 import '../../../styles/items/models/Assignment.scss'
-
-const targetMap = (classes) => {
-    const data = Array.isArray(classes) ? classes : [classes]
-    const attributes = { class: data }
-    return attributes
-}
 
 const Assignment = (props) => {
     const [assignment, setAssignment] = useState([])
@@ -107,7 +104,7 @@ const Assignment = (props) => {
                 {
                     display.sideAction && 
                     <div className='side-actions'>
-                        <ButtonAction onClick={() => editAssignment(assignment.id)} target={targetMap(['panel-center', 'assignment'])} classBtn='edit-assignment' iconFa='fa-regular fa-pen-to-square'/>
+                        <ButtonAction onClick={() => editAssignment(assignment.id)} target={targetMap(['panel-center', 'assignment'])} switchLayout={switchLayoutMap('panel', 'layout', 'center')} classBtn='edit-assignment' iconFa='fa-regular fa-pen-to-square'/>
                         <ButtonAction onClick={() => deleteAssignment(assignment.id)} target={targetMap(null)} classBtn='remove-assignment' iconFa='fa-regular fa-trash-can'/>
                     </div>
                 }

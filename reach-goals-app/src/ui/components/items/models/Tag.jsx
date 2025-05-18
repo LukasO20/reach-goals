@@ -5,7 +5,7 @@ import { VisibilityContext } from '../../../../provider/VisibilityProvider'
 import { insertModelComponent } from '../../../utils/layout/uiLayout'
 
 import { targetMap, switchLayoutMap } from '../../../../utils/mappingUtils'
-import { useRequestGetModel } from '../../../../hook/useRequestGetModel'
+import { useGetModel } from '../../../../hook/useGetModel'
 
 import ButtonAction from '../elements/ButtonAction'
 import * as tagAction from '../../../../provider/tag/tagAction'
@@ -35,7 +35,7 @@ const Tag = (props) => {
         tagSomeID: props.tagSomeID ?? null
     }), [props.goalID, props.assignmentID, props.notRelationID, props.notRelationModel, props.tagSomeID]) 
 
-    const { params, data } = useRequestGetModel(requestPropsTag)
+    const { params, data } = useGetModel(requestPropsTag)
 
     const getTag = async () => {
         try { setTag(data) }

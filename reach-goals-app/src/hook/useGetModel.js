@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react'
 import * as tagAction from '../provider/tag/tagAction'
 
-const useRequestGetModel = (requestProps) => {
+const useGetModel = (requestProps) => {
     const params = useMemo(() => ({
         type: requestProps.type ?? null,
         tagsRelation: requestProps.tagsRelation ?? null,     
@@ -51,4 +51,4 @@ const useRequestGetModel = (requestProps) => {
     return { params, data }
 }
 
-export { useRequestGetModel }
+export { useGetModel }

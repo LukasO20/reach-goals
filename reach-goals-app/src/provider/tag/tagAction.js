@@ -100,7 +100,23 @@ export const getTagOnGoal = async (goalID) => {
 }
 
 export const getTagOnAssignment = async (assignmentID) => {
+    try {
+        const response = await fetch(`${apiURL}/api/tag/actions/${assignmentID}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        })  
 
+        if (!response.ok) {
+            const error  = await response.json()
+            throw new Error(error.error || 'Failed to fetch tags on goal.')
+        }
+
+        const data = await response.json()
+        return data
+    } catch (error) {
+        console.error('Error get tag on goal: ', error.message)
+        throw error
+    }
 }
 
 export const getTagNotGoal = async (relationID) => {
@@ -125,7 +141,7 @@ export const getTagNotGoal = async (relationID) => {
 
 export const getTagNotAssignment = async (relationID) => {
         try {
-        const response = await fetch(`${apiURL}/api/tag/actions/${relationID}`, {
+        const response = await fetch(`${apiURL}/api/tag/actions/not-assignment/${relationID}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         })  
