@@ -79,9 +79,9 @@ export const getTag = async (tags) => {
     }
 }
 
-export const getTagOnGoal = async (goalID) => {
+export const getTagOnGoal = async (relationID) => {
     try {
-        const response = await fetch(`${apiURL}/api/tag/actions/${goalID}`, {
+        const response = await fetch(`${apiURL}/api/tag/actions/relation-goal/${relationID}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         })  
@@ -99,9 +99,9 @@ export const getTagOnGoal = async (goalID) => {
     }
 }
 
-export const getTagOnAssignment = async (assignmentID) => {
+export const getTagOnAssignment = async (relationID) => {
     try {
-        const response = await fetch(`${apiURL}/api/tag/actions/${assignmentID}`, {
+        const response = await fetch(`${apiURL}/api/tag/actions/relation-assignment/${relationID}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         })  

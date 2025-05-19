@@ -20,7 +20,11 @@ const useGetModel = (requestProps) => {
                 switch (params.type) {
                     case 'tag': {
                         if (params.tagsRelation) {
-                            const result = await tagAction.getTagOnGoal(params.tagsRelation)
+                            let result = await tagAction.getTagOnGoal(params.tagsRelation)
+                            if (!result.length) {
+                                result = await tagAction.getTagOnAssignment(params.tagsRelation)
+                            }
+                            
                             setData(result)
                         } else if (params.tagSomeID) {
                             const result = await tagAction.getTag(params.tagSomeID)

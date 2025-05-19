@@ -115,14 +115,14 @@ const getTag = async (req, res) => {
 const getTagOnGoal = async (req, res) => {
     if (req.method === 'GET') {
         try {
-            const { goalID } = req.params
+            const { relationID } = req.params
             
-            if (!goalID || isNaN(goalID)) {
+            if (!relationID || isNaN(relationID)) {
                 return res.status(400).json({ error: "Parameter 'goalID' invalid." });
             }
  
             const tags = await prisma.tagOnGoal.findMany({
-                where: { goalID: Number(goalID) },
+                where: { goalID: Number(relationID) },
                 include: { tag: { select: { id: true, name: true, color: true } } }
             })
 
@@ -139,14 +139,14 @@ const getTagOnGoal = async (req, res) => {
 const getTagOnAssignment = async (req, res) => {
     if (req.method === 'GET') {
         try {
-            const { assignmentID } = req.params
+            const { relationID } = req.params
             
-            if (!assignmentID || isNaN(assignmentID)) {
+            if (!relationID || isNaN(relationID)) {
                 return res.status(400).json({ error: "Parameter 'assignmentID' invalid." });
             }
  
             const tags = await prisma.tagOnAssignment.findMany({
-                where: { assignmentID: Number(assignmentID) },
+                where: { assignmentID: Number(relationID) },
                 include: { tag: { select: { id: true, name: true, color: true } } }
             })
 
