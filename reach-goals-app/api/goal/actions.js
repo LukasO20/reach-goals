@@ -11,23 +11,23 @@ const addGoal = async (req, res) => {
     if (req.method === 'POST') {
         const { name, description, status, start, end, assignments, tags } = req.body
 
-        if (!name) { return res.status(400).json({ error: 'Name is required.'}) }
+        if (!name) { return res.status(400).json({ error: 'Name is required.' }) }
 
-        const startDate = start ? moment(start, 'DD/MM/YYYY').toISOString() : new Date().toISOString()  
+        const startDate = start ? moment(start, 'DD/MM/YYYY').toISOString() : new Date().toISOString()
         const endDate = end ? moment(end, 'DD/MM/YYYY').toISOString() : null
 
-        const rawObject = { 
+        const rawObject = {
             name,
-            description, 
-            status, 
+            description,
+            status,
             start: startDate,
-            end: endDate, 
+            end: endDate,
             assignments: {
                 connect: assignments.map((id) => ({ id: Number(id) }))
             },
             tags: {
                 create: tags.map(tagID => ({
-                    tag: { connect: { id: Number(tagID) }}
+                    tag: { connect: { id: Number(tagID) } }
                 }))
             }
         }
@@ -40,15 +40,15 @@ const addGoal = async (req, res) => {
                 data: formattedData,
                 include: { assignments: true, tags: { include: { tag: true } } }
             })
-    
+
             return res.status(201).json(goal)
-        
+
         } catch (error) {
             console.error(error)
-            return res.status(500).json({ error: 'Failed to create goal'})
+            return res.status(500).json({ error: 'Failed to create goal' })
         }
 
-    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }
+    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
 const updateGoal = async (req, res) => {
@@ -59,12 +59,12 @@ const updateGoal = async (req, res) => {
         const startDate = start ? moment(start).toISOString() : new Date().toISOString()
         const endDate = end ? moment(end).toISOString() : null
 
-        const rawObject = { 
+        const rawObject = {
             name,
-            description, 
-            status, 
+            description,
+            status,
             start: startDate,
-            end: endDate, 
+            end: endDate,
             assignments: {
                 connect: assignments?.map(assignment => ({ id: Number(assignment?.id ?? assignment) }))
             }
@@ -90,10 +90,10 @@ const updateGoal = async (req, res) => {
 
         } catch (error) {
             console.error(error)
-            return res.status(500).json({ error: 'Failed updating goals'})
+            return res.status(500).json({ error: 'Failed updating goals' })
         }
 
-    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }
+    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
 const deleteGoal = async (req, res) => {
@@ -102,18 +102,19 @@ const deleteGoal = async (req, res) => {
         const { id } = req.params
 
         try {
+
             const goal = await prisma.goal.delete({
                 where: { id: Number(id) }
             })
 
             return res.status(200).json(goal)
-            
+
         } catch (error) {
             console.error(error)
-            return res.status(500).json({ error: 'Failed to delete this goal'})
+            return res.status(500).json({ error: 'Failed to delete this goal' })
         }
 
-    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }
+    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
 const getGoal = async (req, res) => {
@@ -121,7 +122,7 @@ const getGoal = async (req, res) => {
         try {
             let goal = undefined
             const { id } = req.params
-            
+
             if (id !== undefined) {
                 goal = await prisma.goal.findUnique({
                     where: { id: Number(id) },
@@ -137,10 +138,10 @@ const getGoal = async (req, res) => {
 
         } catch (error) {
             console.error(error)
-            return res.status(500).json({ error: 'Failed to fetch goals'})
+            return res.status(500).json({ error: 'Failed to fetch goals' })
         }
 
-    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }
+    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
 module.exports = { addGoal, updateGoal, deleteGoal, getGoal }

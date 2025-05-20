@@ -10,7 +10,7 @@ app.use(express.json())
 // routes set
 const { addGoal, updateGoal, getGoal, deleteGoal } = require('../api/goal/actions')
 const { addAssignment, updateAssignment, getAssignment, deleteAssignment } = require('../api/assignment/actions')
-const { addTag, updateTag, getTag, deleteTag, getTagOnGoal, getTagOnAssignment, getTagNotGoal, getTagNotAssignment } = require('../api/tag/actions')
+const { addTag, updateTag, getTag, deleteTag, getTagOnGoal, getTagOnAssignment, getTagNotGoal, getTagNotAssignment, unlinkAllTagOnGoal, unlinkAllTagOnAssignment } = require('../api/tag/actions')
 
 app.post('/api/goal/actions', addGoal)
 app.get('/api/goal/actions/:id?', getGoal)
@@ -29,7 +29,10 @@ app.get('/api/tag/actions/relation-assignment/:relationID', getTagOnAssignment)
 app.get('/api/tag/actions/not-goal/:relationID', getTagNotGoal)
 app.get('/api/tag/actions/not-assignment/:relationID', getTagNotAssignment)
 app.put('/api/tag/actions/:id', updateTag)
+
 app.delete('/api/tag/actions/:id', deleteTag)
+app.delete('/api/tag/actions/unlink-all-goal/:id', unlinkAllTagOnGoal)
+app.delete('/api/tag/actions/unlink-all-assignment/:id', unlinkAllTagOnAssignment)
 
 // server status
 app.get('/', (req, res) => {

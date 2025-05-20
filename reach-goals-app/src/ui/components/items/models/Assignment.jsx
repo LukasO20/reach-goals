@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider'
+import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider'
 
 import { insertModelComponent } from '../../../utils/layout/uiLayout'
 import { targetMap, switchLayoutMap } from '../../../../utils/mappingUtils'
@@ -19,6 +20,7 @@ const Assignment = (props) => {
     
     const { toggleVisibility } = useContext(VisibilityContext)
     const { setSelectModel } = useContext(ManageModelContext)
+    const { switchLayoutComponent } = useContext(SwitchLayoutContext)
 
     const location = useLocation()
     const currentLocation = useMemo(() => {
@@ -77,6 +79,7 @@ const Assignment = (props) => {
 
             setSelectModel(id)
             toggleVisibility(target, e)
+            switchLayoutComponent(switchLayoutMap('panel', 'layout', 'right'))
         },
         [setSelectModel, toggleVisibility, target]
     )

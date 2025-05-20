@@ -45,16 +45,28 @@ export const updateGoal = async (goal) => {
 
 export const deleteGoal = async (id) => {
     try {
-        const url = `${apiURL}/api/goal/actions/${id}`
-        const response = await fetch(url, {
+        const urlUnlinkTag = `${apiURL}/api/tag/actions/unlink-all-goal/${id}`
+        const responseUnlinkTag = await fetch(urlUnlinkTag, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+        })
+
+        const urlDeletGoal = `${apiURL}/api/goal/actions/${id}`
+        const responseGoal = await fetch(urlDeletGoal, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
         })  
 
-        if (!response.ok) {
-            const error  = await response.json()
+        if (!responseUnlinkTag.ok) {
+            const error  = await responseUnlinkTag.json()
+            throw new Error(error.error || 'Failed to unlink tags from goal.')
+        }
+
+        if (!responseGoal.ok) {
+            const error  = await responseGoal.json()
             throw new Error(error.error || 'Failed to delete goal.')
         }
+
     } catch (error) {
         console.error('Error delete goal: ', error.message)
         throw error

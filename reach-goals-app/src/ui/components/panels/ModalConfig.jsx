@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import ButtonAction from '../items/elements/ButtonAction'
-import ModalConfigSection from '../items/config_components/ModalConfigSection'
+import ModalConfigSection from '../items/modals/modal_config/ModalConfigSection'
 import { VisibilityContext } from '../../../provider/VisibilityProvider'
 
 import '../../styles/panels/Config.scss'

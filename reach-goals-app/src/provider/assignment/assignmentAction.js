@@ -44,11 +44,22 @@ export const updateAssignment = async (assignment) => {
 
 export const deleteAssignment = async (id) => {
     try {
-        const url = `${apiURL}/api/assignment/actions/${id}`
-        const response = await fetch(url, {
+        const urlUnlinkTag = `${apiURL}/api/tag/actions/unlink-all-assignment/${id}`
+        const responseUnlinkTag = await fetch(urlUnlinkTag, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+        })
+
+        const urlDeletAssignment = `${apiURL}/api/assignment/actions/${id}`
+        const response = await fetch(urlDeletAssignment, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
         })  
+
+        if (!responseUnlinkTag.ok) {
+            const error = await responseUnlinkTag.json()
+            throw new Error(error.error || 'Failed to unlink tags from assignment.')
+        }
 
         if (!response.ok) {
             const error  = await response.json()

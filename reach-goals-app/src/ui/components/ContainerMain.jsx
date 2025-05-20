@@ -1,5 +1,6 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import Routes from '../../app/Routes'
+
 import { VisibilityContext } from '../../provider/VisibilityProvider'
 
 import ButtonAction from './items/elements/ButtonAction'

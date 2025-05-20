@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useMemo } from 'react'
+import { useContext, useEffect, useState, useMemo } from 'react'
 import { VisibilityContext } from '../../../provider/VisibilityProvider'
 import { ManageModelContext } from '../../../provider/ManageModelProvider'
 import { ModalListContext } from '../../../provider/ModalListProvider'
@@ -97,7 +97,12 @@ const ModalForm = (props) => {
     const [success, setSucess] = useState(false)
     const [isLoading, setLoading] = useState(false)
 
-    const nullModal = () => { setSelectModel(null) }
+    const nullModal = () => { 
+        !selectModel && setSelectModel(null)
+        setGoal(goalEmpty)
+        setAssignment(assignmentEmpty)
+        setTag(tagEmpty)
+    }
 
     const formatDate = (modalForm) => {
         if (!modalForm) { return }
@@ -210,7 +215,7 @@ const ModalForm = (props) => {
             setLoading(true)
 
             if (id === null ) {
-                typeForm === 'goal' ? setGoal(goalEmpty) : setAssignment(assignmentEmpty)
+                nullModal()
                 setLoading(false)
                 return
             } 

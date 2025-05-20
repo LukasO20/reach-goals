@@ -1,5 +1,7 @@
-import React, { useContext, useState, useEffect } from 'react'
+import { useContext } from 'react'
+
 import { VisibilityContext } from '../../../../provider/VisibilityProvider'
+import { ManageModelContext } from '../../../../provider/ManageModelProvider'
 
 import ButtonAction from './ButtonAction'
 
@@ -51,6 +53,7 @@ const switchLayoutMap = (nameComponent, nameLayout, value) => {
 
 const ButtonDropdown = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
+    const { setSelectModel } = useContext(ManageModelContext)
 
     const target = props.target ?? { class : [] }
     const typeClass = target.class !== undefined ? target.class[0] : null
@@ -66,6 +69,10 @@ const ButtonDropdown = (props) => {
             const datavalue = event.props.datavalue
             if (typeof props.changeDropdownValue === 'function' && dropdownStatus) {
                 props.changeDropdownValue({ name: 'status', value: datavalue })
+            }
+
+            if (typeClass === 'btn-action-create') {
+                setSelectModel(null)
             }
         }
     }
