@@ -142,7 +142,7 @@ const getTagOnAssignment = async (req, res) => {
             const { relationID } = req.params
 
             if (!relationID || isNaN(relationID)) {
-                return res.status(400).json({ error: "Parameter 'assignmentID' invalid." });
+                return res.status(400).json({ error: "Parameter 'relationID' invalid." });
             }
 
             const tags = await prisma.tagOnAssignment.findMany({

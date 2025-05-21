@@ -8,6 +8,7 @@ import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider'
 
 import { insertModelComponent } from '../../../utils/layout/uiLayout'
 import { targetMap, switchLayoutMap } from '../../../../utils/mappingUtils'
+import { useGetModel } from '../../../../hook/useGetModel'
 
 import ButtonAction from '../elements/ButtonAction'
 import * as goalAction from '../../../../provider/goal/goalAction'
@@ -32,22 +33,25 @@ const Goal = (props) => {
         sideAction: false, 
         type: 'mini-list'
     }
+    
     const utilsGoal = {
         idAssignment: props.idAssignment ?? null
     }
 
-    useEffect(() => {
-        const fetchGoal = async () => {
-            try {
-                const fetched = await goalAction.getGoal()
-                setGoal(fetched)
+    const requestPropsGoal = useMemo(() => ({
+        type: 'goal',
+        assignmentRelation: props.assignmentRelation ?? null,
+        goalSomeID: props.goalSomeID ?? null
+    }), [props.goalSomeID, props.assignmentRelation]) 
 
-            } catch (error) {
-                setErro(`Failed to load goal: ${error.message}`)
-            }
-        }
-        fetchGoal()
-    }, [])
+    const { params, data } = useGetModel(requestPropsGoal)
+
+    const getGoal = async () => {
+        try { setGoal(data) }
+        catch (error) { setErro(`Failed to load goal: ${error.message}`) }
+    }
+
+    useEffect(() => { getGoal() }, [data])
 
     const deleteGoal = async (id) => {
         try {
@@ -83,7 +87,6 @@ const Goal = (props) => {
     )
 
     return (
-        !goal.some(goal => goal.assignments.filter(assignment => assignment.id === utilsGoal.idAssignment).length) ?
         goal.map(goal => ( 
             <div className={`goal ${display.type}`} id={goal.id} key={goal.id} onClick={(e) => handleGoalClick(goal.id, e)}>
                 {
@@ -108,10 +111,10 @@ const Goal = (props) => {
                 }
             </div>
         )) 
-        : 
-        <div className='box-message alert'>
-            <label className='label-message'>This activity is already linked to a goal.</label>
-        </div>
+        // : 
+        // <div className='box-message alert'>
+        //     <label className='label-message'>This activity is already linked to a goal.</label>
+        // </div>
     )
 }
 

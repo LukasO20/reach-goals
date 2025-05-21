@@ -27,7 +27,7 @@ const Assignment = (props) => {
         return location.pathname.includes('/objectives') ? '/objectives' : location.pathname.includes('/home') ? '/home' : '/calendar'
     }, [location.pathname])
 
-    const target = useMemo(() => targetMap('panel-left'), []) 
+    const target = useMemo(() => targetMap(['panel-right', 'assignment']), []) 
     const display = props.display ?? {
         sideAction: false, 
         type: 'mini-list',

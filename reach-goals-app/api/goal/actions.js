@@ -123,7 +123,8 @@ const getGoal = async (req, res) => {
             let goal = undefined
             const { id } = req.params
 
-            if (id !== undefined) {
+            console.log('ID GOAL - ', id)
+            if (id !== undefined && !isNaN(id)) {
                 goal = await prisma.goal.findUnique({
                     where: { id: Number(id) },
                     include: { assignments: true, tags: true }
@@ -144,4 +145,35 @@ const getGoal = async (req, res) => {
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-module.exports = { addGoal, updateGoal, deleteGoal, getGoal }
+const getGoalOnAssignment = async (req, res) => {
+    if (req.method === 'GET') {
+        try {
+            const { relationID } = req.params
+
+            if (!relationID || isNaN(relationID)) {
+                return res.status(400).json({ error: "Parameter 'relationID' invalid." });
+            }
+
+            if (relationID !== undefined) {
+                goal = await prisma.goal.findMany({
+                    where: { 
+                        assignments: {
+                            some: {
+                                id: Number(relationID)
+                            }
+                        }
+                    },
+                    include: { assignments: true, tags: true }
+                })
+            }
+
+            return res.status(200).json(goal)
+            
+        } catch (error) {
+            console.error(error)
+            return res.status(500).json({ error: 'Failed to fetch goals on this assignment' })
+        }
+    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
+}
+
+module.exports = { addGoal, updateGoal, deleteGoal, getGoal, getGoalOnAssignment }
