@@ -10,23 +10,23 @@ const formatObject = (objectData) => { //CREATE AN UNIQUE "formatObject" functio
 const addAssignment = async (req, res) => {
     if (req.method === 'POST') {
         const { name, description, status, duration, start, end, goal, tags } = req.body
-        if (!name) { return res.status(400).json({ error: 'Name is required.'}) }
-  
-        const startDate = start ? moment(start, 'DD/MM/YYYY').toISOString() : new Date().toISOString()  
+        if (!name) { return res.status(400).json({ error: 'Name is required.' }) }
+
+        const startDate = start ? moment(start, 'DD/MM/YYYY').toISOString() : new Date().toISOString()
         const endDate = end ? moment(end, 'DD/MM/YYYY').toISOString() : null
         const durationFormat = duration ? parseInt(duration) : null
 
-        const rawObject = { 
+        const rawObject = {
             name,
-            description, 
-            status, 
+            description,
+            status,
             duration: durationFormat,
             start: startDate,
-            end: endDate, 
+            end: endDate,
             goal: goal ? { connect: { id: Number(goal) } } : null,
             tags: {
                 create: tags.map(tagID => ({
-                    tag: { connect: { id: Number(tagID) }}
+                    tag: { connect: { id: Number(tagID) } }
                 }))
             }
         }
@@ -39,13 +39,13 @@ const addAssignment = async (req, res) => {
             const assignment = await prisma.assignment.create({
                 data: formattedData,
                 include: { goal: true, tags: { include: { tag: true } } }
-            })  
+            })
 
             return res.status(201).json(assignment)
-        
+
         } catch (error) {
             console.error(error)
-            return res.status(500).json({ error: 'Failed to create assignment'})
+            return res.status(500).json({ error: 'Failed to create assignment' })
         }
     }
 }
@@ -55,17 +55,17 @@ const updateAssignment = async (req, res) => {
         const { id } = req.params
         const { name, description, status, duration, start, end, goal, tags } = req.body
 
-        const startDate = start ? moment(start, 'DD/MM/YYYY').toISOString() : new Date().toISOString()  
+        const startDate = start ? moment(start, 'DD/MM/YYYY').toISOString() : new Date().toISOString()
         const endDate = end ? moment(end, 'DD/MM/YYYY').toISOString() : null
         const durationFormat = duration ? parseInt(duration) : null
 
-        const rawObject = { 
+        const rawObject = {
             name,
-            description, 
-            status, 
+            description,
+            status,
             duration: durationFormat,
             start: startDate,
-            end: endDate, 
+            end: endDate,
             goal: goal ? { connect: { id: Number(goal) } } : null
         }
 
@@ -89,10 +89,10 @@ const updateAssignment = async (req, res) => {
 
         } catch (error) {
             console.error(error)
-            return res.status(500).json({ error: 'Failed updating assignments'})
+            return res.status(500).json({ error: 'Failed updating assignments' })
         }
 
-    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }
+    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
 const deleteAssignment = async (req, res) => {
@@ -106,13 +106,13 @@ const deleteAssignment = async (req, res) => {
             })
 
             return res.status(200).json(assignment)
-            
+
         } catch (error) {
             console.error(error)
-            return res.status(500).json({ error: 'Failed to delete this assignment'})
+            return res.status(500).json({ error: 'Failed to delete this assignment' })
         }
 
-    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }
+    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
 const getAssignment = async (req, res) => {
@@ -120,24 +120,77 @@ const getAssignment = async (req, res) => {
         try {
             let assignment = undefined
             const { id } = req.params
-            
-            if (id !== undefined) {
+
+            if (id !== undefined && !isNaN(id)) {
                 assignment = await prisma.assignment.findUnique({
                     where: { id: Number(id) },
-                    include: { goal: true }
+                    include: { goal: true, tags: true }
                 })
             } else {
-                assignment = await prisma.assignment.findMany()
+                assignment = await prisma.assignment.findMany({
+                    include: { goal: true, tags: true }
+                })
+            }
+
+            return res.status(200).json(Array.isArray(assignment) ? assignment : [assignment])
+
+        } catch (error) {
+            console.error(error)
+            return res.status(500).json({ error: 'Failed to fetch assignments' })
+        }
+
+    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
+}
+
+const getAssignmentOnGoal = async (req, res) => {
+    if (req.method === 'GET') {
+        try {
+            const { relationID } = req.params
+            let assignment = undefined
+
+            if (!relationID || isNaN(relationID)) {
+                return res.status(400).json({ error: "Parameter 'relationID' invalid." });
+            }
+
+            if (relationID !== undefined) {
+                assignment = await prisma.assignment.findMany({
+                    where: {
+                        goalID: Number(relationID)
+                    },
+                    include: { goal: true, tags: true }
+                })
             }
 
             return res.status(200).json(assignment)
 
         } catch (error) {
             console.error(error)
-            return res.status(500).json({ error: 'Failed to fetch assignments'})
+            return res.status(500).json({ error: 'Failed to fetch assignments' })
         }
 
-    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended'}) }
+    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-module.exports = { addAssignment, updateAssignment, deleteAssignment, getAssignment }
+const getAssignmentWithoutGoal = async (req, res) => {
+    if (req.method === 'GET') {
+        try {
+            let assignment = undefined
+
+            assignment = await prisma.assignment.findMany({
+                where: {
+                    goalID: null
+                },
+                include: { tags: true }
+            })
+
+            return res.status(200).json(assignment)
+
+        } catch (error) {
+            console.error(error)
+            return res.status(500).json({ error: 'Failed to fetch assignments' })
+        }
+
+    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
+}
+
+module.exports = { addAssignment, updateAssignment, deleteAssignment, getAssignment, getAssignmentOnGoal, getAssignmentWithoutGoal }

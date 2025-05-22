@@ -59,17 +59,17 @@ export const deleteTag = async (id) => {
     }
 }
 
-export const getTag = async (tags) => {
+export const getTag = async (id) => {
     try {
-        const response = await fetch((typeof tags?.tagSomeID === 'number' || /^\d+$/.test(tags?.tagSomeID)) ? `${apiURL}/api/tag/actions/${tags.tagSomeID}` : `${apiURL}/api/tag/actions`, {
+
+        const url = (id !== undefined && !isNaN(id))
+            ? `${apiURL}/api/tag/actions/${id}`
+            : `${apiURL}/api/tag/actions`
+
+        const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         })  
-
-        if (!response.ok) {
-            const error  = await response.json()
-            throw new Error(error.error || 'Failed to fetch tags.')
-        }
 
         const data = await response.json()
         return data

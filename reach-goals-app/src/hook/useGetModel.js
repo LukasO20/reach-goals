@@ -4,7 +4,7 @@ import * as goalAction from '../provider/goal/goalAction'
 import * as assignmentAction from '../provider/assignment/assignmentAction'
 
 const useGetModel = (requestProps) => {
-    const params = useMemo(() => ({
+    const params = {
         type: requestProps.type ?? null,
 
         tagsRelation: requestProps.tagsRelation ?? null,     
@@ -17,14 +17,11 @@ const useGetModel = (requestProps) => {
         goalSomeID: requestProps.goalSomeID ?? null,
         assignmentRelation: requestProps.assignmentRelation ?? null,     
 
-        assignmentSomeID: requestProps.assignmentSomeID ?? null
-
-    }), [requestProps.type, requestProps.tagsRelation,
-        requestProps.assignmentSomeID,  requestProps.goalSomeID,
-        requestProps.tagSomeID, requestProps.tagsNotRelation])
-
+        assignmentSomeID: requestProps.assignmentSomeID ?? null,
+        goalRelation: requestProps.goalRelation ?? null,
+        notGoalRelation: requestProps.notGoalRelation ?? null,
+    }
     const [data, setData] = useState([])
-
     console.log('PARAMS OF HOOK GETMODEL - ', params)
     useEffect(() => {
         const fetchData = async () => {
@@ -46,6 +43,12 @@ const useGetModel = (requestProps) => {
                         if (params.assignmentSomeID) {
                             const result = await assignmentAction.getAssignment(params.assignmentSomeID)
                             setData(result)
+                        } else if (params.goalRelation) {
+                            const result = await assignmentAction.getAssignmentOnGoal(params.goalRelation)
+                            setData(result)
+                        } else if (params.notGoalRelation) {
+                            const result = await assignmentAction.getAssignmentWithoutGoal()
+                            setData(result)
                         } else {
                             setData([])
                         }
@@ -55,8 +58,7 @@ const useGetModel = (requestProps) => {
                         if (params.tagSomeID) {
                             const result = await tagAction.getTag(params.tagSomeID)
                             setData(result)
-                        } 
-                        else if (params.tagsRelation) {
+                        } else if (params.tagsRelation) {
                             let result = await tagAction.getTagOnGoal(params.tagsRelation)
                             if (!result.length) {
                                 result = await tagAction.getTagOnAssignment(params.tagsRelation)
@@ -84,7 +86,7 @@ const useGetModel = (requestProps) => {
         }
 
         fetchData()
-    }, [params])
+    }, [JSON.stringify(params)])
 
     return { params, data }
 }

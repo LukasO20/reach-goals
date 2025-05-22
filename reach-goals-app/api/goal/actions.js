@@ -120,8 +120,8 @@ const deleteGoal = async (req, res) => {
 const getGoal = async (req, res) => {
     if (req.method === 'GET') {
         try {
-            let goal = undefined
             const { id } = req.params
+            let goal = undefined
 
             if (id !== undefined && !isNaN(id)) {
                 goal = await prisma.goal.findUnique({
@@ -148,6 +148,7 @@ const getGoalOnAssignment = async (req, res) => {
     if (req.method === 'GET') {
         try {
             const { relationID } = req.params
+            let goal = undefined
 
             if (!relationID || isNaN(relationID)) {
                 return res.status(400).json({ error: "Parameter 'relationID' invalid." });

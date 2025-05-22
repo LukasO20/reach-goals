@@ -73,7 +73,10 @@ export const deleteAssignment = async (id) => {
 
 export const getAssignment = async (id) => {
     try {
-        const url = id ? `${apiURL}/api/assignment/actions/${id}` : `${apiURL}/api/assignment/actions`
+        const url = (id !== undefined && !isNaN(id))
+            ? `${apiURL}/api/assignment/actions/${id}`
+            : `${apiURL}/api/assignment/actions`
+
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
@@ -86,6 +89,50 @@ export const getAssignment = async (id) => {
 
         const data = await response.json()
         return data
+    } catch (error) {
+        console.error('Error get assignment: ', error.message)
+        throw error
+    }
+}
+
+export const getAssignmentOnGoal = async (id) => {
+    try {
+        const url = `${apiURL}/api/assignment/actions/relation-goal/${id}`
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        })  
+
+        if (!response.ok) {
+            const error  = await response.json()
+            throw new Error(error.error || 'Failed to fetch assignments.')
+        }
+
+        const data = await response.json()
+        return data
+
+    } catch (error) {
+        console.error('Error get assignment: ', error.message)
+        throw error
+    }
+}
+
+export const getAssignmentWithoutGoal = async () => {
+    try {
+        const url = `${apiURL}/api/assignment/actions/not-goal`
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        })  
+
+        if (!response.ok) {
+            const error  = await response.json()
+            throw new Error(error.error || 'Failed to fetch assignments.')
+        }
+
+        const data = await response.json()
+        return data
+
     } catch (error) {
         console.error('Error get assignment: ', error.message)
         throw error

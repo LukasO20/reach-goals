@@ -2,6 +2,8 @@ import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom' 
 
+import { useGetModel } from '../../../../hook/useGetModel'
+
 import { ManageModelContext } from '../../../../provider/ManageModelProvider'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider'
 import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider'
@@ -33,23 +35,22 @@ const Assignment = (props) => {
         type: 'mini-list',
         formMode: props?.formMode ?? false
     }
-    const utilsAssignment = {
-        unfocused: props.unfocused ?? false,
-        focused: props.focused ?? null
+
+    const requestPropsAssignment = useMemo(() => ({
+        type: 'assignment',
+        goalRelation: props.goalRelation ?? null,
+        assignmentSomeID: props.assignmentSomeID ?? null,
+        notGoalRelation: props.notGoalRelation ?? null
+    }), [props.goalSomeID, props.assignmentRelation, props.notGoalRelation]) 
+
+    const { params, data } = useGetModel(requestPropsAssignment)
+
+    const getAssignment = async () => {
+        try { setAssignment(data) }
+        catch (error) { setErro(`Failed to load assignment: ${error.message}`) }
     }
 
-    useEffect(() => {
-        const fetchAssignment = async () => {
-            try {
-                const fetched = await assignmentAction.getAssignment()
-                setAssignment(fetched)
-
-            } catch (error) {
-                setErro(`Failed to load assignment: ${error.message}`)
-            }
-        }
-        fetchAssignment()
-    }, [])
+    useEffect(() => { getAssignment() }, [data])
 
     const deleteAssignment = async (id) => {
         try {
@@ -85,11 +86,7 @@ const Assignment = (props) => {
     )
 
     return (
-        assignment.filter((assignment) => {
-            if (utilsAssignment.unfocused) { return !assignment.goalID }
-            if (utilsAssignment.focused) { return assignment.goalID === utilsAssignment.focused.id }
-            return true
-        }).map(assignment => (
+        assignment.map(assignment => (
             <div className={`assignment ${display.type}`} id={assignment.id} key={assignment.id} onClick={(e) => handleAssignmentClick(assignment.id, e)}>
                 {
                     display.type === 'card' ?

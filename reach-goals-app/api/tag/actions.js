@@ -91,18 +91,21 @@ const deleteTag = async (req, res) => {
 const getTag = async (req, res) => {
     if (req.method === 'GET') {
         try {
-            let tag = undefined
             const { id } = req.params
+            let tag = undefined
 
-            if (id !== undefined) {
+            if (id !== undefined && !isNaN(id)) {
                 tag = await prisma.tag.findUnique({
-                    where: { id: Number(id) }
+                    where: { id: Number(id) },
+                    include: { goals: true, assignments: true }
                 })
             } else {
-                tag = await prisma.tag.findMany()
+                tag = await prisma.tag.findMany({
+                    include: { goals: true, assignments: true }
+                })
             }
 
-            return res.status(200).json(tag)
+            return res.status(200).json(Array.isArray(tag) ? tag : [tag])
 
         } catch (error) {
             console.error(error)

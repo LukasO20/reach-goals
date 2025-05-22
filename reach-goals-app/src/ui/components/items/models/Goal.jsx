@@ -2,13 +2,14 @@ import React, { useCallback, useContext, useEffect, useMemo, useState } from 're
 import { useLocation } from 'react-router-dom' 
 import { Link } from 'react-router-dom'
 
+import { useGetModel } from '../../../../hook/useGetModel'
+
 import { ManageModelContext } from '../../../../provider/ManageModelProvider'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider'
 import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider'
 
 import { insertModelComponent } from '../../../utils/layout/uiLayout'
 import { targetMap, switchLayoutMap } from '../../../../utils/mappingUtils'
-import { useGetModel } from '../../../../hook/useGetModel'
 
 import ButtonAction from '../elements/ButtonAction'
 import * as goalAction from '../../../../provider/goal/goalAction'
@@ -33,25 +34,21 @@ const Goal = (props) => {
         sideAction: false, 
         type: 'mini-list'
     }
-    
-    const utilsGoal = {
-        idAssignment: props.idAssignment ?? null
-    }
 
-    const requestPropsGoal = useMemo(() => ({
+    const [requestPropsGoal, setRequestPropsGoal] = useState({
         type: 'goal',
         assignmentRelation: props.assignmentRelation ?? null,
         goalSomeID: props.goalSomeID ?? null
-    }), [props.goalSomeID, props.assignmentRelation]) 
+    })
 
     const { params, data } = useGetModel(requestPropsGoal)
+
+    useEffect(() => { getGoal() }, [data])
 
     const getGoal = async () => {
         try { setGoal(data) }
         catch (error) { setErro(`Failed to load goal: ${error.message}`) }
     }
-
-    useEffect(() => { getGoal() }, [data])
 
     const deleteGoal = async (id) => {
         try {
@@ -64,8 +61,14 @@ const Goal = (props) => {
 
     const editGoal = useCallback(async (id) => {
         try {
-            const fetched = await goalAction.getGoal(id)
-            setSelectModel(fetched.id)
+            setRequestPropsGoal(prevProps => ({
+                ...prevProps,
+                goalSomeID: id
+            }))
+            //setGoal(data)
+            console.log('DATA FRONT - ', data)
+            //setSelectModel(id)
+
         } catch (error) {
             setErro(`Failed to edit this goal: ${erro.message}`)
         }
