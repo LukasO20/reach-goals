@@ -80,7 +80,7 @@ export const getGoal = async (id) => {
             ? `${apiURL}/api/goal/actions/${id}`
             : `${apiURL}/api/goal/actions`
 
-        const response = (url, {
+        const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         })  

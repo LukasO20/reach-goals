@@ -26,7 +26,7 @@ const Home = () => {
                         <div className='list'>
                             {
                                 layoutComponent.home.layout === 'goal' ?
-                                <Goal display={{sideAction: true, type: 'card'}} goalSomeID={25} /> :
+                                <Goal display={{sideAction: true, type: 'card'}} goalSomeID={true} /> :
                                 <Assignment display={{sideAction: true, type: 'card'}} unfocused={true} />
                             }
                         </div>

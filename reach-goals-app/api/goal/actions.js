@@ -123,7 +123,6 @@ const getGoal = async (req, res) => {
             let goal = undefined
             const { id } = req.params
 
-            console.log('ID GOAL - ', id)
             if (id !== undefined && !isNaN(id)) {
                 goal = await prisma.goal.findUnique({
                     where: { id: Number(id) },
@@ -135,7 +134,7 @@ const getGoal = async (req, res) => {
                 })
             }
 
-            return res.status(200).json(goal)
+            return res.status(200).json(Array.isArray(goal) ? goal : [goal])
 
         } catch (error) {
             console.error(error)
