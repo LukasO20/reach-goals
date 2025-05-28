@@ -32,9 +32,9 @@ const ModalList = (props) => {
             </div>
             <div className='body'>
                 {
-                complement === 'tag' ? <Tag selectableModel={true} action={{ setForm: true }} {...typeGet} exFunction={externalFunction}/> :
-                complement === 'goal' ? <Goal selectableModel={true} assignmentRelation={externalID} action={{ setForm: true }} exFunction={externalFunction}/> :
-                <Assignment selectableModel={true} action={{ setForm: true }} unfocused={true} exFunction={externalFunction}/>
+                    complement === 'tag' ? <Tag selectableModel={true} action={{ setForm: true }} {...typeGet} exFunction={externalFunction}/> :
+                    complement === 'goal' ? <Goal selectableModel={true} assignmentRelation={externalID} action={{ setForm: true }} exFunction={externalFunction}/> :
+                    <Assignment selectableModel={true} action={{ setForm: true }} unfocused={true} exFunction={externalFunction}/>
                 }
             </div>
         </div>

@@ -7,6 +7,11 @@ const formatObject = (objectData) => { //CREATE AN UNIQUE "formatObject" functio
     )
 }
 
+const extractIds = (arr, key = 'id') => {
+    if (!Array.isArray(arr)) return []
+    return arr.map(item => typeof item === 'object' ? Number(item[key]) : Number(item))
+}
+
 const addGoal = async (req, res) => {
     if (req.method === 'POST') {
         const { name, description, status, start, end, assignments, tags } = req.body
@@ -56,8 +61,12 @@ const updateGoal = async (req, res) => {
         const { id } = req.params
         const { name, description, status, start, end, assignments, tags } = req.body
 
-        const startDate = start ? moment(start).toISOString() : new Date().toISOString()
-        const endDate = end ? moment(end).toISOString() : null
+        const typeDate = ['DD/MM/YYYY', 'YYYY-MM-DD', 'YYYY/MM/DD']
+        const startDate = start ? moment(start, typeDate).toISOString() : new Date().toISOString()
+        const endDate = end ? moment(end, typeDate).toISOString() : null
+
+        const assignmentIds = extractIds(assignments, 'id')
+        const tagIds = extractIds(tags, 'tagID')
 
         const rawObject = {
             name,
@@ -66,17 +75,18 @@ const updateGoal = async (req, res) => {
             start: startDate,
             end: endDate,
             assignments: {
-                connect: assignments?.map(assignment => ({ id: Number(assignment?.id ?? assignment) }))
+                connect: assignmentIds?.map(id => ({ id }))
             }
         }
 
         const formattedData = formatObject(rawObject)
+        console.log('Goal RECEVEID - ', rawObject)
         console.log('Goal TO UPDATE - ', formattedData)
 
         try {
 
             await prisma.tagOnGoal.createMany({
-                data: tags?.map(tagID => ({ goalID: Number(id), tagID: Number(tagID) })) || [],
+                data: tagIds?.map(tagID => ({ goalID: Number(id), tagID: Number(tagID) })) || [],
                 skipDuplicates: true
             })
 

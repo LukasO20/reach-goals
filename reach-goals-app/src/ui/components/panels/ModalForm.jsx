@@ -3,6 +3,10 @@ import { VisibilityContext } from '../../../provider/VisibilityProvider'
 import { ManageModelContext } from '../../../provider/ManageModelProvider'
 import { ModalListContext } from '../../../provider/ModalListProvider'
 
+import { useGetModel } from '../../../hook/useGetModel'
+
+import { removeElement } from '../../utils/layout/uiLayout'
+
 import * as goalAction from '../../../provider/goal/goalAction'
 import * as assignmentAction from '../../../provider/assignment/assignmentAction'
 import * as tagAction from '../../../provider/tag/tagAction'
@@ -24,35 +28,53 @@ const modalListMap = (open, type) => {
     return attributes
 }
 
-const formsInputMap = (typeForm, exFunction) => {
-    const form = typeForm === 'assignment' ?
+const formsInputMap = (typeForm, model, exFunction) => {
+    const form = typeForm === 'assignment' &&
         <div className='field-forms duration'>
-            <input id={`${typeForm}-duration`} className='input-form' type="text" placeholder='set duration' name='duration' onChange={exFunction} />
-        </div>  
-        : undefined
+            <input id={`${typeForm}-duration`} className='input-form' type="text" placeholder='set duration' name='duration' onChange={exFunction} value={model?.duration} />
+        </div>
 
     return form
 }
 
-const formsItemMap = (typeForm, modelObject) => {
+const formsItemMap = (typeForm, modelForm) => {
     const refFormItem = typeForm === 'goal' ? 'assignment' : 'goal'
-    const formItem = 
+    const formItem =
         <div className={`item-forms ${refFormItem}`}>
             <div className='item-forms head'>
                 <div className='item-head-1'>
                     <label>{`${refFormItem}s`}</label>
-                    <ButtonAction modalList={modalListMap(true, typeForm)} classBtn={`form-modallist-${typeForm} button-st`} iconFa='fa-solid fa-plus' title='Add'/>
+                    <ButtonAction modalList={modalListMap(true, typeForm)} classBtn={`form-modallist-${typeForm} button-st`} iconFa='fa-solid fa-plus' title='Add' />
                 </div>
                 <div className='item-head-2'></div>
             </div>
             <div className='item-forms body'>
-                {   
-                    typeForm === 'goal' && <Assignment focused={modelObject.model} formMode={true} />
+                {
+                    typeForm === 'goal' && <Assignment focused={modelForm.model} formMode={true} goalRelation={modelForm.model.id} />
                 }
             </div>
         </div>
 
     return formItem
+}
+
+const submitModel = async (typeForm, model) => {
+    switch (typeForm) {
+        case 'goal': {
+            model.id ? await goalAction.updateGoal(model) : await goalAction.addGoal(model)
+            break
+        }
+        case 'assignment': {
+            model.id ? await assignmentAction.updateAssignment(model) : await assignmentAction.addAssignment(model)
+            break
+        }
+        case 'tag': {
+            model.id ? await tagAction.updateTag(model) : await tagAction.addTag(model)
+            break
+        }
+        default: 
+            break
+    }
 }
 
 const ModalForm = (props) => {
@@ -63,45 +85,46 @@ const ModalForm = (props) => {
     const typeForm = props.type
     const classRemove = visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
 
-    const goalEmpty = {
-        name: '',
-        description: '',
-        status: undefined,
-        start: undefined,
-        end: undefined,
-        assignments: [],
-        tags: []
-    }
-    
-    const assignmentEmpty = {
-        name: '',
-        description: '',
-        duration: '',
-        status: undefined,
-        start: '',
-        end: '', 
-        goal: null,
-        tags: []
-    }
-
-    const tagEmpty = {
-        name: '',
-        color: ''     
-    }
-
-    const [goal, setGoal] = useState(goalEmpty)
-    const [assignment, setAssignment] = useState(assignmentEmpty)
-    const [tag, setTag] = useState(tagEmpty)
-
     const [error, setError] = useState(null)
     const [success, setSucess] = useState(false)
     const [isLoading, setLoading] = useState(false)
 
-    const nullModal = () => { 
+    const [modelProps, setModelProps] = useState({})
+    const [modelTarget, setModelTarget] = useState({})
+    const [resetModel, setResetModel] = useState(false)
+    const { params, data } = useGetModel(modelProps, resetModel)
+
+    const nullModal = () => {
         !selectModel && setSelectModel(null)
-        setGoal(goalEmpty)
-        setAssignment(assignmentEmpty)
-        setTag(tagEmpty)
+        setModelProps({})
+        setModelTarget({})
+        setResetModel(true)
+    }
+
+    const loadModel = (id) => {
+        setLoading(true)
+
+        if (id === null) {
+            nullModal()
+            setLoading(false)
+            return
+        }
+
+        const currentKeySomeID = typeForm === 'assignment' ? 'assignmentSomeID' : typeForm === 'goal' ? 'goalSomeID' : 'tagSomeID'
+        const currentUseGetModel = {
+            type: typeForm,
+            [currentKeySomeID]: id
+        }
+
+        try {
+            setModelProps(currentUseGetModel)
+        }
+        catch (error) {
+            setError('Ops, something wrong: ', error)
+        }
+        finally {
+            setLoading(false)
+        }
     }
 
     const formatDate = (modalForm) => {
@@ -111,24 +134,24 @@ const ModalForm = (props) => {
         const formatInputISO = (input) => {
             if (moment(input, moment.ISO_8601, true).isValid()) {
                 return input ? moment(input).format('DD/MM/YYYY') : null
-            } 
+            }
         }
 
-        const formatInput = (input) => {            
+        const formatInput = (input) => {
             if (input && !moment(input, moment.ISO_8601, true).isValid()) {
 
-                const cleanedInput = input.replace(/\D/g, '')  
+                const cleanedInput = input.replace(/\D/g, '')
                 if (isNaN(Number(cleanedInput))) { return '' }
-        
+
                 const limitedInput = cleanedInput.slice(0, 8)
                 let formattedInput = ''
 
-                if (limitedInput.length <= 2) { 
+                if (limitedInput.length <= 2) {
                     formattedInput = limitedInput
-                } 
+                }
                 else if (limitedInput.length <= 4) {
                     formattedInput = `${limitedInput.slice(0, 2)}/${limitedInput.slice(2)}`
-                } 
+                }
                 else {
                     formattedInput = `${limitedInput.slice(0, 2)}/${limitedInput.slice(2, 4)}/${limitedInput.slice(4)}`
                 }
@@ -154,30 +177,44 @@ const ModalForm = (props) => {
     const handleChange = (e) => {
         const { name, value } = e.target || e
 
-        if (typeForm === 'goal') {
-            const assignmentsRelation = e.assignments ?? goal.assignments
-            const tagsRelation = e.tags ?? goal.tags
+        //Tag attributes
+        const tagsRelation = e.tags ?? modelTarget.tags ?? []
 
-            setGoal((prevData) => ({
-                ...prevData,
+        if (typeForm === 'goal') {
+            const assignmentsRelation = e.assignments ?? modelTarget.assignments ?? []
+
+            const update = {
+                ...modelTarget,
                 [name]: value,
                 assignments: [...assignmentsRelation],
                 tags: [...tagsRelation]
-            }))
-        } else if (typeForm === 'assignment') {
-            const tagsRelation = e.tags ?? assignment.tags
+            }
 
-            setAssignment((prevData) => ({
-                ...prevData,
+            //Format object when is necessary
+            const formatted = { ...update, ...formatDate(update) }
+
+            setModelTarget(formatted)
+        } else if (typeForm === 'assignment') {
+
+            const update = {
+                ...modelTarget,
                 [name]: value,
                 goal: e.target === undefined ? Object.values(e)[0] : null,
                 tags: [...tagsRelation]
-            }))
+            }
+
+            //Format object when is necessary
+            const formatted = { ...update, ...formatDate(update) }
+
+            setModelTarget(formatted)
         } else {
-            setTag((prevData) => ({
-                ...prevData,
+
+            const update = {
+                ...modelTarget,
                 [name]: value
-            }))
+            }
+
+            setModelTarget(update)
         }
     }
 
@@ -186,55 +223,35 @@ const ModalForm = (props) => {
         setSucess(false)
 
         try {
-            if (typeForm === 'goal') {
-                goal.id ? await goalAction.updateGoal(goal) : await goalAction.addGoal(goal)  
-                setGoal(goalEmpty)
-            } else if (typeForm === 'assignment') {
-                assignment.id? await assignmentAction.updateAssignment(assignment) : await assignmentAction.addAssignment(assignment)
-                setAssignment(assignmentEmpty)
-            } else {
-                tag.id? await tagAction.updateTag(tag) : await tagAction.addTag(tag)
-                setTag(tagEmpty)
-            }
+            await submitModel(typeForm, structuredClone(modelTarget))
             setSucess(true)
-        
         } catch (error) {
             setError(error.message)
         }
     }
 
-    const handleTarget = (typeForm) => {
-        let objectTarget = typeForm === 'goal' ? goal : typeForm === 'assignment' ? assignment : tag
+    const handleTarget = (objectTarget) => {
         const fotmatedDate = formatDate(objectTarget)
-        objectTarget = { ...objectTarget, ...fotmatedDate }
-        return objectTarget
+        return { ...objectTarget, ...fotmatedDate }
     }
 
     useEffect(() => {
-        const loadModel = async (id) => {
-            setLoading(true)
+        if (!resetModel) {
+            loadModel(selectModel)
 
-            if (id === null ) {
-                nullModal()
-                setLoading(false)
-                return
-            } 
-
-            try {
-                const getModel = typeForm === 'goal' ? await goalAction.getGoal(id) : await assignmentAction.getAssignment(id)
-                typeForm === 'goal' ? setGoal(getModel) : setAssignment(getModel)
+            if (modelProps && Object.keys(modelProps).length > 0 && selectModel) {
+                setModelTarget(handleTarget(data[0]))
             }
-            catch (error) {
-                setError('Ops, something wrong: ', error)
-            } finally {
-                setLoading(false)
-            } 
         }
+    }, [selectModel, data])
 
-        loadModel(selectModel)
-    }, [selectModel])
+    useEffect(() => {
+        resetModel && setResetModel(false)
+        const removeRelationsElement = document.querySelectorAll(`.container-form-modal .body .item-forms ${typeForm}.mini-list[id]`)
+        console.log('TAG TO REMOVE? ', removeRelationsElement)
+        //removeElement(removeRelationsElement)
 
-    const modelTarget = useMemo(() => handleTarget(typeForm), [typeForm, goal, assignment, tag])
+    }, [resetModel])
 
     const functionFormMap = {
         mapHandleModalList: handleModalList,
@@ -262,12 +279,19 @@ const ModalForm = (props) => {
         mapStateError: error
     }
 
-    console.log('BEFORE TO ATT MODEL - ', typeForm === 'goal'? goal : typeForm === 'assignment' ? assignment : tag)
-    console.log('VALUE OF LOADING - ', isLoading)
+    console.log('VALUE OF LOADING - ', isLoading, modelTarget)
 
-    return (    
-        isLoading ? <div className='loading-animation'></div> :
-        <Form typeForm={typeForm} functionFormMap={functionFormMap} model={modelTarget} booleanFormMap={booleanFormMap} contextFormMap={contextFormMap} stateFormMap={stateFormMap} />
+    console.log('SHOW FORM?  - ', selectModel, resetModel)
+    return (
+        isLoading ? <div id="load-element" className='loading-animation'></div> :
+            ((modelTarget && modelTarget.id) || (selectModel === null && !resetModel)) ?
+                (
+                    <Form typeForm={typeForm} functionFormMap={functionFormMap}
+                        model={modelTarget} booleanFormMap={booleanFormMap}
+                        contextFormMap={contextFormMap} stateFormMap={stateFormMap} />
+                )
+                :
+                null
     )
 }
 

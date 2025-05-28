@@ -66,4 +66,16 @@ const insertModelComponent = (props, type, e) => {
     }
 }
 
-export { createElement, insertModelComponent }
+const removeElement = (region) => {
+    if (!region) { return console.error('region parameter is undefined. Check it value.') } 
+
+    if (Array.isArray(region)) {
+        region.forEach(element => { 
+            element instanceof HTMLElement && element.remove()
+        })
+    } else {
+        region instanceof HTMLElement && region.remove()
+    }
+}
+
+export { createElement, insertModelComponent, removeElement }

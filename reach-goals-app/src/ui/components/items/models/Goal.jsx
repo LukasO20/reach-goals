@@ -45,7 +45,7 @@ const Goal = (props) => {
 
     useEffect(() => { getGoal() }, [data])
 
-    const getGoal = async () => {
+    const getGoal = () => {
         try { setGoal(data) }
         catch (error) { setErro(`Failed to load goal: ${error.message}`) }
     }
@@ -59,16 +59,9 @@ const Goal = (props) => {
         }
     }
 
-    const editGoal = useCallback(async (id) => {
+    const editGoal = useCallback((id) => {
         try {
-            setRequestPropsGoal(prevProps => ({
-                ...prevProps,
-                goalSomeID: id
-            }))
-            //setGoal(data)
-            console.log('DATA FRONT - ', data)
-            //setSelectModel(id)
-
+            setSelectModel(id)
         } catch (error) {
             setErro(`Failed to edit this goal: ${erro.message}`)
         }

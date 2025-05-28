@@ -1,8 +1,10 @@
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+
 import { VisibilityContext } from '../../../../provider/VisibilityProvider'
 import { ModalListContext } from '../../../../provider/ModalListProvider'
 import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider'
+import { ManageModelContext } from '../../../../provider/ManageModelProvider'
 
 const statusButton = (classBtn, providervisibleElements) => {
     if (!providervisibleElements) { return false }
@@ -13,6 +15,7 @@ const ButtonAction = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { switchLayoutComponent } = useContext(SwitchLayoutContext)
     const { handleModalList } = useContext(ModalListContext)
+    const { selectModel, setSelectModel } = useContext(ManageModelContext)
 
     const classBtn = props.classBtn.split(' ')[2]
     const isOn = statusButton(classBtn, visibleElements)
@@ -28,6 +31,7 @@ const ButtonAction = (props) => {
         if (props.target) { toggleVisibility(props.target, e) }
         if (props.modalList) { handleModalList(props.modalList, e) }
         if (props.switchLayout) { switchLayoutComponent(props.switchLayout) }
+        if (props.nullModel) { setSelectModel(null) }
     }
 
     return (

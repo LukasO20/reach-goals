@@ -2,7 +2,6 @@ const apiURL = window.location.origin.includes("localhost") ? "http://localhost:
 : window.location.origin
 
 export const addGoal = async (goal) => {
-    console.log('GOAL RECEIVED - ', goal)
 
     try {
         const response = await fetch(`${apiURL}/api/goal/actions`, {
@@ -25,6 +24,8 @@ export const addGoal = async (goal) => {
 }
 
 export const updateGoal = async (goal) => {
+    console.log('GOAL FRONTEND TO SEND - ', goal)
+
     try {
         const url = `${apiURL}/api/goal/actions/${goal.id}`
         const response = await fetch(url, {

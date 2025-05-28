@@ -31,11 +31,11 @@ const Form = (props) => {
 
     const dynamicGetTagRelation = typeForm === 'goal' ? 'goalID' : 'assignmentID';
     const dynamicGetTagProps = {
-        [dynamicGetTagRelation]: modelForm.id
+        [dynamicGetTagRelation]: modelForm?.id
     }
 
     const getNotRelationModel = {
-        notRelationID: modelForm.id,
+        notRelationID: modelForm?.id,
         notRelationModel: typeForm
     }
 
@@ -124,7 +124,7 @@ const Form = (props) => {
                             <div className='field-forms status'>
                                 <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })} classBtn='dropdown-form' title='choose an option' opening='modal-form' dropdownValue={modelForm?.status || undefined} changeDropdownValue={functionsForm.mapHandleChange} dataSelectable={true} />
                             </div>
-                            {functionsForm.mapFormsInputMap(typeForm, functionsForm.mapHandleChange)}
+                            {functionsForm.mapFormsInputMap(typeForm, modelForm, functionsForm.mapHandleChange)}
                             <div className='item-forms tag'>
                                 <div className='item-forms head'>
                                     <div className='item-head-1'>
@@ -135,7 +135,7 @@ const Form = (props) => {
                                 </div>
                                 <div className='item-forms body'>
                                     {
-                                        modelForm.id && <Tag {...dynamicGetTagProps} />
+                                        modelForm?.id && <Tag {...dynamicGetTagProps} />
                                     }
                                 </div>
                             </div>

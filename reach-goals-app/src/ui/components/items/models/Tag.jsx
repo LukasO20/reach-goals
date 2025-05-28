@@ -25,7 +25,7 @@ const Tag = (props) => {
         type: 'mini-list'
     }
 
-    const requestPropsTag = useMemo(() => ({
+    const [requestPropsTag, setRequestPropsTag] = useState({
         type: 'tag',
         tagsRelation: props.goalID ?? props.assignmentID ?? null,
         tagsNotRelation: {
@@ -33,7 +33,7 @@ const Tag = (props) => {
             notRelationModel: props.notRelationModel ?? null
         },
         tagSomeID: props.tagSomeID ?? null
-    }), [props.goalID, props.assignmentID, props.notRelationID, props.notRelationModel, props.tagSomeID]) 
+    })
 
     const { params, data } = useGetModel(requestPropsTag)
 
@@ -53,10 +53,9 @@ const Tag = (props) => {
         }
     }
 
-    const editTag = useCallback(async (id) => {
+    const editTag = useCallback((id) => {
         try {
-            const fetched = await tagAction.getTag(id)
-            setSelectModel(fetched.id)
+            setSelectModel(id)
         } catch (error) {
             setErro(`Failed to edit this tag: ${erro.message}`)
         }

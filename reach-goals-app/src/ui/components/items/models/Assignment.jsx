@@ -36,12 +36,12 @@ const Assignment = (props) => {
         formMode: props?.formMode ?? false
     }
 
-    const requestPropsAssignment = useMemo(() => ({
+    const [requestPropsAssignment, setPropsAssignment] = useState({
         type: 'assignment',
         goalRelation: props.goalRelation ?? null,
         assignmentSomeID: props.assignmentSomeID ?? null,
         notGoalRelation: props.notGoalRelation ?? null
-    }), [props.goalSomeID, props.assignmentRelation, props.notGoalRelation]) 
+    }) 
 
     const { params, data } = useGetModel(requestPropsAssignment)
 
@@ -61,10 +61,9 @@ const Assignment = (props) => {
         }
     }
 
-    const editAssignment = useCallback(async (id) => {
+    const editAssignment = useCallback((id) => {
         try {
-            const fetched = await assignmentAction.getAssignment(id)
-            setSelectModel(fetched.id)        
+            setSelectModel(id)        
         } catch (error) {
             setErro(`Failed to edit this assignment: ${erro.message}`)
         }
