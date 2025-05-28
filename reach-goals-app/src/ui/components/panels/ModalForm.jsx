@@ -5,14 +5,11 @@ import { ModalListContext } from '../../../provider/ModalListProvider'
 
 import { useGetModel } from '../../../hook/useGetModel'
 
-import { removeElement } from '../../utils/layout/uiLayout'
-
 import * as goalAction from '../../../provider/goal/goalAction'
 import * as assignmentAction from '../../../provider/assignment/assignmentAction'
 import * as tagAction from '../../../provider/tag/tagAction'
 
 import ButtonAction from '../items/elements/ButtonAction'
-import Assignment from '../items/models/Assignment'
 import Form from '../items/forms/Form'
 
 import moment from 'moment'
@@ -37,8 +34,9 @@ const formsInputMap = (typeForm, model, exFunction) => {
     return form
 }
 
-const formsItemMap = (typeForm, modelForm) => {
+const formsItemMap = (typeForm, modelComponent) => {
     const refFormItem = typeForm === 'goal' ? 'assignment' : 'goal'
+
     const formItem =
         <div className={`item-forms ${refFormItem}`}>
             <div className='item-forms head'>
@@ -49,9 +47,7 @@ const formsItemMap = (typeForm, modelForm) => {
                 <div className='item-head-2'></div>
             </div>
             <div className='item-forms body'>
-                {
-                    typeForm === 'goal' && <Assignment focused={modelForm.model} formMode={true} goalRelation={modelForm.model.id} />
-                }
+                {modelComponent}
             </div>
         </div>
 
@@ -247,9 +243,6 @@ const ModalForm = (props) => {
 
     useEffect(() => {
         resetModel && setResetModel(false)
-        const removeRelationsElement = document.querySelectorAll(`.container-form-modal .body .item-forms ${typeForm}.mini-list[id]`)
-        console.log('TAG TO REMOVE? ', removeRelationsElement)
-        //removeElement(removeRelationsElement)
 
     }, [resetModel])
 
@@ -271,7 +264,8 @@ const ModalForm = (props) => {
     }
 
     const contextFormMap = {
-        mapModalList: modalList
+        mapModalList: modalList,
+        mapSelectModel: selectModel
     }
 
     const stateFormMap = {
