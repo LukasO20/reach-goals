@@ -4,10 +4,8 @@ import Tag from './Tag'
 
 const ReloaderModel = (props) => {
     const type = props?.type
-    const idReference = props?.idReference
     const propsReference = props?.propsReference
 
-    console.log('PROPS RELOADER - ', props)
     switch (type) {
         case 'goal':
             return <Goal {...propsReference} />
@@ -18,7 +16,7 @@ const ReloaderModel = (props) => {
         case 'assignment-relation':
             return <Goal {...propsReference} />
         case 'tag':
-            return <Tag {...propsReference} />
+            return <Tag {...propsReference} /> 
         default:
             return null
     }

@@ -25,7 +25,7 @@ const Tag = (props) => {
         type: 'mini-list'
     }
 
-    const [requestPropsTag, setRequestPropsTag] = useState({
+    const requestPropsTag = {
         type: 'tag',
         tagsRelation: props.goalID ?? props.assignmentID ?? null,
         tagsNotRelation: {
@@ -33,7 +33,7 @@ const Tag = (props) => {
             notRelationModel: props.notRelationModel ?? null
         },
         tagSomeID: props.tagSomeID ?? null
-    })
+    }
 
     const { params, data } = useGetModel(requestPropsTag)
 

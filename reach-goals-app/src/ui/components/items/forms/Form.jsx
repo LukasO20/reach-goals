@@ -2,11 +2,8 @@ import ModalList from '../../panels/ModalList'
 import ButtonAction from '../elements/ButtonAction'
 import ButtonDropdown from '../elements/ButtonDropdown'
 
-import Tag from '../models/Tag'
-
 import { targetMap } from '../../../../utils/mappingUtils'
 
-import { useReloaderModel } from '../../../../hook/useRealoderModel'
 import ModelReloader from '../models/ModelReloader'
 
 const iconMap = {
@@ -51,9 +48,6 @@ const Form = (props) => {
         formMode: true,
         goalRelation: modelForm.id
     }
-
-    const modelComponent = useReloaderModel(`${typeForm}-relation`, contextForm.mapSelectModel, propsReference)
-    const modelTagComponent = useReloaderModel('tag', contextForm.mapSelectModel, dynamicGetTagProps)
 
     switch (typeForm) {
         case 'tag':
@@ -147,13 +141,11 @@ const Form = (props) => {
                                 </div>
                                 <div className='item-forms body'>
                                     {
-                                        modelForm?.id && <ModelReloader key={contextForm.mapSelectModel} type={'tag'} idReference={contextForm.mapSelectModel} propsReference={dynamicGetTagProps} />
-                                        //modelForm?.id && modelTagComponent
-                                        //modelForm?.id && <Tag {...dynamicGetTagProps} />
+                                        modelForm?.id && <ModelReloader type={'tag'} propsReference={dynamicGetTagProps} />
                                     }
                                 </div>
                             </div>
-                            {functionsForm.mapFormsItemMap(typeForm, modelComponent)}
+                            {functionsForm.mapFormsItemMap(typeForm, <ModelReloader type={`${typeForm === 'goal' ? 'goal-relation' : ''}`} propsReference={propsReference} />)}
                             <div className='field-forms details'>
                                 <textarea id={`${typeForm}-details`} className='input-form' placeholder='details here...'
                                     name='description' value={modelForm?.description || ''} onChange={functionsForm.mapHandleChange}></textarea>

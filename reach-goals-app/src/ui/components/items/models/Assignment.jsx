@@ -36,12 +36,12 @@ const Assignment = (props) => {
         formMode: props?.formMode ?? false
     }
 
-    const [requestPropsAssignment, setPropsAssignment] = useState({
+    const requestPropsAssignment = {
         type: 'assignment',
         goalRelation: props.goalRelation ?? null,
         assignmentSomeID: props.assignmentSomeID ?? null,
         notGoalRelation: props.notGoalRelation ?? null
-    }) 
+    }
 
     const { params, data } = useGetModel(requestPropsAssignment)
 

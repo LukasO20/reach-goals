@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState } from 'react'
 import * as tagAction from '../provider/tag/tagAction'
 import * as goalAction from '../provider/goal/goalAction'
 import * as assignmentAction from '../provider/assignment/assignmentAction'
@@ -94,7 +94,14 @@ const useGetModel = (requestProps, reset = false) => {
         fetchData()
     }, [JSON.stringify(params)], reset)
     
-    console.log('PARAMS OF HOOK GETMODEL - ', params)
+    if (params.goalSomeID) {
+        console.log('PARAMS OF HOOK GETMODEL (goal) - ', params)
+    }
+
+    if (params.tagsRelation) {
+        console.log('PARAMS OF HOOK GETMODEL (tag relation) - ', params)
+    }
+
     console.log('THIS DATA GETTED - ', data)
 
     return { params, data }
