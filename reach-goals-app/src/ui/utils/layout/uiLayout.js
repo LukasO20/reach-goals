@@ -23,6 +23,7 @@ const insertModelComponent = (props, type, e) => {
             const containerModel = form.querySelector(`.item-forms.${type} .body`)  
             const isDefinable = checkElementContainer(setModel, containerModel)
 
+            //This HTML element is based on 'models' components
             if (isDefinable) {
                 createElement('beforeend', containerModel, 
                     `<input hidden id="${setModel.getAttribute('id')}" value="${setModel.getAttribute('id')}" />`)
@@ -57,8 +58,6 @@ const insertModelComponent = (props, type, e) => {
                     const modelSelectable = {
                         [currentKey]: modelSelectableReference
                     }
-
-                    console.log('ARRRRAY 0 ', modelSelectable)
                     props.exFunction(modelSelectable)
                 }
             }
