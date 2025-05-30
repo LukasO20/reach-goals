@@ -1,14 +1,15 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
+import { useGetModel } from '../../../../hook/useGetModel'
+import { useDeleteModel } from '../../../../hook/useDeleteModel'
+
 import { ManageModelContext } from '../../../../provider/ManageModelProvider'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider'
 import { insertModelComponent } from '../../../utils/layout/uiLayout'
 
 import { targetMap, switchLayoutMap } from '../../../../utils/mappingUtils'
-import { useGetModel } from '../../../../hook/useGetModel'
 
 import ButtonAction from '../elements/ButtonAction'
-import * as tagAction from '../../../../provider/tag/tagAction'
 
 import '../../../styles/items/models/Tag.scss'
 
@@ -35,22 +36,20 @@ const Tag = (props) => {
         tagSomeID: props.tagSomeID ?? null
     }
 
-    const { params, data } = useGetModel(requestPropsTag)
+    const { params: getParams, data: getData } = useGetModel(requestPropsTag)
 
     const getTag = async () => {
-        try { setTag(data) }
+        try { setTag(getData) }
         catch (error) { setErro(`Failed to load tag: ${error.message}`) }
     }
 
-    useEffect(() => { getTag() }, [data])
+    useEffect(() => { getTag() }, [getData])
+
+    const { data: deleteData, deleteModel } = useDeleteModel({})
 
     const deleteTag = async (id) => {
-        try {
-            await tagAction.deleteTag(id)
-            setTag((prevTag) => prevTag.filter((tag) => tag.id !== id))
-        } catch (error) {
-            setErro(`Failed to delete tag: ${erro.message}`)
-        }
+        deleteModel({ type: 'tag', tagID: id })
+        setTag((prevTag) => prevTag.filter((tag) => tag.id !== id))
     }
 
     const editTag = useCallback((id) => {

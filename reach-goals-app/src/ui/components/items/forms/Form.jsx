@@ -34,12 +34,27 @@ const Form = (props) => {
         [dynamicGetTagRelation]: modelForm?.id
     }
 
-    // externalRequestProps is based on requestPropsModel(Goal, Tag, Assignment)
-    const externalRequestProps = {
+    // formRequestProps is based on requestPropsModel(Goal, Tag, Assignment)
+    let formRequestProps = {
         notRelationID: modelForm?.id,
         notRelationModel: typeForm,
-        notGoalRelation: typeForm === 'goal' ? true : false,
     }
+
+    if (!modelForm?.id) {
+        formRequestProps = {
+            ...formRequestProps,
+            notRelationID: false,
+            notRelationModel: false,
+            tagSomeID: true
+        }
+    }
+
+    // if (typeForm === 'assignment') {
+    //     formRequestProps = {
+    //         ...formRequestProps,
+    //         notGoalRelation: true
+    //     }
+    // }
 
     const propsReference = {
         focused: modelForm,
@@ -170,11 +185,11 @@ const Form = (props) => {
                 </div>
                 {
                     contextForm.mapModalList.open && contextForm.mapModalList.type !== 'tag' &&
-                    <ModalList title={`Complementing ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} complement={typeForm} externalRequestProps={externalRequestProps} exFunction={functionsForm.mapHandleChange} />
+                    <ModalList title={`Complementing ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} complement={typeForm} externalRequestProps={formRequestProps} exFunction={functionsForm.mapHandleChange} />
                 }
                 {   
                     contextForm.mapModalList.open && contextForm.mapModalList.type === 'tag' && 
-                    <ModalList title='Complementing a tag' complement='tag' externalRequestProps={externalRequestProps} exFunction={functionsForm.mapHandleChange} />
+                    <ModalList title='Complementing a tag' complement='tag' externalRequestProps={formRequestProps} exFunction={functionsForm.mapHandleChange} />
                 }
             </div>
             break

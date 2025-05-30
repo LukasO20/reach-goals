@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom' 
 
 import { useGetModel } from '../../../../hook/useGetModel'
+import { useDeleteModel } from '../../../../hook/useDeleteModel'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider'
@@ -43,22 +44,20 @@ const Assignment = (props) => {
         notGoalRelation: props.notGoalRelation ?? null
     }
 
-    const { params, data } = useGetModel(requestPropsAssignment)
+    const { params: getParams, data: getData } = useGetModel(requestPropsAssignment)
 
     const getAssignment = async () => {
-        try { setAssignment(data) }
+        try { setAssignment(getData) }
         catch (error) { setErro(`Failed to load assignment: ${error.message}`) }
     }
 
-    useEffect(() => { getAssignment() }, [data])
+    useEffect(() => { getAssignment() }, [getData])
 
-    const deleteAssignment = async (id) => {
-        try {
-            await assignmentAction.deleteAssignment(id)
-            setAssignment((prevAssignment) => prevAssignment.filter((assignment) => assignment.id !== id))
-        } catch (error) {
-            setErro(`Failed to delete assignment: ${erro.message}`)
-        }
+    const { data: deleteData, deleteModel } = useDeleteModel({})
+
+    const deleteAssignment = (id) => {
+        deleteModel({ type: 'assignment', assignmentID: id })
+        setAssignment((prevAssignment) => prevAssignment.filter((assignment) => assignment.id !== id))
     }
 
     const editAssignment = useCallback((id) => {

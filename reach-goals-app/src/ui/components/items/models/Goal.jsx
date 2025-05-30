@@ -1,8 +1,9 @@
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom' 
 import { Link } from 'react-router-dom'
 
 import { useGetModel } from '../../../../hook/useGetModel'
+import { useDeleteModel } from '../../../../hook/useDeleteModel'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider'
@@ -12,7 +13,6 @@ import { insertModelComponent } from '../../../utils/layout/uiLayout'
 import { targetMap, switchLayoutMap } from '../../../../utils/mappingUtils'
 
 import ButtonAction from '../elements/ButtonAction'
-import * as goalAction from '../../../../provider/goal/goalAction'
 
 import '../../../styles/items/models/Goal.scss'
 
@@ -35,36 +35,31 @@ const Goal = (props) => {
         type: 'mini-list'
     }
 
-    const [requestPropsGoal, setRequestPropsGoal] = useState({
+    const requestPropsGetGoal = {
         type: 'goal',
         assignmentRelation: props.assignmentRelation ?? null,
         goalSomeID: props.goalSomeID ?? null
-    })
+    }
 
-    const { params, data } = useGetModel(requestPropsGoal)
+    const { params: getParams, data: getData } = useGetModel(requestPropsGetGoal)
 
-    useEffect(() => { getGoal() }, [data])
+    useEffect(() => { getGoal() }, [getData])
 
     const getGoal = () => {
-        try { setGoal(data) }
+        try { setGoal(getData) }
         catch (error) { setErro(`Failed to load goal: ${error.message}`) }
     }
 
-    const deleteGoal = async (id) => {
-        try {
-            await goalAction.deleteGoal(id)
-            setGoal((prevGoal) => prevGoal.filter((goal) => goal.id !== id))
-        } catch (error) {
-            setErro(`Failed to delete goal: ${erro.message}`)
-        }
+    const { data: deleteData, deleteModel } = useDeleteModel({})
+
+    const deleteGoal = (id) => {
+        deleteModel({ type: 'goal', goalID: id })
+        setGoal((prevGoal) => prevGoal.filter((goal) => goal.id !== id))
     }
 
     const editGoal = useCallback((id) => {
-        try {
-            setSelectModel(id)
-        } catch (error) {
-            setErro(`Failed to edit this goal: ${erro.message}`)
-        }
+        try { setSelectModel(id) }
+        catch (error) { setErro(`Failed to edit this goal: ${erro.message}`) }
     }, [setSelectModel])
 
     const handleGoalClick = useCallback(

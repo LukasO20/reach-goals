@@ -20,6 +20,7 @@ const ModalList = (props) => {
                 <ButtonAction modalList={modalListMap(false)} standardRoute='true' classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark'/>
             </div>
             <div className='body'>
+                { console.log('MODAL LIST WITOUT MODEL - ', props) }
                 {
                     <ModelSwitcher type={complement} selectableModel={true} action={{ setForm: true }} propsReference={externalRequestProps} exFunction={externalFunction} />
                 }
