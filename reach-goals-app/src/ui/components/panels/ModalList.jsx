@@ -1,28 +1,17 @@
-import React from 'react'
-import Goal from '../items/models/Goal'
-import Assignment from '../items/models/Assignment'
-import Tag from '../items/models/Tag'
+import ModelSwitcher from '../items/models/ModelSwitcher'
 import ButtonAction from '../items/elements/ButtonAction'
 
-const modalListMap = (open, type) => {
-    const attributes = {
-        open: open,
-        type: type
-    }
-    return attributes
-}
+import { modalListMap } from '../../../utils/mappingUtils'
 
 const ModalList = (props) => {
     const title = props?.title
-    const complement = props?.complement 
+    let complement = props?.complement
     const externalFunction = props?.exFunction
-    const externalID = props?.externalID
-    const externalGetNotRelationModel = props?.getNotRelationModel
-    const externalGetAllModel = props?.getAllModel
 
-    const typeGet = externalGetNotRelationModel?.notRelationID
-        ? { ...externalGetNotRelationModel }
-        : { ...externalGetAllModel }
+    if (complement === 'goal') { complement = 'goal-relation' }
+    else if (complement === 'assignment') { complement = 'assignment-relation' }
+
+    const externalRequestProps = props?.externalRequestProps
 
     return (
         <div className={`container-list-modal ${complement}`}>
@@ -32,9 +21,7 @@ const ModalList = (props) => {
             </div>
             <div className='body'>
                 {
-                    complement === 'tag' ? <Tag selectableModel={true} action={{ setForm: true }} {...typeGet} exFunction={externalFunction}/> :
-                    complement === 'goal' ? <Goal selectableModel={true} assignmentRelation={externalID} action={{ setForm: true }} exFunction={externalFunction}/> :
-                    <Assignment selectableModel={true} action={{ setForm: true }} unfocused={true} exFunction={externalFunction}/>
+                    <ModelSwitcher type={complement} selectableModel={true} action={{ setForm: true }} propsReference={externalRequestProps} exFunction={externalFunction} />
                 }
             </div>
         </div>

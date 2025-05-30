@@ -4,7 +4,7 @@ import ButtonDropdown from '../elements/ButtonDropdown'
 
 import { targetMap } from '../../../../utils/mappingUtils'
 
-import ModelReloader from '../models/ModelReloader'
+import ModelSwitcher from '../models/ModelSwitcher'
 
 const iconMap = {
     assignment: 'fa-solid fa-list-check',
@@ -34,13 +34,11 @@ const Form = (props) => {
         [dynamicGetTagRelation]: modelForm?.id
     }
 
-    const getNotRelationModel = {
+    // externalRequestProps is based on requestPropsModel(Goal, Tag, Assignment)
+    const externalRequestProps = {
         notRelationID: modelForm?.id,
-        notRelationModel: typeForm
-    }
-
-    const getAllModel = {
-        tagSomeID: true
+        notRelationModel: typeForm,
+        notGoalRelation: typeForm === 'goal' ? true : false,
     }
 
     const propsReference = {
@@ -141,11 +139,11 @@ const Form = (props) => {
                                 </div>
                                 <div className='item-forms body'>
                                     {
-                                        modelForm?.id && <ModelReloader type={'tag'} propsReference={dynamicGetTagProps} />
+                                        modelForm?.id && <ModelSwitcher type={'tag'} propsReference={dynamicGetTagProps} />
                                     }
                                 </div>
                             </div>
-                            {functionsForm.mapFormsItemMap(typeForm, <ModelReloader type={`${typeForm === 'goal' ? 'goal-relation' : ''}`} propsReference={propsReference} />)}
+                            {functionsForm.mapFormsItemMap(typeForm, <ModelSwitcher type={`${typeForm === 'goal' ? 'goal-relation' : ''}`} propsReference={propsReference} />)}
                             <div className='field-forms details'>
                                 <textarea id={`${typeForm}-details`} className='input-form' placeholder='details here...'
                                     name='description' value={modelForm?.description || ''} onChange={functionsForm.mapHandleChange}></textarea>
@@ -172,11 +170,11 @@ const Form = (props) => {
                 </div>
                 {
                     contextForm.mapModalList.open && contextForm.mapModalList.type !== 'tag' &&
-                    <ModalList title={`Complementing ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} complement={typeForm === 'goal' ? 'assignment' : 'goal'} externalID={modelForm?.id} exFunction={functionsForm.mapHandleChange}/>
+                    <ModalList title={`Complementing ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} complement={typeForm} externalRequestProps={externalRequestProps} exFunction={functionsForm.mapHandleChange} />
                 }
                 {   
                     contextForm.mapModalList.open && contextForm.mapModalList.type === 'tag' && 
-                    <ModalList title='Complementing a tag' complement='tag' externalID={modelForm?.id} getAllModel={getAllModel} getNotRelationModel={getNotRelationModel} exFunction={functionsForm.mapHandleChange}/>
+                    <ModalList title='Complementing a tag' complement='tag' externalRequestProps={externalRequestProps} exFunction={functionsForm.mapHandleChange} />
                 }
             </div>
             break

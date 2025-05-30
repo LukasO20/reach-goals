@@ -29,4 +29,12 @@ const checkboxMap = (checkbox) => {
     return null
 }
 
-export { targetMap, switchLayoutMap, checkboxMap }
+const modalListMap = (open, type) => {
+    const attributes = {
+        open: open,
+        type: type
+    }
+    return attributes
+}
+
+export { targetMap, switchLayoutMap, checkboxMap, modalListMap }
