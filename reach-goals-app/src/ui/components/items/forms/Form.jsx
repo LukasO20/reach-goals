@@ -1,10 +1,9 @@
 import ModalList from '../../panels/ModalList'
 import ButtonAction from '../elements/ButtonAction'
 import ButtonDropdown from '../elements/ButtonDropdown'
+import ModelSwitcher from '../models/ModelSwitcher'
 
 import { targetMap } from '../../../../utils/mappingUtils'
-
-import ModelSwitcher from '../models/ModelSwitcher'
 
 const iconMap = {
     assignment: 'fa-solid fa-list-check',
@@ -29,34 +28,48 @@ const Form = (props) => {
     const icon = iconMap[typeForm] || 'fa-solid fa-triangle-exclamation'
     const titleForm = titleMap[typeForm] || 'Create your objective'
 
-    const dynamicGetTagRelation = typeForm === 'goal' ? 'goalID' : 'assignmentID';
-    const dynamicGetTagProps = {
-        [dynamicGetTagRelation]: modelForm?.id
-    }
-
-    // formRequestProps is based on requestPropsModel(Goal, Tag, Assignment)
-    let formRequestProps = {
+    // modalListRequestProps is based on requestPropsModel(Goal, Tag, Assignment)
+    let modalListRequestProps = {
         notRelationID: modelForm?.id,
         notRelationModel: typeForm,
     }
 
     if (!modelForm?.id) {
-        formRequestProps = {
-            ...formRequestProps,
+        modalListRequestProps = {
+            ...modalListRequestProps,
             notRelationID: false,
             notRelationModel: false,
             tagSomeID: true
         }
+
+        if (typeForm === 'assignment') {
+            modalListRequestProps = {
+                ...modalListRequestProps,
+                goalSomeID: true
+            }
+        }
     }
 
-    // if (typeForm === 'assignment') {
-    //     formRequestProps = {
-    //         ...formRequestProps,
-    //         notGoalRelation: true
-    //     }
-    // }
+    if (typeForm === 'goal') {
+        modalListRequestProps = {
+            ...modalListRequestProps,
+            notGoalRelation: true
+        }
+    }
 
-    const propsReference = {
+    if (typeForm === 'assignment' && modelForm?.id) {
+        modalListRequestProps = {
+            ...modalListRequestProps,
+            notAssignmentRelation: modelForm.id
+        }
+    }
+
+    const tagRelation = typeForm === 'goal' ? 'goalID' : 'assignmentID';
+    const modelSwitcherTagProps = {
+        [tagRelation]: modelForm?.id
+    }
+
+    const modelSwitcherProps = {
         focused: modelForm,
         formMode: true,
         goalRelation: modelForm.id
@@ -154,11 +167,11 @@ const Form = (props) => {
                                 </div>
                                 <div className='item-forms body'>
                                     {
-                                        modelForm?.id && <ModelSwitcher type={'tag'} propsReference={dynamicGetTagProps} />
+                                        modelForm?.id && <ModelSwitcher type={'tag'} propsReference={modelSwitcherTagProps} />
                                     }
                                 </div>
                             </div>
-                            {functionsForm.mapFormsItemMap(typeForm, <ModelSwitcher type={`${typeForm === 'goal' ? 'goal-relation' : ''}`} propsReference={propsReference} />)}
+                            {functionsForm.mapFormsItemMap(typeForm, <ModelSwitcher type={`${typeForm === 'goal' ? 'goal-relation' : ''}`} propsReference={modelSwitcherProps} />)}
                             <div className='field-forms details'>
                                 <textarea id={`${typeForm}-details`} className='input-form' placeholder='details here...'
                                     name='description' value={modelForm?.description || ''} onChange={functionsForm.mapHandleChange}></textarea>
@@ -185,11 +198,11 @@ const Form = (props) => {
                 </div>
                 {
                     contextForm.mapModalList.open && contextForm.mapModalList.type !== 'tag' &&
-                    <ModalList title={`Complementing ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} complement={typeForm} externalRequestProps={formRequestProps} exFunction={functionsForm.mapHandleChange} />
+                    <ModalList title={`Complementing ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} complement={typeForm} externalRequestProps={modalListRequestProps} exFunction={functionsForm.mapHandleChange} />
                 }
                 {   
                     contextForm.mapModalList.open && contextForm.mapModalList.type === 'tag' && 
-                    <ModalList title='Complementing a tag' complement='tag' externalRequestProps={formRequestProps} exFunction={functionsForm.mapHandleChange} />
+                    <ModalList title='Complementing a tag' complement='tag' externalRequestProps={modalListRequestProps} exFunction={functionsForm.mapHandleChange} />
                 }
             </div>
             break

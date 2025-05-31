@@ -1,13 +1,12 @@
-import { useContext, useEffect, useState, useMemo } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { VisibilityContext } from '../../../provider/VisibilityProvider'
 import { ManageModelContext } from '../../../provider/ManageModelProvider'
 import { ModalListContext } from '../../../provider/ModalListProvider'
 
 import { useGetModel } from '../../../hook/useGetModel'
+import { useSaveModel } from '../../../hook/useSaveModel'
 
-import * as goalAction from '../../../provider/goal/goalAction'
-import * as assignmentAction from '../../../provider/assignment/assignmentAction'
-import * as tagAction from '../../../provider/tag/tagAction'
+import { modalListMap } from '../../../utils/mappingUtils'
 
 import ButtonAction from '../items/elements/ButtonAction'
 import Form from '../items/forms/Form'
@@ -16,14 +15,6 @@ import moment from 'moment'
 
 import '../../styles/items/Elements.scss'
 import '../../styles/panels/Objectives.scss'
-
-const modalListMap = (open, type) => {
-    const attributes = {
-        open: open,
-        type: type
-    }
-    return attributes
-}
 
 const formsInputMap = (typeForm, model, exFunction) => {
     const form = typeForm === 'assignment' &&
@@ -54,25 +45,6 @@ const formsItemMap = (typeForm, modelComponent) => {
     return formItem
 }
 
-const submitModel = async (typeForm, model) => {
-    switch (typeForm) {
-        case 'goal': {
-            model.id ? await goalAction.updateGoal(model) : await goalAction.addGoal(model)
-            break
-        }
-        case 'assignment': {
-            model.id ? await assignmentAction.updateAssignment(model) : await assignmentAction.addAssignment(model)
-            break
-        }
-        case 'tag': {
-            model.id ? await tagAction.updateTag(model) : await tagAction.addTag(model)
-            break
-        }
-        default: 
-            break
-    }
-}
-
 const ModalForm = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { selectModel, setSelectModel } = useContext(ManageModelContext)
@@ -88,7 +60,9 @@ const ModalForm = (props) => {
     const [modelProps, setModelProps] = useState({})
     const [modelTarget, setModelTarget] = useState({})
     const [resetModel, setResetModel] = useState(false)
-    const { params, data } = useGetModel(modelProps, resetModel)
+
+    const { params: getParams, data: getData } = useGetModel(modelProps, resetModel)
+    const { data: saveData, saveModel } = useSaveModel({})
 
     const nullModal = () => {
         !selectModel && setSelectModel(null)
@@ -214,12 +188,12 @@ const ModalForm = (props) => {
         }
     }
 
-    const handleSubmit = async () => {
+    const handleSubmit = () => {
         setError(null)
         setSucess(false)
 
         try {
-            await submitModel(typeForm, structuredClone(modelTarget))
+            saveModel({ type: typeForm, model: structuredClone(modelTarget) })
             setSucess(true)
         } catch (error) {
             setError(error.message)
@@ -236,14 +210,13 @@ const ModalForm = (props) => {
             loadModel(selectModel)
 
             if (modelProps && Object.keys(modelProps).length > 0 && selectModel) {
-                setModelTarget(handleTarget(data[0]))
+                setModelTarget(handleTarget(getData[0]))
             }
         }
-    }, [selectModel, data])
+    }, [selectModel, getData])
 
     useEffect(() => {
         resetModel && setResetModel(false)
-
     }, [resetModel])
 
     const functionFormMap = {
@@ -274,8 +247,8 @@ const ModalForm = (props) => {
     }
 
     console.log('VALUE OF LOADING - ', isLoading, modelTarget)
-
     console.log('SHOW FORM?  - ', selectModel, resetModel)
+    
     return (
         isLoading ? <div id="load-element" className='loading-animation'></div> :
             ((modelTarget && modelTarget.id) || (selectModel === null && !resetModel)) ?

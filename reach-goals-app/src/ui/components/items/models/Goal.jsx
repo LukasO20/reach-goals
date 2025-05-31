@@ -38,7 +38,8 @@ const Goal = (props) => {
     const requestPropsGetGoal = {
         type: 'goal',
         assignmentRelation: props.assignmentRelation ?? null,
-        goalSomeID: props.goalSomeID ?? null
+        goalSomeID: props.goalSomeID ?? null,
+        notAssignmentRelation: props.notAssignmentRelation ?? null
     }
 
     const { params: getParams, data: getData } = useGetModel(requestPropsGetGoal)

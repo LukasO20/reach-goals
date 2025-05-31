@@ -16,6 +16,7 @@ const useGetModel = (requestProps, reset = false) => {
 
         goalSomeID: requestProps.goalSomeID ?? null,
         assignmentRelation: requestProps.assignmentRelation ?? null,
+        notAssignmentRelation: requestProps.notAssignmentRelation ?? null,
 
         assignmentSomeID: requestProps.assignmentSomeID ?? null,
         goalRelation: requestProps.goalRelation ?? null,
@@ -33,6 +34,9 @@ const useGetModel = (requestProps, reset = false) => {
                         setData(result)
                     } else if (params.assignmentRelation) {
                         const result = await goalAction.getGoalOnAssignment(params.assignmentRelation)
+                        setData(result)
+                    } else if (params.notAssignmentRelation) {
+                        const result = await goalAction.getGoalWithoutAssignment(params.notAssignmentRelation)
                         setData(result)
                     } else {
                         setData([])

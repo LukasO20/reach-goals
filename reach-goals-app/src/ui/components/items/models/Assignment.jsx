@@ -13,7 +13,6 @@ import { insertModelComponent } from '../../../utils/layout/uiLayout'
 import { targetMap, switchLayoutMap } from '../../../../utils/mappingUtils'
 
 import ButtonAction from '../elements/ButtonAction'
-import * as assignmentAction from '../../../../provider/assignment/assignmentAction'
 
 import '../../../styles/items/models/Assignment.scss'
 

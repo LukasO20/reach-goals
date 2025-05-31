@@ -120,3 +120,25 @@ export const getGoalOnAssignment = async (id) => {
         throw error
     }
 }
+
+export const getGoalWithoutAssignment = async (id) => {
+    try {
+        const url = `${apiURL}/api/goal/actions/not-assignment/${id}`
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        })  
+
+        if (!response.ok) {
+            const error  = await response.json()
+            throw new Error(error.error || 'Failed to fetch goals.')
+        }
+
+        const data = await response.json()
+        return data
+
+    } catch (error) {
+        console.error('Error get goal: ', error.message)
+        throw error
+    }
+}
