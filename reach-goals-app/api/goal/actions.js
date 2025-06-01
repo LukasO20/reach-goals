@@ -160,19 +160,21 @@ const getGoalOnAssignment = async (req, res) => {
             const { relationID } = req.params
             let goal = undefined
 
-            if (!relationID || isNaN(relationID)) {
-                return res.status(400).json({ error: "Parameter 'relationID' invalid." });
+            const isTrue = relationID === true || relationID === 'true'
+            const isNumber = !isNaN(relationID) && relationID !== '' && relationID !== null && relationID !== undefined
+
+            if (!isTrue && !isNumber) {
+                return res.status(400).json({ error: "Parameter 'relationID' invalid." })
             }
 
-            if (relationID !== undefined) {
+            if (isTrue) {
                 goal = await prisma.goal.findMany({
-                    where: { 
-                        assignments: {
-                            some: {
-                                id: Number(relationID)
-                            }
-                        }
-                    },
+                    where: { assignments: { some: {} } },
+                    include: { assignments: true, tags: true }
+                })
+            } else if (isNumber) {
+                goal = await prisma.goal.findMany({
+                    where: { assignments: { none: { id: Number(relationID) } } },
                     include: { assignments: true, tags: true }
                 })
             }
@@ -192,19 +194,21 @@ const getGoalWithoutAssignment = async (req, res) => {
             const { relationID } = req.params
             let goal = undefined
 
-            if (!relationID || isNaN(relationID)) {
-                return res.status(400).json({ error: "Parameter 'relationID' invalid." });
+            const isTrue = relationID === true || relationID === 'true'
+            const isNumber = !isNaN(relationID) && relationID !== '' && relationID !== null && relationID !== undefined
+
+            if (!isTrue && !isNumber) {
+                return res.status(400).json({ error: "Parameter 'relationID' invalid." })
             }
 
-            if (relationID !== undefined) {
+            if (isTrue) {
                 goal = await prisma.goal.findMany({
-                    where: { 
-                        assignments: {
-                            none: {
-                                id: Number(relationID)
-                            }
-                        }
-                    },
+                    where: { assignments: { none: {} } },
+                    include: { assignments: true, tags: true }
+                })
+            } else if (isNumber) {
+                goal = await prisma.goal.findMany({
+                    where: { assignments: { none: { id: Number(relationID) } } },
                     include: { assignments: true, tags: true }
                 })
             }

@@ -1,6 +1,8 @@
 import React, { useContext } from 'react'
 import { TitleContext } from '../../../provider/TitleProvider'
 
+import ExpandableBox from '../items/box/ExpandableBox'
+
 const Objectives = () => {
     const { update } = useContext(TitleContext)
 
@@ -10,7 +12,7 @@ const Objectives = () => {
 
     return (
         <div className='container-objectives'>
-            <h1>I'M editor</h1>
+            <ExpandableBox containerType='objectives' />
         </div>
     )
 }
