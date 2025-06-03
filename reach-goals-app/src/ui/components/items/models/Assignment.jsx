@@ -38,8 +38,9 @@ const Assignment = (props) => {
 
     const requestPropsAssignment = {
         type: 'assignment',
-        goalRelation: props.goalRelation ?? null,
+        assignmentGoalRelation: props.assignmentGoalRelation ?? null,
         assignmentSomeID: props.assignmentSomeID ?? null,
+        assignmentTagRelation: props.assignmentTagRelation ?? null,
         notGoalRelation: props.notGoalRelation ?? null
     }
 

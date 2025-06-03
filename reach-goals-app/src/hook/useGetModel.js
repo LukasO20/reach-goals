@@ -15,11 +15,13 @@ const useGetModel = (requestProps, reset = false) => {
         tagSomeID: requestProps.tagSomeID ?? null,
 
         goalSomeID: requestProps.goalSomeID ?? null,
-        assignmentRelation: requestProps.assignmentRelation ?? null,
+        goalAssignmentRelation: requestProps.goalAssignmentRelation ?? null,
+        goalTagRelation: requestProps.goalTagRelation ?? null,
         notAssignmentRelation: requestProps.notAssignmentRelation ?? null,
 
         assignmentSomeID: requestProps.assignmentSomeID ?? null,
-        goalRelation: requestProps.goalRelation ?? null,
+        assignmentGoalRelation: requestProps.assignmentGoalRelation ?? null,
+        assignmentTagRelation: requestProps.assignmentTagRelation ?? null,
         notGoalRelation: requestProps.notGoalRelation ?? null,
     }
 
@@ -32,8 +34,11 @@ const useGetModel = (requestProps, reset = false) => {
                     if (params.goalSomeID) {
                         const result = await goalAction.getGoal(params.goalSomeID)
                         setData(result)
-                    } else if (params.assignmentRelation) {
-                        const result = await goalAction.getGoalOnAssignment(params.assignmentRelation)
+                    } else if (params.goalAssignmentRelation) {
+                        const result = await goalAction.getGoalOnAssignment(params.goalAssignmentRelation)
+                        setData(result)
+                    } else if (params.goalTagRelation) {
+                        const result = await goalAction.getGoalOnTag(params.goalTagRelation)
                         setData(result)
                     } else if (params.notAssignmentRelation) {
                         const result = await goalAction.getGoalWithoutAssignment(params.notAssignmentRelation)
@@ -47,8 +52,11 @@ const useGetModel = (requestProps, reset = false) => {
                     if (params.assignmentSomeID) {
                         const result = await assignmentAction.getAssignment(params.assignmentSomeID)
                         setData(result)
-                    } else if (params.goalRelation) {
-                        const result = await assignmentAction.getAssignmentOnGoal(params.goalRelation)
+                    } else if (params.assignmentGoalRelation) {
+                        const result = await assignmentAction.getAssignmentOnGoal(params.assignmentGoalRelation)
+                        setData(result)
+                    } else if (params.assignmentTagRelation) {
+                        const result = await assignmentAction.getAssignmentOnTag(params.assignmentTagRelation)
                         setData(result)
                     } else if (params.notGoalRelation) {
                         const result = await assignmentAction.getAssignmentWithoutGoal()
@@ -68,7 +76,6 @@ const useGetModel = (requestProps, reset = false) => {
                             result = await tagAction.getTagOnAssignment(params.tagsRelation)
                         }
                         setData(result)
-
                     } else if (params.tagsNotRelation.notRelationID && params.tagsNotRelation.notRelationModel !== '') {
                         const result = params.tagsNotRelation.notRelationModel === 'goal'
                             ? await tagAction.getTagNotGoal(params.tagsNotRelation.notRelationID)

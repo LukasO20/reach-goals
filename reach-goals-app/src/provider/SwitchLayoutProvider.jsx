@@ -9,6 +9,9 @@ const SwitchLayoutProvider = ({children}) => {
             home: {
                 layout: 'goal'
             },
+            objectives: {
+                layout: 'default'
+            },
             configModal: {
                 layout: 'config-theme'
             },

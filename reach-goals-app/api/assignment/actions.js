@@ -148,11 +148,21 @@ const getAssignmentOnGoal = async (req, res) => {
             const { relationID } = req.params
             let assignment = undefined
 
-            if (!relationID || isNaN(relationID)) {
-                return res.status(400).json({ error: "Parameter 'relationID' invalid." });
+            const isTrue = relationID === true || relationID === 'true'
+            const isNumber = !isNaN(relationID) && relationID !== '' && relationID !== null && relationID !== undefined
+
+            if (!isTrue && !isNumber) {
+                return res.status(400).json({ error: "Parameter 'relationID' invalid." })
             }
 
-            if (relationID !== undefined) {
+            if (isTrue) {
+                assignment = await prisma.assignment.findMany({
+                    where: {
+                        goalID: { not: null }
+                    },
+                    include: { goal: true, tags: true }
+                })
+            } else if (isNumber) {
                 assignment = await prisma.assignment.findMany({
                     where: {
                         goalID: Number(relationID)
@@ -168,6 +178,40 @@ const getAssignmentOnGoal = async (req, res) => {
             return res.status(500).json({ error: 'Failed to fetch assignments' })
         }
 
+    } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
+}
+
+const getAssignmentOnTag = async (req, res) => {
+    if (req.method === 'GET') {
+        try {
+            const { relationID } = req.params
+            let assignment = undefined
+
+            const isTrue = relationID === true || relationID === 'true'
+            const isNumber = !isNaN(relationID) && relationID !== '' && relationID !== null && relationID !== undefined
+
+            if (!isTrue && !isNumber) {
+                return res.status(400).json({ error: "Parameter 'relationID' invalid." })
+            }
+
+            if (isTrue) {
+                assignment = await prisma.assignment.findMany({
+                    where: { tags: { some: {} } },
+                    include: { goal: true, tags: true }
+                })
+            } else if (isNumber) {
+                assignment = await prisma.assignment.findMany({
+                    where: { tags: { id: Number(relationID) } },
+                    include: { goal: true, tags: true }
+                })
+            }
+
+            return res.status(200).json(assignment)
+            
+        } catch (error) {
+            console.error(error)
+            return res.status(500).json({ error: 'Failed to fetch assignments with this tag' })
+        }
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
@@ -193,4 +237,4 @@ const getAssignmentWithoutGoal = async (req, res) => {
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-module.exports = { addAssignment, updateAssignment, deleteAssignment, getAssignment, getAssignmentOnGoal, getAssignmentWithoutGoal }
+module.exports = { addAssignment, updateAssignment, deleteAssignment, getAssignment, getAssignmentOnTag, getAssignmentOnGoal, getAssignmentWithoutGoal }

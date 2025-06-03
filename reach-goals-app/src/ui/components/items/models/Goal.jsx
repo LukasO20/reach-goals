@@ -37,8 +37,9 @@ const Goal = (props) => {
 
     const requestPropsGetGoal = {
         type: 'goal',
-        assignmentRelation: props.assignmentRelation ?? null,
+        goalAssignmentRelation: props.goalAssignmentRelation ?? null,
         goalSomeID: props.goalSomeID ?? null,
+        goalTagRelation: props.goalTagRelation ?? null,
         notAssignmentRelation: props.notAssignmentRelation ?? null
     }
 

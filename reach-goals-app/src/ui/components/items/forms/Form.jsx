@@ -72,7 +72,7 @@ const Form = (props) => {
     const modelSwitcherProps = {
         focused: modelForm,
         formMode: true,
-        goalRelation: modelForm.id
+        assignmentGoalRelation: modelForm.id
     }
 
     switch (typeForm) {

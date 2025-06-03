@@ -95,6 +95,28 @@ export const getAssignment = async (id) => {
     }
 }
 
+export const getAssignmentOnTag = async (id) => {
+    try {
+        const url = `${apiURL}/api/assignment/actions/relation-tag/${id}`
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        })  
+
+        if (!response.ok) {
+            const error  = await response.json()
+            throw new Error(error.error || 'Failed to fetch assignments.')
+        }
+
+        const data = await response.json()
+        return data
+
+    } catch (error) {
+        console.error('Error get assignment: ', error.message)
+        throw error
+    }
+}
+
 export const getAssignmentOnGoal = async (id) => {
     try {
         const url = `${apiURL}/api/assignment/actions/relation-goal/${id}`

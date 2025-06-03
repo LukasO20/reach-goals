@@ -3,39 +3,11 @@ import Routes from '../../app/Routes'
 
 import { VisibilityContext } from '../../provider/VisibilityProvider'
 
+import { targetMap, switchLayoutMap, checkboxMap } from '../../utils/mappingUtils'
+
 import ButtonAction from './items/elements/ButtonAction'
 import ButtonDropdown from './items/elements/ButtonDropdown'
 import ButtonCheckbox from './items/elements/ButtonCheckbox'
-
-const targetMap = (classes) => {
-    const data = Array.isArray(classes) ? classes : [classes]
-    const attributes = {
-        class: data,
-    }
-    return attributes
-}
-
-const switchLayoutMap = (nameComponent, nameLayout, value) => {
-    const attributes = {
-        nameComponent: nameComponent,
-        nameLayout: nameLayout,
-        value: value
-    }
-    return attributes
-}
-
-const checkboxMap = (checkbox) => {
-    const data = typeof checkbox === 'object' && checkbox !== null ? true : false  
-    if (data) {
-        const attributes = {
-            id: checkbox.id,
-            value: checkbox.value ?? false
-        }
-
-        return attributes
-    }
-    return null
-}
 
 const ContainerM = () => {
     const { toggleVisibility } = useContext(VisibilityContext)   
