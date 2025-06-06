@@ -140,7 +140,7 @@ export const getTagNotGoal = async (relationID) => {
 }
 
 export const getTagNotAssignment = async (relationID) => {
-        try {
+    try {
         const response = await fetch(`${apiURL}/api/tag/actions/not-assignment/${relationID}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
@@ -155,6 +155,26 @@ export const getTagNotAssignment = async (relationID) => {
         return data
     } catch (error) {
         console.error('Error get tag without relation: ', error.message)
+        throw error
+    }
+}
+
+export const unlinkTagOnGoal = async (tagID, relationID) => {
+    try {
+        const response = await fetch(`${apiURL}/api/tag/actions/unlink-goal/${tagID}/${relationID}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        })  
+
+        if (!response.ok) {
+            const error  = await response.json()
+            throw new Error(error.error || 'Failed to unlink this tag.')
+        }
+
+        const data = await response.json()
+        return data
+    } catch (error) {
+        console.error('Error to unlink tag: ', error.message)
         throw error
     }
 }

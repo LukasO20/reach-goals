@@ -225,13 +225,13 @@ const getTagNotAssignment = async (req, res) => {
 
 const unlinkTagOnGoal = async (req, res) => {
     if (req.method === 'DELETE') {
-        const { goalID, tagID } = req.params
+        const { tagID, relationID } = req.params
 
         try {
             const tag = await prisma.tagOnGoal.delete({
                 where: {
                     goalID_tagID: {
-                        goalID: Number(goalID),
+                        goalID: Number(relationID),
                         tagID: Number(tagID)
                     }
                 }

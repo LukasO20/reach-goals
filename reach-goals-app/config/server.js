@@ -8,9 +8,12 @@ app.use(cors())
 app.use(express.json())
 
 // routes set
-const { addGoal, updateGoal, getGoal, getGoalOnTag, getGoalOnAssignment, getGoalWithoutAssignment, deleteGoal } = require('../api/goal/actions')
-const { addAssignment, updateAssignment, getAssignment, getAssignmentOnTag, getAssignmentOnGoal, getAssignmentWithoutGoal, deleteAssignment } = require('../api/assignment/actions')
-const { addTag, updateTag, getTag, deleteTag, getTagOnGoal, getTagOnAssignment, getTagNotGoal, getTagNotAssignment, unlinkAllTagOnGoal, unlinkAllTagOnAssignment } = require('../api/tag/actions')
+const { addGoal, updateGoal, getGoal, getGoalOnTag, getGoalOnAssignment,
+     getGoalWithoutAssignment, deleteGoal } = require('../api/goal/actions')
+const { addAssignment, updateAssignment, getAssignment, getAssignmentOnTag,
+     getAssignmentOnGoal, getAssignmentWithoutGoal, deleteAssignment } = require('../api/assignment/actions')
+const { addTag, updateTag, getTag, deleteTag, getTagOnGoal, getTagOnAssignment,
+     getTagNotGoal, getTagNotAssignment, unlinkTagOnGoal, unlinkAllTagOnGoal, unlinkTagOnAssignment, unlinkAllTagOnAssignment } = require('../api/tag/actions')
 
 app.post('/api/goal/actions', addGoal)
 app.get('/api/goal/actions/:id?', getGoal)
@@ -39,6 +42,8 @@ app.put('/api/tag/actions/:id', updateTag)
 app.delete('/api/tag/actions/:id', deleteTag)
 app.delete('/api/tag/actions/unlink-all-goal/:id', unlinkAllTagOnGoal)
 app.delete('/api/tag/actions/unlink-all-assignment/:id', unlinkAllTagOnAssignment)
+app.delete('/api/tag/actions/unlink-goal/:tagID/:relationID', unlinkTagOnGoal)
+app.delete('/api/tag/actions/unlink-assignment/:tagID/:relationID', unlinkTagOnAssignment)
 
 // server status
 app.get('/', (req, res) => {

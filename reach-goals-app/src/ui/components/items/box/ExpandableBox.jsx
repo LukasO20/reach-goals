@@ -1,9 +1,13 @@
+import { useContext } from 'react'
+
+import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider'
+
 import Goal from '../models/Goal'
 import Assignment from '../models/Assignment'
 import ButtonAction from '../elements/ButtonAction'
 
-const boxConfigs = {
-    default: [
+const boxConfigs = (type) => {
+    const goal = [
         {
             key: 'goal-no-assignment',
             className: 'goal',
@@ -25,6 +29,9 @@ const boxConfigs = {
             content: <Goal goalTagRelation={true} />,
             btnClass: 'goal'
         },
+    ]
+
+    const assignment = [
         {
             key: 'assignment-no-goal',
             className: 'assignment',
@@ -47,15 +54,30 @@ const boxConfigs = {
             btnClass: 'assignment'
         }
     ]
+
+    const defaultConfig = [
+        ...goal, ...assignment
+    ]
+
+    switch (type) {
+        case 'goal':
+            return goal
+        case 'assignment':
+            return assignment
+        default:
+            return defaultConfig
+    }
 }
 
 const ExpandableBox = (props) => {
+    const { layoutComponent } = useContext(SwitchLayoutContext)     
     const containerType = props?.containerType ?? ''
 
+    const configType = layoutComponent.objectives.layout
 
     return (
         <>
-            {boxConfigs.default.map(box => (
+            {boxConfigs(configType).map(box => (
                 <div className={`box-list ${box.className} ${containerType}`} key={box.key}>
                     <div className='head'>
                         <label>{box.label}</label>

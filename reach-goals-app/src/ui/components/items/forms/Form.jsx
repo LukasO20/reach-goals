@@ -84,7 +84,7 @@ const Form = (props) => {
                         <label>Create a tag</label>
                     </div>
                     <div className='objective-buttons-options'>
-                        <ButtonAction target={targetMap('near-modalForm', { remove: true })} classBtn='button-action-p close-modal button-st' iconFa='fa-solid fa-xmark'/>
+                        <ButtonAction target={targetMap('near-modalForm', { remove: true })} classBtn='button-action-p close-modal' iconFa='fa-solid fa-xmark'/>
                     </div>
                 </div>
                 <div className='body'>
@@ -126,15 +126,15 @@ const Form = (props) => {
                     </div>
                     <div className='objective-options'> 
                         <div className='objective-op'>
-                            <ButtonAction onClick={typeForm === 'goal' ? functionsForm.mapNullModal : true} target={targetMap(['panel-center', 'assignment'], { maintain: true })} classBtn='op-form-assignment button-op-objective button-st' title='assingments'/>
-                            <ButtonAction onClick={typeForm === 'assignment' ? functionsForm.mapNullModal : true} target={targetMap(['panel-center', 'goal'], { maintain: true })} classBtn='op-form-goal button-op-objective button-st' title='goals'/>
+                            <ButtonAction onClick={typeForm === 'goal' ? functionsForm.mapNullModal : true} target={targetMap(['panel-center', 'assignment'], { maintain: true })} classBtn='op-form-assignment button-op-objective' title='assingments'/>
+                            <ButtonAction onClick={typeForm === 'assignment' ? functionsForm.mapNullModal : true} target={targetMap(['panel-center', 'goal'], { maintain: true })} classBtn='op-form-goal button-op-objective' title='goals'/>
                         </div>
                         <div className='objective-color'>
                             <label className='color'></label>
                         </div>
                     </div>
                     <div className='objective-buttons-options'>
-                        <ButtonAction target={targetMap(null)} classBtn='button-action-p close-modal button-st' iconFa='fa-solid fa-xmark'/>
+                        <ButtonAction target={targetMap(null)} classBtn='button-action-p close-modal' iconFa='fa-solid fa-xmark'/>
                     </div>
                 </div>
                 <div className='body'>
@@ -161,7 +161,7 @@ const Form = (props) => {
                                 <div className='item-forms head'>
                                     <div className='item-head-1'>
                                         <label>tags</label>
-                                        <ButtonAction modalList={functionsForm.mapModalListMap(true, 'tag')} classBtn={'form-modallist-tag button-st'} iconFa='fa-solid fa-plus' title='Add'/>
+                                        <ButtonAction modalList={functionsForm.mapModalListMap(true, 'tag')} classBtn={'form-modallist-tag'} iconFa='fa-solid fa-plus' title='Add'/>
                                     </div>
                                     <div className='item-head-2'></div>
                                 </div>

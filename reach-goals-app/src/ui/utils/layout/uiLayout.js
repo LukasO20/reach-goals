@@ -34,6 +34,7 @@ const insertModelComponent = (props, type, e) => {
                                 <i class="icon-st fa-solid ${iconModelReference}"></i>
                                 <label>${setModel.querySelector('.line-info label').textContent}</label>
                             </label>
+                            <label class="remove-tag"><i class="fa-solid fa-xmark"></i></label>
                         </div>
                     </div>`)
 

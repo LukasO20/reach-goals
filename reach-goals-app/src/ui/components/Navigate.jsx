@@ -1,26 +1,12 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { VisibilityContext } from '../../provider/VisibilityProvider'
 
-import '../styles/Navigate.scss'
+import { VisibilityContext } from '../../provider/VisibilityProvider'
+import { targetMap, switchLayoutMap } from '../../utils/mappingUtils'
+
 import ButtonAction from './items/elements/ButtonAction'
 
-const targetMap = (classes) => {
-    const data = Array.isArray(classes) ? classes : [classes]
-    const attributes = {
-        class: data,
-    }
-    return attributes
-}
-
-const switchLayoutMap = (nameComponent, nameLayout, value) => {
-    const attributes = {
-        nameComponent: nameComponent,
-        nameLayout: nameLayout,
-        value: value
-    }
-    return attributes
-}
+import '../styles/Navigate.scss'
 
 const Navigate = () => {
     const { toggleVisibility } = useContext(VisibilityContext)

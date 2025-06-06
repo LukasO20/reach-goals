@@ -1,5 +1,7 @@
-import React from 'react'
 import { useParams, Outlet } from 'react-router-dom'
+import { useContext } from 'react'
+
+import { PageTypeContext } from '../../provider/PageTypeProvider'
 
 import Home from './pages/Home'
 import Calendar from './pages/Calendar'
@@ -7,6 +9,7 @@ import Objectives from './pages/Objectives'
 
 const Sections = () => {
     const { section } = useParams()
+    const { setPageType } = useContext(PageTypeContext)
 
     let componentRender
     switch (section) {
@@ -20,6 +23,8 @@ const Sections = () => {
             componentRender = <Objectives />
             break
     }
+
+    setPageType(section)
 
     return (
         <div className='container-dynamic'>
