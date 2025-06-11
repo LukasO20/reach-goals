@@ -1,5 +1,6 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { VisibilityContext } from '../../../provider/VisibilityProvider'
+import { ManageModelContext } from '../../../provider/ManageModelProvider'
 import { useSwitchLayout } from '../../../hook/useSwitchLayout'
 
 import ModalForm from './ModalForm'
@@ -12,12 +13,13 @@ import '../../styles/panels/Notification.scss'
 import '../../styles/panels/ModalDetails.scss'
 import '../../styles/panels/Panel.scss'
 
-const renderLayoutContentPanel = (panelPosition, type) => {
+const renderLayoutContentPanel = (panelPosition, renderConfig) => {
+
     switch (panelPosition) {
         case 'center':
             return (
                 <>
-                    <ModalForm type={type}/>
+                    <ModalForm {...renderConfig}/>
                     <ModalConfig />
                 </>
             ) 
@@ -25,7 +27,7 @@ const renderLayoutContentPanel = (panelPosition, type) => {
             return (
                 <>
                     <ModalTag />
-                    <ModalDetails type={type} />
+                    <ModalDetails {...renderConfig} />
                 </>
             )
         default:
@@ -35,15 +37,19 @@ const renderLayoutContentPanel = (panelPosition, type) => {
 
 const Panel = (props) => {
     const { visibleElements } = useContext(VisibilityContext)
+    const { selectModel } = useContext(ManageModelContext)
     const { layoutComponent } = useSwitchLayout()
     
     const panelType = ['panel-left', 'panel-center', 'panel-right']
     const btnCurrent = visibleElements[1] ?? ''
-    const type = btnCurrent.split(' ')[0]
+    const renderConfig = {
+        type: btnCurrent.split(' ')[0],
+        modelID: selectModel
+    }
 
     return (
-        <div className={`content-${layoutComponent.panel.layout} ${panelType.some(panel => visibleElements.includes(panel)) ? 'show' : ''} ${type}`}>  
-            {renderLayoutContentPanel(layoutComponent.panel.layout, type)}
+        <div className={`content-${layoutComponent.panel.layout} ${panelType.some(panel => visibleElements.includes(panel)) ? 'show' : ''} ${renderConfig.type}`}>  
+            {renderLayoutContentPanel(layoutComponent.panel.layout, renderConfig)}
         </div>
     )
 } 

@@ -28,7 +28,7 @@ const switchSectionLayout = (model, type) => {
                                     <h4>Assignments</h4>
                                 </div>
                                 <div className='body-assignment-list'>
-                                    <Assignment />
+                                    <Assignment assignmentGoalRelation={model?.id} />
                                 </div>
                             </div>
                         }
@@ -65,7 +65,6 @@ const ModalDetailsSection = (props) => {
     const model = props?.model
     const type = props?.type
 
-    console.log('ModalDetailsSection', model, type)
     return (switchSectionLayout(model, type))
 }
 

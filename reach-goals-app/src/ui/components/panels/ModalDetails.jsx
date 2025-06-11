@@ -1,42 +1,26 @@
-import { useContext, useState, useEffect } from 'react'
+import { useState } from 'react'
 
-import { ManageModelContext } from '../../../provider/ManageModelProvider'
-
-import * as goalAction from '../../../provider/goal/goalAction'
-import * as assignmentAction from '../../../provider/assignment/assignmentAction'
+import { useGetModel } from '../../../hook/useGetModel'
 
 import ModalDetailsSection from '../items/modals/modal_details/ModalDetailsSection'
 
 const ModalDetails = (props) => {
     const [error, setError] = useState(null)
-    const [genericModel, setGenericModel] = useState({
-        name: '',
-        description: '',
-        end: '',
-    })
 
-    const { selectModel } = useContext(ManageModelContext)
     const typeDetail = props?.type
+    const mapRequestProps = typeDetail === 'goal' ? 'goalSomeID' : 'assignmentSomeID'
 
-    useEffect(() => {
-        const loadGoal = async (id) => {
-            if (id === null) { return }
+    const requestPropsGetModel = {
+        type: typeDetail,
+        [mapRequestProps]: props?.modelID ?? null,
+    }
 
-            try {
-                typeDetail === 'goal' ?
-                setGenericModel(await goalAction.getGoal(id)) : setGenericModel(await assignmentAction.getAssignment(id))
-            }
-            catch (error) {
-                setError(`Ops, something wrong to open this : ${typeDetail}`)
-            }
-        } 
-        loadGoal(selectModel)
-    }, [selectModel])
+    const { params: getParams, data: getData } = useGetModel(requestPropsGetModel)
 
     return (
         error ? <div className='error'>{error}</div> :
         <div className='container-modaldetails aside-content'>
-            <ModalDetailsSection model={genericModel} type={typeDetail} />
+            <ModalDetailsSection model={Array.isArray(getData) && getData[0]} type={typeDetail} />
         </div>
     )
 }

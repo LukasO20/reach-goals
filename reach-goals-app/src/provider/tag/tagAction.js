@@ -1,5 +1,4 @@
-const apiURL = window.location.origin.includes("localhost") ? "http://localhost:5000"
-: window.location.origin
+const apiURL = window.location.origin.includes("localhost") ? "http://localhost:5000" : window.location.origin
 
 export const addTag = async (tag) => {
     try {
