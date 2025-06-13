@@ -47,7 +47,7 @@ const formsItemMap = (typeForm, modelComponent) => {
 
 const ModalForm = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
-    const { selectModel, setSelectModel } = useContext(ManageModelContext)
+    const { manageModel, setManageModel } = useContext(ManageModelContext)
     const { modalList, handleModalList } = useContext(ModalListContext)
 
     const typeForm = props.type
@@ -65,7 +65,7 @@ const ModalForm = (props) => {
     const { data: saveData, saveModel } = useSaveModel({})
 
     const nullModal = () => {
-        !selectModel && setSelectModel(null)
+        !manageModel.mainModelID && setManageModel({ ...manageModel, mainModelID: null, relatedModelID: null })
         setModelProps({})
         setModelTarget({})
         setResetModel(true)
@@ -207,13 +207,13 @@ const ModalForm = (props) => {
 
     useEffect(() => {
         if (!resetModel) {
-            loadModel(selectModel)
+            loadModel(manageModel.mainModelID)
 
-            if (modelProps && Object.keys(modelProps).length > 0 && selectModel) {
+            if (modelProps && Object.keys(modelProps).length > 0 && manageModel.mainModelID) {
                 setModelTarget(handleTarget(getData[0]))
             }
         }
-    }, [selectModel, getData])
+    }, [manageModel, getData])
 
     useEffect(() => {
         resetModel && setResetModel(false)
@@ -238,7 +238,7 @@ const ModalForm = (props) => {
 
     const contextFormMap = {
         mapModalList: modalList,
-        mapSelectModel: selectModel
+        mapManageModel: manageModel.mainModelID,
     }
 
     const stateFormMap = {
@@ -247,11 +247,11 @@ const ModalForm = (props) => {
     }
 
     console.log('VALUE OF LOADING - ', isLoading, modelTarget)
-    console.log('SHOW FORM?  - ', selectModel, resetModel)
+    console.log('SHOW FORM?  - ', manageModel.mainModelID, resetModel)
     
     return (
         isLoading ? <div id="load-element" className='loading-animation'></div> :
-            ((modelTarget && modelTarget.id) || (selectModel === null && !resetModel)) ?
+            ((modelTarget && modelTarget.id) || (manageModel.mainModelID === null && !resetModel)) ?
                 (
                     <Form typeForm={typeForm} functionFormMap={functionFormMap}
                         model={modelTarget} booleanFormMap={booleanFormMap}

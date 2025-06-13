@@ -21,7 +21,7 @@ const Assignment = (props) => {
     const [erro, setErro] = useState(false)
     
     const { toggleVisibility } = useContext(VisibilityContext)
-    const { setSelectModel } = useContext(ManageModelContext)
+    const { manageModel, setManageModel } = useContext(ManageModelContext)
     const { switchLayoutComponent } = useContext(SwitchLayoutContext)
 
     const location = useLocation()
@@ -62,11 +62,11 @@ const Assignment = (props) => {
 
     const editAssignment = useCallback((id) => {
         try {
-            setSelectModel(id)        
+            setManageModel({...manageModel, mainModelID: id })        
         } catch (error) {
             setErro(`Failed to edit this assignment: ${erro.message}`)
         }
-    }, [setSelectModel])
+    }, [setManageModel])
 
     const handleAssignmentClick = useCallback(
         (id, e) => {
@@ -76,11 +76,11 @@ const Assignment = (props) => {
                 return insertModelComponent(props, 'assignment', e)
             }
 
-            setSelectModel(id)
+            setManageModel({...manageModel, mainModelID: id })        
             toggleVisibility(target, e)
             switchLayoutComponent(switchLayoutMap('panel', 'layout', 'right'))
         },
-        [setSelectModel, toggleVisibility, target]
+        [setManageModel, toggleVisibility, target]
     )
 
     return (

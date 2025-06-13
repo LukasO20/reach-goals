@@ -21,7 +21,7 @@ const Goal = (props) => {
     const [erro, setErro] = useState(false)
     
     const { toggleVisibility } = useContext(VisibilityContext)
-    const { setSelectModel } = useContext(ManageModelContext)
+    const { manageModel, setManageModel } = useContext(ManageModelContext)
     const { switchLayoutComponent } = useContext(SwitchLayoutContext)
 
     const location = useLocation()
@@ -60,23 +60,24 @@ const Goal = (props) => {
     }
 
     const editGoal = useCallback((id) => {
-        try { setSelectModel(id) }
+        try { setManageModel({ ...manageModel, mainModelID: id }) }
         catch (error) { setErro(`Failed to edit this goal: ${erro.message}`) }
-    }, [setSelectModel])
+    }, [setManageModel])
 
     const handleGoalClick = useCallback(
         (id, e) => {
             const isSelectableModel = props.selectableModel ?? false
             if (isSelectableModel) { 
                 e.stopPropagation()
-                return insertModelComponent(props, 'goal', e)
+                return setManageModel({ ...manageModel, relatedModelID: id })
+                //return insertModelComponent(props, 'goal', e)
             }
 
-            setSelectModel(id)
+            setManageModel({ ...manageModel, mainModelID: id })
             toggleVisibility(target, e)
             switchLayoutComponent(switchLayoutMap('panel', 'layout', 'right'))
         },
-        [setSelectModel, toggleVisibility, target]
+        [setManageModel, toggleVisibility, target]
     )
 
     return (

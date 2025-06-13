@@ -4,6 +4,7 @@ import ButtonDropdown from '../elements/ButtonDropdown'
 import ModelSwitcher from '../models/ModelSwitcher'
 
 import { targetMap } from '../../../../utils/mappingUtils'
+import ModelCopy from '../models/ModelCopy'
 
 const iconMap = {
     assignment: 'fa-solid fa-list-check',
@@ -21,6 +22,7 @@ const Form = (props) => {
     const typeForm = props?.typeForm
     const functionsForm = props?.functionFormMap
     const modelForm = props?.model
+    const manageModel = props?.manageModelMap
     const booleanForm = props?.booleanFormMap
     const contextForm = props?.contextFormMap
     const stateForm = props?.stateFormMap
@@ -166,10 +168,8 @@ const Form = (props) => {
                                     <div className='item-head-2'></div>
                                 </div>
                                 <div className='item-forms body'>
-                                    {
-                                        modelForm?.id && <ModelSwitcher type={'tag'} propsReference={modelSwitcherTagProps} />
-                                        //HERE... WILL BE PUT COPY MODELS (A CONTAINER VISUAL REFENCE)
-                                    }
+                                    { modelForm?.id && <ModelSwitcher type={'tag'} propsReference={modelSwitcherTagProps} /> }
+                                    { manageModel?.relatedModelID && <ModelCopy /> }
                                 </div>
                             </div>
                             {functionsForm.mapFormsItemMap(typeForm, <ModelSwitcher type={`${typeForm === 'goal' ? 'goal-relation' : ''}`} propsReference={modelSwitcherProps} />)}

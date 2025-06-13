@@ -53,7 +53,7 @@ const switchLayoutMap = (nameComponent, nameLayout, value) => {
 
 const ButtonDropdown = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
-    const { setSelectModel } = useContext(ManageModelContext)
+    const { manageModel, setManageModel } = useContext(ManageModelContext)
 
     const target = props.target ?? { class : [] }
     const typeClass = target.class !== undefined ? target.class[0] : null
@@ -72,7 +72,7 @@ const ButtonDropdown = (props) => {
             }
 
             if (typeClass === 'btn-action-create') {
-                setSelectModel(null)
+                setManageModel({ ...manageModel, mainModelID: null, relatedModelID: null })
             }
         }
     }
