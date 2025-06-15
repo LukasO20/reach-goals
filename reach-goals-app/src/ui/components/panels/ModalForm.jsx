@@ -238,7 +238,6 @@ const ModalForm = (props) => {
 
     const contextFormMap = {
         mapModalList: modalList,
-        mapManageModel: manageModel.mainModelID,
     }
 
     const stateFormMap = {
@@ -247,7 +246,6 @@ const ModalForm = (props) => {
     }
 
     console.log('VALUE OF LOADING - ', isLoading, modelTarget)
-    console.log('SHOW FORM?  - ', manageModel.mainModelID, resetModel)
     
     return (
         isLoading ? <div id="load-element" className='loading-animation'></div> :

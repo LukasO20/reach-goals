@@ -4,6 +4,7 @@ const ManageModelContext = React.createContext()
 
 const ManageModelProvider = ({ children }) => {
     const [manageModel, setManageModel] = useState({
+        typeModel: '',
         mainModelID: null,
         relatedModelID: null
     })

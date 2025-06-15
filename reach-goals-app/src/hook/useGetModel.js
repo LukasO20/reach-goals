@@ -113,8 +113,6 @@ const useGetModel = (requestProps, reset = false) => {
         console.log('PARAMS OF HOOK GETMODEL (tag relation) - ', params)
     }
 
-    console.log('THIS DATA GETTED - ', data)
-
     return { params, data }
 }
 
