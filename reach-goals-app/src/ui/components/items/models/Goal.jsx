@@ -9,7 +9,6 @@ import { ManageModelContext } from '../../../../provider/ManageModelProvider'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider'
 import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider'
 
-import { insertModelComponent } from '../../../utils/layout/uiLayout'
 import { targetMap, switchLayoutMap } from '../../../../utils/mappingUtils'
 
 import ButtonAction from '../elements/ButtonAction'
