@@ -3,15 +3,17 @@ import React, { useState } from 'react'
 const ManageModelContext = React.createContext()
 
 const ManageModelProvider = ({ children }) => {
-    const [manageModel, setManageModel] = useState({
+    const [model, setModel] = useState({
         typeModel: '',
         mainModelID: null,
-        relatedModelID: null
+        relatedModelID: null,
+        transportModel: [],
+        submitModel: {}
     })
-    console.log('MODEL SELECTED - ', manageModel)
+    console.log('MODEL SELECTED - ', model)
 
     return (
-        <ManageModelContext.Provider value={{ manageModel, setManageModel }}>
+        <ManageModelContext.Provider value={{ model, setModel }}>
             {children} 
         </ManageModelContext.Provider>
     )

@@ -18,7 +18,7 @@ const Tag = (props) => {
     const [erro, setErro] = useState(false)
 
     const { toggleVisibility } = useContext(VisibilityContext)
-    const { manageModel, setManageModel } = useContext(ManageModelContext)
+    const { model, setModel } = useContext(ManageModelContext)
 
     const target = targetMap(['panel-right', 'tag'])
     const display = props.display ?? {
@@ -54,11 +54,11 @@ const Tag = (props) => {
 
     const editTag = useCallback((id) => {
         try {
-            setManageModel({ ...manageModel, mainModelID: id })
+            setModel({ ...model, mainModelID: id })
         } catch (error) {
             setErro(`Failed to edit this tag: ${erro.message}`)
         }
-    }, [setManageModel])
+    }, [setModel])
 
     const handleTagClick = useCallback(
         (id, e) => {
@@ -68,10 +68,10 @@ const Tag = (props) => {
                 return insertModelComponent(props, 'tag', e)
             }
 
-            setManageModel({ ...manageModel, mainModelID: id })
+            setModel({ ...model, mainModelID: id })
             toggleVisibility(target, e)
         },
-        [setManageModel, toggleVisibility, target]
+        [setModel, toggleVisibility, target]
     )
 
     console.log('TAG LOADED - ', tag)

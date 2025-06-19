@@ -47,7 +47,7 @@ const formsItemMap = (typeForm, modelComponent) => {
 
 const ModalForm = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
-    const { manageModel, setManageModel } = useContext(ManageModelContext)
+    const { model, setModel } = useContext(ManageModelContext)
     const { modalList, handleModalList } = useContext(ModalListContext)
 
     const typeForm = props.type
@@ -58,16 +58,15 @@ const ModalForm = (props) => {
     const [isLoading, setLoading] = useState(false)
 
     const [modelProps, setModelProps] = useState({})
-    const [modelTarget, setModelTarget] = useState({})
+    //const [modelTarget, setModelTarget] = useState({})
     const [resetModel, setResetModel] = useState(false)
 
     const { params: getParams, data: getData } = useGetModel(modelProps, resetModel)
     const { data: saveData, saveModel } = useSaveModel({})
 
     const nullModal = () => {
-        !manageModel.mainModelID && setManageModel({ ...manageModel, mainModelID: null, relatedModelID: null })
+        !model.mainModelID && setModel({ ...model, mainModelID: null, transportModel: [], submitModel: {} })
         setModelProps({})
-        setModelTarget({})
         setResetModel(true)
     }
 
@@ -148,13 +147,13 @@ const ModalForm = (props) => {
         const { name, value } = e.target || e
 
         //Tag attributes
-        const tagsRelation = e.tags ?? modelTarget.tags ?? []
+        const tagsRelation = e.tags ?? model.submitModel.tags ?? []
 
         if (typeForm === 'goal') {
-            const assignmentsRelation = e.assignments ?? modelTarget.assignments ?? []
+            const assignmentsRelation = e.assignments ?? model.submitModel.assignments ?? []
 
             const update = {
-                ...modelTarget,
+                ...model.submitModel,
                 [name]: value,
                 assignments: [...assignmentsRelation],
                 tags: [...tagsRelation]
@@ -163,11 +162,14 @@ const ModalForm = (props) => {
             //Format object when is necessary
             const formatted = { ...update, ...formatDate(update) }
 
-            setModelTarget(formatted)
+            setModel(prevModel => ({
+                ...prevModel,
+                submitModel: formatted
+            }))
         } else if (typeForm === 'assignment') {
 
             const update = {
-                ...modelTarget,
+                ...model.submitModel,
                 [name]: value,
                 goal: e.target === undefined ? Object.values(e)[0] : null,
                 tags: [...tagsRelation]
@@ -176,15 +178,21 @@ const ModalForm = (props) => {
             //Format object when is necessary
             const formatted = { ...update, ...formatDate(update) }
 
-            setModelTarget(formatted)
+            setModel(prevModel => ({
+                ...prevModel,
+                submitModel: formatted
+            }))
         } else {
 
             const update = {
-                ...modelTarget,
+                ...model.submitModel,
                 [name]: value
             }
 
-            setModelTarget(update)
+            setModel(prevModel => ({
+                ...prevModel,
+                submitModel: update
+            }))
         }
     }
 
@@ -193,7 +201,7 @@ const ModalForm = (props) => {
         setSucess(false)
 
         try {
-            saveModel({ type: typeForm, model: structuredClone(modelTarget) })
+            saveModel({ type: typeForm, model: structuredClone(model.submitModel) })
             setSucess(true)
         } catch (error) {
             setError(error.message)
@@ -207,13 +215,16 @@ const ModalForm = (props) => {
 
     useEffect(() => {
         if (!resetModel) {
-            loadModel(manageModel.mainModelID)
+            loadModel(model.mainModelID)
 
-            if (modelProps && Object.keys(modelProps).length > 0 && manageModel.mainModelID) {
-                setModelTarget(handleTarget(getData[0]))
+            if (modelProps && Object.keys(modelProps).length > 0 && model.mainModelID) {
+                setModel(prevModel => ({
+                    ...prevModel,
+                    submitModel: handleTarget(getData[0])
+                }))
             }
         }
-    }, [manageModel, getData])
+    }, [model.mainModelID, getData])
 
     useEffect(() => {
         resetModel && setResetModel(false)
@@ -245,14 +256,14 @@ const ModalForm = (props) => {
         mapStateError: error
     }
 
-    console.log('VALUE OF LOADING - ', isLoading, modelTarget)
-    
+    console.log('VALUE OF LOADING - ', isLoading, model.submitModel)
+
     return (
         isLoading ? <div id="load-element" className='loading-animation'></div> :
-            ((modelTarget && modelTarget.id) || (manageModel.mainModelID === null && !resetModel)) ?
+            ((model.submitModel && model.submitModel.id) || (model.mainModelID === null && !resetModel)) ?
                 (
                     <Form typeForm={typeForm} functionFormMap={functionFormMap}
-                        model={modelTarget} booleanFormMap={booleanFormMap}
+                        model={model.submitModel} booleanFormMap={booleanFormMap}
                         contextFormMap={contextFormMap} stateFormMap={stateFormMap} />
                 )
                 :

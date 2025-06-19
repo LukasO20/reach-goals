@@ -77,7 +77,7 @@ const Form = (props) => {
         assignmentGoalRelation: modelForm.id
     }
 
-    const { manageModel, setManageModel } = useContext(ManageModelContext)
+    const { model } = useContext(ManageModelContext)
 
     switch (typeForm) {
         case 'tag':
@@ -171,7 +171,7 @@ const Form = (props) => {
                                     </div>
                                     <div className='item-forms body'>
                                         {modelForm?.id && <ModelSwitcher type={'tag'} propsReference={modelSwitcherTagProps} />}
-                                        {manageModel?.relatedModelID && <ModelCopy typeModel={manageModel.typeModel}  modelID={manageModel.relatedModelID} referenceModel={'tag'} />}
+                                        {model?.relatedModelID && <ModelCopy type={model.typeModel}  />}
                                     </div>
                                 </div>
                                 {functionsForm.mapFormsItemMap(typeForm, <ModelSwitcher type={`${typeForm === 'goal' ? 'goal-relation' : ''}`} propsReference={modelSwitcherProps} />)}

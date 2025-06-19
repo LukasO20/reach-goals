@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useLocation } from 'react-router-dom' 
+import { useLocation } from 'react-router-dom'
 
 import { useGetModel } from '../../../../hook/useGetModel'
 import { useDeleteModel } from '../../../../hook/useDeleteModel'
@@ -19,9 +19,9 @@ import '../../../styles/items/models/Assignment.scss'
 const Assignment = (props) => {
     const [assignment, setAssignment] = useState([])
     const [erro, setErro] = useState(false)
-    
+
     const { toggleVisibility } = useContext(VisibilityContext)
-    const { manageModel, setManageModel } = useContext(ManageModelContext)
+    const { model, setModel } = useContext(ManageModelContext)
     const { switchLayoutComponent } = useContext(SwitchLayoutContext)
 
     const location = useLocation()
@@ -29,9 +29,9 @@ const Assignment = (props) => {
         return location.pathname.includes('/objectives') ? '/objectives' : location.pathname.includes('/home') ? '/home' : '/calendar'
     }, [location.pathname])
 
-    const target = useMemo(() => targetMap(['panel-right', 'assignment']), []) 
+    const target = useMemo(() => targetMap(['panel-right', 'assignment']), [])
     const display = props.display ?? {
-        sideAction: false, 
+        sideAction: false,
         type: 'mini-list',
         formMode: props?.formMode ?? false
     }
@@ -62,48 +62,45 @@ const Assignment = (props) => {
 
     const editAssignment = useCallback((id) => {
         try {
-            setManageModel({...manageModel, mainModelID: id })        
+            setModel({ ...model, mainModelID: id })
         } catch (error) {
             setErro(`Failed to edit this assignment: ${erro.message}`)
         }
-    }, [setManageModel])
+    }, [setModel])
 
-    const handleAssignmentClick = useCallback(
-        (id, e) => {
-            const isSelectableModel = props.selectableModel ?? false
-            if (isSelectableModel) { 
-                e.stopPropagation()
-                return insertModelComponent(props, 'assignment', e)
-            }
+    const handleAssignmentClick = (id, e) => {
+        const isSelectableModel = props.selectableModel ?? false
+        if (isSelectableModel) {
+            e.stopPropagation()
+            return insertModelComponent(props, 'assignment', e)
+        }
 
-            setManageModel({...manageModel, mainModelID: id })        
-            toggleVisibility(target, e)
-            switchLayoutComponent(switchLayoutMap('panel', 'layout', 'right'))
-        },
-        [setManageModel, toggleVisibility, target]
-    )
+        setModel({ ...model, mainModelID: id })
+        toggleVisibility(target, e)
+        switchLayoutComponent(switchLayoutMap('panel', 'layout', 'right'))
+    }
 
     return (
         assignment.map(assignment => (
             <div className={`assignment ${display.type}`} id={assignment.id} key={assignment.id} onClick={(e) => handleAssignmentClick(assignment.id, e)}>
                 {
                     display.type === 'card' ?
-                    <Link to={`${currentLocation}/details`}>
+                        <Link to={`${currentLocation}/details`}>
+                            <div className='head'>
+                                <label className='line-info'><i className='icon-st fa-solid fa-list-check'></i><label>{assignment.name}</label></label>
+                            </div>
+                            <div className='body'></div>
+                        </Link>
+                        :
                         <div className='head'>
                             <label className='line-info'><i className='icon-st fa-solid fa-list-check'></i><label>{assignment.name}</label></label>
                         </div>
-                        <div className='body'></div>
-                    </Link>
-                    :
-                    <div className='head'>
-                        <label className='line-info'><i className='icon-st fa-solid fa-list-check'></i><label>{assignment.name}</label></label>
-                    </div>
                 }
                 {
-                    display.sideAction && 
+                    display.sideAction &&
                     <div className='side-actions'>
-                        <ButtonAction onClick={() => editAssignment(assignment.id)} target={targetMap(['panel-center', 'assignment'])} switchLayout={switchLayoutMap('panel', 'layout', 'center')} classBtn='edit-assignment' iconFa='fa-regular fa-pen-to-square'/>
-                        <ButtonAction onClick={() => deleteAssignment(assignment.id)} target={targetMap(null)} classBtn='remove-assignment' iconFa='fa-regular fa-trash-can'/>
+                        <ButtonAction onClick={() => editAssignment(assignment.id)} target={targetMap(['panel-center', 'assignment'])} switchLayout={switchLayoutMap('panel', 'layout', 'center')} classBtn='edit-assignment' iconFa='fa-regular fa-pen-to-square' />
+                        <ButtonAction onClick={() => deleteAssignment(assignment.id)} target={targetMap(null)} classBtn='remove-assignment' iconFa='fa-regular fa-trash-can' />
                     </div>
                 }
                 {display.formMode && <input hidden readOnly={true} value={assignment.id} id={assignment.id} />}

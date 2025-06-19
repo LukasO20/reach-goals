@@ -37,14 +37,14 @@ const renderLayoutContentPanel = (panelPosition, renderConfig) => {
 
 const Panel = (props) => {
     const { visibleElements } = useContext(VisibilityContext)
-    const { manageModel } = useContext(ManageModelContext)
+    const { model } = useContext(ManageModelContext)
     const { layoutComponent } = useSwitchLayout()
     
     const panelType = ['panel-left', 'panel-center', 'panel-right']
     const btnCurrent = visibleElements[1] ?? ''
     const renderConfig = {
         type: btnCurrent.split(' ')[0],
-        modelID: manageModel.mainModelID
+        modelID: model.mainModelID
     }
 
     return (
