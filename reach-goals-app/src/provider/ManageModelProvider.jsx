@@ -2,15 +2,32 @@ import React, { useState } from 'react'
 
 const ManageModelContext = React.createContext()
 
-const ManageModelProvider = ({ children }) => {
-    const [model, setModel] = useState({
+const addToTransportModel = (newModel) => {
+
+}
+
+const removeFromTransportModel = (modelID) => {
+
+}
+
+const updateSubmitModel = () => {
+
+}
+
+const resetManageModel = () => {
+    return {
         typeModel: '',
         mainModelID: null,
         relatedModelID: null,
         transportModel: [],
         submitModel: {}
-    })
-    console.log('MODEL SELECTED - ', model)
+    }
+}
+
+const ManageModelProvider = ({ children }) => {
+    const [model, setModel] = useState(resetManageModel)
+
+    console.log('MODEL READY TO MANAGE - ', model)
 
     return (
         <ManageModelContext.Provider value={{ model, setModel }}>

@@ -171,7 +171,7 @@ const Form = (props) => {
                                     </div>
                                     <div className='item-forms body'>
                                         {modelForm?.id && <ModelSwitcher type={'tag'} propsReference={modelSwitcherTagProps} />}
-                                        {model?.relatedModelID && <ModelCopy type={model.typeModel}  />}
+                                        {model?.mainModelID && <ModelCopy type={model.typeModel}  />}
                                     </div>
                                 </div>
                                 {functionsForm.mapFormsItemMap(typeForm, <ModelSwitcher type={`${typeForm === 'goal' ? 'goal-relation' : ''}`} propsReference={modelSwitcherProps} />)}

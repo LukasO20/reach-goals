@@ -72,14 +72,19 @@ const Goal = (props) => {
             e.stopPropagation()
             const selected = goal.find(m => m.id === id)
 
-            return selected ? setModel(prevModel => ({
-                ...prevModel,
-                typeModel: 'goal',
-                relatedModelID: id,
-                transportModel: [
-                    ...prevModel.transportModel, { id: selected.id, name: selected.name }
-                ]
-            })) : null
+            return setModel(prevModel => {
+                const alreadyExists = prevModel.transportModel.some(item => item.id === selected.id)
+
+                return alreadyExists ? prevModel :
+                    {
+                        ...prevModel,
+                        typeModel: 'goal',
+                        transportModel: [
+                            ...prevModel.transportModel,
+                            { id: selected.id, name: selected.name }
+                        ]
+                    }
+            })        
         }
 
         setModel({ ...model, mainModelID: id })

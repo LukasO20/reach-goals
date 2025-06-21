@@ -24,9 +24,10 @@ const ModelCopy = ({ type, displayRef }) => {
     }
 
     useEffect(( ) => {
-
-
+        setCopyModel(model.transportModel)
     }, [model.transportModel])
+
+    console.log('MODEL COPY - ', model)
 
     return modelCopy.map(model => (
         <div className={`${type} ${display.type}`} id={model.id} key={model.id} /*onClick={(e) => handleGoalClick(goal.id, e)}*/>
