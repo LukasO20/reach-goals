@@ -20,7 +20,7 @@ const Goal = (props) => {
     const [erro, setErro] = useState(false)
 
     const { toggleVisibility } = useContext(VisibilityContext)
-    const { model, setModel } = useContext(ManageModelContext)
+    const { model, setModel, addToTransportModel, updateSubmitModel } = useContext(ManageModelContext)
     const { switchLayoutComponent } = useContext(SwitchLayoutContext)
 
     const location = useLocation()
@@ -69,22 +69,12 @@ const Goal = (props) => {
 
     const handleGoalClick = (id, e) => {
         if (isSelectableModel) {
-            e.stopPropagation()
+            e.stopPropagation()     
             const selected = goal.find(m => m.id === id)
-
-            return setModel(prevModel => {
-                const alreadyExists = prevModel.transportModel.some(item => item.id === selected.id)
-
-                return alreadyExists ? prevModel :
-                    {
-                        ...prevModel,
-                        typeModel: 'goal',
-                        transportModel: [
-                            ...prevModel.transportModel,
-                            { id: selected.id, name: selected.name }
-                        ]
-                    }
-            })        
+            if (model.transportModel.length > 1 && model.typeModel !== 'assignment') { return } 
+            
+            addToTransportModel(selected)
+            return updateSubmitModel('goalID', id)
         }
 
         setModel({ ...model, mainModelID: id })

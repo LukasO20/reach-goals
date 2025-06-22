@@ -62,7 +62,7 @@ const Assignment = (props) => {
 
     const editAssignment = useCallback((id) => {
         try {
-            setModel({ ...model, mainModelID: id })
+            setModel({ ...model, mainModelID: id, typeModel: 'assignment' })
         } catch (error) {
             setErro(`Failed to edit this assignment: ${erro.message}`)
         }

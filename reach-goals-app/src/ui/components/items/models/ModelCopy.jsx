@@ -9,13 +9,9 @@ const iconLayoutMap = {
     assignment: 'fa-solid fa-list-check'
 }
 
-const removeModelCopy = (modelID) => {
-
-}
-
 const ModelCopy = ({ type, displayRef }) => {
     const [modelCopy, setCopyModel] = useState([])
-    const { model } = useContext(ManageModelContext)
+    const { model, removeFromTransportModel, updateSubmitModel } = useContext(ManageModelContext)
 
     const icon = iconLayoutMap[type] || 'fa-solid fa-triangle-exclamation'
     const display = displayRef ?? {
@@ -26,6 +22,16 @@ const ModelCopy = ({ type, displayRef }) => {
     useEffect(( ) => {
         setCopyModel(model.transportModel)
     }, [model.transportModel])
+
+    const handleModelCopyClick = (modelID, action) => {
+        updateSubmitModel('goalID', null) 
+
+        switch (action) {
+            case 'delete': //Right now, only delete action is available
+                removeFromTransportModel(modelID)
+                break
+        }
+    }
 
     console.log('MODEL COPY - ', model)
 
@@ -41,7 +47,7 @@ const ModelCopy = ({ type, displayRef }) => {
             {
                 display.sideAction &&
                 <div className='side-actions'>
-                    <ButtonAction classBtn={`remove-${type}`} iconFa='fa-solid fa-xmark' />
+                    <ButtonAction classBtn={`remove-${type}`} iconFa='fa-solid fa-xmark' onClick={() => { handleModelCopyClick(model.id, 'delete') }} />
                 </div>
             }
         </div>

@@ -1,9 +1,15 @@
-import React, { useState } from 'react'
+import { useState, useContext, createContext } from 'react'
 
-const VisibilityContext = React.createContext()
+import { ManageModelContext } from './ManageModelProvider'
 
-const VisibilityProvider = ({children}) => {
+const VisibilityContext = createContext()
+
+const VisibilityProvider = ({ children }) => {
     const [visibleElements, setVisibleElement] = useState([])
+    const { model, resetManageModel } = useContext(ManageModelContext)
+
+    const hasPanelContext = (types = []) => //Used with ManageModelContext
+        types.some(type => visibleElements.includes('panel-center') && visibleElements.includes(type))
 
     const setSafeVisibleElement = (updateFn) => {
         setVisibleElement((prev) => {
@@ -28,7 +34,7 @@ const VisibilityProvider = ({children}) => {
                 if (target.operator.remove) {
                     if (target.class) {
                         filter = filter.filter(classPrevious => target.class.some(el => el !== classPrevious))
-                    } 
+                    }
 
                     filter.pop()
                     return filter
@@ -41,8 +47,8 @@ const VisibilityProvider = ({children}) => {
 
     const removeVisibility = (target) => {
         setSafeVisibleElement((prev) => {
-            const classType = Array.isArray(target.class)      
-            if (classType) { 
+            const classType = Array.isArray(target.class)
+            if (classType) {
                 if (target.operator.maintain) {
                     return target.class
                 }
@@ -72,13 +78,17 @@ const VisibilityProvider = ({children}) => {
             }
         })
         isVisible ? removeVisibility(parameterTarget) : updateVisibility(parameterTarget)
+
+        if (model?.mainModelID && !hasPanelContext(['assignment', 'goal'])) {
+            return console.log('READY TO CLEAN')//resetManageModel()
+        }
     }
 
     console.log('VISIBLES - ', visibleElements)
 
     return (
         <VisibilityContext.Provider value={{ visibleElements, toggleVisibility }}>
-            {children} 
+            {children}
         </VisibilityContext.Provider>
     )
 }

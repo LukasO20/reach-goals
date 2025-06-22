@@ -7,10 +7,10 @@ import { SwitchLayoutProvider } from './SwitchLayoutProvider'
 import { PageTypeProvider } from './PageTypeProvider'
 
 const ProviderApp = ({ children }) => (
-    <TitleProvider>
+    <ManageModelProvider>
         <VisibilityProvider>
-            <CheckboxProvider>
-                <ManageModelProvider>
+            <TitleProvider>
+                <CheckboxProvider>
                     <ModalListProvider>
                         <SwitchLayoutProvider>
                             <PageTypeProvider>
@@ -18,10 +18,11 @@ const ProviderApp = ({ children }) => (
                             </PageTypeProvider>
                         </SwitchLayoutProvider>
                     </ModalListProvider>
-                </ManageModelProvider>
-            </CheckboxProvider>
+                </CheckboxProvider>
+            </TitleProvider>
         </VisibilityProvider>
-    </TitleProvider>
+    </ManageModelProvider>
+
 )
 
 export default ProviderApp
