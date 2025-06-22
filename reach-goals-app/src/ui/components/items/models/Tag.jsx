@@ -5,7 +5,6 @@ import { useDeleteModel } from '../../../../hook/useDeleteModel'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider'
-import { insertModelComponent } from '../../../utils/layout/uiLayout'
 
 import { targetMap, switchLayoutMap } from '../../../../utils/mappingUtils'
 
@@ -18,7 +17,7 @@ const Tag = (props) => {
     const [erro, setErro] = useState(false)
 
     const { toggleVisibility } = useContext(VisibilityContext)
-    const { model, setModel } = useContext(ManageModelContext)
+    const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
 
     const target = targetMap(['panel-right', 'tag'])
     const display = props.display ?? {
@@ -65,7 +64,11 @@ const Tag = (props) => {
             const isSelectableModel = props.selectableModel ?? false
             if (isSelectableModel) {
                 e.stopPropagation()
-                return insertModelComponent(props, 'tag', e)
+                const selected = tag.find(m => m.id === id)
+                if (model.transportModel.some(item => item.id === selected.id)) return
+                
+                addToTransportModel(selected)
+                return updateSubmitModel({ keyObject: 'tags', value: { tagID: id }, type: 'array' })
             }
 
             setModel({ ...model, mainModelID: id })

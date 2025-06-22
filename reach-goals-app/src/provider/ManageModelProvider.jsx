@@ -36,16 +36,40 @@ const ManageModelProvider = ({ children }) => {
         })
     }
 
-    const updateSubmitModel = (keyObject, value) => {
+    const updateSubmitModel = ({ keyObject, value, type = 'single', action = 'add' }) => {
         if (!keyObject) { return console.error('To update a submitModel is necessary a key') }
 
-        setModel(prevModel => ({
-            ...prevModel,
-            submitModel: {
-                ...prevModel.submitModel,
-                [keyObject]: value
+        const submitToAdd = (prevValue) => {
+            return type === 'array'
+                ? [...(Array.isArray(prevValue) ? prevValue : []), value] : value
+        }
+
+        const submitToRemove = (prevValue) => {
+            if (type === 'array') {
+                const currentList = Array.isArray(prevValue) ? prevValue : []
+                return currentList.filter(item => {
+                    if (typeof item === 'object' && item !== null && typeof value === 'object') {
+                        return item.id !== value.id
+                    }
+                    return item !== value
+                })
+
+            } else { return value }
+        }
+
+        setModel(prev => {
+            const prevValue = prev.submitModel[keyObject]
+            const newValue = action === 'add' ? submitToAdd(prevValue) :
+                action === 'remove' ? submitToRemove(prevValue) : null
+
+            return {
+                ...prev,
+                submitModel: {
+                    ...prev.submitModel,
+                    [keyObject]: newValue
+                }
             }
-        }))
+        })
     }
 
     const resetManageModel = () => {

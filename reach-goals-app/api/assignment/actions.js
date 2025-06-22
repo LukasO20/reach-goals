@@ -23,7 +23,7 @@ const addAssignment = async (req, res) => {
             duration: durationFormat,
             start: startDate,
             end: endDate,
-            goal: goal ? { connect: { id: Number(goal) } } : null,
+            //goal: goal ? { connect: { id: Number(goal) } } : null,
             tags: {
                 create: tags.map(tagID => ({
                     tag: { connect: { id: Number(tagID) } }
@@ -53,7 +53,7 @@ const addAssignment = async (req, res) => {
 const updateAssignment = async (req, res) => {
     if (req.method === 'PUT') {
         const { id } = req.params
-        const { name, description, status, duration, start, end, goal, tags } = req.body
+        const { name, description, status, duration, start, end, goal, goalID, tags } = req.body
 
         const startDate = start ? moment(start, 'DD/MM/YYYY').toISOString() : new Date().toISOString()
         const endDate = end ? moment(end, 'DD/MM/YYYY').toISOString() : null
@@ -66,7 +66,8 @@ const updateAssignment = async (req, res) => {
             duration: durationFormat,
             start: startDate,
             end: endDate,
-            goal: goal ? { connect: { id: Number(goal) } } : null
+            goalID: goalID ? Number(goalID) : null,
+            //goal: goal ? { connect: { id: Number(goal) } } : null
         }
 
         const formattedData = formatObject(rawObject)

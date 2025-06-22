@@ -19,8 +19,8 @@ const Goal = (props) => {
     const [goal, setGoal] = useState([])
     const [erro, setErro] = useState(false)
 
-    const { toggleVisibility } = useContext(VisibilityContext)
-    const { model, setModel, addToTransportModel, updateSubmitModel } = useContext(ManageModelContext)
+    const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
+    const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
     const { switchLayoutComponent } = useContext(SwitchLayoutContext)
 
     const location = useLocation()
@@ -71,10 +71,10 @@ const Goal = (props) => {
         if (isSelectableModel) {
             e.stopPropagation()     
             const selected = goal.find(m => m.id === id)
-            if (model.transportModel.length > 1 && model.typeModel !== 'assignment') { return } 
+            if (model.transportModel.length > 0 && visibleElements.includes('panel-center') && visibleElements.includes('assignment')) return
             
             addToTransportModel(selected)
-            return updateSubmitModel('goalID', id)
+            return updateSubmitModel({ keyObject: 'goalID', value: id })
         }
 
         setModel({ ...model, mainModelID: id })

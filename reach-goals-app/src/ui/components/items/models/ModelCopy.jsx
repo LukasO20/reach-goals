@@ -6,7 +6,8 @@ import ButtonAction from '../elements/ButtonAction'
 
 const iconLayoutMap = {
     goal: 'fa-solid fa-bullseye',
-    assignment: 'fa-solid fa-list-check'
+    assignment: 'fa-solid fa-list-check',
+    tag: 'fa-solid fa-tag',
 }
 
 const ModelCopy = ({ type, displayRef }) => {
@@ -19,16 +20,25 @@ const ModelCopy = ({ type, displayRef }) => {
         type: 'mini-list' //Right now, is necessary only one style
     }
 
-    useEffect(( ) => {
+    useEffect(() => {
         setCopyModel(model.transportModel)
     }, [model.transportModel])
 
-    const handleModelCopyClick = (modelID, action) => {
-        updateSubmitModel('goalID', null) 
-
+    const handleModelCopyClick = (modelID, action, type) => {
         switch (action) {
             case 'delete': //Right now, only delete action is available
                 removeFromTransportModel(modelID)
+
+                if (!type) { return console.error('No type provided for model copy delete action') }
+                switch (type) {
+                    case 'goal':
+                        updateSubmitModel({ keyObject: 'goalID', value: null, action: 'remove'})
+                        break
+                    case 'assignment':
+                        break
+                    case 'tag':
+                        updateSubmitModel({ keyObject: 'tags', value: { tagID: modelID }, type: 'array', action: 'remove' })
+                }
                 break
         }
     }
