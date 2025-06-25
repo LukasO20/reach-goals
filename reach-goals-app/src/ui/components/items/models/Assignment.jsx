@@ -9,7 +9,6 @@ import { ManageModelContext } from '../../../../provider/ManageModelProvider'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider'
 import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider'
 
-import { insertModelComponent } from '../../../utils/layout/uiLayout'
 import { targetMap, switchLayoutMap } from '../../../../utils/mappingUtils'
 
 import ButtonAction from '../elements/ButtonAction'
@@ -21,7 +20,7 @@ const Assignment = (props) => {
     const [erro, setErro] = useState(false)
 
     const { toggleVisibility } = useContext(VisibilityContext)
-    const { model, setModel } = useContext(ManageModelContext)
+    const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
     const { switchLayoutComponent } = useContext(SwitchLayoutContext)
 
     const location = useLocation()
@@ -61,18 +60,19 @@ const Assignment = (props) => {
     }
 
     const editAssignment = useCallback((id) => {
-        try {
-            setModel({ ...model, mainModelID: id, typeModel: 'assignment' })
-        } catch (error) {
-            setErro(`Failed to edit this assignment: ${erro.message}`)
-        }
+        try { setModel({ ...model, mainModelID: id, typeModel: 'assignment' }) }
+        catch (error) { setErro(`Failed to edit this assignment: ${erro.message}`) }
     }, [setModel])
 
     const handleAssignmentClick = (id, e) => {
         const isSelectableModel = props.selectableModel ?? false
         if (isSelectableModel) {
             e.stopPropagation()
-            return insertModelComponent(props, 'assignment', e)
+            const selected = assignment.find(m => m.id === id)
+            if (model.transportModel.some(item => item.id === selected.id)) return
+
+            addToTransportModel({...selected, type: 'assignment' })
+            return updateSubmitModel({ keyObject: 'assignments', value: { id: id }, type: 'array' })
         }
 
         setModel({ ...model, mainModelID: id })

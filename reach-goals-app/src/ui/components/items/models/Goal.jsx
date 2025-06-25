@@ -60,7 +60,7 @@ const Goal = (props) => {
     }
 
     const editGoal = useCallback((id) => {
-        try { setModel({ ...model, mainModelID: id }) }
+        try { setModel({ ...model, mainModelID: id, typeModel: 'goal' }) }
         catch (error) { setErro(`Failed to edit this goal: ${erro.message}`) }
     }, [setModel])
 
@@ -73,7 +73,7 @@ const Goal = (props) => {
             const selected = goal.find(m => m.id === id)
             if (model.transportModel.length > 0 && visibleElements.includes('panel-center') && visibleElements.includes('assignment')) return
             
-            addToTransportModel(selected)
+            addToTransportModel({...selected, type: 'goal' })
             return updateSubmitModel({ keyObject: 'goalID', value: id })
         }
 

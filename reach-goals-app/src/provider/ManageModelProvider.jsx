@@ -21,7 +21,7 @@ const ManageModelProvider = ({ children }) => {
                 ...prevModel,
                 transportModel: [
                     ...prevModel.transportModel,
-                    { id: newModel.id, name: newModel.name }]
+                    { id: newModel.id, name: newModel.name, type: newModel.type }]
             }
         })
     }
@@ -37,7 +37,7 @@ const ManageModelProvider = ({ children }) => {
     }
 
     const updateSubmitModel = ({ keyObject, value, type = 'single', action = 'add' }) => {
-        if (!keyObject) { return console.error('To update a submitModel is necessary a key') }
+        if (!keyObject) return console.error('To update a submitModel is necessary a key')
 
         const submitToAdd = (prevValue) => {
             return type === 'array'

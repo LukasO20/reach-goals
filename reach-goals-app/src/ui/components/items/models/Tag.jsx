@@ -52,30 +52,24 @@ const Tag = (props) => {
     }
 
     const editTag = useCallback((id) => {
-        try {
-            setModel({ ...model, mainModelID: id })
-        } catch (error) {
-            setErro(`Failed to edit this tag: ${erro.message}`)
-        }
+        try { setModel({ ...model, mainModelID: id, typeModel: 'tag' }) }
+        catch (error) { setErro(`Failed to edit this tag: ${erro.message}`) }
     }, [setModel])
 
-    const handleTagClick = useCallback(
-        (id, e) => {
-            const isSelectableModel = props.selectableModel ?? false
-            if (isSelectableModel) {
-                e.stopPropagation()
-                const selected = tag.find(m => m.id === id)
-                if (model.transportModel.some(item => item.id === selected.id)) return
-                
-                addToTransportModel(selected)
-                return updateSubmitModel({ keyObject: 'tags', value: { tagID: id }, type: 'array' })
-            }
+    const handleTagClick = (id, e) => {
+        const isSelectableModel = props.selectableModel ?? false
+        if (isSelectableModel) {
+            e.stopPropagation()
+            const selected = tag.find(m => m.id === id)
+            if (model.transportModel.some(item => item.id === selected.id)) return
 
-            setModel({ ...model, mainModelID: id })
-            toggleVisibility(target, e)
-        },
-        [setModel, toggleVisibility, target]
-    )
+            addToTransportModel({...selected, type: 'tag' })
+            return updateSubmitModel({ keyObject: 'tags', value: { id: id }, type: 'array' })
+        }
+
+        setModel({ ...model, mainModelID: id })
+        toggleVisibility(target, e)
+    }
 
     console.log('TAG LOADED - ', tag)
 
