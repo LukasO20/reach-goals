@@ -64,7 +64,7 @@ const Tag = (props) => {
             if (model.transportModel.some(item => item.id === selected.id)) return
 
             addToTransportModel({...selected, type: 'tag' })
-            return updateSubmitModel({ keyObject: 'tags', value: { id: id }, type: 'array' })
+            return updateSubmitModel({ keyObject: 'tags', value: { tagID: id }, type: 'array' })
         }
 
         setModel({ ...model, mainModelID: id })

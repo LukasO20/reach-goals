@@ -53,7 +53,7 @@ const addAssignment = async (req, res) => {
 const updateAssignment = async (req, res) => {
     if (req.method === 'PUT') {
         const { id } = req.params
-        const { name, description, status, duration, start, end, goal, goalID, tags } = req.body
+        const { name, description, status, duration, start, end, goalID, tags } = req.body
 
         const startDate = start ? moment(start, 'DD/MM/YYYY').toISOString() : new Date().toISOString()
         const endDate = end ? moment(end, 'DD/MM/YYYY').toISOString() : null
@@ -67,18 +67,14 @@ const updateAssignment = async (req, res) => {
             start: startDate,
             end: endDate,
             goalID: goalID ? Number(goalID) : null,
-            //goal: goal ? { connect: { id: Number(goal) } } : null
         }
 
         const formattedData = formatObject(rawObject)
-        console.log('ASSIGN TO ADD - ', formattedData)
+        console.log('ASSIGN TO ADD - ', formattedData, tags)
 
         try {
 
-            await prisma.tagOnAssignment.createMany({
-                data: tags?.map(tagID => ({ assignmentID: Number(id), tagID: Number(tagID) })) || [],
-                skipDuplicates: true
-            })
+            handleUpdateTagOnAssignment(id, tags)
 
             const assignment = await prisma.assignment.update({
                 where: { id: Number(id) },
@@ -208,7 +204,7 @@ const getAssignmentOnTag = async (req, res) => {
             }
 
             return res.status(200).json(assignment)
-            
+
         } catch (error) {
             console.error(error)
             return res.status(500).json({ error: 'Failed to fetch assignments with this tag' })
@@ -236,6 +232,27 @@ const getAssignmentWithoutGoal = async (req, res) => {
         }
 
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
+}
+
+const handleUpdateTagOnAssignment = async (assignmentID, tags) => {
+    if (!assignmentID || !tags) return
+
+    try {
+        await prisma.tagOnAssignment.deleteMany({
+            where: { assignmentID: Number(assignmentID) }
+        })
+
+        await prisma.tagOnAssignment.createMany({
+            data: tags?.map(tag => ({
+                assignmentID: Number(assignmentID),
+                tagID: Number(tag.tagID)
+            })),
+            skipDuplicates: true
+        })
+
+    } catch (error) {
+        console.error('Failed to update tags on assignment:', error)
+    }
 }
 
 module.exports = { addAssignment, updateAssignment, deleteAssignment, getAssignment, getAssignmentOnTag, getAssignmentOnGoal, getAssignmentWithoutGoal }
