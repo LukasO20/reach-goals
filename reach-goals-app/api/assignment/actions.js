@@ -9,7 +9,7 @@ const formatObject = (objectData) => { //CREATE AN UNIQUE "formatObject" functio
 
 const addAssignment = async (req, res) => {
     if (req.method === 'POST') {
-        const { name, description, status, duration, start, end, goal, tags } = req.body
+        const { name, description, status, duration, start, end, goalID, tags } = req.body
         if (!name) { return res.status(400).json({ error: 'Name is required.' }) }
 
         const startDate = start ? moment(start, 'DD/MM/YYYY').toISOString() : new Date().toISOString()
@@ -23,10 +23,10 @@ const addAssignment = async (req, res) => {
             duration: durationFormat,
             start: startDate,
             end: endDate,
-            //goal: goal ? { connect: { id: Number(goal) } } : null,
+            goalID: goalID ? Number(goalID) : null,
             tags: {
-                create: tags.map(tagID => ({
-                    tag: { connect: { id: Number(tagID) } }
+                create: tags.map(tag => ({
+                    tag: { connect: { id: Number(tag.tagID) } }
                 }))
             }
         }
@@ -73,7 +73,6 @@ const updateAssignment = async (req, res) => {
         console.log('ASSIGN TO ADD - ', formattedData, tags)
 
         try {
-
             handleUpdateTagOnAssignment(id, tags)
 
             const assignment = await prisma.assignment.update({

@@ -28,11 +28,14 @@ const addGoal = async (req, res) => {
             start: startDate,
             end: endDate,
             assignments: {
-                connect: assignments.map((id) => ({ id: Number(id) }))
+                connect: assignments.map(assignment =>
+                ({
+                    id: Number(assignment.id)
+                }))
             },
             tags: {
-                create: tags.map(tagID => ({
-                    tag: { connect: { id: Number(tagID) } }
+                create: tags.map(tag => ({
+                    tag: { connect: { id: Number(tag.tagID) } }
                 }))
             }
         }
@@ -66,7 +69,6 @@ const updateGoal = async (req, res) => {
         const endDate = end ? moment(end, typeDate).toISOString() : null
 
         const assignmentIds = extractIds(assignments, 'id')
-        const tagIds = extractIds(tags, 'tagID')
 
         const rawObject = {
             name,
@@ -84,11 +86,7 @@ const updateGoal = async (req, res) => {
         console.log('Goal TO UPDATE - ', formattedData)
 
         try {
-
-            await prisma.tagOnGoal.createMany({
-                data: tagIds?.map(tagID => ({ goalID: Number(id), tagID: Number(tagID) })) || [],
-                skipDuplicates: true
-            })
+            handleUpdateTagOnGoal(id, tags)
 
             const goal = await prisma.goal.update({
                 where: { id: Number(id) },
@@ -180,7 +178,7 @@ const getGoalOnAssignment = async (req, res) => {
             }
 
             return res.status(200).json(goal)
-            
+
         } catch (error) {
             console.error(error)
             return res.status(500).json({ error: 'Failed to fetch goals on this assignment' })
@@ -214,7 +212,7 @@ const getGoalOnTag = async (req, res) => {
             }
 
             return res.status(200).json(goal)
-            
+
         } catch (error) {
             console.error(error)
             return res.status(500).json({ error: 'Failed to fetch goals with this tag' })
@@ -248,12 +246,33 @@ const getGoalWithoutAssignment = async (req, res) => {
             }
 
             return res.status(200).json(goal)
-            
+
         } catch (error) {
             console.error(error)
             return res.status(500).json({ error: 'Failed to fetch goals on this assignment' })
         }
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
+}
+
+const handleUpdateTagOnGoal = async (goalID, tags) => {
+    if (!goalID || !tags) return
+
+    try {
+        await prisma.tagOnGoal.deleteMany({
+            where: { goalID: Number(goalID) }
+        })
+
+        await prisma.tagOnGoal.createMany({
+            data: tags?.map(tag => ({
+                goalID: Number(goalID),
+                tagID: Number(tag.tagID)
+            })),
+            skipDuplicates: true
+        })
+
+    } catch (error) {
+        console.error('Failed to update tags on goal:', error)
+    }
 }
 
 module.exports = { addGoal, updateGoal, deleteGoal, getGoal, getGoalOnTag, getGoalOnAssignment, getGoalWithoutAssignment }

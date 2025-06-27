@@ -28,7 +28,7 @@ const ManageModelProvider = ({ children }) => {
 
     const removeFromTransportModel = (modelID) => {
         setModel(prevModel => {
-            const updatedTransportModel = prevModel.transportModel.filter(item => item.id !== modelID)
+            const updatedTransportModel = prevModel.transportModel.filter(item => (item.id ?? item.tagID) !== modelID)
             return {
                 ...prevModel,
                 transportModel: updatedTransportModel

@@ -39,7 +39,7 @@ const ModelCopy = ({ type, displayRef }) => {
                         updateSubmitModel({ keyObject: 'assignments', value: { id: modelID }, type: 'array', action: 'remove' })
                         break
                     case 'tag':
-                        updateSubmitModel({ keyObject: 'tags', value: { id: modelID }, type: 'array', action: 'remove' })
+                        updateSubmitModel({ keyObject: 'tags', value: { tagID: modelID }, type: 'array', action: 'remove' })
                 }
                 break
         }
