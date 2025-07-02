@@ -1,0 +1,147 @@
+import { prisma } from '../connectdb.js'
+
+const addGoal = async (data) => {
+    if (!data) return
+
+    try {
+        return await prisma.goal.create({
+            data: data,
+            include: { assignments: true, tags: { include: { tag: true } } }
+        })
+    }
+    catch (error) {
+        console.error(error)
+        return false
+    }
+}
+
+const updateGoal = async (goalID, data) => {
+    if (!data) return
+
+    try {
+        return await prisma.goal.update({
+            where: { id: Number(goalID) },
+            data: data,
+            include: { assignments: true, tags: { include: { tag: true } } }
+        })
+    }
+    catch (error) {
+        console.error(error)
+        return false
+    }
+}
+
+const deleteGoal = async (goalID) => {
+    if (!goalID) return
+
+    try {
+        return await prisma.goal.delete({
+            where: { id: Number(goalID) }
+        })
+    }
+    catch (error) {
+        console.error(error)
+        return false
+    }
+}
+
+const getGoal = async (goalID) => {
+    if (!goalID) return
+
+    try {
+        if (goalID !== undefined && !isNaN(goalID)) {
+            return await prisma.goal.findUnique({
+                where: { id: Number(goalID) },
+                include: { assignments: true, tags: true }
+            })
+        } else {
+            return await prisma.goal.findMany({
+                include: { assignments: true, tags: true }
+            })
+        }
+    }
+    catch (error) {
+        console.error(error)
+        return false
+    }
+}
+
+const getGoalOnAssignment = async (assignmentID) => {
+    try {
+        const isTrue = assignmentID === true || assignmentID === 'true'
+        const isNumber = !isNaN(assignmentID) && assignmentID !== '' && assignmentID !== null && assignmentID !== undefined
+
+        if (!isTrue && !isNumber) return
+
+        if (isTrue) {
+            return await prisma.goal.findMany({
+                where: { assignments: { some: {} } },
+                include: { assignments: true, tags: true }
+            })
+        } else if (isNumber) {
+            return await prisma.goal.findMany({
+                where: { assignments: { none: { id: Number(assignmentID) } } },
+                include: { assignments: true, tags: true }
+            })
+        }
+    }
+    catch (error) {
+        console.error(error)
+        return false
+    }
+}
+
+const getGoalOnTag = async (tagID) => {
+    try {
+        const isTrue = tagID === true || tagID === 'true'
+        const isNumber = !isNaN(tagID) && tagID !== '' && tagID !== null && tagID !== undefined
+
+        if (!isTrue && !isNumber) return
+
+        if (isTrue) {
+            return await prisma.goal.findMany({
+                where: { tags: { some: {} } },
+                include: { assignments: true, tags: true }
+            })
+        } else if (isNumber) {
+            return await prisma.goal.findMany({
+                where: { tags: { id: Number(tagID) } },
+                include: { assignments: true, tags: true }
+            })
+        }
+    }
+    catch (error) {
+        console.error(error)
+        return false
+    }
+}
+
+const getGoalWithoutAssignment = async (assignmentID) => {
+    try {
+        const isTrue = assignmentID === true || assignmentID === 'true'
+        const isNumber = !isNaN(assignmentID) && assignmentID !== '' && assignmentID !== null && assignmentID !== undefined
+
+        if (!isTrue && !isNumber) return
+
+        if (isTrue) {
+            return await prisma.goal.findMany({
+                where: { assignments: { none: {} } },
+                include: { assignments: true, tags: true }
+            })
+        } else if (isNumber) {
+            return await prisma.goal.findMany({
+                where: { assignments: { none: { id: Number(assignmentID) } } },
+                include: { assignments: true, tags: true }
+            })
+        }
+    }
+    catch (error) {
+        console.error(error)
+        return false
+    }
+}
+
+export {
+    addGoal, updateGoal, deleteGoal, getGoal, getGoalOnAssignment, getGoalOnTag,
+    getGoalWithoutAssignment
+}

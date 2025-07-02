@@ -1,18 +1,18 @@
-const prisma = require('../connectdb')
-const moment = require('moment')
+import {
+    addGoal, updateGoal, deleteGoal, getGoal, getGoalOnAssignment,
+    getGoalOnTag, getGoalWithoutAssignment
+} from './service.js'
 
-const formatObject = (objectData) => { //CREATE AN UNIQUE "formatObject" function and share it
-    return Object.fromEntries(
-        Object.entries(objectData).filter(([_, value]) => value !== undefined && value !== "")
-    )
-}
+import { formatObject } from '../utils/utils.js'
+
+import moment from 'moment'
 
 const extractIds = (arr, key = 'id') => {
     if (!Array.isArray(arr)) return []
     return arr.map(item => typeof item === 'object' ? Number(item[key]) : Number(item))
 }
 
-const addGoal = async (req, res) => {
+const handleAddGoal = async (req, res) => {
     if (req.method === 'POST') {
         const { name, description, status, start, end, assignments, tags } = req.body
 
@@ -42,26 +42,20 @@ const addGoal = async (req, res) => {
 
         const formattedData = formatObject(rawObject)
         console.log('Goal TO ADD - ', formattedData)
+        const goal = await addGoal(formattedData)
 
-        try {
-            const goal = await prisma.goal.create({
-                data: formattedData,
-                include: { assignments: true, tags: { include: { tag: true } } }
-            })
-
+        if (goal) {
             return res.status(201).json(goal)
-
-        } catch (error) {
-            console.error(error)
+        } else {
             return res.status(500).json({ error: 'Failed to create goal' })
         }
 
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-const updateGoal = async (req, res) => {
+const handleUpdateGoal = async (req, res) => {
     if (req.method === 'PUT') {
-        const { id } = req.params
+        const { goalID } = req.params
         const { name, description, status, start, end, assignments, tags } = req.body
 
         const typeDate = ['DD/MM/YYYY', 'YYYY-MM-DD', 'YYYY/MM/DD']
@@ -85,176 +79,90 @@ const updateGoal = async (req, res) => {
         console.log('Goal RECEVEID - ', rawObject)
         console.log('Goal TO UPDATE - ', formattedData)
 
-        try {
-            handleUpdateTagOnGoal(id, tags)
+        helperUpdateTagOnGoal(goalID, tags)
+        helperUpdateUnlinkTagOnGoal(goalID, tags)
+        const goal = await updateGoal(goalID, formattedData)
 
-            const goal = await prisma.goal.update({
-                where: { id: Number(id) },
-                data: formattedData,
-                include: { assignments: true, tags: { include: { tag: true } } }
-            })
-
+        if (goal) {
             return res.status(200).json(goal)
-
-        } catch (error) {
-            console.error(error)
+        } else {
             return res.status(500).json({ error: 'Failed updating goals' })
         }
 
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-const deleteGoal = async (req, res) => {
+const handleDeleteGoal = async (req, res) => {
     if (req.method === 'DELETE') {
+        const { goalID } = req.params
+        const goal = await deleteGoal(goalID)
 
-        const { id } = req.params
-
-        try {
-
-            const goal = await prisma.goal.delete({
-                where: { id: Number(id) }
-            })
-
+        if (goal) {
             return res.status(200).json(goal)
-
-        } catch (error) {
-            console.error(error)
+        } else {
             return res.status(500).json({ error: 'Failed to delete this goal' })
         }
 
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-const getGoal = async (req, res) => {
+const handleGetGoal = async (req, res) => {
     if (req.method === 'GET') {
-        try {
-            const { id } = req.params
-            let goal = undefined
+        const { goalID } = req.params
+        const goal = await getGoal(goalID)
 
-            if (id !== undefined && !isNaN(id)) {
-                goal = await prisma.goal.findUnique({
-                    where: { id: Number(id) },
-                    include: { assignments: true, tags: true }
-                })
-            } else {
-                goal = await prisma.goal.findMany({
-                    include: { assignments: true, tags: true }
-                })
-            }
-
+        if (goal) {
             return res.status(200).json(Array.isArray(goal) ? goal : [goal])
-
-        } catch (error) {
-            console.error(error)
-            return res.status(500).json({ error: 'Failed to fetch goals' })
+        } else {
+            return res.status(500).json({ error: 'Failed to get a goal' })
         }
 
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-const getGoalOnAssignment = async (req, res) => {
+const handleGetGoalOnAssignment = async (req, res) => {
     if (req.method === 'GET') {
-        try {
-            const { relationID } = req.params
-            let goal = undefined
+        const { assignmentID } = req.params
+        const goal = await getGoalOnAssignment(assignmentID)
 
-            const isTrue = relationID === true || relationID === 'true'
-            const isNumber = !isNaN(relationID) && relationID !== '' && relationID !== null && relationID !== undefined
-
-            if (!isTrue && !isNumber) {
-                return res.status(400).json({ error: "Parameter 'relationID' invalid." })
-            }
-
-            if (isTrue) {
-                goal = await prisma.goal.findMany({
-                    where: { assignments: { some: {} } },
-                    include: { assignments: true, tags: true }
-                })
-            } else if (isNumber) {
-                goal = await prisma.goal.findMany({
-                    where: { assignments: { none: { id: Number(relationID) } } },
-                    include: { assignments: true, tags: true }
-                })
-            }
-
+        if (goal) {
             return res.status(200).json(goal)
-
-        } catch (error) {
-            console.error(error)
+        } else {
             return res.status(500).json({ error: 'Failed to fetch goals on this assignment' })
         }
+
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-const getGoalOnTag = async (req, res) => {
+const handleGetGoalOnTag = async (req, res) => {
     if (req.method === 'GET') {
-        try {
-            const { relationID } = req.params
-            let goal = undefined
+        const { tagID } = req.params
+        const goal = await getGoalOnTag(tagID)
 
-            const isTrue = relationID === true || relationID === 'true'
-            const isNumber = !isNaN(relationID) && relationID !== '' && relationID !== null && relationID !== undefined
-
-            if (!isTrue && !isNumber) {
-                return res.status(400).json({ error: "Parameter 'relationID' invalid." })
-            }
-
-            if (isTrue) {
-                goal = await prisma.goal.findMany({
-                    where: { tags: { some: {} } },
-                    include: { assignments: true, tags: true }
-                })
-            } else if (isNumber) {
-                goal = await prisma.goal.findMany({
-                    where: { tags: { id: Number(relationID) } },
-                    include: { assignments: true, tags: true }
-                })
-            }
-
+        if (goal) {
             return res.status(200).json(goal)
-
-        } catch (error) {
-            console.error(error)
+        } else {
             return res.status(500).json({ error: 'Failed to fetch goals with this tag' })
         }
+
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-const getGoalWithoutAssignment = async (req, res) => {
+const handleGetGoalWithoutAssignment = async (req, res) => {
     if (req.method === 'GET') {
-        try {
-            const { relationID } = req.params
-            let goal = undefined
+        const { assignmentID } = req.params
+        const goal = await getGoalWithoutAssignment(assignmentID)
 
-            const isTrue = relationID === true || relationID === 'true'
-            const isNumber = !isNaN(relationID) && relationID !== '' && relationID !== null && relationID !== undefined
-
-            if (!isTrue && !isNumber) {
-                return res.status(400).json({ error: "Parameter 'relationID' invalid." })
-            }
-
-            if (isTrue) {
-                goal = await prisma.goal.findMany({
-                    where: { assignments: { none: {} } },
-                    include: { assignments: true, tags: true }
-                })
-            } else if (isNumber) {
-                goal = await prisma.goal.findMany({
-                    where: { assignments: { none: { id: Number(relationID) } } },
-                    include: { assignments: true, tags: true }
-                })
-            }
-
+        if (goal) {
             return res.status(200).json(goal)
-
-        } catch (error) {
-            console.error(error)
+        } else {
             return res.status(500).json({ error: 'Failed to fetch goals on this assignment' })
         }
+
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-const handleUpdateTagOnGoal = async (goalID, tags) => {
+const helperUpdateTagOnGoal = async (goalID, tags) => {
     if (!goalID || !tags) return
 
     try {
@@ -275,4 +183,22 @@ const handleUpdateTagOnGoal = async (goalID, tags) => {
     }
 }
 
-module.exports = { addGoal, updateGoal, deleteGoal, getGoal, getGoalOnTag, getGoalOnAssignment, getGoalWithoutAssignment }
+const helperUpdateUnlinkTagOnGoal = async (goalID, tags) => {
+    if (!Array.isArray(tags)) { return }
+
+    const getTags = await prisma.tagOnGoal.findMany({
+        where: {
+            goalID: Number(goalID),
+        }
+    })
+
+    const toUnlink = !tags.length ? getTags : getTags.filter(tag => !tags.includes(tag.id))
+
+    //OBS: CRIE ENDPOINT COM INCIAL HANDLE (FAZ SENTIDO PRO HTTP)
+    //HANDLE chama funções reutilizáveis
+}
+
+export {
+    handleAddGoal, handleUpdateGoal, handleDeleteGoal, handleGetGoal, handleGetGoalOnAssignment,
+    handleGetGoalOnTag, handleGetGoalWithoutAssignment
+}

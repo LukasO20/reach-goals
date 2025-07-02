@@ -1,15 +1,15 @@
 import { useContext, useEffect, useState } from 'react'
-import { VisibilityContext } from '../../../provider/VisibilityProvider'
-import { ManageModelContext } from '../../../provider/ManageModelProvider'
-import { ModalListContext } from '../../../provider/ModalListProvider'
+import { VisibilityContext } from '../../../provider/VisibilityProvider.jsx'
+import { ManageModelContext } from '../../../provider/ManageModelProvider.jsx'
+import { ModalListContext } from '../../../provider/ModalListProvider.jsx'
 
-import { useGetModel } from '../../../hook/useGetModel'
-import { useSaveModel } from '../../../hook/useSaveModel'
+import { useGetModel } from '../../../hook/useGetModel.js'
+import { useSaveModel } from '../../../hook/useSaveModel.js'
 
-import { modalListMap } from '../../../utils/mappingUtils'
+import { modalListMap } from '../../../utils/mappingUtils.js'
 
-import ButtonAction from '../items/elements/ButtonAction'
-import Form from '../items/forms/Form'
+import ButtonAction from '../items/elements/ButtonAction.jsx'
+import Form from '../items/forms/Form.jsx'
 
 import moment from 'moment'
 

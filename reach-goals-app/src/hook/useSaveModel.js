@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import * as tagAction from '../provider/tag/tagAction'
-import * as goalAction from '../provider/goal/goalAction'
-import * as assignmentAction from '../provider/assignment/assignmentAction'
+import * as tagAction from '../provider/tag/tagAction.js'
+import * as goalAction from '../provider/goal/goalAction.js'
+import * as assignmentAction from '../provider/assignment/assignmentAction.js'
 
 const useSaveModel = () => {
     const [data, setData] = useState([])

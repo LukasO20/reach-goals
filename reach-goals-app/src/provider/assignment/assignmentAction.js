@@ -42,15 +42,15 @@ export const updateAssignment = async (assignment) => {
     }
 }
 
-export const deleteAssignment = async (id) => {
+export const deleteAssignment = async (assignmentID) => {
     try {
-        const urlUnlinkTag = `${apiURL}/api/tag/actions/unlink-all-assignment/${id}`
+        const urlUnlinkTag = `${apiURL}/api/tag/actions/unlink-all-assignment/${assignmentID}`
         const responseUnlinkTag = await fetch(urlUnlinkTag, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
         })
 
-        const urlDeletAssignment = `${apiURL}/api/assignment/actions/${id}`
+        const urlDeletAssignment = `${apiURL}/api/assignment/actions/${assignmentID}`
         const response = await fetch(urlDeletAssignment, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
@@ -71,10 +71,10 @@ export const deleteAssignment = async (id) => {
     }
 }
 
-export const getAssignment = async (id) => {
+export const getAssignment = async (assignmentID) => {
     try {
-        const url = (id !== undefined && !isNaN(id))
-            ? `${apiURL}/api/assignment/actions/${id}`
+        const url = (assignmentID !== undefined && !isNaN(assignmentID))
+            ? `${apiURL}/api/assignment/actions/${assignmentID}`
             : `${apiURL}/api/assignment/actions`
 
         const response = await fetch(url, {
@@ -95,9 +95,9 @@ export const getAssignment = async (id) => {
     }
 }
 
-export const getAssignmentOnTag = async (id) => {
+export const getAssignmentOnTag = async (tagID) => {
     try {
-        const url = `${apiURL}/api/assignment/actions/relation-tag/${id}`
+        const url = `${apiURL}/api/assignment/actions/relation-tag/${tagID}`
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
@@ -117,9 +117,9 @@ export const getAssignmentOnTag = async (id) => {
     }
 }
 
-export const getAssignmentOnGoal = async (id) => {
+export const getAssignmentOnGoal = async (goalID) => {
     try {
-        const url = `${apiURL}/api/assignment/actions/relation-goal/${id}`
+        const url = `${apiURL}/api/assignment/actions/relation-goal/${goalID}`
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },

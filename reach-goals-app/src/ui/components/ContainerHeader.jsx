@@ -1,12 +1,12 @@
 import { useContext } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import { TitleContext } from '../../provider/TitleProvider'
-import { VisibilityContext } from '../../provider/VisibilityProvider'
+import { TitleContext } from '../../provider/TitleProvider.jsx'
+import { VisibilityContext } from '../../provider/VisibilityProvider.jsx'
 
-import { targetMap, switchLayoutMap } from '../../utils/mappingUtils'
+import { targetMap, switchLayoutMap } from '../../utils/mappingUtils.js'
 
-import ButtonLink from './items/elements/ButtonLink'
+import ButtonLink from './items/elements/ButtonLink.jsx'
 
 const ContainerH = () => {
     const { title } = useContext(TitleContext)

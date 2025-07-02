@@ -1,10 +1,10 @@
-import { TitleProvider } from './TitleProvider'
-import { VisibilityProvider } from './VisibilityProvider'
-import { CheckboxProvider } from './CheckboxProvider'
-import { ManageModelProvider } from './ManageModelProvider'
-import { ModalListProvider } from './ModalListProvider'
-import { SwitchLayoutProvider } from './SwitchLayoutProvider'
-import { PageTypeProvider } from './PageTypeProvider'
+import { TitleProvider } from './TitleProvider.jsx'
+import { VisibilityProvider } from './VisibilityProvider.jsx'
+import { CheckboxProvider } from './CheckboxProvider.jsx'
+import { ManageModelProvider } from './ManageModelProvider.jsx'
+import { ModalListProvider } from './ModalListProvider.jsx'
+import { SwitchLayoutProvider } from './SwitchLayoutProvider.jsx'
+import { PageTypeProvider } from './PageTypeProvider.jsx'
 
 const ProviderApp = ({ children }) => (
     <ManageModelProvider>

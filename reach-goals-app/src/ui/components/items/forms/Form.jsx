@@ -1,14 +1,14 @@
 import { useContext } from 'react'
 
-import ModalList from '../../panels/ModalList'
-import ButtonAction from '../elements/ButtonAction'
-import ButtonDropdown from '../elements/ButtonDropdown'
-import ModelSwitcher from '../models/ModelSwitcher'
-import ModelCopy from '../models/ModelCopy'
+import ModalList from '../../panels/ModalList.jsx'
+import ButtonAction from '../elements/ButtonAction.jsx'
+import ButtonDropdown from '../elements/ButtonDropdown.jsx'
+import ModelSwitcher from '../models/ModelSwitcher.jsx'
+import ModelCopy from '../models/ModelCopy.jsx'
 
-import { ManageModelContext } from '../../../../provider/ManageModelProvider'
+import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 
-import { targetMap } from '../../../../utils/mappingUtils'
+import { targetMap } from '../../../../utils/mappingUtils.js'
 
 const iconMap = {
     assignment: 'fa-solid fa-list-check',

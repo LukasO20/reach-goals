@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 
-import { VisibilityContext } from '../../../../provider/VisibilityProvider'
-import { ManageModelContext } from '../../../../provider/ManageModelProvider'
+import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
+import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 
 import ButtonAction from './ButtonAction'
 

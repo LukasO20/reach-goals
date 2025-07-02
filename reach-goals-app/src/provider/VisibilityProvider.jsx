@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext, createContext } from 'react'
 
-import { ManageModelContext } from './ManageModelProvider'
+import { ManageModelContext } from './ManageModelProvider.jsx'
 
 const VisibilityContext = createContext()
 

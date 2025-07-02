@@ -1,8 +1,8 @@
-import ButtonAction from '../../elements/ButtonAction'
-import Assignment from '../../models/Assignment'
-import Goal from '../../models/Goal'
+import ButtonAction from '../../elements/ButtonAction.jsx'
+import Assignment from '../../models/Assignment.jsx'
+import Goal from '../../models/Goal.jsx'
 
-import { targetMap } from '../../../../../utils/mappingUtils'
+import { targetMap } from '../../../../../utils/mappingUtils.js'
 
 const switchSectionLayout = (model, type) => {
     switch (type) {

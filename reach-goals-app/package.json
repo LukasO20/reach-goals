@@ -2,6 +2,7 @@
   "name": "reach-goals-app",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@prisma/client": "^5.22.0",
     "@testing-library/jest-dom": "^5.17.0",

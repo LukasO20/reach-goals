@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-import { useGetModel } from '../../../hook/useGetModel'
+import { useGetModel } from '../../../hook/useGetModel.js'
 
-import ModalDetailsSection from '../items/modals/modal_details/ModalDetailsSection'
+import ModalDetailsSection from '../items/modals/modal_details/ModalDetailsSection.jsx'
 
 const ModalDetails = (props) => {
     const [error, setError] = useState(null)

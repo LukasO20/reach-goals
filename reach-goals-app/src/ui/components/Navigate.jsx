@@ -1,10 +1,10 @@
 import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 
-import { VisibilityContext } from '../../provider/VisibilityProvider'
-import { targetMap, switchLayoutMap } from '../../utils/mappingUtils'
+import { VisibilityContext } from '../../provider/VisibilityProvider.jsx'
+import { targetMap, switchLayoutMap } from '../../utils/mappingUtils.js'
 
-import ButtonAction from './items/elements/ButtonAction'
+import ButtonAction from './items/elements/ButtonAction.jsx'
 
 import '../styles/Navigate.scss'
 

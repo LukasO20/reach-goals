@@ -1,14 +1,14 @@
 import { useContext } from 'react'
 
-import { VisibilityContext } from '../../../provider/VisibilityProvider'
+import { VisibilityContext } from '../../../provider/VisibilityProvider.jsx'
 
-import { targetMap, checkboxMap } from '../../../utils/mappingUtils'
+import { targetMap, checkboxMap } from '../../../utils/mappingUtils.js'
 
-import Tag from '../items/models/Tag'
-import ModalForm from './ModalForm'
-import ButtonAction from '../items/elements/ButtonAction'
-import ButtonDropdown from '../items/elements/ButtonDropdown'
-import ButtonCheckbox from '../items/elements/ButtonCheckbox'
+import Tag from '../items/models/Tag.jsx'
+import ModalForm from './ModalForm.jsx'
+import ButtonAction from '../items/elements/ButtonAction.jsx'
+import ButtonDropdown from '../items/elements/ButtonDropdown.jsx'
+import ButtonCheckbox from '../items/elements/ButtonCheckbox.jsx'
 
 const ModalTag = () => {
     const { visibleElements } = useContext(VisibilityContext)

@@ -1,13 +1,13 @@
-const prisma = require('../connectdb')
-const moment = require('moment')
+import {
+    addAssignment, updateAssignment, deleteAssignment, getAssignment, getAssignmentOnGoal, getAssignmentOnTag,
+    getAssignmentWithoutGoal, updateTagOnAssignment
+} from './service.js'
 
-const formatObject = (objectData) => { //CREATE AN UNIQUE "formatObject" function and share it
-    return Object.fromEntries(
-        Object.entries(objectData).filter(([_, value]) => value !== undefined && value !== null && value !== "")
-    )
-}
+import { formatObject } from '../utils/utils.js'
 
-const addAssignment = async (req, res) => {
+import moment from 'moment'
+
+const handleAddAssignment = async (req, res) => {
     if (req.method === 'POST') {
         const { name, description, status, duration, start, end, goalID, tags } = req.body
         if (!name) { return res.status(400).json({ error: 'Name is required.' }) }
@@ -33,26 +33,20 @@ const addAssignment = async (req, res) => {
 
         const formattedData = formatObject(rawObject)
         console.log('ASSIGN TO ADD - ', formattedData)
+        const assignment = await addAssignment(formattedData)
 
-        try {
-
-            const assignment = await prisma.assignment.create({
-                data: formattedData,
-                include: { goal: true, tags: { include: { tag: true } } }
-            })
-
+        if (assignment) {
             return res.status(201).json(assignment)
-
-        } catch (error) {
-            console.error(error)
+        }
+        else {
             return res.status(500).json({ error: 'Failed to create assignment' })
         }
     }
 }
 
-const updateAssignment = async (req, res) => {
+const handleUpdateAssignment = async (req, res) => {
     if (req.method === 'PUT') {
-        const { id } = req.params
+        const { assignmentID } = req.params
         const { name, description, status, duration, start, end, goalID, tags } = req.body
 
         const startDate = start ? moment(start, 'DD/MM/YYYY').toISOString() : new Date().toISOString()
@@ -71,163 +65,83 @@ const updateAssignment = async (req, res) => {
 
         const formattedData = formatObject(rawObject)
         console.log('ASSIGN TO ADD - ', formattedData, tags)
+        handleUpdateTagOnAssignment(assignmentID, tags)
+        const assignment = await updateAssignment(assignmentID, formattedData)
 
-        try {
-            handleUpdateTagOnAssignment(id, tags)
-
-            const assignment = await prisma.assignment.update({
-                where: { id: Number(id) },
-                data: formattedData,
-                include: { goal: true, tags: { include: { tag: true } } }
-            })
-
+        if (assignment) {
             return res.status(200).json(assignment)
-
-        } catch (error) {
-            console.error(error)
+        } else {
             return res.status(500).json({ error: 'Failed updating assignments' })
         }
 
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-const deleteAssignment = async (req, res) => {
+const handleDeleteAssignment = async (req, res) => {
     if (req.method === 'DELETE') {
 
-        const { id } = req.params
+        const { assignmentID } = req.params
+        const assignment = await deleteAssignment(assignmentID)
 
-        try {
-            const assignment = await prisma.assignment.delete({
-                where: { id: Number(id) }
-            })
-
+        if (assignment) {
             return res.status(200).json(assignment)
-
-        } catch (error) {
-            console.error(error)
+        } else {
             return res.status(500).json({ error: 'Failed to delete this assignment' })
         }
 
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-const getAssignment = async (req, res) => {
+const handleGetAssignment = async (req, res) => {
     if (req.method === 'GET') {
-        try {
-            let assignment = undefined
-            const { id } = req.params
+        const { assignmentID } = req.params
+        const assignment = await getAssignment(assignmentID)
 
-            if (id !== undefined && !isNaN(id)) {
-                assignment = await prisma.assignment.findUnique({
-                    where: { id: Number(id) },
-                    include: { goal: true, tags: true }
-                })
-            } else {
-                assignment = await prisma.assignment.findMany({
-                    include: { goal: true, tags: true }
-                })
-            }
-
+        if (assignment) {
             return res.status(200).json(Array.isArray(assignment) ? assignment : [assignment])
-
-        } catch (error) {
-            console.error(error)
+        } else {
             return res.status(500).json({ error: 'Failed to fetch assignments' })
         }
 
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-const getAssignmentOnGoal = async (req, res) => {
+const handleGetAssignmentOnGoal = async (req, res) => {
     if (req.method === 'GET') {
-        try {
-            const { relationID } = req.params
-            let assignment = undefined
+        const { goalID } = req.params
+        const assignment = await getAssignmentOnGoal(goalID)
 
-            const isTrue = relationID === true || relationID === 'true'
-            const isNumber = !isNaN(relationID) && relationID !== '' && relationID !== null && relationID !== undefined
-
-            if (!isTrue && !isNumber) {
-                return res.status(400).json({ error: "Parameter 'relationID' invalid." })
-            }
-
-            if (isTrue) {
-                assignment = await prisma.assignment.findMany({
-                    where: {
-                        goalID: { not: null }
-                    },
-                    include: { goal: true, tags: true }
-                })
-            } else if (isNumber) {
-                assignment = await prisma.assignment.findMany({
-                    where: {
-                        goalID: Number(relationID)
-                    },
-                    include: { goal: true, tags: true }
-                })
-            }
-
+        if (assignment) {
             return res.status(200).json(assignment)
-
-        } catch (error) {
-            console.error(error)
-            return res.status(500).json({ error: 'Failed to fetch assignments' })
+        } else {
+            return res.status(500).json({ error: 'Failed to fetch assignments with goals' })
         }
 
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-const getAssignmentOnTag = async (req, res) => {
+const handleGetAssignmentOnTag = async (req, res) => {
     if (req.method === 'GET') {
-        try {
-            const { relationID } = req.params
-            let assignment = undefined
+        const { tagID } = req.params
+        const assignment = await getAssignmentOnTag(tagID)
 
-            const isTrue = relationID === true || relationID === 'true'
-            const isNumber = !isNaN(relationID) && relationID !== '' && relationID !== null && relationID !== undefined
-
-            if (!isTrue && !isNumber) {
-                return res.status(400).json({ error: "Parameter 'relationID' invalid." })
-            }
-
-            if (isTrue) {
-                assignment = await prisma.assignment.findMany({
-                    where: { tags: { some: {} } },
-                    include: { goal: true, tags: true }
-                })
-            } else if (isNumber) {
-                assignment = await prisma.assignment.findMany({
-                    where: { tags: { id: Number(relationID) } },
-                    include: { goal: true, tags: true }
-                })
-            }
-
+        if (assignment) {
             return res.status(200).json(assignment)
-
-        } catch (error) {
-            console.error(error)
+        } else {
             return res.status(500).json({ error: 'Failed to fetch assignments with this tag' })
         }
+
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-const getAssignmentWithoutGoal = async (req, res) => {
+const handleGetAssignmentWithoutGoal = async (req, res) => {
     if (req.method === 'GET') {
-        try {
-            let assignment = undefined
+        const assignment = await getAssignmentWithoutGoal()
 
-            assignment = await prisma.assignment.findMany({
-                where: {
-                    goalID: null
-                },
-                include: { tags: true }
-            })
-
+        if (assignment) {
             return res.status(200).json(assignment)
-
-        } catch (error) {
-            console.error(error)
-            return res.status(500).json({ error: 'Failed to fetch assignments' })
+        } else {
+            return res.status(500).json({ error: 'Failed to fetch assignments without goals' })
         }
 
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
@@ -236,22 +150,13 @@ const getAssignmentWithoutGoal = async (req, res) => {
 const handleUpdateTagOnAssignment = async (assignmentID, tags) => {
     if (!assignmentID || !tags) return
 
-    try {
-        await prisma.tagOnAssignment.deleteMany({
-            where: { assignmentID: Number(assignmentID) }
-        })
-
-        await prisma.tagOnAssignment.createMany({
-            data: tags?.map(tag => ({
-                assignmentID: Number(assignmentID),
-                tagID: Number(tag.tagID)
-            })),
-            skipDuplicates: true
-        })
-
-    } catch (error) {
-        console.error('Failed to update tags on assignment:', error)
+    const assignment = await updateTagOnAssignment(assignmentID, tags)
+    if (!assignment) {
+        console.error("Failed to update this assignment's tag relation")
     }
 }
 
-module.exports = { addAssignment, updateAssignment, deleteAssignment, getAssignment, getAssignmentOnTag, getAssignmentOnGoal, getAssignmentWithoutGoal }
+export {
+    handleAddAssignment, handleUpdateAssignment, handleDeleteAssignment, handleGetAssignment,
+    handleGetAssignmentOnGoal, handleGetAssignmentOnTag, handleGetAssignmentWithoutGoal, handleUpdateTagOnAssignment
+}

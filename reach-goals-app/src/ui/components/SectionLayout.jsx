@@ -1,11 +1,11 @@
 import { useParams, Outlet } from 'react-router-dom'
 import { useContext } from 'react'
 
-import { PageTypeContext } from '../../provider/PageTypeProvider'
+import { PageTypeContext } from '../../provider/PageTypeProvider.jsx'
 
-import Home from './pages/Home'
-import Calendar from './pages/Calendar'
-import Objectives from './pages/Objectives'
+import Home from './pages/Home.jsx'
+import Calendar from './pages/Calendar.jsx'
+import Objectives from './pages/Objectives.jsx'
 
 const Sections = () => {
     const { section } = useParams()

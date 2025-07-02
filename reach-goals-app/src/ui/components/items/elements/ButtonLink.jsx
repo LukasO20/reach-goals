@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider'
+import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider.jsx'
 
 const ButtonLink = (props) => {
     const { switchLayoutComponent } = useContext(SwitchLayoutContext) 

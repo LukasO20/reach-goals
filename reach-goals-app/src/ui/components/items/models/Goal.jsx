@@ -2,16 +2,16 @@ import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
-import { useGetModel } from '../../../../hook/useGetModel'
-import { useDeleteModel } from '../../../../hook/useDeleteModel'
+import { useGetModel } from '../../../../hook/useGetModel.js'
+import { useDeleteModel } from '../../../../hook/useDeleteModel.js'
 
-import { ManageModelContext } from '../../../../provider/ManageModelProvider'
-import { VisibilityContext } from '../../../../provider/VisibilityProvider'
-import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider'
+import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
+import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
+import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider.jsx'
 
-import { targetMap, switchLayoutMap } from '../../../../utils/mappingUtils'
+import { targetMap, switchLayoutMap } from '../../../../utils/mappingUtils.js'
 
-import ButtonAction from '../elements/ButtonAction'
+import ButtonAction from '../elements/ButtonAction.jsx'
 
 import '../../../styles/items/models/Goal.scss'
 

@@ -1,14 +1,14 @@
 import { useContext } from 'react'
 import Routes from '../../app/Routes'
 
-import { VisibilityContext } from '../../provider/VisibilityProvider'
-import { PageTypeContext } from '../../provider/PageTypeProvider'
+import { VisibilityContext } from '../../provider/VisibilityProvider.jsx'
+import { PageTypeContext } from '../../provider/PageTypeProvider.jsx'
 
-import { targetMap, switchLayoutMap, checkboxMap } from '../../utils/mappingUtils'
+import { targetMap, switchLayoutMap, checkboxMap } from '../../utils/mappingUtils.js'
 
-import ButtonAction from './items/elements/ButtonAction'
-import ButtonDropdown from './items/elements/ButtonDropdown'
-import ButtonCheckbox from './items/elements/ButtonCheckbox'
+import ButtonAction from './items/elements/ButtonAction.jsx'
+import ButtonDropdown from './items/elements/ButtonDropdown.jsx'
+import ButtonCheckbox from './items/elements/ButtonCheckbox.jsx'
 
 const ContainerM = () => {
     const { toggleVisibility } = useContext(VisibilityContext) 

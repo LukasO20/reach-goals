@@ -40,9 +40,9 @@ export const updateTag = async (tag) => {
     }
 }
 
-export const deleteTag = async (id) => {
+export const deleteTag = async (tagID) => {
     try {
-        const url = `${apiURL}/api/tag/actions/${id}`
+        const url = `${apiURL}/api/tag/actions/${tagID}`
         const response = await fetch(url, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
@@ -58,11 +58,11 @@ export const deleteTag = async (id) => {
     }
 }
 
-export const getTag = async (id) => {
+export const getTag = async (tagID) => {
     try {
 
-        const url = (id !== undefined && !isNaN(id))
-            ? `${apiURL}/api/tag/actions/${id}`
+        const url = (tagID !== undefined && !isNaN(tagID))
+            ? `${apiURL}/api/tag/actions/${tagID}`
             : `${apiURL}/api/tag/actions`
 
         const response = await fetch(url, {
@@ -78,9 +78,9 @@ export const getTag = async (id) => {
     }
 }
 
-export const getTagOnGoal = async (relationID) => {
+export const getTagOnGoal = async (goalID) => {
     try {
-        const response = await fetch(`${apiURL}/api/tag/actions/relation-goal/${relationID}`, {
+        const response = await fetch(`${apiURL}/api/tag/actions/relation-goal/${goalID}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         })  
@@ -98,9 +98,9 @@ export const getTagOnGoal = async (relationID) => {
     }
 }
 
-export const getTagOnAssignment = async (relationID) => {
+export const getTagOnAssignment = async (assignmentID) => {
     try {
-        const response = await fetch(`${apiURL}/api/tag/actions/relation-assignment/${relationID}`, {
+        const response = await fetch(`${apiURL}/api/tag/actions/relation-assignment/${assignmentID}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         })  
@@ -118,9 +118,9 @@ export const getTagOnAssignment = async (relationID) => {
     }
 }
 
-export const getTagNotGoal = async (relationID) => {
+export const getTagNotGoal = async (goalID) => {
         try {
-        const response = await fetch(`${apiURL}/api/tag/actions/not-goal/${relationID}`, {
+        const response = await fetch(`${apiURL}/api/tag/actions/not-goal/${goalID}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         })  
@@ -138,9 +138,9 @@ export const getTagNotGoal = async (relationID) => {
     }
 }
 
-export const getTagNotAssignment = async (relationID) => {
+export const getTagNotAssignment = async (assignmentID) => {
     try {
-        const response = await fetch(`${apiURL}/api/tag/actions/not-assignment/${relationID}`, {
+        const response = await fetch(`${apiURL}/api/tag/actions/not-assignment/${assignmentID}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         })  
@@ -158,9 +158,9 @@ export const getTagNotAssignment = async (relationID) => {
     }
 }
 
-export const unlinkTagOnGoal = async (tagID, relationID) => {
+export const unlinkTagOnGoal = async (tagID, goalID) => {
     try {
-        const response = await fetch(`${apiURL}/api/tag/actions/unlink-goal/${tagID}/${relationID}`, {
+        const response = await fetch(`${apiURL}/api/tag/actions/unlink-goal/${tagID}/${goalID}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         })  

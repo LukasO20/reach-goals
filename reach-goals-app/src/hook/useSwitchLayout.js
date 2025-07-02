@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { SwitchLayoutContext } from '../provider/SwitchLayoutProvider'
+import { SwitchLayoutContext } from '../provider/SwitchLayoutProvider.jsx'
 
 export const useSwitchLayout = () => {
     const context = useContext(SwitchLayoutContext)

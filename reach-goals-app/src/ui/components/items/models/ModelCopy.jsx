@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from 'react'
 
-import { ManageModelContext } from '../../../../provider/ManageModelProvider'
+import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 
-import ButtonAction from '../elements/ButtonAction'
+import ButtonAction from '../elements/ButtonAction.jsx'
 
 const iconLayoutMap = {
     goal: 'fa-solid fa-bullseye',

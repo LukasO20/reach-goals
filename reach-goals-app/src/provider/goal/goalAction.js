@@ -44,15 +44,15 @@ export const updateGoal = async (goal) => {
     }
 }
 
-export const deleteGoal = async (id) => {
+export const deleteGoal = async (goalID) => {
     try {
-        const urlUnlinkTag = `${apiURL}/api/tag/actions/unlink-all-goal/${id}`
+        const urlUnlinkTag = `${apiURL}/api/tag/actions/unlink-all-goal/${goalID}`
         const responseUnlinkTag = await fetch(urlUnlinkTag, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
         })
 
-        const urlDeletGoal = `${apiURL}/api/goal/actions/${id}`
+        const urlDeletGoal = `${apiURL}/api/goal/actions/${goalID}`
         const responseGoal = await fetch(urlDeletGoal, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
@@ -74,11 +74,11 @@ export const deleteGoal = async (id) => {
     }
 }
 
-export const getGoal = async (id) => {
+export const getGoal = async (goalID) => {
     try {
 
-        const url = (id !== undefined && !isNaN(id))
-            ? `${apiURL}/api/goal/actions/${id}`
+        const url = (goalID !== undefined && !isNaN(goalID))
+            ? `${apiURL}/api/goal/actions/${goalID}`
             : `${apiURL}/api/goal/actions`
 
         const response = await fetch(url, {
@@ -99,9 +99,9 @@ export const getGoal = async (id) => {
     }
 }
 
-export const getGoalOnTag = async (id) => {
+export const getGoalOnTag = async (tagID) => {
     try {
-        const url = `${apiURL}/api/goal/actions/relation-tag/${id}`
+        const url = `${apiURL}/api/goal/actions/relation-tag/${tagID}`
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
@@ -121,9 +121,9 @@ export const getGoalOnTag = async (id) => {
     }
 }
 
-export const getGoalOnAssignment = async (id) => {
+export const getGoalOnAssignment = async (assignmentID) => {
     try {
-        const url = `${apiURL}/api/goal/actions/relation-assignment/${id}`
+        const url = `${apiURL}/api/goal/actions/relation-assignment/${assignmentID}`
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
@@ -143,9 +143,9 @@ export const getGoalOnAssignment = async (id) => {
     }
 }
 
-export const getGoalWithoutAssignment = async (id) => {
+export const getGoalWithoutAssignment = async (assignmentID) => {
     try {
-        const url = `${apiURL}/api/goal/actions/not-assignment/${id}`
+        const url = `${apiURL}/api/goal/actions/not-assignment/${assignmentID}`
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },

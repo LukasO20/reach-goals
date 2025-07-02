@@ -1,11 +1,11 @@
 import { useContext } from 'react'
 
-import { VisibilityContext } from '../../../provider/VisibilityProvider'
+import { VisibilityContext } from '../../../provider/VisibilityProvider.jsx'
 
-import { targetMap } from '../../../utils/mappingUtils'
+import { targetMap } from '../../../utils/mappingUtils.js'
 
-import ButtonAction from '../items/elements/ButtonAction'
-import ModalConfigSection from '../items/modals/modal_config/ModalConfigSection'
+import ButtonAction from '../items/elements/ButtonAction.jsx'
+import ModalConfigSection from '../items/modals/modal_config/ModalConfigSection.jsx'
 
 import '../../styles/panels/Config.scss'
 

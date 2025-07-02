@@ -1,10 +1,10 @@
 import { useContext } from 'react'
 
-import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider'
+import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider.jsx'
 
-import Goal from '../models/Goal'
-import Assignment from '../models/Assignment'
-import ButtonAction from '../elements/ButtonAction'
+import Goal from '../models/Goal.jsx'
+import Assignment from '../models/Assignment.jsx'
+import ButtonAction from '../elements/ButtonAction.jsx'
 
 const boxConfigs = (type) => {
     const goal = [

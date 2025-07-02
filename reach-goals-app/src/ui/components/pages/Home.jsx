@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
-import { TitleContext } from '../../../provider/TitleProvider'
-import { useSwitchLayout } from '../../../hook/useSwitchLayout'
+import { TitleContext } from '../../../provider/TitleProvider.jsx'
+import { useSwitchLayout } from '../../../hook/useSwitchLayout.js'
 
 import '../../styles/pages/Home.scss'
 
-import Goal from '../items/models/Goal'
-import Assignment from '../items/models/Assignment'
+import Goal from '../items/models/Goal.jsx'
+import Assignment from '../items/models/Assignment.jsx'
 
 const Home = () => {
     const { update } = useContext(TitleContext)

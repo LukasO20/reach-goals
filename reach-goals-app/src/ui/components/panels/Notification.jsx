@@ -2,9 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Outlet } from 'react-router-dom'
 
-import ButtonAction from '../items/elements/ButtonAction'
-import ButtonDropdown from '../items/elements/ButtonDropdown'
-import ButtonCheckbox from '../items/elements/ButtonCheckbox'
+import ButtonAction from '../items/elements/ButtonAction.jsx'
+import ButtonDropdown from '../items/elements/ButtonDropdown.jsx'
+import ButtonCheckbox from '../items/elements/ButtonCheckbox.jsx'
 
 const targetMap = (classes, operator = {}) => {
     const data = Array.isArray(classes) ? classes : [classes]

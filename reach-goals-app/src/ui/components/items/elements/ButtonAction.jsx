@@ -1,10 +1,10 @@
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { VisibilityContext } from '../../../../provider/VisibilityProvider'
-import { ModalListContext } from '../../../../provider/ModalListProvider'
-import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider'
-import { ManageModelContext } from '../../../../provider/ManageModelProvider'
+import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
+import { ModalListContext } from '../../../../provider/ModalListProvider.jsx'
+import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider.jsx'
+import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 
 const statusButton = (classBtn, providervisibleElements) => {
     if (!providervisibleElements) { return false }

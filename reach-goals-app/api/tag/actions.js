@@ -1,316 +1,214 @@
-const prisma = require('../connectdb')
+import {
+    unlinkTagOnGoal, unlinkAllTagOnGoal, unlinkTagOnAssignment, unlinkAllTagOnAssignment,
+    getTagNotAssignment, getTagNotGoal, getTagOnAssignment, getTagOnGoal, getTag, deleteTag, updateTag,
+    addTag
+} from './service.js'
 
-const formatObject = (objectData) => { //CREATE AN UNIQUE "formatObject" function and share it
-    return Object.fromEntries(
-        Object.entries(objectData).filter(([_, value]) => value !== undefined && value !== "")
-    )
-}
+import { formatObject } from '../utils/utils.js'
 
-const addTag = async (req, res) => {
+const handleAddTag = async (req, res) => {
     if (req.method === 'POST') {
         const { name, color } = req.body
 
         if (!name) { return res.status(400).json({ error: 'Name is required.' }) }
         if (!color) { return res.status(400).json({ error: 'Name is required.' }) }
 
-        const rawObject = {
-            name,
-            color
-        }
+        const rawObject = { name, color }
 
         const formattedData = formatObject(rawObject)
         console.log('Tag TO ADD - ', formattedData)
+        const tag = await addTag(formattedData)
 
-        try {
-            const tag = await prisma.tag.create({
-                data: formattedData
-            })
-
+        if (tag) {
             return res.status(201).json(tag)
-
-        } catch (error) {
-            console.error(error)
+        } else {
             return res.status(500).json({ error: 'Failed to create tag' })
         }
 
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-const updateTag = async (req, res) => {
+const handleUpdateTag = async (req, res) => {
     if (req.method === 'PUT') {
-        const { id } = req.params
+        const { tagID } = req.params
         const { name, color } = req.body
 
         if (!name) { return res.status(400).json({ error: 'Name is required.' }) }
         if (!color) { return res.status(400).json({ error: 'Name is required.' }) }
 
-        const rawObject = {
-            name,
-            color
-        }
+        const rawObject = { name, color }
 
         const formattedData = formatObject(rawObject)
-        console.log('Goal TO UPDATE - ', formattedData)
+        const tag = await updateTag(tagID, formattedData)
+        console.log('Tag TO UPDATE - ', formattedData)
 
-        try {
-            const tag = await prisma.tag.update({
-                where: { id: Number(id) },
-                data: formattedData,
-            })
-
+        if (tag) {
             return res.status(200).json(tag)
-
-        } catch (error) {
-            console.error(error)
+        } else {
             return res.status(500).json({ error: 'Failed updating tags' })
         }
 
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-const deleteTag = async (req, res) => {
+const handleDeleteTag = async (req, res) => {
     if (req.method === 'DELETE') {
+        const { tagID } = req.params
+        const tag = await deleteTag(tagID)
 
-        const { id } = req.params
-
-        try {
-            const tag = await prisma.tag.delete({
-                where: { id: Number(id) }
-            })
-
+        if (tag) {
             return res.status(200).json(tag)
-
-        } catch (error) {
-            console.error(error)
+        } else {
             return res.status(500).json({ error: 'Failed to delete this tag' })
         }
 
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-const getTag = async (req, res) => {
+const handleGetTag = async (req, res) => {
     if (req.method === 'GET') {
-        try {
-            const { id } = req.params
-            let tag = undefined
+        const { tagID } = req.params
+        const tag = await getTag(tagID)
 
-            if (id !== undefined && !isNaN(id)) {
-                tag = await prisma.tag.findUnique({
-                    where: { id: Number(id) },
-                    include: { goals: true, assignments: true }
-                })
-            } else {
-                tag = await prisma.tag.findMany({
-                    include: { goals: true, assignments: true }
-                })
-            }
-
+        if (tag) {
             return res.status(200).json(Array.isArray(tag) ? tag : [tag])
-
-        } catch (error) {
-            console.error(error)
+        } else {
             return res.status(500).json({ error: 'Failed to fetch tags' })
         }
 
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-const getTagOnGoal = async (req, res) => {
+const handleGetTagOnGoal = async (req, res) => {
     if (req.method === 'GET') {
-        try {
-            const { relationID } = req.params
+        const { goalID } = req.params
+        if (!goalID || isNaN(goalID)) {
+            return res.status(400).json({ error: "Parameter 'goalID' invalid." });
+        }
 
-            if (!relationID || isNaN(relationID)) {
-                return res.status(400).json({ error: "Parameter 'goalID' invalid." });
-            }
+        const tag = await getTagOnGoal(goalID)
 
-            const tags = await prisma.tagOnGoal.findMany({
-                where: { goalID: Number(relationID) },
-                include: { tag: { select: { id: true, name: true, color: true } } }
-            })
-
-            return res.status(200).json(tags.map(tagRelation => tagRelation.tag))
-
-        } catch (error) {
-            console.error(error)
+        if (tag) {
+            return res.status(200).json(tag.map(tagRelation => tagRelation.tag))
+        } else {
             return res.status(500).json({ error: 'Failed to fetch tags' })
         }
 
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-const getTagOnAssignment = async (req, res) => {
+const handleGetTagOnAssignment = async (req, res) => {
     if (req.method === 'GET') {
-        try {
-            const { relationID } = req.params
+        const { assignmentID } = req.params
+        if (!assignmentID || isNaN(assignmentID)) {
+            return res.status(400).json({ error: "Parameter 'assignmentID' invalid." });
+        }
 
-            if (!relationID || isNaN(relationID)) {
-                return res.status(400).json({ error: "Parameter 'relationID' invalid." });
-            }
+        const tag = await getTagOnAssignment(assignmentID)
 
-            const tags = await prisma.tagOnAssignment.findMany({
-                where: { assignmentID: Number(relationID) },
-                include: { tag: { select: { id: true, name: true, color: true } } }
-            })
-
-            return res.status(200).json(tags.map(tagRelation => tagRelation.tag))
-
-        } catch (error) {
-            console.error(error)
+        if (tag) {
+            return res.status(200).json(tag.map(tagRelation => tagRelation.tag))
+        } else {
             return res.status(500).json({ error: 'Failed to fetch tags' })
         }
 
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-const getTagNotGoal = async (req, res) => {
+const handleGetTagNotGoal = async (req, res) => {
     if (req.method === 'GET') {
-        try {
-            const { relationID } = req.params
+        const { goalID } = req.params
+        if (!goalID || isNaN(goalID)) {
+            return res.status(400).json({ error: "Parameter 'goalID' invalid." })
+        }
 
-            if (!relationID || isNaN(relationID)) {
-                return res.status(400).json({ error: "Parameter 'relationID' invalid." })
-            }
+        const tag = await getTagNotGoal(goalID)
 
-            const tags = await prisma.tag.findMany({
-                where: {
-                    NOT: {
-                        goals: {
-                            some: { goalID: Number(relationID) }
-                        }
-                    }
-                },
-                select: { id: true, name: true, color: true }
-            })
-
-            return res.status(200).json(tags)
-
-        } catch (error) {
-            console.error(error)
+        if (tag) {
+            return res.status(200).json(tag)
+        } else {
             return res.status(500).json({ error: 'Failed to fetch tags' })
         }
 
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-const getTagNotAssignment = async (req, res) => {
+const handleGetTagNotAssignment = async (req, res) => {
     if (req.method === 'GET') {
-        try {
-            const { relationID } = req.params
+        const { assignmentID } = req.params
+        if (!assignmentID || isNaN(assignmentID)) {
+            return res.status(400).json({ error: "Parameter 'assignmentID' invalid." });
+        }
 
-            if (!relationID || isNaN(relationID)) {
-                return res.status(400).json({ error: "Parameter 'relationID' invalid." });
-            }
+        const tag = await getTagNotAssignment(assignmentID)
 
-            const tags = await prisma.tag.findMany({
-                where: {
-                    NOT: {
-                        assignments: {
-                            some: { assignmentID: Number(relationID) }
-                        }
-                    }
-                },
-                select: { id: true, name: true, color: true }
-            })
-
-            return res.status(200).json(tags)
-
-        } catch (error) {
-            console.error(error)
+        if (tag) {
+            return res.status(200).json(tag)
+        } else {
             return res.status(500).json({ error: 'Failed to fetch tags' })
         }
 
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-const unlinkTagOnGoal = async (req, res) => {
+const handleUnlinkTagOnAssignment = async (req, res) => {
     if (req.method === 'DELETE') {
-        const { tagID, relationID } = req.params
+        const { tagID, assignmentID } = req.params
+        const tag = await unlinkTagOnAssignment(tagID, assignmentID)
 
-        try {
-            const tag = await prisma.tagOnGoal.delete({
-                where: {
-                    goalID_tagID: {
-                        goalID: Number(relationID),
-                        tagID: Number(tagID)
-                    }
-                }
-            })
-
+        if (tag) {
             return res.status(200).json(tag)
-
-        } catch (error) {
-            console.error(error)
-            return res.status(500).json({ error: 'Failed to delete this tag' })
+        } else {
+            return res.status(500).json({ error: 'Failed to unlink this tag' })
         }
 
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-const unlinkAllTagOnGoal = async (req, res) => {
+const handleUnlinkAllTagOnAssignment = async (req, res) => {
     if (req.method === 'DELETE') {
-        const { id } = req.params
+        const { assignmentID } = req.params
+        const tag = await unlinkAllTagOnAssignment(assignmentID)
 
-        try {
-            const tag = await prisma.tagOnGoal.deleteMany({
-                where: {
-                    goalID: Number(id),
-                }
-            })
-
+        if (tag) {
             return res.status(200).json(tag)
-
-        } catch (error) {
-            console.error(error)
-            return res.status(500).json({ error: 'Failed to delete these relations between tag and goal' })
+        } else {
+            return res.status(500).json({ error: 'Failed to unlink this tag' })
         }
 
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-const unlinkTagOnAssignment = async (req, res) => {
+const handleUnlinkTagOnGoal = async (req, res) => {
     if (req.method === 'DELETE') {
-        const { assignmentID, tagID } = req.params
+        const { tagID, goalID } = req.params
+        const tag = await unlinkTagOnGoal(tagID, goalID)
 
-        try {
-            const tag = await prisma.tagOnAssignment.delete({
-                where: {
-                    assignmentID_tagID: {
-                        assignmentID: Number(assignmentID),
-                        tagID: Number(tagID)
-                    }
-                }
-            })
-
+        if (tag) {
             return res.status(200).json(tag)
-
-        } catch (error) {
-            console.error(error)
-            return res.status(500).json({ error: 'Failed to delete this tag' })
+        } else {
+            return res.status(500).json({ error: 'Failed to unlink this tag' })
         }
 
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-const unlinkAllTagOnAssignment = async (req, res) => {
+const handleUnlinkAllTagOnGoal = async (req, res) => {
     if (req.method === 'DELETE') {
-        const { id } = req.params
+        const { goalID } = req.params
+        const tag = await unlinkAllTagOnGoal(goalID)
 
-        try {
-            const tag = await prisma.tagOnAssignment.deleteMany({
-                where: {
-                    assignmentID: Number(id),
-                }
-            })
-
+        if (tag) {
             return res.status(200).json(tag)
-
-        } catch (error) {
-            console.error(error)
-            return res.status(500).json({ error: 'Failed to delete these relations between tag and assignment' })
+        } else {
+            return res.status(500).json({ error: 'Failed to unlink these relations between tag and goal' })
         }
 
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-module.exports = { addTag, updateTag, deleteTag, getTag, getTagOnGoal, getTagOnAssignment, getTagNotGoal, getTagNotAssignment, unlinkTagOnGoal, unlinkTagOnAssignment, unlinkAllTagOnGoal, unlinkAllTagOnAssignment }
+export {
+    handleUnlinkTagOnGoal, handleUnlinkAllTagOnGoal, handleUnlinkTagOnAssignment, handleUnlinkAllTagOnAssignment,
+    handleGetTagNotAssignment, handleGetTagNotGoal, handleGetTagOnAssignment, handleGetTagOnGoal, handleGetTag, handleDeleteTag,
+    handleUpdateTag, handleAddTag
+}
