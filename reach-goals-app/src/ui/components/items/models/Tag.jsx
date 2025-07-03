@@ -12,7 +12,7 @@ import ButtonAction from '../elements/ButtonAction.jsx'
 
 import '../../../styles/items/models/Tag.scss'
 
-const Tag = (props, { selectableModel }) => {
+const Tag = (props) => {
     const [tag, setTag] = useState([])
     const [erro, setErro] = useState(false)
 
@@ -58,10 +58,9 @@ const Tag = (props, { selectableModel }) => {
     }, [setModel])
 
     const removeDOMTagClick = (id, e) => {
-        e.stopPropagation()
-
         if (id) {
-            console.log('THIS TAG will be removed!')
+            e.stopPropagation()
+            updateSubmitModel({ keyObject: 'tags', value: { tagID: id }, type: 'array', action: 'remove' })
         }
     }
 
@@ -102,7 +101,7 @@ const Tag = (props, { selectableModel }) => {
                     <div className='side-actions'>
                         {
                             display.type === "mini-list" ?
-                                <ButtonAction onClick={(e) => removeDOMTagClick(tag.id, e)} classBtn='remove-tag-dom' iconFa='fa-solid fa-xmark' />
+                                <ButtonAction onClick={({ e }) => removeDOMTagClick(tag.id, e)} classBtn='remove-tag-dom' iconFa='fa-solid fa-xmark' />
                                 :
                                 <>
                                     <ButtonAction onClick={() => editTag(tag.id)} target={targetMap(['panel-center', 'tag'])} switchLayout={switchLayoutMap('panel', 'layout', 'center')} classBtn='edit-tag' iconFa='fa-regular fa-pen-to-square' />

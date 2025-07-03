@@ -49,7 +49,12 @@ const ManageModelProvider = ({ children }) => {
                 const currentList = Array.isArray(prevValue) ? prevValue : []
                 return currentList.filter(item => {
                     if (typeof item === 'object' && item !== null && typeof value === 'object') {
-                        return item.id !== value.id
+                        switch (keyObject) {
+                            case 'tags':
+                                return item.tagID !== value.tagID
+                            default:
+                                return item.id !== value.id
+                        }
                     }
                     return item !== value
                 })

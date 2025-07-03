@@ -68,7 +68,11 @@ const Form = (props) => {
 
     const tagRelation = typeForm === 'goal' ? 'goalID' : 'assignmentID';
     const modelSwitcherTagProps = {
-        [tagRelation]: modelForm?.id
+        [tagRelation]: modelForm?.id,
+        display: {
+            sideAction: true,
+            type: 'mini-list'
+        }
     }
 
     const modelSwitcherProps = {
