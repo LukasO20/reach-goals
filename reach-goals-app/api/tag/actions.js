@@ -73,7 +73,7 @@ const handleGetTag = async (req, res) => {
         if (tag) {
             return res.status(200).json(Array.isArray(tag) ? tag : [tag])
         } else {
-            return res.status(500).json({ error: 'Failed to fetch tags' })
+            return res.status(500).json({ error: 'Failed to get a tag' })
         }
 
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }

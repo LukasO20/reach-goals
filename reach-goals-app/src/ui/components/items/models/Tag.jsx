@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 
 import { useGetModel } from '../../../../hook/useGetModel.js'
 import { useDeleteModel } from '../../../../hook/useDeleteModel.js'
@@ -12,7 +12,7 @@ import ButtonAction from '../elements/ButtonAction.jsx'
 
 import '../../../styles/items/models/Tag.scss'
 
-const Tag = (props) => {
+const Tag = (props, { selectableModel }) => {
     const [tag, setTag] = useState([])
     const [erro, setErro] = useState(false)
 
@@ -20,6 +20,7 @@ const Tag = (props) => {
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
 
     const target = targetMap(['panel-right', 'tag'])
+    const isSelectableModel = props.selectableModel ?? false
     const display = props.display ?? {
         sideAction: false,
         type: 'mini-list'
@@ -56,14 +57,21 @@ const Tag = (props) => {
         catch (error) { setErro(`Failed to edit this tag: ${erro.message}`) }
     }, [setModel])
 
-    const handleTagClick = (id, e) => {
-        const isSelectableModel = props.selectableModel ?? false
+    const removeDOMTagClick = (id, e) => {
+        e.stopPropagation()
+
+        if (id) {
+            console.log('THIS TAG will be removed!')
+        }
+    }
+
+    const tagDOMClick = (id, e) => {
         if (isSelectableModel) {
             e.stopPropagation()
             const selected = tag.find(m => m.id === id)
             if (model.transportModel.some(item => item.id === selected.id)) return
 
-            addToTransportModel({...selected, type: 'tag' })
+            addToTransportModel({ ...selected, type: 'tag' })
             return updateSubmitModel({ keyObject: 'tags', value: { tagID: id }, type: 'array' })
         }
 
@@ -75,7 +83,7 @@ const Tag = (props) => {
 
     return (
         tag.map(tag => (
-            <div className={`tag ${display.type}`} id={tag.id} key={tag.id} onClick={(e) => handleTagClick(tag.id, e)}>
+            <div className={`tag ${display.type}`} id={tag.id} key={tag.id} onClick={(e) => tagDOMClick(tag.id, e)}>
                 {
                     display.type === 'card' ?
                         <div>
@@ -92,8 +100,15 @@ const Tag = (props) => {
                 {
                     display.sideAction &&
                     <div className='side-actions'>
-                        <ButtonAction onClick={() => editTag(tag.id)} target={targetMap(['panel-center', 'tag'])} switchLayout={switchLayoutMap('panel', 'layout', 'center')} classBtn='edit-tag' iconFa='fa-regular fa-pen-to-square' />
-                        <ButtonAction onClick={() => deleteTag(tag.id)} target={targetMap(null)} classBtn='remove-tag' iconFa='fa-regular fa-trash-can' />
+                        {
+                            display.type === "mini-list" ?
+                                <ButtonAction onClick={(e) => removeDOMTagClick(tag.id, e)} classBtn='remove-tag-dom' iconFa='fa-solid fa-xmark' />
+                                :
+                                <>
+                                    <ButtonAction onClick={() => editTag(tag.id)} target={targetMap(['panel-center', 'tag'])} switchLayout={switchLayoutMap('panel', 'layout', 'center')} classBtn='edit-tag' iconFa='fa-regular fa-pen-to-square' />
+                                    <ButtonAction onClick={() => deleteTag(tag.id)} target={targetMap(null)} classBtn='remove-tag' iconFa='fa-regular fa-trash-can' />
+                                </>
+                        }
                     </div>
                 }
             </div>

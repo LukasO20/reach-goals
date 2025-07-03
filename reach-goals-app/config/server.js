@@ -39,7 +39,7 @@ app.put('/api/assignment/actions/:assignmentID', handleUpdateAssignment)
 app.delete('/api/assignment/actions/:assignmentID', handleDeleteAssignment)
 
 app.post('/api/tag/actions', handleAddTag)
-app.get('/api/tag/actions/:id?', handleGetTag)
+app.get('/api/tag/actions/:tagID?', handleGetTag)
 app.get('/api/tag/actions/relation-goal/:goalID', handleGetTagOnGoal)
 app.get('/api/tag/actions/relation-assignment/:assignmentID', handleGetTagOnAssignment)
 app.get('/api/tag/actions/not-goal/:goalID', handleGetTagNotGoal)
