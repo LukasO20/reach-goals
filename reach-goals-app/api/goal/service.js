@@ -141,7 +141,28 @@ const getGoalWithoutAssignment = async (assignmentID) => {
     }
 }
 
+const updateTagOnGoal = async (goalID, tags) => {
+    try {
+        await prisma.tagOnGoal.deleteMany({
+            where: { goalID: Number(goalID) }
+        })
+
+        await prisma.tagOnGoal.createMany({
+            data: tags?.map(tag => ({
+                goalID: Number(goalID),
+                tagID: Number(tag.tagID)
+            })),
+            skipDuplicates: true
+        })
+
+        return true
+
+    } catch (error) {
+        return false
+    }
+}
+
 export {
     addGoal, updateGoal, deleteGoal, getGoal, getGoalOnAssignment, getGoalOnTag,
-    getGoalWithoutAssignment
+    getGoalWithoutAssignment, updateTagOnGoal
 }

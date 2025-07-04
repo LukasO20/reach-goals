@@ -77,8 +77,11 @@ const Form = (props) => {
 
     const modelSwitcherProps = {
         focused: modelForm,
-        formMode: true,
-        assignmentGoalRelation: modelForm.id
+        assignmentGoalRelation: modelForm.id,
+        display: {
+            sideAction: true,
+            type: 'mini-list'
+        }
     }
 
     const { model } = useContext(ManageModelContext)

@@ -64,7 +64,9 @@ const handleUpdateAssignment = async (req, res) => {
         }
 
         const formattedData = formatObject(rawObject)
-        console.log('ASSIGN TO ADD - ', formattedData, tags)
+        console.log('Assignment RECEVEID - ', rawObject)
+        console.log('Assignment TO UPDATE - ', formattedData)
+
         handleUpdateTagOnAssignment(assignmentID, tags)
         const assignment = await updateAssignment(assignmentID, formattedData)
 

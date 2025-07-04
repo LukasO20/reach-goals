@@ -31,8 +31,7 @@ const Assignment = (props) => {
     const target = useMemo(() => targetMap(['panel-right', 'assignment']), [])
     const display = props.display ?? {
         sideAction: false,
-        type: 'mini-list',
-        formMode: props?.formMode ?? false
+        type: 'mini-list'
     }
 
     const requestPropsAssignment = {
@@ -64,7 +63,15 @@ const Assignment = (props) => {
         catch (error) { setErro(`Failed to edit this assignment: ${erro.message}`) }
     }, [setModel])
 
-    const handleAssignmentClick = (id, e) => {
+    const removeAssignmentDOMClick = (id, e) => {
+        if (id) {
+            e.stopPropagation()
+            updateSubmitModel({ keyObject: 'assignments', value: { id: id }, type: 'array', action: 'remove' })
+            setAssignment((prevAssignment) => prevAssignment.filter((assignment) => assignment.id !== id))
+        }
+    }
+
+    const assignmentDOMClick = (id, e) => {
         const isSelectableModel = props.selectableModel ?? false
         if (isSelectableModel) {
             e.stopPropagation()
@@ -82,7 +89,7 @@ const Assignment = (props) => {
 
     return (
         assignment.map(assignment => (
-            <div className={`assignment ${display.type}`} id={assignment.id} key={assignment.id} onClick={(e) => handleAssignmentClick(assignment.id, e)}>
+            <div className={`assignment ${display.type}`} id={assignment.id} key={assignment.id} onClick={(e) => assignmentDOMClick(assignment.id, e)}>
                 {
                     display.type === 'card' ?
                         <Link to={`${currentLocation}/details`}>
@@ -99,11 +106,17 @@ const Assignment = (props) => {
                 {
                     display.sideAction &&
                     <div className='side-actions'>
-                        <ButtonAction onClick={() => editAssignment(assignment.id)} target={targetMap(['panel-center', 'assignment'])} switchLayout={switchLayoutMap('panel', 'layout', 'center')} classBtn='edit-assignment' iconFa='fa-regular fa-pen-to-square' />
-                        <ButtonAction onClick={() => deleteAssignment(assignment.id)} target={targetMap(null)} classBtn='remove-assignment' iconFa='fa-regular fa-trash-can' />
+                        {
+                            display.type === "mini-list" ?
+                                <ButtonAction onClick={({ e }) => removeAssignmentDOMClick(assignment.id, e)} classBtn='remove-assignment-dom' iconFa='fa-solid fa-xmark' />
+                                :
+                                <>
+                                    <ButtonAction onClick={() => editAssignment(assignment.id)} target={targetMap(['panel-center', 'assignment'])} switchLayout={switchLayoutMap('panel', 'layout', 'center')} classBtn='edit-assignment' iconFa='fa-regular fa-pen-to-square' />
+                                    <ButtonAction onClick={() => deleteAssignment(assignment.id)} target={targetMap(null)} classBtn='remove-assignment' iconFa='fa-regular fa-trash-can' />
+                                </>
+                        }
                     </div>
                 }
-                {display.formMode && <input hidden readOnly={true} value={assignment.id} id={assignment.id} />}
             </div>
         ))
     )

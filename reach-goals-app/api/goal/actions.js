@@ -1,6 +1,6 @@
 import {
     addGoal, updateGoal, deleteGoal, getGoal, getGoalOnAssignment,
-    getGoalOnTag, getGoalWithoutAssignment
+    getGoalOnTag, getGoalWithoutAssignment, updateTagOnGoal
 } from './service.js'
 
 import { formatObject } from '../utils/utils.js'
@@ -71,7 +71,7 @@ const handleUpdateGoal = async (req, res) => {
             start: startDate,
             end: endDate,
             assignments: {
-                connect: assignmentIds?.map(id => ({ id }))
+                set: assignmentIds?.map(id => ({ id }))
             }
         }
 
@@ -79,8 +79,7 @@ const handleUpdateGoal = async (req, res) => {
         console.log('Goal RECEVEID - ', rawObject)
         console.log('Goal TO UPDATE - ', formattedData)
 
-        helperUpdateTagOnGoal(goalID, tags)
-        helperUpdateUnlinkTagOnGoal(goalID, tags)
+        handleUpdateTagOnGoal(goalID, tags)
         const goal = await updateGoal(goalID, formattedData)
 
         if (goal) {
@@ -183,19 +182,13 @@ const helperUpdateTagOnGoal = async (goalID, tags) => {
     }
 }
 
-const helperUpdateUnlinkTagOnGoal = async (goalID, tags) => {
-    if (!Array.isArray(tags)) { return }
+const handleUpdateTagOnGoal = async (goalID, tags) => {
+    if (!goalID || !tags) return
 
-    const getTags = await prisma.tagOnGoal.findMany({
-        where: {
-            goalID: Number(goalID),
-        }
-    })
-
-    const toUnlink = !tags.length ? getTags : getTags.filter(tag => !tags.includes(tag.id))
-
-    //OBS: CRIE ENDPOINT COM INCIAL HANDLE (FAZ SENTIDO PRO HTTP)
-    //HANDLE chama funções reutilizáveis
+    const assignment = await updateTagOnGoal(goalID, tags)
+    if (!assignment) {
+        console.error("Failed to update this goal's tag relation")
+    }
 }
 
 export {

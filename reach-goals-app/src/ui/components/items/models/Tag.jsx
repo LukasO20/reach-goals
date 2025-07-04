@@ -57,10 +57,11 @@ const Tag = (props) => {
         catch (error) { setErro(`Failed to edit this tag: ${erro.message}`) }
     }, [setModel])
 
-    const removeDOMTagClick = (id, e) => {
+    const removeTagDOMClick = (id, e) => {
         if (id) {
             e.stopPropagation()
             updateSubmitModel({ keyObject: 'tags', value: { tagID: id }, type: 'array', action: 'remove' })
+            setTag((prevTag) => prevTag.filter((tag) => tag.id !== id))
         }
     }
 
@@ -101,7 +102,7 @@ const Tag = (props) => {
                     <div className='side-actions'>
                         {
                             display.type === "mini-list" ?
-                                <ButtonAction onClick={({ e }) => removeDOMTagClick(tag.id, e)} classBtn='remove-tag-dom' iconFa='fa-solid fa-xmark' />
+                                <ButtonAction onClick={({ e }) => removeTagDOMClick(tag.id, e)} classBtn='remove-tag-dom' iconFa='fa-solid fa-xmark' />
                                 :
                                 <>
                                     <ButtonAction onClick={() => editTag(tag.id)} target={targetMap(['panel-center', 'tag'])} switchLayout={switchLayoutMap('panel', 'layout', 'center')} classBtn='edit-tag' iconFa='fa-regular fa-pen-to-square' />
