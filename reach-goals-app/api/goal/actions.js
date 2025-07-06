@@ -161,27 +161,6 @@ const handleGetGoalWithoutAssignment = async (req, res) => {
     } else { return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' }) }
 }
 
-const helperUpdateTagOnGoal = async (goalID, tags) => {
-    if (!goalID || !tags) return
-
-    try {
-        await prisma.tagOnGoal.deleteMany({
-            where: { goalID: Number(goalID) }
-        })
-
-        await prisma.tagOnGoal.createMany({
-            data: tags?.map(tag => ({
-                goalID: Number(goalID),
-                tagID: Number(tag.tagID)
-            })),
-            skipDuplicates: true
-        })
-
-    } catch (error) {
-        console.error('Failed to update tags on goal:', error)
-    }
-}
-
 const handleUpdateTagOnGoal = async (goalID, tags) => {
     if (!goalID || !tags) return
 

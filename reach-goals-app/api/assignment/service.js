@@ -148,7 +148,16 @@ const updateTagOnAssignment = async (assignmentID, tags) => {
     }
 }
 
+const handleUpdateTagOnAssignment = async (assignmentID, tags) => {
+    if (!assignmentID || !tags) return
+
+    const assignment = await updateTagOnAssignment(assignmentID, tags)
+    if (!assignment) {
+        console.error("Failed to update this assignment's tag relation")
+    }
+}
+
 export {
     addAssignment, updateAssignment, deleteAssignment, getAssignment, getAssignmentOnGoal, getAssignmentOnTag,
-    getAssignmentWithoutGoal, updateTagOnAssignment
+    getAssignmentWithoutGoal, updateTagOnAssignment, handleUpdateTagOnAssignment
 }

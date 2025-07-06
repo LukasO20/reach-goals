@@ -46,8 +46,6 @@ const deleteGoal = async (goalID) => {
 }
 
 const getGoal = async (goalID) => {
-    if (!goalID) return
-
     try {
         if (goalID !== undefined && !isNaN(goalID)) {
             return await prisma.goal.findUnique({
@@ -162,7 +160,16 @@ const updateTagOnGoal = async (goalID, tags) => {
     }
 }
 
+const handleUpdateTagOnGoal = async (goalID, tags) => {
+    if (!goalID || !tags) return
+
+    const assignment = await updateTagOnGoal(goalID, tags)
+    if (!assignment) {
+        console.error("Failed to update this goal's tag relation")
+    }
+}
+
 export {
     addGoal, updateGoal, deleteGoal, getGoal, getGoalOnAssignment, getGoalOnTag,
-    getGoalWithoutAssignment, updateTagOnGoal
+    getGoalWithoutAssignment, updateTagOnGoal, handleUpdateTagOnGoal
 }

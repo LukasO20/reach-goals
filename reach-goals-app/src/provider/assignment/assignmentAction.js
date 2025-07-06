@@ -1,10 +1,10 @@
-const apiURL = window.location.origin.includes("localhost") ? "http://localhost:5000"
+const apiURL = window.location.origin.includes("localhost") 
+? "http://localhost:3000" //if vercel dev running use 3000 PORT, if npm start (use 5000 PORT API custom server)
 : window.location.origin
 
 export const addAssignment = async (assignment) => {
-    console.log('ASSIGNMENT RECEIVED - ', assignment)
     try {
-        const response = await fetch(`${apiURL}/api/assignment/actions`, {
+        const response = await fetch(`${apiURL}/api/assignment/addAssignment`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(assignment)
@@ -25,7 +25,7 @@ export const addAssignment = async (assignment) => {
 
 export const updateAssignment = async (assignment) => {
     try {
-        const url = `${apiURL}/api/assignment/actions/${assignment.id}`
+        const url = `${apiURL}/api/assignment/${assignment.id}`
         const response = await fetch(url, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -50,7 +50,7 @@ export const deleteAssignment = async (assignmentID) => {
             headers: { 'Content-Type': 'application/json' },
         })
 
-        const urlDeletAssignment = `${apiURL}/api/assignment/actions/${assignmentID}`
+        const urlDeletAssignment = `${apiURL}/api/assignment/${assignmentID}`
         const response = await fetch(urlDeletAssignment, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
@@ -74,8 +74,8 @@ export const deleteAssignment = async (assignmentID) => {
 export const getAssignment = async (assignmentID) => {
     try {
         const url = (assignmentID !== undefined && !isNaN(assignmentID))
-            ? `${apiURL}/api/assignment/actions/${assignmentID}`
-            : `${apiURL}/api/assignment/actions`
+            ? `${apiURL}/api/assignment/${assignmentID}`
+            : `${apiURL}/api/assignment/getAssignment`
 
         const response = await fetch(url, {
             method: 'GET',
@@ -97,7 +97,7 @@ export const getAssignment = async (assignmentID) => {
 
 export const getAssignmentOnTag = async (tagID) => {
     try {
-        const url = `${apiURL}/api/assignment/actions/relation-tag/${tagID}`
+        const url = `${apiURL}/api/assignment/tag/${tagID}`
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
@@ -119,7 +119,7 @@ export const getAssignmentOnTag = async (tagID) => {
 
 export const getAssignmentOnGoal = async (goalID) => {
     try {
-        const url = `${apiURL}/api/assignment/actions/relation-goal/${goalID}`
+        const url = `${apiURL}/api/assignment/goal/${goalID}`
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
@@ -141,7 +141,7 @@ export const getAssignmentOnGoal = async (goalID) => {
 
 export const getAssignmentWithoutGoal = async () => {
     try {
-        const url = `${apiURL}/api/assignment/actions/not-goal`
+        const url = `${apiURL}/api/assignment/not-goal`
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },

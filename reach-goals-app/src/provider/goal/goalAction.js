@@ -1,10 +1,11 @@
-const apiURL = window.location.origin.includes("localhost") ? "http://localhost:5000"
+const apiURL = window.location.origin.includes("localhost") 
+? "http://localhost:3000" //if vercel dev running use 3000 PORT, if npm start (use 5000 PORT API custom server)
 : window.location.origin
 
 export const addGoal = async (goal) => {
 
     try {
-        const response = await fetch(`${apiURL}/api/goal/actions`, {
+        const response = await fetch(`${apiURL}/api/goal/addGoal`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(goal)
@@ -27,7 +28,7 @@ export const updateGoal = async (goal) => {
     console.log('GOAL FRONTEND TO SEND - ', goal)
 
     try {
-        const url = `${apiURL}/api/goal/actions/${goal.id}`
+        const url = `${apiURL}/api/goal/${goal.id}`
         const response = await fetch(url, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -52,7 +53,7 @@ export const deleteGoal = async (goalID) => {
             headers: { 'Content-Type': 'application/json' },
         })
 
-        const urlDeletGoal = `${apiURL}/api/goal/actions/${goalID}`
+        const urlDeletGoal = `${apiURL}/api/goal/${goalID}`
         const responseGoal = await fetch(urlDeletGoal, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
@@ -76,10 +77,9 @@ export const deleteGoal = async (goalID) => {
 
 export const getGoal = async (goalID) => {
     try {
-
         const url = (goalID !== undefined && !isNaN(goalID))
-            ? `${apiURL}/api/goal/actions/${goalID}`
-            : `${apiURL}/api/goal/actions`
+            ? `${apiURL}/api/goal/${goalID}`
+            : `${apiURL}/api/goal/getGoal`
 
         const response = await fetch(url, {
             method: 'GET',
@@ -101,7 +101,7 @@ export const getGoal = async (goalID) => {
 
 export const getGoalOnTag = async (tagID) => {
     try {
-        const url = `${apiURL}/api/goal/actions/relation-tag/${tagID}`
+        const url = `${apiURL}/api/goal/tag/${tagID}`
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
@@ -123,7 +123,7 @@ export const getGoalOnTag = async (tagID) => {
 
 export const getGoalOnAssignment = async (assignmentID) => {
     try {
-        const url = `${apiURL}/api/goal/actions/relation-assignment/${assignmentID}`
+        const url = `${apiURL}/api/goal/assignment/${assignmentID}`
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
@@ -145,7 +145,7 @@ export const getGoalOnAssignment = async (assignmentID) => {
 
 export const getGoalWithoutAssignment = async (assignmentID) => {
     try {
-        const url = `${apiURL}/api/goal/actions/not-assignment/${assignmentID}`
+        const url = `${apiURL}/api/goal/not-assignment/${assignmentID}`
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },

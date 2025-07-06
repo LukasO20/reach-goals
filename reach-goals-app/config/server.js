@@ -23,7 +23,8 @@ import {
 } from '../api/tag/actions.js'
 
 app.post('/api/goal/actions', handleAddGoal)
-app.get('/api/goal/actions/:goalID?', handleGetGoal)
+//app.get('/api/goal/actions/:goalID?', handleGetGoal)
+app.get('/api/goal/getGoal/:goalID?', handleGetGoal)
 app.get('/api/goal/actions/relation-assignment/:assignmentID', handleGetGoalOnAssignment)
 app.get('/api/goal/actions/not-assignment/:assignmentID', handleGetGoalWithoutAssignment)
 app.get('/api/goal/actions/relation-tag/:tagID', handleGetGoalOnTag)
