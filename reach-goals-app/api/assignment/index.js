@@ -3,7 +3,7 @@ import { formatObject } from '../utils/utils.js'
 import moment from 'moment'
 
 const handler = async (req, res) => {
-    const { action } = query
+    const { action } = req.query
 
     if (req.method === 'POST') {
         const { name, description, status, duration, start, end, goalID, tags } = req.body
@@ -52,12 +52,14 @@ const handler = async (req, res) => {
             }
         }
 
-        if (action === 'assignment-not-goal') {
-            assignment = await getAssignmentWithoutGoal()
+        if (action === 'assignment-on-goal') {
+            const { goalID } = req.query
+            assignment = await getAssignmentOnGoal(goalID)
+
             if (assignment) {
                 return res.status(200).json(assignment)
             } else {
-                return res.status(500).json({ error: 'Failed to fetch assignments without goals' })
+                return res.status(500).json({ error: 'Failed to fetch assignments with goals' })
             }
         }
 
@@ -72,14 +74,12 @@ const handler = async (req, res) => {
             }
         }
 
-        if (action === 'assignment-on-goal') {
-            const { goalID } = req.query
-            assignment = await getAssignmentOnGoal(goalID)
-
+        if (action === 'assignment-not-goal') {
+            assignment = await getAssignmentWithoutGoal()
             if (assignment) {
                 return res.status(200).json(assignment)
             } else {
-                return res.status(500).json({ error: 'Failed to fetch assignments with goals' })
+                return res.status(500).json({ error: 'Failed to fetch assignments without goals' })
             }
         }
     }

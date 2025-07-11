@@ -37,4 +37,19 @@ const modalListMap = (open, type) => {
     return attributes
 }
 
-export { targetMap, switchLayoutMap, checkboxMap, modalListMap }
+const buildQueryParamsMap = ({ IDobject, action }) => {
+    if (typeof action !== 'string' || !action.trim()) return console.error('"action" must be a non-empty string')
+    if (!IDobject || typeof IDobject !== 'object') return console.error('"IDobject" must be an object like { key: value }')
+
+    const hasValidKey = Object.entries(IDobject).some(([k, v]) =>
+        k.trim() !== '' && v !== undefined && v !== null && v !== ''
+    )
+    if (!hasValidKey) return console.error('"IDobject" must have at least one key with a non-empty value')
+
+    return new URLSearchParams({
+        action: action,
+        ...IDobject
+    }).toString()
+}
+
+export { targetMap, switchLayoutMap, checkboxMap, modalListMap, buildQueryParamsMap }

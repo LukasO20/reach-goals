@@ -44,10 +44,7 @@ const deleteTag = async (tagID) => {
 }
 
 const getTag = async (tagID) => {
-    if (!tagID) return
-
     try {
-
         if (tagID !== undefined && !isNaN(tagID)) {
             return await prisma.tag.findUnique({
                 where: { id: Number(tagID) },

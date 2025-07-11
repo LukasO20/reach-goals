@@ -1,17 +1,19 @@
-const apiURL = window.location.origin.includes("localhost") 
-? "http://localhost:3000" //if vercel dev running use 3000 PORT, if npm start (use 5000 PORT API custom server)
-: window.location.origin
+import { buildQueryParamsMap } from "../../utils/mappingUtils.js"
+
+const apiURL = window.location.origin.includes("localhost")
+    ? "http://localhost:3000" //if vercel dev running use 3000 PORT, if npm start (use 5000 PORT API custom server)
+    : window.location.origin
 
 export const addAssignment = async (assignment) => {
     try {
-        const response = await fetch(`${apiURL}/api/assignment/addAssignment`, {
+        const response = await fetch(`${apiURL}/api/assignment`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(assignment)
-        })  
+        })
 
         if (!response.ok) {
-            const error  = await response.json()
+            const error = await response.json()
             throw new Error(error.error || 'Failed to add assignment.')
         }
 
@@ -30,10 +32,10 @@ export const updateAssignment = async (assignment) => {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(assignment)
-        })  
+        })
 
         if (!response.ok) {
-            const error  = await response.json()
+            const error = await response.json()
             throw new Error(error.error || 'Failed to add assignment.')
         }
     } catch (error) {
@@ -54,7 +56,7 @@ export const deleteAssignment = async (assignmentID) => {
         const response = await fetch(urlDeletAssignment, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
-        })  
+        })
 
         if (!responseUnlinkTag.ok) {
             const error = await responseUnlinkTag.json()
@@ -62,7 +64,7 @@ export const deleteAssignment = async (assignmentID) => {
         }
 
         if (!response.ok) {
-            const error  = await response.json()
+            const error = await response.json()
             throw new Error(error.error || 'Failed to delete assignment.')
         }
     } catch (error) {
@@ -75,15 +77,15 @@ export const getAssignment = async (assignmentID) => {
     try {
         const url = (assignmentID !== undefined && !isNaN(assignmentID))
             ? `${apiURL}/api/assignment/${assignmentID}`
-            : `${apiURL}/api/assignment/getAssignment`
+            : `${apiURL}/api/assignment?action=assignment-get`
 
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
-        })  
+        })
 
         if (!response.ok) {
-            const error  = await response.json()
+            const error = await response.json()
             throw new Error(error.error || 'Failed to fetch assignments.')
         }
 
@@ -96,15 +98,20 @@ export const getAssignment = async (assignmentID) => {
 }
 
 export const getAssignmentOnTag = async (tagID) => {
+    const queryParms = {
+        action: 'assignment-on-tag',
+        IDobject: { 'tagID': tagID }
+    }
+    
     try {
-        const url = `${apiURL}/api/assignment/tag/${tagID}`
+        const url = `${apiURL}/api/assignment?${buildQueryParamsMap(queryParms)}`
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
-        })  
+        })
 
         if (!response.ok) {
-            const error  = await response.json()
+            const error = await response.json()
             throw new Error(error.error || 'Failed to fetch assignments.')
         }
 
@@ -118,15 +125,20 @@ export const getAssignmentOnTag = async (tagID) => {
 }
 
 export const getAssignmentOnGoal = async (goalID) => {
+    const queryParms = {
+        action: 'assignment-on-goal',
+        IDobject: { 'goalID': goalID }
+    }
+
     try {
-        const url = `${apiURL}/api/assignment/goal/${goalID}`
+        const url = `${apiURL}/api/assignment?${buildQueryParamsMap(queryParms)}`
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
-        })  
+        })
 
         if (!response.ok) {
-            const error  = await response.json()
+            const error = await response.json()
             throw new Error(error.error || 'Failed to fetch assignments.')
         }
 
@@ -141,14 +153,14 @@ export const getAssignmentOnGoal = async (goalID) => {
 
 export const getAssignmentWithoutGoal = async () => {
     try {
-        const url = `${apiURL}/api/assignment/not-goal`
+        const url = `${apiURL}/api/assignment?action=assignment-not-goal`
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
-        })  
+        })
 
         if (!response.ok) {
-            const error  = await response.json()
+            const error = await response.json()
             throw new Error(error.error || 'Failed to fetch assignments.')
         }
 

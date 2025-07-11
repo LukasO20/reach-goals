@@ -1,18 +1,19 @@
-const apiURL = window.location.origin.includes("localhost") 
-? "http://localhost:3000" //if vercel dev running use 3000 PORT, if npm start (use 5000 PORT API custom server)
-: window.location.origin
+import { buildQueryParamsMap } from "../../utils/mappingUtils.js"
+
+const apiURL = window.location.origin.includes("localhost")
+    ? "http://localhost:3000" //if vercel dev running use 3000 PORT, if npm start (use 5000 PORT API custom server)
+    : window.location.origin
 
 export const addGoal = async (goal) => {
-
     try {
-        const response = await fetch(`${apiURL}/api/goal/addGoal`, {
+        const response = await fetch(`${apiURL}/api/goal`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(goal)
-        })  
+        })
 
         if (!response.ok) {
-            const error  = await response.json()
+            const error = await response.json()
             throw new Error(error.error || 'Failed to add goal.')
         }
 
@@ -25,18 +26,16 @@ export const addGoal = async (goal) => {
 }
 
 export const updateGoal = async (goal) => {
-    console.log('GOAL FRONTEND TO SEND - ', goal)
-
     try {
         const url = `${apiURL}/api/goal/${goal.id}`
         const response = await fetch(url, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(goal)
-        })  
+        })
 
         if (!response.ok) {
-            const error  = await response.json()
+            const error = await response.json()
             throw new Error(error.error || 'Failed to add goal.')
         }
     } catch (error) {
@@ -46,8 +45,13 @@ export const updateGoal = async (goal) => {
 }
 
 export const deleteGoal = async (goalID) => {
+    const queryParms = {
+        action: 'tag-unlink-all-goal',
+        IDobject: { 'goalID': goalID }
+    }
+
     try {
-        const urlUnlinkTag = `${apiURL}/api/tag/actions/unlink-all-goal/${goalID}`
+        const urlUnlinkTag = `${apiURL}/api/tag?${buildQueryParamsMap(queryParms)}`
         const responseUnlinkTag = await fetch(urlUnlinkTag, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
@@ -57,15 +61,15 @@ export const deleteGoal = async (goalID) => {
         const responseGoal = await fetch(urlDeletGoal, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
-        })  
+        })
 
         if (!responseUnlinkTag.ok) {
-            const error  = await responseUnlinkTag.json()
+            const error = await responseUnlinkTag.json()
             throw new Error(error.error || 'Failed to unlink tags from goal.')
         }
 
         if (!responseGoal.ok) {
-            const error  = await responseGoal.json()
+            const error = await responseGoal.json()
             throw new Error(error.error || 'Failed to delete goal.')
         }
 
@@ -79,15 +83,15 @@ export const getGoal = async (goalID) => {
     try {
         const url = (goalID !== undefined && !isNaN(goalID))
             ? `${apiURL}/api/goal/${goalID}`
-            : `${apiURL}/api/goal/getGoal`
+            : `${apiURL}/api/goal?action=goal-get`
 
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
-        })  
+        })
 
         if (!response.ok) {
-            const error  = await response.json()
+            const error = await response.json()
             throw new Error(error.error || 'Failed to fetch goals.')
         }
 
@@ -100,15 +104,20 @@ export const getGoal = async (goalID) => {
 }
 
 export const getGoalOnTag = async (tagID) => {
+    const queryParms = {
+        action: 'goal-on-tag',
+        IDobject: { 'tagID': tagID }
+    }
+
     try {
-        const url = `${apiURL}/api/goal/tag/${tagID}`
+        const url = `${apiURL}/api/goal?${buildQueryParamsMap(queryParms)}`
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
-        })  
+        })
 
         if (!response.ok) {
-            const error  = await response.json()
+            const error = await response.json()
             throw new Error(error.error || 'Failed to fetch goals.')
         }
 
@@ -122,15 +131,20 @@ export const getGoalOnTag = async (tagID) => {
 }
 
 export const getGoalOnAssignment = async (assignmentID) => {
+    const queryParms = {
+        action: 'goal-on-assignment',
+        IDobject: { 'assignmentID': assignmentID }
+    }
+
     try {
-        const url = `${apiURL}/api/goal/assignment/${assignmentID}`
+        const url = `${apiURL}/api/goal?${buildQueryParamsMap(queryParms)}`
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
-        })  
+        })
 
         if (!response.ok) {
-            const error  = await response.json()
+            const error = await response.json()
             throw new Error(error.error || 'Failed to fetch goals.')
         }
 
@@ -144,15 +158,20 @@ export const getGoalOnAssignment = async (assignmentID) => {
 }
 
 export const getGoalWithoutAssignment = async (assignmentID) => {
+    const queryParms = {
+        action: 'goal-not-assignment',
+        IDobject: { 'assignmentID': assignmentID }
+    }
+
     try {
-        const url = `${apiURL}/api/goal/not-assignment/${assignmentID}`
+        const url = `${apiURL}/api/goal?${buildQueryParamsMap(queryParms)}`
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
-        })  
+        })
 
         if (!response.ok) {
-            const error  = await response.json()
+            const error = await response.json()
             throw new Error(error.error || 'Failed to fetch goals.')
         }
 

@@ -117,10 +117,10 @@ const getGoalOnTag = async (tagID) => {
 const getGoalWithoutAssignment = async (assignmentID) => {
     try {
         const isTrue = assignmentID === true || assignmentID === 'true'
-        const isNumber = !isNaN(assignmentID) && assignmentID !== '' && assignmentID !== null && assignmentID !== undefined
+        const isNumeric = !isNaN(assignmentID) && typeof assignmentID !== 'boolean';
 
-        if (!isTrue && !isNumber) return
-
+        if (!isTrue && !isNumeric) return res.status(400).json({ error: 'Invalid assignmentID' })
+        
         if (isTrue) {
             return await prisma.goal.findMany({
                 where: { assignments: { none: {} } },
