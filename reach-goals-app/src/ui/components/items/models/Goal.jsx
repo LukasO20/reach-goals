@@ -88,7 +88,7 @@ const Goal = (props) => {
             setPendingPanel(false)
         }
 
-    }, [getData, model.mainModelID, pendingPanel])
+    }, [getData, pendingPanel])
 
     console.log('GOAL LOADED - ', goal)
 

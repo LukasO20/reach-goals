@@ -145,7 +145,7 @@ const Form = (props) => {
                             </div>
                         </div>
                         <div className='objective-buttons-options'>
-                            <ButtonAction target={targetMap(null)} classBtn='button-action-p close-modal' iconFa='fa-solid fa-xmark' />
+                            <ButtonAction target={targetMap(null)} nullModel={true} classBtn='button-action-p close-modal' iconFa='fa-solid fa-xmark' />
                         </div>
                     </div>
                     <div className='body'>

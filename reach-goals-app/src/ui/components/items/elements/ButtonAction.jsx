@@ -20,18 +20,17 @@ const ButtonAction = (props) => {
     const classBtn = props.classBtn.split(' ')[2]
     const isOn = statusButton(classBtn, visibleElements)
     const navigate = useNavigate()
-    const standardRoute = props.standardRoute ?? false
 
     const handleClick = (e) => {
+        if (props.target) toggleVisibility(props.target, e)
+        if (props.modalList) handleModalList(props.modalList, e)
+        if (props.switchLayout) switchLayoutComponent(props.switchLayout)
+        if (props.nullModel) resetManageModel()
+        if (props.standardRoute) navigate('/home') // return standard route if true 
+
         if (typeof props.onClick === 'function') {
             props.onClick({props, e}) // execute external function from 'onClick' attribute    
         }
-        if (standardRoute) { navigate('/home') } // return standard route if true  
-
-        if (props.target) { toggleVisibility(props.target, e) }
-        if (props.modalList) { handleModalList(props.modalList, e) }
-        if (props.switchLayout) { switchLayoutComponent(props.switchLayout) }
-        if (props.nullModel) { resetManageModel() }
     }
 
     return (

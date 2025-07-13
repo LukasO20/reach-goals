@@ -58,22 +58,14 @@ const ModalForm = (props) => {
     const [isLoading, setLoading] = useState(false)
 
     const [modelProps, setModelProps] = useState({})
-    const [resetModel, setResetModel] = useState(false)
 
     const { params: getParams, data: getData } = useGetModel(modelProps)
     const { data: saveData, saveModel } = useSaveModel({})
 
-    const nullModal = () => {
-        resetManageModel()
-    }
-
     const loadModel = (id) => {
         setLoading(true)
 
-        if (!id) {
-            nullModal()
-            return setLoading(false)
-        }
+        if (!id) return setLoading(false)
 
         const currentKeySomeID = typeForm === 'assignment' ? 'assignmentSomeID' : typeForm === 'goal' ? 'goalSomeID' : 'tagSomeID'
         const currentUseGetModel = {
@@ -234,7 +226,6 @@ const ModalForm = (props) => {
         mapHandleModalList: handleModalList,
         mapModalListMap: modalListMap,
         mapToggleVisibility: toggleVisibility,
-        mapNullModal: nullModal,
         mapHandleChange: handleChange,
         mapFormsInputMap: formsInputMap,
         mapFormsItemMap: formsItemMap,
@@ -256,11 +247,11 @@ const ModalForm = (props) => {
         mapStateError: error
     }
 
-    console.log('VALUE OF LOADING - ', isLoading, model.submitModel)
+    console.log('VALUE OF LOADING - ', isLoading, model)
 
     return (
         isLoading ? <div id="load-element" className='loading-animation'></div> :
-            ((model.submitModel && model.submitModel.id) || (model.mainModelID === null && !resetModel)) ?
+            ((model.submitModel && model.submitModel.id) || model.mainModelID === null) ?
                 (
                     <Form typeForm={typeForm} functionFormMap={functionFormMap}
                         model={model.submitModel} booleanFormMap={booleanFormMap}

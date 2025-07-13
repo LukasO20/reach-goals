@@ -45,7 +45,7 @@ const ModelCopy = ({ type, displayRef }) => {
         }
     }
 
-    console.log('MODEL COPY - ', model)
+    //console.log('MODEL COPY - ', model)
 
     return modelCopy.map(model => (
         <div className={`${model.type} ${display.type}`} id={model.id} key={model.id}>

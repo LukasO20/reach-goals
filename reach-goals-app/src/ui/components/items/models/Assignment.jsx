@@ -18,6 +18,7 @@ import '../../../styles/items/models/Assignment.scss'
 const Assignment = (props) => {
     const [assignment, setAssignment] = useState([])
     const [erro, setErro] = useState(false)
+    const [pendingPanel, setPendingPanel] = useState(false)
 
     const { toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
@@ -28,11 +29,13 @@ const Assignment = (props) => {
         return location.pathname.includes('/objectives') ? '/objectives' : location.pathname.includes('/home') ? '/home' : '/calendar'
     }, [location.pathname])
 
-    const target = useMemo(() => targetMap(['panel-right', 'assignment']), [])
     const display = props.display ?? {
         sideAction: false,
         type: 'mini-list'
     }
+
+    const isSelectableModel = props.selectableModel ?? false
+    const isDetailsModel = props.detailsModel ?? false
 
     const requestPropsAssignment = {
         type: 'assignment',
@@ -43,15 +46,12 @@ const Assignment = (props) => {
     }
 
     const { params: getParams, data: getData } = useGetModel(requestPropsAssignment)
+    const { data: deleteData, deleteModel } = useDeleteModel({})
 
     const getAssignment = async () => {
         try { setAssignment(getData) }
         catch (error) { setErro(`Failed to load assignment: ${error.message}`) }
     }
-
-    useEffect(() => { getAssignment() }, [getData])
-
-    const { data: deleteData, deleteModel } = useDeleteModel({})
 
     const deleteAssignment = (id) => {
         deleteModel({ type: 'assignment', assignmentID: id })
@@ -72,7 +72,6 @@ const Assignment = (props) => {
     }
 
     const assignmentDOMClick = (id, e) => {
-        const isSelectableModel = props.selectableModel ?? false
         if (isSelectableModel) {
             e.stopPropagation()
             const selected = assignment.find(m => m.id === id)
@@ -82,10 +81,23 @@ const Assignment = (props) => {
             return updateSubmitModel({ keyObject: 'assignments', value: { id: id }, type: 'array' })
         }
 
-        setModel({ ...model, mainModelID: id })
-        toggleVisibility(target, e)
-        switchLayoutComponent(switchLayoutMap('panel', 'layout', 'right'))
+        if (isDetailsModel) {
+            setModel(prev => ({ ...prev, mainModelID: id, typeModel: 'assignment' }))
+            setPendingPanel(true)
+            return
+        }
     }
+
+    useEffect(() => { 
+        getAssignment() 
+    
+        if (pendingPanel && model.mainModelID) {
+            switchLayoutComponent(switchLayoutMap('panel', 'layout', 'right'))
+            toggleVisibility(targetMap(['panel-right', 'assignment']))
+            setPendingPanel(false)
+        }
+
+    }, [getData, pendingPanel])
 
     console.log('ASSIGNMENT LOADED - ', assignment)
 

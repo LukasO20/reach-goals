@@ -3,6 +3,8 @@ import { useContext } from 'react'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 
+import { targetMap, switchLayoutMap } from '../../../../utils/mappingUtils.js'
+
 import ButtonAction from './ButtonAction'
 
 const mapOptionDropdown = (type) => {
@@ -33,45 +35,29 @@ const NullObject = (value) => {
     return (Array.isArray(value) || typeof value === "string") && value.length !== 0
 }
 
-const targetMap = (classes, operator = {}) => {
-    const data = Array.isArray(classes) ? classes : [classes]
-    const attributes = {
-        class: data,
-        operator: operator
-    }
-    return attributes
-}
-
-const switchLayoutMap = (nameComponent, nameLayout, value) => {
-    const attributes = {
-        nameComponent: nameComponent,
-        nameLayout: nameLayout,
-        value: value
-    }
-    return attributes
-}
-
 const ButtonDropdown = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
-    const { model, resetManageModel } = useContext(ManageModelContext)
+    const { setModel } = useContext(ManageModelContext)
 
-    const target = props.target ?? { class : [] }
+    const target = props.target ?? { class: [] }
     const typeClass = target.class !== undefined ? target.class[0] : null
-    const dropdownStatus = typeClass.includes('goal-status') || typeClass.includes('assignment-status') 
+    const dropdownStatus = typeClass.includes('goal-status') || typeClass.includes('assignment-status')
     const reference = props?.reference
 
     let titleDropdown = undefined
     let optionsDropdown = undefined
     let classTargetDropdown = undefined
 
-    const handleAction = (event) => {
+    const dropdownActionClick = (event) => {
         if (event.props) {
             const datavalue = event.props.datavalue
             if (typeof props.changeDropdownValue === 'function' && dropdownStatus) {
                 props.changeDropdownValue({ name: 'status', value: datavalue })
             }
 
-            if (typeClass === 'btn-action-create') resetManageModel()  
+            if (typeClass === 'btn-action-create' && event.props.type === 'goal' || event.props.type === 'assignment') {
+                setModel(prev => ({...prev, typeModel: event.props.type, mainModelID: null, submitModel: {} }))
+            }
         }
     }
 
@@ -111,17 +97,17 @@ const ButtonDropdown = (props) => {
         }
     }
 
-    return (        
-        <span className={`${props.classBtn} button-st`} onClick={(e) => toggleVisibility(target, e)} onKeyDown={(e) => e.key === 'Enter' ? toggleVisibility(target, e) : ''} role='button' tabIndex='0'> 
+    return (
+        <span className={`${props.classBtn} button-st`} onClick={(e) => toggleVisibility(target, e)} onKeyDown={(e) => e.key === 'Enter' ? toggleVisibility(target, e) : ''} role='button' tabIndex='0'>
             <i className={`icon-st ${props.iconFa}`}></i>{props.title}
-            <div className={`dropdown-menu ${ visibleElements.includes(typeClass) ? 'show' : '' }`} onClick={(e) => e.stopPropagation()}>
+            <div className={`dropdown-menu ${visibleElements.includes(typeClass) ? 'show' : ''}`} onClick={(e) => e.stopPropagation()}>
                 {defineDropdown()}
                 <div className='dropdown-item item-element'>
                     <div className='section-options'>
-                        { NullObject(titleDropdown) ? <span>{titleDropdown}</span> : ''}
-                        { NullObject(optionsDropdown) ?
-                            optionsDropdown.map((option, index) => {  
-                                switch(reference) {
+                        {NullObject(titleDropdown) ? <span>{titleDropdown}</span> : ''}
+                        {NullObject(optionsDropdown) ?
+                            optionsDropdown.map((option, index) => {
+                                switch (reference) {
                                     case 'panel-center':
                                         classTargetDropdown = [['panel-center', `${option.op}`]]
                                         break
@@ -132,14 +118,14 @@ const ButtonDropdown = (props) => {
 
                                 return (
                                     <div className={`option ${option.op}`} key={`op-${index}`}>
-                                        <div className='item-option'>                                  
+                                        <div className='item-option'>
                                             <div className='item-title'>
-                                                <ButtonAction onClick={handleAction} datavalue={dropdownStatus ? option.op : null}  target={targetMap(...classTargetDropdown)} switchLayout={switchLayoutMap('panel', 'layout', 'center')} classBtn={`form-${option.op} button-st`} iconFa='fa-solid fa-plus' title={`${option.title}`}/>
-                                            </div> 
+                                                <ButtonAction onClick={dropdownActionClick} nullModel={true} datavalue={dropdownStatus ? option.op : null} target={targetMap(...classTargetDropdown)} switchLayout={switchLayoutMap('panel', 'layout', 'center')} classBtn={`form-${option.op} button-st`} iconFa='fa-solid fa-plus' title={`${option.title}`} type={option.op} />
+                                            </div>
                                             <div className='item-details'>
 
                                             </div>
-                                        </div>   
+                                        </div>
                                         <div className='item-option-style'>
 
                                         </div>
