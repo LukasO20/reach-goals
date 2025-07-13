@@ -26,13 +26,13 @@ const formsInputMap = (typeForm, model, exFunction) => {
 }
 
 const formsItemMap = (typeForm, modelComponent) => {
-    const refFormItem = typeForm === 'goal' ? 'assignment' : 'goal'
+    const messageRelation = typeForm === 'goal' ? 'assignments' : 'goals'
 
     const formItem =
-        <div className={`item-forms ${refFormItem}`}>
+        <div className={`item-forms ${typeForm === 'goal' ? 'assignment' : 'goal'}`}>
             <div className='item-forms head'>
                 <div className='item-head-1'>
-                    <label>{`${refFormItem}s`}</label>
+                    <label>{messageRelation}</label>
                     <ButtonAction modalList={modalListMap(true, typeForm)} classBtn={`form-modallist-${typeForm} button-st`} iconFa='fa-solid fa-plus' title='Add' />
                 </div>
                 <div className='item-head-2'></div>
@@ -47,7 +47,7 @@ const formsItemMap = (typeForm, modelComponent) => {
 
 const ModalForm = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
-    const { model, setModel } = useContext(ManageModelContext)
+    const { model, setModel, resetManageModel } = useContext(ManageModelContext)
     const { modalList, handleModalList } = useContext(ModalListContext)
 
     const typeForm = props.type
@@ -58,25 +58,21 @@ const ModalForm = (props) => {
     const [isLoading, setLoading] = useState(false)
 
     const [modelProps, setModelProps] = useState({})
-    //const [modelTarget, setModelTarget] = useState({})
     const [resetModel, setResetModel] = useState(false)
 
-    const { params: getParams, data: getData } = useGetModel(modelProps, resetModel)
+    const { params: getParams, data: getData } = useGetModel(modelProps)
     const { data: saveData, saveModel } = useSaveModel({})
 
     const nullModal = () => {
-        !model.mainModelID && setModel({ ...model, mainModelID: null, transportModel: [], submitModel: {} })
-        setModelProps({})
-        setResetModel(true)
+        resetManageModel()
     }
 
     const loadModel = (id) => {
         setLoading(true)
 
-        if (id === null) {
+        if (!id) {
             nullModal()
-            setLoading(false)
-            return
+            return setLoading(false)
         }
 
         const currentKeySomeID = typeForm === 'assignment' ? 'assignmentSomeID' : typeForm === 'goal' ? 'goalSomeID' : 'tagSomeID'
@@ -202,7 +198,6 @@ const ModalForm = (props) => {
 
         try {
             saveModel({ type: typeForm, model: structuredClone(model.submitModel) })
-            setSucess(true)
         } catch (error) {
             setError(error.message)
         }
@@ -214,21 +209,26 @@ const ModalForm = (props) => {
     }
 
     useEffect(() => {
-        if (!resetModel) {
-            loadModel(model.mainModelID)
+        loadModel(model.mainModelID)
 
-            if (modelProps && Object.keys(modelProps).length > 0 && model.mainModelID) {
-                setModel(prevModel => ({
-                    ...prevModel,
-                    submitModel: handleTarget(getData[0])
-                }))
-            }
+        if (modelProps && Object.keys(modelProps).length > 0 && model.mainModelID) {
+            setModel(prevModel => ({
+                ...prevModel,
+                submitModel: handleTarget(getData[0])
+            }))
         }
+
+        console.log("CALLING EFFECT")
+
     }, [model.mainModelID, getData])
 
     useEffect(() => {
-        resetModel && setResetModel(false)
-    }, [resetModel])
+        if (Object.keys(saveData).length > 0) {
+            resetManageModel()
+            toggleVisibility(null)
+            setSucess(true)
+        }
+    }, [saveData])
 
     const functionFormMap = {
         mapHandleModalList: handleModalList,

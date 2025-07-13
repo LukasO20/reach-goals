@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
@@ -18,6 +18,7 @@ import '../../../styles/items/models/Goal.scss'
 const Goal = (props) => {
     const [goal, setGoal] = useState([])
     const [erro, setErro] = useState(false)
+    const [pendingPanel, setPendingPanel] = useState(false)
 
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
@@ -28,12 +29,12 @@ const Goal = (props) => {
         return location.pathname.includes('/objectives') ? '/objectives' : location.pathname.includes('/home') ? '/home' : '/calendar'
     }, [location.pathname])
 
-    const target = useMemo(() => targetMap(['panel-right', 'goal']), [])
     const display = props.display ?? {
         sideAction: false,
         type: 'mini-list'
     }
     const isSelectableModel = props.selectableModel ?? false
+    const isDetailsModel = props.detailsModel ?? false
 
     const requestPropsGetGoal = {
         type: 'goal',
@@ -44,49 +45,56 @@ const Goal = (props) => {
     }
 
     const { params: getParams, data: getData } = useGetModel(requestPropsGetGoal)
-
-    useEffect(() => { getGoal() }, [getData])
+    const { data: deleteData, deleteModel } = useDeleteModel({})
 
     const getGoal = () => {
         try { setGoal(getData) }
         catch (error) { setErro(`Failed to load goal: ${error.message}`) }
     }
 
-    const { data: deleteData, deleteModel } = useDeleteModel({})
-
     const deleteGoal = (id) => {
         deleteModel({ type: 'goal', goalID: id })
         setGoal((prevGoal) => prevGoal.filter((goal) => goal.id !== id))
     }
 
-    const editGoal = useCallback((id) => {
-        try { setModel({ ...model, mainModelID: id, typeModel: 'goal' }) }
-        catch (error) { setErro(`Failed to edit this goal: ${erro.message}`) }
-    }, [setModel])
+    const editGoal = (id) => {
+        try { setModel(prev => ({ ...prev, mainModelID: id, typeModel: 'goal' })) }
+        catch (error) { setErro(`Failed to edit this goal: ${error}`) }
+    }
 
-    //Usecallback for 'handleGoalClick' might not necessary here, but is it still being analyzed
-    //useCallback((id, e) => {}, [setModel, toggleVisibility, target, goal])
-
-    const handleGoalClick = (id, e) => {
+    const goalClick = (id, e) => {
         if (isSelectableModel) {
-            e.stopPropagation()     
+            e.stopPropagation()
             const selected = goal.find(m => m.id === id)
             if (model.transportModel.length > 0 && visibleElements.includes('panel-center') && visibleElements.includes('assignment')) return
-            
-            addToTransportModel({...selected, type: 'goal' })
+
+            addToTransportModel({ ...selected, type: 'goal' })
             return updateSubmitModel({ keyObject: 'goalID', value: id })
         }
 
-        setModel({ ...model, mainModelID: id })
-        toggleVisibility(target, e)
-        switchLayoutComponent(switchLayoutMap('panel', 'layout', 'right'))
+        if (isDetailsModel) {
+            setModel(prev => ({ ...prev, mainModelID: id, typeModel: 'goal' }))
+            setPendingPanel(true)
+            return
+        }
     }
 
-    console.log('GOAL SELECTED ', getData)
+    useEffect(() => { 
+        getGoal() 
+    
+        if (pendingPanel && model.mainModelID) {
+            switchLayoutComponent(switchLayoutMap('panel', 'layout', 'right'))
+            toggleVisibility(targetMap(['panel-right', 'goal']))
+            setPendingPanel(false)
+        }
+
+    }, [getData, model.mainModelID, pendingPanel])
+
+    console.log('GOAL LOADED - ', goal)
 
     return (
         goal.map(goal => (
-            <div className={`goal ${display.type}`} id={goal.id} key={goal.id} onClick={(e) => handleGoalClick(goal.id, e)}>
+            <div className={`goal ${display.type}`} id={goal.id} key={goal.id} onClick={(e) => goalClick(goal.id, e)}>
                 {
                     display.type === 'card' ?
                         <Link to={`${currentLocation}/details`}>

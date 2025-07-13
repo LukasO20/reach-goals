@@ -41,11 +41,12 @@ const Panel = (props) => {
     const { layoutComponent } = useSwitchLayout()
     
     const panelType = ['panel-left', 'panel-center', 'panel-right']
-    const btnCurrent = visibleElements[1] ?? ''
     const renderConfig = {
-        type: btnCurrent.split(' ')[0],
+        type: model.typeModel,
         modelID: model.mainModelID
     }
+
+    console.log('manage model from PANEL - ', model)
 
     return (
         <div className={`content-${layoutComponent.panel.layout} ${panelType.some(panel => visibleElements.includes(panel)) ? 'show' : ''} ${renderConfig.type}`}>  

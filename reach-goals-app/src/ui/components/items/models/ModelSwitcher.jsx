@@ -10,11 +10,7 @@ const ModelSwitcher = (props) => {
     const action = props?.action
 
     switch (type) {
-        case 'goal':
-            return <Goal {...propsReference} action={action} selectableModel={selectableModel} exFunction={externalFunction}  />
         case 'goal-relation':
-            return <Assignment {...propsReference} action={action} selectableModel={selectableModel} exFunction={externalFunction} />
-        case 'assignment':
             return <Assignment {...propsReference} action={action} selectableModel={selectableModel} exFunction={externalFunction} />
         case 'assignment-relation':
             return <Goal {...propsReference} action={action} selectableModel={selectableModel} exFunction={externalFunction} />

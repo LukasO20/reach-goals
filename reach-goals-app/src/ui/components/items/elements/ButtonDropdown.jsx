@@ -53,7 +53,7 @@ const switchLayoutMap = (nameComponent, nameLayout, value) => {
 
 const ButtonDropdown = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
-    const { model, setModel } = useContext(ManageModelContext)
+    const { model, resetManageModel } = useContext(ManageModelContext)
 
     const target = props.target ?? { class : [] }
     const typeClass = target.class !== undefined ? target.class[0] : null
@@ -71,9 +71,7 @@ const ButtonDropdown = (props) => {
                 props.changeDropdownValue({ name: 'status', value: datavalue })
             }
 
-            if (typeClass === 'btn-action-create') {
-                setModel({ ...model, mainModelID: null, relatedModelID: null })
-            }
+            if (typeClass === 'btn-action-create') resetManageModel()  
         }
     }
 

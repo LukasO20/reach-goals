@@ -126,7 +126,7 @@ const getGoalWithoutAssignment = async (assignmentID) => {
                 where: { assignments: { none: {} } },
                 include: { assignments: true, tags: true }
             })
-        } else if (isNumber) {
+        } else if (isNumeric) {
             return await prisma.goal.findMany({
                 where: { assignments: { none: { id: Number(assignmentID) } } },
                 include: { assignments: true, tags: true }

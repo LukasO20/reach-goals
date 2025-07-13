@@ -60,7 +60,7 @@ const Assignment = (props) => {
 
     const editAssignment = useCallback((id) => {
         try { setModel({ ...model, mainModelID: id, typeModel: 'assignment' }) }
-        catch (error) { setErro(`Failed to edit this assignment: ${erro.message}`) }
+        catch (error) { setErro(`Failed to edit this assignment: ${error}`) }
     }, [setModel])
 
     const removeAssignmentDOMClick = (id, e) => {
@@ -86,6 +86,8 @@ const Assignment = (props) => {
         toggleVisibility(target, e)
         switchLayoutComponent(switchLayoutMap('panel', 'layout', 'right'))
     }
+
+    console.log('ASSIGNMENT LOADED - ', assignment)
 
     return (
         assignment.map(assignment => (

@@ -1,12 +1,9 @@
-import { useState, useEffect, useContext, createContext } from 'react'
-
-import { ManageModelContext } from './ManageModelProvider.jsx'
+import { useState, createContext } from 'react'
 
 const VisibilityContext = createContext()
 
 const VisibilityProvider = ({ children }) => {
     const [visibleElements, setVisibleElement] = useState([])
-    const { model, resetManageModel } = useContext(ManageModelContext)
 
     const setSafeVisibleElement = (updateFn) => {
         setVisibleElement((prev) => {
@@ -58,7 +55,7 @@ const VisibilityProvider = ({ children }) => {
     const toggleVisibility = (target, event) => {
         console.log('ALVO - ', target)
 
-        event.stopPropagation()
+        event?.stopPropagation()
         const parameterTarget = {
             class: target?.class ?? null,
             operator: {
@@ -76,14 +73,6 @@ const VisibilityProvider = ({ children }) => {
         })
         isVisible ? removeVisibility(parameterTarget) : updateVisibility(parameterTarget)
     }
-
-    //Used with ManageModelContext
-    const hasPanelContext = (types = []) => 
-        types.some(type => visibleElements.includes('panel-center') && visibleElements.includes(type))
-
-    useEffect(() => {
-        model.mainModelID && !hasPanelContext(['assignment', 'goal']) && resetManageModel()
-    }, [visibleElements])
 
     console.log('VISIBLES - ', visibleElements)
 
