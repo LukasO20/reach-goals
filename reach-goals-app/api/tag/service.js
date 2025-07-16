@@ -186,6 +186,8 @@ const unlinkTagOnAssignment = async (tagID, assignmentID) => {
 }
 
 const unlinkAllTagOnAssignment = async (assignmentID) => {
+    if (!assignmentID) return
+
     try {
         return await prisma.tagOnAssignment.deleteMany({
             where: {

@@ -76,7 +76,7 @@ const useGetModel = (requestProps, reset = false) => {
                             result = await tagAction.getTagOnAssignment(params.tagsRelation)
                         }
                         setData(result)
-                    } else if (params.tagsNotRelation.notRelationID && params.tagsNotRelation.notRelationModel !== '') {
+                    } else if (params.tagsNotRelation?.notRelationID && params.tagsNotRelation?.notRelationModel !== '') {
                         const result = params.tagsNotRelation.notRelationModel === 'goal'
                             ? await tagAction.getTagNotGoal(params.tagsNotRelation.notRelationID)
                             : await tagAction.getTagNotAssignment(params.tagsNotRelation.notRelationID)

@@ -84,7 +84,7 @@ const Form = (props) => {
         }
     }
 
-    const { model } = useContext(ManageModelContext)
+    const { model, setModel } = useContext(ManageModelContext)
 
     switch (typeForm) {
         case 'tag':
@@ -137,8 +137,8 @@ const Form = (props) => {
                         </div>
                         <div className='objective-options'>
                             <div className='objective-op'>
-                                <ButtonAction onClick={typeForm === 'goal' ? functionsForm.mapNullModal : true} target={targetMap(['panel-center', 'assignment'], { maintain: true })} classBtn='op-form-assignment button-op-objective' title='assingments' />
-                                <ButtonAction onClick={typeForm === 'assignment' ? functionsForm.mapNullModal : true} target={targetMap(['panel-center', 'goal'], { maintain: true })} classBtn='op-form-goal button-op-objective' title='goals' />
+                                <ButtonAction target={targetMap(['panel-center', 'assignment'], { maintain: true })} classBtn='op-form-assignment button-op-objective' title='assingments' nullModel={true} onClick={() => setModel(prev => ({ ...prev, typeModel: 'assignment' }))}/>
+                                <ButtonAction target={targetMap(['panel-center', 'goal'], { maintain: true })} classBtn='op-form-goal button-op-objective' title='goals' nullModel={true} onClick={() => setModel(prev => ({ ...prev, typeModel: 'goal' }))}/>
                             </div>
                             <div className='objective-color'>
                                 <label className='color'></label>

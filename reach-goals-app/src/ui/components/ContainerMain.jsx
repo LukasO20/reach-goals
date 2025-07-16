@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import Routes from '../../app/Routes'
 
+import { ManageModelContext } from '../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../provider/VisibilityProvider.jsx'
 import { PageTypeContext } from '../../provider/PageTypeProvider.jsx'
 
@@ -11,11 +12,12 @@ import ButtonDropdown from './items/elements/ButtonDropdown.jsx'
 import ButtonCheckbox from './items/elements/ButtonCheckbox.jsx'
 
 const ContainerM = () => {
+    const { resetManageModel } = useContext(ManageModelContext)
     const { toggleVisibility } = useContext(VisibilityContext) 
     const { pageType } = useContext(PageTypeContext)     
     
     return (
-        <div className='container-main' onClick={(e) => toggleVisibility(targetMap(null), e)}>
+        <div className='container-main' onClick={(e) => { toggleVisibility(targetMap(null), e); resetManageModel() } }>
             <div className='head'>
                 <div className='line-p'>
                     <div className='title-m'>

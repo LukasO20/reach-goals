@@ -120,7 +120,7 @@ const ButtonDropdown = (props) => {
                                     <div className={`option ${option.op}`} key={`op-${index}`}>
                                         <div className='item-option'>
                                             <div className='item-title'>
-                                                <ButtonAction onClick={dropdownActionClick} nullModel={true} datavalue={dropdownStatus ? option.op : null} target={targetMap(...classTargetDropdown)} switchLayout={switchLayoutMap('panel', 'layout', 'center')} classBtn={`form-${option.op} button-st`} iconFa='fa-solid fa-plus' title={`${option.title}`} type={option.op} />
+                                                <ButtonAction onClick={dropdownActionClick} datavalue={dropdownStatus ? option.op : null} target={targetMap(...classTargetDropdown)} switchLayout={switchLayoutMap('panel', 'layout', 'center')} classBtn={`form-${option.op} button-st`} iconFa='fa-solid fa-plus' title={`${option.title}`} type={option.op} />
                                             </div>
                                             <div className='item-details'>
 

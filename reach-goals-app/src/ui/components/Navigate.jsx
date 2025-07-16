@@ -30,7 +30,7 @@ const Navigate = () => {
                     </Link>
                 </div>
                 <div className="item-nav">
-                    <ButtonAction target={targetMap(['panel-center', 'config'])} switchLayout={switchLayoutMap('panel', 'layout', 'center')} classBtn='btn-action-config button-nav' iconFa='fa-solid fa-sliders'/>
+                    <ButtonAction target={targetMap(['panel-center', 'config'])} switchLayout={switchLayoutMap('panel', 'layout', 'center')} classBtn='btn-action-config button-nav' iconFa='fa-solid fa-sliders' />
                 </div>
             </div>
         </div>

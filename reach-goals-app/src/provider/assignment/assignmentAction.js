@@ -45,8 +45,13 @@ export const updateAssignment = async (assignment) => {
 }
 
 export const deleteAssignment = async (assignmentID) => {
+    const queryParms = {
+        action: 'tag-unlink-all-assignment',
+        IDobject: { 'assignmentID': assignmentID }
+    }
+
     try {
-        const urlUnlinkTag = `${apiURL}/api/tag/actions/unlink-all-assignment/${assignmentID}`
+        const urlUnlinkTag = `${apiURL}/api/tag?${buildQueryParamsMap(queryParms)}`
         const responseUnlinkTag = await fetch(urlUnlinkTag, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
