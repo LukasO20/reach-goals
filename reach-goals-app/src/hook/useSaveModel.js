@@ -21,8 +21,6 @@ const useSaveModel = () => {
                     params.model.id ? setData(await tagAction.updateTag(params.model)) : setData(await tagAction.addTag(params.model))
                     break
                 }
-                default: 
-                    break
             }
         }
         catch (error) {
@@ -30,7 +28,7 @@ const useSaveModel = () => {
         }
     }
 
-    return { data, saveModel: fetchData }
+    return { saveModel: fetchData, data }
 }
 
 export { useSaveModel }

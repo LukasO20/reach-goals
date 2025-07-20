@@ -1,6 +1,4 @@
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
+import { useCallback, useContext, useEffect, useState } from 'react'
 
 import { useGetModel } from '../../../../hook/useGetModel.js'
 import { useDeleteModel } from '../../../../hook/useDeleteModel.js'
@@ -11,7 +9,7 @@ import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider.j
 
 import { targetMap, switchLayoutMap } from '../../../../utils/mappingUtils.js'
 
-import ButtonAction from '../elements/ButtonAction.jsx'
+import CardItem from '../elements/CardItem.jsx'
 
 import '../../../styles/items/models/Assignment.scss'
 
@@ -24,16 +22,7 @@ const Assignment = (props) => {
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
     const { switchLayoutComponent } = useContext(SwitchLayoutContext)
 
-    const location = useLocation()
-    const currentLocation = useMemo(() => {
-        return location.pathname.includes('/objectives') ? '/objectives' : location.pathname.includes('/home') ? '/home' : '/calendar'
-    }, [location.pathname])
-
-    const display = props.display ?? {
-        sideAction: false,
-        type: 'mini-list'
-    }
-
+    const display = props.display
     const isSelectableModel = props.selectableModel ?? false
     const isDetailsModel = props.detailsModel ?? false
 
@@ -63,15 +52,7 @@ const Assignment = (props) => {
         catch (error) { setErro(`Failed to edit this assignment: ${error}`) }
     }, [setModel])
 
-    const removeAssignmentDOMClick = (id, e) => {
-        if (id) {
-            e.stopPropagation()
-            updateSubmitModel({ keyObject: 'assignments', value: { id: id }, type: 'array', action: 'remove' })
-            setAssignment((prevAssignment) => prevAssignment.filter((assignment) => assignment.id !== id))
-        }
-    }
-
-    const assignmentDOMClick = (id, e) => {
+    const assignmentClick = (id, e) => {
         if (isSelectableModel) {
             e.stopPropagation()
             const selected = assignment.find(m => m.id === id)
@@ -88,6 +69,14 @@ const Assignment = (props) => {
         }
     }
 
+    const removeElDOMClick = (id, e) => {
+        if (id) {
+            e.stopPropagation()
+            updateSubmitModel({ keyObject: 'assignments', value: { id: id }, type: 'array', action: 'remove' })
+            setAssignment((prevAssignment) => prevAssignment.filter((assignment) => assignment.id !== id))
+        }
+    }
+
     useEffect(() => { 
         getAssignment() 
     
@@ -99,40 +88,17 @@ const Assignment = (props) => {
 
     }, [getData, pendingPanel])
 
+    const clickEvents = {
+        card: assignmentClick,
+        edit: editAssignment,
+        delete: deleteAssignment,
+        aux: removeElDOMClick
+    }
+
     console.log('ASSIGNMENT LOADED - ', assignment)
 
     return (
-        assignment.map(assignment => (
-            <div className={`assignment ${display.type}`} id={assignment.id} key={assignment.id} onClick={(e) => assignmentDOMClick(assignment.id, e)}>
-                {
-                    display.type === 'card' ?
-                        <Link to={`${currentLocation}/details`}>
-                            <div className='head'>
-                                <label className='line-info'><i className='icon-st fa-solid fa-list-check'></i><label>{assignment.name}</label></label>
-                            </div>
-                            <div className='body'></div>
-                        </Link>
-                        :
-                        <div className='head'>
-                            <label className='line-info'><i className='icon-st fa-solid fa-list-check'></i><label>{assignment.name}</label></label>
-                        </div>
-                }
-                {
-                    display.sideAction &&
-                    <div className='side-actions'>
-                        {
-                            display.type === "mini-list" ?
-                                <ButtonAction onClick={({ e }) => removeAssignmentDOMClick(assignment.id, e)} classBtn='remove-assignment-dom' iconFa='fa-solid fa-xmark' />
-                                :
-                                <>
-                                    <ButtonAction onClick={() => editAssignment(assignment.id)} target={targetMap(['panel-center', 'assignment'])} switchLayout={switchLayoutMap('panel', 'layout', 'center')} classBtn='edit-assignment' iconFa='fa-regular fa-pen-to-square' />
-                                    <ButtonAction onClick={() => deleteAssignment(assignment.id)} target={targetMap(null)} classBtn='remove-assignment' iconFa='fa-regular fa-trash-can' />
-                                </>
-                        }
-                    </div>
-                }
-            </div>
-        ))
+        <CardItem type={'assignment'} model={assignment} clickFunction={clickEvents} display={display} />
     )
 }
 

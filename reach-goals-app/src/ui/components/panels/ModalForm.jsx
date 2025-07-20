@@ -60,7 +60,7 @@ const ModalForm = (props) => {
     const [modelProps, setModelProps] = useState({})
 
     const { params: getParams, data: getData } = useGetModel(modelProps)
-    const { data: saveData, saveModel } = useSaveModel({})
+    const { saveModel, data: saveData } = useSaveModel({})
 
     const loadModel = (id) => {
         setLoading(true)
@@ -210,12 +210,10 @@ const ModalForm = (props) => {
             }))
         }
 
-        console.log("CALLING EFFECT")
-
     }, [model.mainModelID, getData])
 
     useEffect(() => {
-        if (Object.keys(saveData).length > 0) {
+        if (saveData && typeof saveData === 'object' && Object.keys(saveData).length > 0) {
             resetManageModel()
             toggleVisibility(null)
             setSucess(true)

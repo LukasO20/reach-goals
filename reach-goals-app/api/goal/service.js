@@ -47,7 +47,7 @@ const deleteGoal = async (goalID) => {
 
 const getGoal = async (goalID) => {
     try {
-        if (goalID !== undefined && !isNaN(goalID)) {
+        if (goalID !== undefined && !isNaN(goalID) && typeof goalID !== 'boolean') {
             return await prisma.goal.findUnique({
                 where: { id: Number(goalID) },
                 include: { assignments: true, tags: true }

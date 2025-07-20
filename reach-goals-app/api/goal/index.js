@@ -46,14 +46,17 @@ const handler = async (req, res) => {
     if (req.method === 'GET') {
         let goal = undefined
 
-        if (action === 'goal-get') {
-            goal = await getGoal()
+        try {
+            if (action === 'goal-get') {
+                goal = await getGoal()
 
-            if (goal) {
-                return res.status(200).json(Array.isArray(goal) ? goal : [goal])
-            } else {
-                return res.status(500).json({ error: 'Failed to get a goal' })
+                if (goal) {
+                    return res.status(200).json(Array.isArray(goal) ? goal : [goal])
+                }
             }
+        }
+        catch (err) {
+            return res.status(500).json({ error: err.message || 'Internal Server Error' });
         }
 
         if (action === 'goal-on-assignment') {

@@ -1,19 +1,18 @@
 import { buildQueryParamsMap } from "../../utils/mappingUtils.js"
 
 const apiURL = window.location.origin.includes("localhost")
-    ? "http://localhost:3000" //if vercel dev running use 3000 PORT, if npm start (use 5000 PORT API custom server)
-    : window.location.origin
+    && "http://localhost:5000" //Standard URL to use with a local custom server. Insert it like ${apiURL}/api/...
 
 export const addTag = async (tag) => {
     try {
-        const response = await fetch(`${apiURL}/api/tag`, {
+        const response = await fetch(`/api/tag`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(tag)
-        })  
+        })
 
         if (!response.ok) {
-            const error  = await response.json()
+            const error = await response.json()
             throw new Error(error.error || 'Failed to add tag.')
         }
 
@@ -27,17 +26,17 @@ export const addTag = async (tag) => {
 
 export const updateTag = async (tag) => {
     try {
-        const url = `${apiURL}/api/tag/${tag.id}`
+        const url = `/api/tag/${tag.id}`
         const response = await fetch(url, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(tag)
-        })  
+        })
 
-        if (!response.ok) {
-            const error  = await response.json()
-            throw new Error(error.error || 'Failed to add tag.')
-        }
+        const result = await response.json()
+        if (!response.ok) throw new Error(result.error || 'Failed to update tag.')
+
+        return result
     } catch (error) {
         console.error('Error update tag: ', error.message)
         throw error
@@ -46,14 +45,14 @@ export const updateTag = async (tag) => {
 
 export const deleteTag = async (tagID) => {
     try {
-        const url = `${apiURL}/api/tag/${tagID}`
+        const url = `/api/tag/${tagID}`
         const response = await fetch(url, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
-        })  
+        })
 
         if (!response.ok) {
-            const error  = await response.json()
+            const error = await response.json()
             throw new Error(error.error || 'Failed to delete tag.')
         }
     } catch (error) {
@@ -65,13 +64,13 @@ export const deleteTag = async (tagID) => {
 export const getTag = async (tagID) => {
     try {
         const url = (tagID !== undefined && !isNaN(tagID))
-            ? `${apiURL}/api/tag/${tagID}`
-            : `${apiURL}/api/tag?action=tag-get`
+            ? `/api/tag/${tagID}`
+            : `/api/tag?action=tag-get`
 
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
-        })  
+        })
 
         const data = await response.json()
         return data
@@ -88,13 +87,13 @@ export const getTagOnGoal = async (goalID) => {
     }
 
     try {
-        const response = await fetch(`${apiURL}/api/tag?${buildQueryParamsMap(queryParms)}`, {
+        const response = await fetch(`/api/tag?${buildQueryParamsMap(queryParms)}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
-        })  
+        })
 
         if (!response.ok) {
-            const error  = await response.json()
+            const error = await response.json()
             throw new Error(error.error || 'Failed to fetch tags on goal.')
         }
 
@@ -113,13 +112,13 @@ export const getTagOnAssignment = async (assignmentID) => {
     }
 
     try {
-        const response = await fetch(`${apiURL}/api/tag?${buildQueryParamsMap(queryParms)}`, {
+        const response = await fetch(`/api/tag?${buildQueryParamsMap(queryParms)}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
-        })  
+        })
 
         if (!response.ok) {
-            const error  = await response.json()
+            const error = await response.json()
             throw new Error(error.error || 'Failed to fetch tags on goal.')
         }
 
@@ -138,13 +137,13 @@ export const getTagNotGoal = async (goalID) => {
     }
 
     try {
-        const response = await fetch(`${apiURL}/api/tag?${buildQueryParamsMap(queryParms)}`, {
+        const response = await fetch(`/api/tag?${buildQueryParamsMap(queryParms)}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
-        })  
+        })
 
         if (!response.ok) {
-            const error  = await response.json()
+            const error = await response.json()
             throw new Error(error.error || 'Failed to fetch tags.')
         }
 
@@ -163,13 +162,13 @@ export const getTagNotAssignment = async (assignmentID) => {
     }
 
     try {
-        const response = await fetch(`${apiURL}/api/tag?${buildQueryParamsMap(queryParms)}`, {
+        const response = await fetch(`/api/tag?${buildQueryParamsMap(queryParms)}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
-        })  
+        })
 
         if (!response.ok) {
-            const error  = await response.json()
+            const error = await response.json()
             throw new Error(error.error || 'Failed to fetch tags.')
         }
 
@@ -183,13 +182,13 @@ export const getTagNotAssignment = async (assignmentID) => {
 
 export const unlinkTagOnGoal = async (tagID, goalID) => {
     try {
-        const response = await fetch(`${apiURL}/api/tag/actions/unlink-goal/${tagID}/${goalID}`, {
+        const response = await fetch(`/api/tag/actions/unlink-goal/${tagID}/${goalID}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
-        })  
+        })
 
         if (!response.ok) {
-            const error  = await response.json()
+            const error = await response.json()
             throw new Error(error.error || 'Failed to unlink this tag.')
         }
 
