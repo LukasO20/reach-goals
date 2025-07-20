@@ -36,10 +36,12 @@ const handler = async (req, res) => {
         console.log('Goal TO ADD - ', formattedData)
         const goal = await addGoal(formattedData)
 
-        if (goal) {
-            return res.status(201).json(goal)
-        } else {
-            return res.status(500).json({ error: 'Failed to create goal' })
+        try {
+            if (goal) return res.status(201).json(goal)
+        }
+        catch (err) {
+            console.error('Error adding goal:', err)
+            return res.status(500).json({ error: err.message || 'Failed to create goal' });
         }
     }
 
@@ -50,46 +52,32 @@ const handler = async (req, res) => {
             if (action === 'goal-get') {
                 goal = await getGoal()
 
-                if (goal) {
-                    return res.status(200).json(Array.isArray(goal) ? goal : [goal])
-                }
+                if (goal) return res.status(200).json(Array.isArray(goal) ? goal : [goal])  
+            }
+
+            if (action === 'goal-on-assignment') {
+                const { assignmentID } = req.query
+                goal = await getGoalOnAssignment(assignmentID)
+
+                if (goal) return res.status(200).json(goal)    
+            }
+
+            if (action === 'goal-on-tag') {
+                const { tagID } = req.query
+                goal = await getGoalOnTag(tagID)
+
+                if (goal) return res.status(200).json(goal)
+            }
+
+            if (action === "goal-not-assignment") {
+                const { assignmentID } = req.query
+                goal = await getGoalWithoutAssignment(assignmentID)
+
+                if (goal) return res.status(200).json(goal)
             }
         }
         catch (err) {
             return res.status(500).json({ error: err.message || 'Internal Server Error' });
-        }
-
-        if (action === 'goal-on-assignment') {
-            const { assignmentID } = req.query
-            goal = await getGoalOnAssignment(assignmentID)
-
-            if (goal) {
-                return res.status(200).json(goal)
-            } else {
-                return res.status(500).json({ error: 'Failed to fetch goals on this assignment' })
-            }
-        }
-
-        if (action === 'goal-on-tag') {
-            const { tagID } = req.query
-            goal = await getGoalOnTag(tagID)
-
-            if (goal) {
-                return res.status(200).json(goal)
-            } else {
-                return res.status(500).json({ error: 'Failed to fetch goals with this tag' })
-            }
-        }
-
-        if (action === "goal-not-assignment") {
-            const { assignmentID } = req.query
-            goal = await getGoalWithoutAssignment(assignmentID)
-
-            if (goal) {
-                return res.status(200).json(goal)
-            } else {
-                return res.status(500).json({ error: 'Failed to fetch goals on this assignment' })
-            }
         }
     }
 

@@ -4,6 +4,7 @@ import * as goalAction from '../provider/goal/goalAction.js'
 import * as assignmentAction from '../provider/assignment/assignmentAction.js'
 
 const useGetModel = (requestProps, reset = false) => {
+    //try to use a state here of 'params' to improve calls and actions of this hook
     const params = {
         type: requestProps.type ?? null,
 

@@ -32,55 +32,47 @@ const handler = async (req, res) => {
         console.log('ASSIGN TO ADD - ', formattedData)
         const assignment = await addAssignment(formattedData)
 
-        if (assignment) {
-            return res.status(201).json(assignment)
+        try {
+            if (assignment) return res.status(201).json(assignment)
         }
-        else {
-            return res.status(500).json({ error: 'Failed to create assignment' })
+        catch (err) {
+            console.error('Error adding assignment:', err)
+            return res.status(500).json({ error: err.message || 'Failed to create assignment' });
         }
     }
 
     if (req.method === 'GET') {
         let assignment = undefined
 
-        if (action === 'assignment-get') {
-            assignment = await getAssignment()
-            if (assignment) {
-                return res.status(200).json(Array.isArray(assignment) ? assignment : [assignment])
-            } else {
-                return res.status(500).json({ error: 'Failed to fetch assignments' })
+        try {
+            if (action === 'assignment-get') {
+                assignment = await getAssignment()
+
+                if (assignment) return res.status(200).json(Array.isArray(assignment) ? assignment : [assignment])
+            }
+
+            if (action === 'assignment-on-goal') {
+                const { goalID } = req.query
+                assignment = await getAssignmentOnGoal(goalID)
+
+                if (assignment) return res.status(200).json(assignment)
+            }
+
+            if (action === 'assignment-on-tag') {
+                const { tagID } = req.query
+                assignment = await getAssignmentOnTag(tagID)
+
+                if (assignment) return res.status(200).json(assignment)
+            }
+
+            if (action === 'assignment-not-goal') {
+                assignment = await getAssignmentWithoutGoal()
+
+                if (assignment) return res.status(200).json(assignment)
             }
         }
-
-        if (action === 'assignment-on-goal') {
-            const { goalID } = req.query
-            assignment = await getAssignmentOnGoal(goalID)
-
-            if (assignment) {
-                return res.status(200).json(assignment)
-            } else {
-                return res.status(500).json({ error: 'Failed to fetch assignments with goals' })
-            }
-        }
-
-        if (action === 'assignment-on-tag') {
-            const { tagID } = req.query
-            assignment = await getAssignmentOnTag(tagID)
-
-            if (assignment) {
-                return res.status(200).json(assignment)
-            } else {
-                return res.status(500).json({ error: 'Failed to fetch assignments with this tag' })
-            }
-        }
-
-        if (action === 'assignment-not-goal') {
-            assignment = await getAssignmentWithoutGoal()
-            if (assignment) {
-                return res.status(200).json(assignment)
-            } else {
-                return res.status(500).json({ error: 'Failed to fetch assignments without goals' })
-            }
+        catch (err) {
+            return res.status(500).json({ error: err.message || 'Internal Server Error' });
         }
     }
 
