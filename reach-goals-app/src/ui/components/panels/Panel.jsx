@@ -14,7 +14,6 @@ import '../../styles/panels/ModalDetails.scss'
 import '../../styles/panels/Panel.scss'
 
 const renderLayoutContentPanel = (panelPosition, renderConfig) => {
-
     switch (panelPosition) {
         case 'center':
             return (
@@ -41,8 +40,9 @@ const Panel = (props) => {
     const { layoutComponent } = useSwitchLayout()
     
     const panelType = ['panel-left', 'panel-center', 'panel-right']
+    const formartType = model.typeModel && model.typeModel !== '' ? model.typeModel : visibleElements[1]
     const renderConfig = {
-        type: model.typeModel,
+        type: formartType,
         modelID: model.mainModelID
     }
 
