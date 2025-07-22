@@ -7,6 +7,7 @@ import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx
 import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 
 import { targetMap } from '../../../../utils/mappingUtils.js'
+import { requestPropsGetModel } from '../../../../utils/mappingUtilsHook.js'
 
 import CardItem from '../elements/CardItem.jsx'
 
@@ -25,6 +26,7 @@ const Tag = (props) => {
     const isSelectableModel = props.selectableModel ?? false
 
     const requestPropsTag = {
+        ...requestPropsGetModel,
         type: 'tag',
         tagsRelation: props.goalID ?? props.assignmentID ?? null,
         tagsNotRelation: {

@@ -8,6 +8,7 @@ import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider.jsx'
 
 import { targetMap, switchLayoutMap } from '../../../../utils/mappingUtils.js'
+import { requestPropsGetModel } from '../../../../utils/mappingUtilsHook.js'
 
 import CardItem from '../elements/CardItem.jsx'
 
@@ -27,12 +28,15 @@ const Goal = (props) => {
     const isDetailsModel = props.detailsModel ?? false
 
     const requestPropsGetGoal = {
+        ...requestPropsGetModel,
         type: 'goal',
         goalAssignmentRelation: props.goalAssignmentRelation ?? null,
         goalSomeID: props.goalSomeID ?? null,
         goalTagRelation: props.goalTagRelation ?? null,
         notAssignmentRelation: props.notAssignmentRelation ?? null
     }
+
+    console.log('NOW MAP REQUEST PROPS - ', requestPropsGetGoal)
 
     const { params: getParams, data: getData } = useGetModel(requestPropsGetGoal)
     const { data: deleteData, deleteModel } = useDeleteModel({})

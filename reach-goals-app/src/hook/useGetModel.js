@@ -4,29 +4,9 @@ import * as goalAction from '../provider/goal/goalAction.js'
 import * as assignmentAction from '../provider/assignment/assignmentAction.js'
 
 const useGetModel = (requestProps, reset = false) => {
-    //try to use a state here of 'params' to improve calls and actions of this hook
-    const params = {
-        type: requestProps.type ?? null,
-
-        tagsRelation: requestProps.tagsRelation ?? null,
-        tagsNotRelation: requestProps.tagsNotRelation && {
-            notRelationID: requestProps.tagsNotRelation.notRelationID ?? null,
-            notRelationModel: requestProps.tagsNotRelation.notRelationModel ?? null
-        },
-        tagSomeID: requestProps.tagSomeID ?? null,
-
-        goalSomeID: requestProps.goalSomeID ?? null,
-        goalAssignmentRelation: requestProps.goalAssignmentRelation ?? null,
-        goalTagRelation: requestProps.goalTagRelation ?? null,
-        notAssignmentRelation: requestProps.notAssignmentRelation ?? null,
-
-        assignmentSomeID: requestProps.assignmentSomeID ?? null,
-        assignmentGoalRelation: requestProps.assignmentGoalRelation ?? null,
-        assignmentTagRelation: requestProps.assignmentTagRelation ?? null,
-        notGoalRelation: requestProps.notGoalRelation ?? null,
-    }
-
     const [data, setData] = useState([])
+    const [params, setParams] = useState({ ...requestProps })
+    console.log('PARAMS OF HOOK GETMODEL - ', params)
 
     const fetchData = async () => {
         try {
@@ -114,7 +94,7 @@ const useGetModel = (requestProps, reset = false) => {
         console.log('PARAMS OF HOOK GETMODEL (tag relation) - ', params)
     }
 
-    return { params, data }
+    return { params, data, setParams }
 }
 
 export { useGetModel }

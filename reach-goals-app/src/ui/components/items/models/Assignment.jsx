@@ -8,6 +8,7 @@ import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider.jsx'
 
 import { targetMap, switchLayoutMap } from '../../../../utils/mappingUtils.js'
+import { requestPropsGetModel } from '../../../../utils/mappingUtilsHook.js'
 
 import CardItem from '../elements/CardItem.jsx'
 
@@ -27,6 +28,7 @@ const Assignment = (props) => {
     const isDetailsModel = props.detailsModel ?? false
 
     const requestPropsAssignment = {
+        ...requestPropsGetModel,
         type: 'assignment',
         assignmentGoalRelation: props.assignmentGoalRelation ?? null,
         assignmentSomeID: props.assignmentSomeID ?? null,

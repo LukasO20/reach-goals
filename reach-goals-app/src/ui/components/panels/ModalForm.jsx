@@ -57,9 +57,7 @@ const ModalForm = (props) => {
     const [success, setSucess] = useState(false)
     const [isLoading, setLoading] = useState(false)
 
-    const [modelProps, setModelProps] = useState({})
-
-    const { params: getParams, data: getData } = useGetModel(modelProps)
+    const { params: getParams, data: getData, setParams: setParams } = useGetModel({})
     const { saveModel, data: saveData } = useSaveModel({})
 
     const loadModel = (id) => {
@@ -74,7 +72,8 @@ const ModalForm = (props) => {
         }
 
         try {
-            setModelProps(currentUseGetModel)
+            console.log('CURRENT IN ACTION - ', currentUseGetModel)
+            setParams(currentUseGetModel)
         }
         catch (error) {
             setError('Ops, something wrong: ', error)
@@ -203,7 +202,7 @@ const ModalForm = (props) => {
     useEffect(() => {
         loadModel(model.mainModelID)
 
-        if (modelProps && Object.keys(modelProps).length > 0 && model.mainModelID) {
+        if (getParams && Object.keys(getParams).length > 0 && model.mainModelID) {
             setModel(prevModel => ({
                 ...prevModel,
                 submitModel: handleTarget(getData[0])
