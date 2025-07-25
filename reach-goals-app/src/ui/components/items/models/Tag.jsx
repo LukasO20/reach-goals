@@ -36,7 +36,7 @@ const Tag = (props) => {
         tagSomeID: props.tagSomeID ?? null
     }
 
-    const { params: getParams, data: getData } = useGetModel(requestPropsTag)
+    const { params: getParams, data: getData } = useGetModel({ requestProps: requestPropsTag })
 
     const getTag = async () => {
         try { setTag(getData) }
@@ -86,7 +86,7 @@ const Tag = (props) => {
         aux: removeElDOMClick
     }
 
-    console.log('TAG LOADED - ', tag)
+    //console.log('TAG LOADED - ', tag)
 
     return (
         <CardItem type={'tag'} model={tag} clickFunction={clickEvents} display={display} />

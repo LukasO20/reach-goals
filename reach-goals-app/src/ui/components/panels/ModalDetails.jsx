@@ -11,7 +11,7 @@ const ModalDetails = (props) => {
         [mapRequestProps]: props?.modelID ?? null,
     }
 
-    const { params: getParams, data: getData } = useGetModel(requestPropsGetModel)
+    const { params: getParams, data: getData } = useGetModel({ requestProps: requestPropsGetModel })
 
     return (
         <div className='container-modaldetails aside-content'>

@@ -1,6 +1,8 @@
 import { useContext } from 'react'
+
 import { VisibilityContext } from '../../../provider/VisibilityProvider.jsx'
 import { ManageModelContext } from '../../../provider/ManageModelProvider.jsx'
+
 import { useSwitchLayout } from '../../../hook/useSwitchLayout.js'
 
 import ModalForm from './ModalForm.jsx'
@@ -18,10 +20,10 @@ const renderLayoutContentPanel = (panelPosition, renderConfig) => {
         case 'center':
             return (
                 <>
-                    <ModalForm {...renderConfig}/>
+                    <ModalForm {...renderConfig} />
                     <ModalConfig />
                 </>
-            ) 
+            )
         case 'right':
             return (
                 <>
@@ -38,7 +40,7 @@ const Panel = (props) => {
     const { visibleElements } = useContext(VisibilityContext)
     const { model } = useContext(ManageModelContext)
     const { layoutComponent } = useSwitchLayout()
-    
+
     const panelType = ['panel-left', 'panel-center', 'panel-right']
     const formartType = model.typeModel && model.typeModel !== '' ? model.typeModel : visibleElements[1]
     const renderConfig = {
@@ -49,10 +51,10 @@ const Panel = (props) => {
     console.log('manage model from PANEL - ', model)
 
     return (
-        <div className={`content-${layoutComponent.panel.layout} ${panelType.some(panel => visibleElements.includes(panel)) ? 'show' : ''} ${renderConfig.type}`}>  
+        <div className={`content-${layoutComponent.panel.layout} ${panelType.some(panel => visibleElements.includes(panel)) ? 'show' : ''} ${renderConfig.type}`}>
             {renderLayoutContentPanel(layoutComponent.panel.layout, renderConfig)}
         </div>
     )
-} 
+}
 
 export default Panel

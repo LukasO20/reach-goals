@@ -36,7 +36,7 @@ const Assignment = (props) => {
         notGoalRelation: props.notGoalRelation ?? null
     }
 
-    const { params: getParams, data: getData } = useGetModel(requestPropsAssignment)
+    const { params: getParams, data: getData } = useGetModel({ requestProps: requestPropsAssignment })
     const { data: deleteData, deleteModel } = useDeleteModel({})
 
     const getAssignment = async () => {
@@ -97,7 +97,7 @@ const Assignment = (props) => {
         aux: removeElDOMClick
     }
 
-    console.log('ASSIGNMENT LOADED - ', assignment)
+    //console.log('ASSIGNMENT LOADED - ', assignment)
 
     return (
         <CardItem type={'assignment'} model={assignment} clickFunction={clickEvents} display={display} />

@@ -3,10 +3,9 @@ import * as tagAction from '../provider/tag/tagAction.js'
 import * as goalAction from '../provider/goal/goalAction.js'
 import * as assignmentAction from '../provider/assignment/assignmentAction.js'
 
-const useGetModel = (requestProps, reset = false) => {
+const useGetModel = ({ requestProps, reset = false }) => {
     const [data, setData] = useState([])
     const [params, setParams] = useState({ ...requestProps })
-    console.log('PARAMS OF HOOK GETMODEL - ', params)
 
     const fetchData = async () => {
         try {
@@ -84,14 +83,14 @@ const useGetModel = (requestProps, reset = false) => {
         }
 
         fetchData()
-    }, [JSON.stringify(params)], reset)
+    }, [JSON.stringify(params), reset])
     
     if (params.goalSomeID) {
-        console.log('PARAMS OF HOOK GETMODEL (goal) - ', params)
+        console.log('PARAMS OF HOOK GETMODEL (goal) - ', params, data)
     }
 
     if (params.tagsRelation) {
-        console.log('PARAMS OF HOOK GETMODEL (tag relation) - ', params)
+        //console.log('PARAMS OF HOOK GETMODEL (tag relation) - ', params)
     }
 
     return { params, data, setParams }

@@ -1,5 +1,7 @@
 import React, { useContext } from 'react'
+
 import { TitleContext } from '../../../provider/TitleProvider.jsx'
+
 import { useSwitchLayout } from '../../../hook/useSwitchLayout.js'
 
 import '../../styles/pages/Home.scss'

@@ -52,6 +52,7 @@ const ModalForm = (props) => {
 
     const typeForm = props.type
     const classRemove = visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
+    const currentKeySomeID = `${typeForm}SomeID`
 
     const [error, setError] = useState(null)
     const [success, setSucess] = useState(false)
@@ -65,14 +66,12 @@ const ModalForm = (props) => {
 
         if (!id) return setLoading(false)
 
-        const currentKeySomeID = typeForm === 'assignment' ? 'assignmentSomeID' : typeForm === 'goal' ? 'goalSomeID' : 'tagSomeID'
         const currentUseGetModel = {
             type: typeForm,
             [currentKeySomeID]: id
         }
 
         try {
-            console.log('CURRENT IN ACTION - ', currentUseGetModel)
             setParams(currentUseGetModel)
         }
         catch (error) {
@@ -201,14 +200,13 @@ const ModalForm = (props) => {
 
     useEffect(() => {
         loadModel(model.mainModelID)
-
+        
         if (getParams && Object.keys(getParams).length > 0 && model.mainModelID) {
             setModel(prevModel => ({
                 ...prevModel,
                 submitModel: handleTarget(getData[0])
             }))
         }
-
     }, [model.mainModelID, getData])
 
     useEffect(() => {
@@ -218,6 +216,7 @@ const ModalForm = (props) => {
             setSucess(true)
         }
     }, [saveData])
+
 
     const functionFormMap = {
         mapHandleModalList: handleModalList,

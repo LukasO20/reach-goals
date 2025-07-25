@@ -38,13 +38,8 @@ const Goal = (props) => {
 
     console.log('NOW MAP REQUEST PROPS - ', requestPropsGetGoal)
 
-    const { params: getParams, data: getData } = useGetModel(requestPropsGetGoal)
+    const { params: getParams, data: getData } = useGetModel({ requestProps: requestPropsGetGoal })
     const { data: deleteData, deleteModel } = useDeleteModel({})
-
-    const getGoal = () => {
-        try { setGoal(getData) }
-        catch (error) { setErro(`Failed to load goal: ${error.message}`) }
-    }
 
     const deleteGoal = (id) => {
         deleteModel({ type: 'goal', goalID: id })
@@ -74,13 +69,16 @@ const Goal = (props) => {
     }
 
     useEffect(() => { 
-        getGoal() 
-    
+        console.log('HOOK CALLING,,, ', getData)
+        try { getData && setGoal(getData) }
+        catch (error) { setErro(`Failed to load goal: ${error.message}`) }
+
         if (pendingPanel && model.mainModelID) {
             switchLayoutComponent(switchLayoutMap('panel', 'layout', 'right'))
             toggleVisibility(targetMap(['panel-right', 'goal']))
             setPendingPanel(false)
         }
+
     }, [getData, pendingPanel])
 
     const clickEvents = {
