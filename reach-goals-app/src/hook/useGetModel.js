@@ -3,7 +3,7 @@ import * as tagAction from '../provider/tag/tagAction.js'
 import * as goalAction from '../provider/goal/goalAction.js'
 import * as assignmentAction from '../provider/assignment/assignmentAction.js'
 
-const useGetModel = ({ requestProps, reset = false }) => {
+const useGetModel = ({ requestProps, reset }) => {
     const [data, setData] = useState([])
     const [params, setParams] = useState({ ...requestProps })
 
