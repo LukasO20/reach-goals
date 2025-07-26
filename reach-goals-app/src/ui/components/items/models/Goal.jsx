@@ -35,9 +35,7 @@ const Goal = (props) => {
         goalTagRelation: props.goalTagRelation ?? null,
         notAssignmentRelation: props.notAssignmentRelation ?? null
     }
-
-    console.log('NOW MAP REQUEST PROPS - ', requestPropsGetGoal)
-
+    
     const { params: getParams, data: getData } = useGetModel({ requestProps: requestPropsGetGoal })
     const { data: deleteData, deleteModel } = useDeleteModel({})
 
@@ -69,7 +67,6 @@ const Goal = (props) => {
     }
 
     useEffect(() => { 
-        console.log('HOOK CALLING,,, ', getData)
         try { getData && setGoal(getData) }
         catch (error) { setErro(`Failed to load goal: ${error.message}`) }
 
