@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react'
 
-import { useGetModel } from '../../../../hook/useGetModel.js'
 import { useDeleteModel } from '../../../../hook/useDeleteModel.js'
 
+import { DataModelContext } from '../../../../provider/DataModelProvider.jsx'
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider.jsx'
@@ -15,13 +15,14 @@ import CardItem from '../elements/CardItem.jsx'
 import '../../../styles/items/models/Goal.scss'
 
 const Goal = (props) => {
-    const [goal, setGoal] = useState([])
     const [erro, setErro] = useState(false)
     const [pendingPanel, setPendingPanel] = useState(false)
 
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
     const { switchLayoutComponent } = useContext(SwitchLayoutContext)
+    const { dataModelGet, getModel } = useContext(DataModelContext)
+    const { goal } = dataModelGet
 
     const display = props.display
     const isSelectableModel = props.selectableModel ?? false
@@ -36,12 +37,10 @@ const Goal = (props) => {
         notAssignmentRelation: props.notAssignmentRelation ?? null
     }
     
-    const { params: getParams, data: getData } = useGetModel({ requestProps: requestPropsGetGoal })
     const { data: deleteData, deleteModel } = useDeleteModel({})
 
     const deleteGoal = (id) => {
         deleteModel({ type: 'goal', goalID: id })
-        setGoal((prevGoal) => prevGoal.filter((goal) => goal.id !== id))
     }
 
     const editGoal = (id) => {
@@ -66,17 +65,18 @@ const Goal = (props) => {
         }
     }
 
-    useEffect(() => { 
-        try { getData && setGoal(getData) }
-        catch (error) { setErro(`Failed to load goal: ${error.message}`) }
+    useEffect(() => {
+        getModel(requestPropsGetGoal)
+    }, [])
 
+    useEffect(() => { 
         if (pendingPanel && model.mainModelID) {
             switchLayoutComponent(switchLayoutMap('panel', 'layout', 'right'))
             toggleVisibility(targetMap(['panel-right', 'goal']))
             setPendingPanel(false)
         }
 
-    }, [getData, pendingPanel])
+    }, [pendingPanel])
 
     const clickEvents = {
         card: goalClick,
@@ -87,7 +87,7 @@ const Goal = (props) => {
     console.log('GOAL LOADED - ', goal)
 
     return (
-        <CardItem type={'goal'} model={goal} clickFunction={clickEvents} display={display} />
+        <CardItem type={'goal'} model={goal ?? []} clickFunction={clickEvents} display={display} />
     )
 }
 

@@ -1,8 +1,8 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
 
-import { useGetModel } from '../../../../hook/useGetModel.js'
 import { useDeleteModel } from '../../../../hook/useDeleteModel.js'
 
+import { DataModelContext } from '../../../../provider/DataModelProvider.jsx'
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 
@@ -14,11 +14,12 @@ import CardItem from '../elements/CardItem.jsx'
 import '../../../styles/items/models/Tag.scss'
 
 const Tag = (props) => {
-    const [tag, setTag] = useState([])
     const [erro, setErro] = useState(false)
 
     const { toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
+    const { dataModelGet, getModel } = useContext(DataModelContext)
+    const { tag } = dataModelGet
 
     const target = targetMap(['panel-right', 'tag'])
 
@@ -36,20 +37,10 @@ const Tag = (props) => {
         tagSomeID: props.tagSomeID ?? null
     }
 
-    const { params: getParams, data: getData } = useGetModel({ requestProps: requestPropsTag })
-
-    const getTag = async () => {
-        try { setTag(getData) }
-        catch (error) { setErro(`Failed to load tag: ${error.message}`) }
-    }
-
-    useEffect(() => { getTag() }, [getData])
-
     const { data: deleteData, deleteModel } = useDeleteModel({})
 
     const deleteTag = async (id) => {
         deleteModel({ type: 'tag', tagID: id })
-        setTag((prevTag) => prevTag.filter((tag) => tag.id !== id))
     }
 
     const editTag = useCallback((id) => {
@@ -75,9 +66,13 @@ const Tag = (props) => {
         if (id) {
             e.stopPropagation()
             updateSubmitModel({ keyObject: 'tags', value: { tagID: id }, type: 'array', action: 'remove' })
-            setTag((prevTag) => prevTag.filter((tag) => tag.id !== id))
+            //Tem que remover o elemento do DOM
         }
     }
+
+    useEffect(() => {
+        getModel(requestPropsTag)
+    }, [])
 
     const clickEvents = {
         card: tagClick,
@@ -89,7 +84,7 @@ const Tag = (props) => {
     //console.log('TAG LOADED - ', tag)
 
     return (
-        <CardItem type={'tag'} model={tag} clickFunction={clickEvents} display={display} />
+        <CardItem type={'tag'} model={tag ?? []} clickFunction={clickEvents} display={display} />
     )
 }
 

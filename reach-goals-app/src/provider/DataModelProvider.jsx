@@ -10,6 +10,7 @@ const DataModelContext = React.createContext()
 const DataModelProvider = ({ children }) => {
     const [dataModelGet, setDataModelGet] = useState(getModelMap)
     const { params: getParams, data: getData, setParams } = useGetModel({})
+    //When a single model was selected, try to use current attribute of getModelMap to keep the data (maybe become useful)
 
     const getModel = (requestPropsGetModel) => {
         setParams(requestPropsGetModel)

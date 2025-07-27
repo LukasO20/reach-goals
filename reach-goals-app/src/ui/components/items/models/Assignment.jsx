@@ -1,8 +1,8 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
 
-import { useGetModel } from '../../../../hook/useGetModel.js'
 import { useDeleteModel } from '../../../../hook/useDeleteModel.js'
 
+import { DataModelContext } from '../../../../provider/DataModelProvider.jsx'
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider.jsx'
@@ -15,13 +15,14 @@ import CardItem from '../elements/CardItem.jsx'
 import '../../../styles/items/models/Assignment.scss'
 
 const Assignment = (props) => {
-    const [assignment, setAssignment] = useState([])
     const [erro, setErro] = useState(false)
     const [pendingPanel, setPendingPanel] = useState(false)
 
     const { toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
     const { switchLayoutComponent } = useContext(SwitchLayoutContext)
+    const { dataModelGet, getModel } = useContext(DataModelContext)
+    const { assignment } = dataModelGet
 
     const display = props.display
     const isSelectableModel = props.selectableModel ?? false
@@ -36,17 +37,10 @@ const Assignment = (props) => {
         notGoalRelation: props.notGoalRelation ?? null
     }
 
-    const { params: getParams, data: getData } = useGetModel({ requestProps: requestPropsAssignment })
     const { data: deleteData, deleteModel } = useDeleteModel({})
-
-    const getAssignment = async () => {
-        try { setAssignment(getData) }
-        catch (error) { setErro(`Failed to load assignment: ${error.message}`) }
-    }
 
     const deleteAssignment = (id) => {
         deleteModel({ type: 'assignment', assignmentID: id })
-        setAssignment((prevAssignment) => prevAssignment.filter((assignment) => assignment.id !== id))
     }
 
     const editAssignment = useCallback((id) => {
@@ -75,20 +69,22 @@ const Assignment = (props) => {
         if (id) {
             e.stopPropagation()
             updateSubmitModel({ keyObject: 'assignments', value: { id: id }, type: 'array', action: 'remove' })
-            setAssignment((prevAssignment) => prevAssignment.filter((assignment) => assignment.id !== id))
+            //Tem que remover o elemento do DOM
         }
     }
 
-    useEffect(() => { 
-        getAssignment() 
-    
+    useEffect(() => {
+        getModel(requestPropsAssignment)
+    }, [])
+
+    useEffect(() => {     
         if (pendingPanel && model.mainModelID) {
             switchLayoutComponent(switchLayoutMap('panel', 'layout', 'right'))
             toggleVisibility(targetMap(['panel-right', 'assignment']))
             setPendingPanel(false)
         }
 
-    }, [getData, pendingPanel])
+    }, [pendingPanel])
 
     const clickEvents = {
         card: assignmentClick,
@@ -100,7 +96,7 @@ const Assignment = (props) => {
     //console.log('ASSIGNMENT LOADED - ', assignment)
 
     return (
-        <CardItem type={'assignment'} model={assignment} clickFunction={clickEvents} display={display} />
+        <CardItem type={'assignment'} model={assignment ?? []} clickFunction={clickEvents} display={display} />
     )
 }
 
