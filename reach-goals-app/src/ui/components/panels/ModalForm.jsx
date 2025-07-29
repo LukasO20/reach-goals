@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from 'react'
+
+import { DataModelContext } from '../../../provider/DataModelProvider.jsx'
 import { VisibilityContext } from '../../../provider/VisibilityProvider.jsx'
 import { ManageModelContext } from '../../../provider/ManageModelProvider.jsx'
 import { ModalListContext } from '../../../provider/ModalListProvider.jsx'
 
-import { useGetModel } from '../../../hook/useGetModel.js'
 import { useSaveModel } from '../../../hook/useSaveModel.js'
 
 import { modalListMap } from '../../../utils/mappingUtils.js'
@@ -49,6 +50,8 @@ const ModalForm = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, resetManageModel } = useContext(ManageModelContext)
     const { modalList, handleModalList } = useContext(ModalListContext)
+    const { modelGet, currentModel, getModel } = useContext(DataModelContext)
+    const { goal } = modelGet
 
     const typeForm = props.type
     const classRemove = visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
@@ -58,7 +61,6 @@ const ModalForm = (props) => {
     const [success, setSucess] = useState(false)
     const [isLoading, setLoading] = useState(false)
 
-    const { params: getParams, data: getData, setParams: setParams } = useGetModel({})
     const { saveModel, data: saveData } = useSaveModel({})
 
     const loadModel = (id) => {
@@ -72,7 +74,7 @@ const ModalForm = (props) => {
         }
 
         try {
-            setParams(currentUseGetModel)
+            getModel(currentUseGetModel)
         }
         catch (error) {
             setError('Ops, something wrong: ', error)
@@ -201,13 +203,13 @@ const ModalForm = (props) => {
     useEffect(() => {
         loadModel(model.mainModelID)
         
-        if (getParams && Object.keys(getParams).length > 0 && model.mainModelID) {
+        if (model.mainModelID) {
             setModel(prevModel => ({
                 ...prevModel,
-                submitModel: handleTarget(getData[0])
+                submitModel: handleTarget(goal.filter(target => target.id === model.mainModelID)[0])
             }))
         }
-    }, [model.mainModelID, getData])
+    }, [model.mainModelID, goal])
 
     useEffect(() => {
         if (saveData && typeof saveData === 'object' && Object.keys(saveData).length > 0) {

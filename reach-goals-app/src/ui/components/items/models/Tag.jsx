@@ -18,8 +18,8 @@ const Tag = (props) => {
 
     const { toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
-    const { dataModelGet, getModel } = useContext(DataModelContext)
-    const { tag } = dataModelGet
+    const { modelGet, getModel } = useContext(DataModelContext)
+    const { tag } = modelGet
 
     const target = targetMap(['panel-right', 'tag'])
 

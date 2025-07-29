@@ -86,7 +86,7 @@ const useGetModel = ({ requestProps, reset }) => {
     }, [JSON.stringify(params), reset])
     
     if (params.goalSomeID) {
-        console.log('PARAMS OF HOOK GETMODEL (goal) - ', params, data)
+        //console.log('PARAMS OF HOOK GETMODEL (goal) - ', params, data)
     }
 
     if (params.tagsRelation) {

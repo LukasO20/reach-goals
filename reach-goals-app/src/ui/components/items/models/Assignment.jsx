@@ -21,8 +21,8 @@ const Assignment = (props) => {
     const { toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
     const { switchLayoutComponent } = useContext(SwitchLayoutContext)
-    const { dataModelGet, getModel } = useContext(DataModelContext)
-    const { assignment } = dataModelGet
+    const { modelGet, getModel } = useContext(DataModelContext)
+    const { assignment } = modelGet
 
     const display = props.display
     const isSelectableModel = props.selectableModel ?? false

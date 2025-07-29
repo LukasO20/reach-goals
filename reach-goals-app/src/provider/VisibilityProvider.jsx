@@ -74,7 +74,7 @@ const VisibilityProvider = ({ children }) => {
         isVisible ? removeVisibility(parameterTarget) : updateVisibility(parameterTarget)
     }
 
-    console.log('VISIBLES - ', visibleElements)
+    //console.log('VISIBLES - ', visibleElements)
 
     return (
         <VisibilityContext.Provider value={{ visibleElements, toggleVisibility }}>

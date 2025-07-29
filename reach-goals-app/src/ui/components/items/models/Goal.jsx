@@ -21,8 +21,8 @@ const Goal = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
     const { switchLayoutComponent } = useContext(SwitchLayoutContext)
-    const { dataModelGet, getModel } = useContext(DataModelContext)
-    const { goal } = dataModelGet
+    const { modelGet, getModel } = useContext(DataModelContext)
+    const { goal } = modelGet
 
     const display = props.display
     const isSelectableModel = props.selectableModel ?? false
@@ -84,7 +84,7 @@ const Goal = (props) => {
         delete: deleteGoal
     }
 
-    console.log('GOAL LOADED - ', goal)
+    //console.log('GOAL LOADED - ', goal)
 
     return (
         <CardItem type={'goal'} model={goal ?? []} clickFunction={clickEvents} display={display} />
