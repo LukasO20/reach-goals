@@ -66,7 +66,7 @@ const Goal = (props) => {
     }
 
     useEffect(() => {
-        getModel(requestPropsGetGoal)
+        getModel(requestPropsGetGoal, { current: false })
     }, [])
 
     useEffect(() => { 

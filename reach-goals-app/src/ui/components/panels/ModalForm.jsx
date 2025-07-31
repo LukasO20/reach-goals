@@ -50,7 +50,7 @@ const ModalForm = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, resetManageModel } = useContext(ManageModelContext)
     const { modalList, handleModalList } = useContext(ModalListContext)
-    const { modelGet, currentModel, getModel } = useContext(DataModelContext)
+    const { modelGet, currentModelGet, getModel } = useContext(DataModelContext)
     const { goal } = modelGet
 
     const typeForm = props.type
@@ -74,7 +74,7 @@ const ModalForm = (props) => {
         }
 
         try {
-            getModel(currentUseGetModel)
+            getModel(currentUseGetModel, { current: true })
         }
         catch (error) {
             setError('Ops, something wrong: ', error)
@@ -206,10 +206,10 @@ const ModalForm = (props) => {
         if (model.mainModelID) {
             setModel(prevModel => ({
                 ...prevModel,
-                submitModel: handleTarget(goal.filter(target => target.id === model.mainModelID)[0])
+                submitModel: handleTarget(currentModelGet[typeForm])
             }))
         }
-    }, [model.mainModelID, goal])
+    }, [model.mainModelID, currentModelGet])
 
     useEffect(() => {
         if (saveData && typeof saveData === 'object' && Object.keys(saveData).length > 0) {

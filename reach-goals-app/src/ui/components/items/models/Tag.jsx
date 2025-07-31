@@ -71,7 +71,7 @@ const Tag = (props) => {
     }
 
     useEffect(() => {
-        getModel(requestPropsTag)
+        //getModel(requestPropsTag, { current: false })
     }, [])
 
     const clickEvents = {

@@ -74,7 +74,7 @@ const Assignment = (props) => {
     }
 
     useEffect(() => {
-        getModel(requestPropsAssignment)
+        //getModel(requestPropsAssignment, { current: false })
     }, [])
 
     useEffect(() => {     
