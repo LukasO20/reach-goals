@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import { VisibilityContext } from '../../../provider/VisibilityProvider.jsx'
 import { ManageModelContext } from '../../../provider/ManageModelProvider.jsx'
 
-import { targetMap, checkboxMap } from '../../../utils/mappingUtils.js'
+import { targetMap, checkboxMap } from '../../../utils/mapping/mappingUtils.js'
 
 import Tag from '../items/models/Tag.jsx'
 import ModalForm from './ModalForm.jsx'

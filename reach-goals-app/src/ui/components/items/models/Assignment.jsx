@@ -7,22 +7,26 @@ import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx
 import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider.jsx'
 
-import { targetMap, switchLayoutMap } from '../../../../utils/mappingUtils.js'
-import { requestPropsGetModel } from '../../../../utils/mappingUtilsHook.js'
+import { targetMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
+import { requestPropsGetModel } from '../../../../utils/mapping/mappingUtilsHook.js'
 
 import CardItem from '../elements/CardItem.jsx'
 
 import '../../../styles/items/models/Assignment.scss'
 
 const Assignment = (props) => {
-    const [erro, setErro] = useState(false)
-    const [pendingPanel, setPendingPanel] = useState(false)
-
     const { toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
     const { switchLayoutComponent } = useContext(SwitchLayoutContext)
     const { modelGet, getModel } = useContext(DataModelContext)
+
     const { assignment } = modelGet
+    const modelSource = props.modelRef
+
+    const [erro, setErro] = useState(false)
+    const [pendingPanel, setPendingPanel] = useState(false)
+    const [dataSource, setDataSource] = useState(modelSource ?? [])
+    const { data: deleteData, deleteModel } = useDeleteModel({})
 
     const display = props.display
     const isSelectableModel = props.selectableModel ?? false
@@ -36,8 +40,6 @@ const Assignment = (props) => {
         assignmentTagRelation: props.assignmentTagRelation ?? null,
         notGoalRelation: props.notGoalRelation ?? null
     }
-
-    const { data: deleteData, deleteModel } = useDeleteModel({})
 
     const deleteAssignment = (id) => {
         deleteModel({ type: 'assignment', assignmentID: id })
@@ -75,7 +77,8 @@ const Assignment = (props) => {
 
     useEffect(() => {
         //getModel(requestPropsAssignment, { current: false })
-    }, [])
+        setDataSource(assignment)
+    }, [assignment])
 
     useEffect(() => {     
         if (pendingPanel && model.mainModelID) {
@@ -96,7 +99,7 @@ const Assignment = (props) => {
     //console.log('ASSIGNMENT LOADED - ', assignment)
 
     return (
-        <CardItem type={'assignment'} model={assignment ?? []} clickFunction={clickEvents} display={display} />
+        <CardItem type={'assignment'} model={dataSource} clickFunction={clickEvents} display={display} />
     )
 }
 

@@ -5,7 +5,7 @@ import { ManageModelContext } from '../../provider/ManageModelProvider.jsx'
 import { TitleContext } from '../../provider/TitleProvider.jsx'
 import { VisibilityContext } from '../../provider/VisibilityProvider.jsx'
 
-import { targetMap, switchLayoutMap } from '../../utils/mappingUtils.js'
+import { targetMap, switchLayoutMap } from '../../utils/mapping/mappingUtils.js'
 
 import ButtonLink from './items/elements/ButtonLink.jsx'
 

@@ -2,7 +2,7 @@ import { useContext, useEffect, useMemo, useState } from 'react'
 import { useLocation, Link } from 'react-router-dom'
 
 import ButtonAction from './ButtonAction.jsx'
-import { switchLayoutMap, targetMap } from '../../../../utils/mappingUtils.js'
+import { switchLayoutMap, targetMap } from '../../../../utils/mapping/mappingUtils.js'
 
 const iconMap = {
     goal: 'fa-solid fa-bullseye',

@@ -5,7 +5,7 @@ import { ManageModelContext } from '../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../provider/VisibilityProvider.jsx'
 import { PageTypeContext } from '../../provider/PageTypeProvider.jsx'
 
-import { targetMap, switchLayoutMap, checkboxMap } from '../../utils/mappingUtils.js'
+import { targetMap, switchLayoutMap, checkboxMap } from '../../utils/mapping/mappingUtils.js'
 
 import ButtonAction from './items/elements/ButtonAction.jsx'
 import ButtonDropdown from './items/elements/ButtonDropdown.jsx'

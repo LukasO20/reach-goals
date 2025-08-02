@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 
-import { targetMap, switchLayoutMap } from '../../../../utils/mappingUtils.js'
+import { targetMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import ButtonAction from './ButtonAction'
 

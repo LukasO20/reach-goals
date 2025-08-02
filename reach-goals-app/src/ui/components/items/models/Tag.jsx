@@ -6,8 +6,8 @@ import { DataModelContext } from '../../../../provider/DataModelProvider.jsx'
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 
-import { targetMap } from '../../../../utils/mappingUtils.js'
-import { requestPropsGetModel } from '../../../../utils/mappingUtilsHook.js'
+import { targetMap } from '../../../../utils/mapping/mappingUtils.js'
+import { requestPropsGetModel } from '../../../../utils/mapping/mappingUtilsHook.js'
 
 import CardItem from '../elements/CardItem.jsx'
 

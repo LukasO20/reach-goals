@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 import { VisibilityContext } from '../../provider/VisibilityProvider.jsx'
-import { targetMap, switchLayoutMap } from '../../utils/mappingUtils.js'
+import { targetMap, switchLayoutMap } from '../../utils/mapping/mappingUtils.js'
 
 import ButtonAction from './items/elements/ButtonAction.jsx'
 

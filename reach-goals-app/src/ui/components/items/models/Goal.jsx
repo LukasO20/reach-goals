@@ -7,8 +7,8 @@ import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx
 import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider.jsx'
 
-import { targetMap, switchLayoutMap } from '../../../../utils/mappingUtils.js'
-import { requestPropsGetModel } from '../../../../utils/mappingUtilsHook.js'
+import { targetMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
+import { requestPropsGetModel } from '../../../../utils/mapping/mappingUtilsHook.js'
 
 import CardItem from '../elements/CardItem.jsx'
 

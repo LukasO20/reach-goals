@@ -8,7 +8,7 @@ import ModelCopy from '../models/ModelCopy.jsx'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 
-import { targetMap } from '../../../../utils/mappingUtils.js'
+import { targetMap } from '../../../../utils/mapping/mappingUtils.js'
 
 const iconMap = {
     assignment: 'fa-solid fa-list-check',
