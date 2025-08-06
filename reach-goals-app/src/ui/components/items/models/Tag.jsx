@@ -14,12 +14,16 @@ import CardItem from '../elements/CardItem.jsx'
 import '../../../styles/items/models/Tag.scss'
 
 const Tag = (props) => {
-    const [erro, setErro] = useState(false)
-
     const { toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
     const { modelGet, getModel } = useContext(DataModelContext)
+    
     const { tag } = modelGet
+    const modelSource = props.modelRef?.tag
+
+    const [erro, setErro] = useState(false)
+    const [dataSource, setDataSource] = useState([])
+    const { data: deleteData, deleteModel } = useDeleteModel({})
 
     const target = targetMap(['panel-right', 'tag'])
 
@@ -37,7 +41,6 @@ const Tag = (props) => {
         tagSomeID: props.tagSomeID ?? null
     }
 
-    const { data: deleteData, deleteModel } = useDeleteModel({})
 
     const deleteTag = async (id) => {
         deleteModel({ type: 'tag', tagID: id })
@@ -71,8 +74,12 @@ const Tag = (props) => {
     }
 
     useEffect(() => {
-        //getModel(requestPropsTag, { current: false })
-    }, [])
+        // if (modelSource && modelSource.length) {
+        //     return setDataSource(modelSource)
+        // }
+        // getModel(requestPropsTag, { current: false })
+        // setDataSource(tag)
+    }, [tag, modelSource])
 
     const clickEvents = {
         card: tagClick,
@@ -84,7 +91,7 @@ const Tag = (props) => {
     //console.log('TAG LOADED - ', tag)
 
     return (
-        <CardItem type={'tag'} model={tag ?? []} clickFunction={clickEvents} display={display} />
+        <CardItem type={'tag'} model={dataSource} clickFunction={clickEvents} display={display} />
     )
 }
 

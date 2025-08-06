@@ -21,11 +21,11 @@ const Assignment = (props) => {
     const { modelGet, getModel } = useContext(DataModelContext)
 
     const { assignment } = modelGet
-    const modelSource = props.modelRef
+    const modelSource = props.modelRef?.assignment
 
     const [erro, setErro] = useState(false)
     const [pendingPanel, setPendingPanel] = useState(false)
-    const [dataSource, setDataSource] = useState(modelSource ?? [])
+    const [dataSource, setDataSource] = useState([])
     const { data: deleteData, deleteModel } = useDeleteModel({})
 
     const display = props.display
@@ -56,7 +56,7 @@ const Assignment = (props) => {
             const selected = assignment.find(m => m.id === id)
             if (model.transportModel.some(item => item.id === selected.id)) return
 
-            addToTransportModel({...selected, type: 'assignment' })
+            addToTransportModel({ ...selected, type: 'assignment' })
             return updateSubmitModel({ keyObject: 'assignments', value: { id: id }, type: 'array' })
         }
 
@@ -76,11 +76,15 @@ const Assignment = (props) => {
     }
 
     useEffect(() => {
-        //getModel(requestPropsAssignment, { current: false })
-        setDataSource(assignment)
-    }, [assignment])
+        if (modelSource && modelSource.length) {
+            setDataSource(modelSource)
+        } else {
+            //getModel(requestPropsAssignment, { current: false })
+            //setDataSource(assignment)
+        }
+    }, [])
 
-    useEffect(() => {     
+    useEffect(() => {
         if (pendingPanel && model.mainModelID) {
             switchLayoutComponent(switchLayoutMap('panel', 'layout', 'right'))
             toggleVisibility(targetMap(['panel-right', 'assignment']))

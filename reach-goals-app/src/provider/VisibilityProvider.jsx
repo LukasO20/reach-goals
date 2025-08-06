@@ -53,8 +53,6 @@ const VisibilityProvider = ({ children }) => {
     }
 
     const toggleVisibility = (target, event) => {
-        console.log('ALVO - ', target)
-
         event?.stopPropagation()
         const parameterTarget = {
             class: target?.class ?? null,

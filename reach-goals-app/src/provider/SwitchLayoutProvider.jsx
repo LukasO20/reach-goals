@@ -40,7 +40,7 @@ const SwitchLayoutProvider = ({children}) => {
         updateLayoutComponent(switchLayout)
     }
 
-    console.log('LAYPROVIDER - ', layoutComponent)
+    //console.log('LAYPROVIDER - ', layoutComponent)
 
     return (
         <SwitchLayoutContext.Provider value={{layoutComponent, switchLayoutComponent}}>

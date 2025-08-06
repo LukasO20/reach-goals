@@ -3,8 +3,6 @@ import React, { useState, useEffect, useContext } from 'react'
 import { ManageModelContext } from './ManageModelProvider.jsx'
 
 import { useGetModel } from '../hook/useGetModel.js'
-import { useDeleteModel } from '../hook/useDeleteModel.js'
-import { useSaveModel } from '../hook/useSaveModel.js'
 
 import { getModelMap } from '../utils/mapping/mappingUtilsProvider.js'
 import { formatDate } from '../utils/utils.js' 
@@ -32,6 +30,7 @@ const DataModelProvider = ({ children }) => {
     }
 
     const switchSetModel = ({ data, params, current }) => {
+        if (!Array.isArray(data) || data.length === 0) return
         if (!params) return
 
         if (current === true) {
@@ -52,7 +51,7 @@ const DataModelProvider = ({ children }) => {
         switchSetModel({ data: getData, params: getParams, current: isCurrentMode })
     }, [getData])
 
-    console.log('MANAGE DATA READY? ', modelGet, currentModelGet)
+    //console.log('MANAGE DATA READY? ', modelGet, currentModelGet)
 
     return (
         <DataModelContext.Provider

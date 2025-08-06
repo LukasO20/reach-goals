@@ -184,7 +184,7 @@ const ModalForm = (props) => {
         mapStateError: error
     }
 
-    console.log('VALUE OF LOADING - ', isLoading, model)
+    //console.log('VALUE OF LOADING - ', isLoading, model)
 
     return (
         isLoading ? <div id="load-element" className='loading-animation'></div> :

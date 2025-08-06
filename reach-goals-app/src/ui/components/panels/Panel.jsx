@@ -48,7 +48,7 @@ const Panel = (props) => {
         modelID: model.mainModelID
     }
 
-    console.log('manage model from PANEL - ', model)
+    //console.log('manage model from PANEL - ', model)
 
     return (
         <div className={`content-${layoutComponent.panel.layout} ${panelType.some(panel => visibleElements.includes(panel)) ? 'show' : ''} ${renderConfig.type}`}>

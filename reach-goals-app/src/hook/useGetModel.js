@@ -12,44 +12,31 @@ const useGetModel = ({ requestProps, reset }) => {
             switch (params.type) {
                 case 'goal': {
                     if (params.goalSomeID) {
-                        const result = await goalAction.getGoal(params.goalSomeID)
-                        setData(result)
+                        setData(await goalAction.getGoal(params.goalSomeID))
                     } else if (params.goalAssignmentRelation) {
-                        const result = await goalAction.getGoalOnAssignment(params.goalAssignmentRelation)
-                        setData(result)
+                        setData(await goalAction.getGoalOnAssignment(params.goalAssignmentRelation))
                     } else if (params.goalTagRelation) {
-                        const result = await goalAction.getGoalOnTag(params.goalTagRelation)
-                        setData(result)
+                        setData(await goalAction.getGoalOnTag(params.goalTagRelation))
                     } else if (params.notAssignmentRelation) {
-                        const result = await goalAction.getGoalWithoutAssignment(params.notAssignmentRelation)
-                        setData(result)
-                    } else {
-                        setData([])
+                        setData(await goalAction.getGoalWithoutAssignment(params.notAssignmentRelation))
                     }
                     break
                 }
                 case 'assignment': {
                     if (params.assignmentSomeID) {
-                        const result = await assignmentAction.getAssignment(params.assignmentSomeID)
-                        setData(result)
+                        setData(await assignmentAction.getAssignment(params.assignmentSomeID))
                     } else if (params.assignmentGoalRelation) {
-                        const result = await assignmentAction.getAssignmentOnGoal(params.assignmentGoalRelation)
-                        setData(result)
+                        setData(await assignmentAction.getAssignmentOnGoal(params.assignmentGoalRelation))
                     } else if (params.assignmentTagRelation) {
-                        const result = await assignmentAction.getAssignmentOnTag(params.assignmentTagRelation)
-                        setData(result)
+                        setData(await assignmentAction.getAssignmentOnTag(params.assignmentTagRelation))
                     } else if (params.notGoalRelation) {
-                        const result = await assignmentAction.getAssignmentWithoutGoal()
-                        setData(result)
-                    } else {
-                        setData([])
+                        setData(await assignmentAction.getAssignmentWithoutGoal())
                     }
                     break
                 }
                 case 'tag': {
                     if (params.tagSomeID) {
-                        const result = await tagAction.getTag(params.tagSomeID)
-                        setData(result)
+                        setData(await tagAction.getTag(params.tagSomeID))
                     } else if (params.tagsRelation) {
                         let result = await tagAction.getTagOnGoal(params.tagsRelation)
                         if (!result.length) {
@@ -57,17 +44,11 @@ const useGetModel = ({ requestProps, reset }) => {
                         }
                         setData(result)
                     } else if (params.tagsNotRelation?.notRelationID && params.tagsNotRelation?.notRelationModel !== '') {
-                        const result = params.tagsNotRelation.notRelationModel === 'goal'
+                        setData(params.tagsNotRelation.notRelationModel === 'goal'
                             ? await tagAction.getTagNotGoal(params.tagsNotRelation.notRelationID)
-                            : await tagAction.getTagNotAssignment(params.tagsNotRelation.notRelationID)
-                        setData(result)
-                    } else {
-                        setData([])
+                            : await tagAction.getTagNotAssignment(params.tagsNotRelation.notRelationID))
                     }
                     break
-                }
-                default: {
-                    setData([])
                 }
             }
         }
@@ -77,6 +58,7 @@ const useGetModel = ({ requestProps, reset }) => {
     }
 
     useEffect(() => {
+        console.log('PARAMS SENDED - ', params)
         if (reset) {
             setData([])
             return
@@ -84,7 +66,7 @@ const useGetModel = ({ requestProps, reset }) => {
 
         fetchData()
     }, [JSON.stringify(params), reset])
-    
+
     if (params.goalSomeID) {
         //console.log('PARAMS OF HOOK GETMODEL (goal) - ', params, data)
     }
