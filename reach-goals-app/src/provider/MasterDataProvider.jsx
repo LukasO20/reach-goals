@@ -1,7 +1,9 @@
-const MasterDataProvider = ({ children }) => {
+import { GoalModelProvider } from './GoalModelProvider.jsx'
+
+export const MasterDataProvider = ({ children }) => {
     return (
-        {children}
+        <GoalModelProvider>
+            {children}
+        </GoalModelProvider>
     )
 }
-
-export default MasterDataProvider

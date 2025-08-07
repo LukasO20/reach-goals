@@ -2,13 +2,14 @@ import { useContext, useEffect, useState } from 'react'
 
 import { useDeleteModel } from '../../../../hook/useDeleteModel.js'
 
-import { DataModelContext } from '../../../../provider/DataModelProvider.jsx'
+import { useGoalModel } from '../../../../provider/GoalModelProvider.jsx'
+
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider.jsx'
 
 import { targetMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
-import { requestPropsGetModel } from '../../../../utils/mapping/mappingUtilsHook.js'
+import { filterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
 import CardItem from '../elements/CardItem.jsx'
 
@@ -21,23 +22,23 @@ const Goal = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
     const { switchLayoutComponent } = useContext(SwitchLayoutContext)
-    const { modelGet, getModel } = useContext(DataModelContext)
-    const { goal } = modelGet
+    const { data, loading, refetch } = useGoalModel()
 
     const display = props.display
     const isSelectableModel = props.selectableModel ?? false
     const isDetailsModel = props.detailsModel ?? false
 
-    const requestPropsGetGoal = {
-        ...requestPropsGetModel,
+    const filterGetGoal = {
+        ...filterModelMap,
         type: 'goal',
-        goalAssignmentRelation: props.goalAssignmentRelation ?? null,
-        goalSomeID: props.goalSomeID ?? null,
-        goalTagRelation: props.goalTagRelation ?? null,
-        notAssignmentRelation: props.notAssignmentRelation ?? null
+        goalAssignmentRelation: props.goalAssignmentRelation,
+        goalSomeID: props.goalSomeID,
+        goalTagRelation: props.goalTagRelation,
+        notAssignmentRelation: props.notAssignmentRelation
     }
-    
+
     const { data: deleteData, deleteModel } = useDeleteModel({})
+
 
     const deleteGoal = (id) => {
         deleteModel({ type: 'goal', goalID: id })
@@ -51,7 +52,7 @@ const Goal = (props) => {
     const goalClick = (id, e) => {
         if (isSelectableModel) {
             e.stopPropagation()
-            const selected = goal.find(m => m.id === id)
+            const selected = [].find(m => m.id === id)
             if (model.transportModel.length > 0 && visibleElements.includes('panel-center') && visibleElements.includes('assignment')) return
 
             addToTransportModel({ ...selected, type: 'goal' })
@@ -66,10 +67,10 @@ const Goal = (props) => {
     }
 
     useEffect(() => {
-        getModel(requestPropsGetGoal, { current: false })
+        refetch(filterGetGoal)
     }, [])
 
-    useEffect(() => { 
+    useEffect(() => {
         if (pendingPanel && model.mainModelID) {
             switchLayoutComponent(switchLayoutMap('panel', 'layout', 'right'))
             toggleVisibility(targetMap(['panel-right', 'goal']))
@@ -87,7 +88,10 @@ const Goal = (props) => {
     //console.log('GOAL LOADED - ', goal)
 
     return (
-        <CardItem type={'goal'} model={goal ?? []} clickFunction={clickEvents} display={display} />
+        loading ?
+            <p>Loading...</p>
+            :
+            <CardItem type={'goal'} model={data} clickFunction={clickEvents} display={display} />
     )
 }
 
