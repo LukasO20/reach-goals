@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import * as tagAction from '../provider/tag/tagAction.js'
-import * as goalAction from '../provider/goal/goalAction.js'
+import * as goalService from '../services/goalService.js'
 import * as assignmentAction from '../provider/assignment/assignmentAction.js'
 
 const useSaveModel = () => {
@@ -10,7 +10,7 @@ const useSaveModel = () => {
         try {
             switch (params.type) {
                 case 'goal': {
-                    params.model.id ? setData(await goalAction.updateGoal(params.model)) : setData(await goalAction.addGoal(params.model))
+                    params.model.id ? setData(await goalService.updateGoal(params.model)) : setData(await goalService.addGoal(params.model))
                     break
                 }
                 case 'assignment': {

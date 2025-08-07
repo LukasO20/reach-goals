@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import * as tagAction from '../provider/tag/tagAction.js'
-import * as goalAction from '../provider/goal/goalAction.js'
+import * as goalService from '../services/goalService.js'
 import * as assignmentAction from '../provider/assignment/assignmentAction.js'
 
 const useDeleteModel = () => {
@@ -11,7 +11,7 @@ const useDeleteModel = () => {
             switch (params.type) {
                 case 'goal': {
                     if (params.goalID) {
-                        const result = await goalAction.deleteGoal(params.goalID)
+                        const result = await goalService.deleteGoal(params.goalID)
                         setData(result)
                     }
                     break

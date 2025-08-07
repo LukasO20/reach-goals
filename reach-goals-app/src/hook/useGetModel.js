@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import * as tagAction from '../provider/tag/tagAction.js'
-import * as goalAction from '../provider/goal/goalAction.js'
 import * as assignmentAction from '../provider/assignment/assignmentAction.js'
 
 const useGetModel = ({ requestProps, reset }) => {
@@ -10,18 +9,6 @@ const useGetModel = ({ requestProps, reset }) => {
     const fetchData = async () => {
         try {
             switch (params.type) {
-                case 'goal': {
-                    if (params.goalSomeID) {
-                        setData(await goalAction.getGoal(params.goalSomeID))
-                    } else if (params.goalAssignmentRelation) {
-                        setData(await goalAction.getGoalOnAssignment(params.goalAssignmentRelation))
-                    } else if (params.goalTagRelation) {
-                        setData(await goalAction.getGoalOnTag(params.goalTagRelation))
-                    } else if (params.notAssignmentRelation) {
-                        setData(await goalAction.getGoalWithoutAssignment(params.notAssignmentRelation))
-                    }
-                    break
-                }
                 case 'assignment': {
                     if (params.assignmentSomeID) {
                         setData(await assignmentAction.getAssignment(params.assignmentSomeID))
