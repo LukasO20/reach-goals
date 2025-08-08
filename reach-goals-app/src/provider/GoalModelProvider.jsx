@@ -7,15 +7,18 @@ export const GoalModelContext = createContext()
 const initialState = {
     loading: false,
     error: null,
-    data: []
+    data: [],
+    selected: {}
 }
 
 const goalReducer = (state, action) => {
     switch (action.type) {
         case 'LOADING':
             return { ...state, loading: true, error: null }
-        case 'SUCCESS':
-            return { loading: false, error: null, data: action.payload }
+        case 'FETCH_LIST':
+            return { ...state, loading: false, error: null, data: action.payload }
+        case 'FETCH_ONE':
+            return { ...state, loading: false, error: null, selected: action.payload }
         case 'ERROR':
             return { loading: false, error: action.payload, data: [] }
         default:
@@ -23,40 +26,51 @@ const goalReducer = (state, action) => {
     }
 }
 
-export const GoalModelProvider = ({ children, initialFilters = {} }) => {
+export const GoalModelProvider = ({ children }) => {
     const [state, dispatch] = useReducer(goalReducer, initialState)
 
-    const loadGoals = async (filters = {}) => {
+    const load = async (filters = {}) => {
         dispatch({ type: 'LOADING' })
-        try {
-            let data = []
 
-            if (filters.goalSomeID) {
-                data = await goalService.getGoal(filters.goalSomeID)
+        try {
+            if (typeof filters.goalSomeID === 'boolean' && filters.goalSomeID === true) {
+                return dispatch({
+                    type: 'FETCH_LIST', payload: await goalService.getGoal(filters.goalSomeID)
+                })
+            } else if (typeof filters.goalSomeID === 'number') {
+                return dispatch({
+                    type: 'FETCH_ONE', payload: await goalService.getGoal(filters.goalSomeID)
+                })
             } else if (filters.goalAssignmentRelation) {
-                data = await goalService.getGoalOnAssignment(filters.goalAssignmentRelation)
+                return dispatch({
+                    type: 'FETCH_LIST', payload: await goalService.getGoalOnAssignment(filters.goalAssignmentRelation)
+                })
             } else if (filters.goalTagRelation) {
-                data = await goalService.getGoalOnTag(filters.goalTagRelation)
+                return dispatch({
+                    type: 'FETCH_LIST', payload: await goalService.getGoalOnTag(filters.goalTagRelation)
+                })
             } else if (filters.notAssignmentRelation) {
-                data = await goalService.getGoalWithoutAssignment(filters.notAssignmentRelation)
+                return dispatch({
+                    type: 'FETCH_LIST', payload: await goalService.getGoalWithoutAssignment(filters.notAssignmentRelation)
+                })       
             }
 
-            dispatch({ type: 'SUCCESS', payload: data })
         } catch (err) {
             dispatch({ type: 'ERROR', payload: err.message })
         }
     }
 
     useEffect(() => {
-        loadGoals()
+        load()
     }, [])
 
     useEffect(() => {
-        //if necessary check the results of state - console.log(state)
+        //if necessary check the results of state - 
+        console.log('GOAL RPOVIDER - ', state)
     }, [state])
 
     return (
-        <GoalModelContext.Provider value={{ ...state, refetch: loadGoals }}>
+        <GoalModelContext.Provider value={{ ...state, refetch: load }}>
             {children}
         </GoalModelContext.Provider>
     )

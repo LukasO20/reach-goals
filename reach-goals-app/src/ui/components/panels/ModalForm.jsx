@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from 'react'
 
-import { DataModelContext } from '../../../provider/DataModelProvider.jsx'
 import { VisibilityContext } from '../../../provider/VisibilityProvider.jsx'
 import { ManageModelContext } from '../../../provider/ManageModelProvider.jsx'
 import { ModalListContext } from '../../../provider/ModalListProvider.jsx'
 
 import { useSaveModel } from '../../../hook/useSaveModel.js'
+
+import { useGoalModel } from '../../../provider/GoalModelProvider.jsx'
 
 import { modalListMap } from '../../../utils/mapping/mappingUtils.js'
 import { formatDate } from '../../../utils/utils.js'
@@ -49,7 +50,8 @@ const ModalForm = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, resetManageModel } = useContext(ManageModelContext)
     const { modalList, handleModalList } = useContext(ModalListContext)
-    const { getModel } = useContext(DataModelContext)
+
+    const { selected, refetch } = useGoalModel() // ?? assignment or tag
 
     const typeForm = props.type
     const classRemove = visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
@@ -72,7 +74,7 @@ const ModalForm = (props) => {
         }
 
         try {
-            getModel(currentUseGetModel, { current: true })
+            refetch(currentUseGetModel)
         }
         catch (error) {
             setError('Ops, something wrong: ', error)
@@ -147,8 +149,17 @@ const ModalForm = (props) => {
     }
 
     useEffect(() => {
-        loadModel(model.mainModelID)
-    }, [model.mainModelID])
+        const selectedSubmitModel = Array.isArray(selected) ? selected[0] : selected
+        if (Object.keys(selectedSubmitModel).length) {
+            setModel(prevModel => ({
+                ...prevModel,
+                submitModel: selectedSubmitModel
+            }))
+
+        } else {
+            loadModel(model.mainModelID)
+        }
+    }, [model.mainModelID, selected])
 
     useEffect(() => {
         if (saveData && typeof saveData === 'object' && Object.keys(saveData).length > 0) {

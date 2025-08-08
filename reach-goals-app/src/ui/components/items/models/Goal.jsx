@@ -88,7 +88,7 @@ const Goal = (props) => {
     //console.log('GOAL LOADED - ', goal)
 
     return (
-        loading ?
+        loading && data.length === 0 ?
             <p>Loading...</p>
             :
             <CardItem type={'goal'} model={data} clickFunction={clickEvents} display={display} />
