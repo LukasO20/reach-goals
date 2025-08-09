@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import * as tagAction from '../provider/tag/tagAction.js'
 import * as goalService from '../services/goalService.js'
-import * as assignmentAction from '../provider/assignment/assignmentAction.js'
+import * as assignmentService from '../services/assignmentService.js'
 
 const useSaveModel = () => {
     const [data, setData] = useState([])
@@ -14,7 +14,7 @@ const useSaveModel = () => {
                     break
                 }
                 case 'assignment': {
-                    params.model.id ? setData(await assignmentAction.updateAssignment(params.model)) : setData(await assignmentAction.addAssignment(params.model))
+                    params.model.id ? setData(await assignmentService.updateAssignment(params.model)) : setData(await assignmentService.addAssignment(params.model))
                     break
                 }
                 case 'tag': {
