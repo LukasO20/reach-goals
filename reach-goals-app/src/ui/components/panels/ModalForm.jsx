@@ -6,8 +6,8 @@ import { ModalListContext } from '../../../provider/ModalListProvider.jsx'
 
 import { useSaveModel } from '../../../hook/useSaveModel.js'
 
-import { useGoalModel } from '../../../provider/GoalModelProvider.jsx'
-import { useAssignmentModel } from '../../../provider/AssignmentModelProvider.jsx'
+import { useGoalModel } from '../../../provider/model/GoalModelProvider.jsx'
+import { useAssignmentModel } from '../../../provider/model/AssignmentModelProvider.jsx'
 
 import { modalListMap } from '../../../utils/mapping/mappingUtils.js'
 import { formatDate } from '../../../utils/utils.js'

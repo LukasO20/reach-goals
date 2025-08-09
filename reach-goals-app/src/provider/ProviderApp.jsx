@@ -6,7 +6,7 @@ import { ModalListProvider } from './ModalListProvider.jsx'
 import { SwitchLayoutProvider } from './SwitchLayoutProvider.jsx'
 import { PageTypeProvider } from './PageTypeProvider.jsx'
 import { DataModelProvider } from './DataModelProvider.jsx'
-import { MasterDataProvider } from './MasterDataProvider.jsx'
+import { MasterDataProvider } from './model/MasterDataProvider.jsx'
 
 const ProviderApp = ({ children }) => (
     <MasterDataProvider>

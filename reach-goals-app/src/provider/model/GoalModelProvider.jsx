@@ -1,8 +1,8 @@
 import { useReducer, useEffect, createContext, useContext } from 'react'
 
-import * as goalService from '../services/goalService.js'
+import * as goalService from '../../services/goalService.js'
 
-import { initialStateMap } from '../utils/mapping/mappingUtilsProvider.js'
+import { initialStateMap } from '../../utils/mapping/mappingUtilsProvider.js'
 
 export const GoalModelContext = createContext()
 

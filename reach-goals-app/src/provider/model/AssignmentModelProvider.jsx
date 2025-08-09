@@ -1,8 +1,8 @@
 import { useReducer, useEffect, createContext, useContext } from 'react'
 
-import * as assinmentService from '../services/assignmentService.js'
+import * as assignmentService from '../../services/assignmentService.js'
 
-import { initialStateMap } from '../utils/mapping/mappingUtilsProvider.js'
+import { initialStateMap } from '../../utils/mapping/mappingUtilsProvider.js'
 
 export const AssignmentModelContext = createContext()
 
@@ -30,23 +30,23 @@ export const AssignmentModelProvider = ({ children }) => {
         try {
             if (typeof filters.assignmentSomeID === 'boolean' && filters.assignmentSomeID === true) {
                 return dispatch({
-                    type: 'FETCH_LIST', payload: await assinmentService.getAssignment(filters.assignmentSomeID)
+                    type: 'FETCH_LIST', payload: await assignmentService.getAssignment(filters.assignmentSomeID)
                 })
             } else if (typeof filters.assignmentSomeID === 'number') {
                 return dispatch({
-                    type: 'FETCH_ONE', payload: await assinmentService.getAssignment(filters.assignmentSomeID)
+                    type: 'FETCH_ONE', payload: await assignmentService.getAssignment(filters.assignmentSomeID)
                 })
             } else if (filters.assignmentGoalRelation) {
                 return dispatch({
-                    type: 'FETCH_LIST', payload: await assinmentService.getAssignmentOnGoal(filters.assignmentGoalRelation)
+                    type: 'FETCH_LIST', payload: await assignmentService.getAssignmentOnGoal(filters.assignmentGoalRelation)
                 })
             } else if (filters.assignmentTagRelation) {
                 return dispatch({
-                    type: 'FETCH_LIST', payload: await assinmentService.getAssignmentOnTag(filters.assignmentTagRelation)
+                    type: 'FETCH_LIST', payload: await assignmentService.getAssignmentOnTag(filters.assignmentTagRelation)
                 })
             } else if (filters.notGoalRelation) {
                 return dispatch({
-                    type: 'FETCH_LIST', payload: await assinmentService.getAssignmentWithoutGoal(filters.notGoalRelation)
+                    type: 'FETCH_LIST', payload: await assignmentService.getAssignmentWithoutGoal(filters.notGoalRelation)
                 })       
             }
 
