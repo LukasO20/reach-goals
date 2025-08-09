@@ -161,20 +161,21 @@ const ModalForm = (props) => {
         const typeSelected =
             typeForm === 'goal' ?
                 selectedGoal :
-                typeForm === 'assignmet' ?
+                typeForm === 'assignment' ?
                     selectedAssignment : null
 
         const selectedSubmitModel = Array.isArray(typeSelected) ? typeSelected[0] : typeSelected
-        if (Object.keys(selectedSubmitModel).length) {
+        if (selectedSubmitModel && Object.keys(selectedSubmitModel).length) {
             setModel(prevModel => ({
                 ...prevModel,
                 submitModel: selectedSubmitModel
             }))
-
-        } else {
-            loadModel(model.mainModelID)
         }
-    }, [model.mainModelID, selectedGoal, selectedAssignment])
+    }, [selectedGoal, selectedAssignment])
+
+    useEffect(() => {
+        if (typeof model.mainModelID === 'number') loadModel(model.mainModelID)
+    }, [model.mainModelID])
 
     useEffect(() => {
         if (saveData && typeof saveData === 'object' && Object.keys(saveData).length > 0) {

@@ -23,6 +23,7 @@ const Goal = (props) => {
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
     const { switchLayoutComponent } = useContext(SwitchLayoutContext)
     const { data, loading, refetch } = useGoalModel()
+    const { data: deleteData, deleteModel } = useDeleteModel({})
 
     const display = props.display
     const isSelectableModel = props.selectableModel ?? false
@@ -36,9 +37,6 @@ const Goal = (props) => {
         goalTagRelation: props.goalTagRelation,
         notAssignmentRelation: props.notAssignmentRelation
     }
-
-    const { data: deleteData, deleteModel } = useDeleteModel({})
-
 
     const deleteGoal = (id) => {
         deleteModel({ type: 'goal', goalID: id })

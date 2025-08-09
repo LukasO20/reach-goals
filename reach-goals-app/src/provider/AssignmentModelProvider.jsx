@@ -54,11 +54,7 @@ export const AssignmentModelProvider = ({ children }) => {
             dispatch({ type: 'ERROR', payload: err.message })
         }
     }
-
-    useEffect(() => {
-        load()
-    }, [])
-
+    
     useEffect(() => {
         //if necessary check the results of state - 
         console.log('ASSIGNMENT PROVIDER - ', state)

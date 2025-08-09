@@ -77,13 +77,13 @@ const Assignment = (props) => {
     }
 
     useEffect(() => {
-        if (modelSource && modelSource.length) {
-            setDataSource(modelSource)
-        } else {
-            refetch(filterGetAssignment)
-            setDataSource(data)
-        }
+        if (modelSource && modelSource.length) setDataSource(modelSource)
+        else setDataSource(data)
     }, [modelSource, data])
+
+    useEffect(() => {
+        if (!modelSource || !modelSource.length) refetch(filterGetAssignment)     
+    }, [])
 
     useEffect(() => {
         if (pendingPanel && model.mainModelID) {
@@ -91,7 +91,6 @@ const Assignment = (props) => {
             toggleVisibility(targetMap(['panel-right', 'assignment']))
             setPendingPanel(false)
         }
-
     }, [pendingPanel])
 
     const clickEvents = {

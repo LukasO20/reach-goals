@@ -56,10 +56,6 @@ export const GoalModelProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        load()
-    }, [])
-
-    useEffect(() => {
         //if necessary check the results of state - 
         console.log('GOAL RPOVIDER - ', state)
     }, [state])
