@@ -7,6 +7,7 @@ import { ModalListContext } from '../../../provider/ModalListProvider.jsx'
 import { useSaveModel } from '../../../hook/useSaveModel.js'
 
 import { useGoalModel } from '../../../provider/GoalModelProvider.jsx'
+import { useAssignmentModel } from '../../../provider/AssignmentModelProvider.jsx'
 
 import { modalListMap } from '../../../utils/mapping/mappingUtils.js'
 import { formatDate } from '../../../utils/utils.js'
@@ -51,7 +52,8 @@ const ModalForm = (props) => {
     const { model, setModel, resetManageModel } = useContext(ManageModelContext)
     const { modalList, handleModalList } = useContext(ModalListContext)
 
-    const { selected, refetch } = useGoalModel() // ?? assignment or tag
+    const { selected: selectedAssignment, refetch: refetchAssignment } = useAssignmentModel()
+    const { selected: selectedGoal, refetch: refetchGoal } = useGoalModel()
 
     const typeForm = props.type
     const classRemove = visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
@@ -74,7 +76,14 @@ const ModalForm = (props) => {
         }
 
         try {
-            refetch(currentUseGetModel)
+            const refetchFn =
+                typeForm === 'goal'
+                    ? () => refetchGoal(currentUseGetModel)
+                    : typeForm === 'assignment'
+                        ? () => refetchAssignment(currentUseGetModel)
+                        : () => null
+
+            refetchFn()
         }
         catch (error) {
             setError('Ops, something wrong: ', error)
@@ -149,7 +158,13 @@ const ModalForm = (props) => {
     }
 
     useEffect(() => {
-        const selectedSubmitModel = Array.isArray(selected) ? selected[0] : selected
+        const typeSelected =
+            typeForm === 'goal' ?
+                selectedGoal :
+                typeForm === 'assignmet' ?
+                    selectedAssignment : null
+
+        const selectedSubmitModel = Array.isArray(typeSelected) ? typeSelected[0] : typeSelected
         if (Object.keys(selectedSubmitModel).length) {
             setModel(prevModel => ({
                 ...prevModel,
@@ -159,7 +174,7 @@ const ModalForm = (props) => {
         } else {
             loadModel(model.mainModelID)
         }
-    }, [model.mainModelID, selected])
+    }, [model.mainModelID, selectedGoal, selectedAssignment])
 
     useEffect(() => {
         if (saveData && typeof saveData === 'object' && Object.keys(saveData).length > 0) {

@@ -18,3 +18,10 @@ export const filterModelMap = {
     tagsRelation: null,
     tagsNotRelation: null,
 }
+
+export const initialStateMap = {
+    loading: false,
+    error: null,
+    data: [],
+    selected: {}
+}

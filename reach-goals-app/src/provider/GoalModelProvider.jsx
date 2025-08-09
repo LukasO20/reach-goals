@@ -2,14 +2,9 @@ import { useReducer, useEffect, createContext, useContext } from 'react'
 
 import * as goalService from '../services/goalService.js'
 
-export const GoalModelContext = createContext()
+import { initialStateMap } from '../utils/mapping/mappingUtilsProvider.js'
 
-const initialState = {
-    loading: false,
-    error: null,
-    data: [],
-    selected: {}
-}
+export const GoalModelContext = createContext()
 
 const goalReducer = (state, action) => {
     switch (action.type) {
@@ -27,7 +22,7 @@ const goalReducer = (state, action) => {
 }
 
 export const GoalModelProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(goalReducer, initialState)
+    const [state, dispatch] = useReducer(goalReducer, initialStateMap)
 
     const load = async (filters = {}) => {
         dispatch({ type: 'LOADING' })
