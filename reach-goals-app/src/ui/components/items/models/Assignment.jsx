@@ -79,8 +79,7 @@ const Assignment = (props) => {
         if (modelSource && modelSource.length) {
             setDataSource(modelSource)
         } else {
-            //getModel(requestPropsAssignment, { current: false })
-            //setDataSource(assignment)
+            
         }
     }, [])
 

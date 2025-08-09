@@ -41,7 +41,6 @@ const Tag = (props) => {
         tagSomeID: props.tagSomeID ?? null
     }
 
-
     const deleteTag = async (id) => {
         deleteModel({ type: 'tag', tagID: id })
     }
@@ -74,12 +73,12 @@ const Tag = (props) => {
     }
 
     useEffect(() => {
-        // if (modelSource && modelSource.length) {
-        //     return setDataSource(modelSource)
-        // }
-        // getModel(requestPropsTag, { current: false })
-        // setDataSource(tag)
-    }, [tag, modelSource])
+        if (modelSource && modelSource.length) {
+            setDataSource(modelSource)
+        } else {
+            
+        }
+    }, [])
 
     const clickEvents = {
         card: tagClick,

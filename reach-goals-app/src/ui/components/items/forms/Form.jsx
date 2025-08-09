@@ -67,15 +67,9 @@ const Form = (props) => {
     }
 
     const tagRelation = typeForm === 'goal' ? 'goalID' : 'assignmentID';
-    const modelSwitcherTagProps = {
-        [tagRelation]: modelForm?.id,
-        display: {
-            sideAction: true,
-            type: 'mini-list'
-        }
-    }
 
     const modelSwitcherProps = {
+        [tagRelation]: modelForm?.id,
         focused: modelForm,
         assignmentGoalRelation: modelForm.id,
         display: {
@@ -181,7 +175,7 @@ const Form = (props) => {
                                         <div className='item-head-2'></div>
                                     </div>
                                     <div className='item-forms body'>
-                                        {<ModelSwitcher type={'tag'} propsReference={modelSwitcherTagProps} />}
+                                        {<ModelSwitcher type={'tag'} propsReference={modelSwitcherProps} />}
                                         {<ModelCopy type={model.typeModel}  />}
                                     </div>
                                 </div>
