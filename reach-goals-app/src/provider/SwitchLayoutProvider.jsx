@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import { useState, createContext } from 'react'
+import { useContext } from 'react'
 
-const SwitchLayoutContext = React.createContext()
+const SwitchLayoutContext = createContext()
 
-const SwitchLayoutProvider = ({children}) => {
+export const SwitchLayoutProvider = ({children}) => {
 
     const standardSwitchLayout = () => {
         return {
@@ -49,4 +50,4 @@ const SwitchLayoutProvider = ({children}) => {
     )
 }
 
-export { SwitchLayoutContext, SwitchLayoutProvider }
+export const useSwitchLayout = () => useContext(SwitchLayoutContext)

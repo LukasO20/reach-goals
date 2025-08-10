@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 
-import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider.jsx'
+import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 
 import Goal from '../models/Goal.jsx'
 import Assignment from '../models/Assignment.jsx'
@@ -70,7 +70,7 @@ const boxConfigs = (type) => {
 }
 
 const ExpandableBox = (props) => {
-    const { layoutComponent } = useContext(SwitchLayoutContext)     
+    const { layoutComponent } = useSwitchLayout()     
     const containerType = props?.containerType ?? ''
 
     const configType = layoutComponent.objectives.layout

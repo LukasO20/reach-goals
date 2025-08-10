@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import { VisibilityContext } from '../../../provider/VisibilityProvider.jsx'
 import { ManageModelContext } from '../../../provider/ManageModelProvider.jsx'
 
-import { useSwitchLayout } from '../../../hook/useSwitchLayout.js'
+import { useSwitchLayout } from '../../../provider/SwitchLayoutProvider.jsx'
 
 import ModalForm from './ModalForm.jsx'
 import ModalDetails from './ModalDetails.jsx'

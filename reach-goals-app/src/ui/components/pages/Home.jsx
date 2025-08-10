@@ -1,8 +1,7 @@
-import React, { useContext } from 'react'
+import { useEffect } from 'react'
 
-import { TitleContext } from '../../../provider/TitleProvider.jsx'
-
-import { useSwitchLayout } from '../../../hook/useSwitchLayout.js'
+import { useTitle } from '../../../provider/TitleProvider.jsx'
+import { useSwitchLayout } from '../../../provider/SwitchLayoutProvider.jsx'
 
 import '../../styles/pages/Home.scss'
 
@@ -10,10 +9,10 @@ import Goal from '../items/models/Goal.jsx'
 import Assignment from '../items/models/Assignment.jsx'
 
 const Home = () => {
-    const { update } = useContext(TitleContext)
+    const { update } = useTitle()
     const { layoutComponent } = useSwitchLayout()
 
-    React.useEffect(() => {
+    useEffect(() => {
         update(`Welcome. Let's produce?`)
     }, [update])
 

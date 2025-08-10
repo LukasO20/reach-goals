@@ -2,15 +2,16 @@ import { useContext } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { ManageModelContext } from '../../provider/ManageModelProvider.jsx'
-import { TitleContext } from '../../provider/TitleProvider.jsx'
 import { VisibilityContext } from '../../provider/VisibilityProvider.jsx'
+
+import { useTitle } from '../../provider/TitleProvider.jsx'
 
 import { targetMap, switchLayoutMap } from '../../utils/mapping/mappingUtils.js'
 
 import ButtonLink from './items/elements/ButtonLink.jsx'
 
 const ContainerH = () => {
-    const { title } = useContext(TitleContext)
+    const { title } = useTitle()
     const { toggleVisibility } = useContext(VisibilityContext)
     const { setModel } = useContext(ManageModelContext)
     

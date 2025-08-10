@@ -1,12 +1,13 @@
-import React, { useContext } from 'react'
-import { TitleContext } from '../../../provider/TitleProvider.jsx'
+import { useEffect } from 'react'
+
+import { useTitle } from '../../../provider/TitleProvider.jsx'
 
 import ExpandableBox from '../items/box/ExpandableBox.jsx'
 
 const Objectives = () => {
-    const { update } = useContext(TitleContext)
+    const { update } = useTitle()
 
-    React.useEffect(() => {
+    useEffect(() => {
         update('Manage your goals and assingments')
     }, [update])
 

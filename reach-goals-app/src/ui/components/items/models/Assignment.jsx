@@ -6,7 +6,7 @@ import { useAssignmentModel } from '../../../../provider/model/AssignmentModelPr
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
-import { SwitchLayoutContext } from '../../../../provider/SwitchLayoutProvider.jsx'
+import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 
 import { targetMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
 import { filterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
@@ -22,7 +22,7 @@ const Assignment = (props) => {
 
     const { toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
-    const { switchLayoutComponent } = useContext(SwitchLayoutContext)
+    const { switchLayoutComponent } = useSwitchLayout()
     const { data, loading, refetch } = useAssignmentModel()
 
     const modelSource = props.modelRef?.assignment

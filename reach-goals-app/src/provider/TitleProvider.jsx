@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import { useState, useContext, createContext } from 'react'
 
-const TitleContext = React.createContext()
+const TitleContext = createContext()
 
-const TitleProvider = ({ children }) => {
+export const TitleProvider = ({ children }) => {
     const [title, setTitle] = useState(`Welcome. Let's produce?`)
     const update = (newTitle) => { setTitle(newTitle) }
 
@@ -13,4 +13,4 @@ const TitleProvider = ({ children }) => {
     )
 }
 
-export { TitleContext, TitleProvider }
+export const useTitle = () => useContext(TitleContext)
