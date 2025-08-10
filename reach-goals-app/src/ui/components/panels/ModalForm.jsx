@@ -8,6 +8,7 @@ import { useSaveModel } from '../../../hook/useSaveModel.js'
 
 import { useGoalModel } from '../../../provider/model/GoalModelProvider.jsx'
 import { useAssignmentModel } from '../../../provider/model/AssignmentModelProvider.jsx'
+import { useTagModel } from '../../../provider/model/TagModelProvider.jsx'
 
 import { modalListMap } from '../../../utils/mapping/mappingUtils.js'
 import { formatDate } from '../../../utils/utils.js'
@@ -54,6 +55,7 @@ const ModalForm = (props) => {
 
     const { selected: selectedAssignment, refetch: refetchAssignment } = useAssignmentModel()
     const { selected: selectedGoal, refetch: refetchGoal } = useGoalModel()
+    const { selected: selectedTag, refetch: refetchTag } = useTagModel()
 
     const typeForm = props.type
     const classRemove = visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
@@ -81,7 +83,7 @@ const ModalForm = (props) => {
                     ? () => refetchGoal(currentUseGetModel)
                     : typeForm === 'assignment'
                         ? () => refetchAssignment(currentUseGetModel)
-                        : () => null
+                        : () => refetchTag(currentUseGetModel)
 
             refetchFn()
         }
@@ -171,7 +173,7 @@ const ModalForm = (props) => {
                 submitModel: selectedSubmitModel
             }))
         }
-    }, [selectedGoal, selectedAssignment])
+    }, [selectedGoal, selectedAssignment, selectedTag])
 
     useEffect(() => {
         if (typeof model.mainModelID === 'number') loadModel(model.mainModelID)
@@ -210,8 +212,6 @@ const ModalForm = (props) => {
         mapStateSuccess: success,
         mapStateError: error
     }
-
-    //console.log('VALUE OF LOADING - ', isLoading, model)
 
     return (
         isLoading ? <div id="load-element" className='loading-animation'></div> :
