@@ -135,8 +135,8 @@ const Form = (props) => {
                         </div>
                         <div className='objective-options'>
                             <div className='objective-op'>
-                                <ButtonAction target={targetMap(['panel-center', 'assignment'], { maintain: true })} classBtn='op-form-assignment button-op-objective' title='assingments' nullModel={true} onClick={() => setModel(prev => ({ ...prev, typeModel: 'assignment' }))}/>
-                                <ButtonAction target={targetMap(['panel-center', 'goal'], { maintain: true })} classBtn='op-form-goal button-op-objective' title='goals' nullModel={true} onClick={() => setModel(prev => ({ ...prev, typeModel: 'goal' }))}/>
+                                <ButtonAction target={targetMap(['panel-center', 'assignment'], { maintain: true })} classBtn='op-form-assignment button-op-objective' title='assingments' nullModel={true} onClick={() => setModel(prev => ({ ...prev, typeModel: 'assignment' }))} />
+                                <ButtonAction target={targetMap(['panel-center', 'goal'], { maintain: true })} classBtn='op-form-goal button-op-objective' title='goals' nullModel={true} onClick={() => setModel(prev => ({ ...prev, typeModel: 'goal' }))} />
                             </div>
                             <div className='objective-color'>
                                 <label className='color'></label>
@@ -175,11 +175,20 @@ const Form = (props) => {
                                         <div className='item-head-2'></div>
                                     </div>
                                     <div className='item-forms body'>
-                                        {<ModelSwitcher type={'tag'} propsReference={modelSwitcherProps} />}
-                                        {<ModelCopy type={model.typeModel}  />}
+                                        {
+                                            modelForm.id ?
+                                                <ModelSwitcher type={'tag'} propsReference={modelSwitcherProps} />
+                                                :
+                                                <ModelCopy type={model.typeModel} />
+                                        }
                                     </div>
                                 </div>
-                                {typeForm === 'goal' && functionsForm.mapFormsItemMap(typeForm, <ModelSwitcher type={'goal-relation'} propsReference={modelSwitcherProps} />)}
+                                {
+                                    modelForm.id && typeForm === 'goal' ?
+                                        functionsForm.mapFormsItemMap(typeForm, <ModelSwitcher type={'goal-relation'} propsReference={modelSwitcherProps} />)
+                                        :
+                                        functionsForm.mapFormsItemMap(typeForm, <ModelCopy type={model.typeModel} />)
+                                }
                                 {/* {typeForm === 'assignment' && functionsForm.mapFormsItemMap(typeForm, <ModelSwitcher type={'assignment-relation'} propsReference={modelSwitcherProps} />)} */}
                                 <div className='field-forms details'>
                                     <textarea id={`${typeForm}-details`} className='input-form' placeholder='details here...'
