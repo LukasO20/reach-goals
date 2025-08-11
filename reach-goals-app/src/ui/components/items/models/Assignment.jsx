@@ -54,7 +54,7 @@ const Assignment = (props) => {
     const assignmentClick = (id, e) => {
         if (isSelectableModel) {
             e.stopPropagation()
-            const selected = [].find(m => m.id === id)
+            const selected = dataSource.find(m => m.id === id)
             if (model.transportModel.some(item => item.id === selected.id)) return
 
             addToTransportModel({ ...selected, type: 'assignment' })
