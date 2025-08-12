@@ -179,7 +179,7 @@ const Form = (props) => {
                                             modelForm.id ?
                                                 <ModelSwitcher type={'tag'} propsReference={modelSwitcherProps} />
                                                 :
-                                                <ModelCopy type={model.typeModel} />
+                                                <ModelCopy type={model.typeModel} region={'tag'}  />
                                         }
                                     </div>
                                 </div>
@@ -187,7 +187,7 @@ const Form = (props) => {
                                     modelForm.id && typeForm === 'goal' ?
                                         functionsForm.mapFormsItemMap(typeForm, <ModelSwitcher type={'goal-relation'} propsReference={modelSwitcherProps} />)
                                         :
-                                        functionsForm.mapFormsItemMap(typeForm, <ModelCopy type={model.typeModel} />)
+                                        functionsForm.mapFormsItemMap(typeForm, <ModelCopy type={model.typeModel} region={'assignment'} />)
                                 }
                                 {/* {typeForm === 'assignment' && functionsForm.mapFormsItemMap(typeForm, <ModelSwitcher type={'assignment-relation'} propsReference={modelSwitcherProps} />)} */}
                                 <div className='field-forms details'>

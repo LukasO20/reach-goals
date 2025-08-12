@@ -1,34 +1,40 @@
-import React, { useState } from 'react' 
+import React, { useState } from 'react'
 
 const ManageModelContext = React.createContext()
 const resetObject = {
     typeModel: '',
     mainModelID: null,
-    transportModel: [],
+    transportModel: {
+        tag: [],
+        assignment: []
+    },
     submitModel: {}
 }
 
 const ManageModelProvider = ({ children }) => {
     const [model, setModel] = useState(resetObject)
 
-    const addToTransportModel = (newModel) => {
-        if (typeof newModel !== 'object') { return console.error('No model provided to add to transport model. The model should be an object') }
-        if (!newModel.id || !newModel.name) { return console.error('The model object must have an id and a name property') }
+    const addToTransportModel = ({ id, name, type }) => {
+        if (!id || !name) return console.error('The model object must have an id and a name property')
+        if (typeof type !== 'string') return console.error('The type is necessary and should be a string value. Did you send something like "tag" or "assignment"?')
 
         setModel(prevModel => {
-            const alreadyExists = prevModel.transportModel.some(item => item.id === newModel.id)
+            const alreadyExists = prevModel.transportModel[type].some(item => item.id === id)
             return alreadyExists ? prevModel : {
                 ...prevModel,
-                transportModel: [
-                    ...prevModel.transportModel,
-                    { id: newModel.id, name: newModel.name, type: newModel.type }]
+                transportModel: {
+                    [type]: [
+                        ...prevModel.transportModel[type],
+                        { id: id, name: name, type: type }
+                    ]
+                }
             }
         })
     }
 
-    const removeFromTransportModel = (modelID) => {
+    const removeFromTransportModel = ({ id, type }) => {
         setModel(prevModel => {
-            const updatedTransportModel = prevModel.transportModel.filter(item => (item.id ?? item.tagID) !== modelID)
+            const updatedTransportModel = prevModel.transportModel[type].filter(item => (item.id ?? item.tagID) !== id)
             return {
                 ...prevModel,
                 transportModel: updatedTransportModel

@@ -10,7 +10,7 @@ const iconLayoutMap = {
     tag: 'fa-solid fa-tag',
 }
 
-const ModelCopy = ({ type, displayRef }) => {
+const ModelCopy = ({ type, displayRef, region }) => {
     const [modelCopy, setCopyModel] = useState([])
     const { model, removeFromTransportModel, updateSubmitModel } = useContext(ManageModelContext)
 
@@ -20,14 +20,14 @@ const ModelCopy = ({ type, displayRef }) => {
     }
 
     useEffect(() => {
-        setCopyModel(model.transportModel)
+        setCopyModel(model.transportModel[region] || [])
     }, [model.transportModel])
 
     const handleModelCopyClick = (modelID, action, type) => {
 
         switch (action) {
             case 'delete': //Right now, only delete action is available
-                removeFromTransportModel(modelID)
+                removeFromTransportModel({ id: modelID, type: type })
 
                 if (!type) { return console.error('No type provided for model copy delete action') }
 

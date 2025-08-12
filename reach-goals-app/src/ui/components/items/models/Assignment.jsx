@@ -55,7 +55,7 @@ const Assignment = (props) => {
         if (isSelectableModel) {
             e.stopPropagation()
             const selected = dataSource.find(m => m.id === id)
-            if (model.transportModel.some(item => item.id === selected.id)) return
+            if (model.transportModel['assignment'].some(item => item.id === selected.id)) return //This might become unnecessary if updateSubmitModel can choose when value can update
 
             addToTransportModel({ ...selected, type: 'assignment' })
             return updateSubmitModel({ keyObject: 'assignments', value: { id: id }, type: 'array' })
