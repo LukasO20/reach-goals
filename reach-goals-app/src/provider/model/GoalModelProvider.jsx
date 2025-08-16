@@ -14,6 +14,8 @@ const goalReducer = (state, action) => {
             return { ...state, loading: false, error: null, data: action.payload }
         case 'FETCH_ONE':
             return { ...state, loading: false, error: null, selected: action.payload }
+        case 'REMOVE_ONE':
+            return { ...state, loading: false, error: null/*, removed: action.payload*/ }
         case 'ERROR':
             return { loading: false, error: action.payload, data: [] }
         default:
@@ -55,13 +57,27 @@ export const GoalModelProvider = ({ children }) => {
         }
     }
 
+    const remove = async (id) => {
+        dispatch({ type: 'LOADING' })
+
+        try {
+            if (typeof id === 'number') {
+                return dispatch({
+                    type: 'REMOVE_ONE', payload: await goalService.deleteGoal(id)
+                })
+            }
+        } catch (err) {
+            dispatch({ type: 'ERROR', payload: err.message })
+        }
+    }
+
     useEffect(() => {
         //if necessary check the results of state - 
-        console.log('GOAL RPOVIDER - ', state)
+        console.log('GOAL provider - ', state)
     }, [state])
 
     return (
-        <GoalModelContext.Provider value={{ ...state, refetch: load }}>
+        <GoalModelContext.Provider value={{ ...state, refetch: load, remove }}>
             {children}
         </GoalModelContext.Provider>
     )

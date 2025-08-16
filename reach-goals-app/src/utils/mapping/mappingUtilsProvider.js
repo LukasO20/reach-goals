@@ -23,5 +23,6 @@ export const initialStateMap = {
     loading: false,
     error: null,
     data: [],
-    selected: {}
+    selected: {},
+    removed: {}
 }

@@ -14,6 +14,8 @@ const tagReducer = (state, action) => {
             return { ...state, loading: false, error: null, data: action.payload }
         case 'FETCH_ONE':
             return { ...state, loading: false, error: null, selected: action.payload }
+        case 'REMOVE_ONE':
+            return { ...state, loading: false, error: null/*, removed: action.payload*/ }
         case 'ERROR':
             return { loading: false, error: action.payload, data: [] }
         default:
@@ -54,14 +56,28 @@ export const TagModelProvider = ({ children }) => {
             dispatch({ type: 'ERROR', payload: err.message })
         }
     }
-    
+
+    const remove = async (id) => {
+        dispatch({ type: 'LOADING' })
+
+        try {
+            if (typeof id === 'number') {
+                return dispatch({
+                    type: 'REMOVE_ONE', payload: await tagService.deleteTag(id)
+                })
+            }
+        } catch (err) {
+            dispatch({ type: 'ERROR', payload: err.message })
+        }
+    }
+
     useEffect(() => {
         //if necessary check the results of state - 
-        console.log('TAG PROVIDER - ', state)
+        console.log('TAG provider - ', state)
     }, [state])
 
     return (
-        <TagModelContext.Provider value={{ ...state, refetch: load }}>
+        <TagModelContext.Provider value={{ ...state, refetch: load, remove }}>
             {children}
         </TagModelContext.Provider>
     )

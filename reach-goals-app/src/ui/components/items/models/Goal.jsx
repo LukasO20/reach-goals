@@ -23,8 +23,7 @@ const Goal = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
     const { switchLayoutComponent } = useSwitchLayout()
-    const { data, loading, refetch } = useGoalModel()
-    const { data: deleteData, deleteModel } = useDeleteModel({})
+    const { data, loading, refetch, remove } = useGoalModel()
 
     const display = props.display
     const isSelectableModel = props.selectableModel ?? false
@@ -39,8 +38,9 @@ const Goal = (props) => {
         notAssignmentRelation: props.notAssignmentRelation
     }
 
-    const deleteGoal = (id) => {
-        deleteModel({ type: 'goal', goalID: id })
+    const deleteGoal = async (id) => {
+        await remove(id)
+        refetch(filterGetGoal)
     }
 
     const editGoal = (id) => {
@@ -51,10 +51,10 @@ const Goal = (props) => {
     const goalClick = (id, e) => {
         if (isSelectableModel) {
             e.stopPropagation()
-            const selected = [].find(m => m.id === id)
+            const selected = data.find(m => m.id === id)
 
             addToTransportModel({ ...selected, type: 'goal' })
-            return updateSubmitModel({ keyObject: 'goalID', value: id })
+            return updateSubmitModel({ keyObject: 'goalID', value: { id: id } })
         }
 
         if (isDetailsModel) {

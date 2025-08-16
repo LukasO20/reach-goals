@@ -23,11 +23,9 @@ const Assignment = (props) => {
     const { toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
     const { switchLayoutComponent } = useSwitchLayout()
-    const { data, loading, refetch } = useAssignmentModel()
+    const { data, loading, refetch, remove } = useAssignmentModel()
 
     const modelSource = props.modelRef?.assignment
-
-    const { data: deleteData, deleteModel } = useDeleteModel({})
 
     const display = props.display
     const isSelectableModel = props.selectableModel ?? false
@@ -42,8 +40,9 @@ const Assignment = (props) => {
         notGoalRelation: props.notGoalRelation ?? null
     }
 
-    const deleteAssignment = (id) => {
-        deleteModel({ type: 'assignment', assignmentID: id })
+    const deleteAssignment = async (id) => {
+        await remove(id)
+        refetch(filterGetAssignment)
     }
 
     const editAssignment = useCallback((id) => {

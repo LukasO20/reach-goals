@@ -20,10 +20,8 @@ const Tag = (props) => {
 
     const { toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
-    const { data, loading, refetch } = useTagModel()
+    const { data, loading, refetch, remove } = useTagModel()
     
-    const { data: deleteData, deleteModel } = useDeleteModel({})
-
     const modelSource = props.modelRef?.tag
 
     const target = targetMap(['panel-right', 'tag'])
@@ -43,7 +41,8 @@ const Tag = (props) => {
     }
 
     const deleteTag = async (id) => {
-        deleteModel({ type: 'tag', tagID: id })
+        await remove(id)
+        refetch(filterGetTag)
     }
 
     const editTag = useCallback((id) => {
