@@ -53,9 +53,9 @@ const ModalForm = (props) => {
     const { model, setModel, resetManageModel } = useContext(ManageModelContext)
     const { modalList, handleModalList } = useContext(ModalListContext)
 
-    const { selected: selectedAssignment, refetch: refetchAssignment } = useAssignmentModel()
-    const { selected: selectedGoal, refetch: refetchGoal } = useGoalModel()
-    const { selected: selectedTag, refetch: refetchTag } = useTagModel()
+    const { selected: selectedAssignment, refetch: refetchAssignment, save: saveAssignment } = useAssignmentModel()
+    const { selected: selectedGoal, refetch: refetchGoal, save: saveGoal } = useGoalModel()
+    const { selected: selectedTag, refetch: refetchTag, save: saveTag } = useTagModel()
 
     const typeForm = props.type
     const classRemove = visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
@@ -65,11 +65,8 @@ const ModalForm = (props) => {
     const [success, setSucess] = useState(false)
     const [isLoading, setLoading] = useState(false)
 
-    const { saveModel, data: saveData } = useSaveModel({})
-
-    const loadModel = (id) => {
+    const loadModel = async (id) => {
         setLoading(true)
-
         if (!id) return setLoading(false)
 
         const currentUseGetModel = {
@@ -85,7 +82,8 @@ const ModalForm = (props) => {
                         ? () => refetchAssignment(currentUseGetModel)
                         : () => refetchTag(currentUseGetModel)
 
-            refetchFn()
+            await refetchFn()
+            id === true && resetManageModel()
         }
         catch (error) {
             setError('Ops, something wrong: ', error)
@@ -148,12 +146,19 @@ const ModalForm = (props) => {
         }
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         setError(null)
         setSucess(false)
 
         try {
-            saveModel({ type: typeForm, model: structuredClone(model.submitModel) })
+            typeForm === 'goal' && await saveGoal(structuredClone(model.submitModel))
+            typeForm === 'assignment' && await saveAssignment(structuredClone(model.submitModel))
+            typeForm === 'tag' && await saveTag(structuredClone(model.submitModel))
+
+            loadModel(true)
+            toggleVisibility(null)
+            setSucess(true)
+
         } catch (error) {
             setError(error.message)
         }
@@ -178,15 +183,6 @@ const ModalForm = (props) => {
     useEffect(() => {
         if (typeof model.mainModelID === 'number') loadModel(model.mainModelID)
     }, [model.mainModelID])
-
-    useEffect(() => {
-        if (saveData && typeof saveData === 'object' && Object.keys(saveData).length > 0) {
-            resetManageModel()
-            toggleVisibility(null)
-            setSucess(true)
-        }
-    }, [saveData])
-
 
     const functionFormMap = {
         mapHandleModalList: handleModalList,
