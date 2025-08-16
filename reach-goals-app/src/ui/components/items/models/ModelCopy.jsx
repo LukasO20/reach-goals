@@ -45,10 +45,8 @@ const ModelCopy = ({ type, displayRef, region }) => {
         }
     }
 
-    //console.log('MODEL COPY - ', model)
-
     return modelCopy.map(model => (
-        <div className={`${model.type} ${display.type}`} id={model.id} key={model.id}>
+        <div className={`${model.type} ${display.type}`} id={(model.id || model.tagID)} key={(model.id || model.tagID)}>
             {
                 display.type === 'card' ? ''
                     :
@@ -59,7 +57,7 @@ const ModelCopy = ({ type, displayRef, region }) => {
             {
                 display.sideAction &&
                 <div className='side-actions'>
-                    <ButtonAction classBtn={`remove-${type}`} iconFa='fa-solid fa-xmark' onClick={() => { handleModelCopyClick(model.id, 'delete', model.type) }} />
+                    <ButtonAction classBtn={`remove-${type}`} iconFa='fa-solid fa-xmark' onClick={() => { handleModelCopyClick((model.id || model.tagID), 'delete', model.type) }} />
                 </div>
             }
         </div>

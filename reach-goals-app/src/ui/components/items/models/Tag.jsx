@@ -55,7 +55,6 @@ const Tag = (props) => {
         if (isSelectableModel) {
             e.stopPropagation()
             const selected = dataSource.find(m => m.id === id)
-            if (model.transportModel.some(item => item.id === selected.id)) return
 
             addToTransportModel({ ...selected, type: 'tag' })
             return updateSubmitModel({ keyObject: 'tags', value: { tagID: id }, type: 'array' })

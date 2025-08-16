@@ -18,14 +18,17 @@ const ManageModelProvider = ({ children }) => {
         if (!id || !name) return console.error('The model object must have an id and a name property')
         if (typeof type !== 'string') return console.error('The type is necessary and should be a string value. Did you send something like "tag" or "assignment"?')
 
+        const dynamicKey = type === 'tag' ? 'tagID' : 'id'
+
         setModel(prevModel => {
-            const alreadyExists = prevModel.transportModel[type].some(item => item.id === id)
+            const alreadyExists = prevModel.transportModel[type].some(item => (item.id ?? item.tagID) === id)
             return alreadyExists ? prevModel : {
                 ...prevModel,
                 transportModel: {
+                    ...prevModel.transportModel,
                     [type]: [
                         ...prevModel.transportModel[type],
-                        { id: id, name: name, type: type }
+                        { [dynamicKey]: id, name: name, type: type }
                     ]
                 }
             }
@@ -33,11 +36,15 @@ const ManageModelProvider = ({ children }) => {
     }
 
     const removeFromTransportModel = ({ id, type }) => {
+        console.log("READY TO REMOVE - ", id, type)
         setModel(prevModel => {
             const updatedTransportModel = prevModel.transportModel[type].filter(item => (item.id ?? item.tagID) !== id)
             return {
                 ...prevModel,
-                transportModel: updatedTransportModel
+                transportModel: {
+                    ...prevModel.transportModel,
+                    [type]: updatedTransportModel
+                }
             }
         })
     }
@@ -55,28 +62,26 @@ const ManageModelProvider = ({ children }) => {
                 const currentList = Array.isArray(prevValue) ? prevValue : []
                 return currentList.filter(item => {
                     if (typeof item === 'object' && item !== null && typeof value === 'object') {
-                        switch (keyObject) {
-                            case 'tags':
-                                return item.tagID !== value.tagID
-                            default:
-                                return item.id !== value.id
+                        if (keyObject === 'tags') {
+                            return item.tagID !== value.tagID
                         }
+                        return item.id !== value.id
                     }
                     return item !== value
                 })
-
             } else { return value }
         }
 
-        setModel(prev => {
-            const prevValue = prev.submitModel[keyObject]
-            const newValue = action === 'add' ? submitToAdd(prevValue) :
-                action === 'remove' ? submitToRemove(prevValue) : null
+        setModel(prevModel => {
+            const prevValue = prevModel.submitModel[keyObject]
+            const notExists = Array.isArray(prevValue) ? !prevValue.some(item => (item.id ?? item.tagID) === (value.id ?? value.tagID)) : true
+            const newValue = action === 'add' && notExists ? submitToAdd(prevValue) :
+                action === 'remove' ? submitToRemove(prevValue) : prevValue
 
             return {
-                ...prev,
+                ...prevModel,
                 submitModel: {
-                    ...prev.submitModel,
+                    ...prevModel.submitModel,
                     [keyObject]: newValue
                 }
             }

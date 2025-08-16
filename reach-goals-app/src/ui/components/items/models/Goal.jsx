@@ -52,7 +52,6 @@ const Goal = (props) => {
         if (isSelectableModel) {
             e.stopPropagation()
             const selected = [].find(m => m.id === id)
-            if (model.transportModel.length > 0 && visibleElements.includes('panel-center') && visibleElements.includes('assignment')) return
 
             addToTransportModel({ ...selected, type: 'goal' })
             return updateSubmitModel({ keyObject: 'goalID', value: id })
