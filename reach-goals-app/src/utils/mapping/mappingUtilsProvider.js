@@ -24,5 +24,6 @@ export const initialStateMap = {
     error: null,
     data: [],
     selected: {},
-    removed: {}
+    removed: {},
+    saved: {}
 }

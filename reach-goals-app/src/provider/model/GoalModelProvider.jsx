@@ -16,6 +16,8 @@ const goalReducer = (state, action) => {
             return { ...state, loading: false, error: null, selected: action.payload }
         case 'REMOVE_ONE':
             return { ...state, loading: false, error: null/*, removed: action.payload*/ }
+        case 'SAVE_ONE':
+            return { ...state, loading: false, error: null, saved: action.payload }
         case 'ERROR':
             return { loading: false, error: action.payload, data: [] }
         default:
@@ -49,7 +51,7 @@ export const GoalModelProvider = ({ children }) => {
             } else if (filters.notAssignmentRelation) {
                 return dispatch({
                     type: 'FETCH_LIST', payload: await goalService.getGoalWithoutAssignment(filters.notAssignmentRelation)
-                })       
+                })
             }
 
         } catch (err) {
@@ -71,13 +73,28 @@ export const GoalModelProvider = ({ children }) => {
         }
     }
 
+    const save = async (model) => {
+        dispatch({ type: 'LOADING' })
+
+        try {
+            if (model) {
+                const saveModel = typeof model.id === 'number' ? 'update' : 'create'
+                return dispatch({
+                    type: 'SAVE_ONE', payload: saveModel === 'update' ? await goalService.updateGoal(model) : await goalService.addGoal(model)
+                })
+            }
+        } catch (err) {
+            dispatch({ type: 'ERROR', payload: err.message })
+        }
+    }
+
     useEffect(() => {
         //if necessary check the results of state - 
         console.log('GOAL provider - ', state)
     }, [state])
 
     return (
-        <GoalModelContext.Provider value={{ ...state, refetch: load, remove }}>
+        <GoalModelContext.Provider value={{ ...state, refetch: load, remove, save }}>
             {children}
         </GoalModelContext.Provider>
     )
