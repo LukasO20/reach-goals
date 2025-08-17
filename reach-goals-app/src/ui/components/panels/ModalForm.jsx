@@ -4,8 +4,6 @@ import { VisibilityContext } from '../../../provider/VisibilityProvider.jsx'
 import { ManageModelContext } from '../../../provider/ManageModelProvider.jsx'
 import { ModalListContext } from '../../../provider/ModalListProvider.jsx'
 
-import { useSaveModel } from '../../../hook/useSaveModel.js'
-
 import { useGoalModel } from '../../../provider/model/GoalModelProvider.jsx'
 import { useAssignmentModel } from '../../../provider/model/AssignmentModelProvider.jsx'
 import { useTagModel } from '../../../provider/model/TagModelProvider.jsx'
