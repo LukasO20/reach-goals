@@ -1,7 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
 
-import { useDeleteModel } from '../../../../hook/useDeleteModel.js'
-
 import { useGoalModel } from '../../../../provider/model/GoalModelProvider.jsx'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'

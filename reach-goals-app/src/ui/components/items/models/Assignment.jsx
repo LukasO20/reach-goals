@@ -1,7 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
 
-import { useDeleteModel } from '../../../../hook/useDeleteModel.js'
-
 import { useAssignmentModel } from '../../../../provider/model/AssignmentModelProvider.jsx'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
