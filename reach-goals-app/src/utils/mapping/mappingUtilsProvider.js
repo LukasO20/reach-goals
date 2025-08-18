@@ -22,7 +22,10 @@ export const filterModelMap = {
 export const initialStateMap = {
     loading: false,
     error: null,
-    data: [],
+    data: {
+        core: [],
+        support: []
+    },
     selected: {},
     removed: {},
     saved: {}

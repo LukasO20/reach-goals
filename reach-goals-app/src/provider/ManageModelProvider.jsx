@@ -6,7 +6,8 @@ const resetObject = {
     mainModelID: null,
     transportModel: {
         tag: [],
-        assignment: []
+        assignment: [],
+        goal: []
     },
     submitModel: {}
 }
