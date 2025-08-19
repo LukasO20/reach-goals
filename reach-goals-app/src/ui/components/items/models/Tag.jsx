@@ -14,13 +14,16 @@ import '../../../styles/items/models/Tag.scss'
 
 const Tag = (props) => {
     const [erro, setErro] = useState(false)
-    const [dataSource, setDataSource] = useState([])
+    const [activeModelSource, setActiveModelSource] = useState([])
 
     const { toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
     const { data, loading, refetch, remove } = useTagModel()
     
-    const modelSource = props.modelRef?.tag
+    const modelSources = {
+        ref: props.formModelRef?.tag,
+        source: props.typeDataSource ?? 'core'
+    }
 
     const target = targetMap(['panel-right', 'tag'])
 
@@ -51,7 +54,7 @@ const Tag = (props) => {
     const tagClick = (id, e) => {
         if (isSelectableModel) {
             e.stopPropagation()
-            const selected = dataSource.find(m => m.id === id)
+            const selected = activeModelSource.find(m => m.id === id)
 
             addToTransportModel({ ...selected, type: 'tag' })
             return updateSubmitModel({ keyObject: 'tags', value: { tagID: id }, type: 'array' })
@@ -70,12 +73,12 @@ const Tag = (props) => {
     }
 
     useEffect(() => {
-        if (modelSource && modelSource.length) setDataSource(modelSource)
-        else setDataSource(data)
-    }, [modelSource, data])
+        if (modelSources.ref && modelSources.ref.length) setActiveModelSource(modelSources.ref)
+        else setActiveModelSource(data[modelSources.source])
+    }, [modelSources, data])
 
     useEffect(() => {
-        if (!modelSource || !modelSource.length) refetch(filterGetTag)
+        if (!modelSources || !modelSources.length) refetch(filterGetTag)
     }, [])
 
     const clickEvents = {
@@ -89,7 +92,7 @@ const Tag = (props) => {
         loading && data.length === 0 ?
             <p>Loading...</p>
             :
-            <CardItem type={'tag'} model={dataSource} clickFunction={clickEvents} display={display} />
+            <CardItem type={'tag'} model={activeModelSource} clickFunction={clickEvents} display={display} />
     )
 }
 

@@ -16,14 +16,17 @@ import '../../../styles/items/models/Assignment.scss'
 const Assignment = (props) => {
     const [erro, setErro] = useState(false)
     const [pendingPanel, setPendingPanel] = useState(false)
-    const [dataSource, setDataSource] = useState([])
+    const [activeModelSource, setActiveModelSource] = useState([])
 
     const { toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
     const { switchLayoutComponent } = useSwitchLayout()
     const { data, loading, refetch, remove } = useAssignmentModel()
 
-    const modelSource = props.modelRef?.assignment
+    const modelSources = {
+        ref: props.formModelRef?.assignment,
+        source: props.typeDataSource ?? 'core'
+    }
 
     const display = props.display
     const isSelectableModel = props.selectableModel ?? false
@@ -51,7 +54,7 @@ const Assignment = (props) => {
     const assignmentClick = (id, e) => {
         if (isSelectableModel) {
             e.stopPropagation()
-            const selected = dataSource.find(m => m.id === id)
+            const selected = activeModelSource.find(m => m.id === id)
 
             addToTransportModel({ ...selected, type: 'assignment' })
             return updateSubmitModel({ keyObject: 'assignments', value: { id: id }, type: 'array' })
@@ -73,12 +76,12 @@ const Assignment = (props) => {
     }
 
     useEffect(() => {
-        if (modelSource && modelSource.length) setDataSource(modelSource)
-        else setDataSource(data)
-    }, [modelSource, data])
+        if (modelSources.ref && modelSources.ref.length) setActiveModelSource(modelSources.ref)
+        else setActiveModelSource(data[modelSources.source])
+    }, [modelSources, data])
 
     useEffect(() => {
-        if (!modelSource || !modelSource.length) refetch(filterGetAssignment)     
+        if (!modelSources.ref || !modelSources.ref.length) refetch(filterGetAssignment)
     }, [])
 
     useEffect(() => {
@@ -102,7 +105,7 @@ const Assignment = (props) => {
         loading && data.length === 0 ?
             <p>Loading...</p>
             :
-            <CardItem type={'assignment'} model={dataSource} clickFunction={clickEvents} display={display} />
+            <CardItem type={'assignment'} model={activeModelSource} clickFunction={clickEvents} display={display} />
     )
 }
 

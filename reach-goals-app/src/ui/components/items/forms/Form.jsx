@@ -34,6 +34,7 @@ const Form = (props) => {
     let modalListRequestProps = {
         notRelationID: modelForm?.id,
         notRelationModel: typeForm,
+        typeDataSource: 'support'
     }
 
     if (!modelForm?.id) {
@@ -76,7 +77,7 @@ const Form = (props) => {
             sideAction: true,
             type: 'mini-list'
         },
-        modelRef: {
+        formModelRef: {
             assignment: modelForm?.assignments,
             tag: modelForm?.tags?.map(tags => tags.tag)
         }
