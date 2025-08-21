@@ -177,7 +177,7 @@ const Form = (props) => {
                                     </div>
                                     <div className='item-forms body'>
                                         {
-                                            modelForm.id ?
+                                            modelForm.id && modelSwitcherProps.fromModelSource.tag.length ?
                                                 <ModelSwitcher type={'tag'} propsReference={modelSwitcherProps} />
                                                 :
                                                 <ModelCopy type={model.typeModel} region={'tag'}  />
