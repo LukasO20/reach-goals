@@ -19,11 +19,6 @@ const Tag = (props) => {
     const { toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
     const { data, loading, refetch, remove } = useTagModel()
-    
-    const modelSources = {
-        ref: props.formModelRef?.tag,
-        source: props.typeDataSource ?? 'core'
-    }
 
     const target = targetMap(['panel-right', 'tag'])
 
@@ -33,6 +28,7 @@ const Tag = (props) => {
     const filterGetTag = {
         ...filterModelMap,
         type: 'tag',
+        source: props.typeDataSource ?? 'core',
         tagsRelation: props.goalID ?? props.assignmentID ?? null,
         tagsNotRelation: {
             notRelationID: props.notRelationID ?? null,
@@ -68,17 +64,18 @@ const Tag = (props) => {
         if (id) {
             e.stopPropagation()
             updateSubmitModel({ keyObject: 'tags', value: { tagID: id }, type: 'array', action: 'remove' })
-            //Tem que remover o elemento do DOM
         }
     }
 
     useEffect(() => {
-        if (modelSources.ref && modelSources.ref.length) setActiveModelSource(modelSources.ref)
-        else setActiveModelSource(data[modelSources.source])
-    }, [modelSources, data])
+        const fromModelSource = props.fromModelSource?.tag 
+
+        if (fromModelSource && fromModelSource.length) setActiveModelSource(fromModelSource)
+        else setActiveModelSource(data[filterGetTag.source] || [])
+    }, [data])
 
     useEffect(() => {
-        if (!modelSources || !modelSources.length) refetch(filterGetTag)
+        refetch(filterGetTag)
     }, [])
 
     const clickEvents = {
@@ -87,7 +84,7 @@ const Tag = (props) => {
         delete: deleteTag,
         aux: removeElDOMClick
     }
-
+    
     return (
         loading && data.length === 0 ?
             <p>Loading...</p>

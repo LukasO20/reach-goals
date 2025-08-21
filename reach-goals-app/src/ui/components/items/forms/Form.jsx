@@ -77,7 +77,7 @@ const Form = (props) => {
             sideAction: true,
             type: 'mini-list'
         },
-        formModelRef: {
+        fromModelSource: {
             assignment: modelForm?.assignments,
             tag: modelForm?.tags?.map(tags => tags.tag)
         }
