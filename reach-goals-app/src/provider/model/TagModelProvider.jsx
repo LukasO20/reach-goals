@@ -32,28 +32,29 @@ export const TagModelProvider = ({ children }) => {
 
     const load = async (filters = {}) => {
         dispatch({ type: 'LOADING' })
-
+        const dataSource = filters.source || 'core'
+        const typeDispatch = dataSource === 'core' ? 'FETCH_LIST' : 'FETCH_SUPPORT_LIST'
+        
         try {
             if (typeof filters.tagSomeID === 'boolean' && filters.tagSomeID === true) {
                 return dispatch({
-                    type: 'FETCH_LIST', payload: await tagService.getTag(filters.tagSomeID)
+                    type: typeDispatch, payload: await tagService.getTag(filters.tagSomeID)
                 })
             } else if (typeof filters.tagSomeID === 'number') {
                 return dispatch({
                     type: 'FETCH_ONE', payload: await tagService.getTag(filters.tagSomeID)
                 })
-            } else if (filters.tagsRelation) {
-                return dispatch({
-                    type: 'FETCH_LIST', payload: []//tagService.getAssignmentOnGoal(filters.tagsRelation)
-                })
-            } else if (filters.assignmentTagRelation) {
-                // return dispatch({
-                //     type: 'FETCH_LIST', payload: await tagService.getAssignmentOnTag(filters.assignmentTagRelation)
-                // })
-            } else if (filters.notGoalRelation) {
-                // return dispatch({
-                //     type: 'FETCH_LIST', payload: await tagService.getAssignmentWithoutGoal(filters.notGoalRelation)
-                // })       
+            } else if (filters.tagsNotRelation) {
+
+                if (typeof filters.tagsNotRelation.notRelationID === 'number' && typeof filters.tagsNotRelation.notRelationModel === 'string') {                    
+                    const notRelation = filters.tagsNotRelation
+                    const notRelationModel = notRelation.notRelationModel
+
+                    return dispatch({
+                        type: typeDispatch, payload: notRelationModel === 'goal' ?
+                            await tagService.getTagNotGoal(notRelation.notRelationID) : await tagService.getTagNotAssignment(notRelation.notRelationID)
+                    })  
+                }
             }
 
         } catch (err) {

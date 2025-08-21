@@ -6,6 +6,7 @@ export const getModelMap = {
 
 export const filterModelMap = {
     type: null,
+    source: 'core',
     goalSomeID: null,
     goalAssignmentRelation: null,
     goalTagRelation: null,
