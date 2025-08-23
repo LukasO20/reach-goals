@@ -11,9 +11,9 @@ const tagReducer = (state, action) => {
         case 'LOADING':
             return { ...state, loading: true, error: null }
         case 'FETCH_LIST':
-            return { ...state, loading: false, error: null, data: { core: action.payload } }
+            return { ...state, loading: false, error: null, data: { ...state.data, core: action.payload } }
         case 'FETCH_SUPPORT_LIST':
-            return { ...state, loading: false, error: null, data: { support: action.payload } }
+            return { ...state, loading: false, error: null, data: { ...state.data, support: action.payload } }
         case 'FETCH_ONE':
             return { ...state, loading: false, error: null, selected: action.payload }
         case 'REMOVE_ONE':

@@ -11,9 +11,9 @@ const assignmentReducer = (state, action) => {
         case 'LOADING':
             return { ...state, loading: true, error: null }
         case 'FETCH_LIST':
-            return { ...state, loading: false, error: null, data: { core: action.payload } }
+            return { ...state, loading: false, error: null, data: { ...state.data, core: action.payload } }
         case 'FETCH_SUPPORT_LIST':
-            return { ...state, loading: false, error: null, data: { support: action.payload } }
+            return { ...state, loading: false, error: null, data: { ...state.data, support: action.payload } }
         case 'FETCH_ONE':
             return { ...state, loading: false, error: null, selected: action.payload }
         case 'REMOVE_ONE':
@@ -32,11 +32,13 @@ export const AssignmentModelProvider = ({ children }) => {
 
     const load = async (filters = {}) => {
         dispatch({ type: 'LOADING' })
+        const dataSource = filters.source || 'core'
+        const typeDispatch = dataSource === 'core' ? 'FETCH_LIST' : 'FETCH_SUPPORT_LIST'
 
         try {
             if (typeof filters.assignmentSomeID === 'boolean' && filters.assignmentSomeID === true) {
                 return dispatch({
-                    type: 'FETCH_LIST', payload: await assignmentService.getAssignment(filters.assignmentSomeID)
+                    type: typeDispatch, payload: await assignmentService.getAssignment(filters.assignmentSomeID)
                 })
             } else if (typeof filters.assignmentSomeID === 'number') {
                 return dispatch({
@@ -44,15 +46,15 @@ export const AssignmentModelProvider = ({ children }) => {
                 })
             } else if (filters.assignmentGoalRelation) {
                 return dispatch({
-                    type: 'FETCH_LIST', payload: await assignmentService.getAssignmentOnGoal(filters.assignmentGoalRelation)
+                    type: typeDispatch, payload: await assignmentService.getAssignmentOnGoal(filters.assignmentGoalRelation)
                 })
             } else if (filters.assignmentTagRelation) {
                 return dispatch({
-                    type: 'FETCH_LIST', payload: await assignmentService.getAssignmentOnTag(filters.assignmentTagRelation)
+                    type: typeDispatch, payload: await assignmentService.getAssignmentOnTag(filters.assignmentTagRelation)
                 })
             } else if (filters.notGoalRelation) {
                 return dispatch({
-                    type: 'FETCH_LIST', payload: await assignmentService.getAssignmentWithoutGoal(filters.notGoalRelation)
+                    type: typeDispatch, payload: await assignmentService.getAssignmentWithoutGoal(filters.notGoalRelation)
                 })
             }
 
