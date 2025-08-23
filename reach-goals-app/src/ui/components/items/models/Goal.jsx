@@ -54,7 +54,7 @@ const Goal = (props) => {
             const selected = data.core.find(m => m.id === id)
 
             addToTransportModel({ ...selected, type: 'goal' })
-            return updateSubmitModel({ keyObject: 'goalID', value: { id: id } })
+            return updateSubmitModel({ keyObject: 'goalID', value: id })
         }
 
         if (isDetailsModel) {
