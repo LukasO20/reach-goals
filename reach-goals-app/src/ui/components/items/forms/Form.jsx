@@ -185,12 +185,14 @@ const Form = (props) => {
                                     </div>
                                 </div>
                                 {
-                                    modelForm.id && typeForm === 'goal' ?
-                                        functionsForm.mapFormsItemMap(typeForm, <ModelSwitcher type={'goal-relation'} propsReference={modelSwitcherProps} />)
-                                        :
-                                        functionsForm.mapFormsItemMap(typeForm, <ModelCopy type={model.typeModel} region={'assignment'} />)
+                                    modelForm.id && typeof typeForm === 'string' ? 
+                                        typeForm === 'goal' ?
+                                            functionsForm.mapFormsItemMap(typeForm, <ModelSwitcher type={'goal-relation'} propsReference={modelSwitcherProps} />)
+                                            :
+                                            functionsForm.mapFormsItemMap(typeForm, <ModelSwitcher type={'assignment-relation'} propsReference={modelSwitcherProps} />)
+                                    :
+                                    functionsForm.mapFormsItemMap(typeForm, <ModelCopy type={model.typeModel} region={typeForm === 'assignment' ? 'goal' : 'assignment'} />)
                                 }
-                                {/* {typeForm === 'assignment' && functionsForm.mapFormsItemMap(typeForm, <ModelSwitcher type={'assignment-relation'} propsReference={modelSwitcherProps} />)} */}
                                 <div className='field-forms details'>
                                     <textarea id={`${typeForm}-details`} className='input-form' placeholder='details here...'
                                         name='description' value={modelForm?.description || ''} onChange={functionsForm.mapHandleChange}></textarea>

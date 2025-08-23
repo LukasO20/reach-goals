@@ -23,11 +23,6 @@ const Assignment = (props) => {
     const { switchLayoutComponent } = useSwitchLayout()
     const { data, loading, refetch, remove } = useAssignmentModel()
 
-    const modelSources = {
-        ref: props.formModelRef?.assignment,
-        source: props.typeDataSource ?? 'core'
-    }
-
     const display = props.display
     const isSelectableModel = props.selectableModel ?? false
     const isDetailsModel = props.detailsModel ?? false
@@ -35,6 +30,7 @@ const Assignment = (props) => {
     const filterGetAssignment = {
         ...filterModelMap,
         type: 'assignment',
+        source: props.typeDataSource ?? 'core',
         assignmentGoalRelation: props.assignmentGoalRelation ?? null,
         assignmentSomeID: props.assignmentSomeID ?? null,
         assignmentTagRelation: props.assignmentTagRelation ?? null,
@@ -71,17 +67,18 @@ const Assignment = (props) => {
         if (id) {
             e.stopPropagation()
             updateSubmitModel({ keyObject: 'assignments', value: { id: id }, type: 'array', action: 'remove' })
-            //Tem que remover o elemento do DOM
         }
     }
 
     useEffect(() => {
-        if (modelSources.ref && modelSources.ref.length) setActiveModelSource(modelSources.ref)
-        else setActiveModelSource(data[modelSources.source])
-    }, [modelSources, data])
+        const fromModelSource = props.fromModelSource?.assignment 
+        
+        if (fromModelSource && fromModelSource.length) setActiveModelSource(fromModelSource)
+        else setActiveModelSource(data[filterGetAssignment.source])
+    }, [data])
 
     useEffect(() => {
-        if (!modelSources.ref || !modelSources.ref.length) refetch(filterGetAssignment)
+        refetch(filterGetAssignment)
     }, [])
 
     useEffect(() => {
@@ -105,7 +102,7 @@ const Assignment = (props) => {
         loading && data.length === 0 ?
             <p>Loading...</p>
             :
-            <CardItem type={'assignment'} model={activeModelSource} clickFunction={clickEvents} display={display} />
+            <CardItem type={'assignment'} model={activeModelSource ?? []} clickFunction={clickEvents} display={display} />
     )
 }
 

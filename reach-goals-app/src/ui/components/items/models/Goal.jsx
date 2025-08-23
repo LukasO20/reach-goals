@@ -17,6 +17,7 @@ import '../../../styles/items/models/Goal.scss'
 const Goal = (props) => {
     const [erro, setErro] = useState(false)
     const [pendingPanel, setPendingPanel] = useState(false)
+    const [activeModelSource, setActiveModelSource] = useState([])
 
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
@@ -30,6 +31,7 @@ const Goal = (props) => {
     const filterGetGoal = {
         ...filterModelMap,
         type: 'goal',
+        source: props.typeDataSource ?? 'core',
         goalAssignmentRelation: props.goalAssignmentRelation,
         goalSomeID: props.goalSomeID,
         goalTagRelation: props.goalTagRelation,
@@ -63,6 +65,10 @@ const Goal = (props) => {
     }
 
     useEffect(() => {
+        setActiveModelSource(data[filterGetGoal.source])
+    }, [data])
+
+    useEffect(() => {
         refetch(filterGetGoal)
     }, [])
 
@@ -87,7 +93,7 @@ const Goal = (props) => {
         loading && data.core.length === 0 ?
             <p>Loading...</p>
             :
-            <CardItem type={'goal'} model={data.core ?? []} clickFunction={clickEvents} display={display} />
+            <CardItem type={'goal'} model={activeModelSource ?? []} clickFunction={clickEvents} display={display} />
     )
 }
 
