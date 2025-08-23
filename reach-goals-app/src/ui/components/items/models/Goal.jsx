@@ -87,7 +87,7 @@ const Goal = (props) => {
         loading && data.core.length === 0 ?
             <p>Loading...</p>
             :
-            <CardItem type={'goal'} model={data.core} clickFunction={clickEvents} display={display} />
+            <CardItem type={'goal'} model={data.core ?? []} clickFunction={clickEvents} display={display} />
     )
 }
 

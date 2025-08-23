@@ -71,7 +71,7 @@ const Tag = (props) => {
         const fromModelSource = props.fromModelSource?.tag 
 
         if (fromModelSource && fromModelSource.length) setActiveModelSource(fromModelSource)
-        else setActiveModelSource(data[filterGetTag.source] || [])
+        else setActiveModelSource(data[filterGetTag.source])
     }, [data])
 
     useEffect(() => {
@@ -89,7 +89,7 @@ const Tag = (props) => {
         loading && data.length === 0 ?
             <p>Loading...</p>
             :
-            <CardItem type={'tag'} model={activeModelSource} clickFunction={clickEvents} display={display} />
+            <CardItem type={'tag'} model={activeModelSource ?? []} clickFunction={clickEvents} display={display} />
     )
 }
 
