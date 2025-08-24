@@ -53,6 +53,8 @@ const Goal = (props) => {
             e.stopPropagation()
             const selected = data.core.find(m => m.id === id)
 
+            if (model.transportModel.goal.length > 0) return
+
             addToTransportModel({ ...selected, type: 'goal' })
             return updateSubmitModel({ keyObject: 'goalID', value: id })
         }
