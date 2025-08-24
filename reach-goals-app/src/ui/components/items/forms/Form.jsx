@@ -179,24 +179,20 @@ const Form = (props) => {
                                     </div>
                                     <div className='item-forms body'>
                                         {
-                                            modelForm.id && modelSwitcherProps.fromModelSource.tag.length ?
-                                                <ModelSwitcher type={'tag'} propsReference={modelSwitcherProps} />
-                                                :
+                                            <>
+                                                {!! modelForm.id && (<ModelSwitcher type={'tag'} propsReference={modelSwitcherProps} />)}
                                                 <ModelCopy type={model.typeModel} region={'tag'} />
+                                            </>
                                         }
                                     </div>
                                 </div>
                                 {
-                                    typeForm === 'goal' ?
-                                        modelForm.id ?
-                                            functionsForm.mapFormsItemMap(typeForm, <ModelSwitcher type={modelSwitcherRelation} propsReference={modelSwitcherProps} />)
-                                            :
-                                            functionsForm.mapFormsItemMap(typeForm, <ModelCopy type={model.typeModel} region={modelCopyRelation} />)
-                                        : null
-                                }
-                                {
-                                    typeForm === 'assignment' &&
-                                    functionsForm.mapFormsItemMap(typeForm, <ModelCopy type={model.typeModel} region={modelCopyRelation} />)
+                                    functionsForm.mapFormsItemMap(typeForm,
+                                        <>
+                                            {!! modelForm.id && (<ModelSwitcher type={modelSwitcherRelation} propsReference={modelSwitcherProps} />)}
+                                            <ModelCopy type={model.typeModel} region={modelCopyRelation} />
+                                        </>
+                                    )
                                 }
                                 <div className='field-forms details'>
                                     <textarea id={`${typeForm}-details`} className='input-form' placeholder='details here...'
