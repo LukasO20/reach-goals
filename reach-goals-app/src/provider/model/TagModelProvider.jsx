@@ -2,33 +2,12 @@ import { useReducer, useEffect, createContext, useContext } from 'react'
 
 import * as tagService from '../../services/tagService.js'
 
-import { initialStateMap } from '../../utils/mapping/mappingUtilsProvider.js'
+import { reduceModelMap, initialStateMap } from '../../utils/mapping/mappingUtilsProvider.js'
 
 export const TagModelContext = createContext()
 
-const tagReducer = (state, action) => {
-    switch (action.type) {
-        case 'LOADING':
-            return { ...state, loading: true, error: null }
-        case 'FETCH_LIST':
-            return { ...state, loading: false, error: null, data: { ...state.data, core: action.payload } }
-        case 'FETCH_SUPPORT_LIST':
-            return { ...state, loading: false, error: null, data: { ...state.data, support: action.payload } }
-        case 'FETCH_ONE':
-            return { ...state, loading: false, error: null, selected: action.payload }
-        case 'REMOVE_ONE':
-            return { ...state, loading: false, error: null/*, removed: action.payload*/ }
-        case 'SAVE_ONE':
-            return { ...state, loading: false, error: null, saved: action.payload }
-        case 'ERROR':
-            return { loading: false, error: action.payload, data: [] }
-        default:
-            return state
-    }
-}
-
 export const TagModelProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(tagReducer, initialStateMap)
+    const [state, dispatch] = useReducer(reduceModelMap, initialStateMap)
 
     const load = async (filters = {}) => {
         dispatch({ type: 'LOADING' })
