@@ -2,15 +2,9 @@ import { useState, useEffect, useContext } from 'react'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 
-import ButtonAction from '../elements/ButtonAction.jsx'
+import CardItem from '../elements/CardItem.jsx'
 
-const iconLayoutMap = {
-    goal: 'fa-solid fa-bullseye',
-    assignment: 'fa-solid fa-list-check',
-    tag: 'fa-solid fa-tag',
-}
-
-const ModelCopy = ({ type, displayRef, region }) => {
+const ModelCopy = ({ displayRef, region }) => {
     const [modelCopy, setCopyModel] = useState([])
     const { model, removeFromTransportModel, updateSubmitModel } = useContext(ManageModelContext)
 
@@ -45,23 +39,12 @@ const ModelCopy = ({ type, displayRef, region }) => {
         }
     }
 
-    return modelCopy.map(model => (
-        <div className={`${model.type} ${display.type}`} id={(model.id || model.tagID)} key={(model.id || model.tagID)}>
-            {
-                display.type === 'card' ? ''
-                    :
-                    <div className='head'>
-                        <label className='line-info'><i className={`icon-st ${iconLayoutMap[model.type] || 'fa-solid fa-triangle-exclamation'}`}></i><label>{model.name}</label></label>
-                    </div>
-            }
-            {
-                display.sideAction &&
-                <div className='side-actions'>
-                    <ButtonAction classBtn={`remove-${type}`} iconFa='fa-solid fa-xmark' onClick={() => { handleModelCopyClick((model.id || model.tagID), 'delete', model.type) }} />
-                </div>
-            }
-        </div>
-    ))
+    const clickEvents = {
+        card: () => { },
+        aux: handleModelCopyClick
+    }
+
+    return <CardItem type={modelCopy[0]?.type} model={modelCopy} clickFunction={clickEvents} display={display} />
 }
 
 export default ModelCopy
