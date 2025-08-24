@@ -49,8 +49,9 @@ const Goal = (props) => {
     }
 
     const goalClick = (id, e) => {
+        e.stopPropagation()
+
         if (isSelectableModel) {
-            e.stopPropagation()
             const selected = data.core.find(m => m.id === id)
 
             if (model.transportModel.goal.length > 0) return
@@ -61,8 +62,7 @@ const Goal = (props) => {
 
         if (isDetailsModel) {
             setModel(prev => ({ ...prev, mainModelID: id, typeModel: 'goal' }))
-            setPendingPanel(true)
-            return
+            return setPendingPanel(true)
         }
     }
 
@@ -95,7 +95,7 @@ const Goal = (props) => {
         loading && data.core.length === 0 ?
             <p>Loading...</p>
             :
-            <CardItem type={'goal'} model={activeModelSource ?? []} clickFunction={clickEvents} display={display} />
+            activeModelSource.length ? <CardItem type={'goal'} model={activeModelSource} clickFunction={clickEvents} display={display} /> : null
     )
 }
 

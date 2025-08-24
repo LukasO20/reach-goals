@@ -48,8 +48,9 @@ const Tag = (props) => {
     }, [setModel])
 
     const tagClick = (id, e) => {
+        e.stopPropagation()
+
         if (isSelectableModel) {
-            e.stopPropagation()
             const selected = activeModelSource.find(m => m.id === id)
 
             addToTransportModel({ ...selected, type: 'tag' })
@@ -89,7 +90,7 @@ const Tag = (props) => {
         loading && data.length === 0 ?
             <p>Loading...</p>
             :
-            <CardItem type={'tag'} model={activeModelSource ?? []} clickFunction={clickEvents} display={display} />
+            activeModelSource.length ? <CardItem type={'tag'} model={activeModelSource} clickFunction={clickEvents} display={display} /> : null
     )
 }
 

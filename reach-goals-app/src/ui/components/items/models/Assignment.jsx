@@ -48,8 +48,9 @@ const Assignment = (props) => {
     }, [setModel])
 
     const assignmentClick = (id, e) => {
+        e.stopPropagation()
+
         if (isSelectableModel) {
-            e.stopPropagation()
             const selected = activeModelSource.find(m => m.id === id)
 
             addToTransportModel({ ...selected, type: 'assignment' })
@@ -71,8 +72,8 @@ const Assignment = (props) => {
     }
 
     useEffect(() => {
-        const fromModelSource = props.fromModelSource?.assignment 
-        
+        const fromModelSource = props.fromModelSource?.assignment
+
         if (fromModelSource && fromModelSource.length) setActiveModelSource(fromModelSource)
         else setActiveModelSource(data[filterGetAssignment.source])
     }, [data])
@@ -102,7 +103,7 @@ const Assignment = (props) => {
         loading && data.length === 0 ?
             <p>Loading...</p>
             :
-            <CardItem type={'assignment'} model={activeModelSource ?? []} clickFunction={clickEvents} display={display} />
+            activeModelSource.length ? <CardItem type={'assignment'} model={activeModelSource} clickFunction={clickEvents} display={display} /> : null
     )
 }
 
