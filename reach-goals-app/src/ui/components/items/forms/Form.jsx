@@ -68,6 +68,8 @@ const Form = (props) => {
     }
 
     const tagRelation = typeForm === 'goal' ? 'goalID' : 'assignmentID';
+    const modelSwitcherRelation = typeForm === 'assignment' ? 'assignment-relation' : 'goal-relation'
+    const modelCopyRelation = typeForm === 'assignment' ? 'goal' : 'assignment'
 
     const modelSwitcherProps = {
         [tagRelation]: modelForm?.id,
@@ -180,18 +182,21 @@ const Form = (props) => {
                                             modelForm.id && modelSwitcherProps.fromModelSource.tag.length ?
                                                 <ModelSwitcher type={'tag'} propsReference={modelSwitcherProps} />
                                                 :
-                                                <ModelCopy type={model.typeModel} region={'tag'}  />
+                                                <ModelCopy type={model.typeModel} region={'tag'} />
                                         }
                                     </div>
                                 </div>
                                 {
-                                    modelForm.id && typeof typeForm === 'string' ? 
-                                        typeForm === 'goal' ?
-                                            functionsForm.mapFormsItemMap(typeForm, <ModelSwitcher type={'goal-relation'} propsReference={modelSwitcherProps} />)
+                                    typeForm === 'goal' ?
+                                        modelForm.id ?
+                                            functionsForm.mapFormsItemMap(typeForm, <ModelSwitcher type={modelSwitcherRelation} propsReference={modelSwitcherProps} />)
                                             :
-                                            functionsForm.mapFormsItemMap(typeForm, <ModelSwitcher type={'assignment-relation'} propsReference={modelSwitcherProps} />)
-                                    :
-                                    functionsForm.mapFormsItemMap(typeForm, <ModelCopy type={model.typeModel} region={typeForm === 'assignment' ? 'goal' : 'assignment'} />)
+                                            functionsForm.mapFormsItemMap(typeForm, <ModelCopy type={model.typeModel} region={modelCopyRelation} />)
+                                        : null
+                                }
+                                {
+                                    typeForm === 'assignment' &&
+                                    functionsForm.mapFormsItemMap(typeForm, <ModelCopy type={model.typeModel} region={modelCopyRelation} />)
                                 }
                                 <div className='field-forms details'>
                                     <textarea id={`${typeForm}-details`} className='input-form' placeholder='details here...'
