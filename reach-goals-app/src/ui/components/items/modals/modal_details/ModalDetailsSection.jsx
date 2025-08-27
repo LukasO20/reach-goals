@@ -5,6 +5,14 @@ import Goal from '../../models/Goal.jsx'
 import { targetMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 const switchSectionLayout = (model, type) => {
+
+    const modelRelationProps = {
+        fromModelSource: {
+            assignment: model?.assignments,
+            tag: model?.tags?.map(tags => tags.tag)
+        }
+    }
+
     switch (type) {
         case 'goal':
             return (
@@ -28,7 +36,7 @@ const switchSectionLayout = (model, type) => {
                                     <h4>Assignments</h4>
                                 </div>
                                 <div className='body-assignment-list'>
-                                    <Assignment assignmentGoalRelation={model?.id} />
+                                    <Assignment {...modelRelationProps} />
                                 </div>
                             </div>
                         }
@@ -44,9 +52,6 @@ const switchSectionLayout = (model, type) => {
                         <ButtonAction target={targetMap(null)} standardRoute="true" classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark' />
                     </div>
                     <div className='body'>
-                        <div>
-                            <Goal />
-                        </div>
                         {
                             model?.description &&
                             <div>
