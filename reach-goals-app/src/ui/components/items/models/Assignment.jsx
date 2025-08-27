@@ -76,7 +76,7 @@ const Assignment = (props) => {
 
         if (fromModelSource && fromModelSource.length) setActiveModelSource(fromModelSource)
         else setActiveModelSource(data[filterGetAssignment.source])
-    }, [data])
+    }, [data, props.fromModelSource])
 
     useEffect(() => {
         refetch(filterGetAssignment)
