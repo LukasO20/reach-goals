@@ -1,6 +1,8 @@
-import { useContext } from 'react'
+import { useState } from 'react'
 
 import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
+
+import { filterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
 import Goal from '../models/Goal.jsx'
 import Assignment from '../models/Assignment.jsx'
@@ -9,54 +11,44 @@ import ButtonAction from '../elements/ButtonAction.jsx'
 const boxConfigs = (type) => {
     const goal = [
         {
-            key: 'goal-no-assignment',
-            className: 'goal',
-            label: 'Goals without assignment relation',
-            content: <Goal notAssignmentRelation={true} />,
-            btnClass: 'goal'
+            currentfilter: 'goal-no-assignment',
+            label: 'without assignments',
         },
         {
-            key: 'goal-assignment',
-            className: 'goal-assignment',
-            label: 'Goals with assignments',
-            content: <Goal goalAssignmentRelation={true} />,
-            btnClass: 'goal'
+            currentfilter: 'goal-assignment',
+            label: 'with assignments',
         },
         {
-            key: 'goal-tags',
-            className: 'goal-tags',
-            label: 'Goals with tags',
-            content: <Goal goalTagRelation={true} />,
-            btnClass: 'goal'
+            currentfilter: 'goal-tags',
+            label: 'with tags',
+        },
+        {
+            currentfilter: 'goal-every',
+            label: 'every goal',
         },
     ]
 
     const assignment = [
         {
-            key: 'assignment-no-goal',
-            className: 'assignment',
-            label: 'Assignments without goal relation',
-            content: <Assignment notGoalRelation={true} />,
-            btnClass: 'assignment'
+            currentfilter: 'assignment-no-goal',
+            label: 'without goals',
         },
         {
-            key: 'assignment-goal',
-            className: 'assignment-goal',
-            label: 'Assignments with goals',
-            content: <Assignment assignmentGoalRelation={true} />,
-            btnClass: 'goal'
+            currentfilter: 'assignment-goal',
+            label: 'with goals',
         },
         {
-            key: 'assignment-tags',
-            className: 'assignment-tags',
-            label: 'Assignments with tags',
-            content: <Assignment assignmentTagRelation={true} />,
-            btnClass: 'assignment'
+            currentfilter: 'assignment-tags',
+            label: 'with tags',
+        },
+        {
+            currentfilter: 'assignment-every',
+            label: 'every assignment',
         }
     ]
 
     const defaultConfig = [
-        ...goal, ...assignment
+        // ...goal, ...assignment
     ]
 
     switch (type) {
@@ -70,24 +62,56 @@ const boxConfigs = (type) => {
 }
 
 const ExpandableBox = (props) => {
-    const { layoutComponent } = useSwitchLayout()     
+    const { layoutComponent } = useSwitchLayout()
     const containerType = props?.containerType ?? ''
 
     const configType = layoutComponent.objectives.layout
+    const currentIcoType = configType === 'goal' ? 'fa-bullseye' : configType === 'assignment' ? 'fa-list-check' : ''
+
+    const [filterRenderModel, setFilterRenderModel] = useState(filterModelMap)
+    const handleOptions = (currentfilter) => {
+        setFilterRenderModel(prevMap => ({
+            ...prevMap,
+            currentfilter
+        }))
+    }
 
     return (
         <>
-            {boxConfigs(configType).map(box => (
-                <div className={`box-list ${box.className} ${containerType}`} key={box.key}>
-                    <div className='head'>
-                        <label>{box.label}</label>
-                        <ButtonAction classBtn={`button-expand ${box.btnClass}`} iconFa='fa-solid fa-chevron-down' />
-                    </div>
-                    <div className='body'>
-                        {box.content}
-                    </div>
-                </div>
-            ))}
+            <div className='head'>
+                {
+                    <>
+                        <div className='title'>
+                            <h2><i className={'fa-solid ' + currentIcoType}></i>{configType}</h2>
+                        </div>
+                        <div className='options'>
+                            {
+                                boxConfigs(configType).map(box => {
+                                    return <ButtonAction classBtn={'objective-filter option'} title={box.label} />
+                                })
+                            }
+                        </div>
+                    </>
+                }
+            </div>
+            <div className='body'>
+                {
+                    <>
+                        {
+                            configType === 'goal' ? 
+                                <Goal {...filterRenderModel} />
+                                :
+                            configType === 'assignment' ?
+                                <Assignment/>
+                                :
+                                <>
+                                    <Goal display={{type: 'mini-list'}} goalSomeID={true}/>
+                                    <Assignment display={{type: 'mini-list'}} notGoalRelation={true}/>
+                                </>
+                        }
+                    </>
+                }
+            </div>
         </>
     )
 }
