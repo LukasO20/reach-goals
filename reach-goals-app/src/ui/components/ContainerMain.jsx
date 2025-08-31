@@ -39,7 +39,7 @@ const ContainerM = () => {
                         <label className='button-show-m button-st line-chart'><i className='icon-st fa-solid fa-chart-line'></i></label>
                         <label className='button-filter-m search'><i className='icon-st fa-solid fa-magnifying-glass'></i><input type='text' placeholder='search' id='search-content-m' className='search-content' /></label>
                         <ButtonAction classBtn='button-show-m goals' title='goals' switchLayout={switchLayoutMap(pageType, 'layout', 'goal')} />
-                        <ButtonAction classBtn='button-show-m assignment' title='unfocused assignments' switchLayout={switchLayoutMap(pageType, 'layout', 'assignment')} />
+                        <ButtonAction classBtn='button-show-m assignment' title='assignments' switchLayout={switchLayoutMap(pageType, 'layout', 'assignment')} />
                         { pageType === 'objectives' && <ButtonAction classBtn='button-show-m all-activities' title='all activities' switchLayout={switchLayoutMap(pageType, 'layout', 'default')} /> }
                     </div>
                     <div className='action'>           
