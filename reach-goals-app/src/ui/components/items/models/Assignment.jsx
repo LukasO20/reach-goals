@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 
 import { useAssignmentModel } from '../../../../provider/model/AssignmentModelProvider.jsx'
 
@@ -27,25 +27,31 @@ const Assignment = (props) => {
     const isSelectableModel = props.selectableModel ?? false
     const isDetailsModel = props.detailsModel ?? false
 
-    const filterGetAssignment = {
+    const filterGetAssignment = useMemo(() => ({
         ...filterModelMap,
         type: 'assignment',
         source: props.typeDataSource ?? 'core',
-        assignmentGoalRelation: props.assignmentGoalRelation ?? null,
-        assignmentSomeID: props.assignmentSomeID ?? null,
-        assignmentTagRelation: props.assignmentTagRelation ?? null,
-        notGoalRelation: props.notGoalRelation ?? null
-    }
+        assignmentGoalRelation: props.assignmentGoalRelation,
+        assignmentSomeID: props.assignmentSomeID,
+        assignmentTagRelation: props.assignmentTagRelation,
+        notGoalRelation: props.notGoalRelation
+    }), [
+        props.typeDataSource,
+        props.assignmentGoalRelation,
+        props.assignmentSomeID,
+        props.assignmentTagRelation,
+        props.notGoalRelation
+    ])
 
     const deleteAssignment = async (id) => {
         await remove(id)
         refetch(filterGetAssignment)
     }
 
-    const editAssignment = useCallback((id) => {
+    const editAssignment = (id) => {
         try { setModel(prev => ({ ...prev, mainModelID: id, typeModel: 'assignment' })) }
         catch (error) { setErro(`Failed to edit this assignment: ${error}`) }
-    }, [setModel])
+    }
 
     const assignmentClick = (id, e) => {
         e.stopPropagation()
@@ -80,7 +86,7 @@ const Assignment = (props) => {
 
     useEffect(() => {
         refetch(filterGetAssignment)
-    }, [])
+    }, [filterGetAssignment])
 
     useEffect(() => {
         if (pendingPanel && model.mainModelID) {

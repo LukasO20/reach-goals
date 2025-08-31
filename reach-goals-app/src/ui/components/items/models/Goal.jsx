@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 
 import { useGoalModel } from '../../../../provider/model/GoalModelProvider.jsx'
 
@@ -28,7 +28,7 @@ const Goal = (props) => {
     const isSelectableModel = props.selectableModel ?? false
     const isDetailsModel = props.detailsModel ?? false
 
-    const filterGetGoal = {
+    const filterGetGoal = useMemo(() => ({
         ...filterModelMap,
         type: 'goal',
         source: props.typeDataSource ?? 'core',
@@ -36,7 +36,13 @@ const Goal = (props) => {
         goalSomeID: props.goalSomeID,
         goalTagRelation: props.goalTagRelation,
         notAssignmentRelation: props.notAssignmentRelation
-    }
+    }), [
+       props.typeDataSource,
+       props.goalAssignmentRelation, 
+       props.goalSomeID, 
+       props.goalTagRelation, 
+       props.notAssignmentRelation 
+    ])
 
     const deleteGoal = async (id) => {
         await remove(id)
@@ -72,7 +78,7 @@ const Goal = (props) => {
 
     useEffect(() => {
         refetch(filterGetGoal)
-    }, [])
+    }, [filterGetGoal])
 
     useEffect(() => {
         if (pendingPanel && model.mainModelID) {
