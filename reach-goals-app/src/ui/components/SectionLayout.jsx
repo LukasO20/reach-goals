@@ -1,35 +1,29 @@
 import { useParams, Outlet } from 'react-router-dom'
-import { useContext } from 'react'
-
-import { PageTypeContext } from '../../provider/PageTypeProvider.jsx'
 
 import Home from './pages/Home.jsx'
 import Calendar from './pages/Calendar.jsx'
 import Objectives from './pages/Objectives.jsx'
 
-const Sections = () => {
-    const { section } = useParams()
-    const { setPageType } = useContext(PageTypeContext)
-
-    let componentRender
+const sectionRender = (section) => {
     switch (section) {
         case 'home':
-            componentRender = <Home />
-            break
+            return <Home />   
         case 'calendar':
-            componentRender = <Calendar />
-            break
+            return <Calendar />
         case 'objectives':
-            componentRender = <Objectives />
-            break
+            return <Objectives />
+        default:
+            return <Home />
     }
+}
 
-    setPageType(section)
+const Sections = () => {
+    const { section } = useParams()
 
     return (
         <div className='container-dynamic'>
-            {componentRender}
-            <Outlet />
+            {sectionRender(section)}
+            {/* <Outlet /> */}
         </div>
     )
 }
