@@ -11,44 +11,40 @@ import ButtonAction from '../elements/ButtonAction.jsx'
 const boxConfigs = (type) => {
     const goal = [
         {
-            currentfilter: 'goal-no-assignment',
+            currentfilter: { notAssignmentRelation: true },
             label: 'without assignments',
         },
         {
-            currentfilter: 'goal-assignment',
+            currentfilter: { goalAssignmentRelation: true },
             label: 'with assignments',
         },
         {
-            currentfilter: 'goal-tags',
+            currentfilter: { goalTagRelation: true },
             label: 'with tags',
         },
         {
-            currentfilter: 'goal-every',
+            currentfilter: { goalSomeID: true },
             label: 'every goal',
         },
     ]
 
     const assignment = [
         {
-            currentfilter: 'assignment-no-goal',
+            currentfilter: { notGoalRelation: true },
             label: 'without goals',
         },
         {
-            currentfilter: 'assignment-goal',
+            currentfilter: { assignmentGoalRelation: true },
             label: 'with goals',
         },
         {
-            currentfilter: 'assignment-tags',
+            currentfilter: { assignmentTagRelation: true },
             label: 'with tags',
         },
         {
-            currentfilter: 'assignment-every',
+            currentfilter: { assignmentSomeID: true },
             label: 'every assignment',
         }
-    ]
-
-    const defaultConfig = [
-        // ...goal, ...assignment
     ]
 
     switch (type) {
@@ -57,23 +53,21 @@ const boxConfigs = (type) => {
         case 'assignment':
             return assignment
         default:
-            return defaultConfig
+            return []
     }
 }
 
 const ExpandableBox = (props) => {
     const { layoutComponent } = useSwitchLayout()
-    const containerType = props?.containerType ?? ''
+    const [filterRenderModel, setFilterRenderModel] = useState(filterModelMap)
 
     const configType = layoutComponent.objectives.layout
     const currentIcoType = configType === 'goal' ? 'fa-bullseye' : configType === 'assignment' ? 'fa-list-check' : ''
 
-    const [filterRenderModel, setFilterRenderModel] = useState(filterModelMap)
     const handleOptions = (currentfilter) => {
-        setFilterRenderModel(prevMap => ({
-            ...prevMap,
-            currentfilter
-        }))
+        setFilterRenderModel(() => ({
+            ...currentfilter
+         }))
     }
 
     return (
@@ -87,7 +81,7 @@ const ExpandableBox = (props) => {
                         <div className='options'>
                             {
                                 boxConfigs(configType).map(box => {
-                                    return <ButtonAction classBtn={'objective-filter option'} title={box.label} />
+                                    return <ButtonAction classBtn={'objective-filter option'} title={box.label} onClick={() => { handleOptions(box.currentfilter) }} />
                                 })
                             }
                         </div>
@@ -99,14 +93,14 @@ const ExpandableBox = (props) => {
                     <>
                         {
                             configType === 'goal' ? 
-                                <Goal {...filterRenderModel} />
+                                <Goal display={{type: 'mini-list'}} {...filterRenderModel} />
                                 :
                             configType === 'assignment' ?
-                                <Assignment/>
+                                <Assignment display={{type: 'mini-list'}} {...filterRenderModel} />
                                 :
                                 <>
                                     <Goal display={{type: 'mini-list'}} goalSomeID={true}/>
-                                    <Assignment display={{type: 'mini-list'}} notGoalRelation={true}/>
+                                    <Assignment display={{type: 'mini-list'}} assignmentSomeID={true}/>
                                 </>
                         }
                     </>
