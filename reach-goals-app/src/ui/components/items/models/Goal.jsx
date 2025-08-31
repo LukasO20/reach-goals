@@ -73,8 +73,11 @@ const Goal = (props) => {
     }
 
     useEffect(() => {
-        setActiveModelSource(data[filterGetGoal.source])
-    }, [data])
+        const fromModelSource = props.fromModelSource?.goal
+
+        if (fromModelSource && Array.isArray(fromModelSource)) setActiveModelSource(fromModelSource)
+        else setActiveModelSource(data[filterGetGoal.source])
+    }, [data, props.fromModelSource])
 
     useEffect(() => {
         refetch(filterGetGoal)
