@@ -4,12 +4,15 @@ import { Link } from 'react-router-dom'
 import { VisibilityContext } from '../../provider/VisibilityProvider.jsx'
 import { targetMap, switchLayoutMap } from '../../utils/mapping/mappingUtils.js'
 
+import { useSwitchLayout } from '../../provider/SwitchLayoutProvider.jsx'
+
 import ButtonAction from './items/elements/ButtonAction.jsx'
 
 import '../styles/Navigate.scss'
 
 const Navigate = () => {
     const { toggleVisibility } = useContext(VisibilityContext)
+    const { layoutComponent } = useSwitchLayout()
 
     return (
         <div className="container-navigate aside-content" onClick={(e) => toggleVisibility(targetMap(), e)}>
@@ -30,7 +33,7 @@ const Navigate = () => {
                     </Link>
                 </div>
                 <div className="item-nav">
-                    <ButtonAction target={targetMap(['panel-center', 'config'])} switchLayout={switchLayoutMap('panel', 'layout', 'center')} classBtn='btn-action-config button-nav' iconFa='fa-solid fa-sliders' />
+                    <ButtonAction target={targetMap(['panel-center', 'config'])} switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'center' })} classBtn='btn-action-config button-nav' iconFa='fa-solid fa-sliders' />
                 </div>
             </div>
         </div>
