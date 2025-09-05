@@ -7,13 +7,13 @@ const targetMap = (classes, operator = {}) => {
     return attributes
 }
 
-const switchLayoutMap = (nameComponent, nameLayout, value) => {
-    const attributes = {
-        nameComponent: nameComponent,
-        nameLayout: nameLayout,
+const switchLayoutMap = ({ page, name, layout, value }) => {
+    return {
+        page: page ?? 'home',
+        nameComponent: name,
+        nameLayout: layout,
         value: value
     }
-    return attributes
 }
 
 const checkboxMap = (checkbox) => {

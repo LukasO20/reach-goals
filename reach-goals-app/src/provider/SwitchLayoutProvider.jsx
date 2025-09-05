@@ -1,12 +1,11 @@
-import { useState, createContext } from 'react'
-import { useContext } from 'react'
+import { useState, useContext, createContext } from 'react'
 
 const SwitchLayoutContext = createContext()
 
-export const SwitchLayoutProvider = ({children}) => {
-
+export const SwitchLayoutProvider = ({ children }) => {
     const standardSwitchLayout = () => {
         return {
+            page: 'home',
             home: {
                 layout: 'goal'
             },
@@ -23,14 +22,14 @@ export const SwitchLayoutProvider = ({children}) => {
     }
 
     const [layoutComponent, setLayoutComponent] = useState(standardSwitchLayout)
-
     const updateLayoutComponent = (switchLayout) => {
         if (switchLayout) {
             setLayoutComponent({
                 ...layoutComponent,
+                page: switchLayout.page ?? layoutComponent.page,
                 [switchLayout.nameComponent]: {
                     ...layoutComponent[switchLayout.nameComponent],
-                    [switchLayout.nameLayout]: switchLayout.value 
+                    [switchLayout.nameLayout]: switchLayout.value
                 }
             })
         }
@@ -44,7 +43,7 @@ export const SwitchLayoutProvider = ({children}) => {
     //console.log('LAYPROVIDER - ', layoutComponent)
 
     return (
-        <SwitchLayoutContext.Provider value={{layoutComponent, switchLayoutComponent}}>
+        <SwitchLayoutContext.Provider value={{ layoutComponent, switchLayoutComponent }}>
             {children}
         </SwitchLayoutContext.Provider>
     )

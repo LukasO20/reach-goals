@@ -67,7 +67,7 @@ const ExpandableBox = (props) => {
     const handleOptions = (currentfilter) => {
         setFilterRenderModel(() => ({
             ...currentfilter
-         }))
+        }))
     }
 
     return (
@@ -99,8 +99,8 @@ const ExpandableBox = (props) => {
                                 <Assignment display={{type: 'mini-list'}} {...filterRenderModel} />
                                 :
                                 <>
-                                    <Goal display={{type: 'mini-list'}} goalSomeID={true}/>
-                                    <Assignment display={{type: 'mini-list'}} assignmentSomeID={true}/>
+                                    <Goal display={{type: 'mini-list'}} goalSomeID={true} />
+                                    <Assignment display={{type: 'mini-list'}} assignmentSomeID={true} />
                                 </>
                         }
                     </>

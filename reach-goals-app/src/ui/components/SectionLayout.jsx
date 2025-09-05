@@ -1,4 +1,8 @@
-import { useParams, Outlet } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+
+import { useEffect } from 'react'
+
+import { useSwitchLayout } from '../../provider/SwitchLayoutProvider.jsx'
 
 import Home from './pages/Home.jsx'
 import Calendar from './pages/Calendar.jsx'
@@ -17,13 +21,18 @@ const sectionRender = (section) => {
     }
 }
 
+//VERIFICAR SITUAÇÃO DO TYPE PAGE PARA RENDERIZAR LAYOUTS
 const Sections = () => {
     const { section } = useParams()
+    const { switchLayoutComponent } = useSwitchLayout()
+
+    useEffect(() => {
+        switchLayoutComponent({ page: section })
+    }, [section])
 
     return (
         <div className='container-dynamic'>
             {sectionRender(section)}
-            {/* <Outlet /> */}
         </div>
     )
 }
