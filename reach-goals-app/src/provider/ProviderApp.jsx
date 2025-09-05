@@ -4,7 +4,6 @@ import { CheckboxProvider } from './CheckboxProvider.jsx'
 import { ManageModelProvider } from './ManageModelProvider.jsx'
 import { ModalListProvider } from './ModalListProvider.jsx'
 import { SwitchLayoutProvider } from './SwitchLayoutProvider.jsx'
-import { PageTypeProvider } from './PageTypeProvider.jsx'
 import { MasterDataProvider } from './model/MasterDataProvider.jsx'
 
 const ProviderApp = ({ children }) => (
@@ -15,9 +14,7 @@ const ProviderApp = ({ children }) => (
                     <CheckboxProvider>
                         <ModalListProvider>
                             <SwitchLayoutProvider>
-                                <PageTypeProvider>
-                                    {children}
-                                </PageTypeProvider>
+                                {children}
                             </SwitchLayoutProvider>
                         </ModalListProvider>
                     </CheckboxProvider>
