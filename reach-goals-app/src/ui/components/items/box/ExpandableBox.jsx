@@ -80,8 +80,8 @@ const ExpandableBox = (props) => {
                         </div>
                         <div className='options'>
                             {
-                                boxConfigs(configType).map(box => {
-                                    return <ButtonAction classBtn={'objective-filter option'} title={box.label} onClick={() => { handleOptions(box.currentfilter) }} />
+                                boxConfigs(configType).map((box, index) => {
+                                    return <ButtonAction key={index} classBtn={'objective-filter option'} title={box.label} onClick={() => { handleOptions(box.currentfilter) }} />
                                 })
                             }
                         </div>
