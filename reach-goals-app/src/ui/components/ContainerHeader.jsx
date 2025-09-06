@@ -26,19 +26,19 @@ const ContainerH = () => {
                 <h1>{title}</h1>
             </div>
             <div className="nav">
-                <div className='item-nav'>
-                    <ButtonLink id="btn-theme" classBtn="button-h theme" iconFa="fa-solid fa-palette" />
-                </div>
                 <div className="item-nav" onClick={(e) => { toggleVisibility(targetMap(['panel-right', 'tag']), e); linkTagClick(e) }}>
                     <ButtonLink id="btn-tag" switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'right' })}
-                        link={`/${layoutComponent.page}/tag`} classBtn="button-h tag" iconFa="fa-solid fa-tag"
+                        link={`/${layoutComponent.page}/tag`} classBtn="button-h tag" icon="tag"
                     />
+                </div>
+                <div className='item-nav'>
+                    <ButtonLink id="btn-theme" classBtn="button-h theme" icon="themes" />
                 </div>
                 {/* <div className="item-nav" onClick={(e) => toggleVisibility(target, e)}>
                     <ButtonLink id="btn-notification" link={`${currentLocation}/notification`} classBtn="button-h notification" iconFa="fa-solid fa-bell"/>
                 </div> */}
                 <div className="item-nav">
-                    <ButtonLink id="btn-profile" classBtn="button-h profile" iconFa="fa-solid fa-user" />
+                    <ButtonLink id="btn-profile" classBtn="button-h profile" icon="user" />
                 </div>
             </div>
         </div>
