@@ -7,6 +7,8 @@ import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx
 
 import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 
+import { iconMap } from '../../../../utils/mapping/mappingUtils.js'
+
 const statusButton = (classBtn, providervisibleElements) => {
     if (!providervisibleElements) { return false }
     return providervisibleElements.includes(classBtn)
@@ -36,7 +38,8 @@ const ButtonAction = (props) => {
 
     return (
         <span className={`${props.classBtn} button-st ${isOn ? 'on' : ''}`} datavalue={props.datavalue} onClick={handleClick} onKeyDown={(e) => e.key === 'Enter' ? handleClick(e) : ''} role='button' tabIndex='0'>
-            <i className={`icon-st ${props.iconFa}`}></i><span className='button-title'>{props.title}</span>
+            {props.icon && iconMap[props.icon]}
+            <span className='button-title'>{props.title}</span>
         </span>
     )
 }

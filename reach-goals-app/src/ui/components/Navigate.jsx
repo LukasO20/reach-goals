@@ -27,7 +27,7 @@ const Navigate = () => {
                     <ButtonLink link={'/objectives'} classBtn="objectives button-nav" icon="objectives" />                
                 </div>
                 <div className="item-nav">
-                    <ButtonAction target={targetMap(['panel-center', 'config'])} switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'center' })} classBtn='btn-action-config button-nav' iconFa='fa-solid fa-sliders' />
+                    <ButtonAction target={targetMap(['panel-center', 'config'])} switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'center' })} classBtn='btn-action-config button-nav' icon='config' />
                 </div>
             </div>
         </div>

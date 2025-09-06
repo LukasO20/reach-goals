@@ -8,12 +8,7 @@ import ModelCopy from '../models/ModelCopy.jsx'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 
-import { targetMap } from '../../../../utils/mapping/mappingUtils.js'
-
-const iconMap = {
-    assignment: 'fa-solid fa-list-check',
-    goal: 'fa-solid fa-bullseye'
-}
+import { targetMap, iconMap } from '../../../../utils/mapping/mappingUtils.js'
 
 const titleMap = {
     assignment: 'Create your assignment',
@@ -97,7 +92,7 @@ const Form = (props) => {
                             <label>Create a tag</label>
                         </div>
                         <div className='objective-buttons-options'>
-                            <ButtonAction target={targetMap('near-modalForm', { remove: true })} classBtn='button-action-p close-modal' iconFa='fa-solid fa-xmark' />
+                            <ButtonAction target={targetMap('near-modalForm', { remove: true })} classBtn='button-action-p close-modal' icon='close' />
                         </div>
                     </div>
                     <div className='body'>
@@ -135,7 +130,7 @@ const Form = (props) => {
                 <div className='container-form-modal center-content' onClick={(e) => { functionsForm.mapHandleModalList(functionsForm.mapModalListMap(false), e); functionsForm.mapToggleVisibility(targetMap(booleanForm.mapClassRemove), e) }}>
                     <div className='head'>
                         <div className='objective-icon'>
-                            <i className={`icon-st ${icon}`}></i>
+                            {icon}
                         </div>
                         <div className='objective-options'>
                             <div className='objective-op'>
@@ -147,7 +142,7 @@ const Form = (props) => {
                             </div>
                         </div>
                         <div className='objective-buttons-options'>
-                            <ButtonAction target={targetMap(null)} nullModel={true} classBtn='button-action-p close-modal' iconFa='fa-solid fa-xmark' />
+                            <ButtonAction target={targetMap(null)} nullModel={true} classBtn='button-action-p close-modal' icon='close' />
                         </div>
                     </div>
                     <div className='body'>
@@ -174,7 +169,7 @@ const Form = (props) => {
                                     <div className='item-forms head'>
                                         <div className='item-head-1'>
                                             <label>tags</label>
-                                            <ButtonAction modalList={functionsForm.mapModalListMap(true, 'tag')} classBtn={'form-modallist-tag'} iconFa='fa-solid fa-plus' title='Add' />
+                                            <ButtonAction modalList={functionsForm.mapModalListMap(true, 'tag')} classBtn={'form-modallist-tag'} icon='plus' title='Add' />
                                         </div>
                                         <div className='item-head-2'></div>
                                     </div>

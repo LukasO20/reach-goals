@@ -25,12 +25,13 @@ const ModalTag = () => {
         <div className='container-tag aside-content' onClick={(e) => e.stopPropagation()}>
             <div className='header'>
                 <h2>Tags</h2>
-                <ButtonAction target={targetMap(null)} standardRoute="true" classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark'/>
+                <ButtonAction target={targetMap(null)} standardRoute="true" classBtn='btn-action-r close-modal circ' icon='close'/>
                 <div className='options'>
-                    <ButtonAction target={targetMap('near-modalForm', { add: true })} classBtn='form-tag btn-option-r create' iconFa='fa-solid fa-plus' title='create'/>
+                    <ButtonAction target={targetMap('near-modalForm', { add: true })} classBtn='form-tag btn-option-r create' icon='plus' title='create'/>
                     <ButtonCheckbox checkbox={checkboxMap({ id: 'checkbox-r-tag', value: false })} classBtn='checkbox-r-tag btn-checkbox'/>
-                    <ButtonDropdown target={targetMap('btn-filter-tag', { add: true })} classBtn='btn-option-r filter-content' iconFa='fa-solid fa-filter'/>
-                    <ButtonAction target={targetMap(['panel-center', 'config'])} classBtn='btn-option-r config-content' iconFa='fa-solid fa-sliders' onClick={(e) => configClick(e)}/>
+                    {/* <ButtonDropdown target={targetMap('btn-filter-tag', { add: true })} classBtn='btn-option-r filter-content' iconFa='fa-solid fa-filter'/> */}
+                    {/* Maybe a search bar can be better than a filter button, consider this aproach */}
+                    <ButtonAction target={targetMap(['panel-center', 'config'])} classBtn='btn-option-r config-content' icon='config' onClick={(e) => configClick(e)}/>
                 </div>
             </div>
             <div className='body'>

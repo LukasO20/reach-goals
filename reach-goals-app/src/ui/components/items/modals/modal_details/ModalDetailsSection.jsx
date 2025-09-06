@@ -20,7 +20,7 @@ const switchSectionLayout = (model, type) => {
                     <div className='header'>
                         <h2>{model?.name}</h2>
                         <h4>{model?.end}</h4>
-                        <ButtonAction target={targetMap(null)} standardRoute="true" classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark' />
+                        <ButtonAction target={targetMap(null)} standardRoute="true" classBtn='btn-action-r close-modal circ' icon='close' />
                     </div>
                     <div className='body'>
                         {
@@ -49,7 +49,7 @@ const switchSectionLayout = (model, type) => {
                     <div className='header'>
                         <h2>{model?.name}</h2>
                         <h4>{model?.end}</h4>
-                        <ButtonAction target={targetMap(null)} standardRoute="true" classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark' />
+                        <ButtonAction target={targetMap(null)} standardRoute="true" classBtn='btn-action-r close-modal circ' icon='close' />
                     </div>
                     <div className='body'>
                         {

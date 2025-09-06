@@ -1,0 +1,38 @@
+/* COLORS */
+$color-primary: #172B4D;
+$color-white: #fff;
+$color-complementary-p: #EAEAEA;
+$color-complementary-s: #5E5850;
+
+
+/* COLORS OPACITY */
+
+// 5%
+$color-primary-05: rgba($color-primary, 0.05);
+$color-white-05: rgba($color-white, 0.05);
+$color-complementary-p-05: rgba($color-complementary-p, 0.05);
+$color-complementary-s-05: rgba($color-complementary-s, 0.05);
+
+// 15%
+$color-primary-15: rgba($color-primary, 0.15);
+$color-white-15: rgba($color-white, 0.15);
+$color-complementary-p-15: rgba($color-complementary-p, 0.15);
+$color-complementary-s-15: rgba($color-complementary-s, 0.15);
+
+// 30%
+$color-primary-30: rgba($color-primary, 0.30);
+$color-white-30: rgba($color-white, 0.30);
+$color-complementary-p-30: rgba($color-complementary-p, 0.30);
+$color-complementary-s-30: rgba($color-complementary-s, 0.30);
+
+// 50%
+$color-primary-50: rgba($color-primary, 0.50);
+$color-white-50: rgba($color-white, 0.50);
+$color-complementary-p-50: rgba($color-complementary-p, 0.50);
+$color-complementary-s-50: rgba($color-complementary-s, 0.50);
+
+// 70%
+$color-primary-70: rgba($color-primary, 0.70);
+$color-white-70: rgba($color-white, 0.70);
+$color-complementary-p-70: rgba($color-complementary-p, 0.70);
+$color-complementary-s-70: rgba($color-complementary-s, 0.70);

@@ -17,7 +17,7 @@ const ModalList = (props) => {
         <div className={`container-list-modal ${complement}`}>
             <div className='head'>
                 <h3>{title}</h3>
-                <ButtonAction modalList={modalListMap(false)} standardRoute='true' classBtn='btn-action-r close-modal circ' iconFa='fa-solid fa-xmark'/>
+                <ButtonAction modalList={modalListMap(false)} standardRoute='true' classBtn='btn-action-r close-modal circ' icon='close'/>
             </div>
             <div className='body'>
                 {

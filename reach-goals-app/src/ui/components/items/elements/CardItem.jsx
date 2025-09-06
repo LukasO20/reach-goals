@@ -1,31 +1,26 @@
 import { useMemo } from 'react'
 import { useLocation, Link } from 'react-router-dom'
 
+import { switchLayoutMap, targetMap, iconMap } from '../../../../utils/mapping/mappingUtils.js'
+import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
+
 import ButtonAction from './ButtonAction.jsx'
-import { switchLayoutMap, targetMap } from '../../../../utils/mapping/mappingUtils.js'
 
-const iconMap = {
-    goal: 'fa-solid fa-bullseye',
-    assignment: 'fa-solid fa-list-check',
-    tag: 'fa-solid fa-tag',
-    undefined: 'fa-solid fa-exclamation'
-}
-
-const renderCard = ({ type, model, clickFunction, display }, { currentLocation }) => {
+const renderCard = ({ type, model, clickFunction, display }, page) => {    
     return model.map(model => (
         <div className={`${type} ${display.type}`} id={model.id || model.tagID} key={model.id || model.tagID}
             onClick={typeof display.type === 'string' && display.type !== '' ? (e) => clickFunction.card(model.id || model.tagID, e) : undefined}>
             {
                 display.type === 'card' ?
-                    <Link to={`${currentLocation}/details`}>
+                    <Link to={`/${page}/details`}>
                         <div className='head'>
-                            <label className='line-info'><i className={`icon-st ${iconMap[type]}`}></i><label>{model.name}</label></label>
+                            <label className='line-info'>{iconMap[type]}<label>{model.name}</label></label>
                         </div>
                         <div className='body'></div>
                     </Link>
                     :
                     <div className='head'>
-                        <label className='line-info'><i className={`icon-st ${iconMap[type]}`}></i><label>{model.name}</label></label>
+                        <label className='line-info'>{iconMap[type]}<label>{model.name}</label></label>
                     </div>
             }
             {
@@ -35,11 +30,11 @@ const renderCard = ({ type, model, clickFunction, display }, { currentLocation }
                         display.type === 'card'
                             ?
                             <>
-                                <ButtonAction onClick={() => clickFunction.edit(model.id || model.tagID)} target={targetMap(['panel-center', type])} switchLayout={switchLayoutMap('panel', 'layout', 'center')} classBtn={`edit-${type}`} iconFa='fa-regular fa-pen-to-square' />
-                                <ButtonAction onClick={() => clickFunction.delete(model.id || model.tagID)} target={targetMap(null)} classBtn={`remove-${type}`} iconFa='fa-regular fa-trash-can' />
+                                <ButtonAction onClick={() => clickFunction.edit(model.id || model.tagID)} target={targetMap(['panel-center', type])} switchLayout={switchLayoutMap({ page: page, name: 'panel', layout: 'layout', value: 'center' })} classBtn={`edit-${type}`} icon='edit' />
+                                <ButtonAction onClick={() => clickFunction.delete(model.id || model.tagID)} target={targetMap(null)} classBtn={`remove-${type}`} icon='remove' />
                             </>
                             :
-                            <ButtonAction onClick={() => clickFunction.aux(model.id || model.tagID, 'delete', model.type)} classBtn={`remove-${type}-dom`} iconFa='fa-solid fa-xmark' />
+                            <ButtonAction onClick={() => clickFunction.aux(model.id || model.tagID, 'delete', model.type)} classBtn={`remove-${type}-dom`} icon='close' />
                     }
                 </div>
             }
@@ -47,7 +42,8 @@ const renderCard = ({ type, model, clickFunction, display }, { currentLocation }
     ))
 }
 
-const CardItem = (props) => {
+const CardItem = (props) => { 
+    const { layoutComponent } = useSwitchLayout()
     const cardProps = {
         type: props.type || 'undefined',
         model: props.model || {},
@@ -55,14 +51,7 @@ const CardItem = (props) => {
         display: props.display || { type: 'mini-list', sideAction: false }
     }
 
-    const location = useLocation()
-    const hooks = {
-        currentLocation: useMemo(() => {
-            return location.pathname.includes('/objectives') ? '/objectives' : location.pathname.includes('/home') ? '/home' : '/calendar'
-        }, [location.pathname])
-    }
-
-    return (renderCard(cardProps, hooks))
+    return (renderCard(cardProps, layoutComponent.page))
 }
 
 export default CardItem

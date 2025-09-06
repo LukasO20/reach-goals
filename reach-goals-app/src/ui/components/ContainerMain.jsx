@@ -5,7 +5,7 @@ import { ManageModelContext } from '../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../provider/VisibilityProvider.jsx'
 import { useSwitchLayout } from '../../provider/SwitchLayoutProvider.jsx'
 
-import { targetMap, switchLayoutMap, checkboxMap } from '../../utils/mapping/mappingUtils.js'
+import { targetMap, switchLayoutMap, checkboxMap, iconMap } from '../../utils/mapping/mappingUtils.js'
 
 import ButtonAction from './items/elements/ButtonAction.jsx'
 import ButtonDropdown from './items/elements/ButtonDropdown.jsx'
@@ -25,19 +25,19 @@ const ContainerM = () => {
                     </div>
                     <div className='options-m'>
                         <div className='visibility-m'>
-                            <ButtonDropdown target={targetMap('btn-visibility')} classBtn='button-m visibility' title='visibility' />
+                            <ButtonDropdown target={targetMap('btn-visibility')} classBtn='button-m visibility' title='visibility' icon={'monitor'} />
                         </div>
                         <div className='more-m'>
-                            <ButtonDropdown target={targetMap('btn-more')} classBtn='button-m more' iconFa='fa-solid fa-ellipsis-vertical' />
+                            <ButtonDropdown target={targetMap('btn-more')} classBtn='button-m more' icon='ellipsisv' />
                         </div>
                     </div>
                 </div>
                 <div className='line-s'>
                     <div className='filter'>
                         <ButtonCheckbox checkbox={checkboxMap({ id: 'checkbox-m', value: false })} classBtn='checkbox-m btn-checkbox' />
-                        <ButtonDropdown target={targetMap('btn-filter-content')} classBtn='button-filter-m filter-content' iconFa='fa-solid fa-filter' />
-                        <label className='button-show-m button-st line-chart'><i className='icon-st fa-solid fa-chart-line'></i></label>
-                        <label className='button-filter-m search'><i className='icon-st fa-solid fa-magnifying-glass'></i><input type='text' placeholder='search' id='search-content-m' className='search-content' /></label>
+                        {/* <ButtonDropdown target={targetMap('btn-filter-content')} classBtn='button-filter-m filter-content' iconFa='fa-solid fa-filter' /> */}
+                        <ButtonAction classBtn='button-show-m chart' icon='chartbar' />
+                        <label className='button-filter-m search'>{iconMap['search']}<input type='text' placeholder='search' id='search-content-m' className='search-content' /></label>
                         <ButtonAction classBtn='button-show-m goals' title='goals'
                             switchLayout={switchLayoutMap({ page: layoutComponent.page, name: layoutComponent.page, layout: 'layout', value: 'goal' })}
                         />
@@ -50,8 +50,8 @@ const ContainerM = () => {
                             />}
                     </div>
                     <div className='action'>
-                        <ButtonDropdown target={targetMap('btn-action-order')} classBtn='button-action-m order' iconFa='fa-solid fa-sort' title='order' />
-                        <ButtonDropdown target={targetMap('btn-action-create')} classBtn='button-action-m create' iconFa='fa-solid fa-plus' title='create' reference='panel-center' />
+                        <ButtonDropdown target={targetMap('btn-action-order')} classBtn='button-action-m order' icon='arrowaltv' title='order' />
+                        <ButtonDropdown target={targetMap('btn-action-create')} classBtn='button-action-m create' icon='plus' title='create' reference='panel-center' />
                     </div>
                 </div>
             </div>

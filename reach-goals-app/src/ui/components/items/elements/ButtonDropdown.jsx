@@ -5,7 +5,7 @@ import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx
 
 import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 
-import { targetMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
+import { targetMap, switchLayoutMap, iconMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import ButtonAction from './ButtonAction'
 
@@ -14,15 +14,18 @@ const mapOptionDropdown = (type) => {
         return [
             {
                 op: 'progress',
-                title: 'in progress'
+                title: 'in progress',
+                icon: 'progress'
             },
             {
                 op: 'conclude',
-                title: 'concluded'
+                title: 'concluded',
+                icon: 'check',
             },
             {
                 op: 'cancel',
-                title: 'canceled'
+                title: 'canceled',
+                icon: 'cancel',
             },
         ]
     } /*else if (type === 'reminder') {
@@ -58,7 +61,7 @@ const ButtonDropdown = (props) => {
                 props.changeDropdownValue({ name: 'status', value: datavalue })
             }
 
-            if (typeClass === 'btn-action-create' && event.props.type === 'goal' || event.props.type === 'assignment') {
+            if (typeClass === 'btn-action-create' && (event.props.type === 'goal' || event.props.type === 'assignment')) {
                 setModel(prev => ({ ...prev, typeModel: event.props.type, mainModelID: null, submitModel: {} }))
             }
         }
@@ -71,13 +74,13 @@ const ButtonDropdown = (props) => {
                 optionsDropdown = [
                     {
                         op: 'goal',
-                        iconFa: 'fa-solid fa-plus',
-                        title: 'goal'
+                        title: 'goal',
+                        icon: 'plus'
                     },
                     {
                         op: 'assignment',
-                        iconFa: 'fa-solid fa-plus',
-                        title: 'assignment'
+                        title: 'assignment',
+                        icon: 'plus'
                     }
                 ]
                 break
@@ -102,7 +105,8 @@ const ButtonDropdown = (props) => {
 
     return (
         <span className={`${props.classBtn} button-st`} onClick={(e) => toggleVisibility(target, e)} onKeyDown={(e) => e.key === 'Enter' ? toggleVisibility(target, e) : ''} role='button' tabIndex='0'>
-            <i className={`icon-st ${props.iconFa}`}></i>{props.title}
+            {props.icon && iconMap[props.icon]}
+            {props.title}
             <div className={`dropdown-menu ${visibleElements.includes(typeClass) ? 'show' : ''}`} onClick={(e) => e.stopPropagation()}>
                 {defineDropdown()}
                 <div className='dropdown-item item-element'>
@@ -126,7 +130,7 @@ const ButtonDropdown = (props) => {
                                                 <ButtonAction onClick={dropdownActionClick} datavalue={dropdownStatus ? option.op : null}
                                                     target={targetMap(...classTargetDropdown)}
                                                     switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'center' })}
-                                                    classBtn={`form-${option.op} button-st`} iconFa='fa-solid fa-plus' title={`${option.title}`} type={option.op}
+                                                    classBtn={`form-${option.op} button-st`} icon={option.icon} title={`${option.title}`} type={option.op}
                                                 />
                                             </div>
                                             <div className='item-details'>
