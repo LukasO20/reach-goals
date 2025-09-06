@@ -3,6 +3,8 @@ import { useContext } from 'react'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 
+import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
+
 import { targetMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import ButtonAction from './ButtonAction'
@@ -38,6 +40,7 @@ const NullObject = (value) => {
 const ButtonDropdown = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { setModel } = useContext(ManageModelContext)
+    const { layoutComponent } = useSwitchLayout()
 
     const target = props.target ?? { class: [] }
     const typeClass = target.class !== undefined ? target.class[0] : null
@@ -56,7 +59,7 @@ const ButtonDropdown = (props) => {
             }
 
             if (typeClass === 'btn-action-create' && event.props.type === 'goal' || event.props.type === 'assignment') {
-                setModel(prev => ({...prev, typeModel: event.props.type, mainModelID: null, submitModel: {} }))
+                setModel(prev => ({ ...prev, typeModel: event.props.type, mainModelID: null, submitModel: {} }))
             }
         }
     }
@@ -120,7 +123,11 @@ const ButtonDropdown = (props) => {
                                     <div className={`option ${option.op}`} key={`op-${index}`}>
                                         <div className='item-option'>
                                             <div className='item-title'>
-                                                <ButtonAction onClick={dropdownActionClick} datavalue={dropdownStatus ? option.op : null} target={targetMap(...classTargetDropdown)} switchLayout={switchLayoutMap('panel', 'layout', 'center')} classBtn={`form-${option.op} button-st`} iconFa='fa-solid fa-plus' title={`${option.title}`} type={option.op} />
+                                                <ButtonAction onClick={dropdownActionClick} datavalue={dropdownStatus ? option.op : null}
+                                                    target={targetMap(...classTargetDropdown)}
+                                                    switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'center' })}
+                                                    classBtn={`form-${option.op} button-st`} iconFa='fa-solid fa-plus' title={`${option.title}`} type={option.op}
+                                                />
                                             </div>
                                             <div className='item-details'>
 
