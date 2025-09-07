@@ -1,5 +1,5 @@
 import ModelSwitcher from '../../items/models/ModelSwitcher.jsx'
-import ButtonAction from '../../items/elements/ButtonAction.jsx'
+import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 
 import { modalListMap } from '../../../../utils/mapping/mappingUtils.js'
 

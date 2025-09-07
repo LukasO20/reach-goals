@@ -1,6 +1,6 @@
-import ButtonAction from '../../elements/ButtonAction.jsx'
-import Assignment from '../../models/Assignment.jsx'
-import Goal from '../../models/Goal.jsx'
+import ButtonAction from '../../elements/ButtonAction/ButtonAction.jsx'
+import Assignment from '../../models/Assignment/Assignment.jsx'
+import Goal from '../../models/Goal/Goal.jsx'
 
 import { targetMap } from '../../../../../utils/mapping/mappingUtils.js'
 

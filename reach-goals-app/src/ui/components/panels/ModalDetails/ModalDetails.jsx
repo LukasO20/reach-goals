@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 
 import { filterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
-import ModalDetailsSection from '../../items/modals/modal_details/ModalDetailsSection.jsx'
+import ModalDetailsSection from '../../items/modals/ModalDetailsSection/ModalDetailsSection.jsx'
 
 const ModalDetails = (props) => {
     const { selected: selectedAssignment, refetch: refetchAssignment } = useAssignmentModel()

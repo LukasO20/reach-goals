@@ -5,8 +5,8 @@ import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 
 import '../Home/Home.scss'
 
-import Goal from '../../items/models/Goal.jsx'
-import Assignment from '../../items/models/Assignment.jsx'
+import Goal from '../../items/models/Goal/Goal.jsx'
+import Assignment from '../../items/models/Assignment/Assignment.jsx'
 
 const Home = () => {
     const { update } = useTitle()

@@ -11,10 +11,10 @@ import { useTagModel } from '../../../../provider/model/TagModelProvider.jsx'
 import { modalListMap } from '../../../../utils/mapping/mappingUtils.js'
 import { formatDate } from '../../../../utils/utils.js'
 
-import ButtonAction from '../../items/elements/ButtonAction.jsx'
-import Form from '../../items/forms/Form.jsx'
+import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
+import Form from '../../items/forms/Form/Form.jsx'
 
-import '../../../styles/items/Elements.scss'
+import '../../../styles/elements.scss'
 
 const formsInputMap = (typeForm, model, exFunction) => {
     const form = typeForm === 'assignment' &&

@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 
-import CardItem from '../elements/CardItem.jsx'
+import CardItem from '../elements/CardItem/CardItem.jsx'
 
 const ModelCopy = ({ displayRef, region }) => {
     const [modelCopy, setCopyModel] = useState([])

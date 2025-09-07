@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import ButtonAction from './ButtonAction.jsx'
+import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 
 const NullObject = (props) => {
     if (props !== undefined) {

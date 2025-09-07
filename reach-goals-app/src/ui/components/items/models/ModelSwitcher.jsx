@@ -1,6 +1,6 @@
-import Assignment from './Assignment.jsx'
-import Goal from './Goal.jsx'
-import Tag from './Tag.jsx'
+import Assignment from './Assignment/Assignment.jsx'
+import Goal from './Goal/Goal.jsx'
+import Tag from './Tag/Tag.jsx'
 
 const ModelSwitcher = (props) => {
     const type = props?.type

@@ -1,13 +1,13 @@
 import { useState } from 'react'
 
-import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
+import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
-import { filterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
+import { filterModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
-import Goal from '../models/Goal.jsx'
-import Assignment from '../models/Assignment.jsx'
-import ButtonAction from '../elements/ButtonAction.jsx'
-import { iconMap } from '../../../../utils/mapping/mappingUtils.js'
+import Goal from '../../models/Goal/Goal.jsx'
+import Assignment from '../../models/Assignment/Assignment.jsx'
+import ButtonAction from '../../elements/ButtonAction/ButtonAction.jsx'
+import { iconMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 const boxConfigs = (type) => {
     const goal = [

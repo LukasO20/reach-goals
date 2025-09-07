@@ -1,13 +1,6 @@
-import React from 'react'
-
 const modalItem = (type) => {
     let layout = undefined
     switch (type) {
-        // case 'config-notification':
-        //     layout = <div className='sec-notification sec'>
-        //         <h3>Configurations of notifications section</h3>
-        //     </div>
-        //     break
         case 'config-theme':
             layout = <div className='sec-theme sec'>
                 <h3>Configurations of theme section</h3>

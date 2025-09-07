@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
 
-import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
+import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
-import { iconMap } from '../../../../utils/mapping/mappingUtils.js'
+import { iconMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 const ButtonLink = (props) => {
     const { switchLayoutComponent } = useSwitchLayout()

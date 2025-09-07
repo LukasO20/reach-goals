@@ -8,7 +8,7 @@ import { useTitle } from '../../../../provider/TitleProvider.jsx'
 
 import { targetMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
 
-import ButtonLink from '../../items/elements/ButtonLink.jsx'
+import ButtonLink from '../../items/elements/ButtonLink/ButtonLink.jsx'
 
 const ContainerH = () => {
     const { title } = useTitle()
@@ -34,9 +34,6 @@ const ContainerH = () => {
                 <div className='item-nav'>
                     <ButtonLink id="btn-theme" classBtn="button-h theme" icon="themes" />
                 </div>
-                {/* <div className="item-nav">
-                    <ButtonLink id="btn-profile" classBtn="button-h profile" icon="user" />
-                </div> */}
             </div>
         </div>
     )

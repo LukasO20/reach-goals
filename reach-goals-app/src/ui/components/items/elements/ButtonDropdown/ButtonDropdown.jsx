@@ -1,13 +1,13 @@
 import { useContext } from 'react'
 
-import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
-import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
+import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
+import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 
-import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
+import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
-import { targetMap, switchLayoutMap, iconMap } from '../../../../utils/mapping/mappingUtils.js'
+import { targetMap, switchLayoutMap, iconMap } from '../../../../../utils/mapping/mappingUtils.js'
 
-import ButtonAction from './ButtonAction'
+import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 
 const mapOptionDropdown = (type) => {
     if (type === 'status') {

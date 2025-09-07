@@ -1,17 +1,17 @@
 import { useContext, useEffect, useMemo, useState } from 'react'
 
-import { useAssignmentModel } from '../../../../provider/model/AssignmentModelProvider.jsx'
+import { useAssignmentModel } from '../../../../../provider/model/AssignmentModelProvider.jsx'
 
-import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
-import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
-import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
+import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
+import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
+import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
-import { targetMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
-import { filterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
+import { targetMap, switchLayoutMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { filterModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
-import CardItem from '../elements/CardItem.jsx'
+import CardItem from '../../elements/CardItem/CardItem.jsx'
 
-import '../../../styles/items/models/Assignment.scss'
+import '../Assignment/Assignment.scss'
 
 const Assignment = (props) => {
     const [erro, setErro] = useState(false)

@@ -1,14 +1,14 @@
 import { useContext } from 'react'
 
-import ModalList from '../../panels/ModalList/ModalList.jsx'
-import ButtonAction from '../elements/ButtonAction.jsx'
-import ButtonDropdown from '../elements/ButtonDropdown.jsx'
-import ModelSwitcher from '../models/ModelSwitcher.jsx'
-import ModelCopy from '../models/ModelCopy.jsx'
+import ModalList from '../../../panels/ModalList/ModalList.jsx'
+import ButtonAction from '../../elements/ButtonAction/ButtonAction.jsx'
+import ButtonDropdown from '../../elements/ButtonDropdown/ButtonDropdown.jsx'
+import ModelSwitcher from '../../models/ModelSwitcher.jsx'
+import ModelCopy from '../../models/ModelCopy.jsx'
 
-import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
+import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 
-import { targetMap, iconMap } from '../../../../utils/mapping/mappingUtils.js'
+import { targetMap, iconMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 const titleMap = {
     assignment: 'Create your assignment',

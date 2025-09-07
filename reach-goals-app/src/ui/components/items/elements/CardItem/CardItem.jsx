@@ -1,10 +1,10 @@
 import { useMemo } from 'react'
 import { useLocation, Link } from 'react-router-dom'
 
-import { switchLayoutMap, targetMap, iconMap } from '../../../../utils/mapping/mappingUtils.js'
-import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
+import { switchLayoutMap, targetMap, iconMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
-import ButtonAction from './ButtonAction.jsx'
+import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 
 const renderCard = ({ type, model, clickFunction, display }, page) => {    
     return model.map(model => (

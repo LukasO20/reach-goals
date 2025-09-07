@@ -4,12 +4,12 @@ import ProviderApp from '../provider/ProviderApp.jsx'
 import AppRoutes from './Routes.jsx'
 
 import ContainerN from '../ui/components/navigate/Navigate.jsx'
-import ContainerH from '../ui/components/containers/containerhead/ContainerHeader.jsx'
-import ContainerM from '../ui/components/containers/containermain/ContainerMain.jsx'
+import ContainerH from '../ui/components/containers/ContainerHeader/ContainerHeader.jsx'
+import ContainerM from '../ui/components/containers/ContainerMain/ContainerMain.jsx'
 import Panel from '../ui/components/panels/Panel.jsx'
 
 import './App.scss'
-import '../ui/styles/items/Elements.scss'
+import '../ui/styles/elements.scss'
 
 const App = () => (
     <BrowserRouter>

@@ -4,8 +4,8 @@ import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 
 import { targetMap, iconMap } from '../../../../utils/mapping/mappingUtils.js'
 
-import ButtonAction from '../../items/elements/ButtonAction.jsx'
-import ModalConfigSection from '../../items/modals/modal_config/ModalConfigSection.jsx'
+import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
+import ModalConfigSection from '../../items/modals/ModalConfigSection/ModalConfigSection.jsx'
 
 import '../ModalConfig/ModalConfig.scss'
 

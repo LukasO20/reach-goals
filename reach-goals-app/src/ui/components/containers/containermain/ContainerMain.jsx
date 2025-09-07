@@ -7,9 +7,9 @@ import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 
 import { targetMap, switchLayoutMap, checkboxMap, iconMap } from '../../../../utils/mapping/mappingUtils.js'
 
-import ButtonAction from '../../items/elements/ButtonAction.jsx'
-import ButtonDropdown from '../../items/elements/ButtonDropdown.jsx'
-import ButtonCheckbox from '../../items/elements/ButtonCheckbox.jsx'
+import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
+import ButtonDropdown from '../../items/elements/ButtonDropdown/ButtonDropdown.jsx'
+import ButtonCheckbox from '../../items/elements/ButtonCheckbox/ButtonCheckbox.jsx'
 
 const ContainerM = () => {
     const { resetManageModel } = useContext(ManageModelContext)

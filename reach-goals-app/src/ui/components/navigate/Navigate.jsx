@@ -5,8 +5,8 @@ import { targetMap, switchLayoutMap } from '../../../utils/mapping/mappingUtils.
 
 import { useSwitchLayout } from '../../../provider/SwitchLayoutProvider.jsx'
 
-import ButtonAction from '../items/elements/ButtonAction.jsx'
-import ButtonLink from '../items/elements/ButtonLink.jsx'
+import ButtonAction from '../items/elements/ButtonAction/ButtonAction.jsx'
+import ButtonLink from '../items/elements/ButtonLink/ButtonLink.jsx'
 
 import '../navigate/Navigate.scss'
 

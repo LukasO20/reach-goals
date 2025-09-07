@@ -1,4 +1,4 @@
-@import '../../../app/App.scss';
+@import '../../app/App.scss';
 
 //Configurations primary
 body {
@@ -163,10 +163,6 @@ body {
             background-color: $color-complementary-s-o12;
             color: $color-complementary-s;
         }
-    }
-
-    &.dropdown-form {
-
     }
 }
 
