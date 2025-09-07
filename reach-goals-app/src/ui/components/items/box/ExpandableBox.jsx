@@ -7,6 +7,7 @@ import { filterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.j
 import Goal from '../models/Goal.jsx'
 import Assignment from '../models/Assignment.jsx'
 import ButtonAction from '../elements/ButtonAction.jsx'
+import { iconMap } from '../../../../utils/mapping/mappingUtils.js'
 
 const boxConfigs = (type) => {
     const goal = [
@@ -62,7 +63,6 @@ const ExpandableBox = (props) => {
     const [filterRenderModel, setFilterRenderModel] = useState(filterModelMap)
 
     const configType = layoutComponent.objectives.layout
-    const currentIcoType = configType === 'goal' ? 'fa-bullseye' : configType === 'assignment' ? 'fa-list-check' : ''
 
     const handleOptions = (currentfilter) => {
         setFilterRenderModel(() => ({
@@ -76,7 +76,7 @@ const ExpandableBox = (props) => {
                 {
                     <>
                         <div className='title'>
-                            <h2><i className={'fa-solid ' + currentIcoType}></i>{configType}</h2>
+                            <h2>{iconMap[configType]}{configType + 's'}</h2>
                         </div>
                         <div className='options'>
                             {
