@@ -20,7 +20,7 @@ const Assignment = (props) => {
 
     const { toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
-    const { switchLayoutComponent } = useSwitchLayout()
+    const { layoutComponent, switchLayoutComponent } = useSwitchLayout()
     const { data, loading, refetch, remove } = useAssignmentModel()
 
     const display = props.display
@@ -90,7 +90,7 @@ const Assignment = (props) => {
 
     useEffect(() => {
         if (pendingPanel && model.mainModelID) {
-            switchLayoutComponent(switchLayoutMap('panel', 'layout', 'right'))
+            switchLayoutComponent(switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'right' }))
             toggleVisibility(targetMap(['panel-right', 'assignment']))
             setPendingPanel(false)
         }
@@ -106,7 +106,7 @@ const Assignment = (props) => {
     //console.log('ASSIGNMENT LOADED - ', assignment)
 
     return (
-        loading && data.length === 0 ?
+        loading && activeModelSource.length === 0 ?
             <p>Loading...</p>
             :
             activeModelSource.length ? <CardItem type={'assignment'} model={activeModelSource} clickFunction={clickEvents} display={display} /> : null

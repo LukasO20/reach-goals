@@ -21,7 +21,7 @@ const Goal = (props) => {
 
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
-    const { switchLayoutComponent } = useSwitchLayout()
+    const { layoutComponent, switchLayoutComponent } = useSwitchLayout()
     const { data, loading, refetch, remove } = useGoalModel()
 
     const display = props.display
@@ -37,11 +37,11 @@ const Goal = (props) => {
         goalTagRelation: props.goalTagRelation,
         notAssignmentRelation: props.notAssignmentRelation
     }), [
-       props.typeDataSource,
-       props.goalAssignmentRelation, 
-       props.goalSomeID, 
-       props.goalTagRelation, 
-       props.notAssignmentRelation 
+        props.typeDataSource,
+        props.goalAssignmentRelation,
+        props.goalSomeID,
+        props.goalTagRelation,
+        props.notAssignmentRelation
     ])
 
     const deleteGoal = async (id) => {
@@ -85,7 +85,7 @@ const Goal = (props) => {
 
     useEffect(() => {
         if (pendingPanel && model.mainModelID) {
-            switchLayoutComponent(switchLayoutMap('panel', 'layout', 'right'))
+            switchLayoutComponent(switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'right' }))
             toggleVisibility(targetMap(['panel-right', 'goal']))
             setPendingPanel(false)
         }
@@ -101,7 +101,7 @@ const Goal = (props) => {
     //console.log('GOAL LOADED - ', goal)
 
     return (
-        loading && data.core.length === 0 ?
+        loading && activeModelSource.length === 0 ?
             <p>Loading...</p>
             :
             activeModelSource.length ? <CardItem type={'goal'} model={activeModelSource} clickFunction={clickEvents} display={display} /> : null
