@@ -30,8 +30,12 @@
 }
 
 .search-st {
+    display: inline-flex;
+    align-items: center;
     color: $color-complementary-s;
     background-color: $color-complementary-p;
+    padding: 0.35rem;
+    border-radius: 0.5rem;
 
     .search-content {
         border: none;

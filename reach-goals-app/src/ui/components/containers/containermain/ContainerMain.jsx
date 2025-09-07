@@ -10,6 +10,7 @@ import { targetMap, switchLayoutMap, checkboxMap, iconMap } from '../../../../ut
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import ButtonDropdown from '../../items/elements/ButtonDropdown/ButtonDropdown.jsx'
 import ButtonCheckbox from '../../items/elements/ButtonCheckbox/ButtonCheckbox.jsx'
+import SearchBar from '../../items/elements/SearchBar/SearchBar.jsx'
 
 import '../ContainerMain/ContainerMain.scss'
 
@@ -39,7 +40,7 @@ const ContainerM = () => {
                         <ButtonCheckbox checkbox={checkboxMap({ id: 'checkbox-m', value: false })} classBtn='checkbox-m btn-checkbox' />
                         {/* <ButtonDropdown target={targetMap('btn-filter-content')} classBtn='button-filter-m filter-content' iconFa='fa-solid fa-filter' /> */}
                         <ButtonAction classBtn='button-show-m chart' icon='chartbar' />
-                        <label className='button-filter-m search'>{iconMap['search']}<input type='text' placeholder='search' id='search-content-m' className='search-content' /></label>
+                        <SearchBar />
                         <ButtonAction classBtn='button-show-m goals' title='goals'
                             switchLayout={switchLayoutMap({ page: layoutComponent.page, name: layoutComponent.page, layout: 'layout', value: 'goal' })}
                         />

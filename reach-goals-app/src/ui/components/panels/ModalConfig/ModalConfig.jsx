@@ -6,6 +6,7 @@ import { targetMap, iconMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import ModalConfigSection from '../../items/modals/ModalConfigSection/ModalConfigSection.jsx'
+import SearchBar from '../../items/elements/SearchBar/SearchBar.jsx'
 
 import '../ModalConfig/ModalConfig.scss'
 
@@ -22,12 +23,9 @@ const Config = () => {
                 <div className='aside-config'>
                     <div className='nav-itens'>
                         <div className='head'>
-                            <label className='button-filter-m search'>
-                                {iconMap['search']}<input type='text' placeholder='search' id='search-content-m' className='search-content'/>
-                            </label>
+                            <SearchBar />
                         </div>
                         <div className='body'>
-                            {/* <ButtonAction target={targetMap('config-notification', { add: true })} classBtn=' button-action-config config-notification sq' title='Notifications' iconFa='fa-solid fa-bell'/> */}
                             <ButtonAction target={targetMap('config-theme', { add: true })} classBtn=' button-action-config config-theme sq' title='Themes' icon='themes'/>
                             <ButtonAction target={targetMap('config-search', { add: true })} classBtn=' button-action-config config-search sq' title='Searched items' icon='searchalt'/>
                             <ButtonAction target={targetMap('config-layout', { add: true })} classBtn=' button-action-config config-layout sq' title='Layout' icon='layoutgrid'/>

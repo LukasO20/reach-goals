@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
 
-import ExpandableBox from '../../items/box/ExpandableBox/ExpandableBox.jsx'
+import ExpandableBox from '../../items/elements/ExpandableBox/ExpandableBox.jsx'
 
 const Objectives = () => {
     const { update } = useTitle()
