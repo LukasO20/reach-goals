@@ -6,7 +6,7 @@ import { filterModelMap } from '../../../../../utils/mapping/mappingUtilsProvide
 
 import Goal from '../../models/Goal/Goal.jsx'
 import Assignment from '../../models/Assignment/Assignment.jsx'
-import ButtonAction from '../../elements/ButtonAction/ButtonAction.jsx'
+import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 import { iconMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 const boxConfigs = (type) => {
