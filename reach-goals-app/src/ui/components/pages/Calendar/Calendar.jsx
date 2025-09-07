@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useTitle } from '../../../provider/TitleProvider.jsx'
+import { useTitle } from '../../../../provider/TitleProvider.jsx'
 
 const Calendar = () => {
     const { update } = useTitle()

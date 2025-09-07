@@ -1,13 +1,13 @@
 import { useContext } from 'react'
 
-import { VisibilityContext } from '../../../provider/VisibilityProvider.jsx'
+import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 
-import { targetMap, iconMap } from '../../../utils/mapping/mappingUtils.js'
+import { targetMap, iconMap } from '../../../../utils/mapping/mappingUtils.js'
 
-import ButtonAction from '../items/elements/ButtonAction.jsx'
-import ModalConfigSection from '../items/modals/modal_config/ModalConfigSection.jsx'
+import ButtonAction from '../../items/elements/ButtonAction.jsx'
+import ModalConfigSection from '../../items/modals/modal_config/ModalConfigSection.jsx'
 
-import '../../styles/panels/Config.scss'
+import '../ModalConfig/ModalConfig.scss'
 
 const Config = () => {
     const { visibleElements } = useContext(VisibilityContext)

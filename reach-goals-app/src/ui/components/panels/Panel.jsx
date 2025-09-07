@@ -5,15 +5,12 @@ import { ManageModelContext } from '../../../provider/ManageModelProvider.jsx'
 
 import { useSwitchLayout } from '../../../provider/SwitchLayoutProvider.jsx'
 
-import ModalForm from './ModalForm.jsx'
-import ModalDetails from './ModalDetails.jsx'
-import ModalConfig from './ModalConfig.jsx'
-import ModalTag from './ModalTag.jsx'
+import ModalForm from './ModalForm/ModalForm.jsx'
+import ModalDetails from './ModalDetails/ModalDetails.jsx'
+import ModalConfig from './ModalConfig/ModalConfig.jsx'
+import ModalTag from './ModalTag/ModalTag.jsx'
 
-import '../../styles/panels/Tag.scss'
-import '../../styles/panels/Notification.scss'
-import '../../styles/panels/ModalDetails.scss'
-import '../../styles/panels/Panel.scss'
+import '../panels/Panel.scss'
 
 const renderLayoutContentPanel = (panelPosition, renderConfig) => {
     switch (panelPosition) {

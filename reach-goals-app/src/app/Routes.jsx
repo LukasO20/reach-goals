@@ -1,9 +1,8 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 
 import Sections from '../ui/components/SectionLayout'
-import ModalTag from '../ui/components/panels/ModalTag'
-import Notification from '../ui/components/panels/Notification'
-import ModalDetails from '../ui/components/panels/ModalDetails'
+import ModalTag from '../ui/components/panels/ModalTag/ModalTag.jsx'
+import ModalDetails from '../ui/components/panels/ModalDetails/ModalDetails.jsx'
 
 const AppRoutes = () => {
     return (
@@ -11,7 +10,6 @@ const AppRoutes = () => {
             <Route path='/' element={<Navigate to='/home' />} />
             <Route path='/:section' element={<Sections />}>
                 <Route path='tag' element={<ModalTag />} />
-                <Route path='notification' element={<Notification />} />
                 <Route path='details' element={<ModalDetails />} />
             </Route>
         </Routes>

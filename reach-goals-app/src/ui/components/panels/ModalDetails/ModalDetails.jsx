@@ -1,12 +1,12 @@
-import { useAssignmentModel } from '../../../provider/model/AssignmentModelProvider.jsx'
-import { useGoalModel } from '../../../provider/model/GoalModelProvider.jsx'
-import { useTagModel } from '../../../provider/model/TagModelProvider.jsx'
+import { useAssignmentModel } from '../../../../provider/model/AssignmentModelProvider.jsx'
+import { useGoalModel } from '../../../../provider/model/GoalModelProvider.jsx'
+import { useTagModel } from '../../../../provider/model/TagModelProvider.jsx'
 
 import { useEffect } from 'react'
 
-import { filterModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
+import { filterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
-import ModalDetailsSection from '../items/modals/modal_details/ModalDetailsSection.jsx'
+import ModalDetailsSection from '../../items/modals/modal_details/ModalDetailsSection.jsx'
 
 const ModalDetails = (props) => {
     const { selected: selectedAssignment, refetch: refetchAssignment } = useAssignmentModel()

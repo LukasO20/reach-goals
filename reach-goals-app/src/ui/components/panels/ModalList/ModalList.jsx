@@ -1,7 +1,7 @@
-import ModelSwitcher from '../items/models/ModelSwitcher.jsx'
-import ButtonAction from '../items/elements/ButtonAction.jsx'
+import ModelSwitcher from '../../items/models/ModelSwitcher.jsx'
+import ButtonAction from '../../items/elements/ButtonAction.jsx'
 
-import { modalListMap } from '../../../utils/mapping/mappingUtils.js'
+import { modalListMap } from '../../../../utils/mapping/mappingUtils.js'
 
 const ModalList = (props) => {
     const title = props?.title

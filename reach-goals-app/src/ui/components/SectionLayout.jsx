@@ -4,9 +4,9 @@ import { useEffect } from 'react'
 
 import { useSwitchLayout } from '../../provider/SwitchLayoutProvider.jsx'
 
-import Home from './pages/Home.jsx'
-import Calendar from './pages/Calendar.jsx'
-import Objectives from './pages/Objectives.jsx'
+import Home from './pages/Home/Home.jsx'
+import Calendar from './pages/Calendar/Calendar.jsx'
+import Objectives from './pages/Objectives/Objectives.jsx'
 
 const sectionRender = (section) => {
     switch (section) {

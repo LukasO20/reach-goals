@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
 
-import { useTitle } from '../../../provider/TitleProvider.jsx'
-import { useSwitchLayout } from '../../../provider/SwitchLayoutProvider.jsx'
+import { useTitle } from '../../../../provider/TitleProvider.jsx'
+import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 
-import '../../styles/pages/Home.scss'
+import '../Home/Home.scss'
 
-import Goal from '../items/models/Goal.jsx'
-import Assignment from '../items/models/Assignment.jsx'
+import Goal from '../../items/models/Goal.jsx'
+import Assignment from '../../items/models/Assignment.jsx'
 
 const Home = () => {
     const { update } = useTitle()

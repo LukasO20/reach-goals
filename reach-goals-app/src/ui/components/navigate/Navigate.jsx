@@ -1,14 +1,14 @@
 import { useContext } from 'react'
 
-import { VisibilityContext } from '../../provider/VisibilityProvider.jsx'
-import { targetMap, switchLayoutMap } from '../../utils/mapping/mappingUtils.js'
+import { VisibilityContext } from '../../../provider/VisibilityProvider.jsx'
+import { targetMap, switchLayoutMap } from '../../../utils/mapping/mappingUtils.js'
 
-import { useSwitchLayout } from '../../provider/SwitchLayoutProvider.jsx'
+import { useSwitchLayout } from '../../../provider/SwitchLayoutProvider.jsx'
 
-import ButtonAction from './items/elements/ButtonAction.jsx'
-import ButtonLink from './items/elements/ButtonLink.jsx'
+import ButtonAction from '../items/elements/ButtonAction.jsx'
+import ButtonLink from '../items/elements/ButtonLink.jsx'
 
-import '../styles/Navigate.scss'
+import '../navigate/Navigate.scss'
 
 const Navigate = () => {
     const { toggleVisibility } = useContext(VisibilityContext)

@@ -1,21 +1,20 @@
 import { useContext, useEffect, useState } from 'react'
 
-import { VisibilityContext } from '../../../provider/VisibilityProvider.jsx'
-import { ManageModelContext } from '../../../provider/ManageModelProvider.jsx'
-import { ModalListContext } from '../../../provider/ModalListProvider.jsx'
+import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
+import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
+import { ModalListContext } from '../../../../provider/ModalListProvider.jsx'
 
-import { useGoalModel } from '../../../provider/model/GoalModelProvider.jsx'
-import { useAssignmentModel } from '../../../provider/model/AssignmentModelProvider.jsx'
-import { useTagModel } from '../../../provider/model/TagModelProvider.jsx'
+import { useGoalModel } from '../../../../provider/model/GoalModelProvider.jsx'
+import { useAssignmentModel } from '../../../../provider/model/AssignmentModelProvider.jsx'
+import { useTagModel } from '../../../../provider/model/TagModelProvider.jsx'
 
-import { modalListMap } from '../../../utils/mapping/mappingUtils.js'
-import { formatDate } from '../../../utils/utils.js'
+import { modalListMap } from '../../../../utils/mapping/mappingUtils.js'
+import { formatDate } from '../../../../utils/utils.js'
 
-import ButtonAction from '../items/elements/ButtonAction.jsx'
-import Form from '../items/forms/Form.jsx'
+import ButtonAction from '../../items/elements/ButtonAction.jsx'
+import Form from '../../items/forms/Form.jsx'
 
-import '../../styles/items/Elements.scss'
-import '../../styles/panels/Objectives.scss'
+import '../../../styles/items/Elements.scss'
 
 const formsInputMap = (typeForm, model, exFunction) => {
     const form = typeForm === 'assignment' &&

@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 
-import ModalList from '../../panels/ModalList.jsx'
+import ModalList from '../../panels/ModalList/ModalList.jsx'
 import ButtonAction from '../elements/ButtonAction.jsx'
 import ButtonDropdown from '../elements/ButtonDropdown.jsx'
 import ModelSwitcher from '../models/ModelSwitcher.jsx'

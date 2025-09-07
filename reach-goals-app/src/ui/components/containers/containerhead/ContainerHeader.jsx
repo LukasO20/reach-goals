@@ -1,14 +1,14 @@
 import { useContext } from 'react'
 
-import { ManageModelContext } from '../../provider/ManageModelProvider.jsx'
-import { VisibilityContext } from '../../provider/VisibilityProvider.jsx'
+import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
+import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 
-import { useSwitchLayout } from '../../provider/SwitchLayoutProvider.jsx'
-import { useTitle } from '../../provider/TitleProvider.jsx'
+import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
+import { useTitle } from '../../../../provider/TitleProvider.jsx'
 
-import { targetMap, switchLayoutMap } from '../../utils/mapping/mappingUtils.js'
+import { targetMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
 
-import ButtonLink from './items/elements/ButtonLink.jsx'
+import ButtonLink from '../../items/elements/ButtonLink.jsx'
 
 const ContainerH = () => {
     const { title } = useTitle()
@@ -34,12 +34,9 @@ const ContainerH = () => {
                 <div className='item-nav'>
                     <ButtonLink id="btn-theme" classBtn="button-h theme" icon="themes" />
                 </div>
-                {/* <div className="item-nav" onClick={(e) => toggleVisibility(target, e)}>
-                    <ButtonLink id="btn-notification" link={`${currentLocation}/notification`} classBtn="button-h notification" iconFa="fa-solid fa-bell"/>
-                </div> */}
-                <div className="item-nav">
+                {/* <div className="item-nav">
                     <ButtonLink id="btn-profile" classBtn="button-h profile" icon="user" />
-                </div>
+                </div> */}
             </div>
         </div>
     )

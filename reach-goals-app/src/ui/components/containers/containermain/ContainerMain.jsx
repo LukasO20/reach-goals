@@ -1,15 +1,15 @@
 import { useContext } from 'react'
-import Routes from '../../app/Routes'
+import Routes from '../../../../app/Routes.jsx'
 
-import { ManageModelContext } from '../../provider/ManageModelProvider.jsx'
-import { VisibilityContext } from '../../provider/VisibilityProvider.jsx'
-import { useSwitchLayout } from '../../provider/SwitchLayoutProvider.jsx'
+import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
+import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
+import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 
-import { targetMap, switchLayoutMap, checkboxMap, iconMap } from '../../utils/mapping/mappingUtils.js'
+import { targetMap, switchLayoutMap, checkboxMap, iconMap } from '../../../../utils/mapping/mappingUtils.js'
 
-import ButtonAction from './items/elements/ButtonAction.jsx'
-import ButtonDropdown from './items/elements/ButtonDropdown.jsx'
-import ButtonCheckbox from './items/elements/ButtonCheckbox.jsx'
+import ButtonAction from '../../items/elements/ButtonAction.jsx'
+import ButtonDropdown from '../../items/elements/ButtonDropdown.jsx'
+import ButtonCheckbox from '../../items/elements/ButtonCheckbox.jsx'
 
 const ContainerM = () => {
     const { resetManageModel } = useContext(ManageModelContext)
