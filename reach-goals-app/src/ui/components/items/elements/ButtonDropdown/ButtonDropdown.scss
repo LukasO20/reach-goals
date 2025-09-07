@@ -1,0 +1,22 @@
+@import '../../../../themes/lighttheme.scss';
+
+.dropdown-menu {
+    position: absolute;
+    display: none;
+    background-color: $color-complementary-p;
+    box-shadow: $box-shadow-st;
+    padding: 0.5em;
+    margin: 0.5em;
+    border-radius: 0.2em;
+    max-height: 20em;
+    right: 0;
+
+    &.show {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .button-st {
+        color: $color-complementary-s;
+    }
+}

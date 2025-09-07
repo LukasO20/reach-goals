@@ -9,6 +9,8 @@ import { targetMap, switchLayoutMap, iconMap } from '../../../../../utils/mappin
 
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 
+import '../ButtonDropdown/ButtonDropdown.scss'
+
 const mapOptionDropdown = (type) => {
     if (type === 'status') {
         return [

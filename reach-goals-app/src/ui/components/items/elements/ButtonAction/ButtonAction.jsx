@@ -9,6 +9,8 @@ import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.js
 
 import { iconMap } from '../../../../../utils/mapping/mappingUtils.js'
 
+import '../ButtonAction/ButtonAction.scss'
+
 const statusButton = (classBtn, providervisibleElements) => {
     if (!providervisibleElements) { return false }
     return providervisibleElements.includes(classBtn)

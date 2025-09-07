@@ -1,4 +1,5 @@
-@import '../../../app/App.scss';
+@import '../../themes/lighttheme.scss';
+@import '../../styles/typography.scss';
 
 .container-navigate {
     background-color: $color-complementary-p;
@@ -38,11 +39,6 @@
                         width: 2.05vw;
                         margin: 1em 0em;
                     }
-                }
-
-                .icon-st {
-                    font-size: $icon-size-st;
-                    margin: 0.25em auto;
                 }
             }
         }

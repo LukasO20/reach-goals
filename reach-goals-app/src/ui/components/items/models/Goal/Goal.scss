@@ -1,4 +1,4 @@
-@import '../../../../../app/App.scss';
+@import '../../../../themes/lighttheme.scss';
 
 .goal {
 
@@ -11,10 +11,6 @@
         .head {
             display: inline-flex;
             align-items: center;
-    
-            .icon-st {
-                font-size: $icon-size-small;
-            }
     
             label {
                 margin: 0em 0.5em; 

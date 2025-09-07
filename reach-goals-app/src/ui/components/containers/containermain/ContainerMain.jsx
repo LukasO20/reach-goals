@@ -11,6 +11,8 @@ import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import ButtonDropdown from '../../items/elements/ButtonDropdown/ButtonDropdown.jsx'
 import ButtonCheckbox from '../../items/elements/ButtonCheckbox/ButtonCheckbox.jsx'
 
+import '../ContainerMain/ContainerMain.scss'
+
 const ContainerM = () => {
     const { resetManageModel } = useContext(ManageModelContext)
     const { toggleVisibility } = useContext(VisibilityContext)

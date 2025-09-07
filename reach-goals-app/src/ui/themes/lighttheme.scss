@@ -36,3 +36,6 @@ $color-primary-70: rgba($color-primary, 0.70);
 $color-white-70: rgba($color-white, 0.70);
 $color-complementary-p-70: rgba($color-complementary-p, 0.70);
 $color-complementary-s-70: rgba($color-complementary-s, 0.70);
+
+/* SHADOW */
+$box-shadow-st: 0.01em 0.01em 0.45em 0.01em $color-complementary-s-30;
