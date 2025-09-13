@@ -1,0 +1,30 @@
+@use "../../../../themes/lighttheme" as *;
+@import '../../../../themes/lighttheme.scss';
+
+.button-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2.4rem;
+    width: 2.4rem;
+    background-color: $color-complementary-p-50;
+    transition: .3s linear;
+    cursor: pointer;
+
+    &.circle {
+        border-radius: 50%;
+    }
+
+    &:hover,
+    &.active {
+        background-color: $color-complementary-s;
+        
+        .icon-st {
+            color: $color-white;
+        }
+
+        &.home {
+            background-color: $color-complementary-p-70;
+        }
+    }
+}
