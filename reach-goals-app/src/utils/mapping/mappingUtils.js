@@ -62,6 +62,7 @@ export const iconMap = {
     user: <Unicons.UilUser className='icon-st' />,
     config: <Unicons.UilSlidersVAlt className='icon-st' />,
     calendar: <Unicons.UilCalendar className='icon-st' />,
+    schedule: <Unicons.UilCalendarAlt className='icon-st' />,
     objectives: <Unicons.UilCreateDashboard className='icon-st' />,
     edit: <Unicons.UilPen className='icon-st' />,
     remove: <Unicons.UilTrashAlt className='icon-st' />,
