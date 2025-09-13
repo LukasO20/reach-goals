@@ -9,7 +9,6 @@ import ContainerM from '../ui/components/containers/ContainerMain/ContainerMain.
 import Panel from '../ui/components/panels/Panel.jsx'
 
 import './App.scss'
-import '../ui/styles/elements.scss'
 
 const App = () => (
     <BrowserRouter>

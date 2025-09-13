@@ -1,5 +1,6 @@
 @charset "UTF-8";
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+@import '../ui/themes/lighttheme.scss';
 
 /* DEFAULT COLORS (DON'T FINISHED YET) */
 
@@ -16,7 +17,7 @@
 
 /*COLOS DEFINED (IN PROGRESS...)
 #172B4D - primary
-#9EC2FF - secondary
+#16B0F7 - secondary
 #75a8ff - accent
 #5E5850 - accent complementary
 #1E1E1E - color text
@@ -56,4 +57,9 @@ body {
             grid-area: container-main;
         }
     }
+}
+
+.icon-st {
+    height: 1.35rem;
+    color: $color-complementary-s;
 }
