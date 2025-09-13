@@ -63,3 +63,34 @@ body {
     height: 1.35rem;
     color: $color-complementary-s;
 }
+
+// Scrollbar variables
+$scrollbar-width: 8px;
+$scrollbar-bg: transparent;
+$scrollbar-thumb-radius: 4px;
+
+// Mixin scrollbar
+@mixin overlay-scrollbar {
+  scrollbar-width: thin; // Firefox
+  scrollbar-color: $scrollbar-color $scrollbar-bg;
+
+  &::-webkit-scrollbar {
+    width: $scrollbar-width;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $scrollbar-bg;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $scrollbar-color;
+    border-radius: $scrollbar-thumb-radius;
+    border: 2px solid $scrollbar-bg;
+  }
+}
+
+// Container apply
+.scrollable {
+  padding-right: $scrollbar-width; // avoid content cut
+  @include overlay-scrollbar;
+}
