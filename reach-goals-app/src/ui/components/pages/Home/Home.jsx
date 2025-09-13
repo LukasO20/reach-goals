@@ -28,7 +28,7 @@ const Home = () => {
                     <div className="head-column">
                         {iconLayoutModel}<label>to do</label>
                     </div>
-                    <div className="body-column">
+                    <div className="body-column scrollable">
                         <div className='list'>
                             {
                                 layoutComponent.home.layout === 'goal' ?
