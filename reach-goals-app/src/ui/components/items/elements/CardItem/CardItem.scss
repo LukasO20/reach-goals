@@ -1,0 +1,40 @@
+@use "../../../../themes/lighttheme" as *;
+@import '../../../../themes/lighttheme.scss';
+
+.card {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: $color-white;
+    margin: 0.5rem 0rem;
+
+    > a {
+        text-decoration: none;
+
+        .head {
+            color: $color-complementary-s;
+
+            .line-info {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-weight: 600;
+            }
+        }
+
+        .body {
+            color: $color-complementary-s-70;
+
+            .line-info {
+                margin: 0rem 0.25rem;
+                font-weight: 500;
+            }
+        }
+    }
+
+    .side-actions {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        gap: 0.5rem;
+    }
+}
