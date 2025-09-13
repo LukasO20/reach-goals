@@ -28,6 +28,7 @@
             flex: 1;
             margin: 0em 0em 2em 0em;
             border-bottom: solid 1px $color-complementary-p;
+            padding: 0rem 1rem;
 
             h2,
             .objective-options {
@@ -125,22 +126,15 @@
                 justify-content: space-between;
                 background-color: $color-complementary-s-30;
                 padding: 0.25em 0em;
-
-                * {
+                
+                h2 {
+                    margin: 0.83em 0.5em;
                     color: $color-complementary-s;
                 }
 
-                h2 {
-                    margin: 0.83em 0.5em;
-                }
-
-                .button-st {
-                    padding: 0em;
-
-                    &.close-modal {
-                        position: absolute;
-                        left: -3em;
-                    }
+                .close {
+                    position: absolute;
+                    left: -3em;
                 }
 
                 .options {
@@ -148,6 +142,7 @@
                     display: flex;
                     align-items: center;
                     gap: 1em;
+                    color: $color-complementary-s;
 
                     .btn-option-r {
 
