@@ -16,8 +16,12 @@ import '../ContainerMain/ContainerMain.scss'
 
 const ContainerM = () => {
     const { resetManageModel } = useContext(ManageModelContext)
-    const { toggleVisibility } = useContext(VisibilityContext)
+    const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { layoutComponent } = useSwitchLayout()
+
+    const isSwitchLayoutAssignment = layoutComponent[layoutComponent.page]?.layout === 'assignment'
+    const isSwitchLayoutGoal = layoutComponent[layoutComponent.page]?.layout === 'goal'
+    const isSwitchLayoutActivities = layoutComponent[layoutComponent.page]?.layout === 'default'
 
     return (
         <div className='container-main' onClick={(e) => { toggleVisibility(targetMap(null), e); resetManageModel() }}>
@@ -28,33 +32,36 @@ const ContainerM = () => {
                     </div>
                     <div className='options-m'>
                         <div className='visibility-m'>
-                            <ButtonDropdown target={targetMap('btn-visibility')} classBtn='button-m visibility' title='visibility' icon={'monitor'} />
+                            <ButtonDropdown target={targetMap('btn-visibility')} classBtn={`button-dropdown visibility plan ${visibleElements.includes('btn-visibility') && 'active'}`}
+                             title='visibility' icon={'monitor'} />
                         </div>
                         <div className='more-m'>
-                            <ButtonDropdown target={targetMap('btn-more')} classBtn='button-m more' icon='ellipsisv' />
+                            <ButtonDropdown target={targetMap('btn-more')} classBtn={`button-dropdown more plan ${visibleElements.includes('btn-more') && 'active'}`}
+                             icon='ellipsisv' />
                         </div>
                     </div>
                 </div>
                 <div className='line-s'>
                     <div className='filter'>
                         <ButtonCheckbox checkbox={checkboxMap({ id: 'checkbox-m', value: false })} classBtn='checkbox-m btn-checkbox' />
-                        {/* <ButtonDropdown target={targetMap('btn-filter-content')} classBtn='button-filter-m filter-content' iconFa='fa-solid fa-filter' /> */}
                         <ButtonAction classBtn='button-show-m chart' icon='chartbar' />
                         <SearchBar />
-                        <ButtonAction classBtn='button-show-m goals' title='goals'
+                        <ButtonAction classBtn={`button-action plan-round max-width goal ${isSwitchLayoutGoal && 'active'}`} title='goals'
                             switchLayout={switchLayoutMap({ page: layoutComponent.page, name: layoutComponent.page, layout: 'layout', value: 'goal' })}
                         />
-                        <ButtonAction classBtn='button-show-m assignment' title='assignments'
+                        <ButtonAction classBtn={`button-action plan-round max-width assignment ${isSwitchLayoutAssignment && 'active'}`} title='assignments'
                             switchLayout={switchLayoutMap({ page: layoutComponent.page, name: layoutComponent.page, layout: 'layout', value: 'assignment' })}
                         />
                         {layoutComponent.page === 'objectives' &&
-                            <ButtonAction classBtn='button-show-m all-activities' title='all activities'
+                            <ButtonAction classBtn={`button-action plan-round max-width all-activities ${isSwitchLayoutActivities && 'active'}`} title='all activities'
                                 switchLayout={switchLayoutMap({ page: layoutComponent.page, name: layoutComponent.page, layout: 'layout', value: 'default' })}
                             />}
                     </div>
                     <div className='action'>
-                        <ButtonDropdown target={targetMap('btn-action-order')} classBtn='button-action-m order' icon='arrowaltv' title='order' />
-                        <ButtonDropdown target={targetMap('btn-action-create')} classBtn='button-action-m create' icon='plus' title='create' reference='panel-center' />
+                        <ButtonDropdown target={targetMap('btn-action-order')} classBtn={`order plan ${visibleElements.includes('btn-action-order') && 'active'}`} 
+                            icon='arrowaltv' title='order' />
+                        <ButtonDropdown target={targetMap('btn-action-create')} classBtn={`create plan ${visibleElements.includes('btn-action-create') && 'active'}`} 
+                            icon='plus' title='create' reference='panel-center' />
                     </div>
                 </div>
             </div>

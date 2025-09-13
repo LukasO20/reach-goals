@@ -24,7 +24,7 @@ const ModalTag = () => {
         <div className='container-tag aside-content' onClick={(e) => e.stopPropagation()}>
             <div className='header'>
                 <h2>Tags</h2>
-                <ButtonAction target={targetMap(null)} standardRoute="true" classBtn='btn-action-r close-modal circ' icon='close'/>
+                <ButtonAction target={targetMap(null)} standardRoute="true" classBtn='button-action circle close' icon='close'/>
                 <div className='options'>
                     <ButtonAction target={targetMap('near-modalForm', { add: true })} classBtn='form-tag btn-option-r create' icon='plus' title='create'/>
                     <ButtonCheckbox checkbox={checkboxMap({ id: 'checkbox-r-tag', value: false })} classBtn='checkbox-r-tag btn-checkbox'/>

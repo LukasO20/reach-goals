@@ -13,11 +13,12 @@ import '../ModalConfig/ModalConfig.scss'
 const Config = () => {
     const { visibleElements } = useContext(VisibilityContext)
     const typeSection = visibleElements[2] ?? ''
+
     return (
         <div className="container-config center-content">
             <div className='head'>
                 <h2>{iconMap['config']}Configurations</h2>
-                <ButtonAction target={targetMap(null)} classBtn='button-action-p close-modal' icon='close'/>
+                <ButtonAction target={targetMap(null)} classBtn='button-action circle close' icon='close'/>
             </div>
             <div className='body'>
                 <div className='aside-config'>
@@ -26,9 +27,12 @@ const Config = () => {
                             <SearchBar />
                         </div>
                         <div className='body'>
-                            <ButtonAction target={targetMap('config-theme', { add: true })} classBtn=' button-action-config config-theme sq' title='Themes' icon='themes'/>
-                            <ButtonAction target={targetMap('config-search', { add: true })} classBtn=' button-action-config config-search sq' title='Searched items' icon='searchalt'/>
-                            <ButtonAction target={targetMap('config-layout', { add: true })} classBtn=' button-action-config config-layout sq' title='Layout' icon='layoutgrid'/>
+                            <ButtonAction target={targetMap('config-theme', { add: true })} 
+                                classBtn={`button-action ${typeSection === 'config-theme' ? 'active' : ''} plan config-theme`} title='themes' icon='themes'/>
+                            <ButtonAction target={targetMap('config-search', { add: true })} 
+                                classBtn={`button-action ${typeSection === 'config-search' ? 'active' : ''} plan config-search`} title='searched items' icon='searchalt'/>
+                            <ButtonAction target={targetMap('config-layout', { add: true })} 
+                                classBtn={`button-action ${typeSection === 'config-layout' ? 'active' : ''} plan config-layout`} title='layout' icon='layoutgrid'/>
                         </div>
                     </div>
                 </div>

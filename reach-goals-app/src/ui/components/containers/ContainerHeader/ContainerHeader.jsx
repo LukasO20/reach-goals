@@ -29,12 +29,12 @@ const ContainerH = () => {
             </div>
             <div className="nav">
                 <div className="item-nav" onClick={(e) => { toggleVisibility(targetMap(['panel-right', 'tag']), e); linkTagClick(e) }}>
-                    <ButtonLink id="btn-tag" switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'right' })}
-                        link={`/${layoutComponent.page}/tag`} classBtn="button-h tag" icon="tag"
+                    <ButtonLink switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'right' })}
+                        link={`/${layoutComponent.page}/tag`} classBtn="button-link circle tag" icon="tag"
                     />
                 </div>
                 <div className='item-nav'>
-                    <ButtonLink id="btn-theme" classBtn="button-h theme" icon="themes" />
+                    <ButtonLink classBtn="button-link circle theme" icon="themes" />
                 </div>
             </div>
         </div>
