@@ -1,8 +1,9 @@
-import { useMemo } from 'react'
-import { useLocation, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { switchLayoutMap, targetMap, iconMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
+
+import '../CardItem/CardItem.scss'
 
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 
@@ -16,7 +17,11 @@ const renderCard = ({ type, model, clickFunction, display }, page) => {
                         <div className='head'>
                             <label className='line-info'>{iconMap[type]}<label>{model.name}</label></label>
                         </div>
-                        <div className='body'></div>
+                        <div className='body'>
+                            <label className='line-info'>
+                                {model.description}
+                            </label>
+                        </div>
                     </Link>
                     :
                     <div className='head'>
@@ -30,8 +35,10 @@ const renderCard = ({ type, model, clickFunction, display }, page) => {
                         display.type === 'card'
                             ?
                             <>
-                                <ButtonAction onClick={() => clickFunction.edit(model.id || model.tagID)} target={targetMap(['panel-center', type])} switchLayout={switchLayoutMap({ page: page, name: 'panel', layout: 'layout', value: 'center' })} classBtn={`edit-${type}`} icon='edit' />
-                                <ButtonAction onClick={() => clickFunction.delete(model.id || model.tagID)} target={targetMap(null)} classBtn={`remove-${type}`} icon='remove' />
+                                <ButtonAction onClick={() => clickFunction.edit(model.id || model.tagID)} target={targetMap(['panel-center', type])} switchLayout={switchLayoutMap({ page: page, name: 'panel', layout: 'layout', value: 'center' })} 
+                                    classBtn={`edit-${type} button-action circle small`} icon='edit' />
+                                <ButtonAction onClick={() => clickFunction.delete(model.id || model.tagID)} target={targetMap(null)} 
+                                    classBtn={`remove-${type} button-action circle small`} icon='remove' />
                             </>
                             :
                             <ButtonAction onClick={() => clickFunction.aux(model.id || model.tagID, 'delete', model.type)} classBtn={`remove-${type}-dom`} icon='close' />
