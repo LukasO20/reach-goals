@@ -14,8 +14,6 @@ import { formatDate } from '../../../../utils/utils.js'
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import Form from '../../items/forms/Form/Form.jsx'
 
-import '../../../styles/elements.scss'
-
 const formsInputMap = (typeForm, model, exFunction) => {
     const form = typeForm === 'assignment' &&
         <div className='field-forms duration'>

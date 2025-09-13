@@ -1,20 +1,14 @@
 import { useState, useEffect } from 'react'
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 
+import { targetMap } from '../../../../../utils/mapping/mappingUtils.js'
+
 const NullObject = (props) => {
     if (props !== undefined) {
         const result = props.length !== 0 ? true : false
         return result
 
     } else { return false }
-}
-
-const targetMap = (classes) => {
-    const data = Array.isArray(classes) ? classes : [classes]
-    const attributes = {
-        class: data,
-    }
-    return attributes
 }
 
 const Dropdown = (props) => {
@@ -24,7 +18,6 @@ const Dropdown = (props) => {
     const dropdownStatus = props.parent.includes('goal-status') || props.parent.includes('assignment-status') 
 
     const handleAction = (event) => {
-        console.log('EVENT - ', event)
 
         if (event.props) {
             const datavalue = event.props.datavalue
@@ -44,8 +37,6 @@ const Dropdown = (props) => {
                 if (inputClosest) {
                     inputClosest.forEach(item => {
                         item.value = selectedValue
-
-                        console.log('VALUE OF DROPDOWN INPUT - ', item.value)
                     })
                 }
             }
