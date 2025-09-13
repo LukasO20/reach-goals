@@ -2,19 +2,4 @@
 
 .assignment {
 
-    &.card {
-        padding: 1em;
-        border-radius: 0.5em;
-        background-color: $color-white;
-        margin: 0.5em 0em;
-    
-        .head {
-            display: inline-flex;
-            align-items: center;
-    
-            label {
-                margin: 0em 0.5em; 
-            }
-        }
-    }
 }

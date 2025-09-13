@@ -25,10 +25,11 @@
             }
 
             .head-column {
-                height: 3em;
+                height: 3rem;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                gap: 0.5rem;
 
                 label {
                     font-weight: 600;

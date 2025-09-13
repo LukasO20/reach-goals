@@ -18,6 +18,15 @@
     &.circle {
         border-radius: 50%;
 
+        &.small {
+            height: 1.8rem;
+            width: 1.8rem;
+
+            .icon-st {
+                height: 1rem;
+            }
+        }
+
         &.close {
             height: 1.8rem;
             width: 1.8rem;
