@@ -109,7 +109,7 @@ const Assignment = (props) => {
         loading && activeModelSource.length === 0 ?
             <p>Loading...</p>
             :
-            activeModelSource.length ? <CardItem type={'assignment'} model={activeModelSource} clickFunction={clickEvents} display={display} /> : null
+            activeModelSource?.length ? <CardItem type={'assignment'} model={activeModelSource} clickFunction={clickEvents} display={display} /> : null
     )
 }
 
