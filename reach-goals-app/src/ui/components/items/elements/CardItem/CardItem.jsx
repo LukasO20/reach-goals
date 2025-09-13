@@ -7,6 +7,8 @@ import '../CardItem/CardItem.scss'
 
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 
+import moment from 'moment'
+
 const renderCard = ({ type, model, clickFunction, display }, page) => {    
     return model.map(model => (
         <div className={`${type} ${display.type}`} id={model.id || model.tagID} key={model.id || model.tagID}
@@ -18,7 +20,16 @@ const renderCard = ({ type, model, clickFunction, display }, page) => {
                             <label className='line-info'>{iconMap[type]}<label>{model.name}</label></label>
                         </div>
                         <div className='body'>
-                            <label className='line-info'>
+                            {
+                                model?.end &&
+                                <label className='line-info date'>
+                                    {iconMap['schedule']}
+                                    <span>
+                                        Ends on {moment(model.end).format('DD MMMM')}
+                                    </span> 
+                                </label>
+                            }
+                            <label className='line-info description'>
                                 {model.description}
                             </label>
                         </div>
