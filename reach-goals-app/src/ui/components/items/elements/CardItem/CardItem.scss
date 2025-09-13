@@ -2,13 +2,29 @@
 @import '../../../../themes/lighttheme.scss';
 
 .card {
+    display: flex;
+    gap: 0.5rem;
     padding: 1rem;
+    border: 3.25px solid transparent;
     border-radius: 0.5rem;
     background-color: $color-white;
     margin: 0.5rem 0rem;
 
+    &:hover {
+        border-color: $color-accent-p-30;
+    }
+    
     > a {
+        flex: 1;
         text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        cursor: pointer;
+
+        * {
+            cursor: pointer;
+        }
 
         .head {
             color: $color-complementary-s;
@@ -18,22 +34,56 @@
                 align-items: center;
                 gap: 0.5rem;
                 font-weight: 600;
+
+                > label {
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    flex: 1;
+                }
             }
         }
 
         .body {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
             color: $color-complementary-s-70;
+            max-height: 8rem;
+            overflow: hidden;
 
             .line-info {
-                margin: 0rem 0.25rem;
                 font-weight: 500;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                text-overflow: ellipsis;
+                overflow: hidden;
+
+                &.date {
+                    flex: 2;
+                    color: $color-complementary-s-70;
+                    font-size: 0.85rem;
+                    font-weight: 600;
+
+                    .icon-st {
+                        height: 1rem;
+                    }
+                }
+
+                &.description {
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 5;
+                }
             }
         }
     }
 
     .side-actions {
         display: flex;
-        align-items: center;
+        align-items: end;
         justify-content: end;
         gap: 0.5rem;
     }

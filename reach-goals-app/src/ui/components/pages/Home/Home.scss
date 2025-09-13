@@ -11,7 +11,9 @@
         display: flex;
         justify-content: space-between;
         width: 100%;
-        flex: 2;
+        flex: 5;
+        gap: 1rem;
+        overflow: hidden;
 
         .column {
             display: flex;
@@ -19,9 +21,28 @@
             background-color: $color-complementary-p;
             flex: 1;
             border-radius: 0.35em;
+            overflow: hidden;
+
+            &:nth-child(1) {
+
+                .head-column {
+                    background-color: $color-complementary-s-15;
+                    color: $color-complementary-s;
+                }
+            }
 
             &:nth-child(2) {
-                margin: 0em 1em;
+
+                .head-column {
+
+                }
+            }
+
+            &:nth-child(3) {
+
+                .head-column {
+
+                }
             }
 
             .head-column {
@@ -37,11 +58,9 @@
             }
 
             .body-column {
+                height: 85%;
                 padding: 0.75em;
-
-                .list {
-                    overflow-y: auto;
-                }
+                overflow-y: auto;
             }
         }
     }
