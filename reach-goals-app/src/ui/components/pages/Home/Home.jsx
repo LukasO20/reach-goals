@@ -3,6 +3,8 @@ import { useEffect } from 'react'
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
 import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 
+import { iconMap } from '../../../../utils/mapping/mappingUtils.js'
+
 import '../Home/Home.scss'
 
 import Goal from '../../items/models/Goal/Goal.jsx'
@@ -11,6 +13,9 @@ import Assignment from '../../items/models/Assignment/Assignment.jsx'
 const Home = () => {
     const { update } = useTitle()
     const { layoutComponent } = useSwitchLayout()
+
+    const iconLayoutModel = layoutComponent['home']?.layout === 'assignment' ? 
+        iconMap['assignment'] : layoutComponent['home']?.layout === 'goal' ? iconMap['goal'] : null
 
     useEffect(() => {
         update(`Welcome. Let's produce?`)
@@ -21,7 +26,7 @@ const Home = () => {
             <div className="itens">
                 <div className="itens-to-do column">
                     <div className="head-column">
-                        <label>to do</label>
+                        {iconLayoutModel}<label>to do</label>
                     </div>
                     <div className="body-column">
                         <div className='list'>
@@ -35,13 +40,13 @@ const Home = () => {
                 </div>
                 <div className="itens-progress column">
                     <div className="head-column">
-                        <label>in progress</label>
+                        {iconMap['progress']}<label>in progress</label>
                     </div>
                     <div className="body-column"></div>
                 </div>
                 <div className="itens-conclude column">
                     <div className="head-column">
-                        <label>conclude</label>
+                        {iconMap['check']}<label>conclude</label>
                     </div>
                     <div className="body-column"></div>
                 </div>
