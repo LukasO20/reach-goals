@@ -4,6 +4,8 @@ import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.js
 
 import { iconMap } from '../../../../../utils/mapping/mappingUtils.js'
 
+import '../ButtonLink/ButtonLink.scss'
+
 const ButtonLink = (props) => {
     const { switchLayoutComponent } = useSwitchLayout()
 
@@ -15,7 +17,7 @@ const ButtonLink = (props) => {
         <Link to={`${props.link !== undefined ? props.link : '/'}`} className={props.classBtn} onClick={handleClick}>
             {props.img !== undefined ?
                 <img src={props.img} alt={props.imgAlt} /> :
-                <span className={`${props.classBtn} button-st`}>{iconMap[props.icon]}</span>
+                iconMap[props.icon]
             }
         </Link>
     )

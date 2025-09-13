@@ -106,9 +106,11 @@ const ButtonDropdown = (props) => {
     }
 
     return (
-        <span className={`${props.classBtn} button-st`} onClick={(e) => toggleVisibility(target, e)} onKeyDown={(e) => e.key === 'Enter' ? toggleVisibility(target, e) : ''} role='button' tabIndex='0'>
-            {props.icon && iconMap[props.icon]}
-            {props.title}
+        <div className={`button-dropdown ${props.classBtn}`} onClick={(e) => toggleVisibility(target, e)} onKeyDown={(e) => e.key === 'Enter' ? toggleVisibility(target, e) : ''} role='button' tabIndex='0'>
+            <span>
+                {props.icon && iconMap[props.icon]}
+                {props.title}
+            </span>
             <div className={`dropdown-menu ${visibleElements.includes(typeClass) ? 'show' : ''}`} onClick={(e) => e.stopPropagation()}>
                 {defineDropdown()}
                 <div className='dropdown-item item-element'>
@@ -132,7 +134,7 @@ const ButtonDropdown = (props) => {
                                                 <ButtonAction onClick={dropdownActionClick} datavalue={dropdownStatus ? option.op : null}
                                                     target={targetMap(...classTargetDropdown)}
                                                     switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'center' })}
-                                                    classBtn={`form-${option.op} button-st`} icon={option.icon} title={`${option.title}`} type={option.op}
+                                                    classBtn={`form-${option.op} button-action plan-round`} icon={option.icon} title={`${option.title}`} type={option.op}
                                                 />
                                             </div>
                                             <div className='item-details'>
@@ -149,7 +151,7 @@ const ButtonDropdown = (props) => {
                     </div>
                 </div>
             </div>
-        </span>
+        </div>
     )
 }
 
