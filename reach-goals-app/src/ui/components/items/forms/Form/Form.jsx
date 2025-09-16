@@ -7,6 +7,7 @@ import ModelSwitcher from '../../models/ModelSwitcher.jsx'
 import ModelCopy from '../../models/ModelCopy.jsx'
 
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
+import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 
 import { targetMap, iconMap } from '../../../../../utils/mapping/mappingUtils.js'
 
@@ -81,6 +82,7 @@ const Form = (props) => {
         }
     }
 
+    const { visibleElements } = useContext(VisibilityContext)
     const { model, setModel } = useContext(ManageModelContext)
 
     switch (typeForm) {
@@ -92,7 +94,7 @@ const Form = (props) => {
                             <label>Create a tag</label>
                         </div>
                         <div className='objective-buttons-options'>
-                            <ButtonAction target={targetMap('near-modalForm', { remove: true })} classBtn='button-action-p close-modal' icon='close' />
+                            <ButtonAction target={targetMap('near-modalForm', { remove: true })} classBtn='button-action circle close' icon='close' />
                         </div>
                     </div>
                     <div className='body'>
@@ -134,15 +136,17 @@ const Form = (props) => {
                         </div>
                         <div className='objective-options'>
                             <div className='objective-op'>
-                                <ButtonAction target={targetMap(['panel-center', 'assignment'], { maintain: true })} classBtn='op-form-assignment button-op-objective' title='assingments' nullModel={true} onClick={() => setModel(prev => ({ ...prev, typeModel: 'assignment' }))} />
-                                <ButtonAction target={targetMap(['panel-center', 'goal'], { maintain: true })} classBtn='op-form-goal button-op-objective' title='goals' nullModel={true} onClick={() => setModel(prev => ({ ...prev, typeModel: 'goal' }))} />
+                                <ButtonAction target={targetMap(['panel-center', 'assignment'], { maintain: true })} classBtn={`op-form-assignment button-action plan small ${typeForm === 'assignment' ? 'active' : ''}`} 
+                                    title='assingments' nullModel={true} onClick={() => setModel(prev => ({ ...prev, typeModel: 'assignment' }))} />
+                                <ButtonAction target={targetMap(['panel-center', 'goal'], { maintain: true })} classBtn={`op-form-goal button-action plan small ${typeForm === 'goal' ? 'active' : ''}`} 
+                                    title='goals' nullModel={true} onClick={() => setModel(prev => ({ ...prev, typeModel: 'goal' }))} />
                             </div>
                             <div className='objective-color'>
                                 <label className='color'></label>
                             </div>
                         </div>
                         <div className='objective-buttons-options'>
-                            <ButtonAction target={targetMap(null)} nullModel={true} classBtn='button-action-p close-modal' icon='close' />
+                            <ButtonAction target={targetMap(null)} nullModel={true} classBtn='button-action circle close' icon='close' />
                         </div>
                     </div>
                     <div className='body'>
@@ -162,14 +166,15 @@ const Form = (props) => {
                                         name='end' value={modelForm?.end || ''} onChange={functionsForm.mapHandleChange} />
                                 </div>
                                 <div className='field-forms status'>
-                                    <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })} classBtn='dropdown-form' title='choose an option' opening='modal-form' dropdownValue={modelForm?.status || undefined} changeDropdownValue={functionsForm.mapHandleChange} dataSelectable={true} />
+                                    <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })} classBtn={`button-dropdown plan small max-width status ${visibleElements.includes(`${typeForm}-status`) ? 'active' : '' }`} title='choose an option' opening='modal-form' 
+                                        dropdownValue={modelForm?.status || undefined} changeDropdownValue={functionsForm.mapHandleChange} dataSelectable={true} />
                                 </div>
                                 {functionsForm.mapFormsInputMap(typeForm, modelForm, functionsForm.mapHandleChange)}
                                 <div className='item-forms tag'>
                                     <div className='item-forms head'>
                                         <div className='item-head-1'>
                                             <label>tags</label>
-                                            <ButtonAction modalList={functionsForm.mapModalListMap(true, 'tag')} classBtn={'form-modallist-tag'} icon='plus' title='Add' />
+                                            <ButtonAction modalList={functionsForm.mapModalListMap(true, 'tag')} classBtn={'button-action plan-round add max-width small'} icon='plus' title='Add' />
                                         </div>
                                         <div className='item-head-2'></div>
                                     </div>

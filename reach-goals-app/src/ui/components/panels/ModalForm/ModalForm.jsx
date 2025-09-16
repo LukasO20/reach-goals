@@ -31,7 +31,7 @@ const formsItemMap = (typeForm, modelComponent) => {
             <div className='item-forms head'>
                 <div className='item-head-1'>
                     <label>{messageRelation}</label>
-                    <ButtonAction modalList={modalListMap(true, typeForm)} classBtn={`form-modallist-${typeForm} button-st`} icon='plus' title='Add' />
+                    <ButtonAction modalList={modalListMap(true, typeForm)} classBtn={`form-modallist-${typeForm} button-action plan-round add max-width small`} icon='plus' title='Add' />
                 </div>
                 <div className='item-head-2'></div>
             </div>

@@ -36,7 +36,7 @@ const ContainerM = () => {
                              title='visibility' icon={'monitor'} />
                         </div>
                         <div className='more-m'>
-                            <ButtonDropdown target={targetMap('btn-more')} classBtn={`button-dropdown more plan ${visibleElements.includes('btn-more') && 'active'}`}
+                            <ButtonDropdown target={targetMap('btn-more')} classBtn={`button-dropdown more plan max-width ${visibleElements.includes('btn-more') && 'active'}`}
                              icon='ellipsisv' />
                         </div>
                     </div>
