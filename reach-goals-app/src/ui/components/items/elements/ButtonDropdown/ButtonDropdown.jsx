@@ -44,7 +44,7 @@ const NullObject = (value) => {
 
 const ButtonDropdown = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
-    const { setModel } = useContext(ManageModelContext)
+    const { model, setModel } = useContext(ManageModelContext)
     const { layoutComponent } = useSwitchLayout()
 
     const target = props.target ?? { class: [] }
@@ -134,7 +134,7 @@ const ButtonDropdown = (props) => {
                                                 <ButtonAction onClick={dropdownActionClick} datavalue={dropdownStatus ? option.op : null}
                                                     target={targetMap(...classTargetDropdown)}
                                                     switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'center' })}
-                                                    classBtn={`form-${option.op} button-action plan-round`} icon={option.icon} title={`${option.title}`} type={option.op}
+                                                    classBtn={`form-${option.op} button-action plan-round ${model.submitModel?.status === option.op ? 'active' : ''}`} icon={option.icon} title={`${option.title}`} type={option.op}
                                                 />
                                             </div>
                                             <div className='item-details'>
