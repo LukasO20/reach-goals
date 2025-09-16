@@ -8,11 +8,30 @@
     height: 2.4rem;
     width: 2.4rem;
     background-color: $color-complementary-p-50;
+    color: $color-complementary-s;
     transition: .3s linear;
     cursor: pointer;
 
-    * {
-        color: $color-complementary-s;
+    &.add {
+        background-color: $color-accent-p-15;
+
+        * {
+            color: $color-accent-p;
+        }
+
+        &:hover,
+        &.active {
+            background-color: $color-accent-p;
+
+            * {
+                color: $color-white;
+            }
+        }
+
+        &:active {
+            background-color: $color-primary-50;
+            transition: .1s linear;
+        }
     }
 
     &.circle {
@@ -40,10 +59,6 @@
         justify-content: start;
         gap: 0.5rem;
         font-weight: 600;
-
-        &.max-width {
-            width: max-content;
-        }
     }
 
     &.plan-round {
@@ -52,13 +67,16 @@
         justify-content: center;
         gap: 0.5rem;
         font-weight: 600;
-
-        &.max-width {
-            width: max-content;
-        }
     }
-    
-    &:hover, &.active {
+
+    &:active {
+        background-color: $color-complementary-s-30;
+        transition: .1s linear;
+    }
+
+    /* Double application */
+    &:hover,
+    &.active {
         background-color: $color-complementary-s;
 
         * {
@@ -74,8 +92,18 @@
         }
     }
 
-    &:active {
-        background-color: $color-complementary-s-30;
-        transition: .1s linear;
+    &.plan-round,
+    &.plan,
+    &.add {
+
+        &.small {
+            height: 1.8rem;
+            width: 5.75rem;
+            justify-content: center;
+        }
+
+        &.max-width {
+            width: max-content;
+        }
     }
 }

@@ -1,16 +1,10 @@
+@use "../../../../themes/lighttheme" as *;
 @import '../../../../themes/lighttheme.scss';
 
 .button-dropdown {
     position: relative;
     cursor: pointer;
-
-    > span {
-        display: flex;
-        align-items: center;
-        gap: 0.35rem;
-        font-weight: 600;
-        color: $color-complementary-s;
-    }
+    width: 5.85rem;
 
     &.plan {
         display: flex;
@@ -19,71 +13,144 @@
         transition: .3s linear;
         padding: 0rem 1rem;
         border-radius: 0.5rem;
+    }
 
-        &:hover,
-        &.active {
-            background-color: $color-complementary-s;
+    &.plan-round {
+        border-radius: 2rem;
+        padding: 0rem 1rem;
+        justify-content: center;
+        gap: 0.5rem;
+    }
 
-            > span,
-            .icon-st {
-                color: $color-white;
-            }
-        }
+    /* Double application */
+    &.plan,
+    &.plan-round {
 
         &:active {
             background-color: $color-complementary-s-30;
             transition: .1s linear;
         }
 
+        &.small {
+            height: 1.8rem;
+            width: 5.75rem;
+            justify-content: center;
+
+            .dropdown-menu {
+                top: 2.35rem;
+            }
+        }
+
+        &.max-width {
+            width: max-content;
+        }
+
         &.create {
             background-color: $color-accent-p-15;
-
-            > span,
-            .icon-st {
-                color: $color-accent-p;
-            }
 
             &:hover,
             &.active {
                 background-color: $color-accent-p;
-
-                > span,
-                .icon-st {
-                    color: $color-white;
-                }
             }
 
             &:active {
                 background-color: $color-primary-50;
                 transition: .1s linear;
             }
-        }
 
-        &.order {
+            >span,
+            .icon-st {
+                color: $color-accent-p;
+            }
 
-            &.active {
-                background-color: $color-complementary-s;
+            .dropdown-menu {
 
-                > span,
-                .icon-st {
-                    color: $color-white;
+                .button-action {
+                    background-color: $color-accent-p-15;
+
+                    * {
+                        color: $color-primary;
+                    }
+
+                    &:hover {
+                        background-color: $color-accent-p;
+
+                        * {
+                            color: $color-white;
+                        }
+                    }
+
+                    &:active {
+                        background-color: $color-primary-50;
+                        transition: .1s linear;
+                    }
                 }
             }
         }
+
+        &.status {
+
+            .dropdown-menu {
+               
+                .button-action {
+                    background-color: $color-accent-p-15;
+
+                    * {
+                        color: $color-complementary-s;
+                    }
+
+                    &:hover,
+                    &.active {
+                        background-color: $color-accent-p;
+
+                        * {
+                            color: $color-white;
+                        }
+                    }
+
+                    &:active {
+                        background-color: $color-primary-50;
+                        transition: .1s linear;
+                    }
+                }
+            }
+        }
+
+        &:hover,
+        &.active {
+            background-color: $color-complementary-s;
+
+            >span,
+            .icon-st {
+                color: $color-white;
+            }
+        }
+    }
+
+    >span {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-weight: 600;
+        color: $color-complementary-s;
     }
 
     .dropdown-menu {
         position: absolute;
         display: none;
-        top: 2.35rem;
+        top: 2.95rem;
         width: 10rem;
         background-color: $color-complementary-p;
         box-shadow: $box-shadow-st;
         padding: 0.5em;
-        margin: 0.5em;
         border-radius: 0.2em;
         max-height: 20em;
         right: 0;
+
+        &.show {
+            display: flex;
+            flex-direction: column;
+        }
 
         .section-options {
             display: flex;
@@ -91,7 +158,7 @@
             align-items: center;
             gap: 0.5rem;
 
-            > span {
+            >span {
                 color: $color-complementary-s;
                 text-align: center;
                 font-weight: 600;
@@ -100,27 +167,8 @@
 
             .button-action {
                 width: 8rem;
-                background-color: $color-accent-p-15;
                 justify-content: flex-start;
-
-                &:hover {
-                    background-color: $color-accent-p;
-                }
-
-                &:active {
-                    background-color: $color-primary-50;
-                    transition: .1s linear;
-                }
             }
-        }
-
-        &.show {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .button-action {
-            color: $color-complementary-s;
         }
     }
 }
