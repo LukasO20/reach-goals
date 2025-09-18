@@ -11,10 +11,7 @@ import { VisibilityContext } from '../../../../../provider/VisibilityProvider.js
 
 import { targetMap, iconMap } from '../../../../../utils/mapping/mappingUtils.js'
 
-const titleMap = {
-    assignment: 'Create your assignment',
-    goal: 'Create your goal'
-}
+import './Form.scss'
 
 const Form = (props) => {
     const typeForm = props?.typeForm
@@ -23,6 +20,11 @@ const Form = (props) => {
     const booleanForm = props?.booleanFormMap
     const contextForm = props?.contextFormMap
     const stateForm = props?.stateFormMap
+
+    const titleMap = {
+        assignment: `${typeof modelForm.id === 'number' ? 'Edit' : 'Create'} your assignment`,
+        goal: `${typeof modelForm.id === 'number' ? 'Edit' : 'Create'} your goal`
+    }
 
     const icon = iconMap[typeForm] || 'fa-solid fa-triangle-exclamation'
     const titleForm = titleMap[typeForm] || 'Create your objective'
@@ -136,9 +138,9 @@ const Form = (props) => {
                         </div>
                         <div className='objective-options'>
                             <div className='objective-op'>
-                                <ButtonAction target={targetMap(['panel-center', 'assignment'], { maintain: true })} classBtn={`op-form-assignment button-action plan small ${typeForm === 'assignment' ? 'active' : ''}`} 
+                                <ButtonAction target={targetMap(['panel-center', 'assignment'], { maintain: true })} classBtn={`op-form-assignment button-action plan small ${typeForm === 'assignment' ? 'active' : ''}`}
                                     title='assingments' nullModel={true} onClick={() => setModel(prev => ({ ...prev, typeModel: 'assignment' }))} />
-                                <ButtonAction target={targetMap(['panel-center', 'goal'], { maintain: true })} classBtn={`op-form-goal button-action plan small ${typeForm === 'goal' ? 'active' : ''}`} 
+                                <ButtonAction target={targetMap(['panel-center', 'goal'], { maintain: true })} classBtn={`op-form-goal button-action plan small ${typeForm === 'goal' ? 'active' : ''}`}
                                     title='goals' nullModel={true} onClick={() => setModel(prev => ({ ...prev, typeModel: 'goal' }))} />
                             </div>
                             <div className='objective-color'>
@@ -150,74 +152,85 @@ const Form = (props) => {
                         </div>
                     </div>
                     <div className='body'>
-                        <h2>{titleForm}</h2>
-                        <div className='objective-forms'>
-                            <form>
+                        <form className='scrollable'>
+                            <h2>{titleForm}</h2>
+                            <div className='fields'>
                                 <div className='field-forms name'>
-                                    <input id={`${typeForm}-name`} className='input-form' type='text' placeholder={`${typeForm} name...`}
+                                    <label>{iconMap['editbox']}<span>name</span></label>
+                                    <input id={`${typeForm}-name`} className='input-form' type='text' placeholder={`${typeForm} name`}
                                         name='name' value={modelForm?.name || ''} onChange={functionsForm.mapHandleChange} />
                                 </div>
                                 <div className='field-forms start-date'>
-                                    <input id={`${typeForm}-start-date`} className='input-form' type='text' placeholder='set start date'
+                                    <label>{iconMap['schedule']}<span>start date</span></label>
+                                    <input id={`${typeForm}-start-date`} className='input-form' type='text' placeholder='set dd/mm/yyyy'
                                         name='start' value={modelForm?.start || ''} onChange={functionsForm.mapHandleChange} />
                                 </div>
                                 <div className='field-forms end-date'>
-                                    <input id={`${typeForm}-end-date`} className='input-form' type='text' placeholder='set end date'
+                                    <label>{iconMap['schedule']}<span>end date</span></label>
+                                    <input id={`${typeForm}-end-date`} className='input-form' type='text' placeholder='set dd/mm/yyyy'
                                         name='end' value={modelForm?.end || ''} onChange={functionsForm.mapHandleChange} />
                                 </div>
+                                {functionsForm.mapFormsInputMap(typeForm, modelForm, functionsForm.mapHandleChange)}
                                 <div className='field-forms status'>
-                                    <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })} classBtn={`button-dropdown plan small max-width status ${visibleElements.includes(`${typeForm}-status`) ? 'active' : '' }`} title='choose an option' opening='modal-form' 
+                                    <label>{iconMap['progress']}<span>status</span></label>
+                                    <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })} classBtn={`plan small max-width left status ${visibleElements.includes(`${typeForm}-status`) ? 'active' : ''}`} title='choose an option' opening='modal-form'
                                         dropdownValue={modelForm?.status || undefined} changeDropdownValue={functionsForm.mapHandleChange} dataSelectable={true} />
                                 </div>
-                                {functionsForm.mapFormsInputMap(typeForm, modelForm, functionsForm.mapHandleChange)}
-                                <div className='item-forms tag'>
-                                    <div className='item-forms head'>
-                                        <div className='item-head-1'>
-                                            <label>tags</label>
-                                            <ButtonAction modalList={functionsForm.mapModalListMap(true, 'tag')} classBtn={'button-action plan-round add max-width small'} icon='plus' title='Add' />
-                                        </div>
-                                        <div className='item-head-2'></div>
+                            </div>
+                            <div className='item-forms tag'>
+                                <div className='item-forms head'>
+                                    <div className='item-head-1'>
+                                        <label>{iconMap['tag']}<span>tags</span></label>
+                                        <ButtonAction modalList={functionsForm.mapModalListMap(true, 'tag')} classBtn={'button-action plan-round add max-width small'} icon='plus' title='Add' />
                                     </div>
-                                    <div className='item-forms body'>
-                                        {
-                                            <>
-                                                {!! modelForm.id && (<ModelSwitcher type={'tag'} propsReference={modelSwitcherProps} />)}
-                                                <ModelCopy type={model.typeModel} region={'tag'} />
-                                            </>
-                                        }
+                                    <div className='item-head-2'></div>
+                                </div>
+                                <div className='item-forms body'>
+                                    {
+                                        <>
+                                            {!!modelForm.id && (<ModelSwitcher type={'tag'} propsReference={modelSwitcherProps} />)}
+                                            <ModelCopy type={model.typeModel} region={'tag'} />
+                                        </>
+                                    }
+                                </div>
+                            </div>
+                            {
+                                functionsForm.mapFormsItemMap(typeForm,
+                                    <>
+                                        {!!modelForm.id && (<ModelSwitcher type={modelSwitcherRelation} propsReference={modelSwitcherProps} />)}
+                                        <ModelCopy type={model.typeModel} region={modelCopyRelation} />
+                                    </>
+                                )
+                            }
+                            <div className='item-forms details'>
+                                <div className='item-forms head'>
+                                    <div className='item-head-1'>
+                                        <label>{iconMap['comment']} <span>comment</span></label>
                                     </div>
                                 </div>
-                                {
-                                    functionsForm.mapFormsItemMap(typeForm,
-                                        <>
-                                            {!! modelForm.id && (<ModelSwitcher type={modelSwitcherRelation} propsReference={modelSwitcherProps} />)}
-                                            <ModelCopy type={model.typeModel} region={modelCopyRelation} />
-                                        </>
-                                    )
-                                }
-                                <div className='field-forms details'>
-                                    <textarea id={`${typeForm}-details`} className='input-form' placeholder='details here...'
+                                <div className='item-forms body'>
+                                    <textarea id={`${typeForm}-details`} className='input-form scrollable' placeholder='details here...'
                                         name='description' value={modelForm?.description || ''} onChange={functionsForm.mapHandleChange}></textarea>
                                 </div>
-                                <div className='bottom-form'>
-                                    <label onClick={functionsForm.mapHandleSubmit}>save</label>
-                                </div>
-                                <div className='bottom-form-messagae'>
-                                    {
-                                        stateForm.mapStateSuccess &&
-                                        <p className='message successfull'>
-                                            <label>{typeForm === 'goal' ? 'Goal save with success!' : 'Assignment save with success!'}</label>
-                                        </p>
-                                    }
-                                    {
-                                        stateForm.mapStateError &&
-                                        <p className='message error'>
-                                            <label>{`Ops, something went wrong: ${stateForm.mapStateError}`}</label>
-                                        </p>
-                                    }
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div className='bottom-form-messagae'>
+                                {
+                                    stateForm.mapStateSuccess &&
+                                    <p className='message successfull'>
+                                        <label>{typeForm === 'goal' ? 'Goal save with success!' : 'Assignment save with success!'}</label>
+                                    </p>
+                                }
+                                {
+                                    stateForm.mapStateError &&
+                                    <p className='message error'>
+                                        <label>{`Ops, something went wrong: ${stateForm.mapStateError}`}</label>
+                                    </p>
+                                }
+                            </div>
+                        </form>
+                    </div>
+                    <div className='bottom'>
+                        <ButtonAction onClick={functionsForm.mapHandleSubmit} classBtn='button-action plan max-width save' icon='save' title='Save' />
                     </div>
                     {
                         contextForm.mapModalList.open && contextForm.mapModalList.type !== 'tag' &&
