@@ -8,7 +8,7 @@ import { useGoalModel } from '../../../../provider/model/GoalModelProvider.jsx'
 import { useAssignmentModel } from '../../../../provider/model/AssignmentModelProvider.jsx'
 import { useTagModel } from '../../../../provider/model/TagModelProvider.jsx'
 
-import { modalListMap } from '../../../../utils/mapping/mappingUtils.js'
+import { iconMap, modalListMap } from '../../../../utils/mapping/mappingUtils.js'
 import { formatDate } from '../../../../utils/utils.js'
 
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
@@ -17,6 +17,7 @@ import Form from '../../items/forms/Form/Form.jsx'
 const formsInputMap = (typeForm, model, exFunction) => {
     const form = typeForm === 'assignment' &&
         <div className='field-forms duration'>
+            <label>{iconMap['clock']}<span>duration</span></label>
             <input id={`${typeForm}-duration`} className='input-form' type="text" placeholder='set duration' name='duration' onChange={exFunction} value={model?.duration} />
         </div>
 
@@ -30,7 +31,7 @@ const formsItemMap = (typeForm, modelComponent) => {
         <div className={`item-forms ${typeForm === 'goal' ? 'assignment' : 'goal'}`}>
             <div className='item-forms head'>
                 <div className='item-head-1'>
-                    <label>{messageRelation}</label>
+                    <label>{iconMap[typeForm === 'goal' ? 'assignment' : 'goal']}{messageRelation}</label>
                     <ButtonAction modalList={modalListMap(true, typeForm)} classBtn={`form-modallist-${typeForm} button-action plan-round add max-width small`} icon='plus' title='Add' />
                 </div>
                 <div className='item-head-2'></div>
