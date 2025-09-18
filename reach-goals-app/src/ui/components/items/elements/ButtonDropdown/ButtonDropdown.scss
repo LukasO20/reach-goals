@@ -152,6 +152,11 @@
             flex-direction: column;
         }
 
+        &.left {
+            right: initial;
+            left: 0;
+        }
+
         .section-options {
             display: flex;
             flex-direction: column;

@@ -111,7 +111,7 @@ const ButtonDropdown = (props) => {
                 {props.icon && iconMap[props.icon]}
                 {props.title}
             </span>
-            <div className={`dropdown-menu ${visibleElements.includes(typeClass) ? 'show' : ''}`} onClick={(e) => e.stopPropagation()}>
+            <div className={`dropdown-menu ${props.classBtn.includes('left') && 'left'} ${visibleElements.includes(typeClass) ? 'show' : ''}`} onClick={(e) => e.stopPropagation()}>
                 {defineDropdown()}
                 <div className='dropdown-item item-element'>
                     <div className='section-options'>
