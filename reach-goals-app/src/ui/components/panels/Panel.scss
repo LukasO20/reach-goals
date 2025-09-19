@@ -91,6 +91,8 @@
         transform: translate(-50%, -50%);
         background-color: $color-white;
         box-shadow: $box-shadow-st;
+        overflow: hidden;
+        height: 28rem;
     }
 
     &.show {

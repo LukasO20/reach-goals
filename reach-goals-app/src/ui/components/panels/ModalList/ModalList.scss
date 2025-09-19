@@ -1,0 +1,32 @@
+@import '../../../themes/lighttheme.scss';
+
+.container-list-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0.5rem;
+
+    > .head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        border-bottom: solid 1px $color-complementary-p;
+
+        h2 {
+            font-size: 1.05rem;
+        }
+    }
+
+    > .body {
+        overflow-y: auto;
+
+        .mini-list {
+            cursor: pointer;
+
+            * {
+                cursor: pointer;
+            }
+        }
+    }
+}
