@@ -64,7 +64,7 @@
         }
 
         >.item-forms {
-
+            
             /* DOUBLE APPLY */
             &.assignment,
             &.tag,
@@ -92,6 +92,7 @@
                 }
 
                 .body {
+                    padding: 0.5rem;
 
                     textarea {
                         background-color: $color-complementary-p;
@@ -107,6 +108,38 @@
                         &:hover {
                             border-color: $color-accent-p-30;
                         }
+                    }
+                }
+            }
+
+            &.assignment,
+            &.tag {
+
+                .body {
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    gap: 0.5rem;
+
+                    .mini-list {
+                        display: flex;
+                        font-size: 0.85rem;
+                        gap: 0.25rem;
+                        width: max-content;
+
+                        .icon-st {
+                            height: 1rem;
+                        }
+                    }
+                }
+            }
+
+            &.goal {
+
+                .body {
+
+                    .mini-list {
+                        justify-content: space-between;
                     }
                 }
             }
