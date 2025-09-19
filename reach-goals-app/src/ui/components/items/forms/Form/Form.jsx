@@ -178,14 +178,14 @@ const Form = (props) => {
                                 </div>
                             </div>
                             <div className='item-forms tag'>
-                                <div className='item-forms head'>
+                                <div className='head'>
                                     <div className='item-head-1'>
                                         <label>{iconMap['tag']}<span>tags</span></label>
                                         <ButtonAction modalList={functionsForm.mapModalListMap(true, 'tag')} classBtn={'button-action plan-round add max-width small'} icon='plus' title='Add' />
                                     </div>
                                     <div className='item-head-2'></div>
                                 </div>
-                                <div className='item-forms body'>
+                                <div className='body'>
                                     {
                                         <>
                                             {!!modelForm.id && (<ModelSwitcher type={'tag'} propsReference={modelSwitcherProps} />)}
@@ -203,12 +203,12 @@ const Form = (props) => {
                                 )
                             }
                             <div className='item-forms details'>
-                                <div className='item-forms head'>
+                                <div className='head'>
                                     <div className='item-head-1'>
                                         <label>{iconMap['comment']} <span>comment</span></label>
                                     </div>
                                 </div>
-                                <div className='item-forms body'>
+                                <div className='body'>
                                     <textarea id={`${typeForm}-details`} className='input-form scrollable' placeholder='details here...'
                                         name='description' value={modelForm?.description || ''} onChange={functionsForm.mapHandleChange}></textarea>
                                 </div>
