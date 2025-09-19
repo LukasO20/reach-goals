@@ -29,14 +29,14 @@ const formsItemMap = (typeForm, modelComponent) => {
 
     const formItem =
         <div className={`item-forms ${typeForm === 'goal' ? 'assignment' : 'goal'}`}>
-            <div className='item-forms head'>
+            <div className='head'>
                 <div className='item-head-1'>
                     <label>{iconMap[typeForm === 'goal' ? 'assignment' : 'goal']}{messageRelation}</label>
                     <ButtonAction modalList={modalListMap(true, typeForm)} classBtn={`form-modallist-${typeForm} button-action plan-round add max-width small`} icon='plus' title='Add' />
                 </div>
                 <div className='item-head-2'></div>
             </div>
-            <div className='item-forms body'>
+            <div className='body'>
                 {modelComponent}
             </div>
         </div>
