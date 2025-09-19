@@ -52,7 +52,7 @@ const renderCard = ({ type, model, clickFunction, display }, page) => {
                                     classBtn={`remove-${type} button-action circle small`} icon='remove' />
                             </>
                             :
-                            <ButtonAction onClick={() => clickFunction.aux(model.id || model.tagID, 'delete', model.type)} classBtn={`remove-${type}-dom`} icon='close' />
+                            <ButtonAction onClick={() => clickFunction.aux(model.id || model.tagID, 'delete', model.type)} classBtn={`remove-${type}-dom remove-dom`} icon='close' />
                     }
                 </div>
             }
