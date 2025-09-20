@@ -88,11 +88,12 @@
         border-radius: 0.5em;
         top: 50%;
         left: 50%;
+        width: 14.5rem;
         transform: translate(-50%, -50%);
         background-color: $color-white;
         box-shadow: $box-shadow-st;
         overflow: hidden;
-        height: 28rem;
+        height: 26rem;
     }
 
     &.show {
