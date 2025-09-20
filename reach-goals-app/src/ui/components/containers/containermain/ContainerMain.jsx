@@ -12,7 +12,7 @@ import ButtonDropdown from '../../items/elements/ButtonDropdown/ButtonDropdown.j
 import ButtonCheckbox from '../../items/elements/ButtonCheckbox/ButtonCheckbox.jsx'
 import SearchBar from '../../items/elements/SearchBar/SearchBar.jsx'
 
-import '../ContainerMain/ContainerMain.scss'
+import './ContainerMain.scss'
 
 const ContainerM = () => {
     const { resetManageModel } = useContext(ManageModelContext)

@@ -10,7 +10,7 @@ import { targetMap, switchLayoutMap } from '../../../../utils/mapping/mappingUti
 
 import ButtonLink from '../../items/elements/ButtonLink/ButtonLink.jsx'
 
-import '../ContainerHeader/ContainerHeader.scss'
+import './ContainerHeader.scss'
 
 const ContainerH = () => {
     const { title } = useTitle()
