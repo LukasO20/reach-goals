@@ -7,12 +7,12 @@
     flex-direction: column;
     position: absolute;
     background-color: $color-white;
-    border-radius: 0.5em;
+    border-radius: 0.5rem;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 42.5em;
-    width: 50em;
+    height: 42.5rem;
+    width: 52.5rem;
     opacity: 0;
     z-index: -1;
     box-shadow: $box-shadow-st;
@@ -26,7 +26,7 @@
         &.container-config {
 
             >.head {
-                margin: 0em 0em 2em 0em;
+                margin: 0rem 0rem 2rem 0rem;
             }
         }
 
