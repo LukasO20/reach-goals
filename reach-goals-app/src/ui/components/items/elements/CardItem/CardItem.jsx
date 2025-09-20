@@ -9,10 +9,11 @@ import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 
 import moment from 'moment'
 
-const renderCard = ({ type, model, clickFunction, display }, page) => {    
+const renderCard = ({ type, model, clickFunction, display }, page) => {   
     return model.map(model => (
         <div className={`${type} ${display.type}`} id={model.id || model.tagID} key={model.id || model.tagID}
-            onClick={typeof display.type === 'string' && display.type !== '' ? (e) => clickFunction.card(model.id || model.tagID, e) : undefined}>
+            onClick={typeof display.type === 'string' && display.type !== '' ? (e) => clickFunction.card(model.id || model.tagID, e) : undefined}
+            style={ type === 'tag' ? { backgroundColor:  `${model.color}30`, borderColor: model.color } : {} }>
             {
                 display.type === 'card' ?
                     <Link to={`/${page}/details`}>
