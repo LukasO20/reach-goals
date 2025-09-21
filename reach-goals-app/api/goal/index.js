@@ -16,7 +16,7 @@ const handler = async (req, res) => {
         const rawObject = {
             name,
             description,
-            status,
+            status: status ?? 'progress',
             start: startDate,
             end: endDate,
             assignments: {
