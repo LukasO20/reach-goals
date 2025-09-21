@@ -4,12 +4,11 @@ import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.js
 
 import { filterModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
+import { iconMap } from '../../../../../utils/mapping/mappingUtils.js'
+
 import Goal from '../../models/Goal/Goal.jsx'
 import Assignment from '../../models/Assignment/Assignment.jsx'
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
-import { iconMap } from '../../../../../utils/mapping/mappingUtils.js'
-
-import './ExpandableBox.scss'
 
 const boxConfigs = (type) => {
     const goal = [

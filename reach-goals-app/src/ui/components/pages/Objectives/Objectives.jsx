@@ -4,6 +4,8 @@ import { useTitle } from '../../../../provider/TitleProvider.jsx'
 
 import ExpandableBox from '../../items/elements/ExpandableBox/ExpandableBox.jsx'
 
+import '../Objectives/Objectives.scss'
+
 const Objectives = () => {
     const { update } = useTitle()
 
