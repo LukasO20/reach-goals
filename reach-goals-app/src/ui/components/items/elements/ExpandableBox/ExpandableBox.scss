@@ -1,0 +1,26 @@
+@import '../../../../themes/lighttheme.scss';
+
+.container-objectives {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    > .head {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid $color-complementary-p;
+
+        h2 {
+            color: $color-complementary-s;
+        }
+
+        /* DOUBLE APPLY */
+        .title, h2, .options {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    }
+}

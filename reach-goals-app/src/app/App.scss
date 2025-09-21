@@ -29,39 +29,44 @@
 */
 
 body {
+  margin: 0;
+
+  .container-app {
+    position: relative;
+    height: 100vh;
     margin: 0;
+    padding: 0;
+    overflow: hidden;
 
-    .container-app {
-        position: relative;
-        height: 100vh;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
+    display: grid;
+    grid-template-columns: 4.5em 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "container-navigate container-header"
+      "container-navigate container-main";
 
-        display: grid;
-        grid-template-columns: 4.5em 1fr;
-        grid-template-rows: auto 1fr auto;
-        grid-template-areas: 
-        "container-navigate container-header"
-        "container-navigate container-main";
+    .container-header {
+      grid-area: container-header;
+      z-index: 0;
 
-        .container-header {
-            grid-area: container-header;
-        }
-
-        .container-navigate {
-            grid-area: container-navigate;
-        }
-
-        .container-main {
-            grid-area: container-main;
-        }
     }
+
+    .container-navigate {
+      grid-area: container-navigate;
+      z-index: 0;
+
+    }
+
+    .container-main {
+      grid-area: container-main;
+      z-index: 0;
+    }
+  }
 }
 
 .icon-st {
-    height: 1.35rem;
-    color: $color-complementary-s;
+  height: 1.35rem;
+  color: $color-complementary-s;
 }
 
 // Scrollbar variables
