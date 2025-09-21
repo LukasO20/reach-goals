@@ -9,6 +9,8 @@ import Assignment from '../../models/Assignment/Assignment.jsx'
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 import { iconMap } from '../../../../../utils/mapping/mappingUtils.js'
 
+import './ExpandableBox.scss'
+
 const boxConfigs = (type) => {
     const goal = [
         {
@@ -63,6 +65,7 @@ const ExpandableBox = (props) => {
     const [filterRenderModel, setFilterRenderModel] = useState(filterModelMap)
 
     const configType = layoutComponent.objectives.layout
+    const filterButtonActive = Object.entries(filterRenderModel).find(([_, value]) => value === true)?.[0] ?? `${configType}SomeID`
 
     const handleOptions = (currentfilter) => {
         setFilterRenderModel(() => ({
@@ -76,12 +79,15 @@ const ExpandableBox = (props) => {
                 {
                     <>
                         <div className='title'>
-                            <h2>{iconMap[configType]}{configType + 's'}</h2>
+                            <h2>{iconMap[configType]}{configType}</h2>
                         </div>
                         <div className='options'>
                             {
                                 boxConfigs(configType).map((box, index) => {
-                                    return <ButtonAction key={index} classBtn={'objective-filter option'} title={box.label} onClick={() => { handleOptions(box.currentfilter) }} />
+                                    const currentButton = Object.keys(box.currentfilter)[0]
+
+                                    return <ButtonAction key={index} classBtn={`button-action plan-round max-width small objective ${currentButton === filterButtonActive && 'active'}`} 
+                                    title={box.label} onClick={(e) => { handleOptions(box.currentfilter) }} />
                                 })
                             }
                         </div>

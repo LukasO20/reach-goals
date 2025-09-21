@@ -234,11 +234,11 @@ const Form = (props) => {
                     </div>
                     {
                         contextForm.mapModalList.open && contextForm.mapModalList.type !== 'tag' &&
-                        <ModalList title={`Complementing ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} complement={typeForm} externalRequestProps={modalListRequestProps} exFunction={functionsForm.mapHandleChange} />
+                        <ModalList title={`Assign ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} complement={typeForm} externalRequestProps={modalListRequestProps} exFunction={functionsForm.mapHandleChange} />
                     }
                     {
                         contextForm.mapModalList.open && contextForm.mapModalList.type === 'tag' &&
-                        <ModalList title='Complementing a tag' complement='tag' externalRequestProps={modalListRequestProps} exFunction={functionsForm.mapHandleChange} />
+                        <ModalList title='Assign a tag' complement='tag' externalRequestProps={modalListRequestProps} exFunction={functionsForm.mapHandleChange} />
                     }
                 </div>
             )
