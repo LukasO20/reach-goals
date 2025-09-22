@@ -24,6 +24,7 @@ const Goal = (props) => {
     const { layoutComponent, switchLayoutComponent } = useSwitchLayout()
     const { data, loading, refetch, remove } = useGoalModel()
 
+    const status = props.status
     const display = props.display
     const isSelectableModel = props.selectableModel ?? false
     const isDetailsModel = props.detailsModel ?? false
@@ -104,7 +105,15 @@ const Goal = (props) => {
         loading && activeModelSource.length === 0 ?
             <p>Loading...</p>
             :
-            activeModelSource?.length ? <CardItem type={'goal'} model={activeModelSource} clickFunction={clickEvents} display={display} /> : null
+            activeModelSource?.length ? 
+                <CardItem type={'goal'} 
+                    model={(() => {
+                        return typeof status === 'string' && status !== '' ?
+                          activeModelSource.filter(item => item.status === status) :
+                          activeModelSource
+                    })()}
+                clickFunction={clickEvents} display={display} /> 
+                : null
     )
 }
 

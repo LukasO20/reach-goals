@@ -4,6 +4,7 @@ import { useAssignmentModel } from '../../../../../provider/model/AssignmentMode
 
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
+
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
 import { targetMap, switchLayoutMap } from '../../../../../utils/mapping/mappingUtils.js'
@@ -23,6 +24,7 @@ const Assignment = (props) => {
     const { layoutComponent, switchLayoutComponent } = useSwitchLayout()
     const { data, loading, refetch, remove } = useAssignmentModel()
 
+    const status = props.status
     const display = props.display
     const isSelectableModel = props.selectableModel ?? false
     const isDetailsModel = props.detailsModel ?? false
@@ -80,7 +82,7 @@ const Assignment = (props) => {
     useEffect(() => {
         const fromModelSource = props.fromModelSource?.assignment
 
-        if (fromModelSource && fromModelSource.length) setActiveModelSource(fromModelSource)
+        if (fromModelSource && Array.isArray(fromModelSource)) setActiveModelSource(fromModelSource)
         else setActiveModelSource(data[filterGetAssignment.source])
     }, [data, props.fromModelSource])
 
@@ -109,7 +111,15 @@ const Assignment = (props) => {
         loading && activeModelSource.length === 0 ?
             <p>Loading...</p>
             :
-            activeModelSource?.length ? <CardItem type={'assignment'} model={activeModelSource} clickFunction={clickEvents} display={display} /> : null
+            activeModelSource?.length ?
+                <CardItem type={'assignment'}
+                    model={(() => {
+                        return typeof status === 'string' && status !== '' ?
+                            activeModelSource.filter(item => item.status === status) :
+                            activeModelSource
+                    })()}
+                    clickFunction={clickEvents} display={display} />
+                : null
     )
 }
 
