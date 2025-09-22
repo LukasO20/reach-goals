@@ -24,31 +24,33 @@ const Home = () => {
     return (
         <div className="container-home">
             <div className="itens">
-                <div className="itens-to-do column">
+                <div className="itens-progress column">
                     <div className="head-column">
-                        {iconLayoutModel}<label>to do</label>
+                        {iconMap['progress']}<label>in progress</label>
                     </div>
                     <div className="body-column scrollable">
                         <div className='list'>
                             {
                                 layoutComponent.home.layout === 'goal' ?
-                                <Goal display={{sideAction: true, type: 'card'}} goalSomeID={true} detailsModel={true} /> :
-                                <Assignment display={{sideAction: true, type: 'card'}} notGoalRelation={true} detailsModel={true} />
+                                <Goal display={{sideAction: true, type: 'card'}} goalSomeID={true} detailsModel={true} status={'progress'} /> :
+                                <Assignment display={{sideAction: true, type: 'card'}} notGoalRelation={true} detailsModel={true} status={'progress'} />
                             }
                         </div>
                     </div>
-                </div>
-                <div className="itens-progress column">
-                    <div className="head-column">
-                        {iconMap['progress']}<label>in progress</label>
-                    </div>
-                    <div className="body-column"></div>
                 </div>
                 <div className="itens-conclude column">
                     <div className="head-column">
                         {iconMap['check']}<label>conclude</label>
                     </div>
-                    <div className="body-column"></div>
+                    <div className="body-column">
+                        <div className='list'>
+                            {
+                                layoutComponent.home.layout === 'goal' ?
+                                <Goal display={{sideAction: true, type: 'card'}} goalSomeID={true} detailsModel={true} status={'conclude'} /> :
+                                <Assignment display={{sideAction: true, type: 'card'}} notGoalRelation={true} detailsModel={true} status={'conclude'} />
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className="chart-line">
