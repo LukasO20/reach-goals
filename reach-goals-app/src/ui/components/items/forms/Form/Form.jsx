@@ -78,7 +78,7 @@ const Form = (props) => {
             type: 'mini-list'
         },
         fromModelSource: {
-            goal: modelForm?.goal ?? [],
+            goal: modelForm?.goal ? [modelForm.goal] : [],
             assignment: modelForm?.assignments,
             tag: modelForm?.tags?.map(tags => tags.tag)
         }

@@ -87,7 +87,7 @@ const Tag = (props) => {
     }
     
     return (
-        loading && data.length === 0 ?
+        loading && activeModelSource.length === 0 ?
             <p>Loading...</p>
             :
             activeModelSource?.length ? <CardItem type={'tag'} model={activeModelSource} clickFunction={clickEvents} display={display} /> : null
