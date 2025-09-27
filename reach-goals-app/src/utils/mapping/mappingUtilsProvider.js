@@ -20,6 +20,20 @@ export const filterModelMap = {
     tagsNotRelation: null,
 }
 
+export const filterServiceFnMap = {
+    goalSomeID: 'getGoal',
+    goalAssignmentRelation: 'getGoalOnAssignment',
+    goalTagRelation: 'getGoalOnTag',
+    notAssignmentRelation: 'getGoalWithoutAssignment',
+    assignmentSomeID: 'getAssignment',
+    assignmentGoalRelation: 'getAssignmentOnGoal',
+    assignmentTagRelation: 'getAssignmentOnTag',
+    notGoalRelation: 'getAssignmentWithoutGoal',
+    tagSomeID: null,
+    tagsRelation: null,
+    tagsNotRelation: null,
+}
+
 export const initialStateMap = {
     loading: false,
     error: null,
