@@ -81,12 +81,12 @@ const getGoalOnAssignment = async (assignmentID) => {
             return await prisma.goal.findMany({
                 where: { assignments: { some: {} } },
                 include: { assignments: { select: { id: true, name: true, start: true, end: true, status: true, description: true, duration: true } } }
-            }) ?? []
+            })
         } else if (isNumber) {
             return await prisma.goal.findMany({
-                where: { assignments: { id: Number(assignmentID) } },
+                where: { assignments: { some: { id: Number(assignmentID) } } },
                 include: { assignments: { select: { id: true, name: true, start: true, end: true, status: true, description: true, duration: true } } }
-            }) ?? []
+            })
         }
     }
     catch (error) {

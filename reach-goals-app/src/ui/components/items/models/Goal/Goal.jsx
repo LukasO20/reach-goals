@@ -92,9 +92,7 @@ const Goal = (props) => {
         }
 
         const goalSource = data[filterGetGoal.source]
-        if (goalSource.length) {
-            return setActiveModelSource(goalSource)
-        }
+        return setActiveModelSource(goalSource)
     }, [pendingPanel, data])
 
     const clickEvents = {
