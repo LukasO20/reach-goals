@@ -73,12 +73,12 @@ const Goal = (props) => {
         }
     }
 
-    useEffect(() => {
-        const fromModelSource = props.fromModelSource?.goal
+    // useEffect(() => {
+    //     const fromModelSource = props.fromModelSource?.goal
 
-        if (fromModelSource && Array.isArray(fromModelSource)) setActiveModelSource(fromModelSource)
-        else setActiveModelSource(data[filterGetGoal.source])
-    }, [data, props.fromModelSource])
+    //     if (fromModelSource && Array.isArray(fromModelSource)) setActiveModelSource(fromModelSource)
+    //     else setActiveModelSource(data[filterGetGoal.source])
+    // }, [data, props.fromModelSource])
 
     useEffect(() => {
         refetch(filterGetGoal)
@@ -88,10 +88,14 @@ const Goal = (props) => {
         if (pendingPanel && model.mainModelID) {
             switchLayoutComponent(switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'right' }))
             toggleVisibility(targetMap(['panel-right', 'goal']))
-            setPendingPanel(false)
+            return setPendingPanel(false)
         }
 
-    }, [pendingPanel])
+        const goalSource = data[filterGetGoal.source]
+        if (goalSource.length) {
+            return setActiveModelSource(goalSource)
+        }
+    }, [pendingPanel, data])
 
     const clickEvents = {
         card: goalClick,
@@ -100,7 +104,6 @@ const Goal = (props) => {
     }
 
     //console.log('GOAL LOADED - ', goal)
-
     return (
         loading && activeModelSource.length === 0 ?
             <p>Loading...</p>

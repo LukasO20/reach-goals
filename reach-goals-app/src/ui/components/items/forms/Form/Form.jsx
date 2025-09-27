@@ -45,8 +45,7 @@ const Form = (props) => {
 
         if (typeForm === 'assignment') {
             modalListRequestProps = {
-                ...modalListRequestProps,
-                goalSomeID: true
+                ...modalListRequestProps
             }
         }
     }
@@ -65,20 +64,20 @@ const Form = (props) => {
         }
     }
 
-    const tagRelation = typeForm === 'goal' ? 'goalID' : 'assignmentID';
+    const tagRelation = typeForm === 'goal' ? 'goalID' : 'assignmentID'
+    const filterGetModelRelation = typeForm === 'assignment' ? 'goalAssignmentRelation' : 'assignmentGoalRelation'
     const modelSwitcherRelation = typeForm === 'assignment' ? 'assignment-relation' : 'goal-relation'
     const modelCopyRelation = typeForm === 'assignment' ? 'goal' : 'assignment'
 
     const modelSwitcherProps = {
         [tagRelation]: modelForm?.id,
+        [filterGetModelRelation]: modelForm?.id,
         focused: modelForm,
-        assignmentGoalRelation: modelForm.id,
         display: {
             sideAction: true,
             type: 'mini-list'
         },
         fromModelSource: {
-            goal: modelForm?.goal ? [modelForm.goal] : [],
             assignment: modelForm?.assignments,
             tag: modelForm?.tags?.map(tags => tags.tag)
         }
