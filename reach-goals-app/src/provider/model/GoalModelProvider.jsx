@@ -2,7 +2,7 @@ import { useReducer, useEffect, createContext, useContext } from 'react'
 
 import * as goalService from '../../services/goalService.js'
 
-import { reduceModelMap, initialStateMap } from '../../utils/mapping/mappingUtilsProvider.js'
+import { reduceModelMap, initialStateMap, filterServiceFnMap } from '../../utils/mapping/mappingUtilsProvider.js'
 
 export const GoalModelContext = createContext()
 
@@ -13,27 +13,23 @@ export const GoalModelProvider = ({ children }) => {
         dispatch({ type: 'LOADING' })
         const dataSource = filters.source || 'core'
         const typeDispatch = dataSource === 'core' ? 'FETCH_LIST' : 'FETCH_SUPPORT_LIST'
+        const useFilter = Object.entries(filters).filter(filter => typeof filter[1] === 'number')[0]
 
         try {
-            if (typeof filters.goalSomeID === 'boolean' && filters.goalSomeID === true) {
+            //Filter object has valid value to filter
+            if (useFilter) {
+                const keyFilter = useFilter[0]
+                const valueFilter = useFilter[1]
+                const choseDispatch = keyFilter === 'goalSomeID' ? 'FETCH_ONE' : 'FETCH_LIST'
+
+                return dispatch({
+                    type: choseDispatch, payload: await goalService[filterServiceFnMap[keyFilter]](valueFilter)
+                })
+            }
+            //Filter object hasn't value to filter
+            else {
                 return dispatch({
                     type: typeDispatch, payload: await goalService.getGoal(filters.goalSomeID)
-                })
-            } else if (typeof filters.goalSomeID === 'number') {
-                return dispatch({
-                    type: 'FETCH_ONE', payload: await goalService.getGoal(filters.goalSomeID)
-                })
-            } else if (filters.goalAssignmentRelation) {
-                return dispatch({
-                    type: typeDispatch, payload: await goalService.getGoalOnAssignment(filters.goalAssignmentRelation)
-                })
-            } else if (filters.goalTagRelation) {
-                return dispatch({
-                    type: typeDispatch, payload: await goalService.getGoalOnTag(filters.goalTagRelation)
-                })
-            } else if (filters.notAssignmentRelation) {
-                return dispatch({
-                    type: typeDispatch, payload: await goalService.getGoalWithoutAssignment(filters.notAssignmentRelation)
                 })
             }
 
