@@ -66,13 +66,18 @@ export const filterGetModel = (props, type, source) => {
     
     if (typeof props === 'object') {
         const [key, value] = Object.entries(props).find(
-            ([k, v]) => typeFilterModel.includes(k) && (typeof v === 'number' || v === 'all'))
+            ([k, v]) => typeFilterModel.includes(k) && (typeof v === 'number' || v === 'all')) ?? ['Without key', 'Without value']
 
-        return key ? { 
+        if (key === 'Without key' && value === 'Without value' ) {
+            //This war is used to show a function does not according with structure filter
+            console.warn(`Current filter don't use an ID.`)
+        }
+
+        return key && { 
             type: type,
             source: source,
             [key]: value,
-        } : {}
+        }
     }
 }
 
