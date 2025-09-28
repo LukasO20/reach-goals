@@ -1,4 +1,5 @@
 import * as Unicons from '@iconscout/react-unicons'
+import { typeModel, typeReduceModel, typeFilterModel } from '../reference.js'
 
 export const targetMap = (classes, operator = {}) => {
     const data = Array.isArray(classes) ? classes : [classes]
@@ -52,6 +53,27 @@ export const buildQueryParamsMap = ({ IDobject, action }) => {
         action: action,
         ...IDobject
     }).toString()
+}
+
+/* 
+    props => property of component
+    type => type of model. Can use 'goal', 'tag' or 'assignment'
+    source => type of list according 'reduceModelMap'. 'support' to FETCH_SUPPORT_LIST or 'core' to FETCH_LIST
+*/
+export const filterGetModel = (props, type, source) => {
+    if (!typeModel.includes(type)) return console.error('"type" parameter is invalid. Send a string supported type ["goal", "tag", "assignment"]')
+    if (!typeReduceModel.includes(source)) return console.error('"source" parameter is invalid. Send a string supported source ["core", "support"]') 
+    
+    if (typeof props === 'object') {
+        const [key, value] = Object.entries(props).find(
+            ([k, v]) => typeof v === 'number' || v === 'all')
+
+        return key ? { 
+            type: type,
+            source: source,
+            [key]: value,
+        } : {}
+    }
 }
 
 export const iconMap = {
