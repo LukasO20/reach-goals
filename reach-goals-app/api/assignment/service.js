@@ -41,7 +41,7 @@ const deleteAssignment = async (assignmentID) => {
 
 const getAssignment = async (assignmentID) => {
     try {
-        if (assignmentID !== undefined && !isNaN(assignmentID)) {
+        if (!isNaN(assignmentID) && typeof assignmentID !== 'number') {
             return await prisma.assignment.findUnique({
                 where: { id: Number(assignmentID) },
                 include: { 
@@ -49,7 +49,7 @@ const getAssignment = async (assignmentID) => {
                     tags: { include: { tag: { select: { id: true, name: true, color: true } } } } 
                 }
             })
-        } else {
+        } else if (assignmentID === 'all') {
             return await prisma.assignment.findMany({
                 include: { 
                     goal: true,
@@ -66,16 +66,14 @@ const getAssignment = async (assignmentID) => {
 
 const getAssignmentOnGoal = async (goalID) => {
     try {
-        const isTrue = goalID === true || goalID === 'true'
+        const isAll = goalID === 'all'
         const isNumber = !isNaN(goalID) && goalID !== '' && goalID !== null && goalID !== undefined
 
-        if (!isTrue && !isNumber) return
+        if (!isAll && !isNumber) return
 
-        if (isTrue) {
+        if (isAll) {
             return await prisma.assignment.findMany({
-                where: {
-                    goalID: { not: null }
-                },
+                where: { goalID: { not: null } },
                 include: { 
                     goal: true,
                     tags: { include: { tag: { select: { id: true, name: true, color: true } } } }                         
@@ -83,9 +81,7 @@ const getAssignmentOnGoal = async (goalID) => {
             })
         } else if (isNumber) {
             return await prisma.assignment.findMany({
-                where: {
-                    goalID: Number(goalID)
-                },
+                where: { goalID: Number(goalID) },
                 include: { 
                     goal: true,
                     tags: { include: { tag: { select: { id: true, name: true, color: true } } } } 

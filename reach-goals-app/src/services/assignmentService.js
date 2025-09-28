@@ -79,7 +79,7 @@ export const deleteAssignment = async (assignmentID) => {
 
 export const getAssignment = async (assignmentID) => {
     try {
-        const url = (assignmentID !== undefined && !isNaN(assignmentID))
+        const url = (assignmentID)
             ? `/api/assignment/${assignmentID}`
             : `/api/assignment?action=assignment-get`
 
