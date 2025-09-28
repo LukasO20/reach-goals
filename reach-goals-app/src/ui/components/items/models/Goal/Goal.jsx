@@ -7,7 +7,7 @@ import { VisibilityContext } from '../../../../../provider/VisibilityProvider.js
 
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
-import { targetMap, switchLayoutMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { targetMap, switchLayoutMap, filterGetModel } from '../../../../../utils/mapping/mappingUtils.js'
 import { filterModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
 import CardItem from '../../elements/CardItem/CardItem.jsx'
@@ -29,15 +29,9 @@ const Goal = (props) => {
     const isSelectableModel = props.selectableModel ?? false
     const isDetailsModel = props.detailsModel ?? false
 
-    const filterGetGoal = useMemo(() => ({
-        ...filterModelMap,
-        type: 'goal',
-        source: props.typeDataSource ?? 'core',
-        goalAssignmentRelation: props.goalAssignmentRelation,
-        goalSomeID: props.goalSomeID,
-        goalTagRelation: props.goalTagRelation,
-        notAssignmentRelation: props.notAssignmentRelation
-    }), [
+    const filterGetGoal = useMemo(() => (
+        filterGetModel(props, 'goal', props.typeDataSource ?? 'core')
+    ), [
         props.typeDataSource,
         props.goalAssignmentRelation,
         props.goalSomeID,
@@ -106,14 +100,14 @@ const Goal = (props) => {
         loading && activeModelSource.length === 0 ?
             <p>Loading...</p>
             :
-            activeModelSource?.length ? 
-                <CardItem type={'goal'} 
+            activeModelSource?.length ?
+                <CardItem type={'goal'}
                     model={(() => {
                         return typeof status === 'string' && status !== '' ?
-                          activeModelSource.filter(item => item.status === status) :
-                          activeModelSource
+                            activeModelSource.filter(item => item.status === status) :
+                            activeModelSource
                     })()}
-                clickFunction={clickEvents} display={display} /> 
+                    clickFunction={clickEvents} display={display} />
                 : null
     )
 }
