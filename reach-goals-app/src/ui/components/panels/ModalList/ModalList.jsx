@@ -7,13 +7,12 @@ import './ModalList.scss'
 
 const ModalList = (props) => {
     const title = props?.title
-    let complement = props?.complement
     const externalFunction = props?.exFunction
+    const externalRequestProps = props?.externalRequestProps
 
+    let complement = props?.complement
     if (complement === 'goal') { complement = 'goal-relation' }
     else if (complement === 'assignment') { complement = 'assignment-relation' }
-
-    const externalRequestProps = props?.externalRequestProps
 
     return (
         <div className={`container-list-modal ${complement}`}>

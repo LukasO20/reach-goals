@@ -65,13 +65,15 @@ const Form = (props) => {
     }
 
     const tagRelation = typeForm === 'goal' ? 'goalID' : 'assignmentID'
-    const filterGetModelRelation = typeForm === 'assignment' ? 'goalAssignmentRelation' : 'assignmentGoalRelation'
     const modelSwitcherRelation = typeForm === 'assignment' ? 'assignment-relation' : 'goal-relation'
     const modelCopyRelation = typeForm === 'assignment' ? 'goal' : 'assignment'
+    
+    const keyModelListRelation = typeForm === 'assignment' ? 'goalAssignmentRelation' : 'notGoalRelation'
+    const valueModelListRelation = typeForm === 'assignment' ? modelForm?.id : 'all'
 
     const modelSwitcherProps = {
         [tagRelation]: modelForm?.id,
-        [filterGetModelRelation]: modelForm?.id,
+        [keyModelListRelation]: valueModelListRelation,
         focused: modelForm,
         display: {
             sideAction: true,
@@ -82,6 +84,8 @@ const Form = (props) => {
             tag: modelForm?.tags?.map(tags => tags.tag)
         }
     }
+
+    console.log('Ready to modellist - ', modelSwitcherProps)
 
     const { visibleElements } = useContext(VisibilityContext)
     const { model, setModel } = useContext(ManageModelContext)
