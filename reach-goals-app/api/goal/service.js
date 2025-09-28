@@ -71,7 +71,6 @@ const getGoal = async (goalID) => {
 }
 
 const getGoalOnAssignment = async (assignmentID) => {
-    console.log('ASSIGN HERE - ', assignmentID)
     try {
         const isAll = assignmentID === 'all'
         const isNumber = !isNaN(assignmentID) && typeof assignmentID !== 'number'
