@@ -7,7 +7,7 @@ import { VisibilityContext } from '../../../../../provider/VisibilityProvider.js
 
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
-import { targetMap, switchLayoutMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { targetMap, switchLayoutMap, filterGetModel } from '../../../../../utils/mapping/mappingUtils.js'
 import { filterModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
 import CardItem from '../../elements/CardItem/CardItem.jsx'
@@ -29,15 +29,9 @@ const Assignment = (props) => {
     const isSelectableModel = props.selectableModel ?? false
     const isDetailsModel = props.detailsModel ?? false
 
-    const filterGetAssignment = useMemo(() => ({
-        ...filterModelMap,
-        type: 'assignment',
-        source: props.typeDataSource ?? 'core',
-        assignmentGoalRelation: props.assignmentGoalRelation,
-        assignmentSomeID: props.assignmentSomeID,
-        assignmentTagRelation: props.assignmentTagRelation,
-        notGoalRelation: props.notGoalRelation
-    }), [
+    const filterGetAssignment = useMemo(() => (
+        filterGetModel(props, 'assignment', props.typeDataSource ?? 'core')
+    ), [
         props.typeDataSource,
         props.assignmentGoalRelation,
         props.assignmentSomeID,
@@ -79,12 +73,12 @@ const Assignment = (props) => {
         }
     }
 
-    useEffect(() => {
-        const fromModelSource = props.fromModelSource?.assignment
+    // useEffect(() => {
+    //     const fromModelSource = props.fromModelSource?.assignment
 
-        if (fromModelSource && Array.isArray(fromModelSource)) setActiveModelSource(fromModelSource)
-        else setActiveModelSource(data[filterGetAssignment.source])
-    }, [data, props.fromModelSource])
+    //     if (fromModelSource && Array.isArray(fromModelSource)) setActiveModelSource(fromModelSource)
+    //     else setActiveModelSource(data[filterGetAssignment.source])
+    // }, [data, props.fromModelSource])
 
     useEffect(() => {
         refetch(filterGetAssignment)
@@ -96,7 +90,10 @@ const Assignment = (props) => {
             toggleVisibility(targetMap(['panel-right', 'assignment']))
             setPendingPanel(false)
         }
-    }, [pendingPanel])
+
+        const assignmentSource = data[filterGetAssignment.source]
+        return setActiveModelSource(assignmentSource)
+    }, [pendingPanel, data])
 
     const clickEvents = {
         card: assignmentClick,

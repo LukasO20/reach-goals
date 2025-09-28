@@ -2,7 +2,7 @@ import { useReducer, useEffect, createContext, useContext } from 'react'
 
 import * as assignmentService from '../../services/assignmentService.js'
 
-import { reduceModelMap, initialStateMap } from '../../utils/mapping/mappingUtilsProvider.js'
+import { reduceModelMap, initialStateMap, filterServiceFnMap } from '../../utils/mapping/mappingUtilsProvider.js'
 
 export const AssignmentModelContext = createContext()
 
@@ -11,32 +11,23 @@ export const AssignmentModelProvider = ({ children }) => {
 
     const load = async (filters = {}) => {
         dispatch({ type: 'LOADING' })
-        const dataSource = filters.source || 'core'
-        const typeDispatch = dataSource === 'core' ? 'FETCH_LIST' : 'FETCH_SUPPORT_LIST'
+        const dataSource = filters.source
+        const useFilter = Object.entries(filters).filter(
+            filter => typeof filter[1] === 'number' || filter[1] === 'all'
+        )[0]
 
         try {
-            if (typeof filters.assignmentSomeID === 'boolean' && filters.assignmentSomeID === true) {
-                return dispatch({
-                    type: typeDispatch, payload: await assignmentService.getAssignment(filters.assignmentSomeID)
-                })
-            } else if (typeof filters.assignmentSomeID === 'number') {
-                return dispatch({
-                    type: 'FETCH_ONE', payload: await assignmentService.getAssignment(filters.assignmentSomeID)
-                })
-            } else if (filters.assignmentGoalRelation) {
-                return dispatch({
-                    type: typeDispatch, payload: await assignmentService.getAssignmentOnGoal(filters.assignmentGoalRelation)
-                })
-            } else if (filters.assignmentTagRelation) {
-                return dispatch({
-                    type: typeDispatch, payload: await assignmentService.getAssignmentOnTag(filters.assignmentTagRelation)
-                })
-            } else if (filters.notGoalRelation) {
-                return dispatch({
-                    type: typeDispatch, payload: await assignmentService.getAssignmentWithoutGoal(filters.notGoalRelation)
+            //Filter object has valid value to filter
+            if (useFilter) {
+                const keyFilter = useFilter[0]
+                const valueFilter = useFilter[1]
+                const typeDispatch = keyFilter === 'assignmentSomeID' && typeof valueFilter === 'number' ? 'FETCH_ONE'
+                    : dataSource === 'core' ? 'FETCH_LIST' : 'FETCH_SUPPORT_LIST'
+
+                dispatch({
+                    type: typeDispatch, payload: await assignmentService[filterServiceFnMap[keyFilter]](valueFilter)
                 })
             }
-
         } catch (err) {
             dispatch({ type: 'ERROR', payload: err.message })
         }

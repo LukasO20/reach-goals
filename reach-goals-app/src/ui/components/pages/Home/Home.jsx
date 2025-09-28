@@ -33,7 +33,7 @@ const Home = () => {
                             {
                                 layoutComponent.home.layout === 'goal' ?
                                 <Goal display={{sideAction: true, type: 'card'}} goalSomeID={'all'} detailsModel={true} status={'progress'} /> :
-                                <Assignment display={{sideAction: true, type: 'card'}} notGoalRelation={true} detailsModel={true} status={'progress'} />
+                                <Assignment display={{sideAction: true, type: 'card'}} notGoalRelation={'all'} detailsModel={true} status={'progress'} />
                             }
                         </div>
                     </div>
@@ -47,7 +47,7 @@ const Home = () => {
                             {
                                 layoutComponent.home.layout === 'goal' ?
                                 <Goal display={{sideAction: true, type: 'card'}} goalSomeID={'all'} detailsModel={true} status={'conclude'} /> :
-                                <Assignment display={{sideAction: true, type: 'card'}} notGoalRelation={true} detailsModel={true} status={'conclude'} />
+                                <Assignment display={{sideAction: true, type: 'card'}} notGoalRelation={'all'} detailsModel={true} status={'conclude'} />
                             }
                         </div>
                     </div>
