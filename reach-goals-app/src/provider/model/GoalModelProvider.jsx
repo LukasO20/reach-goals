@@ -11,28 +11,23 @@ export const GoalModelProvider = ({ children }) => {
 
     const load = async (filters = {}) => {
         dispatch({ type: 'LOADING' })
-        const dataSource = filters.source || 'core'
-        const typeDispatch = dataSource === 'core' ? 'FETCH_LIST' : 'FETCH_SUPPORT_LIST'
-        const useFilter = Object.entries(filters).filter(filter => typeof filter[1] === 'number')[0]
+        const dataSource = filters.source
+        const useFilter = Object.entries(filters).filter(
+            filter => typeof filter[1] === 'number' || filter[1] === 'all'
+        )[0]
 
         try {
             //Filter object has valid value to filter
             if (useFilter) {
                 const keyFilter = useFilter[0]
                 const valueFilter = useFilter[1]
-                const choseDispatch = keyFilter === 'goalSomeID' ? 'FETCH_ONE' : 'FETCH_LIST'
+                const typeDispatch = typeof valueFilter === 'number' ? 'FETCH_ONE' 
+                    : dataSource === 'core' ? 'FETCH_LIST' : 'FETCH_SUPPORT_LIST'
 
                 return dispatch({
-                    type: choseDispatch, payload: await goalService[filterServiceFnMap[keyFilter]](valueFilter)
+                    type: typeDispatch, payload: await goalService[filterServiceFnMap[keyFilter]](valueFilter)
                 })
             }
-            //Filter object hasn't value to filter
-            else {
-                return dispatch({
-                    type: typeDispatch, payload: await goalService.getGoal(filters.goalSomeID)
-                })
-            }
-
         } catch (err) {
             dispatch({ type: 'ERROR', payload: err.message })
         }
