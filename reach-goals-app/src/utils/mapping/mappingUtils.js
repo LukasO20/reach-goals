@@ -66,7 +66,7 @@ export const filterGetModel = (props, type, source) => {
     
     if (typeof props === 'object') {
         const [key, value] = Object.entries(props).find(
-            ([k, v]) => typeof v === 'number' || v === 'all')
+            ([k, v]) => typeFilterModel.includes(k) && (typeof v === 'number' || v === 'all'))
 
         return key ? { 
             type: type,
