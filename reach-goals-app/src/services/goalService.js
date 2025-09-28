@@ -80,7 +80,7 @@ export const deleteGoal = async (goalID) => {
 
 export const getGoal = async (goalID) => {
     try {
-        const url = (goalID !== undefined && !isNaN(goalID) && typeof goalID !== 'boolean')
+        const url = (goalID)
             ? `/api/goal/${goalID}`
             : `/api/goal?action=goal-get`
 

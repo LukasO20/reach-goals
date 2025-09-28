@@ -47,7 +47,7 @@ const deleteGoal = async (goalID) => {
 
 const getGoal = async (goalID) => {
     try {
-        if (goalID !== undefined && !isNaN(goalID) && typeof goalID !== 'boolean') {
+        if (!isNaN(goalID) && typeof goalID !== 'number') {
             return await prisma.goal.findUnique({
                 where: { id: Number(goalID) },
                 include: {
@@ -55,7 +55,7 @@ const getGoal = async (goalID) => {
                     tags: { include: { tag: { select: { id: true, name: true, color: true } } } }
                 }
             })
-        } else {
+        } else if (goalID === 'all') {
             return await prisma.goal.findMany({
                 include: {
                     assignments: { select: { id: true, name: true, start: true, end: true, status: true, description: true, duration: true } },
@@ -71,13 +71,14 @@ const getGoal = async (goalID) => {
 }
 
 const getGoalOnAssignment = async (assignmentID) => {
+    console.log('ASSIGN HERE - ', assignmentID)
     try {
-        const isTrue = assignmentID === true || assignmentID === 'true'
-        const isNumber = !isNaN(assignmentID) && assignmentID !== '' && assignmentID !== null && assignmentID !== undefined
+        const isAll = assignmentID === 'all'
+        const isNumber = !isNaN(assignmentID) && typeof assignmentID !== 'number'
 
-        if (!isTrue && !isNumber) return
+        if (!isAll && !isNumber) return
 
-        if (isTrue) {
+        if (isAll) {
             return await prisma.goal.findMany({
                 where: { assignments: { some: {} } },
                 include: { assignments: { select: { id: true, name: true, start: true, end: true, status: true, description: true, duration: true } } }
