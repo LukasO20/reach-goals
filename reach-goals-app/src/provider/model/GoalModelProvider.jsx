@@ -21,10 +21,10 @@ export const GoalModelProvider = ({ children }) => {
             if (useFilter) {
                 const keyFilter = useFilter[0]
                 const valueFilter = useFilter[1]
-                const typeDispatch = typeof valueFilter === 'number' ? 'FETCH_ONE' 
+                const typeDispatch = keyFilter === 'goalSomeID' && typeof valueFilter === 'number' ? 'FETCH_ONE' 
                     : dataSource === 'core' ? 'FETCH_LIST' : 'FETCH_SUPPORT_LIST'
 
-                return dispatch({
+                dispatch({
                     type: typeDispatch, payload: await goalService[filterServiceFnMap[keyFilter]](valueFilter)
                 })
             }
