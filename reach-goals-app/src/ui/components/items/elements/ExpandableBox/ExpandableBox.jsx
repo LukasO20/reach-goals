@@ -61,14 +61,15 @@ const boxConfigs = (type) => {
 
 const ExpandableBox = (props) => {
     const { layoutComponent } = useSwitchLayout()
-    const [filterRenderModel, setFilterRenderModel] = useState(filterModelMap)
-
     const configType = layoutComponent.objectives.layout
+
+    const [filterRenderModel, setFilterRenderModel] = useState(filterModelMap)
     const filterButtonActive = Object.entries(filterRenderModel).find(([_, value]) => value === true)?.[0] ?? `${configType}SomeID`
 
     const handleOptions = (currentfilter) => {
         setFilterRenderModel(() => ({
-            ...currentfilter
+            ...currentfilter,
+            type: configType
         }))
     }
 
@@ -104,7 +105,7 @@ const ExpandableBox = (props) => {
                                 <Assignment display={{type: 'mini-list'}} {...filterRenderModel} />
                                 :
                                 <>
-                                    <Goal display={{type: 'mini-list'}} goalSomeID={true} />
+                                    <Goal display={{type: 'mini-list'}} goalSomeID={'all'} />
                                     <Assignment display={{type: 'mini-list'}} assignmentSomeID={true} />
                                 </>
                         }
