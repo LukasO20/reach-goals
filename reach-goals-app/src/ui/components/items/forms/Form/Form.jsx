@@ -29,41 +29,6 @@ const Form = (props) => {
     const icon = iconMap[typeForm] || 'fa-solid fa-triangle-exclamation'
     const titleForm = titleMap[typeForm] || 'Create your objective'
 
-    let modalListRequestProps = {
-        notRelationID: modelForm?.id,
-        notRelationModel: typeForm,
-        typeDataSource: 'support'
-    }
-
-    if (!modelForm?.id) {
-        modalListRequestProps = {
-            ...modalListRequestProps,
-            notRelationID: false,
-            notRelationModel: false,
-            tagSomeID: true
-        }
-
-        if (typeForm === 'assignment') {
-            modalListRequestProps = {
-                ...modalListRequestProps
-            }
-        }
-    }
-
-    if (typeForm === 'goal') {
-        modalListRequestProps = {
-            ...modalListRequestProps,
-            notGoalRelation: true
-        }
-    }
-
-    if (typeForm === 'assignment' && modelForm?.id) {
-        modalListRequestProps = {
-            ...modalListRequestProps,
-            notAssignmentRelation: modelForm.id
-        }
-    }
-
     const tagRelation = typeForm === 'goal' ? 'goalID' : 'assignmentID'
     const modelSwitcherRelation = typeForm === 'assignment' ? 'assignment-relation' : 'goal-relation'
     const modelCopyRelation = typeForm === 'assignment' ? 'goal' : 'assignment'
@@ -84,8 +49,6 @@ const Form = (props) => {
             tag: modelForm?.tags?.map(tags => tags.tag)
         }
     }
-
-    console.log('Ready to modellist - ', modelSwitcherProps)
 
     const { visibleElements } = useContext(VisibilityContext)
     const { model, setModel } = useContext(ManageModelContext)
@@ -237,11 +200,11 @@ const Form = (props) => {
                     </div>
                     {
                         contextForm.mapModalList.open && contextForm.mapModalList.type !== 'tag' &&
-                        <ModalList title={`Assign ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} complement={typeForm} externalRequestProps={modalListRequestProps} exFunction={functionsForm.mapHandleChange} />
+                        <ModalList title={`Assign ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} type={typeForm} from={'form'} exFunction={functionsForm.mapHandleChange} />
                     }
                     {
                         contextForm.mapModalList.open && contextForm.mapModalList.type === 'tag' &&
-                        <ModalList title='Assign a tag' complement='tag' externalRequestProps={modalListRequestProps} exFunction={functionsForm.mapHandleChange} />
+                        <ModalList title='Assign a tag' type='tag' from={'form'} exFunction={functionsForm.mapHandleChange} />
                     }
                 </div>
             )
