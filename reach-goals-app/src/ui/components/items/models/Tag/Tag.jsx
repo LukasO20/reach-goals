@@ -1,11 +1,11 @@
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
 import { useTagModel } from '../../../../../provider/model/TagModelProvider.jsx'
 
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 
-import { targetMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { targetMap, filterGetModel } from '../../../../../utils/mapping/mappingUtils.js'
 import { filterModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
 import CardItem from '../../elements/CardItem/CardItem.jsx'
@@ -25,17 +25,16 @@ const Tag = (props) => {
     const display = props.display
     const isSelectableModel = props.selectableModel ?? false
 
-    const filterGetTag = {
-        ...filterModelMap,
-        type: 'tag',
-        source: props.typeDataSource ?? 'core',
-        tagsRelation: props.goalID ?? props.assignmentID ?? null,
-        tagsNotRelation: {
-            notRelationID: props.notRelationID ?? null,
-            notRelationModel: props.notRelationModel ?? null
-        },
-        tagSomeID: props.tagSomeID ?? null
-    }
+    const filterGetTag = useMemo(() => (
+        filterGetModel(props, 'tag', props.typeDataSource ?? 'core')
+    ), [
+        props.typeDataSource,
+        props.goalID,
+        props.assignmentID,
+        props.notRelationID,
+        props.notRelationModel,
+        props.tagSomeID
+    ])
 
     const deleteTag = async (id) => {
         await remove(id)
@@ -68,16 +67,22 @@ const Tag = (props) => {
         }
     }
 
-    useEffect(() => {
-        const fromModelSource = props.fromModelSource?.tag 
+    // useEffect(() => {
+    //     const fromModelSource = props.fromModelSource?.tag
 
-        if (fromModelSource && fromModelSource.length) setActiveModelSource(fromModelSource)
-        else setActiveModelSource(data[filterGetTag.source])
-    }, [data])
+    //     if (fromModelSource && fromModelSource.length) setActiveModelSource(fromModelSource)
+    //     else setActiveModelSource(data[filterGetTag.source])
+    // }, [data])
 
     useEffect(() => {
+        console.log('FILT HERE - ', filterGetTag)
         refetch(filterGetTag)
-    }, [])
+    }, [filterGetTag])
+
+    useEffect(() => {
+        const tagSource = data[filterGetTag.source]
+        return setActiveModelSource(tagSource)
+    }, [data])
 
     const clickEvents = {
         card: tagClick,
@@ -85,7 +90,7 @@ const Tag = (props) => {
         delete: deleteTag,
         aux: removeElDOMClick
     }
-    
+
     return (
         loading && activeModelSource.length === 0 ?
             <p>Loading...</p>

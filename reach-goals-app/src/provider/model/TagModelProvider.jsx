@@ -2,7 +2,7 @@ import { useReducer, useEffect, createContext, useContext } from 'react'
 
 import * as tagService from '../../services/tagService.js'
 
-import { reduceModelMap, initialStateMap } from '../../utils/mapping/mappingUtilsProvider.js'
+import { reduceModelMap, initialStateMap, filterServiceFnMap } from '../../utils/mapping/mappingUtilsProvider.js'
 
 export const TagModelContext = createContext()
 
@@ -11,31 +11,23 @@ export const TagModelProvider = ({ children }) => {
 
     const load = async (filters = {}) => {
         dispatch({ type: 'LOADING' })
-        const dataSource = filters.source || 'core'
-        const typeDispatch = dataSource === 'core' ? 'FETCH_LIST' : 'FETCH_SUPPORT_LIST'
-        
+        const dataSource = filters.source
+        const useFilter = Object.entries(filters).filter(
+            filter => typeof filter[1] === 'number' || filter[1] === 'all'
+        )[0]
+
         try {
-            if (typeof filters.tagSomeID === 'boolean' && filters.tagSomeID === true) {
-                return dispatch({
-                    type: typeDispatch, payload: await tagService.getTag(filters.tagSomeID)
-                })
-            } else if (typeof filters.tagSomeID === 'number') {
-                return dispatch({
-                    type: 'FETCH_ONE', payload: await tagService.getTag(filters.tagSomeID)
-                })
-            } else if (filters.tagsNotRelation) {
+            //Filter object has valid value to filter
+            if (useFilter) {
+                const keyFilter = useFilter[0]
+                const valueFilter = useFilter[1]
+                const typeDispatch = keyFilter === 'tagSomeID' && typeof valueFilter === 'number' ? 'FETCH_ONE' 
+                    : dataSource === 'core' ? 'FETCH_LIST' : 'FETCH_SUPPORT_LIST'
 
-                if (typeof filters.tagsNotRelation.notRelationID === 'number' && typeof filters.tagsNotRelation.notRelationModel === 'string') {                    
-                    const notRelation = filters.tagsNotRelation
-                    const notRelationModel = notRelation.notRelationModel
-
-                    return dispatch({
-                        type: typeDispatch, payload: notRelationModel === 'goal' ?
-                            await tagService.getTagNotGoal(notRelation.notRelationID) : await tagService.getTagNotAssignment(notRelation.notRelationID)
-                    })  
-                }
+                dispatch({
+                    type: typeDispatch, payload: await tagService[filterServiceFnMap[keyFilter]](valueFilter)
+                })
             }
-
         } catch (err) {
             dispatch({ type: 'ERROR', payload: err.message })
         }
