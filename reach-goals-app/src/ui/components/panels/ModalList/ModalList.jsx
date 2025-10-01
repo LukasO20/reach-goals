@@ -15,7 +15,7 @@ const plusProps = (props) => {
 
     switch (from) {
         case 'form':
-            const currentFilter = props?.type === 'goal'  ? { notGoalRelation: 'all' } : { goalSomeID: 'all' }
+            const currentFilter = props?.type === 'goal' ? { notGoalRelation: 'all' } : { goalSomeID: 'all' }
 
             return {
                 propsReference: {

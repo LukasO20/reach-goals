@@ -29,7 +29,7 @@ export const filterServiceFnMap = {
     assignmentGoalRelation: 'getAssignmentOnGoal',
     assignmentTagRelation: 'getAssignmentOnTag',
     notGoalRelation: 'getAssignmentWithoutGoal',
-    tagSomeID: null,
+    tagSomeID: 'getTag',
     tagsRelation: null,
     tagsNotRelation: null,
 }
