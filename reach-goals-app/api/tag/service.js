@@ -6,7 +6,7 @@ const addTag = async (data) => {
     try {
         return await prisma.tag.create({
             data: data
-        })        
+        })
     }
     catch (error) {
         console.error(error)
@@ -50,7 +50,7 @@ const getTag = async (tagID) => {
                 where: { id: Number(tagID) },
                 include: { goals: true, assignments: true }
             })
-        } else {
+        } else if (tagID === 'all') {
             return await prisma.tag.findMany({
                 include: { goals: true, assignments: true }
             })
@@ -92,20 +92,21 @@ const getTagOnAssignment = async (assignmentID) => {
 }
 
 const getTagNotGoal = async (goalID) => {
-    if (!goalID) return
-
     try {
-        return await prisma.tag.findMany({
-            where: {
-                NOT: {
-                    goals: {
-                        some: { goalID: Number(goalID) }
-                    }
-                }
-            },
-            select: { id: true, name: true, color: true }
-        })
+        const isNumber = !isNaN(goalID) && typeof goalID !== 'number'
 
+        if (isNumber) {
+            return await prisma.tag.findMany({
+                where: {
+                    NOT: {
+                        goals: {
+                            some: { goalID: Number(goalID) }
+                        }
+                    }
+                },
+                select: { id: true, name: true, color: true }
+            })
+        }
     } catch (error) {
         console.error(error)
         return false

@@ -63,7 +63,7 @@ export const deleteTag = async (tagID) => {
 
 export const getTag = async (tagID) => {
     try {
-        const url = (tagID !== undefined && !isNaN(tagID))
+        const url = (tagID)
             ? `/api/tag/${tagID}`
             : `/api/tag?action=tag-get`
 
