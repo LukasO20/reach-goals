@@ -31,7 +31,8 @@ const Tag = (props) => {
         props.typeDataSource,
         props.goalID,
         props.assignmentID,
-        props.notRelationID,
+        props.notGoalID,
+        props.notAssignmentID,
         props.notRelationModel,
         props.tagSomeID
     ])

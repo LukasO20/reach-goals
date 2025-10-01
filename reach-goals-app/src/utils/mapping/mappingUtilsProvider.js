@@ -30,8 +30,10 @@ export const filterServiceFnMap = {
     assignmentTagRelation: 'getAssignmentOnTag',
     notGoalRelation: 'getAssignmentWithoutGoal',
     tagSomeID: 'getTag',
-    tagsRelation: null,
-    tagsNotRelation: null,
+    tagRelationGoal: 'getTagOnGoal',
+    tagRelationAssignment: 'getTagOnAssignment',
+    tagNotRelationGoal: 'getTagNotGoal',
+    tagNotRelationAssignment: 'getTagNotAssignment'
 }
 
 export const initialStateMap = {
