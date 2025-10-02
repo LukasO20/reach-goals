@@ -8,7 +8,6 @@ import { VisibilityContext } from '../../../../../provider/VisibilityProvider.js
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
 import { targetMap, switchLayoutMap, filterGetModel } from '../../../../../utils/mapping/mappingUtils.js'
-import { filterModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
 import CardItem from '../../elements/CardItem/CardItem.jsx'
 
@@ -73,14 +72,8 @@ const Assignment = (props) => {
         }
     }
 
-    // useEffect(() => {
-    //     const fromModelSource = props.fromModelSource?.assignment
-
-    //     if (fromModelSource && Array.isArray(fromModelSource)) setActiveModelSource(fromModelSource)
-    //     else setActiveModelSource(data[filterGetAssignment.source])
-    // }, [data, props.fromModelSource])
-
     useEffect(() => {
+        if (filterGetAssignment["Without key"] === "Without value") return
         refetch(filterGetAssignment)
     }, [filterGetAssignment])
 
@@ -91,9 +84,17 @@ const Assignment = (props) => {
             setPendingPanel(false)
         }
 
+        //When form send data, it will be considered as source
+        const formSource = props?.sourceForm?.assignments
         const assignmentSource = data[filterGetAssignment.source]
-        return setActiveModelSource(assignmentSource)
-    }, [pendingPanel, data])
+
+        return setActiveModelSource
+            (
+                Array.isArray(formSource) ?
+                    formSource.length ? formSource : []
+                    : assignmentSource
+            )
+    }, [pendingPanel, data, props.sourceForm])
 
     const clickEvents = {
         card: assignmentClick,
