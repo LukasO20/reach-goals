@@ -29,10 +29,8 @@ const Tag = (props) => {
         filterGetModel(props, 'tag', props.typeDataSource ?? 'core')
     ), [
         props.typeDataSource,
-        props.goalID,
-        props.assignmentID,
-        props.notGoalID,
-        props.notAssignmentID,
+        props.tagNotRelationGoal,
+        props.tagNotRelationAssignment,
         props.notRelationModel,
         props.tagSomeID
     ])
@@ -82,7 +80,7 @@ const Tag = (props) => {
 
     useEffect(() => {
         const tagSource = data[filterGetTag.source]
-        return setActiveModelSource(tagSource)
+        return setActiveModelSource(tagSource ?? [])
     }, [data])
 
     const clickEvents = {

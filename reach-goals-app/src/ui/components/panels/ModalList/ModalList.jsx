@@ -1,22 +1,35 @@
-import ModelSwitcher from '../../items/models/ModelSwitcher.jsx'
-import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
+import { useContext } from 'react'
+
+import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 
 import { modalListMap } from '../../../../utils/mapping/mappingUtils.js'
+
+import ModelSwitcher from '../../items/models/ModelSwitcher.jsx'
+import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 
 import './ModalList.scss'
 
 //Plus props can be used to add extra properties to the component
-const plusProps = (props) => {
+const plusProps = (props, model) => {
+    const modelType = model?.typeModel
+    const modelID = model?.mainModelID
     const from = props?.from ?? null
 
     let switcherRelation = null
     if (props?.type === 'goal') switcherRelation = 'goal-relation'
     else if (props?.type === 'assignment') switcherRelation = 'assignment-relation'
+    else if (props?.type === 'tag') switcherRelation = 'tag'
 
     switch (from) {
         case 'form':
-            const currentFilter = props?.type === 'goal' ? { notGoalRelation: 'all' } : { goalSomeID: 'all' }
-
+            const isNumberID = typeof modelID === 'number'
+            const currentFilter = props?.type === 'goal' ? //Ready to filter assignment without goal
+                { notGoalRelation: 'all' } : props?.type === 'assignment' ? //Ready to filter all goal
+                    { goalSomeID: 'all' } : isNumberID ? //Ready to filter relation tag or all tag
+                        modelType === 'goal' ? 
+                            { tagNotRelationGoal: modelID } : { tagNotRelationAssignment: modelID } :
+                                { tagSomeID: 'all' }
+                        
             return {
                 propsReference: {
                     ...currentFilter,
@@ -33,9 +46,10 @@ const plusProps = (props) => {
 }
 
 const ModalList = (props) => {
+    const { model } = useContext(ManageModelContext)
     const title = props?.title
     const type = plusProps(props).switcherRelationType
-    const propsReference = plusProps(props).propsReference
+    const propsReference = plusProps(props, model).propsReference
     const externalFunction = props?.exFunction
 
     return (
