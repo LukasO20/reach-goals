@@ -29,24 +29,14 @@ const Form = (props) => {
     const icon = iconMap[typeForm] || 'fa-solid fa-triangle-exclamation'
     const titleForm = titleMap[typeForm] || 'Create your objective'
 
-    const tagRelation = typeForm === 'goal' ? 'goalID' : 'assignmentID'
     const modelSwitcherRelation = typeForm === 'assignment' ? 'assignment-relation' : 'goal-relation'
     const modelCopyRelation = typeForm === 'assignment' ? 'goal' : 'assignment'
     
-    const keyModelListRelation = typeForm === 'assignment' ? 'goalAssignmentRelation' : 'notGoalRelation'
-    const valueModelListRelation = typeForm === 'assignment' ? modelForm?.id : 'all'
-
     const modelSwitcherProps = {
-        [tagRelation]: modelForm?.id,
-        [keyModelListRelation]: valueModelListRelation,
-        focused: modelForm,
+        sourceForm: modelForm,
         display: {
             sideAction: true,
             type: 'mini-list'
-        },
-        fromModelSource: {
-            assignment: modelForm?.assignments,
-            tag: modelForm?.tags?.map(tags => tags.tag)
         }
     }
 
