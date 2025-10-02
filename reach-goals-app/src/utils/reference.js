@@ -5,4 +5,4 @@ export const typeReduceModel = ['core', 'support']
 export const typeFilterModel = ['goalSomeID', 'goalAssignmentRelation', 'goalTagRelation',
     'notAssignmentRelation', 'assignmentSomeID', 'assignmentGoalRelation',
     'assignmentTagRelation', 'notGoalRelation', 'tagSomeID',
-    'tagsRelation', 'tagsNotRelation']
+    'tagNotRelationGoal', 'tagNotRelationAssignment']
