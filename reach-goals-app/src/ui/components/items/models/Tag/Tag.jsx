@@ -66,22 +66,23 @@ const Tag = (props) => {
         }
     }
 
-    // useEffect(() => {
-    //     const fromModelSource = props.fromModelSource?.tag
-
-    //     if (fromModelSource && fromModelSource.length) setActiveModelSource(fromModelSource)
-    //     else setActiveModelSource(data[filterGetTag.source])
-    // }, [data])
-
     useEffect(() => {
-        console.log('FILT HERE - ', filterGetTag)
+        if (filterGetTag["Without key"] === "Without value") return
         refetch(filterGetTag)
     }, [filterGetTag])
 
     useEffect(() => {
+        //When form send data, it will be considered as source
+        const formSource = props?.sourceForm?.tags.map(tag => tag.tag)
         const tagSource = data[filterGetTag.source]
-        return setActiveModelSource(tagSource ?? [])
-    }, [data])
+
+        return setActiveModelSource
+            (
+                Array.isArray(formSource) ?
+                    formSource.length ? formSource : []
+                    : tagSource
+            )
+    }, [data, props.sourceForm])
 
     const clickEvents = {
         card: tagClick,

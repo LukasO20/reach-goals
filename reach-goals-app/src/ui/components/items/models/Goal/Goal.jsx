@@ -67,14 +67,8 @@ const Goal = (props) => {
         }
     }
 
-    // useEffect(() => {
-    //     const fromModelSource = props.fromModelSource?.goal
-
-    //     if (fromModelSource && Array.isArray(fromModelSource)) setActiveModelSource(fromModelSource)
-    //     else setActiveModelSource(data[filterGetGoal.source])
-    // }, [data, props.fromModelSource])
-
     useEffect(() => {
+        if (filterGetGoal["Without key"] === "Without value") return
         refetch(filterGetGoal)
     }, [filterGetGoal])
 
@@ -86,7 +80,7 @@ const Goal = (props) => {
         }
 
         const goalSource = data[filterGetGoal.source]
-        return setActiveModelSource(goalSource)
+        if (!filterGetGoal["Without key"]) return setActiveModelSource(goalSource)
     }, [pendingPanel, data])
 
     const clickEvents = {
