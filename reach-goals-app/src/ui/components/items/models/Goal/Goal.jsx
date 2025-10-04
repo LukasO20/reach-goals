@@ -58,7 +58,10 @@ const Goal = (props) => {
             if (model.transportModel.goal.length > 0) return
 
             addToTransportModel({ ...selected, type: 'goal' })
-            return updateSubmitModel({ keyObject: 'goalID', value: id })
+            return updateSubmitModel({ 
+                keyObject: 'goalID', 
+                value: id 
+            })
         }
 
         if (isDetailsModel) {

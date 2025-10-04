@@ -45,14 +45,19 @@ const Tag = (props) => {
         catch (error) { setErro(`Failed to edit this tag: ${erro.message}`) }
     }, [setModel])
 
-    const tagClick = (id, e) => {
-        e.stopPropagation()
-
+    const tagClick = ({ id, name, color }, e) => {
         if (isSelectableModel) {
             const selected = activeModelSource.find(m => m.id === id)
 
             addToTransportModel({ ...selected, type: 'tag' })
-            return updateSubmitModel({ keyObject: 'tags', value: { tagID: id }, type: 'array' })
+            return updateSubmitModel({ 
+                keyObject: 'tags', 
+                value: { 
+                    tagID: id, 
+                    tag: { id: id, name: name, color: color }
+                },
+                type: 'array' 
+            })
         }
 
         setModel({ ...model, mainModelID: id })

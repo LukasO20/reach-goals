@@ -55,7 +55,13 @@ const Assignment = (props) => {
             const selected = activeModelSource.find(m => m.id === id)
 
             addToTransportModel({ ...selected, type: 'assignment' })
-            return updateSubmitModel({ keyObject: 'assignments', value: { id: id, name: name }, type: 'array' })
+            return updateSubmitModel({ 
+                keyObject: 'assignments', 
+                value: { 
+                    id: id, name: name 
+                }, 
+                type: 'array' 
+            })
         }
 
         if (isDetailsModel) {
