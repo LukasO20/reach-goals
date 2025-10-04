@@ -97,12 +97,12 @@ const getAssignmentOnGoal = async (goalID) => {
 
 const getAssignmentOnTag = async (tagID) => {
     try {
-        const isTrue = tagID === true || tagID === 'true'
+        const isAll = 'all'
         const isNumber = !isNaN(tagID) && tagID !== '' && tagID !== null && tagID !== undefined
 
-        if (!isTrue && !isNumber) return
+        if (!isAll && !isNumber) return
 
-        if (isTrue) {
+        if (isAll) {
             return await prisma.assignment.findMany({
                 where: { tags: { some: {} } },
                 include: { 
