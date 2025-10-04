@@ -48,26 +48,24 @@ const Assignment = (props) => {
         catch (error) { setErro(`Failed to edit this assignment: ${error}`) }
     }
 
-    const assignmentClick = (id, e) => {
+    const assignmentClick = ({ id, name }, e) => {
         e.stopPropagation()
 
         if (isSelectableModel) {
             const selected = activeModelSource.find(m => m.id === id)
 
             addToTransportModel({ ...selected, type: 'assignment' })
-            return updateSubmitModel({ keyObject: 'assignments', value: { id: id }, type: 'array' })
+            return updateSubmitModel({ keyObject: 'assignments', value: { id: id, name: name }, type: 'array' })
         }
 
         if (isDetailsModel) {
             setModel(prev => ({ ...prev, mainModelID: id, typeModel: 'assignment' }))
-            setPendingPanel(true)
-            return
+            return setPendingPanel(true)
         }
     }
 
-    const removeElDOMClick = (id, e) => {
+    const removeElDOMClick = ({ id }) => {
         if (id) {
-            e.stopPropagation()
             updateSubmitModel({ keyObject: 'assignments', value: { id: id }, type: 'array', action: 'remove' })
         }
     }

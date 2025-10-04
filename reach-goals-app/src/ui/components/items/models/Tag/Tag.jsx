@@ -61,7 +61,6 @@ const Tag = (props) => {
 
     const removeElDOMClick = (id, e) => {
         if (id) {
-            e.stopPropagation()
             updateSubmitModel({ keyObject: 'tags', value: { tagID: id }, type: 'array', action: 'remove' })
         }
     }
