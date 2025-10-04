@@ -11,52 +11,53 @@ import moment from 'moment'
 
 const renderCard = ({ type, model, clickFunction, display }, page) => {   
     return model.map(model => (
-        <div className={`${type} ${display.type}`} id={model.id || model.tagID} key={model.id || model.tagID}
-            onClick={typeof display.type === 'string' && display.type !== '' ? (e) => clickFunction.card(model.id || model.tagID, e) : undefined}
-            style={ type === 'tag' ? { backgroundColor:  `${model.color}30`, borderColor: model.color } : {} }>
-            {
-                display.type === 'card' ?
-                    <Link to={`/${page}/details`}>
+        model && 
+            <div className={`${type} ${display.type}`} id={model.id || model.tagID} key={model.id || model.tagID}
+                onClick={typeof display.type === 'string' && display.type !== '' ? (e) => clickFunction.card(model, e) : undefined}
+                style={ type === 'tag' ? { backgroundColor:  `${model.color}30`, borderColor: model.color } : {} }>
+                {
+                    display.type === 'card' ?
+                        <Link to={`/${page}/details`}>
+                            <div className='head'>
+                                <label className='line-info'>{iconMap[type]}<label>{model.name}</label></label>
+                            </div>
+                            <div className='body'>
+                                {
+                                    model?.end &&
+                                    <label className='line-info date'>
+                                        {iconMap['schedule']}
+                                        <span>
+                                            Ends on {moment(model.end).format('DD MMMM')}
+                                        </span> 
+                                    </label>
+                                }
+                                <label className='line-info description'>
+                                    {model.description}
+                                </label>
+                            </div>
+                        </Link>
+                        :
                         <div className='head'>
                             <label className='line-info'>{iconMap[type]}<label>{model.name}</label></label>
                         </div>
-                        <div className='body'>
+                }
+                {
+                    display.sideAction &&
+                        <div className='side-actions'>
                             {
-                                model?.end &&
-                                <label className='line-info date'>
-                                    {iconMap['schedule']}
-                                    <span>
-                                        Ends on {moment(model.end).format('DD MMMM')}
-                                    </span> 
-                                </label>
+                                display.type === 'card'
+                                    ?
+                                    <>
+                                        <ButtonAction onClick={() => clickFunction.edit(model.id || model.tagID)} target={targetMap(['panel-center', type])} switchLayout={switchLayoutMap({ page: page, name: 'panel', layout: 'layout', value: 'center' })} 
+                                            classBtn={`edit-${type} button-action circle small`} icon='edit' />
+                                        <ButtonAction onClick={() => clickFunction.delete(model.id || model.tagID)} target={targetMap(null)} 
+                                            classBtn={`remove-${type} button-action circle small`} icon='remove' />
+                                    </>
+                                    :
+                                    <ButtonAction onClick={() => clickFunction.aux(model, 'delete', model.type)} classBtn={`remove-${type}-dom remove-dom`} icon='close' />
                             }
-                            <label className='line-info description'>
-                                {model.description}
-                            </label>
                         </div>
-                    </Link>
-                    :
-                    <div className='head'>
-                        <label className='line-info'>{iconMap[type]}<label>{model.name}</label></label>
-                    </div>
-            }
-            {
-                display.sideAction &&
-                <div className='side-actions'>
-                    {
-                        display.type === 'card'
-                            ?
-                            <>
-                                <ButtonAction onClick={() => clickFunction.edit(model.id || model.tagID)} target={targetMap(['panel-center', type])} switchLayout={switchLayoutMap({ page: page, name: 'panel', layout: 'layout', value: 'center' })} 
-                                    classBtn={`edit-${type} button-action circle small`} icon='edit' />
-                                <ButtonAction onClick={() => clickFunction.delete(model.id || model.tagID)} target={targetMap(null)} 
-                                    classBtn={`remove-${type} button-action circle small`} icon='remove' />
-                            </>
-                            :
-                            <ButtonAction onClick={() => clickFunction.aux(model.id || model.tagID, 'delete', model.type)} classBtn={`remove-${type}-dom remove-dom`} icon='close' />
-                    }
-                </div>
-            }
+                }
         </div>
     ))
 }
