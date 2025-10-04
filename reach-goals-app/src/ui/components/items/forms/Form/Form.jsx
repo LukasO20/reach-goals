@@ -31,7 +31,7 @@ const Form = (props) => {
 
     const modelSwitcherRelation = typeForm === 'assignment' ? 'assignment-relation' : 'goal-relation'
     const modelCopyRelation = typeForm === 'assignment' ? 'goal' : 'assignment'
-    
+
     const modelSwitcherProps = {
         sourceForm: modelForm,
         display: {
@@ -144,8 +144,12 @@ const Form = (props) => {
                                 <div className='body'>
                                     {
                                         <>
-                                            {!!modelForm.id && (<ModelSwitcher type={'tag'} propsReference={modelSwitcherProps} />)}
-                                            <ModelCopy type={model.typeModel} region={'tag'} />
+                                            {
+                                                typeof modelForm.id === 'number' ?
+                                                    <ModelSwitcher type={'tag'} propsReference={modelSwitcherProps} />
+                                                    :
+                                                    <ModelCopy type={model.typeModel} region={'tag'} />
+                                            }
                                         </>
                                     }
                                 </div>
@@ -153,8 +157,12 @@ const Form = (props) => {
                             {
                                 functionsForm.mapFormsItemMap(typeForm,
                                     <>
-                                        {!!modelForm.id && (<ModelSwitcher type={modelSwitcherRelation} propsReference={modelSwitcherProps} />)}
-                                        <ModelCopy type={model.typeModel} region={modelCopyRelation} />
+                                        {
+                                            typeof modelForm.id === 'number' ?
+                                                <ModelSwitcher type={modelSwitcherRelation} propsReference={modelSwitcherProps} />
+                                                :
+                                                <ModelCopy type={model.typeModel} region={modelCopyRelation} />
+                                        }
                                     </>
                                 )
                             }
