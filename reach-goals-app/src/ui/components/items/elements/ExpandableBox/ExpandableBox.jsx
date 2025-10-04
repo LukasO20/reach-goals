@@ -2,8 +2,6 @@ import { useState } from 'react'
 
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
-import { filterModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
-
 import { iconMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import Goal from '../../models/Goal/Goal.jsx'
@@ -13,38 +11,38 @@ import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 const boxConfigs = (type) => {
     const goal = [
         {
-            currentfilter: { notAssignmentRelation: true },
+            currentfilter: { notAssignmentRelation: 'all' },
             label: 'without assignments',
         },
         {
-            currentfilter: { goalAssignmentRelation: true },
+            currentfilter: { goalAssignmentRelation: 'all' },
             label: 'with assignments',
         },
         {
-            currentfilter: { goalTagRelation: true },
+            currentfilter: { goalTagRelation: 'all' },
             label: 'with tags',
         },
         {
-            currentfilter: { goalSomeID: true },
+            currentfilter: { goalSomeID: 'all' },
             label: 'every goal',
         },
     ]
 
     const assignment = [
         {
-            currentfilter: { notGoalRelation: true },
+            currentfilter: { notGoalRelation: 'all' },
             label: 'without goals',
         },
         {
-            currentfilter: { assignmentGoalRelation: true },
+            currentfilter: { assignmentGoalRelation: 'all' },
             label: 'with goals',
         },
         {
-            currentfilter: { assignmentTagRelation: true },
+            currentfilter: { assignmentTagRelation: 'all' },
             label: 'with tags',
         },
         {
-            currentfilter: { assignmentSomeID: true },
+            currentfilter: { assignmentSomeID: 'all' },
             label: 'every assignment',
         }
     ]
@@ -63,13 +61,34 @@ const ExpandableBox = (props) => {
     const { layoutComponent } = useSwitchLayout()
     const configType = layoutComponent.objectives.layout
 
-    const [filterRenderModel, setFilterRenderModel] = useState(filterModelMap)
-    const filterButtonActive = Object.entries(filterRenderModel).find(([_, value]) => value === true)?.[0] ?? `${configType}SomeID`
+    const [filterRenderModel, setFilterRenderModel] = useState({
+        assignment: {
+            type: configType,
+            source: 'core',
+            assignmentSomeID: 'all',
+            assignmentGoalRelation: null,
+            assignmentTagRelation: null,
+            notGoalRelation: null,
+        },
+        goal: {
+            type: configType,
+            source: 'core',
+            goalSomeID: 'all',
+            goalAssignmentRelation: null,
+            goalTagRelation: null,
+            notAssignmentRelation: null,
+        },
+        [`${configType}SomeID`]: 'all' //A default value to filterButtonActive
+    })
+
+    const filterButtonActive = Object.entries(filterRenderModel[configType] ?? filterRenderModel)
+        .find(([_, value]) => value === 'all')?.[0]
 
     const handleOptions = (currentfilter) => {
         setFilterRenderModel(() => ({
-            ...currentfilter,
-            type: configType
+            [configType]: {
+                ...currentfilter
+            }
         }))
     }
 
@@ -86,8 +105,8 @@ const ExpandableBox = (props) => {
                                 boxConfigs(configType).map((box, index) => {
                                     const currentButton = Object.keys(box.currentfilter)[0]
 
-                                    return <ButtonAction key={index} classBtn={`button-action plan-round max-width small objective ${currentButton === filterButtonActive && 'active'}`} 
-                                    title={box.label} onClick={(e) => { handleOptions(box.currentfilter) }} />
+                                    return <ButtonAction key={index} classBtn={`button-action plan-round max-width small objective ${currentButton === filterButtonActive && 'active'}`}
+                                        title={box.label} onClick={(e) => { handleOptions(box.currentfilter) }} />
                                 })
                             }
                         </div>
@@ -98,16 +117,16 @@ const ExpandableBox = (props) => {
                 {
                     <>
                         {
-                            configType === 'goal' ? 
-                                <Goal display={{type: 'mini-list'}} {...filterRenderModel} />
+                            configType === 'goal' ?
+                                <Goal display={{ type: 'mini-list' }} {...filterRenderModel.goal} />
                                 :
-                            configType === 'assignment' ?
-                                <Assignment display={{type: 'mini-list'}} {...filterRenderModel} />
-                                :
-                                <>
-                                    <Goal display={{type: 'mini-list'}} goalSomeID={'all'} />
-                                    <Assignment display={{type: 'mini-list'}} assignmentSomeID={true} />
-                                </>
+                                configType === 'assignment' ?
+                                    <Assignment display={{ type: 'mini-list' }} {...filterRenderModel.assignment} />
+                                    :
+                                    <>
+                                        <Goal display={{ type: 'mini-list' }} goalSomeID={'all'} />
+                                        <Assignment display={{ type: 'mini-list' }} assignmentSomeID={'all'} />
+                                    </>
                         }
                     </>
                 }
