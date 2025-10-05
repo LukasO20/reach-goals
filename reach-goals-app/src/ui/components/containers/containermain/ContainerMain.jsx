@@ -1,11 +1,13 @@
 import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import Routes from '../../../../app/Routes.jsx'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 
-import { targetMap, switchLayoutMap, checkboxMap, iconMap } from '../../../../utils/mapping/mappingUtils.js'
+import { targetMap, switchLayoutMap, checkboxMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import ButtonDropdown from '../../items/elements/ButtonDropdown/ButtonDropdown.jsx'
@@ -18,13 +20,20 @@ const ContainerM = () => {
     const { resetManageModel } = useContext(ManageModelContext)
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { layoutComponent } = useSwitchLayout()
+    const navigate = useNavigate()
+
+    const handleClickContainer = (e) => {
+        toggleVisibility(targetMap(null), e)
+        resetManageModel()
+        navigate(`/${layoutComponent.page}`) // return standard route during handle
+    }
 
     const isSwitchLayoutAssignment = layoutComponent[layoutComponent.page]?.layout === 'assignment'
     const isSwitchLayoutGoal = layoutComponent[layoutComponent.page]?.layout === 'goal'
     const isSwitchLayoutActivities = layoutComponent[layoutComponent.page]?.layout === 'default'
 
     return (
-        <div className='container-main' onClick={(e) => { toggleVisibility(targetMap(null), e); resetManageModel() }}>
+        <div className='container-main' onClick={(e) => handleClickContainer(e)}>
             <div className='head'>
                 <div className='line-p'>
                     <div className='title-m'>

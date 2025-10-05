@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
@@ -15,15 +16,22 @@ import './ContainerHeader.scss'
 const ContainerH = () => {
     const { title } = useTitle()
     const { toggleVisibility } = useContext(VisibilityContext)
-    const { setModel } = useContext(ManageModelContext)
+    const { setModel, resetManageModel } = useContext(ManageModelContext)
     const { layoutComponent } = useSwitchLayout()
+    const navigate = useNavigate()
 
     const linkTagClick = (event) => {
         if (event) setModel(prev => ({ ...prev, typeModel: 'tag' }))
     }
 
+    const handleClickHeader = (e) => {
+        toggleVisibility(targetMap(null), e)
+        resetManageModel()
+        navigate(`/${layoutComponent.page}`) // return standard route during handle
+    }
+
     return (
-        <div className="container-header main-content" onClick={(e) => toggleVisibility(targetMap(), e)}>
+        <div className="container-header main-content" onClick={(e) => handleClickHeader(e)}>
             <div className="titles-header">
                 <h1>{title}</h1>
             </div>
