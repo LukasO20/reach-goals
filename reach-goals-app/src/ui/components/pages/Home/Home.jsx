@@ -14,9 +14,6 @@ const Home = () => {
     const { update } = useTitle()
     const { layoutComponent } = useSwitchLayout()
 
-    const iconLayoutModel = layoutComponent['home']?.layout === 'assignment' ? 
-        iconMap['assignment'] : layoutComponent['home']?.layout === 'goal' ? iconMap['goal'] : null
-
     useEffect(() => {
         update(`Welcome. Let's produce?`)
     }, [update])
