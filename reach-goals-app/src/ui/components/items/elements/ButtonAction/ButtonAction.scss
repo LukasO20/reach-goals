@@ -9,8 +9,9 @@
     width: 2.4rem;
     background-color: $color-complementary-p-50;
     color: $color-complementary-s;
-    transition: .3s linear;
+    transition: 0.3s ease-out;
     cursor: pointer;
+    user-select: none;
 
     &.add {
         background-color: $color-accent-p-15;
@@ -31,6 +32,24 @@
         &:active {
             background-color: $color-primary-50;
             transition: .1s linear;
+        }
+    }
+
+    &.create {
+        background-color: $color-accent-p-15;
+
+        &:hover,
+        &.active {
+            background-color: $color-accent-p;
+        }
+
+        &:active {
+            background-color: $color-primary-50;
+            transition: 0.1s ease-out;
+        }
+
+        * {
+            color: $color-accent-p;
         }
     }
 
@@ -69,11 +88,6 @@
         font-weight: 600;
     }
 
-    &:active {
-        background-color: $color-complementary-s-30;
-        transition: .1s linear;
-    }
-
     /* Double application */
     &:hover,
     &.active {
@@ -105,5 +119,11 @@
         &.max-width {
             width: max-content;
         }
+    }
+
+    /* Last application */
+    &:active {
+        background-color: $color-complementary-s-30;
+        transition: 0.1s ease-in-out;
     }
 }

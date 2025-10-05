@@ -4,128 +4,8 @@
 .button-dropdown {
     position: relative;
     cursor: pointer;
+    user-select: none;
     width: 5.85rem;
-
-    &.plan {
-        display: flex;
-        height: 2.4rem;
-        background-color: $color-complementary-p-50;
-        transition: .3s linear;
-        padding: 0rem 1rem;
-        border-radius: 0.5rem;
-    }
-
-    &.plan-round {
-        border-radius: 2rem;
-        padding: 0rem 1rem;
-        justify-content: center;
-        gap: 0.5rem;
-    }
-
-    /* Double application */
-    &.plan,
-    &.plan-round {
-
-        &:active {
-            background-color: $color-complementary-s-30;
-            transition: .1s linear;
-        }
-
-        &.small {
-            height: 1.8rem;
-            width: 5.75rem;
-            justify-content: center;
-
-            .dropdown-menu {
-                top: 2.35rem;
-            }
-        }
-
-        &.max-width {
-            width: max-content;
-        }
-
-        &.create {
-            background-color: $color-accent-p-15;
-
-            &:hover,
-            &.active {
-                background-color: $color-accent-p;
-            }
-
-            &:active {
-                background-color: $color-primary-50;
-                transition: .1s linear;
-            }
-
-            >span,
-            .icon-st {
-                color: $color-accent-p;
-            }
-
-            .dropdown-menu {
-
-                .button-action {
-                    background-color: $color-accent-p-15;
-
-                    * {
-                        color: $color-primary;
-                    }
-
-                    &:hover {
-                        background-color: $color-accent-p;
-
-                        * {
-                            color: $color-white;
-                        }
-                    }
-
-                    &:active {
-                        background-color: $color-primary-50;
-                        transition: .1s linear;
-                    }
-                }
-            }
-        }
-
-        &.status {
-
-            .dropdown-menu {
-               
-                .button-action {
-                    background-color: $color-accent-p-15;
-
-                    * {
-                        color: $color-complementary-s;
-                    }
-
-                    &:hover,
-                    &.active {
-                        background-color: $color-accent-p;
-
-                        * {
-                            color: $color-white;
-                        }
-                    }
-
-                    &:active {
-                        background-color: $color-primary-50;
-                        transition: .1s linear;
-                    }
-                }
-            }
-        }
-
-        &:hover,
-        &.active {
-            background-color: $color-complementary-s;
-
-            >span,
-            .icon-st {
-                color: $color-white;
-            }
-        }
-    }
 
     >span {
         display: flex;
@@ -175,5 +55,123 @@
                 justify-content: flex-start;
             }
         }
+    }
+
+    &.plan {
+        display: flex;
+        height: 2.4rem;
+        background-color: $color-complementary-p-50;
+        transition: .3s linear;
+        padding: 0rem 1rem;
+        border-radius: 0.5rem;
+    }
+
+    &.plan-round {
+        border-radius: 2rem;
+        padding: 0rem 1rem;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    &.small {
+        height: 1.8rem;
+        width: 5.75rem;
+        justify-content: center;
+
+        .dropdown-menu {
+            top: 2.35rem;
+        }
+    }
+
+    &.max-width {
+        width: max-content;
+    }
+
+    &.create {
+        background-color: $color-accent-p-15;
+
+        &:hover,
+        &.active {
+            background-color: $color-accent-p;
+        }
+
+        &:active {
+            background-color: $color-primary-50;
+            transition: 0.1s ease-in-out;
+        }
+
+        >span,
+        .icon-st {
+            color: $color-accent-p;
+        }
+
+        .dropdown-menu {
+
+            .button-action {
+                background-color: $color-accent-p-15;
+
+                * {
+                    color: $color-primary;
+                }
+
+                &:hover {
+                    background-color: $color-accent-p;
+
+                    * {
+                        color: $color-white;
+                    }
+                }
+
+                &:active {
+                    background-color: $color-primary-50;
+                    transition: .1s linear;
+                }
+            }
+        }
+    }
+
+    &.status {
+
+        .dropdown-menu {
+
+            .button-action {
+                background-color: $color-accent-p-15;
+
+                * {
+                    color: $color-complementary-s;
+                }
+
+                &:hover,
+                &.active {
+                    background-color: $color-accent-p;
+
+                    * {
+                        color: $color-white;
+                    }
+                }
+
+                &:active {
+                    background-color: $color-primary-50;
+                    transition: .1s linear;
+                }
+            }
+        }
+    }
+
+    /* Double Application */
+    &:hover,
+    &.active {
+        background-color: $color-complementary-s;
+
+        >span,
+        .icon-st {
+            color: $color-white;
+        }
+    }
+
+    /* Last application */
+    &:active {
+        background-color: $color-complementary-s-30;
+        transition: 0.1s ease-in-out;
     }
 }
