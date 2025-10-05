@@ -1,0 +1,25 @@
+@import '../../../themes/lighttheme.scss';
+
+.container-tag {
+
+    .button-action {
+
+        &.create {
+            background-color: $color-accent-p-70;
+
+            * {
+                color: $color-white;
+            }
+
+            &:hover,
+            &.active {
+                background-color: $color-primary;
+            }
+
+            &:active {
+                background-color: $color-primary-50;
+                transition: 0.1s ease-out;
+            }
+        }
+    }
+}
