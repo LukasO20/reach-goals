@@ -49,7 +49,7 @@ const Form = (props) => {
                 <div className='container-form-modal near tag'>
                     <div className='head'>
                         <div className='objective-title'>
-                            <label>Create a tag</label>
+                            <h2>{iconMap['tag']}Create a tag</h2>
                         </div>
                         <div className='objective-buttons-options'>
                             <ButtonAction target={targetMap('near-modalForm', { remove: true })} classBtn='button-action circle close' icon='close' />
@@ -57,15 +57,16 @@ const Form = (props) => {
                     </div>
                     <div className='body'>
                         <form>
-                            <div className='objective-forms'>
+                            <div className='fields'>
                                 <div className='field-forms name'>
-                                    <input id={`${typeForm}-name`} className='input-form' type='text' placeholder={`${typeForm} name here`}
+                                    <label>{iconMap['editbox']}<span>name</span></label>
+                                    <input id={`${typeForm}-name`} className='input-form' type='text' placeholder={`${typeForm} name`}
                                         name='name' value={modelForm?.name || ''} onChange={functionsForm.mapHandleChange} />
+                                </div>
+                                <div className='field-forms color'>
+                                    <label><span>color</span></label>
                                     <input id={`${typeForm}-color`} name='color' type='color' onChange={functionsForm.mapHandleChange} />
                                 </div>
-                            </div>
-                            <div className='bottom-form'>
-                                <label onClick={functionsForm.mapHandleSubmit}>save</label>
                             </div>
                             <div className='bottom-form-messagae'>
                                 {
@@ -82,6 +83,9 @@ const Form = (props) => {
                                 }
                             </div>
                         </form>
+                    </div>
+                    <div className='bottom'>
+                        <ButtonAction onClick={functionsForm.mapHandleSubmit} classBtn='button-action plan max-width save' icon='save' title='Save' />
                     </div>
                 </div>
             )
