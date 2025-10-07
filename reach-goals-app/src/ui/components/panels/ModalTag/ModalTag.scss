@@ -1,6 +1,7 @@
 @import '../../../themes/lighttheme.scss';
 
 .container-tag {
+    position: relative;
 
     .button-action {
 
@@ -20,6 +21,42 @@
                 background-color: $color-primary-50;
                 transition: 0.1s ease-out;
             }
+        }
+    }
+
+    .container-form-modal {
+        position: absolute;
+        width: 60%;
+        margin: 0.5rem;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        background-color: $color-white;
+        box-shadow: $box-shadow-st;
+        right: 0;
+
+        .head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: solid 1px $color-complementary-p;
+
+            h2 {
+                display: inline-flex;
+                gap: 0.5rem;
+                font-size: 1.05rem;
+                margin: 0rem;
+                padding: 0.85rem 0.5rem;
+                color: $color-complementary-s;
+            }
+        }
+
+        .body {
+            padding: 1rem 0rem 0rem 0rem;
+        }
+
+        .bottom {
+            display: flex;
+            justify-content: center;
         }
     }
 }

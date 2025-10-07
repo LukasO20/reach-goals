@@ -34,7 +34,8 @@ const ModalTag = () => {
                 <h2>Tags</h2>
                 <ButtonAction target={targetMap(null)} standardRoute="true" classBtn='button-action circle close' icon='close'/>
                 <div className='options'>
-                    <ButtonAction target={targetMap('near-modalForm', { add: true })} classBtn='button-action create plan max-width' icon='plus' title='create'/>
+                    <ButtonAction target={targetMap('near-modalForm', { add: true })} 
+                        classBtn={`button-action create plan max-width ${isModalForm.every(e => visibleElements.includes(e)) ? 'active' : ''}`} icon='plus' title='create'/>
                     {/* <ButtonCheckbox checkbox={checkboxMap({ id: 'checkbox-r-tag', value: false })} classBtn='checkbox-r-tag btn-checkbox'/> */}
                     {/* <ButtonDropdown target={targetMap('btn-filter-tag', { add: true })} classBtn='btn-option-r filter-content' iconFa='fa-solid fa-filter'/> */}
                     {/* Maybe a search bar can be better than a filter button, consider this aproach */}
@@ -44,7 +45,7 @@ const ModalTag = () => {
             </div>
             <div className='body'>
                 {
-                    isModalForm.every(elements => visibleElements.includes(elements)) && <ModalForm type='tag' />
+                    isModalForm.every(e => visibleElements.includes(e)) && <ModalForm type='tag' />
                 }
                 <Tag tagSomeID={'all'} />
             </div>
