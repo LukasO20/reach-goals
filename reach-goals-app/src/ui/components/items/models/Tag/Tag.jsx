@@ -46,6 +46,8 @@ const Tag = (props) => {
     }, [setModel])
 
     const tagClick = ({ id, name, color }, e) => {
+        e.stopPropagation()
+
         if (isSelectableModel) {
             const selected = activeModelSource.find(m => m.id === id)
 
@@ -64,7 +66,7 @@ const Tag = (props) => {
         toggleVisibility(target, e)
     }
 
-    const removeElDOMClick = (id, e) => {
+    const removeElDOMClick = ({ id }) => {
         if (id) {
             updateSubmitModel({ keyObject: 'tags', value: { tagID: id }, type: 'array', action: 'remove' })
         }
