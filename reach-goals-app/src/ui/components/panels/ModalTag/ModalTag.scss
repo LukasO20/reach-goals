@@ -6,7 +6,7 @@
     .button-action {
 
         &.create {
-            background-color: $color-accent-p-70;
+            background-color: $color-complementary-s-50;
 
             * {
                 color: $color-white;
@@ -14,12 +14,28 @@
 
             &:hover,
             &.active {
-                background-color: $color-primary;
+                background-color: $color-accent-p;
             }
 
             &:active {
                 background-color: $color-primary-50;
                 transition: 0.1s ease-out;
+            }
+        }
+
+        &.save {
+            background-color: $color-primary;
+
+            &:hover {
+                background-color: $color-primary-70;
+            }
+
+            &:active {
+                background-color: $color-primary-30;
+            }
+
+            * {
+                color: $color-white;
             }
         }
     }
