@@ -14,7 +14,7 @@ const renderCard = ({ type, model, clickFunction, display }, page) => {
         model && 
             <div className={`${type} ${display.type}`} id={model.id || model.tagID} key={model.id || model.tagID}
                 onClick={typeof display.type === 'string' && display.type !== '' ? (e) => clickFunction.card(model, e) : undefined}
-                style={ type === 'tag' ? { backgroundColor:  `${model.color}30`, borderColor: model.color } : {} }>
+                style={ type === 'tag' ? { backgroundColor: `${model.color}30`, borderColor: model.color } : {} }>
                 {
                     display.type === 'card' ?
                         <Link to={`/${page}/details`}>
@@ -54,7 +54,7 @@ const renderCard = ({ type, model, clickFunction, display }, page) => {
                                             classBtn={`remove-${type} button-action circle small`} icon='remove' />
                                     </>
                                     :
-                                    <ButtonAction onClick={() => clickFunction.aux(model, 'delete', model.type)} classBtn={`remove-${type}-dom remove-dom`} icon='close' />
+                                    <ButtonAction onClick={() => clickFunction.aux(model, model.type)} classBtn={`remove-${type}-dom remove-dom`} icon='close' />
                             }
                         </div>
                 }

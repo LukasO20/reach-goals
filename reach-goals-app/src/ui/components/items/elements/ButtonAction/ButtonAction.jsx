@@ -27,6 +27,7 @@ const ButtonAction = (props) => {
     const navigate = useNavigate()
 
     const handleClick = (e) => {
+        e.stopPropagation()
         if (props.target) toggleVisibility(props.target, e)
         if (props.modalList) handleModalList(props.modalList, e)
         if (props.switchLayout) switchLayoutComponent(props.switchLayout)
@@ -34,7 +35,7 @@ const ButtonAction = (props) => {
         if (props.standardRoute) navigate('/home') // return standard route if true 
 
         if (typeof props.onClick === 'function') {
-            props.onClick({props, e}) // execute external function from 'onClick' attribute    
+            props.onClick({props, e}) // execute external function from 'onClick' external attribute    
         }
     }
 
