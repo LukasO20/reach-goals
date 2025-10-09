@@ -8,7 +8,7 @@ import { useGoalModel } from '../../../../provider/model/GoalModelProvider.jsx'
 import { useAssignmentModel } from '../../../../provider/model/AssignmentModelProvider.jsx'
 import { useTagModel } from '../../../../provider/model/TagModelProvider.jsx'
 
-import { iconMap, modalListMap } from '../../../../utils/mapping/mappingUtils.js'
+import { iconMap, modalListMap, targetMap } from '../../../../utils/mapping/mappingUtils.js'
 import { formatDate } from '../../../../utils/utils.js'
 
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
@@ -62,6 +62,7 @@ const ModalForm = (props) => {
     const [isLoading, setLoading] = useState(false)
 
     const loadModel = async (id) => {
+        //CHECK PENDING (REFETCH DON'T WORKING WELL AFTER SAVE MODEL)
         setLoading(true)
         if (!id) return setLoading(false)
 
@@ -79,7 +80,7 @@ const ModalForm = (props) => {
                         : () => refetchTag(currentUseGetModel)
 
             await refetchFn()
-            id === true && resetManageModel()
+            id === 'all' && resetManageModel()
         }
         catch (error) {
             setError('Ops, something wrong: ', error)
@@ -151,8 +152,10 @@ const ModalForm = (props) => {
             typeForm === 'assignment' && await saveAssignment(structuredClone(model.submitModel))
             typeForm === 'tag' && await saveTag(structuredClone(model.submitModel))
 
-            loadModel(true)
-            toggleVisibility(null)
+            const visibilityReady = typeForm === 'tag' ? targetMap(['near-modalForm'], { remove: true }) : null
+
+            loadModel('all')
+            toggleVisibility(visibilityReady)
             setSucess(true)
 
         } catch (error) {
