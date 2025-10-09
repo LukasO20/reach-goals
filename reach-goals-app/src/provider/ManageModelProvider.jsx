@@ -15,11 +15,12 @@ const resetObject = {
 const ManageModelProvider = ({ children }) => {
     const [model, setModel] = useState(resetObject)
 
-    const addToTransportModel = ({ id, name, type }) => {
+    const addToTransportModel = ({ id, name, type, color }) => {
         if (!id || !name) return console.error('The model object must have an id and a name property')
         if (typeof type !== 'string') return console.error('The type is necessary and should be a string value. Did you send something like "tag" or "assignment"?')
 
         const dynamicKey = type === 'tag' ? 'tagID' : 'id'
+        const tagAdded = type === 'tag'
 
         setModel(prevModel => {
             const alreadyExists = prevModel.transportModel[type].some(item => (item.id ?? item.tagID) === id)
@@ -29,7 +30,10 @@ const ManageModelProvider = ({ children }) => {
                     ...prevModel.transportModel,
                     [type]: [
                         ...prevModel.transportModel[type],
-                        { [dynamicKey]: id, name: name, type: type }
+                        tagAdded ?
+                            { [dynamicKey]: id, name: name, type: type, color: color }
+                            :
+                            { [dynamicKey]: id, name: name, type: type }
                     ]
                 }
             }
