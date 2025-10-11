@@ -63,7 +63,7 @@ export const GoalModelProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        //if necessary check the results of state - 
+        //if necessary checks the results of state - discomment this region
         console.log('GOAL provider - ', state)
     }, [state])
 
