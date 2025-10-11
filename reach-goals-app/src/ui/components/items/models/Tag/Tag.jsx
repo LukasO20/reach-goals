@@ -18,7 +18,7 @@ const Tag = (props) => {
 
     const { toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
-    const { data, loading, refetch, remove } = useTagModel()
+    const { data, saved, loading, refetch, remove } = useTagModel()
 
     const target = targetMap(['panel-right', 'tag'])
 
@@ -36,8 +36,7 @@ const Tag = (props) => {
     ])
 
     const deleteTag = async (id) => {
-        await remove(id)
-        refetch(filterGetTag)
+        remove(id).then(() => refetch(filterGetTag))
     }
 
     const editTag = useCallback((id) => {
@@ -73,9 +72,11 @@ const Tag = (props) => {
     }
 
     useEffect(() => {
+        if (typeof saved.id === 'number') return refetch(filterGetTag)
         if (filterGetTag["Without key"] === "Without value") return
+        
         refetch(filterGetTag)
-    }, [filterGetTag])
+    }, [filterGetTag, saved])
 
     useEffect(() => {
         //When form send data, it will be considered as source

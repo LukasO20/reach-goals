@@ -21,7 +21,7 @@ const Assignment = (props) => {
     const { toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
     const { layoutComponent, switchLayoutComponent } = useSwitchLayout()
-    const { data, loading, refetch, remove } = useAssignmentModel()
+    const { data, saved, loading, refetch, remove } = useAssignmentModel()
 
     const status = props.status
     const display = props.display
@@ -39,8 +39,7 @@ const Assignment = (props) => {
     ])
 
     const deleteAssignment = async (id) => {
-        await remove(id)
-        refetch(filterGetAssignment)
+        remove(id).then(() => refetch(filterGetAssignment))
     }
 
     const editAssignment = (id) => {
@@ -77,9 +76,11 @@ const Assignment = (props) => {
     }
 
     useEffect(() => {
+        if (typeof saved.id === 'number') return refetch(filterGetAssignment)
         if (filterGetAssignment["Without key"] === "Without value") return
+        
         refetch(filterGetAssignment)
-    }, [filterGetAssignment])
+    }, [filterGetAssignment, saved])
 
     useEffect(() => {
         if (pendingPanel && model.mainModelID) {

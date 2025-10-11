@@ -59,7 +59,7 @@ export const reduceModelMap = (state, action) => {
         case 'FETCH_ONE':
             return { ...state, loading: false, error: null, selected: action.payload }
         case 'REMOVE_ONE':
-            return { ...state, loading: false, error: null/*, removed: action.payload*/ }
+            return { ...state, loading: false, error: null, removed: true }
         case 'SAVE_ONE':
             return { ...state, loading: false, error: null, saved: action.payload }
         case 'ERROR':

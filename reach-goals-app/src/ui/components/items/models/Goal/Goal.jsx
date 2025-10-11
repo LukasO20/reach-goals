@@ -22,7 +22,7 @@ const Goal = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
     const { layoutComponent, switchLayoutComponent } = useSwitchLayout()
-    const { data, loading, refetch, remove } = useGoalModel()
+    const { data, saved, loading, refetch, remove } = useGoalModel()
 
     const status = props.status
     const display = props.display
@@ -40,8 +40,7 @@ const Goal = (props) => {
     ])
 
     const deleteGoal = async (id) => {
-        await remove(id)
-        refetch(filterGetGoal)
+        remove(id).then(() => refetch(filterGetGoal))
     }
 
     const editGoal = (id) => {
@@ -71,9 +70,11 @@ const Goal = (props) => {
     }
 
     useEffect(() => {
+        if (typeof saved.id === 'number') return refetch(filterGetGoal)
         if (filterGetGoal["Without key"] === "Without value") return
+        
         refetch(filterGetGoal)
-    }, [filterGetGoal])
+    }, [filterGetGoal, saved])
 
     useEffect(() => {
         if (pendingPanel && model.mainModelID) {
@@ -85,7 +86,7 @@ const Goal = (props) => {
         const goalSource = data[filterGetGoal.source]
         if (!filterGetGoal["Without key"]) return setActiveModelSource(goalSource)
     }, [pendingPanel, data])
-
+    
     const clickEvents = {
         card: goalClick,
         edit: editGoal,
