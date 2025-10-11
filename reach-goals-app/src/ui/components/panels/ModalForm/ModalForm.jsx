@@ -62,7 +62,6 @@ const ModalForm = (props) => {
     const [isLoading, setLoading] = useState(false)
 
     const loadModel = async (id) => {
-        //CHECK PENDING (REFETCH DON'T WORKING WELL AFTER SAVE MODEL)
         setLoading(true)
         if (!id) return setLoading(false)
 
@@ -154,7 +153,7 @@ const ModalForm = (props) => {
 
             const visibilityReady = typeForm === 'tag' ? targetMap(['near-modalForm'], { remove: true }) : null
 
-            loadModel('all')
+            resetManageModel()
             toggleVisibility(visibilityReady)
             setSucess(true)
 
