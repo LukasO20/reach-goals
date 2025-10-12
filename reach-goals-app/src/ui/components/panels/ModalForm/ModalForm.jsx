@@ -7,6 +7,7 @@ import { ModalListContext } from '../../../../provider/ModalListProvider.jsx'
 import { useGoalModel } from '../../../../provider/model/GoalModelProvider.jsx'
 import { useAssignmentModel } from '../../../../provider/model/AssignmentModelProvider.jsx'
 import { useTagModel } from '../../../../provider/model/TagModelProvider.jsx'
+import { useTitle } from '../../../../provider/TitleProvider.jsx'
 
 import { iconMap, modalListMap, targetMap } from '../../../../utils/mapping/mappingUtils.js'
 import { formatDate } from '../../../../utils/utils.js'
@@ -48,6 +49,7 @@ const ModalForm = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, resetManageModel } = useContext(ManageModelContext)
     const { modalList, handleModalList } = useContext(ModalListContext)
+    const { update } = useTitle()
 
     const { selected: selectedAssignment, refetch: refetchAssignment, save: saveAssignment } = useAssignmentModel()
     const { selected: selectedGoal, refetch: refetchGoal, save: saveGoal } = useGoalModel()
@@ -151,12 +153,15 @@ const ModalForm = (props) => {
             typeForm === 'assignment' && await saveAssignment(structuredClone(model.submitModel))
             typeForm === 'tag' && await saveTag(structuredClone(model.submitModel))
 
-            const visibilityReady = typeForm === 'tag' ? targetMap(['near-modalForm'], { remove: true }) : null
+            const visibilityTag = typeForm === 'tag' ? targetMap('near-modalForm', { remove: true }) : null
+            const visibilityToast = targetMap('message-toast', { add: true })
+    
+            toggleVisibility(visibilityTag)
+            update({ toast: 'Model updated with sucess!!' })
+            toggleVisibility(visibilityToast)
 
             resetManageModel()
-            toggleVisibility(visibilityReady)
             setSucess(true)
-
         } catch (error) {
             setError(error.message)
         }
