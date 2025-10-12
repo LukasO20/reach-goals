@@ -5,6 +5,7 @@ import ButtonAction from '../../elements/ButtonAction/ButtonAction.jsx'
 import ButtonDropdown from '../../elements/ButtonDropdown/ButtonDropdown.jsx'
 import ModelSwitcher from '../../models/ModelSwitcher.jsx'
 import ModelCopy from '../../models/ModelCopy.jsx'
+import MessagePopup from '../../elements/MessagePopup/MessagePopup.jsx'
 
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
@@ -197,6 +198,7 @@ const Form = (props) => {
                             </div>
                         </form>
                     </div>
+                    <MessagePopup message='message test' />
                     <div className='bottom'>
                         <ButtonAction onClick={functionsForm.mapHandleSubmit} classBtn='button-action plan max-width save' icon='save' title='Save' />
                     </div>
