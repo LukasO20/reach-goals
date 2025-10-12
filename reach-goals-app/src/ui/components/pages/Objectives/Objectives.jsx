@@ -10,8 +10,8 @@ const Objectives = () => {
     const { update } = useTitle()
 
     useEffect(() => {
-        update('Manage your goals and assingments')
-    }, [update])
+        update({ header: 'Manage your goals and assingments' })
+    }, [])
 
     return (
         <div className='container-objectives'>

@@ -15,8 +15,8 @@ const Home = () => {
     const { layoutComponent } = useSwitchLayout()
 
     useEffect(() => {
-        update(`Welcome. Let's produce?`)
-    }, [update])
+        update({ header: `Welcome. Let's produce?` })
+    }, [])
 
     return (
         <div className="container-home">

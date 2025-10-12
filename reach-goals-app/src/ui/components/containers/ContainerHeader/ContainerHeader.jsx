@@ -33,7 +33,7 @@ const ContainerH = () => {
     return (
         <div className="container-header main-content" onClick={(e) => handleClickHeader(e)}>
             <div className="titles-header">
-                <h1>{title}</h1>
+                <h1>{title.header}</h1>
             </div>
             <div className="nav">
                 <div className="item-nav" onClick={(e) => { toggleVisibility(targetMap(['panel-right', 'tag']), e); linkTagClick(e) }}>
