@@ -112,3 +112,8 @@ export const iconMap = {
     progress: <Unicons.UilSpinnerAlt className='icon-st' />,
     undefined: <Unicons.UilExclamationOctagon className='icon-st' />
 }
+
+export const titleMap = {
+    header: '',
+    toast: ''
+}
