@@ -7,6 +7,7 @@ import ContainerN from '../ui/components/navigate/Navigate.jsx'
 import ContainerH from '../ui/components/containers/containerheader/ContainerHeader.jsx'
 import ContainerM from '../ui/components/containers/containermain/ContainerMain.jsx'
 import Panel from '../ui/components/panels/Panel.jsx'
+import MessageToast from '../ui/components/items/elements/MessageToast/MessageToast.jsx'
 
 import './App.scss'
 
@@ -20,6 +21,7 @@ const App = () => (
                     <AppRoutes />
                 </ContainerM>
                 <Panel />
+                <MessageToast />
             </div>
         </ProviderApp>
     </BrowserRouter>
