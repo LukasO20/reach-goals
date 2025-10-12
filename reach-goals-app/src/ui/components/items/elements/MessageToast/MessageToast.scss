@@ -1,0 +1,30 @@
+@import '../../../../themes/lighttheme.scss';
+
+.message-toast {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -200%);
+    display: flex;
+    gap: 0.5rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    background-color: $color-complementary-p;
+    box-shadow: 0.01em 0.01em 0.45em 0.01em $color-complementary-s-30;
+    color: $color-complementary-s;
+    font-weight: 600;
+
+    >span {
+        padding: 0rem 0.5rem;
+    }
+
+    >.icon-st {
+        cursor: pointer;
+        border-left: solid 2px $color-complementary-s-70;
+        padding: 0rem 0.5rem;
+
+        &:hover {
+            color: $color-complementary-s-70;
+        }
+    }
+}
