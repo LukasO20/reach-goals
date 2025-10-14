@@ -4,22 +4,6 @@ export const getModelMap = {
     tag: [],
 }
 
-export const filterModelMap = {
-    type: null,
-    source: 'core',
-    goalSomeID: null,
-    goalAssignmentRelation: null,
-    goalTagRelation: null,
-    notAssignmentRelation: null,
-    assignmentSomeID: null,
-    assignmentGoalRelation: null,
-    assignmentTagRelation: null,
-    notGoalRelation: null,
-    tagSomeID: null,
-    tagsRelation: null,
-    tagsNotRelation: null,
-}
-
 export const filterServiceFnMap = {
     goalSomeID: 'getGoal',
     goalAssignmentRelation: 'getGoalOnAssignment',

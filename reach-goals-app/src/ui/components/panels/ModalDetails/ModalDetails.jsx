@@ -4,8 +4,6 @@ import { useTagModel } from '../../../../provider/model/TagModelProvider.jsx'
 
 import { useEffect } from 'react'
 
-import { filterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
-
 import ModalDetailsSection from '../../items/modals/ModalDetailsSection/ModalDetailsSection.jsx'
 
 const ModalDetails = (props) => {
@@ -17,7 +15,6 @@ const ModalDetails = (props) => {
     const mapRequestProps = typeDetail === 'goal' ? 'goalSomeID' : 'assignmentSomeID'
 
     const filterGetModel = {
-        ...filterModelMap,
         type: typeDetail,
         [mapRequestProps]: props?.modelID ?? null
     }
