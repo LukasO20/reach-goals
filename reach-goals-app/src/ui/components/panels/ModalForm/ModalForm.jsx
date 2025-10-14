@@ -154,11 +154,10 @@ const ModalForm = (props) => {
             typeForm === 'tag' && await saveTag(structuredClone(model.submitModel))
 
             const visibilityTag = typeForm === 'tag' ? targetMap('near-modalForm', { remove: true }) : null
-            const visibilityToast = targetMap('message-toast', { add: true })
-    
+            const messageToastSupport = typeof model.submitModel.id === 'number' ? 'updated' : 'created'
+
             toggleVisibility(visibilityTag)
-            update({ toast: 'Model updated with sucess!!' })
-            toggleVisibility(visibilityToast)
+            update({ toast: `${typeForm} ${messageToastSupport} with success` })
 
             resetManageModel()
             setSucess(true)
