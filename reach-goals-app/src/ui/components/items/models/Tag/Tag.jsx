@@ -1,12 +1,12 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
 import { useTagModel } from '../../../../../provider/model/TagModelProvider.jsx'
+import { useTitle } from '../../../../../provider/TitleProvider.jsx'
 
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 
 import { targetMap, filterGetModel } from '../../../../../utils/mapping/mappingUtils.js'
-import { filterModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
 import CardItem from '../../elements/CardItem/CardItem.jsx'
 
@@ -19,6 +19,7 @@ const Tag = (props) => {
     const { toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
     const { data, saved, loading, refetch, remove } = useTagModel()
+    const { update } = useTitle()
 
     const target = targetMap(['panel-right', 'tag'])
 
@@ -36,7 +37,9 @@ const Tag = (props) => {
     ])
 
     const deleteTag = async (id) => {
-        remove(id).then(() => refetch(filterGetTag))
+        remove(id)
+        .then(() => refetch(filterGetTag))
+        .then(() => update({ toast: `tag was deleted` }))
     }
 
     const editTag = useCallback((id) => {

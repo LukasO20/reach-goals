@@ -6,9 +6,9 @@ import { ManageModelContext } from '../../../../../provider/ManageModelProvider.
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
+import { useTitle } from '../../../../../provider/TitleProvider.jsx'
 
 import { targetMap, switchLayoutMap, filterGetModel } from '../../../../../utils/mapping/mappingUtils.js'
-import { filterModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
 import CardItem from '../../elements/CardItem/CardItem.jsx'
 
@@ -22,6 +22,7 @@ const Goal = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
     const { layoutComponent, switchLayoutComponent } = useSwitchLayout()
+    const { update } = useTitle()
     const { data, saved, loading, refetch, remove } = useGoalModel()
 
     const status = props.status
@@ -40,7 +41,9 @@ const Goal = (props) => {
     ])
 
     const deleteGoal = async (id) => {
-        remove(id).then(() => refetch(filterGetGoal))
+        remove(id)
+        .then(() => refetch(filterGetGoal))
+        .then(() => update({ toast: `goal was deleted` }))
     }
 
     const editGoal = (id) => {

@@ -6,6 +6,7 @@ import { ManageModelContext } from '../../../../../provider/ManageModelProvider.
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
+import { useTitle } from '../../../../../provider/TitleProvider.jsx'
 
 import { targetMap, switchLayoutMap, filterGetModel } from '../../../../../utils/mapping/mappingUtils.js'
 
@@ -21,6 +22,7 @@ const Assignment = (props) => {
     const { toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
     const { layoutComponent, switchLayoutComponent } = useSwitchLayout()
+    const { update } = useTitle()
     const { data, saved, loading, refetch, remove } = useAssignmentModel()
 
     const status = props.status
@@ -39,7 +41,9 @@ const Assignment = (props) => {
     ])
 
     const deleteAssignment = async (id) => {
-        remove(id).then(() => refetch(filterGetAssignment))
+        remove(id)
+        .then(() => refetch(filterGetAssignment))
+        .then(() => update({ toast: `assignment was deleted` }))
     }
 
     const editAssignment = (id) => {
