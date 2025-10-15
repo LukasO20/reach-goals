@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
 
+import MonthDaysPicker from '../../items/elements/MonthDaysPicker/MonthDaysPicker.jsx'
+
 const Calendar = () => {
     const { update } = useTitle()
 
@@ -10,7 +12,7 @@ const Calendar = () => {
 
     return (
         <div className="container-calendar">
-            <h1>Hi, I'm calendar mode</h1>
+            <MonthDaysPicker />
         </div> 
     )
 }
