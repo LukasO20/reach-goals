@@ -42,8 +42,8 @@ const Goal = (props) => {
 
     const deleteGoal = async (id) => {
         remove(id)
-        .then(() => refetch(filterGetGoal))
-        .then(() => update({ toast: `goal was deleted` }))
+            .then(() => refetch(filterGetGoal))
+            .then(() => update({ toast: `goal was deleted` }))
     }
 
     const editGoal = (id) => {
@@ -60,9 +60,9 @@ const Goal = (props) => {
             if (model.transportModel.goal.length > 0) return
 
             addToTransportModel({ ...selected, type: 'goal' })
-            return updateSubmitModel({ 
-                keyObject: 'goalID', 
-                value: id 
+            return updateSubmitModel({
+                keyObject: 'goalID',
+                value: id
             })
         }
 
@@ -73,10 +73,16 @@ const Goal = (props) => {
     }
 
     useEffect(() => {
-        if (typeof saved.id === 'number') return refetch(filterGetGoal)
-        if (filterGetGoal["Without key"] === "Without value") return
-        
-        refetch(filterGetGoal)
+        const fetch = async () => {
+            if (typeof saved.id === 'number') {
+                await refetch(filterGetGoal)
+                return
+            }
+            if (filterGetGoal["Without key"] === "Without value") return
+            await refetch(filterGetGoal)
+        }
+
+        fetch()
     }, [filterGetGoal, saved])
 
     useEffect(() => {
@@ -89,7 +95,7 @@ const Goal = (props) => {
         const goalSource = data[filterGetGoal.source]
         if (!filterGetGoal["Without key"]) return setActiveModelSource(goalSource)
     }, [pendingPanel, data])
-    
+
     const clickEvents = {
         card: goalClick,
         edit: editGoal,

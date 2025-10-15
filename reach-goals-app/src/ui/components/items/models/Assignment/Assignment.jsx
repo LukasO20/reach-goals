@@ -42,8 +42,8 @@ const Assignment = (props) => {
 
     const deleteAssignment = async (id) => {
         remove(id)
-        .then(() => refetch(filterGetAssignment))
-        .then(() => update({ toast: `assignment was deleted` }))
+            .then(() => refetch(filterGetAssignment))
+            .then(() => update({ toast: `assignment was deleted` }))
     }
 
     const editAssignment = (id) => {
@@ -58,12 +58,12 @@ const Assignment = (props) => {
             const selected = activeModelSource.find(m => m.id === id)
 
             addToTransportModel({ ...selected, type: 'assignment' })
-            return updateSubmitModel({ 
-                keyObject: 'assignments', 
-                value: { 
-                    id: id, name: name 
-                }, 
-                type: 'array' 
+            return updateSubmitModel({
+                keyObject: 'assignments',
+                value: {
+                    id: id, name: name
+                },
+                type: 'array'
             })
         }
 
@@ -80,10 +80,16 @@ const Assignment = (props) => {
     }
 
     useEffect(() => {
-        if (typeof saved.id === 'number') return refetch(filterGetAssignment)
-        if (filterGetAssignment["Without key"] === "Without value") return
-        
-        refetch(filterGetAssignment)
+        const fetch = async () => {
+            if (typeof saved.id === 'number') {
+                await refetch(filterGetAssignment)
+                return
+            }
+            if (filterGetAssignment["Without key"] === "Without value") return
+            await refetch(filterGetAssignment)
+        }
+
+        fetch()
     }, [filterGetAssignment, saved])
 
     useEffect(() => {

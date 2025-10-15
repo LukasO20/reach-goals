@@ -38,8 +38,8 @@ const Tag = (props) => {
 
     const deleteTag = async (id) => {
         remove(id)
-        .then(() => refetch(filterGetTag))
-        .then(() => update({ toast: `tag was deleted` }))
+            .then(() => refetch(filterGetTag))
+            .then(() => update({ toast: `tag was deleted` }))
     }
 
     const editTag = useCallback((id) => {
@@ -54,13 +54,13 @@ const Tag = (props) => {
             const selected = activeModelSource.find(m => m.id === id)
 
             addToTransportModel({ ...selected, type: 'tag' })
-            return updateSubmitModel({ 
-                keyObject: 'tags', 
-                value: { 
-                    tagID: id, 
+            return updateSubmitModel({
+                keyObject: 'tags',
+                value: {
+                    tagID: id,
                     tag: { id: id, name: name, color: color }
                 },
-                type: 'array' 
+                type: 'array'
             })
         }
 
@@ -75,10 +75,16 @@ const Tag = (props) => {
     }
 
     useEffect(() => {
-        if (typeof saved.id === 'number') return refetch(filterGetTag)
-        if (filterGetTag["Without key"] === "Without value") return
-        
-        refetch(filterGetTag)
+        const fetch = async () => {
+            if (typeof saved.id === 'number') {
+                await refetch(filterGetTag)
+                return
+            }
+            if (filterGetTag["Without key"] === "Without value") return
+            await refetch(filterGetTag)
+        }
+
+        fetch()
     }, [filterGetTag, saved])
 
     useEffect(() => {
