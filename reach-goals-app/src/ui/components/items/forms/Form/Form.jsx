@@ -19,7 +19,6 @@ const Form = (props) => {
     const modelForm = props?.model
     const booleanForm = props?.booleanFormMap
     const contextForm = props?.contextFormMap
-    const stateForm = props?.stateFormMap
 
     const titleMap = {
         assignment: `${typeof modelForm.id === 'number' ? 'Edit' : 'Create'} your assignment`,
@@ -67,20 +66,6 @@ const Form = (props) => {
                                     <label><span>color</span></label>
                                     <input id={`${typeForm}-color`} name='color' type='color' onChange={functionsForm.mapHandleChange} />
                                 </div>
-                            </div>
-                            <div className='bottom-form-messagae'>
-                                {
-                                    stateForm.mapStateSuccess &&
-                                    <p className='message successfull'>
-                                        <label>Tag save with success!'</label>
-                                    </p>
-                                }
-                                {
-                                    stateForm.mapStateError &&
-                                    <p className='message error'>
-                                        <label>{`Ops, something went wrong: ${stateForm.mapStateError}`}</label>
-                                    </p>
-                                }
                             </div>
                         </form>
                     </div>
@@ -180,20 +165,6 @@ const Form = (props) => {
                                     <textarea id={`${typeForm}-details`} className='input-form scrollable' placeholder='details here...'
                                         name='description' value={modelForm?.description || ''} onChange={functionsForm.mapHandleChange}></textarea>
                                 </div>
-                            </div>
-                            <div className='bottom-form-messagae'>
-                                {
-                                    stateForm.mapStateSuccess &&
-                                    <p className='message successfull'>
-                                        <label>{typeForm === 'goal' ? 'Goal save with success!' : 'Assignment save with success!'}</label>
-                                    </p>
-                                }
-                                {
-                                    stateForm.mapStateError &&
-                                    <p className='message error'>
-                                        <label>{`Ops, something went wrong: ${stateForm.mapStateError}`}</label>
-                                    </p>
-                                }
                             </div>
                         </form>
                     </div>

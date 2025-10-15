@@ -161,8 +161,10 @@ const ModalForm = (props) => {
 
             resetManageModel()
             setSucess(true)
-        } catch (error) {
-            setError(error.message)
+        } catch (exception) {
+            setError(exception.message)
+            update({ toast: "Ops something went wrong during save. Reload page and try again later." })
+            console.error(`Error during save: ${error}`)
         }
     }
 
@@ -206,18 +208,13 @@ const ModalForm = (props) => {
         mapModalList: modalList,
     }
 
-    const stateFormMap = {
-        mapStateSuccess: success,
-        mapStateError: error
-    }
-
     return (
         isLoading ? <div id="load-element" className='loading-animation'></div> :
             ((model.submitModel && model.submitModel.id) || model.mainModelID === null) ?
                 (
                     <Form typeForm={typeForm} functionFormMap={functionFormMap}
                         model={model.submitModel} booleanFormMap={booleanFormMap}
-                        contextFormMap={contextFormMap} stateFormMap={stateFormMap} />
+                        contextFormMap={contextFormMap} />
                 )
                 :
                 null
