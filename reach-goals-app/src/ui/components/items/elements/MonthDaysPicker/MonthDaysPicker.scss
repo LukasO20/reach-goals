@@ -1,0 +1,58 @@
+@import '../../../../themes/lighttheme.scss';
+
+
+.container-calendar {
+
+    .calendar {
+        display: flex;
+        flex-direction: column;
+        background-color: $color-complementary-p-30;
+        border: solid 1px $color-complementary-s-15;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+
+        .header {
+            display: flex;
+            height: 1.5rem;
+            padding: 0.5rem 0rem 1.5rem 0rem;
+            font-weight: 600;
+
+            .day-name {
+                flex: 1;
+                text-align: center;
+            }
+        }
+
+        .body {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+
+            .day {
+                height: 5rem;
+                text-align: center;
+                font-weight: 600;
+                color: $color-complementary-s;
+                background-color: $color-complementary-p-50;
+                padding: 0.15rem;
+                border-radius: 0.5rem;
+
+                .title {
+                    display: inline-flex;
+                    margin: 0.25rem;
+                }
+
+
+                &.today {
+
+                    .title {
+                        background-color: $color-complementary-s;
+                        color: $color-white;
+                        padding: 0.15rem 0.5rem;
+                        border-radius: 1rem;
+                    }
+                }
+            }
+        }
+    }
+}
