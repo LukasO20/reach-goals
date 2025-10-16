@@ -71,6 +71,18 @@
                     display: flex;
                     align-items: center;
                 }
+
+                .month-picker {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.25rem;
+
+                    >span {
+                        color: $color-complementary-s;
+                        font-weight: 600;
+                        font-size: 1.25rem;
+                    }
+                }
             }
         }
     }

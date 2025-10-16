@@ -9,6 +9,8 @@ import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 
 import { targetMap, switchLayoutMap, checkboxMap } from '../../../../utils/mapping/mappingUtils.js'
 
+import { monthNames } from '../../../../utils/reference.js'
+
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import ButtonDropdown from '../../items/elements/ButtonDropdown/ButtonDropdown.jsx'
 import ButtonCheckbox from '../../items/elements/ButtonCheckbox/ButtonCheckbox.jsx'
@@ -52,9 +54,20 @@ const ContainerM = () => {
                 </div>
                 <div className='line-s'>
                     <div className='filter'>
-                        <ButtonCheckbox checkbox={checkboxMap({ id: 'checkbox-m', value: false })} classBtn='checkbox-m btn-checkbox' />
-                        {layoutComponent.page === 'home' &&
+                        {
+                            layoutComponent.page !== 'calendar' &&
+                            <ButtonCheckbox checkbox={checkboxMap({ id: 'checkbox-m', value: false })} classBtn='checkbox-m btn-checkbox' />
+                        }
+                        {
+                            layoutComponent.page === 'home' &&
                             <ButtonAction classBtn='button-show-m chart' icon='chartbar' />
+                        }
+                        {
+                            layoutComponent.page === 'calendar' &&
+                            <div className='month-picker'>
+                                <span className='month-name'>{monthNames[new Date().getMonth()]}</span>
+                                <span className='year-number'>{new Date().getFullYear()}</span>
+                            </div>
                         }
                         <SearchBar />
                         <ButtonAction classBtn={`button-action plan-round max-width goal ${isSwitchLayoutGoal && 'active'}`} title='goals'
