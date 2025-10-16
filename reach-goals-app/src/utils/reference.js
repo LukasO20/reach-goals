@@ -6,3 +6,12 @@ export const typeFilterModel = ['goalSomeID', 'goalAssignmentRelation', 'goalTag
     'notAssignmentRelation', 'assignmentSomeID', 'assignmentGoalRelation',
     'assignmentTagRelation', 'notGoalRelation', 'tagSomeID',
     'tagNotRelationGoal', 'tagNotRelationAssignment']
+
+export const monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December',
+]
+
+export const weekNames = [
+    'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
+]
