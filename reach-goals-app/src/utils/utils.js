@@ -1,8 +1,8 @@
 import moment from 'moment'
 
-const formatDate = (modalForm) => {
-    if (!modalForm) { return }
-    const { start, end } = modalForm
+const formatDate = (model) => {
+    if (!model) { return }
+    const { start, end } = model
 
     const formatInputISO = (input) => {
         if (moment(input, moment.ISO_8601, true).isValid()) {
