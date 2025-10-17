@@ -1,5 +1,5 @@
 @import '../../../../themes/lighttheme.scss';
-
+@import '../../../../styles/typography.scss';
 
 .container-calendar {
 
@@ -14,7 +14,7 @@
         .header {
             display: flex;
             height: 1.5rem;
-            padding: 0.5rem 0rem 1.5rem 0rem;
+            padding: 0.5rem 0rem;
             font-weight: 600;
 
             .day-name {
@@ -29,7 +29,12 @@
             gap: 0.5rem;
 
             .day {
-                height: 5rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.15rem;
+                height: 5.4rem;
+                overflow-x: hidden;
                 text-align: center;
                 font-weight: 600;
                 color: $color-complementary-s;
@@ -40,8 +45,9 @@
                 .title {
                     display: inline-flex;
                     margin: 0.25rem;
+                    justify-content: center;
+                    width: 2rem;
                 }
-
 
                 &.today {
 
@@ -50,6 +56,38 @@
                         color: $color-white;
                         padding: 0.15rem 0.5rem;
                         border-radius: 1rem;
+                    }
+                }
+
+                .activity {
+                    overflow: hidden;
+                    background-color: $color-accent-p-15;
+                    transition: 0.3s ease-out;
+                    cursor: pointer;
+                    border-radius: 0.35rem;
+                    font-size: $font-size-mini;
+                    width: 100%;
+
+                    .activity-name {
+                        display: inline-block;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        width: 100%;
+                    }
+
+                    * {
+                        cursor: pointer;
+                    }
+
+                    &:hover {
+                        background-color: $color-accent-p-70;
+                        color: $color-white;
+                    }
+
+                    &:active {
+                        background-color: $color-primary-50;
+                        transition: 0.1s ease-out;
                     }
                 }
             }
