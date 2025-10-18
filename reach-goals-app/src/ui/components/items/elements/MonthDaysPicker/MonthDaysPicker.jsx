@@ -2,6 +2,7 @@ import { useState, useContext } from 'react'
 
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
+import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
 import { weekNames } from '../../../../../utils/reference.js'
 import { formatDate } from '../../../../../utils/utils.js'
@@ -10,7 +11,6 @@ import { switchLayoutMap, targetMap } from '../../../../../utils/mapping/mapping
 import './MonthDaysPicker.scss'
 
 import moment from 'moment'
-import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
 const MonthDaysPicker = (props) => {
     const [year] = useState(new Date().getFullYear())
