@@ -6,7 +6,7 @@ import { useTitle } from '../../../../../provider/TitleProvider.jsx'
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 
-import { targetMap, filterGetModel } from '../../../../../utils/mapping/mappingUtils.js'
+import { targetMap, filterGetModelMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import CardItem from '../../elements/CardItem/CardItem.jsx'
 
@@ -27,7 +27,7 @@ const Tag = (props) => {
     const isSelectableModel = props.selectableModel ?? false
 
     const filterGetTag = useMemo(() => (
-        filterGetModel(props, 'tag', props.typeDataSource ?? 'core')
+        filterGetModelMap(props, 'tag', props.typeDataSource ?? 'core')
     ), [
         props.typeDataSource,
         props.tagNotRelationGoal,
@@ -76,7 +76,7 @@ const Tag = (props) => {
 
     useEffect(() => {
         const fetch = async () => {
-            if (typeof saved.id === 'number') {
+            if (typeof saved?.id === 'number') {
                 await refetch(filterGetTag)
                 return
             }

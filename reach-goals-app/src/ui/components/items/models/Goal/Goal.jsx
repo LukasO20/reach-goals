@@ -8,7 +8,7 @@ import { VisibilityContext } from '../../../../../provider/VisibilityProvider.js
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 import { useTitle } from '../../../../../provider/TitleProvider.jsx'
 
-import { targetMap, switchLayoutMap, filterGetModel } from '../../../../../utils/mapping/mappingUtils.js'
+import { targetMap, switchLayoutMap, filterGetModelMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import CardItem from '../../elements/CardItem/CardItem.jsx'
 
@@ -31,7 +31,7 @@ const Goal = (props) => {
     const isDetailsModel = props.detailsModel ?? false
 
     const filterGetGoal = useMemo(() => (
-        filterGetModel(props, 'goal', props.typeDataSource ?? 'core')
+        filterGetModelMap(props, 'goal', props.typeDataSource ?? 'core')
     ), [
         props.typeDataSource,
         props.goalAssignmentRelation,
@@ -72,12 +72,13 @@ const Goal = (props) => {
         }
     }
 
-    useEffect(() => {
+    useEffect(() => {        
         const fetch = async () => {
-            if (typeof saved.id === 'number') {
+            if (typeof saved?.id === 'number') {
                 await refetch(filterGetGoal)
                 return
             }
+
             if (filterGetGoal["Without key"] === "Without value") return
             await refetch(filterGetGoal)
         }

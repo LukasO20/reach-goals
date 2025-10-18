@@ -4,7 +4,7 @@ import { useTitle } from '../../../../provider/TitleProvider.jsx'
 import { useGoalModel } from '../../../../provider/model/GoalModelProvider.jsx'
 import { useAssignmentModel } from '../../../../provider/model/AssignmentModelProvider.jsx'
 
-import { filterGetModel } from '../../../../utils/mapping/mappingUtils.js'
+import { filterGetModelMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import MonthDaysPicker from '../../items/elements/MonthDaysPicker/MonthDaysPicker.jsx'
 
@@ -17,8 +17,8 @@ const Calendar = () => {
         assignment: []
     })
 
-    const filterGetGoal = filterGetModel({ goalSomeID: 'all' }, 'goal', 'core')
-    const filterGetAssignment = filterGetModel({ notGoalRelation: 'all' }, 'assignment', 'core')
+    const filterGetGoal = filterGetModelMap({ goalSomeID: 'all' }, 'goal', 'core')
+    const filterGetAssignment = filterGetModelMap({ notGoalRelation: 'all' }, 'assignment', 'core')
 
     useEffect(() => {
         update({ header: 'Manage your goals and assignments' })

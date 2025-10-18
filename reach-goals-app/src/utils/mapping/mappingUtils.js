@@ -60,7 +60,7 @@ export const buildQueryParamsMap = ({ IDobject, action }) => {
     type => type of model. Can use 'goal', 'tag' or 'assignment'
     source => type of list according 'reduceModelMap'. 'support' to FETCH_SUPPORT_LIST or 'core' to FETCH_LIST
 */
-export const filterGetModel = (props, type, source) => {
+export const filterGetModelMap = (props, type, source) => {
     if (!typeModel.includes(type)) return console.error('"type" parameter is invalid. Send a string supported type ["goal", "tag", "assignment"]')
     if (!typeReduceModel.includes(source)) return console.error('"source" parameter is invalid. Send a string supported source ["core", "support"]') 
     
@@ -69,7 +69,7 @@ export const filterGetModel = (props, type, source) => {
             ([k, v]) => typeFilterModel.includes(k) && (typeof v === 'number' || v === 'all')) ?? ['Without key', 'Without value']
 
         if (key === 'Without key' && value === 'Without value' ) {
-            //This war is used to show a function does not according with structure filter
+            //This warn is used to show a function does not according with structure filter
             console.warn(`Current filter don't use an ID.`)
         }
 
