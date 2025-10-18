@@ -1,15 +1,19 @@
+import { iconMap, targetMap } from '../../../../../utils/mapping/mappingUtils.js'
+
 import ButtonAction from '../../elements/ButtonAction/ButtonAction.jsx'
 import Assignment from '../../models/Assignment/Assignment.jsx'
-import Goal from '../../models/Goal/Goal.jsx'
+import Tag from '../../models/Tag/Tag.jsx'
 
-import { targetMap } from '../../../../../utils/mapping/mappingUtils.js'
+import moment from 'moment'
+
+import '../ModalDetailsSection/ModalDetailsSection.scss'
 
 const switchSectionLayout = (model, type) => {
 
     const modelRelationProps = {
-        fromModelSource: {
-            assignment: model?.assignments,
-            tag: model?.tags?.map(tags => tags.tag)
+        sourceForm: {
+            assignments: model?.assignments,
+            tags: model?.tags,
         }
     }
 
@@ -19,21 +23,20 @@ const switchSectionLayout = (model, type) => {
                 <>
                     <div className='header'>
                         <h2>{model?.name}</h2>
-                        <h4>{model?.end}</h4>
-                        <ButtonAction target={targetMap(null)} standardRoute="true" classBtn='btn-action-r close-modal circ' icon='close' />
+                        <h4>{model?.end && `Schedule to end on ${moment(model.end).format('MMMM DD')}`}</h4>
+                        <ButtonAction target={targetMap(null)} standardRoute="true" classBtn='button-action circle close' icon='close' />
                     </div>
                     <div className='body'>
                         {
                             model?.description &&
-                            <div>
+                            <div className='description'>
                                 {model.description}
                             </div>
                         }
                         {
                             <div className='modaldetails assignment-list'>
                                 <div className='header-assignment-list'>
-                                    <i className="icon-st fa-solid fa-list-check"></i>
-                                    <h4>Assignments</h4>
+                                    <h4>{iconMap['assignment']} Assignments</h4>
                                 </div>
                                 <div className='body-assignment-list'>
                                     <Assignment {...modelRelationProps} />
@@ -48,13 +51,13 @@ const switchSectionLayout = (model, type) => {
                 <>
                     <div className='header'>
                         <h2>{model?.name}</h2>
-                        <h4>{model?.end}</h4>
-                        <ButtonAction target={targetMap(null)} standardRoute="true" classBtn='btn-action-r close-modal circ' icon='close' />
+                        <h4>{`Schedule to end on ${model?.end && moment(model.end).format('MMMM DD')}`}</h4>
+                        <ButtonAction target={targetMap(null)} standardRoute="true" classBtn='button-action circle close' icon='close' />
                     </div>
                     <div className='body'>
                         {
                             model?.description &&
-                            <div>
+                            <div className='description'>
                                 {model.description}
                             </div>
                         }

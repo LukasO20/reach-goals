@@ -1,38 +1,76 @@
+import { useContext, useEffect, useState } from 'react'
+
+import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 import { useAssignmentModel } from '../../../../provider/model/AssignmentModelProvider.jsx'
 import { useGoalModel } from '../../../../provider/model/GoalModelProvider.jsx'
-import { useTagModel } from '../../../../provider/model/TagModelProvider.jsx'
-
-import { useEffect } from 'react'
 
 import ModalDetailsSection from '../../items/modals/ModalDetailsSection/ModalDetailsSection.jsx'
 
 const ModalDetails = (props) => {
     const { selected: selectedAssignment, refetch: refetchAssignment } = useAssignmentModel()
     const { selected: selectedGoal, refetch: refetchGoal } = useGoalModel()
-    const { selected: selectedTag, refetch: refetchTag } = useTagModel()
+
+    const { model, setModel } = useContext(ManageModelContext)
+
+    const [isLoading, setLoading] = useState(false)
+    const [error, setError] = useState(null)
 
     const typeDetail = props?.type
-    const mapRequestProps = typeDetail === 'goal' ? 'goalSomeID' : 'assignmentSomeID'
+    const currentKeySomeID = `${typeDetail}SomeID`
 
-    const filterGetModel = {
-        type: typeDetail,
-        [mapRequestProps]: props?.modelID ?? null
+    const loadModel = async (id) => {
+        setLoading(true)
+        if (!id) return setLoading(false)
+
+        const currentUseGetModel = {
+            type: typeDetail,
+            [currentKeySomeID]: id
+        }
+
+        try {
+            const refetchFn =
+                typeDetail === 'goal'
+                    ? () => refetchGoal(currentUseGetModel)
+                    : typeDetail === 'assignment'
+                        ? () => refetchAssignment(currentUseGetModel)
+                        : () => null
+
+            await refetchFn()
+        }
+        catch (error) {
+            setError('Ops, something wrong: ', error)
+        }
+        finally {
+            setLoading(false)
+        }
     }
 
     useEffect(() => {
-        if (typeDetail === 'goal') refetchGoal(filterGetModel)
-        if (typeDetail === 'assignment') refetchAssignment(filterGetModel)
-        if (typeDetail === 'tag') refetchTag(filterGetModel)
-    }, [props?.modelID])
+        if (typeof model.mainModelID === 'number') loadModel(model.mainModelID)
+    }, [model.mainModelID])
+
+    useEffect(() => {
+        const typeSelected =
+            typeDetail === 'goal' ?
+                selectedGoal :
+                typeDetail === 'assignment' ?
+                    selectedAssignment : null
+
+        const selectedSubmitModel = Array.isArray(typeSelected) ? typeSelected[0] : typeSelected
+        if (selectedSubmitModel && Object.keys(selectedSubmitModel).length) {
+            setModel(prevModel => ({
+                ...prevModel,
+                submitModel: selectedSubmitModel
+            }))
+        }
+    }, [selectedGoal, selectedAssignment])
 
     return (
-        <div className='container-modaldetails aside-content'>
-            <ModalDetailsSection model={
-                typeDetail === 'goal' ? selectedGoal[0] :
-                typeDetail === 'assignment' ? selectedAssignment[0] :
-                typeDetail === 'tag' ? selectedTag[0] : {}
-            } type={typeDetail} />
-        </div>
+        isLoading ?
+            <div id="load-element" className='loading-animation'></div> :
+            <div className='container-modaldetails aside-content'>
+                <ModalDetailsSection model={model.submitModel} type={typeDetail} />
+            </div>
     )
 }
 

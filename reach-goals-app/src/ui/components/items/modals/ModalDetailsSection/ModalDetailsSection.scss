@@ -1,0 +1,38 @@
+@import '../../../../themes/lighttheme.scss';
+
+.container-modaldetails {
+
+    .header {}
+
+    .body {
+
+        .description {
+            background-color: $color-white;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            margin: 1rem;
+            font-weight: 600;
+            height: 5rem;
+        }
+
+        .modaldetails {
+            background-color: $color-white;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            margin: 1rem;
+
+            &.assignment-list {
+
+                .header-assignment-list {
+
+                    h4 {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        color: $color-complementary-s;
+                    }
+                }
+            }
+        }
+    }
+}
