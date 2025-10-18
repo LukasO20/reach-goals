@@ -41,8 +41,7 @@ const Panel = (props) => {
     const panelType = ['panel-left', 'panel-center', 'panel-right']
     const formartType = model.typeModel && model.typeModel !== '' ? model.typeModel : visibleElements[1]
     const renderConfig = {
-        type: formartType,
-        modelID: model.mainModelID
+        type: formartType
     }
 
     //console.log('manage model from PANEL - ', model)
