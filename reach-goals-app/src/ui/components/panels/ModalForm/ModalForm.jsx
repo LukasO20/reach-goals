@@ -4,7 +4,7 @@ import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 import { ModalListContext } from '../../../../provider/ModalListProvider.jsx'
 
-import { useGoalModel } from '../../../../provider/model/GoalModelProvider.jsx'
+import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
 import { useAssignmentModel } from '../../../../provider/model/AssignmentModelProvider.jsx'
 import { useTagModel } from '../../../../provider/model/TagModelProvider.jsx'
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
@@ -52,7 +52,7 @@ const ModalForm = (props) => {
     const { update } = useTitle()
 
     const { selected: selectedAssignment, refetch: refetchAssignment, save: saveAssignment } = useAssignmentModel()
-    const { selected: selectedGoal, refetch: refetchGoal, save: saveGoal } = useGoalModel()
+    //const { selected: selectedGoal, refetch: refetchGoal, save: saveGoal } = useGoalModel()
     const { selected: selectedTag, refetch: refetchTag, save: saveTag } = useTagModel()
 
     const typeForm = props.type
@@ -74,9 +74,9 @@ const ModalForm = (props) => {
 
         try {
             const refetchFn =
-                typeForm === 'goal'
+                /*typeForm === 'goal'
                     ? () => refetchGoal(currentUseGetModel)
-                    : typeForm === 'assignment'
+                    :*/ typeForm === 'assignment'
                         ? () => refetchAssignment(currentUseGetModel)
                         : () => refetchTag(currentUseGetModel)
 
@@ -149,7 +149,7 @@ const ModalForm = (props) => {
         setSucess(false)
 
         try {
-            typeForm === 'goal' && await saveGoal(structuredClone(model.submitModel))
+            //typeForm === 'goal' && await saveGoal(structuredClone(model.submitModel))
             typeForm === 'assignment' && await saveAssignment(structuredClone(model.submitModel))
             typeForm === 'tag' && await saveTag(structuredClone(model.submitModel))
 
@@ -170,8 +170,8 @@ const ModalForm = (props) => {
 
     useEffect(() => {
         const typeSelected =
-            typeForm === 'goal' ?
-                selectedGoal :
+            // typeForm === 'goal' ?
+            //     selectedGoal :
                 typeForm === 'assignment' ?
                     selectedAssignment : null
 
@@ -182,7 +182,7 @@ const ModalForm = (props) => {
                 submitModel: selectedSubmitModel
             }))
         }
-    }, [selectedGoal, selectedAssignment, selectedTag])
+    }, [/*selectedGoal*/, selectedAssignment, selectedTag])
 
     useEffect(() => {
         if (typeof model.mainModelID === 'number') loadModel(model.mainModelID)

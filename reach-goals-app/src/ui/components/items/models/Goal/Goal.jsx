@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from 'react'
 
-import { useGoalModel } from '../../../../../provider/model/GoalModelProvider.jsx'
+import { useGoalProvider } from '../../../../../provider/model/GoalModelProvider.jsx'
 
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
@@ -23,7 +23,8 @@ const Goal = (props) => {
     const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
     const { layoutComponent, switchLayoutComponent } = useSwitchLayout()
     const { update } = useTitle()
-    const { data, saved, loading, refetch, remove } = useGoalModel()
+    //const { data, saved, loading, refetch, remove } = useGoalModel()
+    const { data, loading, error, save, remove, refetch } = useGoalProvider()
 
     const status = props.status
     const display = props.display
@@ -72,30 +73,34 @@ const Goal = (props) => {
         }
     }
 
-    useEffect(() => {        
-        const fetch = async () => {
-            if (typeof saved?.id === 'number') {
-                await refetch(filterGetGoal)
-                return
-            }
-
-            if (filterGetGoal["Without key"] === "Without value") return
-            await refetch(filterGetGoal)
-        }
-
-        fetch()
-    }, [filterGetGoal, saved])
-
     useEffect(() => {
-        if (pendingPanel && model.mainModelID) {
-            switchLayoutComponent(switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'right' }))
-            toggleVisibility(targetMap(['panel-right', 'goal']))
-            return setPendingPanel(false)
-        }
+        refetch(filterGetGoal)
+    }, [])
 
-        const goalSource = data[filterGetGoal.source]
-        if (!filterGetGoal["Without key"]) return setActiveModelSource(goalSource)
-    }, [pendingPanel, data])
+    // useEffect(() => {        
+    //     const fetch = async () => {
+    //         if (typeof saved?.id === 'number') {
+    //             await refetch(filterGetGoal)
+    //             return
+    //         }
+
+    //         if (filterGetGoal["Without key"] === "Without value") return
+    //         await refetch(filterGetGoal)
+    //     }
+
+    //     fetch()
+    // }, [filterGetGoal, saved])
+
+    // useEffect(() => {
+    //     if (pendingPanel && model.mainModelID) {
+    //         switchLayoutComponent(switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'right' }))
+    //         toggleVisibility(targetMap(['panel-right', 'goal']))
+    //         return setPendingPanel(false)
+    //     }
+
+    //     const goalSource = data[filterGetGoal.source]
+    //     if (!filterGetGoal["Without key"]) return setActiveModelSource(goalSource)
+    // }, [pendingPanel, data])
 
     const clickEvents = {
         card: goalClick,
@@ -105,18 +110,19 @@ const Goal = (props) => {
 
     //console.log('GOAL LOADED - ', goal)
     return (
-        loading && activeModelSource.length === 0 ?
-            <p>Loading...</p>
-            :
-            activeModelSource?.length ?
-                <CardItem type={'goal'}
-                    model={(() => {
-                        return typeof status === 'string' && status !== '' ?
-                            activeModelSource.filter(item => item.status === status) :
-                            activeModelSource
-                    })()}
-                    clickFunction={clickEvents} display={display} />
-                : null
+        console.log('DATA FILTER - ', data)
+        // loading && activeModelSource.length === 0 ?
+        //     <p>Loading...</p>
+        //     :
+        //     activeModelSource?.length ?
+        //         <CardItem type={'goal'}
+        //             model={(() => {
+        //                 return typeof status === 'string' && status !== '' ?
+        //                     activeModelSource.filter(item => item.status === status) :
+        //                     activeModelSource
+        //             })()}
+        //             clickFunction={clickEvents} display={display} />
+        //         : null
     )
 }
 

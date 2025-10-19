@@ -2,13 +2,13 @@ import { useContext, useEffect, useState } from 'react'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 import { useAssignmentModel } from '../../../../provider/model/AssignmentModelProvider.jsx'
-import { useGoalModel } from '../../../../provider/model/GoalModelProvider.jsx'
+import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
 
 import ModalDetailsSection from '../../items/modals/ModalDetailsSection/ModalDetailsSection.jsx'
 
 const ModalDetails = (props) => {
     const { selected: selectedAssignment, refetch: refetchAssignment } = useAssignmentModel()
-    const { selected: selectedGoal, refetch: refetchGoal } = useGoalModel()
+    //const { selected: selectedGoal, refetch: refetchGoal } = useGoalModel()
 
     const { model, setModel } = useContext(ManageModelContext)
 
@@ -29,9 +29,9 @@ const ModalDetails = (props) => {
 
         try {
             const refetchFn =
-                typeDetail === 'goal'
+                /*typeDetail === 'goal'
                     ? () => refetchGoal(currentUseGetModel)
-                    : typeDetail === 'assignment'
+                    :*/ typeDetail === 'assignment'
                         ? () => refetchAssignment(currentUseGetModel)
                         : () => null
 
@@ -51,8 +51,8 @@ const ModalDetails = (props) => {
 
     useEffect(() => {
         const typeSelected =
-            typeDetail === 'goal' ?
-                selectedGoal :
+            // typeDetail === 'goal' ?
+            //     selectedGoal :
                 typeDetail === 'assignment' ?
                     selectedAssignment : null
 
@@ -63,7 +63,7 @@ const ModalDetails = (props) => {
                 submitModel: selectedSubmitModel
             }))
         }
-    }, [selectedGoal, selectedAssignment])
+    }, [/*selectedGoal*/, selectedAssignment])
 
     return (
         isLoading ?
