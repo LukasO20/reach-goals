@@ -5,23 +5,24 @@ import { ManageModelProvider } from './ManageModelProvider.jsx'
 import { ModalListProvider } from './ModalListProvider.jsx'
 import { SwitchLayoutProvider } from './SwitchLayoutProvider.jsx'
 import { MasterDataProvider } from './model/MasterDataProvider.jsx'
+import { FilterModelProvider } from './model/FilterModelProvider.jsx'
 
 const ProviderApp = ({ children }) => (
-    <MasterDataProvider>
-        <ManageModelProvider>
+    <ManageModelProvider>
+        <FilterModelProvider>
             <VisibilityProvider>
-                <TitleProvider>
-                    <CheckboxProvider>
+                <SwitchLayoutProvider>
+                    <TitleProvider>
                         <ModalListProvider>
-                            <SwitchLayoutProvider>
+                            <CheckboxProvider>
                                 {children}
-                            </SwitchLayoutProvider>
+                            </CheckboxProvider>
                         </ModalListProvider>
-                    </CheckboxProvider>
-                </TitleProvider>
+                    </TitleProvider>
+                </SwitchLayoutProvider>
             </VisibilityProvider>
-        </ManageModelProvider>
-    </MasterDataProvider>
+        </FilterModelProvider>
+    </ManageModelProvider>
 )
 
 export default ProviderApp

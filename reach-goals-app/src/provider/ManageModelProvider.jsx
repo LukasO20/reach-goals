@@ -1,19 +1,11 @@
 import React, { useState } from 'react'
 
+import { manageModelMap } from '../utils/mapping/mappingUtilsProvider.js'
+
 const ManageModelContext = React.createContext()
-const resetObject = {
-    typeModel: '',
-    mainModelID: null,
-    transportModel: {
-        tag: [],
-        assignment: [],
-        goal: []
-    },
-    submitModel: {}
-}
 
 const ManageModelProvider = ({ children }) => {
-    const [model, setModel] = useState(resetObject)
+    const [model, setModel] = useState(manageModelMap)
 
     const addToTransportModel = ({ id, name, type, color }) => {
         if (!id || !name) return console.error('The model object must have an id and a name property')
@@ -92,8 +84,42 @@ const ManageModelProvider = ({ children }) => {
         })
     }
 
+    const updateFilterModel = (filter = {}, type) => {
+        if (!type) return console.error('To update a filterModel is necessary a type')
+
+        setModel(prevModel => ({
+            ...prevModel,
+            filter: {
+                ...prevModel.filter,
+                [type]: { ...prevModel.filter[type], ...filter }
+            }
+        }))
+    }
+
+    const updateActiveModel = (data, type, typesource) => {
+        if (typeof type !== 'string' || type === "") return console.error('To update a activeModel is necessary a type')
+        if (typeof typesource !== 'string' || typesource === "") return console.error('To update a activeModel is necessary a typesource')
+
+        setModel(prevModel => ({
+            ...prevModel,
+            activeModel: {
+                ...prevModel.activeModel,
+                [type]: {
+                    ...prevModel.activeModel[type],
+                    [typesource]: {
+                        ...prevModel.activeModel[type][typesource], data,
+                    },
+                },
+            },
+        }))
+    }
+
     const resetManageModel = () => {
-        setModel(resetObject)
+        setModel(prevModel => ({
+            ...manageModelMap,
+            activeModel: prevModel.activeModel,
+            filter: prevModel.filter
+        }))
     }
 
     console.log('MODEL READY TO MANAGE - ', model)
@@ -105,6 +131,8 @@ const ManageModelProvider = ({ children }) => {
             addToTransportModel,
             removeFromTransportModel,
             updateSubmitModel,
+            updateFilterModel,
+            updateActiveModel,
             resetManageModel
         }}>
             {children}

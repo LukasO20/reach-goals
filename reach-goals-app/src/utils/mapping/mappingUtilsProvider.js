@@ -1,7 +1,34 @@
-export const getModelMap = {
-    goal: [],
-    assignment: [],
-    tag: [],
+export const manageModelMap = {
+    typeModel: '',
+    mainModelID: null,
+    transportModel: {
+        tag: [],
+        assignment: [],
+        goal: []
+    },
+    activeModel: {
+        goal: {
+            selected: {},
+            core: [],
+            support: []
+        },
+        assignment: {
+            selected: {},
+            core: [],
+            support: []
+        },
+        tag: {
+            selected: {},
+            core: [],
+            support: []
+        },
+    },
+    filter: {
+        goal: {},
+        assignment: {},
+        tag: {}
+    },
+    submitModel: {}
 }
 
 export const filterServiceFnMap = {
