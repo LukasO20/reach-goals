@@ -17,10 +17,9 @@ import '../Goal/Goal.scss'
 const Goal = (props) => {
     const [erro, setErro] = useState(false)
     const [pendingPanel, setPendingPanel] = useState(false)
-    const [activeModelSource, setActiveModelSource] = useState([])
 
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
-    const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
+    const { model, setModel, updateSubmitModel, updateFilterModel, updateActiveModel, addToTransportModel } = useContext(ManageModelContext)
     const { layoutComponent, switchLayoutComponent } = useSwitchLayout()
     const { update } = useTitle()
     //const { data, saved, loading, refetch, remove } = useGoalModel()
@@ -74,9 +73,14 @@ const Goal = (props) => {
     }
 
     useEffect(() => {
-        refetch(filterGetGoal)
+        refetch(updateFilterModel(filterGetGoal, 'goal'))
     }, [])
 
+    useEffect(() => {
+        updateActiveModel(data, 'goal', 'core')
+    }, [data])
+
+    const renderModel = model.activeModel.goal[filterGetGoal.source].data
     // useEffect(() => {        
     //     const fetch = async () => {
     //         if (typeof saved?.id === 'number') {
@@ -108,21 +112,19 @@ const Goal = (props) => {
         delete: deleteGoal
     }
 
-    //console.log('GOAL LOADED - ', goal)
     return (
-        console.log('DATA FILTER - ', data)
-        // loading && activeModelSource.length === 0 ?
-        //     <p>Loading...</p>
-        //     :
-        //     activeModelSource?.length ?
-        //         <CardItem type={'goal'}
-        //             model={(() => {
-        //                 return typeof status === 'string' && status !== '' ?
-        //                     activeModelSource.filter(item => item.status === status) :
-        //                     activeModelSource
-        //             })()}
-        //             clickFunction={clickEvents} display={display} />
-        //         : null
+        loading ?
+            <p>Loading...</p>
+            :
+            renderModel?.length ?
+                <CardItem type={'goal'}
+                    model={(() => {
+                        return typeof status === 'string' && status !== '' ?
+                            renderModel.filter(item => item.status === status) :
+                            renderModel
+                    })()}
+                    clickFunction={clickEvents} display={display} />
+                : null
     )
 }
 
