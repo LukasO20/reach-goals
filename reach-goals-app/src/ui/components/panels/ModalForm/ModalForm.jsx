@@ -5,11 +5,11 @@ import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx
 import { ModalListContext } from '../../../../provider/ModalListProvider.jsx'
 
 import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
-import { useAssignmentModel } from '../../../../provider/model/AssignmentModelProvider.jsx'
+import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
 import { useTagModel } from '../../../../provider/model/TagModelProvider.jsx'
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
 
-import { iconMap, modalListMap, targetMap } from '../../../../utils/mapping/mappingUtils.js'
+import { filterGetModelMap, iconMap, modalListMap, targetMap } from '../../../../utils/mapping/mappingUtils.js'
 import { formatDate } from '../../../../utils/utils.js'
 
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
@@ -47,12 +47,12 @@ const formsItemMap = (typeForm, modelComponent) => {
 
 const ModalForm = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
-    const { model, setModel, resetManageModel } = useContext(ManageModelContext)
+    const { model, setModel, updateFilterModel, resetManageModel } = useContext(ManageModelContext)
     const { modalList, handleModalList } = useContext(ModalListContext)
     const { update } = useTitle()
 
-    const { selected: selectedAssignment, refetch: refetchAssignment, save: saveAssignment } = useAssignmentModel()
-    //const { selected: selectedGoal, refetch: refetchGoal, save: saveGoal } = useGoalModel()
+    const { data: dataAssignment, refetch: refetchAssignment, save: saveAssignment } = useAssignmentProvider()
+    const { data: dataGoal, refetch: refetchGoal, save: saveGoal } = useGoalProvider()
     const { selected: selectedTag, refetch: refetchTag, save: saveTag } = useTagModel()
 
     const typeForm = props.type
@@ -67,20 +67,21 @@ const ModalForm = (props) => {
         setLoading(true)
         if (!id) return setLoading(false)
 
-        const currentUseGetModel = {
+        const filterGetModel = {
+            [currentKeySomeID]: id,
             type: typeForm,
-            [currentKeySomeID]: id
+            source: 'selected'
         }
 
         try {
             const refetchFn =
-                /*typeForm === 'goal'
-                    ? () => refetchGoal(currentUseGetModel)
-                    :*/ typeForm === 'assignment'
-                        ? () => refetchAssignment(currentUseGetModel)
-                        : () => refetchTag(currentUseGetModel)
+                typeForm === 'goal'
+                    ? () => refetchGoal(updateFilterModel(filterGetModel, 'goal'))
+                    : typeForm === 'assignment'
+                        ? () => refetchAssignment(updateFilterModel(filterGetModel, 'assignment'))
+                        : () => refetchTag(filterGetModel)
 
-            await refetchFn()
+            refetchFn()
             id === 'all' && resetManageModel()
         }
         catch (error) {
@@ -149,7 +150,7 @@ const ModalForm = (props) => {
         setSucess(false)
 
         try {
-            //typeForm === 'goal' && await saveGoal(structuredClone(model.submitModel))
+            typeForm === 'goal' && await saveGoal(structuredClone(model.submitModel))
             typeForm === 'assignment' && await saveAssignment(structuredClone(model.submitModel))
             typeForm === 'tag' && await saveTag(structuredClone(model.submitModel))
 
@@ -169,11 +170,12 @@ const ModalForm = (props) => {
     }
 
     useEffect(() => {
+        //TODO: remove submitModel object to use selected object from activeModel (ManageModelProvider)
         const typeSelected =
-            // typeForm === 'goal' ?
-            //     selectedGoal :
-                typeForm === 'assignment' ?
-                    selectedAssignment : null
+            typeForm === 'goal' ?
+                dataGoal :
+            typeForm === 'assignment' ?
+                dataAssignment : null
 
         const selectedSubmitModel = Array.isArray(typeSelected) ? typeSelected[0] : typeSelected
         if (selectedSubmitModel && Object.keys(selectedSubmitModel).length) {
@@ -182,7 +184,7 @@ const ModalForm = (props) => {
                 submitModel: selectedSubmitModel
             }))
         }
-    }, [/*selectedGoal*/, selectedAssignment, selectedTag])
+    }, [dataGoal, dataAssignment, selectedTag])
 
     useEffect(() => {
         if (typeof model.mainModelID === 'number') loadModel(model.mainModelID)

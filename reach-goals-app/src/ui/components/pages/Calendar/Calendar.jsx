@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
 
 import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
-import { useAssignmentModel } from '../../../../provider/model/AssignmentModelProvider.jsx'
+import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
 
 import { filterGetModelMap } from '../../../../utils/mapping/mappingUtils.js'
 
@@ -10,8 +10,8 @@ import MonthDaysPicker from '../../items/elements/MonthDaysPicker/MonthDaysPicke
 
 const Calendar = () => {
     const { update } = useTitle()
-    //const { data: dataGoal, refetch: refetchGoal } = useGoalModel()
-    const { data: dataAssignment, refetch: refetchAssignment } = useAssignmentModel()
+    const { data: dataGoal, refetch: refetchGoal } = useGoalProvider()
+    const { data: dataAssignment, refetch: refetchAssignment } = useAssignmentProvider()
     const [activeModelSource, setActiveModelSource] = useState({
         goal: [],
         assignment: []
@@ -22,24 +22,19 @@ const Calendar = () => {
 
     useEffect(() => {
         update({ header: 'Manage your goals and assignments' })
-
-        const fetch = async () => {
-            //await refetchGoal(filterGetGoal)
-            await refetchAssignment(filterGetAssignment)
-        }
-
-        fetch()
+        //refetchGoal(filterGetGoal)
+        //refetchAssignment(filterGetAssignment)
     }, [])
 
     useEffect(() => {
         setActiveModelSource(prevModel => (
             {
                 ...prevModel,
-                //goal: dataGoal ?? [],
+                goal: dataGoal ?? [],
                 assignment: dataAssignment ?? []
             }
         ))
-    }, [/*dataGoal*/, dataAssignment])
+    }, [/*dataGoal, dataAssignment*/])
 
     return (
         <div className="container-calendar">
