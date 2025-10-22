@@ -147,6 +147,7 @@ const Form = (props) => {
                                 functionsForm.mapFormsItemMap(typeForm,
                                     <>
                                         {
+                                            //TODO: ModelSwitcher and ModelCopy will be use only with assignments and tags. Goals will use a new way to show relation (with assignment)
                                             typeof modelForm.id === 'number' ?
                                                 <ModelSwitcher type={modelSwitcherRelation} propsReference={modelSwitcherProps} />
                                                 :
