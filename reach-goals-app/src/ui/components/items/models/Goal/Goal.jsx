@@ -22,8 +22,7 @@ const Goal = (props) => {
     const { model, setModel, updateSubmitModel, updateFilterModel, updateActiveModel, addToTransportModel } = useContext(ManageModelContext)
     const { layoutComponent, switchLayoutComponent } = useSwitchLayout()
     const { update } = useTitle()
-    //const { data, saved, loading, refetch, remove } = useGoalModel()
-    const { data, loading, error, save, remove, refetch } = useGoalProvider()
+    const { data, loading, error, remove, refetch } = useGoalProvider()
 
     const status = props.status
     const display = props.display
@@ -40,10 +39,11 @@ const Goal = (props) => {
         props.notAssignmentRelation
     ])
 
+    const renderModel = model.activeModel.goal[filterGetGoal.source].data
+
     const deleteGoal = async (id) => {
         remove(id)
-            .then(() => refetch(filterGetGoal))
-            .then(() => update({ toast: `goal was deleted` }))
+        update({ toast: `goal was deleted` })
     }
 
     const editGoal = (id) => {
@@ -55,7 +55,7 @@ const Goal = (props) => {
         e.stopPropagation()
 
         if (isSelectableModel) {
-            const selected = data.core.find(m => m.id === id)
+            const selected = renderModel.find(m => m.id === id)
 
             if (model.transportModel.goal.length > 0) return
 
@@ -73,38 +73,18 @@ const Goal = (props) => {
     }
 
     useEffect(() => {
+        if (filterGetGoal["Without key"] === "Without value") return
         refetch(updateFilterModel(filterGetGoal, 'goal'))
     }, [])
 
     useEffect(() => {
-        updateActiveModel(data, 'goal', 'core')
+        if (filterGetGoal["Without key"] === "Without value") return
+
+        const currentFilter = model.filter.goal
+        if (currentFilter.source === 'core' || currentFilter.source === 'support') {
+            updateActiveModel(data, 'goal', currentFilter.source)
+        }
     }, [data])
-
-    const renderModel = model.activeModel.goal[filterGetGoal.source].data
-    // useEffect(() => {        
-    //     const fetch = async () => {
-    //         if (typeof saved?.id === 'number') {
-    //             await refetch(filterGetGoal)
-    //             return
-    //         }
-
-    //         if (filterGetGoal["Without key"] === "Without value") return
-    //         await refetch(filterGetGoal)
-    //     }
-
-    //     fetch()
-    // }, [filterGetGoal, saved])
-
-    // useEffect(() => {
-    //     if (pendingPanel && model.mainModelID) {
-    //         switchLayoutComponent(switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'right' }))
-    //         toggleVisibility(targetMap(['panel-right', 'goal']))
-    //         return setPendingPanel(false)
-    //     }
-
-    //     const goalSource = data[filterGetGoal.source]
-    //     if (!filterGetGoal["Without key"]) return setActiveModelSource(goalSource)
-    // }, [pendingPanel, data])
 
     const clickEvents = {
         card: goalClick,
@@ -113,7 +93,7 @@ const Goal = (props) => {
     }
 
     return (
-        loading ?
+        loading && !renderModel?.length ?
             <p>Loading...</p>
             :
             renderModel?.length ?
