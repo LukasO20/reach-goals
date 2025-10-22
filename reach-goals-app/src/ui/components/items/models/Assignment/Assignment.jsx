@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from 'react'
 
-import { useAssignmentModel } from '../../../../../provider/model/AssignmentModelProvider.jsx'
+import { useAssignmentProvider } from '../../../../../provider/model/AssignmentModelProvider.jsx'
 
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
@@ -20,10 +20,10 @@ const Assignment = (props) => {
     const [activeModelSource, setActiveModelSource] = useState([])
 
     const { toggleVisibility } = useContext(VisibilityContext)
-    const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
+    const { model, setModel, updateSubmitModel, updateFilterModel, updateActiveModel, addToTransportModel } = useContext(ManageModelContext)
     const { layoutComponent, switchLayoutComponent } = useSwitchLayout()
     const { update } = useTitle()
-    const { data, saved, loading, refetch, remove } = useAssignmentModel()
+    const { data, loading, error, remove, refetch } = useAssignmentProvider()
 
     const status = props.status
     const display = props.display
@@ -40,10 +40,11 @@ const Assignment = (props) => {
         props.notGoalRelation
     ])
 
+    const renderModel = model.activeModel.assignment[filterGetAssignment.source].data
+
     const deleteAssignment = async (id) => {
         remove(id)
-            .then(() => refetch(filterGetAssignment))
-            .then(() => update({ toast: `assignment was deleted` }))
+        update({ toast: `assignment was deleted` })
     }
 
     const editAssignment = (id) => {
@@ -55,7 +56,7 @@ const Assignment = (props) => {
         e.stopPropagation()
 
         if (isSelectableModel) {
-            const selected = activeModelSource.find(m => m.id === id)
+            const selected = renderModel.find(m => m.id === id)
 
             addToTransportModel({ ...selected, type: 'assignment' })
             return updateSubmitModel({
@@ -80,36 +81,18 @@ const Assignment = (props) => {
     }
 
     useEffect(() => {
-        const fetch = async () => {
-            if (typeof saved?.id === 'number') {
-                await refetch(filterGetAssignment)
-                return
-            }
-            if (filterGetAssignment["Without key"] === "Without value") return
-            await refetch(filterGetAssignment)
-        }
-
-        fetch()
-    }, [filterGetAssignment, saved])
+        if (filterGetAssignment["Without key"] === "Without value") return
+        refetch(updateFilterModel(filterGetAssignment, 'assignment'))
+    }, [])
 
     useEffect(() => {
-        if (pendingPanel && model.mainModelID) {
-            switchLayoutComponent(switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'right' }))
-            toggleVisibility(targetMap(['panel-right', 'assignment']))
-            setPendingPanel(false)
+        if (filterGetAssignment["Without key"] === "Without value") return
+
+        const currentFilter = model.filter.assignment
+        if (currentFilter.source === 'core' || currentFilter.source === 'support') {
+            updateActiveModel(data, 'assignment', currentFilter.source)
         }
-
-        //When form send data, it will be considered as source
-        const formSource = props?.sourceForm?.assignments
-        const assignmentSource = data[filterGetAssignment.source]
-
-        return setActiveModelSource
-            (
-                Array.isArray(formSource) ?
-                    formSource.length ? formSource : []
-                    : assignmentSource
-            )
-    }, [pendingPanel, data, props.sourceForm])
+    }, [data])
 
     const clickEvents = {
         card: assignmentClick,
@@ -121,15 +104,15 @@ const Assignment = (props) => {
     //console.log('ASSIGNMENT LOADED - ', assignment)
 
     return (
-        loading && activeModelSource.length === 0 ?
+        loading && !renderModel?.length ?
             <p>Loading...</p>
             :
-            activeModelSource?.length ?
+            renderModel?.length ?
                 <CardItem type={'assignment'}
                     model={(() => {
                         return typeof status === 'string' && status !== '' ?
-                            activeModelSource.filter(item => item.status === status) :
-                            activeModelSource
+                            renderModel.filter(item => item.status === status) :
+                            renderModel
                     })()}
                     clickFunction={clickEvents} display={display} />
                 : null

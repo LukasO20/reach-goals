@@ -14,7 +14,7 @@ export const FilterModelProvider = ({ children }) => {
     return (
         <QueryClientProvider client={queryClient}>
             <GoalModelProvider filters={model.filter.goal}>
-                <AssignmentModelProvider>
+                <AssignmentModelProvider filters={model.filter.assignment}>
                     <TagModelProvider>
                         {children}
                     </TagModelProvider>

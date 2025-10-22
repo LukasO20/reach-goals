@@ -1,77 +1,72 @@
-import { useReducer, useEffect, createContext, useContext } from 'react'
+import { createContext, useContext } from 'react'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import * as assignmentService from '../../services/assignmentService.js'
 
-import { reduceModelMap, initialStateMap, filterServiceFnMap } from '../../utils/mapping/mappingUtilsProvider.js'
+import { filterServiceFnMap } from '../../utils/mapping/mappingUtilsProvider.js'
 
 export const AssignmentModelContext = createContext()
 
-export const AssignmentModelProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(reduceModelMap, initialStateMap)
+export const AssignmentModelProvider = ({ children, filters = {} }) => {
+    const queryClient = useQueryClient()
 
-    const load = async (filters = {}) => {
-        dispatch({ type: 'LOADING' })
-        const dataSource = filters.source
-        const useFilter = Object.entries(filters).filter(
-            filter => typeof filter[1] === 'number' || filter[1] === 'all'
-        )[0]
+    const validFilter = Object.entries(filters).find(
+        ([key, value]) =>
+            (typeof value === 'number' || value === 'all') &&
+            filterServiceFnMap[key]
+    )
 
-        try {
-            //Filter object has valid value to filter
-            if (useFilter) {
-                const keyFilter = useFilter[0]
-                const valueFilter = useFilter[1]
-                const typeDispatch = keyFilter === 'assignmentSomeID' && typeof valueFilter === 'number' ? 'FETCH_ONE'
-                    : dataSource === 'core' ? 'FETCH_LIST' : 'FETCH_SUPPORT_LIST'
+    const queryKey = ['assignments', filters]
 
-                dispatch({
-                    type: typeDispatch, payload: await assignmentService[filterServiceFnMap[keyFilter]](valueFilter)
-                })
-            }
-        } catch (err) {
-            dispatch({ type: 'ERROR', payload: err.message })
-        }
+    const queryFn = () => {
+        if (!validFilter) return Promise.resolve([])
+        const [key, value] = validFilter
+        const fnName = filterServiceFnMap[key]
+        return assignmentService[fnName](value)
     }
 
-    const remove = async (id) => {
-        dispatch({ type: 'LOADING' })
+    const {
+        data,
+        error,
+        isLoading,
+        refetch,
+    } = useQuery({
+        queryKey,
+        queryFn,
+        enabled: !!validFilter,
+    })
 
-        try {
-            if (typeof id === 'number') {
-                return dispatch({
-                    type: 'REMOVE_ONE', payload: await assignmentService.deleteAssignment(id)
-                })
-            }
-        } catch (err) {
-            dispatch({ type: 'ERROR', payload: err.message })
-        }
-    }
+    const saveMutation = useMutation({
+        mutationFn: (model) =>
+            typeof model.id === 'number'
+                ? assignmentService.updateAssignment(model)
+                : assignmentService.addAssignment(model),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['assignments'] })
+        },
+    })
 
-    const save = async (model) => {
-        dispatch({ type: 'LOADING' })
-
-        try {
-            if (model) {
-                const saveModel = typeof model.id === 'number' ? 'update' : 'create'
-                return dispatch({
-                    type: 'SAVE_ONE', payload: saveModel === 'update' ? await assignmentService.updateAssignment(model) : await assignmentService.addAssignment(model)
-                })
-            }
-        } catch (err) {
-            dispatch({ type: 'ERROR', payload: err.message })
-        }
-    }
-
-    useEffect(() => {
-        //if necessary checks the results of state - discomment this region
-        console.log('ASSIGNMENT provider - ', state)
-    }, [state])
+    const removeMutation = useMutation({
+        mutationFn: (id) => assignmentService.deleteAssignment(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['assignments'] })
+        },
+    })
 
     return (
-        <AssignmentModelContext.Provider value={{ ...state, refetch: load, remove, save }}>
+        <AssignmentModelContext.Provider value={{
+            data,
+            error,
+            loading: isLoading,
+            refetch,
+            save: saveMutation.mutate,
+            remove: removeMutation.mutate,
+            saving: saveMutation.isPending,
+            removing: removeMutation.isPending,
+        }}>
             {children}
         </AssignmentModelContext.Provider>
     )
 }
 
-export const useAssignmentModel = () => useContext(AssignmentModelContext)
+export const useAssignmentProvider = () => useContext(AssignmentModelContext)
