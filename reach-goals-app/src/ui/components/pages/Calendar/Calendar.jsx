@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react'
-import { useTitle } from '../../../../provider/TitleProvider.jsx'
+import { useEffect, useState, useContext } from 'react'
 
 import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
 import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
+import { useTitle } from '../../../../provider/TitleProvider.jsx'
+
+import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 
 import { filterGetModelMap } from '../../../../utils/mapping/mappingUtils.js'
 
@@ -12,6 +14,8 @@ const Calendar = () => {
     const { update } = useTitle()
     const { data: dataGoal, refetch: refetchGoal } = useGoalProvider()
     const { data: dataAssignment, refetch: refetchAssignment } = useAssignmentProvider()
+    const { updateFilterModel } = useContext(ManageModelContext)
+
     const [activeModelSource, setActiveModelSource] = useState({
         goal: [],
         assignment: []
@@ -22,8 +26,8 @@ const Calendar = () => {
 
     useEffect(() => {
         update({ header: 'Manage your goals and assignments' })
-        //refetchGoal(filterGetGoal)
-        //refetchAssignment(filterGetAssignment)
+        refetchGoal(updateFilterModel(filterGetGoal, 'goal'))
+        refetchAssignment(updateFilterModel(filterGetAssignment, 'assignment'))
     }, [])
 
     useEffect(() => {
@@ -34,7 +38,7 @@ const Calendar = () => {
                 assignment: dataAssignment ?? []
             }
         ))
-    }, [/*dataGoal, dataAssignment*/])
+    }, [dataGoal, dataAssignment])
 
     return (
         <div className="container-calendar">

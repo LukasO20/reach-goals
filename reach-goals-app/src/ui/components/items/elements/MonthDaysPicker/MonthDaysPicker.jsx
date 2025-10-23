@@ -39,8 +39,8 @@ const MonthDaysPicker = (props) => {
     const models = props.model || { goal: [], assignment: [] }
 
     const modelsCalendar = Object.entries(models || {}).flatMap(([key, value]) =>
-        Array.isArray(value?.core) ?
-            value.core.map(model => (
+        Array.isArray(value) ?
+            value.map(model => (
                 {
                     ...model,
                     type: key,
