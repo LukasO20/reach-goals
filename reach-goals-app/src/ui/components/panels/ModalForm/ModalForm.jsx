@@ -174,8 +174,8 @@ const ModalForm = (props) => {
         const typeSelected =
             typeForm === 'goal' ?
                 dataGoal :
-            typeForm === 'assignment' ?
-                dataAssignment : null
+                typeForm === 'assignment' ?
+                    dataAssignment : null
 
         const selectedSubmitModel = Array.isArray(typeSelected) ? typeSelected[0] : typeSelected
         if (selectedSubmitModel && Object.keys(selectedSubmitModel).length) {

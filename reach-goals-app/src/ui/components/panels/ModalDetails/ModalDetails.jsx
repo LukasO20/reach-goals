@@ -7,10 +7,10 @@ import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.js
 import ModalDetailsSection from '../../items/modals/ModalDetailsSection/ModalDetailsSection.jsx'
 
 const ModalDetails = (props) => {
-    const { refetch: refetchAssignment } = useAssignmentProvider()
-    const { refetch: refetchGoal } = useGoalProvider()
+    const { data: dataAssignment, refetch: refetchAssignment } = useAssignmentProvider()
+    const { data: dataGoal, refetch: refetchGoal } = useGoalProvider()
 
-    const { model, setModel } = useContext(ManageModelContext)
+    const { model, setModel, updateFilterModel } = useContext(ManageModelContext)
 
     const [isLoading, setLoading] = useState(false)
     const [error, setError] = useState(null)
@@ -22,18 +22,21 @@ const ModalDetails = (props) => {
         setLoading(true)
         if (!id) return setLoading(false)
 
-        const currentUseGetModel = {
+        const filterGetModel = {
+            [currentKeySomeID]: id,
             type: typeDetail,
-            [currentKeySomeID]: id
+            source: 'selected'
         }
 
         try {
-            const refetchFn = () => null
-                /*typeDetail === 'goal'
-                    ? () => refetchGoal(currentUseGetModel)
+            const refetchFn =
+                typeDetail === 'goal'
+                    ? () => refetchGoal(updateFilterModel(filterGetModel, 'goal'))
                     : typeDetail === 'assignment'
-                        ? () => refetchAssignment(currentUseGetModel)
-                        : () => null*/
+                        ? () => refetchAssignment(updateFilterModel(filterGetModel, 'assignment'))
+                        : () => null
+
+            refetchFn()
         }
         catch (error) {
             setError('Ops, something wrong: ', error)
@@ -48,11 +51,11 @@ const ModalDetails = (props) => {
     }, [model.mainModelID])
 
     useEffect(() => {
-        const typeSelected = null
-            // typeDetail === 'goal' ?
-            //     selectedGoal :
-                // typeDetail === 'assignment' ?
-                //     selectedAssignment : null
+        const typeSelected =
+            typeDetail === 'goal' ?
+                dataGoal :
+                typeDetail === 'assignment' ?
+                    dataAssignment : null
 
         const selectedSubmitModel = Array.isArray(typeSelected) ? typeSelected[0] : typeSelected
         if (selectedSubmitModel && Object.keys(selectedSubmitModel).length) {
@@ -61,11 +64,11 @@ const ModalDetails = (props) => {
                 submitModel: selectedSubmitModel
             }))
         }
-    }, [/*selectedGoal, selectedAssignment*/])
+    }, [dataGoal, dataAssignment])
 
     return (
         isLoading ?
-            <div id="load-element" className='loading-animation'></div> :
+            '...loading' :
             <div className='container-modaldetails aside-content'>
                 <ModalDetailsSection model={model.submitModel} type={typeDetail} />
             </div>
