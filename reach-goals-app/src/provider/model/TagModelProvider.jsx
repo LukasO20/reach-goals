@@ -1,77 +1,72 @@
-import { useReducer, useEffect, createContext, useContext } from 'react'
+import { createContext, useContext } from 'react'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import * as tagService from '../../services/tagService.js'
 
-import { reduceModelMap, initialStateMap, filterServiceFnMap } from '../../utils/mapping/mappingUtilsProvider.js'
+import { filterServiceFnMap } from '../../utils/mapping/mappingUtilsProvider.js'
 
 export const TagModelContext = createContext()
 
-export const TagModelProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(reduceModelMap, initialStateMap)
+export const TagModelProvider = ({ children, filters = {} }) => {
+    const queryClient = useQueryClient()
 
-    const load = async (filters = {}) => {
-        dispatch({ type: 'LOADING' })
-        const dataSource = filters.source
-        const useFilter = Object.entries(filters).filter(
-            filter => typeof filter[1] === 'number' || filter[1] === 'all'
-        )[0]
+    const validFilter = Object.entries(filters).find(
+        ([key, value]) =>
+            (typeof value === 'number' || value === 'all') &&
+            filterServiceFnMap[key]
+    )
 
-        try {
-            //Filter object has valid value to filter
-            if (useFilter) {
-                const keyFilter = useFilter[0]
-                const valueFilter = useFilter[1]
-                const typeDispatch = keyFilter === 'tagSomeID' && typeof valueFilter === 'number' ? 'FETCH_ONE' 
-                    : dataSource === 'core' ? 'FETCH_LIST' : 'FETCH_SUPPORT_LIST'
+    const queryKey = ['tags', filters]
 
-                dispatch({
-                    type: typeDispatch, payload: await tagService[filterServiceFnMap[keyFilter]](valueFilter)
-                })
-            }
-        } catch (err) {
-            dispatch({ type: 'ERROR', payload: err.message })
-        }
+    const queryFn = () => {
+        if (!validFilter) return Promise.resolve([])
+        const [key, value] = validFilter
+        const fnName = filterServiceFnMap[key]
+        return tagService[fnName](value)
     }
 
-    const remove = async (id) => {
-        dispatch({ type: 'LOADING' })
+    const {
+        data,
+        error,
+        isLoading,
+        refetch,
+    } = useQuery({
+        queryKey,
+        queryFn,
+        enabled: !!validFilter,
+    })
 
-        try {
-            if (typeof id === 'number') {
-                return dispatch({
-                    type: 'REMOVE_ONE', payload: await tagService.deleteTag(id)
-                })
-            }
-        } catch (err) {
-            dispatch({ type: 'ERROR', payload: err.message })
-        }
-    }
+    const saveMutation = useMutation({
+        mutationFn: (model) =>
+            typeof model.id === 'number'
+                ? tagService.updateTag(model)
+                : tagService.addTag(model),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['tags'] })
+        },
+    })
 
-    const save = async (model) => {
-        dispatch({ type: 'LOADING' })
-
-        try {
-            if (model) {
-                const saveModel = typeof model.id === 'number' ? 'update' : 'create'
-                return dispatch({
-                    type: 'SAVE_ONE', payload: saveModel === 'update' ? await tagService.updateTag(model) : await tagService.addTag(model)
-                })
-            }
-        } catch (err) {
-            dispatch({ type: 'ERROR', payload: err.message })
-        }
-    }
-
-    useEffect(() => {
-        //if necessary checks the results of state - discomment this region
-        console.log('TAG provider - ', state)
-    }, [state])
+    const removeMutation = useMutation({
+        mutationFn: (id) => tagService.deleteTag(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['tags'] })
+        },
+    })
 
     return (
-        <TagModelContext.Provider value={{ ...state, refetch: load, remove, save }}>
+        <TagModelContext.Provider value={{
+            data,
+            error,
+            loading: isLoading,
+            refetch,
+            save: saveMutation.mutate,
+            remove: removeMutation.mutate,
+            saving: saveMutation.isPending,
+            removing: removeMutation.isPending,
+        }}>
             {children}
         </TagModelContext.Provider>
     )
 }
 
-export const useTagModel = () => useContext(TagModelContext)
+export const useTagProvider = () => useContext(TagModelContext)

@@ -6,7 +6,7 @@ import { ModalListContext } from '../../../../provider/ModalListProvider.jsx'
 
 import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
 import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
-import { useTagModel } from '../../../../provider/model/TagModelProvider.jsx'
+import { useTagProvider } from '../../../../provider/model/TagModelProvider.jsx'
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
 
 import { filterGetModelMap, iconMap, modalListMap, targetMap } from '../../../../utils/mapping/mappingUtils.js'
@@ -53,7 +53,7 @@ const ModalForm = (props) => {
 
     const { data: dataAssignment, refetch: refetchAssignment, save: saveAssignment } = useAssignmentProvider()
     const { data: dataGoal, refetch: refetchGoal, save: saveGoal } = useGoalProvider()
-    const { selected: selectedTag, refetch: refetchTag, save: saveTag } = useTagModel()
+    const { data: dataTag, refetch: refetchTag, save: saveTag } = useTagProvider()
 
     const typeForm = props.type
     const classRemove = visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
@@ -79,7 +79,7 @@ const ModalForm = (props) => {
                     ? () => refetchGoal(updateFilterModel(filterGetModel, 'goal'))
                     : typeForm === 'assignment'
                         ? () => refetchAssignment(updateFilterModel(filterGetModel, 'assignment'))
-                        : () => refetchTag(filterGetModel)
+                        : () => refetchTag(updateFilterModel(filterGetModel, 'tag'))
 
             refetchFn()
             id === 'all' && resetManageModel()
@@ -184,7 +184,7 @@ const ModalForm = (props) => {
                 submitModel: selectedSubmitModel
             }))
         }
-    }, [dataGoal, dataAssignment, selectedTag])
+    }, [dataGoal, dataAssignment])
 
     useEffect(() => {
         if (typeof model.mainModelID === 'number') loadModel(model.mainModelID)

@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
-import { useTagModel } from '../../../../../provider/model/TagModelProvider.jsx'
+import { useTagProvider } from '../../../../../provider/model/TagModelProvider.jsx'
 import { useTitle } from '../../../../../provider/TitleProvider.jsx'
 
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
@@ -14,11 +14,10 @@ import '../Tag/Tag.scss'
 
 const Tag = (props) => {
     const [erro, setErro] = useState(false)
-    const [activeModelSource, setActiveModelSource] = useState([])
 
     const { toggleVisibility } = useContext(VisibilityContext)
-    const { model, setModel, updateSubmitModel, addToTransportModel } = useContext(ManageModelContext)
-    const { data, saved, loading, refetch, remove } = useTagModel()
+    const { model, setModel, updateSubmitModel, updateFilterModel, updateActiveModel, addToTransportModel } = useContext(ManageModelContext)
+    const { data, loading, remove, refetch } = useTagProvider()
     const { update } = useTitle()
 
     const target = targetMap(['panel-right', 'tag'])
@@ -36,10 +35,11 @@ const Tag = (props) => {
         props.tagSomeID
     ])
 
+    const renderModel = model.activeModel.tag[filterGetTag.source].data
+
     const deleteTag = async (id) => {
         remove(id)
-            .then(() => refetch(filterGetTag))
-            .then(() => update({ toast: `tag was deleted` }))
+        update({ toast: `tag was deleted` })
     }
 
     const editTag = useCallback((id) => {
@@ -51,7 +51,7 @@ const Tag = (props) => {
         e.stopPropagation()
 
         if (isSelectableModel) {
-            const selected = activeModelSource.find(m => m.id === id)
+            const selected = renderModel.find(m => m.id === id)
 
             addToTransportModel({ ...selected, type: 'tag' })
             return updateSubmitModel({
@@ -75,30 +75,18 @@ const Tag = (props) => {
     }
 
     useEffect(() => {
-        const fetch = async () => {
-            if (typeof saved?.id === 'number') {
-                await refetch(filterGetTag)
-                return
-            }
-            if (filterGetTag["Without key"] === "Without value") return
-            await refetch(filterGetTag)
-        }
-
-        fetch()
-    }, [filterGetTag, saved])
+        if (filterGetTag["Without key"] === "Without value") return
+        refetch(updateFilterModel(filterGetTag, 'tag'))
+    }, [])
 
     useEffect(() => {
-        //When form send data, it will be considered as source
-        const formSource = props?.sourceForm?.tags.map(tag => tag.tag)
-        const tagSource = data[filterGetTag.source]
+        if (filterGetTag["Without key"] === "Without value") return
 
-        return setActiveModelSource
-            (
-                Array.isArray(formSource) ?
-                    formSource.length ? formSource : []
-                    : tagSource
-            )
-    }, [data, props.sourceForm])
+        const currentFilter = model.filter.tag
+        if (currentFilter.source === 'core' || currentFilter.source === 'support') {
+            updateActiveModel(data, 'tag', currentFilter.source)
+        }
+    }, [data])
 
     const clickEvents = {
         card: tagClick,
@@ -108,10 +96,10 @@ const Tag = (props) => {
     }
 
     return (
-        loading && activeModelSource.length === 0 ?
+        loading && !renderModel?.length ?
             <p>Loading...</p>
             :
-            activeModelSource?.length ? <CardItem type={'tag'} model={activeModelSource} clickFunction={clickEvents} display={display} /> : null
+            renderModel?.length ? <CardItem type={'tag'} model={renderModel} clickFunction={clickEvents} display={display} /> : null
     )
 }
 
