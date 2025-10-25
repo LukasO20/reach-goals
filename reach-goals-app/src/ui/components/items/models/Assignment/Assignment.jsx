@@ -26,6 +26,7 @@ const Assignment = (props) => {
 
     const status = props.status
     const display = props.display
+    const sourceForm = props.sourceForm
     const isSelectableModel = props.selectableModel ?? false
     const isDetailsModel = props.detailsModel ?? false
 
@@ -39,7 +40,8 @@ const Assignment = (props) => {
         props.notGoalRelation
     ])
 
-    const renderModel = model.dataModel.assignment[filterGetAssignment.source].data
+    //First will be checked form source to render an assignment, if not, will be render according assignment filter
+    const renderModel = sourceForm?.assignments ?? model.dataModel.assignment[filterGetAssignment.source].data
 
     const deleteAssignment = async (id) => {
         remove(id)

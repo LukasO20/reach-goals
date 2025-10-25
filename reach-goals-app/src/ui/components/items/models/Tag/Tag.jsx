@@ -23,6 +23,7 @@ const Tag = (props) => {
     const target = targetMap(['panel-right', 'tag'])
 
     const display = props.display
+    const sourceForm = props.sourceForm
     const isSelectableModel = props.selectableModel ?? false
 
     const filterGetTag = useMemo(() => (
@@ -35,7 +36,11 @@ const Tag = (props) => {
         props.tagSomeID
     ])
 
-    const renderModel = model.dataModel.tag[filterGetTag.source].data
+    //First will be checked form source to render a tag, if not, will be render according tag filter
+    const tagSourceAuxiliary = sourceForm?.tags.map(item => {
+        return item.tag
+    })
+    const renderModel = tagSourceAuxiliary ?? model.dataModel.tag[filterGetTag.source].data
 
     const deleteTag = async (id) => {
         remove(id)
