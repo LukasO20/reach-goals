@@ -148,13 +148,10 @@ const Form = (props) => {
                                     <>
                                         {
                                             //TODO: ModelSwitcher and ModelCopy will be use only with assignments and tags. Goals will use a new way to show relation (with assignment)
-                                            model.typeModel === 'assignment' || model.typeModel === 'tag' ?
-                                                typeof modelForm.id === 'number' ?
-                                                    <ModelSwitcher type={modelSwitcherRelation} propsReference={modelSwitcherProps} />
-                                                    :
-                                                    <ModelCopy type={model.typeModel} region={modelCopyRelation} />
+                                            typeof modelForm.id === 'number' ?
+                                                <ModelSwitcher type={modelSwitcherRelation} propsReference={modelSwitcherProps} />
                                                 :
-                                                null
+                                                <ModelCopy type={model.typeModel} region={modelCopyRelation} />
                                         }
                                     </>
                                 )
