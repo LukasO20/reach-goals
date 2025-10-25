@@ -6,19 +6,16 @@ export const manageModelMap = {
         assignment: [],
         goal: []
     },
-    activeModel: {
+    dataModel: {
         goal: {
-            selected: {},
             core: [],
             support: []
         },
         assignment: {
-            selected: {},
             core: [],
             support: []
         },
         tag: {
-            selected: {},
             core: [],
             support: []
         },
@@ -28,7 +25,7 @@ export const manageModelMap = {
         assignment: {},
         tag: {}
     },
-    submitModel: {}
+    formModel: {}
 }
 
 export const filterServiceFnMap = {

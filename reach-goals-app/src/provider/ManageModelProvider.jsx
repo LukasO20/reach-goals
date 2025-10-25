@@ -45,8 +45,8 @@ const ManageModelProvider = ({ children }) => {
         })
     }
 
-    const updateSubmitModel = ({ keyObject, value, type = 'single', action = 'add' }) => {
-        if (!keyObject) return console.error('To update a submitModel is necessary a key')
+    const updateFormModel = ({ keyObject, value, type = 'single', action = 'add' }) => {
+        if (!keyObject) return console.error('To update a formModel is necessary a key')
 
         const submitToAdd = (prevValue) => {
             return type === 'array'
@@ -69,15 +69,15 @@ const ManageModelProvider = ({ children }) => {
         }
 
         setModel(prevModel => {
-            const prevValue = prevModel.submitModel[keyObject]
+            const prevValue = prevModel.formModel[keyObject]
             const notExists = Array.isArray(prevValue) ? !prevValue.some(item => (item.id ?? item.tagID) === (value.id ?? value.tagID)) : true
             const newValue = action === 'add' && notExists ? submitToAdd(prevValue) :
                 action === 'remove' ? submitToRemove(prevValue) : prevValue
 
             return {
                 ...prevModel,
-                submitModel: {
-                    ...prevModel.submitModel,
+                formModel: {
+                    ...prevModel.formModel,
                     [keyObject]: newValue
                 }
             }
@@ -91,23 +91,23 @@ const ManageModelProvider = ({ children }) => {
             ...prevModel,
             filter: {
                 ...prevModel.filter,
-                [type]: { ...prevModel.filter[type], ...filter }
+                [type]: { ...filter }, 
             }
         }))
     }
 
-    const updateActiveModel = (data, type, typesource) => {
-        if (typeof type !== 'string' || type === "") return console.error('To update a activeModel is necessary a type')
-        if (typeof typesource !== 'string' || typesource === "") return console.error('To update a activeModel is necessary a typesource')
+    const updateDataModel = (data, type, typesource) => {
+        if (typeof type !== 'string' || type === "") return console.error('To update a dataModel is necessary a type')
+        if (typeof typesource !== 'string' || typesource === "") return console.error('To update a dataModel is necessary a typesource')
 
         setModel(prevModel => ({
             ...prevModel,
-            activeModel: {
-                ...prevModel.activeModel,
+            dataModel: {
+                ...prevModel.dataModel,
                 [type]: {
-                    ...prevModel.activeModel[type],
+                    ...prevModel.dataModel[type],
                     [typesource]: {
-                        ...prevModel.activeModel[type][typesource], data,
+                        ...prevModel.dataModel[type][typesource], data,
                     },
                 },
             },
@@ -117,7 +117,7 @@ const ManageModelProvider = ({ children }) => {
     const resetManageModel = () => {
         setModel(prevModel => ({
             ...manageModelMap,
-            activeModel: prevModel.activeModel,
+            dataModel: prevModel.dataModel,
             filter: prevModel.filter
         }))
     }
@@ -130,9 +130,9 @@ const ManageModelProvider = ({ children }) => {
             setModel,
             addToTransportModel,
             removeFromTransportModel,
-            updateSubmitModel,
+            updateFormModel,
             updateFilterModel,
-            updateActiveModel,
+            updateDataModel,
             resetManageModel
         }}>
             {children}
