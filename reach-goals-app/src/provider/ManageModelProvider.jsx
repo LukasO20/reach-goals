@@ -117,8 +117,7 @@ const ManageModelProvider = ({ children }) => {
     const resetManageModel = () => {
         setModel(prevModel => ({
             ...manageModelMap,
-            dataModel: prevModel.dataModel,
-            filter: prevModel.filter
+            dataModel: prevModel.dataModel
         }))
     }
 
