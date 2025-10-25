@@ -17,10 +17,9 @@ import '../Assignment/Assignment.scss'
 const Assignment = (props) => {
     const [erro, setErro] = useState(false)
     const [pendingPanel, setPendingPanel] = useState(false)
-    const [activeModelSource, setActiveModelSource] = useState([])
 
     const { toggleVisibility } = useContext(VisibilityContext)
-    const { model, setModel, updateSubmitModel, updateFilterModel, updateActiveModel, addToTransportModel } = useContext(ManageModelContext)
+    const { model, setModel, updateFormModel, updateFilterModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
     const { layoutComponent, switchLayoutComponent } = useSwitchLayout()
     const { update } = useTitle()
     const { data, loading, error, remove, refetch } = useAssignmentProvider()
@@ -40,7 +39,7 @@ const Assignment = (props) => {
         props.notGoalRelation
     ])
 
-    const renderModel = model.activeModel.assignment[filterGetAssignment.source].data
+    const renderModel = model.dataModel.assignment[filterGetAssignment.source].data
 
     const deleteAssignment = async (id) => {
         remove(id)
@@ -59,7 +58,7 @@ const Assignment = (props) => {
             const selected = renderModel.find(m => m.id === id)
 
             addToTransportModel({ ...selected, type: 'assignment' })
-            return updateSubmitModel({
+            return updateFormModel({
                 keyObject: 'assignments',
                 value: {
                     id: id, name: name
@@ -76,7 +75,7 @@ const Assignment = (props) => {
 
     const removeElDOMClick = ({ id }) => {
         if (id) {
-            updateSubmitModel({ keyObject: 'assignments', value: { id: id }, type: 'array', action: 'remove' })
+            updateFormModel({ keyObject: 'assignments', value: { id: id }, type: 'array', action: 'remove' })
         }
     }
 
@@ -90,7 +89,7 @@ const Assignment = (props) => {
 
         const currentFilter = model.filter.assignment
         if (currentFilter.source === 'core' || currentFilter.source === 'support') {
-            updateActiveModel(data, 'assignment', currentFilter.source)
+            updateDataModel(data, 'assignment', currentFilter.source)
         }
     }, [data])
 

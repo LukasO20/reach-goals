@@ -16,7 +16,7 @@ const Tag = (props) => {
     const [erro, setErro] = useState(false)
 
     const { toggleVisibility } = useContext(VisibilityContext)
-    const { model, setModel, updateSubmitModel, updateFilterModel, updateActiveModel, addToTransportModel } = useContext(ManageModelContext)
+    const { model, setModel, updateFormModel, updateFilterModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
     const { data, loading, remove, refetch } = useTagProvider()
     const { update } = useTitle()
 
@@ -35,7 +35,7 @@ const Tag = (props) => {
         props.tagSomeID
     ])
 
-    const renderModel = model.activeModel.tag[filterGetTag.source].data
+    const renderModel = model.dataModel.tag[filterGetTag.source].data
 
     const deleteTag = async (id) => {
         remove(id)
@@ -54,7 +54,7 @@ const Tag = (props) => {
             const selected = renderModel.find(m => m.id === id)
 
             addToTransportModel({ ...selected, type: 'tag' })
-            return updateSubmitModel({
+            return updateFormModel({
                 keyObject: 'tags',
                 value: {
                     tagID: id,
@@ -70,7 +70,7 @@ const Tag = (props) => {
 
     const removeElDOMClick = ({ id }) => {
         if (id) {
-            updateSubmitModel({ keyObject: 'tags', value: { tagID: id }, type: 'array', action: 'remove' })
+            updateFormModel({ keyObject: 'tags', value: { tagID: id }, type: 'array', action: 'remove' })
         }
     }
 
@@ -84,7 +84,7 @@ const Tag = (props) => {
 
         const currentFilter = model.filter.tag
         if (currentFilter.source === 'core' || currentFilter.source === 'support') {
-            updateActiveModel(data, 'tag', currentFilter.source)
+            updateDataModel(data, 'tag', currentFilter.source)
         }
     }, [data])
 

@@ -64,7 +64,7 @@ const ButtonDropdown = (props) => {
             }
 
             if (typeClass === 'btn-action-create' && (event.props.type === 'goal' || event.props.type === 'assignment')) {
-                setModel(prev => ({ ...prev, typeModel: event.props.type, mainModelID: null, submitModel: {} }))
+                setModel(prev => ({ ...prev, typeModel: event.props.type, mainModelID: null, formModel: {} }))
             }
         }
     }
@@ -134,7 +134,7 @@ const ButtonDropdown = (props) => {
                                                 <ButtonAction onClick={dropdownActionClick} datavalue={dropdownStatus ? option.op : null}
                                                     target={targetMap(...classTargetDropdown)}
                                                     switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'center' })}
-                                                    classBtn={`form-${option.op} button-action plan-round ${model.submitModel?.status === option.op ? 'active' : ''}`} icon={option.icon} title={`${option.title}`} type={option.op}
+                                                    classBtn={`form-${option.op} button-action plan-round ${model.formModel?.status === option.op ? 'active' : ''}`} icon={option.icon} title={`${option.title}`} type={option.op}
                                                 />
                                             </div>
                                             <div className='item-details'>

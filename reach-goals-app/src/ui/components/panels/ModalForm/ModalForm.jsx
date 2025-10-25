@@ -70,7 +70,7 @@ const ModalForm = (props) => {
         const filterGetModel = {
             [currentKeySomeID]: id,
             type: typeForm,
-            source: 'selected'
+            source: 'formModel'
         }
 
         try {
@@ -96,13 +96,13 @@ const ModalForm = (props) => {
         const { name, value } = e.target || e
 
         //Tag attributes
-        const tagsRelation = e.tags ?? model.submitModel.tags ?? []
+        const tagsRelation = e.tags ?? model.formModel.tags ?? []
 
         if (typeForm === 'goal') {
-            const assignmentsRelation = e.assignments ?? model.submitModel.assignments ?? []
+            const assignmentsRelation = e.assignments ?? model.formModel.assignments ?? []
 
             const update = {
-                ...model.submitModel,
+                ...model.formModel,
                 [name]: value,
                 assignments: [...assignmentsRelation],
                 tags: [...tagsRelation]
@@ -113,12 +113,12 @@ const ModalForm = (props) => {
 
             setModel(prevModel => ({
                 ...prevModel,
-                submitModel: formatted
+                formModel: formatted
             }))
         } else if (typeForm === 'assignment') {
 
             const update = {
-                ...model.submitModel,
+                ...model.formModel,
                 [name]: value,
                 goal: e.target === undefined ? Object.values(e)[0] : null,
                 tags: [...tagsRelation]
@@ -129,18 +129,18 @@ const ModalForm = (props) => {
 
             setModel(prevModel => ({
                 ...prevModel,
-                submitModel: formatted
+                formModel: formatted
             }))
         } else {
 
             const update = {
-                ...model.submitModel,
+                ...model.formModel,
                 [name]: value
             }
 
             setModel(prevModel => ({
                 ...prevModel,
-                submitModel: update
+                formModel: update
             }))
         }
     }
@@ -150,12 +150,12 @@ const ModalForm = (props) => {
         setSucess(false)
 
         try {
-            typeForm === 'goal' && await saveGoal(structuredClone(model.submitModel))
-            typeForm === 'assignment' && await saveAssignment(structuredClone(model.submitModel))
-            typeForm === 'tag' && await saveTag(structuredClone(model.submitModel))
+            typeForm === 'goal' && await saveGoal(structuredClone(model.formModel))
+            typeForm === 'assignment' && await saveAssignment(structuredClone(model.formModel))
+            typeForm === 'tag' && await saveTag(structuredClone(model.formModel))
 
             const visibilityTag = typeForm === 'tag' ? targetMap('near-modalForm', { remove: true }) : null
-            const messageToastSupport = typeof model.submitModel.id === 'number' ? 'updated' : 'created'
+            const messageToastSupport = typeof model.formModel.id === 'number' ? 'updated' : 'created'
 
             toggleVisibility(visibilityTag)
             update({ toast: `${typeForm} ${messageToastSupport} with success` })
@@ -171,18 +171,17 @@ const ModalForm = (props) => {
 
     useEffect(() => {
         if (typeof model.mainModelID === 'number') {
-            //TODO: remove submitModel object to use selected object from activeModel (ManageModelProvider)
             const typeSelected =
                 typeForm === 'goal' ?
                     dataGoal :
                     typeForm === 'assignment' ?
                         dataAssignment : null
 
-            const selectedSubmitModel = Array.isArray(typeSelected) ? typeSelected[0] : typeSelected
-            if (selectedSubmitModel && Object.keys(selectedSubmitModel).length) {
+            const selectedFormModel = Array.isArray(typeSelected) ? typeSelected[0] : typeSelected
+            if (selectedFormModel && Object.keys(selectedFormModel).length) {
                 setModel(prevModel => ({
                     ...prevModel,
-                    submitModel: selectedSubmitModel
+                    formModel: selectedFormModel
                 }))
             }
         }
@@ -214,10 +213,10 @@ const ModalForm = (props) => {
 
     return (
         isLoading ? <div id="load-element" className='loading-animation'></div> :
-            ((model.submitModel && model.submitModel.id) || model.mainModelID === null) ?
+            ((model.formModel && model.formModel.id) || model.mainModelID === null) ?
                 (
                     <Form typeForm={typeForm} functionFormMap={functionFormMap}
-                        model={model.submitModel} booleanFormMap={booleanFormMap}
+                        model={model.formModel} booleanFormMap={booleanFormMap}
                         contextFormMap={contextFormMap} />
                 )
                 :

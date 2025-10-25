@@ -16,7 +16,7 @@ const Calendar = () => {
     const { data: dataAssignment, refetch: refetchAssignment } = useAssignmentProvider()
     const { updateFilterModel } = useContext(ManageModelContext)
 
-    const [activeModelSource, setActiveModelSource] = useState({
+    const [dataModelSource, setDataModelSource] = useState({
         goal: [],
         assignment: []
     })
@@ -31,7 +31,7 @@ const Calendar = () => {
     }, [])
 
     useEffect(() => {
-        setActiveModelSource(prevModel => (
+        setDataModelSource(prevModel => (
             {
                 ...prevModel,
                 goal: dataGoal ?? [],
@@ -42,7 +42,7 @@ const Calendar = () => {
 
     return (
         <div className="container-calendar">
-            <MonthDaysPicker model={activeModelSource} />
+            <MonthDaysPicker model={dataModelSource} />
         </div>
     )
 }

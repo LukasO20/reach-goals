@@ -25,7 +25,7 @@ const ModalDetails = (props) => {
         const filterGetModel = {
             [currentKeySomeID]: id,
             type: typeDetail,
-            source: 'selected'
+            source: 'support'
         }
 
         try {
@@ -57,11 +57,11 @@ const ModalDetails = (props) => {
                 typeDetail === 'assignment' ?
                     dataAssignment : null
 
-        const selectedSubmitModel = Array.isArray(typeSelected) ? typeSelected[0] : typeSelected
-        if (selectedSubmitModel && Object.keys(selectedSubmitModel).length) {
+        const selectedformModel = Array.isArray(typeSelected) ? typeSelected[0] : typeSelected
+        if (selectedformModel && Object.keys(selectedformModel).length) {
             setModel(prevModel => ({
                 ...prevModel,
-                submitModel: selectedSubmitModel
+                formModel: selectedformModel
             }))
         }
     }, [dataGoal, dataAssignment])
@@ -70,7 +70,7 @@ const ModalDetails = (props) => {
         isLoading ?
             '...loading' :
             <div className='container-modaldetails aside-content'>
-                <ModalDetailsSection model={model.submitModel} type={typeDetail} />
+                <ModalDetailsSection model={model.formModel} type={typeDetail} />
             </div>
     )
 }

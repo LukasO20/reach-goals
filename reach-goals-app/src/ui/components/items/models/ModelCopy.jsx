@@ -6,7 +6,7 @@ import CardItem from '../elements/CardItem/CardItem.jsx'
 
 const ModelCopy = ({ displayRef, region }) => {
     const [modelCopy, setCopyModel] = useState([])
-    const { model, removeFromTransportModel, updateSubmitModel } = useContext(ManageModelContext)
+    const { model, removeFromTransportModel, updateFormModel } = useContext(ManageModelContext)
 
     const display = displayRef ?? {
         sideAction: true,
@@ -24,13 +24,13 @@ const ModelCopy = ({ displayRef, region }) => {
 
         switch (type) {
             case 'goal':
-                updateSubmitModel({ keyObject: 'goalID', value: null, action: 'remove' })
+                updateFormModel({ keyObject: 'goalID', value: null, action: 'remove' })
                 break
             case 'assignment':
-                updateSubmitModel({ keyObject: 'assignments', value: { id: id }, type: 'array', action: 'remove' })
+                updateFormModel({ keyObject: 'assignments', value: { id: id }, type: 'array', action: 'remove' })
                 break
             case 'tag':
-                updateSubmitModel({ keyObject: 'tags', value: { tagID: tagID }, type: 'array', action: 'remove' })
+                updateFormModel({ keyObject: 'tags', value: { tagID: tagID }, type: 'array', action: 'remove' })
         }
     }
 

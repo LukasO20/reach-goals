@@ -19,7 +19,7 @@ const Goal = (props) => {
     const [pendingPanel, setPendingPanel] = useState(false)
 
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
-    const { model, setModel, updateSubmitModel, updateFilterModel, updateActiveModel, addToTransportModel } = useContext(ManageModelContext)
+    const { model, setModel, updateFormModel, updateFilterModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
     const { layoutComponent, switchLayoutComponent } = useSwitchLayout()
     const { update } = useTitle()
     const { data, loading, error, remove, refetch } = useGoalProvider()
@@ -39,7 +39,7 @@ const Goal = (props) => {
         props.notAssignmentRelation
     ])
 
-    const renderModel = model.activeModel.goal[filterGetGoal.source].data
+    const renderModel = model.dataModel.goal[filterGetGoal.source].data
 
     const deleteGoal = async (id) => {
         remove(id)
@@ -60,7 +60,7 @@ const Goal = (props) => {
             if (model.transportModel.goal.length > 0) return
 
             addToTransportModel({ ...selected, type: 'goal' })
-            return updateSubmitModel({
+            return updateFormModel({
                 keyObject: 'goalID',
                 value: id
             })
@@ -82,7 +82,7 @@ const Goal = (props) => {
 
         const currentFilter = model.filter.goal
         if (currentFilter.source === 'core' || currentFilter.source === 'support') {
-            updateActiveModel(data, 'goal', currentFilter.source)
+            updateDataModel(data, 'goal', currentFilter.source)
         }
     }, [data])
 
