@@ -28,8 +28,8 @@ const Form = (props) => {
     const icon = iconMap[typeForm] || 'fa-solid fa-triangle-exclamation'
     const titleForm = titleMap[typeForm] || 'Create your objective'
 
-    const modelSwitcherRelation = typeForm === 'assignment' ? 'assignment-relation' : 'goal-relation'
-    const modelCopyRelation = typeForm === 'assignment' ? 'goal' : 'assignment'
+    const modelSwitcherRelation = typeForm === 'goal' ? 'goal-relation' : null
+    const modelCopyRelation = typeForm === 'goal' ? 'assignment' : null
 
     const modelSwitcherProps = {
         sourceForm: modelForm,
@@ -148,10 +148,13 @@ const Form = (props) => {
                                     <>
                                         {
                                             //TODO: ModelSwitcher and ModelCopy will be use only with assignments and tags. Goals will use a new way to show relation (with assignment)
-                                            typeof modelForm.id === 'number' ?
-                                                <ModelSwitcher type={modelSwitcherRelation} propsReference={modelSwitcherProps} />
+                                            model.typeModel === 'assignment' || model.typeModel === 'tag' ?
+                                                typeof modelForm.id === 'number' ?
+                                                    <ModelSwitcher type={modelSwitcherRelation} propsReference={modelSwitcherProps} />
+                                                    :
+                                                    <ModelCopy type={model.typeModel} region={modelCopyRelation} />
                                                 :
-                                                <ModelCopy type={model.typeModel} region={modelCopyRelation} />
+                                                null
                                         }
                                     </>
                                 )

@@ -170,19 +170,21 @@ const ModalForm = (props) => {
     }
 
     useEffect(() => {
-        //TODO: remove submitModel object to use selected object from activeModel (ManageModelProvider)
-        const typeSelected =
-            typeForm === 'goal' ?
-                dataGoal :
-                typeForm === 'assignment' ?
-                    dataAssignment : null
+        if (typeof model.mainModelID === 'number') {
+            //TODO: remove submitModel object to use selected object from activeModel (ManageModelProvider)
+            const typeSelected =
+                typeForm === 'goal' ?
+                    dataGoal :
+                    typeForm === 'assignment' ?
+                        dataAssignment : null
 
-        const selectedSubmitModel = Array.isArray(typeSelected) ? typeSelected[0] : typeSelected
-        if (selectedSubmitModel && Object.keys(selectedSubmitModel).length) {
-            setModel(prevModel => ({
-                ...prevModel,
-                submitModel: selectedSubmitModel
-            }))
+            const selectedSubmitModel = Array.isArray(typeSelected) ? typeSelected[0] : typeSelected
+            if (selectedSubmitModel && Object.keys(selectedSubmitModel).length) {
+                setModel(prevModel => ({
+                    ...prevModel,
+                    submitModel: selectedSubmitModel
+                }))
+            }
         }
     }, [dataGoal, dataAssignment])
 
