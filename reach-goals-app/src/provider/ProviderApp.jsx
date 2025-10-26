@@ -4,7 +4,6 @@ import { CheckboxProvider } from './CheckboxProvider.jsx'
 import { ManageModelProvider } from './ManageModelProvider.jsx'
 import { ModalListProvider } from './ModalListProvider.jsx'
 import { SwitchLayoutProvider } from './SwitchLayoutProvider.jsx'
-import { MasterDataProvider } from './model/MasterDataProvider.jsx'
 import { FilterModelProvider } from './model/FilterModelProvider.jsx'
 
 const ProviderApp = ({ children }) => (
