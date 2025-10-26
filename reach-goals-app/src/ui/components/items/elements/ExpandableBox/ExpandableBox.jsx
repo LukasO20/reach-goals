@@ -1,8 +1,11 @@
-import { useState } from 'react'
+import { useState, useContext, useEffect } from 'react'
 
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
+import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
+import { useGoalProvider } from '../../../../../provider/model/GoalModelProvider.jsx'
+import { useAssignmentProvider } from '../../../../../provider/model/AssignmentModelProvider.jsx'
 
-import { iconMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { iconMap, filterGetModelMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import Goal from '../../models/Goal/Goal.jsx'
 import Assignment from '../../models/Assignment/Assignment.jsx'
@@ -59,9 +62,11 @@ const boxConfigs = (type) => {
 
 const ExpandableBox = (props) => {
     const { layoutComponent } = useSwitchLayout()
+    const { updateFilterModel } = useContext(ManageModelContext)
+
     const configType = layoutComponent.objectives.layout
 
-    const [filterRenderModel, setFilterRenderModel] = useState({
+    const [currentFilterData, setCurrentFilterData] = useState({
         assignment: {
             type: configType,
             source: 'core',
@@ -81,11 +86,17 @@ const ExpandableBox = (props) => {
         [`${configType}SomeID`]: 'all' //A default value to filterButtonActive
     })
 
-    const filterButtonActive = Object.entries(filterRenderModel[configType] ?? filterRenderModel)
+    const filterButtonActive = Object.entries(currentFilterData[configType] ?? currentFilterData)
         .find(([_, value]) => value === 'all')?.[0]
 
     const handleOptions = (currentfilter) => {
-        setFilterRenderModel(() => ({
+        const filterGetGoal = filterGetModelMap({ ...currentfilter }, 'goal', 'core')
+        const filterGetAssignment = filterGetModelMap({ ...currentfilter }, 'assignment', 'core')
+
+        updateFilterModel(filterGetGoal, 'goal')
+        updateFilterModel(filterGetAssignment, 'assignment')
+
+        setCurrentFilterData(() => ({
             [configType]: {
                 ...currentfilter
             }
@@ -118,10 +129,10 @@ const ExpandableBox = (props) => {
                     <>
                         {
                             configType === 'goal' ?
-                                <Goal display={{ type: 'mini-list' }} {...filterRenderModel.goal} />
+                                <Goal display={{ type: 'mini-list' }} />
                                 :
                                 configType === 'assignment' ?
-                                    <Assignment display={{ type: 'mini-list' }} {...filterRenderModel.assignment} />
+                                    <Assignment display={{ type: 'mini-list' }} />
                                     :
                                     <>
                                         <Goal display={{ type: 'mini-list' }} goalSomeID={'all'} />
