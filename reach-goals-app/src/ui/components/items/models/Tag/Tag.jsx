@@ -85,8 +85,6 @@ const Tag = (props) => {
     }, [])
 
     useEffect(() => {
-        if (filterGetTag["Without key"] === "Without value") return
-
         const currentFilter = model.filter.tag
         if (currentFilter.source === 'core' || currentFilter.source === 'support') {
             updateDataModel(data, 'tag', currentFilter.source)

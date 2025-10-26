@@ -1,14 +1,11 @@
 import { useContext, useEffect, useMemo, useState } from 'react'
 
 import { useAssignmentProvider } from '../../../../../provider/model/AssignmentModelProvider.jsx'
-
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
-import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 
-import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 import { useTitle } from '../../../../../provider/TitleProvider.jsx'
 
-import { targetMap, switchLayoutMap, filterGetModelMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { filterGetModelMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import CardItem from '../../elements/CardItem/CardItem.jsx'
 
@@ -18,9 +15,7 @@ const Assignment = (props) => {
     const [erro, setErro] = useState(false)
     const [pendingPanel, setPendingPanel] = useState(false)
 
-    const { toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateFormModel, updateFilterModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
-    const { layoutComponent, switchLayoutComponent } = useSwitchLayout()
     const { update } = useTitle()
     const { data, loading, error, remove, refetch } = useAssignmentProvider()
 
@@ -87,8 +82,6 @@ const Assignment = (props) => {
     }, [])
 
     useEffect(() => {
-        if (filterGetAssignment["Without key"] === "Without value") return
-
         const currentFilter = model.filter.assignment
         if (currentFilter.source === 'core' || currentFilter.source === 'support') {
             updateDataModel(data, 'assignment', currentFilter.source)
