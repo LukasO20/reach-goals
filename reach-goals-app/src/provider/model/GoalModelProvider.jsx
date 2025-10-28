@@ -62,6 +62,7 @@ export const GoalModelProvider = ({ children, filters = {} }) => {
       save: saveMutation.mutate,
       remove: removeMutation.mutate,
       saving: saveMutation.isPending,
+      saveSuccess: saveMutation.isSuccess,
       removing: removeMutation.isPending,
     }}>
       {children}
