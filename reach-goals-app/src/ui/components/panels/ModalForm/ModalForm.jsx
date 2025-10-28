@@ -51,21 +51,18 @@ const ModalForm = (props) => {
     const { modalList, handleModalList } = useContext(ModalListContext)
     const { update } = useTitle()
 
-    const { data: dataAssignment, refetch: refetchAssignment, save: saveAssignment } = useAssignmentProvider()
-    const { data: dataGoal, refetch: refetchGoal, save: saveGoal } = useGoalProvider()
-    const { data: dataTag, refetch: refetchTag, save: saveTag } = useTagProvider()
+    const { data: dataAssignment, save: saveAssignment, saving: assignmentSaving, saveSuccess: saveAssignmentSuccess, loading: assignmentLoading } = useAssignmentProvider()
+    const { data: dataGoal, save: saveGoal, saving: goalSaving, saveSuccess: saveGoalSuccess, loading: goalLoading } = useGoalProvider()
+    const { data: dataTag, save: saveTag, saving: tagSaving, saveSuccess: saveTagSuccess, loading: tagLoading } = useTagProvider()
 
     const typeForm = props.type
     const classRemove = visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
     const currentKeySomeID = `${typeForm}SomeID`
 
     const [error, setError] = useState(null)
-    const [success, setSucess] = useState(false)
-    const [isLoading, setLoading] = useState(false)
 
     const loadModel = async (id) => {
-        setLoading(true)
-        if (!id) return setLoading(false)
+        if (!id) return
 
         const filterGetModel = {
             [currentKeySomeID]: id,
@@ -74,22 +71,30 @@ const ModalForm = (props) => {
         }
 
         try {
-            const refetchFn =
-                typeForm === 'goal'
-                    ? () => refetchGoal(updateFilterModel(filterGetModel, 'goal'))
-                    : typeForm === 'assignment'
-                        ? () => refetchAssignment(updateFilterModel(filterGetModel, 'assignment'))
-                        : () => refetchTag(updateFilterModel(filterGetModel, 'tag'))
-
-            refetchFn()
+            callRefetch(filterGetModel)
             id === 'all' && resetManageModel()
         }
         catch (error) {
             setError('Ops, something wrong: ', error)
         }
-        finally {
-            setLoading(false)
+    }
+
+    const callRefetch = (filter) => {
+        if (typeof typeForm !== 'string') return
+
+        const filterGetModel = filter ?? {
+            [currentKeySomeID]: 'all',
+            type: typeForm,
+            source: 'core'
         }
+
+        const refetchMap = {
+            goal: () => updateFilterModel(filterGetModel, 'goal'),
+            assignment: () => updateFilterModel(filterGetModel, 'assignment'),
+            tag: () => updateFilterModel(filterGetModel, 'tag'),
+        }
+
+        refetchMap[typeForm]()
     }
 
     const handleChange = (e) => {
@@ -147,7 +152,6 @@ const ModalForm = (props) => {
 
     const handleSubmit = async () => {
         setError(null)
-        setSucess(false)
 
         try {
             typeForm === 'goal' && await saveGoal(structuredClone(model.formModel))
@@ -155,13 +159,9 @@ const ModalForm = (props) => {
             typeForm === 'tag' && await saveTag(structuredClone(model.formModel))
 
             const visibilityTag = typeForm === 'tag' ? targetMap('near-modalForm', { remove: true }) : null
-            const messageToastSupport = typeof model.formModel.id === 'number' ? 'updated' : 'created'
-
             toggleVisibility(visibilityTag)
-            update({ toast: `${typeForm} ${messageToastSupport} with success` })
+            callRefetch()
 
-            resetManageModel()
-            setSucess(true)
         } catch (exception) {
             setError(exception.message)
             update({ toast: "Ops something went wrong during save. Reload page and try again later." })
@@ -191,6 +191,13 @@ const ModalForm = (props) => {
         if (typeof model.mainModelID === 'number') loadModel(model.mainModelID)
     }, [model.mainModelID])
 
+    useEffect(() => {
+        if (saveGoalSuccess || saveAssignmentSuccess || saveTagSuccess) {
+            const messageToastSupport = typeof model.formModel.id === 'number' ? 'updated' : 'created'
+            update({ toast: `${typeForm} ${messageToastSupport} with success` })
+        }
+    }, [saveGoalSuccess, saveAssignmentSuccess, saveTagSuccess])
+
     const functionFormMap = {
         mapHandleModalList: handleModalList,
         mapModalListMap: modalListMap,
@@ -199,7 +206,6 @@ const ModalForm = (props) => {
         mapFormsInputMap: formsInputMap,
         mapFormsItemMap: formsItemMap,
         mapHandleSubmit: handleSubmit,
-        mapSetSucess: setSucess,
         mapSetError: setError
     }
 
@@ -212,7 +218,7 @@ const ModalForm = (props) => {
     }
 
     return (
-        isLoading ? <div id="load-element" className='loading-animation'></div> :
+        (goalLoading || assignmentLoading) ? <div id="load-element" className='loading-animation'></div> :
             ((model.formModel && model.formModel.id) || model.mainModelID === null) ?
                 (
                     <Form typeForm={typeForm} functionFormMap={functionFormMap}
