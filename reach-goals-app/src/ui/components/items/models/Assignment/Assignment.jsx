@@ -17,7 +17,7 @@ const Assignment = (props) => {
 
     const { model, setModel, updateFormModel, updateFilterModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
     const { update } = useTitle()
-    const { data, loading, error, remove, refetch } = useAssignmentProvider()
+    const { data, loading, error, remove } = useAssignmentProvider()
 
     const status = props.status
     const display = props.display
@@ -78,7 +78,7 @@ const Assignment = (props) => {
 
     useEffect(() => {
         if (filterGetAssignment["Without key"] === "Without value") return
-        refetch(updateFilterModel(filterGetAssignment, 'assignment'))
+        updateFilterModel(filterGetAssignment, 'assignment')
     }, [])
 
     useEffect(() => {

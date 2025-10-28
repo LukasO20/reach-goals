@@ -17,7 +17,7 @@ const Tag = (props) => {
 
     const { toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateFormModel, updateFilterModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
-    const { data, loading, remove, refetch } = useTagProvider()
+    const { data, loading, remove } = useTagProvider()
     const { update } = useTitle()
 
     const target = targetMap(['panel-right', 'tag'])
@@ -81,7 +81,7 @@ const Tag = (props) => {
 
     useEffect(() => {
         if (filterGetTag["Without key"] === "Without value") return
-        refetch(updateFilterModel(filterGetTag, 'tag'))
+        updateFilterModel(filterGetTag, 'tag')
     }, [])
 
     useEffect(() => {

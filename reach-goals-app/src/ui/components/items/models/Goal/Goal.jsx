@@ -17,7 +17,7 @@ const Goal = (props) => {
 
     const { model, setModel, updateFormModel, updateFilterModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
     const { update } = useTitle()
-    const { data, loading, error, remove, refetch } = useGoalProvider()
+    const { data, loading, error, remove } = useGoalProvider()
 
     const status = props.status
     const display = props.display
@@ -69,7 +69,7 @@ const Goal = (props) => {
 
     useEffect(() => {
         if (filterGetGoal["Without key"] === "Without value") return
-        refetch(updateFilterModel(filterGetGoal, 'goal'))
+        updateFilterModel(filterGetGoal, 'goal')
     }, [])
 
     useEffect(() => {
