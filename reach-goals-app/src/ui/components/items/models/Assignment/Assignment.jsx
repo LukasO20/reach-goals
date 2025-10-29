@@ -1,11 +1,13 @@
 import { useContext, useEffect, useMemo, useState } from 'react'
 
+import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 import { useAssignmentProvider } from '../../../../../provider/model/AssignmentModelProvider.jsx'
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
+import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 
 import { useTitle } from '../../../../../provider/TitleProvider.jsx'
 
-import { filterGetModelMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { filterGetModelMap, switchLayoutMap, targetMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import CardItem from '../../elements/CardItem/CardItem.jsx'
 
@@ -13,11 +15,12 @@ import '../Assignment/Assignment.scss'
 
 const Assignment = (props) => {
     const [erro, setErro] = useState(false)
-    const [pendingPanel, setPendingPanel] = useState(false)
 
     const { model, setModel, updateFormModel, updateFilterModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
+    const { toggleVisibility } = useContext(VisibilityContext)
+    const { switchLayoutComponent, layoutComponent } = useSwitchLayout()
     const { update } = useTitle()
-    const { data, loading, error, remove } = useAssignmentProvider()
+    const { data, loading, remove } = useAssignmentProvider()
 
     const status = props.status
     const display = props.display
@@ -66,7 +69,8 @@ const Assignment = (props) => {
 
         if (isDetailsModel) {
             setModel(prev => ({ ...prev, mainModelID: id, typeModel: 'assignment' }))
-            return setPendingPanel(true)
+            switchLayoutComponent(switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'right' }))
+            toggleVisibility(targetMap(['panel-right', 'assignment']))
         }
     }
 

@@ -1,11 +1,13 @@
 import { useContext, useEffect, useMemo, useState } from 'react'
 
+import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 import { useGoalProvider } from '../../../../../provider/model/GoalModelProvider.jsx'
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
+import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 
 import { useTitle } from '../../../../../provider/TitleProvider.jsx'
 
-import { filterGetModelMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { filterGetModelMap, switchLayoutMap, targetMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import CardItem from '../../elements/CardItem/CardItem.jsx'
 
@@ -13,9 +15,10 @@ import '../Goal/Goal.scss'
 
 const Goal = (props) => {
     const [erro, setErro] = useState(false)
-    const [pendingPanel, setPendingPanel] = useState(false)
 
     const { model, setModel, updateFormModel, updateFilterModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
+    const { toggleVisibility } = useContext(VisibilityContext)
+    const { switchLayoutComponent, layoutComponent } = useSwitchLayout()
     const { update } = useTitle()
     const { data, loading, error, remove } = useGoalProvider()
 
@@ -46,24 +49,25 @@ const Goal = (props) => {
         catch (error) { setErro(`Failed to edit this goal: ${error}`) }
     }
 
-    const goalClick = (id, e) => {
+    const goalClick = (goal, e) => {
         e.stopPropagation()
 
         if (isSelectableModel) {
-            const selected = renderModel.find(m => m.id === id)
+            const selected = renderModel.find(m => m.id === goal.id)
 
             if (model.transportModel.goal.length > 0) return
 
             addToTransportModel({ ...selected, type: 'goal' })
             return updateFormModel({
                 keyObject: 'goalID',
-                value: id
+                value: goal.id
             })
         }
 
         if (isDetailsModel) {
-            setModel(prev => ({ ...prev, mainModelID: id, typeModel: 'goal' }))
-            return setPendingPanel(true)
+            setModel(prev => ({ ...prev, mainModelID: goal.id, formModel: goal, typeModel: 'goal' }))
+            switchLayoutComponent(switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'right' }))
+            toggleVisibility(targetMap(['panel-right', 'goal']))
         }
     }
 
