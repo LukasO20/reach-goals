@@ -1,9 +1,7 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext } from 'react'
 
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
-import { useGoalProvider } from '../../../../../provider/model/GoalModelProvider.jsx'
-import { useAssignmentProvider } from '../../../../../provider/model/AssignmentModelProvider.jsx'
 
 import { iconMap, filterGetModelMap } from '../../../../../utils/mapping/mappingUtils.js'
 

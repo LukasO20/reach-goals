@@ -3,6 +3,7 @@ import { useEffect, useState, useContext } from 'react'
 import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
 import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
+import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 
@@ -12,6 +13,7 @@ import MonthDaysPicker from '../../items/elements/MonthDaysPicker/MonthDaysPicke
 
 const Calendar = () => {
     const { update } = useTitle()
+    const { layoutComponent } = useSwitchLayout()
     const { data: dataGoal, refetch: refetchGoal } = useGoalProvider()
     const { data: dataAssignment, refetch: refetchAssignment } = useAssignmentProvider()
     const { updateFilterModel } = useContext(ManageModelContext)
@@ -31,14 +33,19 @@ const Calendar = () => {
     }, [])
 
     useEffect(() => {
+        const currentLayout = layoutComponent.calendar?.layout
         setDataModelSource(prevModel => (
-            {
+            (!currentLayout || currentLayout === 'default') ? {
                 ...prevModel,
                 goal: dataGoal ?? [],
                 assignment: dataAssignment ?? []
+            } : {
+                [currentLayout]: currentLayout === 'goal' ? dataGoal :
+                    currentLayout === 'assignment' ?
+                        dataAssignment : []
             }
         ))
-    }, [dataGoal, dataAssignment])
+    }, [dataGoal, dataAssignment, layoutComponent.calendar])
 
     return (
         <div className="container-calendar">

@@ -76,7 +76,7 @@ const ContainerM = () => {
                         <ButtonAction classBtn={`button-action plan-round max-width assignment ${isSwitchLayoutAssignment && 'active'}`} title='assignments'
                             switchLayout={switchLayoutMap({ page: layoutComponent.page, name: layoutComponent.page, layout: 'layout', value: 'assignment' })}
                         />
-                        {layoutComponent.page === 'objectives' &&
+                        {(layoutComponent.page === 'objectives' || layoutComponent.page === 'calendar') &&
                             <ButtonAction classBtn={`button-action plan-round max-width all-activities ${isSwitchLayoutActivities && 'active'}`} title='all activities'
                                 switchLayout={switchLayoutMap({ page: layoutComponent.page, name: layoutComponent.page, layout: 'layout', value: 'default' })}
                             />}
