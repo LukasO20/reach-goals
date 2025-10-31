@@ -102,18 +102,15 @@ const Assignment = (props) => {
     //console.log('ASSIGNMENT LOADED - ', assignment)
 
     return (
-        loading && !renderModel?.length ?
-            <p>Loading...</p>
-            :
-            renderModel?.length ?
-                <CardItem type={'assignment'}
-                    model={(() => {
-                        return typeof status === 'string' && status !== '' ?
-                            renderModel.filter(item => item.status === status) :
-                            renderModel
-                    })()}
-                    clickFunction={clickEvents} display={display} />
-                : null
+        renderModel?.length ?
+            <CardItem type={'assignment'}
+                model={(() => {
+                    return typeof status === 'string' && status !== '' ?
+                        renderModel.filter(item => item.status === status) :
+                        renderModel
+                })()}
+                clickFunction={clickEvents} display={display} />
+            : null
     )
 }
 

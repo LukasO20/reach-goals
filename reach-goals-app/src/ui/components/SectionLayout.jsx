@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom'
-
 import { useEffect } from 'react'
 
 import { useSwitchLayout } from '../../provider/SwitchLayoutProvider.jsx'
@@ -21,7 +20,6 @@ const sectionRender = (section) => {
     }
 }
 
-//VERIFICAR SITUAÇÃO DO TYPE PAGE PARA RENDERIZAR LAYOUTS
 const Sections = () => {
     const { section } = useParams()
     const { switchLayoutComponent } = useSwitchLayout()
@@ -32,7 +30,7 @@ const Sections = () => {
 
     return (
         <div className='container-dynamic'>
-            {sectionRender(section)}
+            { sectionRender(section) }
         </div>
     )
 }

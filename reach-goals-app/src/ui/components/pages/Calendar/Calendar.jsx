@@ -10,12 +10,15 @@ import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx
 import { filterGetModelMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import MonthDaysPicker from '../../items/elements/MonthDaysPicker/MonthDaysPicker.jsx'
+import Loading from '../../items/elements/Loading/Loading.jsx'
+
+import '../Calendar/Calendar.scss'
 
 const Calendar = () => {
     const { update } = useTitle()
     const { layoutComponent } = useSwitchLayout()
-    const { data: dataGoal, refetch: refetchGoal } = useGoalProvider()
-    const { data: dataAssignment, refetch: refetchAssignment } = useAssignmentProvider()
+    const { loading: goalLoading, data: dataGoal, refetch: refetchGoal } = useGoalProvider()
+    const { loading: assignmentLoading, data: dataAssignment, refetch: refetchAssignment } = useAssignmentProvider()
     const { updateFilterModel } = useContext(ManageModelContext)
 
     const [dataModelSource, setDataModelSource] = useState({
@@ -49,6 +52,7 @@ const Calendar = () => {
 
     return (
         <div className="container-calendar">
+            { (goalLoading || assignmentLoading) ? <Loading /> : null }
             <MonthDaysPicker model={dataModelSource} />
         </div>
     )

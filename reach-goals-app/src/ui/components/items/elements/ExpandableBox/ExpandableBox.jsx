@@ -2,12 +2,17 @@ import { useState, useContext } from 'react'
 
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
+import { useGoalProvider } from '../../../../../provider/model/GoalModelProvider.jsx'
+import { useAssignmentProvider } from '../../../../../provider/model/AssignmentModelProvider.jsx'
 
 import { iconMap, filterGetModelMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import Goal from '../../models/Goal/Goal.jsx'
 import Assignment from '../../models/Assignment/Assignment.jsx'
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
+import Loading from '../Loading/Loading.jsx'
+
+import '../ExpandableBox/ExpandableBox.scss'
 
 const boxConfigs = (type) => {
     const goal = [
@@ -61,6 +66,8 @@ const boxConfigs = (type) => {
 const ExpandableBox = (props) => {
     const { layoutComponent } = useSwitchLayout()
     const { updateFilterModel } = useContext(ManageModelContext)
+    const { loading: goalLoading } = useGoalProvider()
+    const { loading: assignmentLoading } = useAssignmentProvider()
 
     const configType = layoutComponent.objectives.layout
 
@@ -102,7 +109,7 @@ const ExpandableBox = (props) => {
     }
 
     return (
-        <>
+        <div className='expandable-model-box'>
             <div className='head'>
                 {
                     <>
@@ -122,25 +129,29 @@ const ExpandableBox = (props) => {
                     </>
                 }
             </div>
-            <div className='body'>
-                {
-                    <>
+            {
+                (goalLoading || assignmentLoading) ?
+                    <Loading /> :
+                    <div className='body scrollable'>
                         {
-                            configType === 'goal' ?
-                                <Goal display={{ type: 'mini-list' }} />
-                                :
-                                configType === 'assignment' ?
-                                    <Assignment display={{ type: 'mini-list' }} />
-                                    :
-                                    <>
-                                        <Goal display={{ type: 'mini-list' }} goalSomeID={'all'} />
-                                        <Assignment display={{ type: 'mini-list' }} assignmentSomeID={'all'} />
-                                    </>
+                            <>
+                                {
+                                    configType === 'goal' ?
+                                        <Goal display={{ type: 'mini-list' }} />
+                                        :
+                                        configType === 'assignment' ?
+                                            <Assignment display={{ type: 'mini-list' }} />
+                                            :
+                                            <>
+                                                <Goal display={{ type: 'mini-list' }} goalSomeID={'all'} />
+                                                <Assignment display={{ type: 'mini-list' }} assignmentSomeID={'all'} />
+                                            </>
+                                }
+                            </>
                         }
-                    </>
-                }
-            </div>
-        </>
+                    </div>
+            }
+        </div>
     )
 }
 
