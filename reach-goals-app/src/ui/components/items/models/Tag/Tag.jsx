@@ -99,10 +99,9 @@ const Tag = (props) => {
     }
 
     return (
-        loading && !renderModel?.length ?
-            <p>Loading...</p>
-            :
-            renderModel?.length ? <CardItem type={'tag'} model={renderModel} clickFunction={clickEvents} display={display} /> : null
+        renderModel?.length ?
+            <CardItem type={'tag'} model={renderModel} clickFunction={clickEvents} display={display} />
+            : null
     )
 }
 
