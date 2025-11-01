@@ -9,11 +9,12 @@ import { useAssignmentProvider } from '../../../../provider/model/AssignmentMode
 import { useTagProvider } from '../../../../provider/model/TagModelProvider.jsx'
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
 
-import { filterGetModelMap, iconMap, modalListMap, targetMap } from '../../../../utils/mapping/mappingUtils.js'
+import { iconMap, modalListMap, targetMap } from '../../../../utils/mapping/mappingUtils.js'
 import { formatDate } from '../../../../utils/utils.js'
 
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import Form from '../../items/forms/Form/Form.jsx'
+import Loading from '../../items/elements/Loading/Loading.jsx'
 
 const formsInputMap = (typeForm, model, exFunction) => {
     const form = typeForm === 'assignment' &&
@@ -51,9 +52,9 @@ const ModalForm = (props) => {
     const { modalList, handleModalList } = useContext(ModalListContext)
     const { update } = useTitle()
 
-    const { data: dataAssignment, save: saveAssignment, saving: assignmentSaving, saveSuccess: saveAssignmentSuccess, loading: assignmentLoading } = useAssignmentProvider()
-    const { data: dataGoal, save: saveGoal, saving: goalSaving, saveSuccess: saveGoalSuccess, loading: goalLoading } = useGoalProvider()
-    const { data: dataTag, save: saveTag, saving: tagSaving, saveSuccess: saveTagSuccess, loading: tagLoading } = useTagProvider()
+    const { data: dataAssignment, save: saveAssignment, saveSuccess: saveAssignmentSuccess, loading: assignmentLoading } = useAssignmentProvider()
+    const { data: dataGoal, save: saveGoal, saveSuccess: saveGoalSuccess, loading: goalLoading } = useGoalProvider()
+    const { save: saveTag, saveSuccess: saveTagSuccess } = useTagProvider()
 
     const typeForm = props.type
     const classRemove = visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
@@ -218,13 +219,13 @@ const ModalForm = (props) => {
     }
 
     return (
-        (goalLoading || assignmentLoading) ? <div id="load-element" className='loading-animation'></div> :
+        (goalLoading || assignmentLoading) ?
+            <Loading/>
+            :
             ((model.formModel && model.formModel.id) || model.mainModelID === null) ?
-                (
-                    <Form typeForm={typeForm} functionFormMap={functionFormMap}
-                        model={model.formModel} booleanFormMap={booleanFormMap}
-                        contextFormMap={contextFormMap} />
-                )
+                <Form typeForm={typeForm} functionFormMap={functionFormMap}
+                    model={model.formModel} booleanFormMap={booleanFormMap}
+                    contextFormMap={contextFormMap} loading={goalLoading || assignmentLoading} />
                 :
                 null
     )
