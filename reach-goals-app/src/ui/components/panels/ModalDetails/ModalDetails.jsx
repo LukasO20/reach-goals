@@ -5,6 +5,7 @@ import { useAssignmentProvider } from '../../../../provider/model/AssignmentMode
 import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
 
 import ModalDetailsSection from '../../items/modals/ModalDetailsSection/ModalDetailsSection.jsx'
+import Loading from '../../items/elements/Loading/Loading.jsx'
 
 const ModalDetails = (props) => {
     const { loading: goalLoading } = useGoalProvider()
@@ -15,11 +16,14 @@ const ModalDetails = (props) => {
     const typeDetail = props?.type
 
     return (
-        (goalLoading || assignmentLoading) ?
-            '...loading' :
-            <div className='container-modaldetails aside-content'>
-                <ModalDetailsSection model={model.formModel} type={typeDetail} />
-            </div>
+        <div className='container-modaldetails aside-content'>
+            {
+                (goalLoading || assignmentLoading) ?
+                    <Loading />
+                    :
+                    <ModalDetailsSection model={model.formModel} type={typeDetail} />
+            }
+        </div>
     )
 }
 

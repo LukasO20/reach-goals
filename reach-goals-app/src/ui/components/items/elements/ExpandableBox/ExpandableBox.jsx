@@ -129,28 +129,26 @@ const ExpandableBox = (props) => {
                     </>
                 }
             </div>
-            {
-                (goalLoading || assignmentLoading) ?
-                    <Loading /> :
-                    <div className='body scrollable'>
-                        {
-                            <>
-                                {
-                                    configType === 'goal' ?
-                                        <Goal display={{ type: 'mini-list' }} />
+            <div className='body scrollable'>
+                {
+                    (goalLoading || assignmentLoading) ?
+                        <Loading /> :
+                        <>
+                            {
+                                configType === 'goal' ?
+                                    <Goal display={{ type: 'mini-list' }} />
+                                    :
+                                    configType === 'assignment' ?
+                                        <Assignment display={{ type: 'mini-list' }} />
                                         :
-                                        configType === 'assignment' ?
-                                            <Assignment display={{ type: 'mini-list' }} />
-                                            :
-                                            <>
-                                                <Goal display={{ type: 'mini-list' }} goalSomeID={'all'} />
-                                                <Assignment display={{ type: 'mini-list' }} assignmentSomeID={'all'} />
-                                            </>
-                                }
-                            </>
-                        }
-                    </div>
-            }
+                                        <>
+                                            <Goal display={{ type: 'mini-list' }} goalSomeID={'all'} />
+                                            <Assignment display={{ type: 'mini-list' }} assignmentSomeID={'all'} />
+                                        </>
+                            }
+                        </>
+                }
+            </div>
         </div>
     )
 }
