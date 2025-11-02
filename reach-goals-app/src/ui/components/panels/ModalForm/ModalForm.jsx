@@ -171,7 +171,8 @@ const ModalForm = (props) => {
     }
 
     useEffect(() => {
-        if (typeof model.mainModelID === 'number') {
+        const currentFilter = model.filter[typeForm]
+        if (typeof model.mainModelID === 'number' && currentFilter.source === 'formModel') {
             const typeSelected =
                 typeForm === 'goal' ?
                     dataGoal :
