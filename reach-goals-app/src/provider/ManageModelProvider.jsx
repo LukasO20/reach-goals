@@ -84,14 +84,20 @@ const ManageModelProvider = ({ children }) => {
         })
     }
 
-    const updateFilterModel = (filter = {}, type) => {
-        if (!type) return console.error('To update a filterModel is necessary a type')
+    const updateFilterModel = (filter = {}, model, scope) => {
+        if (!model) return console.error('To update a filterModel is necessary a model.')
+        if (scope !== 'page' && scope !== 'panel') return console.error('To update a filterModel is necessary a scope value. Send "page" or "panel" scope.')
 
         setModel(prevModel => ({
             ...prevModel,
             filter: {
                 ...prevModel.filter,
-                [type]: { ...filter }, 
+                [model]: {
+                    scope: scope,
+                    [scope]: {
+                        ...filter
+                    }
+                },
             }
         }))
     }

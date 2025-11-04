@@ -10,30 +10,43 @@ const GoalModelContext = createContext()
 export const GoalModelProvider = ({ children, filters = {} }) => {
   const queryClient = useQueryClient()
 
-  const validFilter = Object.entries(filters).find(
-    ([key, value]) =>
-      (typeof value === 'number' || value === 'all') &&
-      filterServiceFnMap[key]
-  )
+  const validFilter = (filter) => {
+    if (!filter) return false
+    return Object.entries(filter).find(
+      ([key, value]) =>
+        (typeof value === 'number' || value === 'all') &&
+        filterServiceFnMap[key]
+    )
+  }
 
-  const queryKey = ['goals', filters]
-
-  const queryFn = () => {
-    if (!validFilter) return Promise.resolve([])
-    const [key, value] = validFilter
+  const createQueryFn = (scopeFilter) => {
+    const valid = validFilter(scopeFilter)
+    if (!valid) return () => Promise.resolve([])
+    const [key, value] = valid;
     const fnName = filterServiceFnMap[key]
-    return goalService[fnName](value)
+    return () => goalService[fnName](value)
   }
 
   const {
-    data,
-    error,
-    isLoading,
-    refetch,
+    data: pageData,
+    error: pageError,
+    isLoading: isPageLoading,
+    refetch: refetchPage,
   } = useQuery({
-    queryKey,
-    queryFn,
-    enabled: !!validFilter,
+    queryKey: ['goals', 'page', filters.page],
+    queryFn: createQueryFn(filters.page),
+    enabled: !!validFilter(filters.page),
+  })
+
+  const {
+    data: panelData,
+    error: panelError,
+    isLoading: isPanelLoading,
+    refetch: refetchPanel,
+  } = useQuery({
+    queryKey: ['goal', 'panel', filters.panel],
+    queryFn: createQueryFn(filters.panel),
+    enabled: !!validFilter(filters.panel),
   })
 
   const saveMutation = useMutation({
@@ -42,23 +55,23 @@ export const GoalModelProvider = ({ children, filters = {} }) => {
         ? goalService.updateGoal(model)
         : goalService.addGoal(model),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['goals'] })
+      queryClient.invalidateQueries({ queryKey: ['goal'] })
     },
   })
 
   const removeMutation = useMutation({
     mutationFn: (id) => goalService.deleteGoal(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['goals'] })
+      queryClient.invalidateQueries({ queryKey: ['goal'] })
     },
   })
 
   return (
     <GoalModelContext.Provider value={{
-      data,
-      error,
-      loading: isLoading,
-      refetch,
+      data: pageData,
+      error: pageError,
+      loading: isPageLoading,
+      refetch: refetchPage,
       save: saveMutation.mutate,
       remove: removeMutation.mutate,
       saving: saveMutation.isPending,

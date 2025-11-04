@@ -73,11 +73,13 @@ const Goal = (props) => {
 
     useEffect(() => {
         if (filterGetGoal["Without key"] === "Without value") return
-        updateFilterModel(filterGetGoal, 'goal')
+        updateFilterModel(filterGetGoal, 'goal', 'page')
     }, [])
 
     useEffect(() => {
-        const currentFilter = model.filter.goal
+        const currentScope = model.filter.goal.scope
+        const currentFilter = model.filter.goal[currentScope]
+
         if (currentFilter.source === 'core' || currentFilter.source === 'support') {
             updateDataModel(data, 'goal', currentFilter.source)
         }

@@ -21,7 +21,11 @@ export const manageModelMap = {
         },
     },
     filter: {
-        goal: {},
+        goal: {
+            scope: 'page',
+            page: {},
+            panel: {}
+        },
         assignment: {},
         tag: {}
     },
