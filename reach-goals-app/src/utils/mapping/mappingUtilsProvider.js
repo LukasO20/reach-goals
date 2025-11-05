@@ -26,8 +26,16 @@ export const manageModelMap = {
             page: {},
             panel: {}
         },
-        assignment: {},
-        tag: {}
+        assignment: {
+            scope: 'page',
+            page: {},
+            panel: {}
+        },
+        tag: {
+            scope: 'page',
+            page: {},
+            panel: {}
+        }
     },
     formModel: {}
 }

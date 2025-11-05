@@ -4,20 +4,12 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import * as goalService from '../../services/goalService.js'
 
 import { filterServiceFnMap } from '../../utils/mapping/mappingUtilsProvider.js'
+import { validFilter } from '../../utils/utilsProvider.js'
 
 const GoalModelContext = createContext()
 
 export const GoalModelProvider = ({ children, filters = {} }) => {
   const queryClient = useQueryClient()
-
-  const validFilter = (filter) => {
-    if (!filter) return false
-    return Object.entries(filter).find(
-      ([key, value]) =>
-        (typeof value === 'number' || value === 'all') &&
-        filterServiceFnMap[key]
-    )
-  }
 
   const createQueryFn = (scopeFilter) => {
     const valid = validFilter(scopeFilter)
@@ -31,7 +23,6 @@ export const GoalModelProvider = ({ children, filters = {} }) => {
     data: pageData,
     error: pageError,
     isLoading: isPageLoading,
-    refetch: refetchPage,
   } = useQuery({
     queryKey: ['goals', 'page', filters.page],
     queryFn: createQueryFn(filters.page),
@@ -42,7 +33,6 @@ export const GoalModelProvider = ({ children, filters = {} }) => {
     data: panelData,
     error: panelError,
     isLoading: isPanelLoading,
-    refetch: refetchPanel,
   } = useQuery({
     queryKey: ['goal', 'panel', filters.panel],
     queryFn: createQueryFn(filters.panel),
@@ -68,10 +58,16 @@ export const GoalModelProvider = ({ children, filters = {} }) => {
 
   return (
     <GoalModelContext.Provider value={{
-      data: pageData,
-      error: pageError,
-      loading: isPageLoading,
-      refetch: refetchPage,
+      page: {
+        data: pageData,
+        error: pageError,
+        loading: isPageLoading,
+      },
+      panel: {
+        data: panelData,
+        error: panelError,
+        loading: isPanelLoading,
+      },
       save: saveMutation.mutate,
       remove: removeMutation.mutate,
       saving: saveMutation.isPending,
