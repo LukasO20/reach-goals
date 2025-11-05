@@ -93,10 +93,9 @@ const ManageModelProvider = ({ children }) => {
             filter: {
                 ...prevModel.filter,
                 [model]: {
-                    scope: scope,
-                    [scope]: {
-                        ...filter
-                    }
+                    ...prevModel.filter[model],
+                    scope,
+                    [scope]: { ...filter }
                 },
             }
         }))
