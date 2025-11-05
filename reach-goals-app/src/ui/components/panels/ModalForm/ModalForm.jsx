@@ -53,7 +53,7 @@ const ModalForm = (props) => {
     const { update } = useTitle()
 
     const { data: dataAssignment, save: saveAssignment, saveSuccess: saveAssignmentSuccess, loading: assignmentLoading } = useAssignmentProvider()
-    const { data: dataGoal, save: saveGoal, saveSuccess: saveGoalSuccess, loading: goalLoading } = useGoalProvider()
+    const { panel: { data: dataGoal, loading: loadingGoal }, save: saveGoal, saveSuccess: saveGoalSuccess } = useGoalProvider()
     const { save: saveTag, saveSuccess: saveTagSuccess } = useTagProvider()
 
     const typeForm = props.type
@@ -62,13 +62,13 @@ const ModalForm = (props) => {
 
     const [error, setError] = useState(null)
 
-    const loadModel = async (id) => {
+    const loadModel = (id) => {
         if (!id) return
 
         const filterGetModel = {
-            [currentKeySomeID]: id,
             type: typeForm,
-            source: 'formModel'
+            source: 'formModel',
+            [currentKeySomeID]: id
         }
 
         try {
@@ -90,8 +90,8 @@ const ModalForm = (props) => {
         }
 
         const refetchMap = {
-            goal: () => updateFilterModel(filterGetModel, 'goal'),
-            assignment: () => updateFilterModel(filterGetModel, 'assignment'),
+            goal: () => updateFilterModel(filterGetModel, 'goal', 'panel'),
+            assignment: () => updateFilterModel(filterGetModel, 'assignment', 'panel'),
             tag: () => updateFilterModel(filterGetModel, 'tag'),
         }
 
@@ -171,7 +171,10 @@ const ModalForm = (props) => {
     }
 
     useEffect(() => {
-        const currentFilter = model.filter[typeForm]
+        const currentScope = model.filter[typeForm]?.scope
+        if (!currentScope) return
+        
+        const currentFilter = model.filter[typeForm][currentScope]
         if (typeof model.mainModelID === 'number' && currentFilter.source === 'formModel') {
             const typeSelected =
                 typeForm === 'goal' ?
@@ -220,13 +223,13 @@ const ModalForm = (props) => {
     }
 
     return (
-        (goalLoading || assignmentLoading) ?
+        (loadingGoal || assignmentLoading) ?
             <Loading/>
             :
             ((model.formModel && model.formModel.id) || model.mainModelID === null) ?
                 <Form typeForm={typeForm} functionFormMap={functionFormMap}
                     model={model.formModel} booleanFormMap={booleanFormMap}
-                    contextFormMap={contextFormMap} loading={goalLoading || assignmentLoading} />
+                    contextFormMap={contextFormMap} />
                 :
                 null
     )

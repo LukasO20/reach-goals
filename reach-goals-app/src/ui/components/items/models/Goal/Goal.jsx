@@ -20,7 +20,7 @@ const Goal = (props) => {
     const { toggleVisibility } = useContext(VisibilityContext)
     const { switchLayoutComponent, layoutComponent } = useSwitchLayout()
     const { update } = useTitle()
-    const { data, loading, error, remove } = useGoalProvider()
+    const { page: { data }, remove } = useGoalProvider()
 
     const status = props.status
     const display = props.display

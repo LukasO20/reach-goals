@@ -16,8 +16,8 @@ import Loading from '../../items/elements/Loading/Loading.jsx'
 const Home = () => {
     const { update } = useTitle()
     const { layoutComponent } = useSwitchLayout()
-    const { loading: goalLoading } = useGoalProvider()
-    const { loading: assignmentLoading } = useAssignmentProvider()
+    const { page: { loading: loadingGoal } } = useGoalProvider()
+    const { page: { loading: loadingAssignment } } = useAssignmentProvider()
 
     useEffect(() => {
         update({ header: `Welcome. Let's produce?` })
@@ -25,40 +25,46 @@ const Home = () => {
 
     return (
         <div className="container-home">
-            <div className="itens">
-                <div className="itens-progress column">
-                    <div className="head-column">
-                        {iconMap['progress']}<label>in progress</label>
-                    </div>
-                    <div className="body-column scrollable">
-                        <div className='list'>
-                            {
-                                layoutComponent.home.layout === 'goal' ?
-                                    goalLoading ? <Loading /> : <Goal display={{ sideAction: true, type: 'card' }} goalSomeID={'all'} detailsModel={true} status={'progress'} />
-                                    :
-                                    assignmentLoading ? <Loading /> : <Assignment display={{ sideAction: true, type: 'card' }} notGoalRelation={'all'} detailsModel={true} status={'progress'} />
-                            }
+            {
+                (loadingGoal || loadingAssignment) ?
+                    <Loading />
+                    :
+                    <div className="itens">
+                        <div className="itens-progress column">
+                            <div className="head-column">
+                                {iconMap['progress']}<label>in progress</label>
+                            </div>
+                            <div className="body-column scrollable">
+                                <div className='list'>
+                                    {
+                                        layoutComponent.home.layout === 'goal' ?
+                                            <Goal display={{ sideAction: true, type: 'card' }} goalSomeID={'all'} detailsModel={true} status={'progress'} />
+                                            :
+                                            <Assignment display={{ sideAction: true, type: 'card' }} notGoalRelation={'all'} detailsModel={true} status={'progress'} />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div className="itens-conclude column scrollable">
+                            <div className="head-column">
+                                {iconMap['check']}<label>conclude</label>
+                            </div>
+                            <div className="body-column">
+                                <div className='list'>
+                                    {
+                                        layoutComponent.home.layout === 'goal' ?
+                                            <Goal display={{ sideAction: true, type: 'card' }} goalSomeID={'all'} detailsModel={true} status={'conclude'} />
+                                            :
+                                            <Assignment display={{ sideAction: true, type: 'card' }} notGoalRelation={'all'} detailsModel={true} status={'conclude'} />
+                                    }
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="itens-conclude column scrollable">
-                    <div className="head-column">
-                        {iconMap['check']}<label>conclude</label>
-                    </div>
-                    <div className="body-column">
-                        <div className='list'>
-                            {
-                                layoutComponent.home.layout === 'goal' ?
-                                    <Goal display={{ sideAction: true, type: 'card' }} goalSomeID={'all'} detailsModel={true} status={'conclude'} /> :
-                                    <Assignment display={{ sideAction: true, type: 'card' }} notGoalRelation={'all'} detailsModel={true} status={'conclude'} />
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {/* <div className="chart-line">
-                <h1>Representation chart line here...</h1>
-            </div> */}
+                /* <div className="chart-line">
+                    <h1>Representation chart line here...</h1>
+                </div> */
+            }
         </div>
     )
 }
