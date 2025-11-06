@@ -17,8 +17,8 @@ import '../Calendar/Calendar.scss'
 const Calendar = () => {
     const { update } = useTitle()
     const { layoutComponent } = useSwitchLayout()
-    const { loading: goalLoading, data: dataGoal, refetch: refetchGoal } = useGoalProvider()
-    const { loading: assignmentLoading, data: dataAssignment, refetch: refetchAssignment } = useAssignmentProvider()
+    const { page: { loading: loadingGoal, data: dataGoal } } = useGoalProvider()
+    const { page: { loading: loadingAssignment, data: dataAssignment } } = useAssignmentProvider()
     const { updateFilterModel } = useContext(ManageModelContext)
 
     const [dataModelSource, setDataModelSource] = useState({
@@ -31,8 +31,8 @@ const Calendar = () => {
 
     useEffect(() => {
         update({ header: 'Manage your goals and assignments' })
-        refetchGoal(updateFilterModel(filterGetGoal, 'goal'))
-        refetchAssignment(updateFilterModel(filterGetAssignment, 'assignment'))
+        updateFilterModel(filterGetGoal, 'goal', 'page')
+        updateFilterModel(filterGetAssignment, 'assignment', 'page')
     }, [])
 
     useEffect(() => {
@@ -52,7 +52,7 @@ const Calendar = () => {
 
     return (
         <div className="container-calendar">
-            { (goalLoading || assignmentLoading) ? <Loading /> : null }
+            { (loadingGoal || loadingAssignment) ? <Loading /> : null }
             <MonthDaysPicker model={dataModelSource} />
         </div>
     )

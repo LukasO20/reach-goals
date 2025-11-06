@@ -20,7 +20,7 @@ const ModalTag = () => {
     const { visibleElements } = useContext(VisibilityContext)
     const { setModel } = useContext(ManageModelContext)
     const { layoutComponent } = useSwitchLayout()
-    const { loading: tagLoading } = useTagProvider()
+    const { panel: { loading: loadingTag } } = useTagProvider()
     const navigate = useNavigate()
 
     const isModalForm = ['tag', 'near-modalForm']
@@ -45,12 +45,12 @@ const ModalTag = () => {
                         target={targetMap(['panel-center', 'config'])} switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'center' })} />
                 </div>
             </div>
-            <div className='body'>
+            <div className='body scrollable'>
                 {
                     isModalForm.every(e => visibleElements.includes(e)) && <ModalForm type='tag' />
                 }
                 {
-                    tagLoading ?
+                    loadingTag ?
                         <Loading />
                         :
                         <Tag tagSomeID={'all'} />

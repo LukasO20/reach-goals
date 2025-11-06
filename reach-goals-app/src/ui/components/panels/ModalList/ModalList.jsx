@@ -10,46 +10,45 @@ import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import './ModalList.scss'
 
 //Plus props can be used to add extra properties to the component
-const plusProps = (props, model) => {
-    const modelType = model?.typeModel
-    const modelID = model?.mainModelID
-    const from = props?.from ?? null
+const plusProps = (props, model, modelUpdateFilter) => {
+    if (!model || !modelUpdateFilter) return
 
-    let switcherRelation = null
-    if (props?.type === 'goal') switcherRelation = 'goal-relation'
-    else if (props?.type === 'assignment') switcherRelation = 'assignment-relation'
-    else if (props?.type === 'tag') switcherRelation = 'tag'
+    const modelID = model?.mainModelID
+    const type = props?.type
+    const from = props?.from ?? null
 
     switch (from) {
         case 'form':
             const isNumberID = typeof modelID === 'number'
-            const currentFilter = props?.type === 'goal' ? //Ready to filter assignment without goal
-                { notGoalRelation: 'all' } : props?.type === 'assignment' ? //Ready to filter all goal
-                    { goalSomeID: 'all' } : isNumberID ? //Ready to filter relation tag or all tag
-                        modelType === 'goal' ? 
-                            { tagNotRelationGoal: modelID } : { tagNotRelationAssignment: modelID } :
-                                { tagSomeID: 'all' }
-                        
-            return {
-                propsReference: {
-                    ...currentFilter,
-                    typeDataSource: 'support',
-                },
-                switcherRelationType: switcherRelation
+            const currentKeySomeID = type === 'goal' ? 'notGoalRelation'
+                : type === 'assignment' ?
+                    'goalSomeID' : isNumberID ?
+                        type === 'goal' ? 'tagNotRelationGoal' : 'tagNotRelationAssignment' :
+                        'tagSomeID'
+
+            const filterGetModel = {
+                [currentKeySomeID]: 'all',
             }
-        default:
+
+            // const currentFilter = props?.type === 'goal' ? //Ready to filter assignment without goal
+            //     { notGoalRelation: 'all' } : props?.type === 'assignment' ? //Ready to filter all goal
+            //         { goalSomeID: 'all' } : isNumberID ? //Ready to filter relation tag or all tag
+            //             props?.type === 'goal' ?
+            //                 { tagNotRelationGoal: modelID } : { tagNotRelationAssignment: modelID } :
+            //             { tagSomeID: 'all' }
+
+            // modelUpdateFilter(filterGetModel, type, 'panel')
+
             return {
-                propsReference: null,
-                switcherRelationType: null
+                switcherRelationType: type === 'goal' ? 'goal-relation' : type === 'assignment' ? 'assignment-relation' : 'tag'
             }
     }
 }
 
 const ModalList = (props) => {
-    const { model } = useContext(ManageModelContext)
+    const { model, updateFilterModel } = useContext(ManageModelContext)
     const title = props?.title
-    const type = plusProps(props).switcherRelationType
-    const propsReference = plusProps(props, model).propsReference
+    const type = plusProps(props, model, updateFilterModel).switcherRelationType
     const externalFunction = props?.exFunction
 
     return (
@@ -60,8 +59,7 @@ const ModalList = (props) => {
             </div>
             <div className='body scrollable'>
                 {/* ModelSwitcher here is ready to render a relation Model */}
-                {<ModelSwitcher type={type} selectableModel={true} action={{ setForm: true }}
-                    propsReference={propsReference} exFunction={externalFunction} />}
+                {<ModelSwitcher type={type} selectableModel={true} action={{ setForm: true }} exFunction={externalFunction} />}
             </div>
         </div>
     )

@@ -4,36 +4,39 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import * as tagService from '../../services/tagService.js'
 
 import { filterServiceFnMap } from '../../utils/mapping/mappingUtilsProvider.js'
+import { validFilter } from '../../utils/utilsProvider.js'
 
 export const TagModelContext = createContext()
 
 export const TagModelProvider = ({ children, filters = {} }) => {
     const queryClient = useQueryClient()
 
-    const validFilter = Object.entries(filters).find(
-        ([key, value]) =>
-            (typeof value === 'number' || value === 'all') &&
-            filterServiceFnMap[key]
-    )
-
-    const queryKey = ['tags', filters]
-
-    const queryFn = () => {
-        if (!validFilter) return Promise.resolve([])
-        const [key, value] = validFilter
+    const createQueryFn = (scopeFilter) => {
+        const valid = validFilter(scopeFilter)
+        if (!valid) return () => Promise.resolve([])
+        const [key, value] = valid;
         const fnName = filterServiceFnMap[key]
-        return tagService[fnName](value)
+        return () => tagService[fnName](value)
     }
 
     const {
-        data,
-        error,
-        isLoading,
-        refetch,
+        data: pageData,
+        error: pageError,
+        isLoading: isPageLoading,
     } = useQuery({
-        queryKey,
-        queryFn,
-        enabled: !!validFilter,
+        queryKey: ['tags', 'page', filters.page],
+        queryFn: createQueryFn(filters.page),
+        enabled: !!validFilter(filters.page),
+    })
+
+    const {
+        data: panelData,
+        error: panelError,
+        isLoading: isPanelLoading,
+    } = useQuery({
+        queryKey: ['tag', 'panel', filters.panel],
+        queryFn: createQueryFn(filters.panel),
+        enabled: !!validFilter(filters.panel),
     })
 
     const saveMutation = useMutation({
@@ -55,10 +58,16 @@ export const TagModelProvider = ({ children, filters = {} }) => {
 
     return (
         <TagModelContext.Provider value={{
-            data,
-            error,
-            loading: isLoading,
-            refetch,
+            page: {
+                data: pageData,
+                error: pageError,
+                loading: isPageLoading,
+            },
+            panel: {
+                data: panelData,
+                error: panelError,
+                loading: isPanelLoading,
+            },
             save: saveMutation.mutate,
             remove: removeMutation.mutate,
             saving: saveMutation.isPending,

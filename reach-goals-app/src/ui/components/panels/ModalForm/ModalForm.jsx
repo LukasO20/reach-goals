@@ -52,7 +52,7 @@ const ModalForm = (props) => {
     const { modalList, handleModalList } = useContext(ModalListContext)
     const { update } = useTitle()
 
-    const { data: dataAssignment, save: saveAssignment, saveSuccess: saveAssignmentSuccess, loading: assignmentLoading } = useAssignmentProvider()
+    const { panel: { data: dataAssignment, loading: loadingAssigment }, save: saveAssignment, saveSuccess: saveAssignmentSuccess } = useAssignmentProvider()
     const { panel: { data: dataGoal, loading: loadingGoal }, save: saveGoal, saveSuccess: saveGoalSuccess } = useGoalProvider()
     const { save: saveTag, saveSuccess: saveTagSuccess } = useTagProvider()
 
@@ -223,7 +223,7 @@ const ModalForm = (props) => {
     }
 
     return (
-        (loadingGoal || assignmentLoading) ?
+        (loadingGoal || loadingAssigment) ?
             <Loading/>
             :
             ((model.formModel && model.formModel.id) || model.mainModelID === null) ?

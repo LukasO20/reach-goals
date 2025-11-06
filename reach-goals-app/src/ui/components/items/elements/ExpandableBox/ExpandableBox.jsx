@@ -66,8 +66,8 @@ const boxConfigs = (type) => {
 const ExpandableBox = (props) => {
     const { layoutComponent } = useSwitchLayout()
     const { updateFilterModel } = useContext(ManageModelContext)
-    const { loading: goalLoading } = useGoalProvider()
-    const { loading: assignmentLoading } = useAssignmentProvider()
+    const { page: { loading: loadingGoal } } = useGoalProvider()
+    const { page: { loading: loadingAssignment } } = useAssignmentProvider()
 
     const configType = layoutComponent.objectives.layout
 
@@ -98,8 +98,8 @@ const ExpandableBox = (props) => {
         const filterGetGoal = filterGetModelMap({ ...currentfilter }, 'goal', 'core')
         const filterGetAssignment = filterGetModelMap({ ...currentfilter }, 'assignment', 'core')
 
-        updateFilterModel(filterGetGoal, 'goal')
-        updateFilterModel(filterGetAssignment, 'assignment')
+        updateFilterModel(filterGetGoal, 'goal', 'page')
+        updateFilterModel(filterGetAssignment, 'assignment', 'page')
 
         setCurrentFilterData(() => ({
             [configType]: {
@@ -131,7 +131,7 @@ const ExpandableBox = (props) => {
             </div>
             <div className='body scrollable'>
                 {
-                    (goalLoading || assignmentLoading) ?
+                    (loadingGoal || loadingAssignment) ?
                         <Loading /> :
                         <>
                             {
