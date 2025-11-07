@@ -20,7 +20,7 @@ const Assignment = (props) => {
     const { toggleVisibility } = useContext(VisibilityContext)
     const { switchLayoutComponent, layoutComponent } = useSwitchLayout()
     const { update } = useTitle()
-    const { page: { data }, remove } = useAssignmentProvider()
+    const { page: { data: dataPage }, panel: { data: dataPanel }, remove } = useAssignmentProvider()
 
     const status = props.status
     const display = props.display
@@ -82,17 +82,19 @@ const Assignment = (props) => {
 
     useEffect(() => {
         if (filterGetAssignment["Without key"] === "Without value") return
-        updateFilterModel(filterGetAssignment, 'assignment', 'page')
+        const currentScope = model.filter.assignment.scope
+        updateFilterModel(filterGetAssignment, 'assignment', currentScope)
     }, [])
 
     useEffect(() => {
         const currentScope = model.filter.assignment.scope
         const currentFilter = model.filter.assignment[currentScope]
+        const currentData = currentScope === 'page' ? dataPage : dataPanel
 
         if (currentFilter.source === 'core' || currentFilter.source === 'support') {
-            updateDataModel(data, 'assignment', currentFilter.source)
+            updateDataModel(currentData, 'assignment', currentFilter.source)
         }
-    }, [data])
+    }, [dataPage, dataPanel])
 
     const clickEvents = {
         card: assignmentClick,

@@ -59,6 +59,7 @@ const ModalForm = (props) => {
     const typeForm = props.type
     const classRemove = visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
     const currentKeySomeID = `${typeForm}SomeID`
+    const currentFilter = model?.filter[typeForm] && model.filter[typeForm]['panel']
 
     const [error, setError] = useState(null)
 
@@ -223,7 +224,7 @@ const ModalForm = (props) => {
     }
 
     return (
-        (loadingGoal || loadingAssigment) ?
+        (loadingGoal || loadingAssigment) && currentFilter.source === 'formModel' ?
             <Loading/>
             :
             ((model.formModel && model.formModel.id) || model.mainModelID === null) ?
