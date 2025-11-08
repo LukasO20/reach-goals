@@ -1,11 +1,12 @@
-import { useEffect } from 'react'
+import { useEffect, useContext } from 'react'
 
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
 import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
 import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
+import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 
-import { iconMap } from '../../../../utils/mapping/mappingUtils.js'
+import { iconMap, filterGetModelMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import '../Home/Home.scss'
 
@@ -18,10 +19,30 @@ const Home = () => {
     const { layoutComponent } = useSwitchLayout()
     const { page: { loading: loadingGoal } } = useGoalProvider()
     const { page: { loading: loadingAssignment } } = useAssignmentProvider()
+    const { updateFilterModel } = useContext(ManageModelContext)
+
+    const currentLayout = layoutComponent.home.layout
 
     useEffect(() => {
         update({ header: `Welcome. Let's produce?` })
     }, [])
+
+    useEffect(() => {
+        const filter = currentLayout === 'assignment' ?
+            filterGetModelMap({
+                notGoalRelation: 'all',
+                type: currentLayout,
+                source: 'core'
+            }, currentLayout, 'core')
+            :
+            filterGetModelMap({
+                goalSomeID: 'all',
+                type: currentLayout,
+                source: 'core'
+            }, currentLayout, 'core')
+        //const currentScope = model.filter[currentLayout].scope
+        updateFilterModel(filter, currentLayout, 'page')
+    }, [currentLayout])
 
     return (
         <div className="container-home">
@@ -37,7 +58,7 @@ const Home = () => {
                             <div className="body-column scrollable">
                                 <div className='list'>
                                     {
-                                        layoutComponent.home.layout === 'goal' ?
+                                        currentLayout === 'goal' ?
                                             <Goal display={{ sideAction: true, type: 'card' }} goalSomeID={'all'} detailsModel={true} status={'progress'} />
                                             :
                                             <Assignment display={{ sideAction: true, type: 'card' }} notGoalRelation={'all'} detailsModel={true} status={'progress'} />
@@ -52,7 +73,7 @@ const Home = () => {
                             <div className="body-column">
                                 <div className='list'>
                                     {
-                                        layoutComponent.home.layout === 'goal' ?
+                                        currentLayout === 'goal' ?
                                             <Goal display={{ sideAction: true, type: 'card' }} goalSomeID={'all'} detailsModel={true} status={'conclude'} />
                                             :
                                             <Assignment display={{ sideAction: true, type: 'card' }} notGoalRelation={'all'} detailsModel={true} status={'conclude'} />

@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 
 import { useTagProvider } from '../../../../../provider/model/TagModelProvider.jsx'
 import { useTitle } from '../../../../../provider/TitleProvider.jsx'
@@ -6,7 +6,7 @@ import { useTitle } from '../../../../../provider/TitleProvider.jsx'
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 
-import { targetMap, filterGetModelMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { targetMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import CardItem from '../../elements/CardItem/CardItem.jsx'
 
@@ -16,7 +16,7 @@ const Tag = (props) => {
     const [erro, setErro] = useState(false)
 
     const { toggleVisibility } = useContext(VisibilityContext)
-    const { model, setModel, updateFormModel, updateFilterModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
+    const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
     const { panel: { data }, remove } = useTagProvider()
     const { update } = useTitle()
 
@@ -26,21 +26,13 @@ const Tag = (props) => {
     const sourceForm = props.sourceForm
     const isSelectableModel = props.selectableModel ?? false
 
-    const filterGetTag = useMemo(() => (
-        filterGetModelMap(props, 'tag', props.typeDataSource ?? 'core')
-    ), [
-        props.typeDataSource,
-        props.tagNotRelationGoal,
-        props.tagNotRelationAssignment,
-        props.notRelationModel,
-        props.tagSomeID
-    ])
-
+    const currentScope = model.filter.tag.scope
+    const currentFilter = model.filter.tag[currentScope]
     //First will be checked form source to render a tag, if not, will be render according tag filter
     const tagSourceAuxiliary = sourceForm?.tags.map(item => {
         return item.tag
     })
-    const renderModel = tagSourceAuxiliary ?? model.dataModel.tag[filterGetTag.source].data
+    const render = tagSourceAuxiliary ?? model.dataModel.tag[currentFilter.source]?.data ?? data
 
     const deleteTag = async (id) => {
         remove(id)
@@ -56,7 +48,7 @@ const Tag = (props) => {
         e.stopPropagation()
 
         if (isSelectableModel) {
-            const selected = renderModel.find(m => m.id === id)
+            const selected = render.find(m => m.id === id)
 
             addToTransportModel({ ...selected, type: 'tag' })
             return updateFormModel({
@@ -80,14 +72,6 @@ const Tag = (props) => {
     }
 
     useEffect(() => {
-        if (filterGetTag["Without key"] === "Without value") return
-        updateFilterModel(filterGetTag, 'tag', 'panel')
-    }, [])
-
-    useEffect(() => {
-        const currentScope = model.filter.tag.scope
-        const currentFilter = model.filter.tag[currentScope]
-
         if (currentFilter.source === 'core' || currentFilter.source === 'support') {
             updateDataModel(data, 'tag', currentFilter.source)
         }
@@ -101,8 +85,11 @@ const Tag = (props) => {
     }
 
     return (
-        renderModel?.length ?
-            <CardItem type={'tag'} model={renderModel} clickFunction={clickEvents} display={display} />
+        render?.length ?
+            <CardItem type={'tag'}
+                model={render}
+                clickFunction={clickEvents}
+                display={display} />
             : null
     )
 }

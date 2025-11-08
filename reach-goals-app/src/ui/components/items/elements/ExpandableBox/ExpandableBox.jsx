@@ -63,7 +63,7 @@ const boxConfigs = (type) => {
     }
 }
 
-const ExpandableBox = (props) => {
+const ExpandableBox = () => {
     const { layoutComponent } = useSwitchLayout()
     const { updateFilterModel } = useContext(ManageModelContext)
     const { page: { loading: loadingGoal } } = useGoalProvider()
@@ -88,7 +88,7 @@ const ExpandableBox = (props) => {
             goalTagRelation: null,
             notAssignmentRelation: null,
         },
-        [`${configType}SomeID`]: 'all' //A default value to filterButtonActive
+        [`${configType}SomeID`]: 'all', //A default value to filterButtonActive
     })
 
     const filterButtonActive = Object.entries(currentFilterData[configType] ?? currentFilterData)
@@ -102,9 +102,7 @@ const ExpandableBox = (props) => {
         updateFilterModel(filterGetAssignment, 'assignment', 'page')
 
         setCurrentFilterData(() => ({
-            [configType]: {
-                ...currentfilter
-            }
+            [configType]: { ...currentfilter }
         }))
     }
 
@@ -142,8 +140,8 @@ const ExpandableBox = (props) => {
                                         <Assignment display={{ type: 'mini-list' }} />
                                         :
                                         <>
-                                            <Goal display={{ type: 'mini-list' }} goalSomeID={'all'} />
-                                            <Assignment display={{ type: 'mini-list' }} assignmentSomeID={'all'} />
+                                            <Goal display={{ type: 'mini-list' }} />
+                                            <Assignment display={{ type: 'mini-list' }} />
                                         </>
                             }
                         </>

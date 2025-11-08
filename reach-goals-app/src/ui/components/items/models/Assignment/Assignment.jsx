@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 import { useAssignmentProvider } from '../../../../../provider/model/AssignmentModelProvider.jsx'
@@ -7,7 +7,7 @@ import { VisibilityContext } from '../../../../../provider/VisibilityProvider.js
 
 import { useTitle } from '../../../../../provider/TitleProvider.jsx'
 
-import { filterGetModelMap, switchLayoutMap, targetMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { switchLayoutMap, targetMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import CardItem from '../../elements/CardItem/CardItem.jsx'
 
@@ -16,7 +16,7 @@ import '../Assignment/Assignment.scss'
 const Assignment = (props) => {
     const [erro, setErro] = useState(false)
 
-    const { model, setModel, updateFormModel, updateFilterModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
+    const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
     const { toggleVisibility } = useContext(VisibilityContext)
     const { switchLayoutComponent, layoutComponent } = useSwitchLayout()
     const { update } = useTitle()
@@ -28,18 +28,10 @@ const Assignment = (props) => {
     const isSelectableModel = props.selectableModel ?? false
     const isDetailsModel = props.detailsModel ?? false
 
-    const filterGetAssignment = useMemo(() => (
-        filterGetModelMap(props, 'assignment', props.typeDataSource ?? 'core')
-    ), [
-        props.typeDataSource,
-        props.assignmentGoalRelation,
-        props.assignmentSomeID,
-        props.assignmentTagRelation,
-        props.notGoalRelation
-    ])
-
+    const currentScope = model.filter.assignment.scope
+    const currentFilter = model.filter.assignment[currentScope]
     //First will be checked form source to render an assignment, if not, will be render according assignment filter
-    const renderModel = sourceForm?.assignments ?? model.dataModel.assignment[filterGetAssignment.source].data
+    const render = sourceForm?.assignments ?? model.dataModel.assignment[currentFilter.source]?.data ?? dataPage
 
     const deleteAssignment = async (id) => {
         remove(id)
@@ -55,7 +47,7 @@ const Assignment = (props) => {
         e.stopPropagation()
 
         if (isSelectableModel) {
-            const selected = renderModel.find(m => m.id === id)
+            const selected = render.find(m => m.id === id)
 
             addToTransportModel({ ...selected, type: 'assignment' })
             return updateFormModel({
@@ -81,14 +73,6 @@ const Assignment = (props) => {
     }
 
     useEffect(() => {
-        if (filterGetAssignment["Without key"] === "Without value") return
-        const currentScope = model.filter.assignment.scope
-        updateFilterModel(filterGetAssignment, 'assignment', currentScope)
-    }, [])
-
-    useEffect(() => {
-        const currentScope = model.filter.assignment.scope
-        const currentFilter = model.filter.assignment[currentScope]
         const currentData = currentScope === 'page' ? dataPage : dataPanel
 
         if (currentFilter.source === 'core' || currentFilter.source === 'support') {
@@ -106,12 +90,11 @@ const Assignment = (props) => {
     //console.log('ASSIGNMENT LOADED - ', assignment)
 
     return (
-        renderModel?.length ?
+        render?.length ?
             <CardItem type={'assignment'}
                 model={(() => {
                     return typeof status === 'string' && status !== '' ?
-                        renderModel.filter(item => item.status === status) :
-                        renderModel
+                        render.filter(item => item.status === status) : render
                 })()}
                 clickFunction={clickEvents} display={display} />
             : null

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 import { useGoalProvider } from '../../../../../provider/model/GoalModelProvider.jsx'
@@ -7,7 +7,7 @@ import { VisibilityContext } from '../../../../../provider/VisibilityProvider.js
 
 import { useTitle } from '../../../../../provider/TitleProvider.jsx'
 
-import { filterGetModelMap, switchLayoutMap, targetMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { switchLayoutMap, targetMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import CardItem from '../../elements/CardItem/CardItem.jsx'
 
@@ -16,28 +16,20 @@ import '../Goal/Goal.scss'
 const Goal = (props) => {
     const [erro, setErro] = useState(false)
 
-    const { model, setModel, updateFormModel, updateFilterModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
+    const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
     const { toggleVisibility } = useContext(VisibilityContext)
     const { switchLayoutComponent, layoutComponent } = useSwitchLayout()
     const { update } = useTitle()
-    const { page: { data }, remove } = useGoalProvider()
+    const { page: { data: dataPage }, panel: { data: dataPanel }, remove } = useGoalProvider()
 
     const status = props.status
     const display = props.display
     const isSelectableModel = props.selectableModel ?? false
     const isDetailsModel = props.detailsModel ?? false
 
-    const filterGetGoal = useMemo(() => (
-        filterGetModelMap(props, 'goal', props.typeDataSource ?? 'core')
-    ), [
-        props.typeDataSource,
-        props.goalAssignmentRelation,
-        props.goalSomeID,
-        props.goalTagRelation,
-        props.notAssignmentRelation
-    ])
-
-    const renderModel = model.dataModel.goal[filterGetGoal.source].data
+    const currentScope = model.filter.goal.scope
+    const currentFilter = model.filter.goal[currentScope]
+    const render = model.dataModel.goal[currentFilter.source]?.data ?? dataPage
 
     const deleteGoal = async (id) => {
         remove(id)
@@ -53,7 +45,7 @@ const Goal = (props) => {
         e.stopPropagation()
 
         if (isSelectableModel) {
-            const selected = renderModel.find(m => m.id === goal.id)
+            const selected = render.find(m => m.id === goal.id)
 
             if (model.transportModel.goal.length > 0) return
 
@@ -72,18 +64,12 @@ const Goal = (props) => {
     }
 
     useEffect(() => {
-        if (filterGetGoal["Without key"] === "Without value") return
-        updateFilterModel(filterGetGoal, 'goal', 'page')
-    }, [])
-
-    useEffect(() => {
-        const currentScope = model.filter.goal.scope
-        const currentFilter = model.filter.goal[currentScope]
+        const currentData = currentScope === 'page' ? dataPage : dataPanel
 
         if (currentFilter.source === 'core' || currentFilter.source === 'support') {
-            updateDataModel(data, 'goal', currentFilter.source)
+            updateDataModel(currentData, 'goal', currentFilter.source)
         }
-    }, [data])
+    }, [dataPage, dataPanel])
 
     const clickEvents = {
         card: goalClick,
@@ -92,12 +78,11 @@ const Goal = (props) => {
     }
 
     return (
-        renderModel?.length ?
+        render?.length ?
             <CardItem type={'goal'}
                 model={(() => {
                     return typeof status === 'string' && status !== '' ?
-                        renderModel.filter(item => item.status === status) :
-                        renderModel
+                        render.filter(item => item.status === status) : render
                 })()}
                 clickFunction={clickEvents} display={display} />
             : null
