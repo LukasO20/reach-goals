@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
@@ -9,6 +9,7 @@ import { iconMap, filterGetModelMap } from '../../../../../utils/mapping/mapping
 
 import Goal from '../../models/Goal/Goal.jsx'
 import Assignment from '../../models/Assignment/Assignment.jsx'
+import ModelSwitcher from '../../models/ModelSwitcher.jsx'
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 import Loading from '../Loading/Loading.jsx'
 
@@ -72,39 +73,44 @@ const ExpandableBox = () => {
     const configType = layoutComponent.objectives.layout
 
     const [currentFilterData, setCurrentFilterData] = useState({
-        assignment: {
-            type: configType,
-            source: 'core',
-            assignmentSomeID: 'all',
-            assignmentGoalRelation: null,
-            assignmentTagRelation: null,
-            notGoalRelation: null,
-        },
-        goal: {
-            type: configType,
-            source: 'core',
-            goalSomeID: 'all',
-            goalAssignmentRelation: null,
-            goalTagRelation: null,
-            notAssignmentRelation: null,
-        },
-        [`${configType}SomeID`]: 'all', //A default value to filterButtonActive
+        assignment: {},
+        goal: {},
     })
 
-    const filterButtonActive = Object.entries(currentFilterData[configType] ?? currentFilterData)
-        .find(([_, value]) => value === 'all')?.[0]
+    const filterButtonActive = currentFilterData[configType] ?
+        Object.entries(currentFilterData[configType]).find(([_, value]) => value === 'all')?.[0]
+        : null
 
     const handleOptions = (currentfilter) => {
-        const filterGetGoal = filterGetModelMap({ ...currentfilter }, 'goal', 'core')
-        const filterGetAssignment = filterGetModelMap({ ...currentfilter }, 'assignment', 'core')
+        if (configType === 'goal') {
+            const filterGetGoal = filterGetModelMap({ ...currentfilter }, 'goal', 'core')
+            updateFilterModel(filterGetGoal, 'goal', 'page')
+        }
 
-        updateFilterModel(filterGetGoal, 'goal', 'page')
-        updateFilterModel(filterGetAssignment, 'assignment', 'page')
+        if (configType === 'assignment') {
+            const filterGetAssignment = filterGetModelMap({ ...currentfilter }, 'assignment', 'core')
+            updateFilterModel(filterGetAssignment, 'assignment', 'page')
+        }
 
         setCurrentFilterData(() => ({
             [configType]: { ...currentfilter }
         }))
     }
+
+    useEffect(() => {
+        if (configType === 'default') {
+            const filterGoal = filterGetModelMap({
+                goalSomeID: 'all', type: 'goal', source: 'core'
+            }, 'goal', 'core')
+
+            const filterAssignment = filterGetModelMap({
+                assignmentSomeID: 'all', type: 'assignment', source: 'core'
+            }, 'assignment', 'core')
+
+            updateFilterModel(filterGoal, 'goal', 'page')
+            updateFilterModel(filterAssignment, 'assignment', 'page')
+        }
+    }, [configType])
 
     return (
         <div className='expandable-model-box'>
@@ -119,7 +125,8 @@ const ExpandableBox = () => {
                                 boxConfigs(configType).map((box, index) => {
                                     const currentButton = Object.keys(box.currentfilter)[0]
 
-                                    return <ButtonAction key={index} classBtn={`button-action plan-round max-width small objective ${currentButton === filterButtonActive && 'active'}`}
+                                    return <ButtonAction key={index} classBtn={`button-action plan-round max-width small objective 
+                                        ${currentButton === filterButtonActive ? 'active' : !filterButtonActive && index === 3 && 'active'}`}
                                         title={box.label} onClick={(e) => { handleOptions(box.currentfilter) }} />
                                 })
                             }
@@ -130,21 +137,15 @@ const ExpandableBox = () => {
             <div className='body scrollable'>
                 {
                     (loadingGoal || loadingAssignment) ?
-                        <Loading /> :
-                        <>
-                            {
-                                configType === 'goal' ?
-                                    <Goal display={{ type: 'mini-list' }} />
-                                    :
-                                    configType === 'assignment' ?
-                                        <Assignment display={{ type: 'mini-list' }} />
-                                        :
-                                        <>
-                                            <Goal display={{ type: 'mini-list' }} />
-                                            <Assignment display={{ type: 'mini-list' }} />
-                                        </>
-                            }
-                        </>
+                        <Loading />
+                        :
+                        configType === 'default' ?
+                            <>
+                                <Goal display={{ type: 'mini-list' }} />
+                                <Assignment display={{ type: 'mini-list' }} />
+                            </>
+                            :
+                            <ModelSwitcher type={configType} propsReference={{ display: { type: 'mini-list' } }} />
                 }
             </div>
         </div>
