@@ -9,16 +9,14 @@ const ModelSwitcher = (props) => {
     const selectableModel = props?.selectableModel
     const action = props?.action
 
-    switch (type) {
-        case 'goal-relation':
-            return <Assignment {...propsReference} action={action} selectableModel={selectableModel} exFunction={externalFunction} />
-        case 'assignment-relation':
-            return <Goal {...propsReference} action={action} selectableModel={selectableModel} exFunction={externalFunction} />
-        case 'tag':
-            return <Tag {...propsReference} action={action} selectableModel={selectableModel} exFunction={externalFunction} /> 
-        default:
-            return null
-    }
+    if (type === 'goal-relation' || type === 'assignment')
+        return <Assignment {...propsReference} action={action} selectableModel={selectableModel} exFunction={externalFunction} />
+    else if (type === 'assignment-relation' || type === 'goal')
+        return <Goal {...propsReference} action={action} selectableModel={selectableModel} exFunction={externalFunction} />
+    else if (type === 'tag')
+        return <Tag {...propsReference} action={action} selectableModel={selectableModel} exFunction={externalFunction} />
+    else
+        return null
 }
 
 export default ModelSwitcher

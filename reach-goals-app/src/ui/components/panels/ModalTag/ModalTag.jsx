@@ -31,9 +31,7 @@ const ModalTag = () => {
 
     useEffect(() => {
         const filter = filterGetModelMap({
-            tagSomeID: 'all',
-            type: 'tag',
-            source: 'core'
+            tagSomeID: 'all', type: 'tag', source: 'core'
         }, 'tag', 'core')
 
         updateFilterModel(filter, 'tag', 'panel')
