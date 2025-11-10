@@ -123,7 +123,8 @@ const ManageModelProvider = ({ children }) => {
         setModel(prevModel => ({
             ...manageModelMap,
             dataModel: prevModel.dataModel,
-            filter: prevModel.filter
+            filter: prevModel.filter,
+            formModel: prevModel.formModel
         }))
     }
 
