@@ -223,6 +223,7 @@ const ModalForm = (props) => {
         mapModalList: modalList,
     }
 
+    //TODO: Try to use a validation where render Form if the quantity of data is ONE (because FORM render only a one data), this might avoid unnecessary animation Loading
     return (
         (loadingGoal || loadingAssigment) && currentFilter.source === 'formModel' ?
             <Loading/>
