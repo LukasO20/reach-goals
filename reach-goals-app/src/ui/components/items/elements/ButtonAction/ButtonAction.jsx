@@ -2,7 +2,6 @@ import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
-import { ModalListContext } from '../../../../../provider/ModalListProvider.jsx'
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
@@ -19,8 +18,7 @@ const statusButton = (classBtn, providervisibleElements) => {
 const ButtonAction = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { switchLayoutComponent } = useSwitchLayout()
-    const { handleModalList } = useContext(ModalListContext)
-    const { model, resetManageModel } = useContext(ManageModelContext)
+    const { resetManageModel } = useContext(ManageModelContext)
 
     const classBtn = props.classBtn.split(' ')[2]
     const isOn = statusButton(classBtn, visibleElements)
@@ -29,7 +27,6 @@ const ButtonAction = (props) => {
     const handleClick = (e) => {
         e.stopPropagation()
         if (props.target) toggleVisibility(props.target, e)
-        if (props.modalList) handleModalList(props.modalList, e)
         if (props.switchLayout) switchLayoutComponent(props.switchLayout)
         if (props.nullModel) resetManageModel()
         if (props.standardRoute) navigate('/home') // return standard route if true 

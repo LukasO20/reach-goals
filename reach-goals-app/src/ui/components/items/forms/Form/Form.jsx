@@ -14,11 +14,15 @@ import { targetMap, iconMap } from '../../../../../utils/mapping/mappingUtils.js
 import './Form.scss'
 
 const Form = (props) => {
+    const { visibleElements } = useContext(VisibilityContext)
+    const { model, setModel } = useContext(ManageModelContext)
+
     const typeForm = props?.typeForm
     const functionsForm = props?.functionFormMap
     const modelForm = props?.model
     const booleanForm = props?.booleanFormMap
-    const contextForm = props?.contextFormMap
+    const isModalList = visibleElements.some(classItem => classItem === 'modal-list-goal' || classItem === 'modal-list-assignment')
+    const isModalTagList = visibleElements.some(classItem => classItem === 'modal-list-tag')
 
     const titleMap = {
         assignment: `${typeof modelForm.id === 'number' ? 'Edit' : 'Create'} your assignment`,
@@ -38,9 +42,6 @@ const Form = (props) => {
             type: 'mini-list'
         }
     }
-
-    const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
-    const { model, setModel } = useContext(ManageModelContext)
 
     switch (typeForm) {
         case 'tag':
@@ -76,7 +77,7 @@ const Form = (props) => {
             )
         default:
             return (
-                <div className='container-form-modal center-content' onClick={(e) => { functionsForm.mapHandleModalList(functionsForm.mapModalListMap(false), e); functionsForm.mapToggleVisibility(targetMap(booleanForm.mapClassRemove), e) }}>
+                <div className='container-form-modal center-content' onClick={(e) => functionsForm.mapToggleVisibility(targetMap(booleanForm.mapClassRemove), e) }>
                     <div className='head'>
                         <div className='objective-icon'>
                             {icon}
@@ -126,7 +127,8 @@ const Form = (props) => {
                                 <div className='head'>
                                     <div className='item-head-1'>
                                         <label>{iconMap['tag']}<span>tags</span></label>
-                                        <ButtonAction modalList={functionsForm.mapModalListMap(true, 'tag')} classBtn={'button-action plan-round add max-width small'} icon='plus' title='Add' />
+                                        <ButtonAction target={targetMap('modal-list-tag', { add: true })}
+                                            classBtn={'button-action plan-round add max-width small'} icon='plus' title='Add' />
                                     </div>
                                     <div className='item-head-2'></div>
                                 </div>
@@ -173,12 +175,10 @@ const Form = (props) => {
                         <ButtonAction onClick={functionsForm.mapHandleSubmit} classBtn='button-action plan max-width save' icon='save' title='Save' />
                     </div>
                     {
-                        contextForm.mapModalList.open && contextForm.mapModalList.type !== 'tag' &&
-                        <ModalList title={`Assign ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} type={typeForm} from={'form'} exFunction={functionsForm.mapHandleChange} />
+                        isModalList === true ? <ModalList title={`Assign ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} type={typeForm} from={'form'} exFunction={functionsForm.mapHandleChange} /> : null
                     }
                     {
-                        contextForm.mapModalList.open && contextForm.mapModalList.type === 'tag' &&
-                        <ModalList title='Assign a tag' type='tag' from={'form'} exFunction={functionsForm.mapHandleChange} />
+                        isModalTagList === true ? <ModalList title='Assign a tag' type='tag' from={'form'} exFunction={functionsForm.mapHandleChange} /> : null
                     }
                 </div>
             )

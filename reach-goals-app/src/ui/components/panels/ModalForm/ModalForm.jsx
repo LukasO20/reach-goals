@@ -2,14 +2,13 @@ import { useContext, useEffect, useState } from 'react'
 
 import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
-import { ModalListContext } from '../../../../provider/ModalListProvider.jsx'
 
 import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
 import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
 import { useTagProvider } from '../../../../provider/model/TagModelProvider.jsx'
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
 
-import { iconMap, modalListMap, targetMap } from '../../../../utils/mapping/mappingUtils.js'
+import { iconMap, targetMap } from '../../../../utils/mapping/mappingUtils.js'
 import { formatDate } from '../../../../utils/utils.js'
 
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
@@ -27,6 +26,7 @@ const formsInputMap = (typeForm, model, exFunction) => {
 }
 
 const formsItemMap = (typeForm, modelComponent) => {
+    const visibilityRelation = typeForm === 'goal' ? 'assignment' : 'goal'
     const messageRelation = typeForm === 'goal' ? 'assignments' : 'goals'
 
     const formItem =
@@ -34,7 +34,9 @@ const formsItemMap = (typeForm, modelComponent) => {
             <div className='head'>
                 <div className='item-head-1'>
                     <label>{iconMap[typeForm === 'goal' ? 'assignment' : 'goal']}{messageRelation}</label>
-                    <ButtonAction modalList={modalListMap(true, typeForm)} classBtn={`form-modallist-${typeForm} button-action plan-round add max-width small`} icon='plus' title='Add' />
+                    <ButtonAction target={targetMap(`modal-list-${visibilityRelation}`, { add: true })}
+                        classBtn={`form-modallist-${typeForm} button-action plan-round add max-width small`}
+                        icon='plus' title='Add' />
                 </div>
                 <div className='item-head-2'></div>
             </div>
@@ -49,7 +51,6 @@ const formsItemMap = (typeForm, modelComponent) => {
 const ModalForm = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateFilterModel, resetManageModel } = useContext(ManageModelContext)
-    const { modalList, handleModalList } = useContext(ModalListContext)
     const { update } = useTitle()
 
     const { panel: { data: dataAssignment, loading: loadingAssigment }, save: saveAssignment, saveSuccess: saveAssignmentSuccess } = useAssignmentProvider()
@@ -174,7 +175,7 @@ const ModalForm = (props) => {
     useEffect(() => {
         const currentScope = model.filter[typeForm]?.scope
         if (!currentScope) return
-        
+
         const currentFilter = model.filter[typeForm][currentScope]
         if (typeof model.mainModelID === 'number' && currentFilter.source === 'formModel') {
             const typeSelected =
@@ -205,8 +206,6 @@ const ModalForm = (props) => {
     }, [saveGoalSuccess, saveAssignmentSuccess, saveTagSuccess])
 
     const functionFormMap = {
-        mapHandleModalList: handleModalList,
-        mapModalListMap: modalListMap,
         mapToggleVisibility: toggleVisibility,
         mapHandleChange: handleChange,
         mapFormsInputMap: formsInputMap,
@@ -219,21 +218,12 @@ const ModalForm = (props) => {
         mapClassRemove: classRemove
     }
 
-    const contextFormMap = {
-        mapModalList: modalList,
-    }
-
     //TODO: Try to use a validation where render Form if the quantity of data is ONE (because FORM render only a one data), this might avoid unnecessary animation Loading
     return (
         (loadingGoal || loadingAssigment) && currentFilter.source === 'formModel' ?
-            <Loading/>
-            :
-            ((model.formModel && model.formModel.id) || model.mainModelID === null) ?
-                <Form typeForm={typeForm} functionFormMap={functionFormMap}
-                    model={model.formModel} booleanFormMap={booleanFormMap}
-                    contextFormMap={contextFormMap} />
-                :
-                null
+            <Loading /> :
+            <Form typeForm={typeForm} functionFormMap={functionFormMap}
+                model={model.formModel} booleanFormMap={booleanFormMap}/>
     )
 }
 
