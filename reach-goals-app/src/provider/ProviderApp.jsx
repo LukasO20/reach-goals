@@ -2,7 +2,6 @@ import { TitleProvider } from './TitleProvider.jsx'
 import { VisibilityProvider } from './VisibilityProvider.jsx'
 import { CheckboxProvider } from './CheckboxProvider.jsx'
 import { ManageModelProvider } from './ManageModelProvider.jsx'
-import { ModalListProvider } from './ModalListProvider.jsx'
 import { SwitchLayoutProvider } from './SwitchLayoutProvider.jsx'
 import { FilterModelProvider } from './model/FilterModelProvider.jsx'
 
@@ -12,11 +11,9 @@ const ProviderApp = ({ children }) => (
             <VisibilityProvider>
                 <SwitchLayoutProvider>
                     <TitleProvider>
-                        <ModalListProvider>
-                            <CheckboxProvider>
-                                {children}
-                            </CheckboxProvider>
-                        </ModalListProvider>
+                        <CheckboxProvider>
+                            {children}
+                        </CheckboxProvider>
                     </TitleProvider>
                 </SwitchLayoutProvider>
             </VisibilityProvider>
