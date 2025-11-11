@@ -32,14 +32,6 @@ export const checkboxMap = (checkbox) => {
     return null
 }
 
-export const modalListMap = (open, type) => {
-    const attributes = {
-        open: open,
-        type: type
-    }
-    return attributes
-}
-
 export const buildQueryParamsMap = ({ IDobject, action }) => {
     if (typeof action !== 'string' || !action.trim()) return console.error('"action" must be a non-empty string')
     if (!IDobject || typeof IDobject !== 'object') return console.error('"IDobject" must be an object like { key: value }')
