@@ -60,7 +60,10 @@ const ModalForm = (props) => {
     const typeForm = props.type
     const classRemove = visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
     const currentKeySomeID = `${typeForm}SomeID`
-    const currentFilter = model?.filter[typeForm] && model.filter[typeForm]['panel']
+    const isModalList = visibleElements.some(
+        classItem => classItem === 'modal-list-goal' ||
+            classItem === 'modal-list-assignment' ||
+            classItem === 'modal-list-tag')
 
     const [error, setError] = useState(null)
 
@@ -220,10 +223,10 @@ const ModalForm = (props) => {
 
     //TODO: Try to use a validation where render Form if the quantity of data is ONE (because FORM render only a one data), this might avoid unnecessary animation Loading
     return (
-        (loadingGoal || loadingAssigment) && currentFilter.source === 'formModel' ?
+        (loadingGoal || loadingAssigment) && !isModalList ?
             <Loading /> :
             <Form typeForm={typeForm} functionFormMap={functionFormMap}
-                model={model.formModel} booleanFormMap={booleanFormMap}/>
+                model={model.formModel} booleanFormMap={booleanFormMap} />
     )
 }
 
