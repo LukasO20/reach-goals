@@ -43,24 +43,24 @@ const Assignment = (props) => {
         catch (error) { setErro(`Failed to edit this assignment: ${error}`) }
     }
 
-    const assignmentClick = ({ id, name }, e) => {
+    const assignmentClick = (assignment, e) => {
         e.stopPropagation()
 
         if (isSelectableModel) {
-            const selected = render.find(m => m.id === id)
+            const selected = model.dataModel.assignment.support.data.find(m => m.id === assignment.id)
 
             addToTransportModel({ ...selected, type: 'assignment' })
             return updateFormModel({
                 keyObject: 'assignments',
                 value: {
-                    id: id, name: name
+                    id: assignment.id, name: assignment.name
                 },
                 type: 'array'
             })
         }
 
         if (isDetailsModel) {
-            setModel(prev => ({ ...prev, mainModelID: id, typeModel: 'assignment' }))
+            setModel(prev => ({ ...prev, mainModelID: assignment.id, formModel: assignment, typeModel: 'assignment' }))
             switchLayoutComponent(switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'right' }))
             toggleVisibility(targetMap(['panel-right', 'assignment']))
         }

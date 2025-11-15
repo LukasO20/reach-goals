@@ -47,7 +47,7 @@ const ModalList = (props) => {
                     (loadingGoal || loadingAssigment || loadingTag) ?
                         <Loading />
                         :
-                        <ModelSwitcher type={typeSwitcherRelation} />}
+                        <ModelSwitcher type={typeSwitcherRelation} selectableModel={true} />}
             </div>
         </div>
     )

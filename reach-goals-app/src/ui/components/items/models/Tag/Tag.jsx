@@ -44,24 +44,24 @@ const Tag = (props) => {
         catch (error) { setErro(`Failed to edit this tag: ${erro.message}`) }
     }, [setModel])
 
-    const tagClick = ({ id, name, color }, e) => {
+    const tagClick = (tag, e) => {
         e.stopPropagation()
 
         if (isSelectableModel) {
-            const selected = render.find(m => m.id === id)
+            const selected = model.dataModel.tag.support.data.find(m => m.id === tag.id)
 
             addToTransportModel({ ...selected, type: 'tag' })
             return updateFormModel({
                 keyObject: 'tags',
                 value: {
-                    tagID: id,
-                    tag: { id: id, name: name, color: color }
+                    tagID: tag.id,
+                    tag: { id: tag.id, name: tag.name, color: tag.color }
                 },
                 type: 'array'
             })
         }
 
-        setModel({ ...model, mainModelID: id })
+        setModel({ ...model, mainModelID: tag.id })
         toggleVisibility(target, e)
     }
 
