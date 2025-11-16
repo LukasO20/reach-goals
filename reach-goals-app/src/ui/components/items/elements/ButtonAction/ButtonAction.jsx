@@ -28,7 +28,7 @@ const ButtonAction = (props) => {
         e.stopPropagation()
         if (props.target) toggleVisibility(props.target, e)
         if (props.switchLayout) switchLayoutComponent(props.switchLayout)
-        if (props.nullModel) resetManageModel(['formModel', 'mainModelID', 'transportModel'])
+        if (props.nullForm) resetManageModel(['formModel', 'mainModelID', 'transportModel'])
         if (props.standardRoute) navigate('/home') // return standard route if true 
 
         if (typeof props.onClick === 'function') {

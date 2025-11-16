@@ -85,16 +85,16 @@ const Form = (props) => {
                         <div className='objective-options'>
                             <div className='objective-op'>
                                 <ButtonAction target={targetMap(['panel-center', 'assignment'], { maintain: true })} classBtn={`op-form-assignment button-action plan small ${typeForm === 'assignment' ? 'active' : ''}`}
-                                    title='assingments' nullModel={true} onClick={() => setModel(prev => ({ ...prev, typeModel: 'assignment' }))} />
+                                    title='assingments' nullForm={true} onClick={() => setModel(prev => ({ ...prev, typeModel: 'assignment' }))} />
                                 <ButtonAction target={targetMap(['panel-center', 'goal'], { maintain: true })} classBtn={`op-form-goal button-action plan small ${typeForm === 'goal' ? 'active' : ''}`}
-                                    title='goals' nullModel={true} onClick={() => setModel(prev => ({ ...prev, typeModel: 'goal' }))} />
+                                    title='goals' nullForm={true} onClick={() => setModel(prev => ({ ...prev, typeModel: 'goal' }))} />
                             </div>
                             <div className='objective-color'>
                                 <label className='color'></label>
                             </div>
                         </div>
                         <div className='objective-buttons-options'>
-                            <ButtonAction target={targetMap(null)} nullModel={true} classBtn='button-action circle close' icon='close' />
+                            <ButtonAction target={targetMap(null)} nullForm={true} classBtn='button-action circle close' icon='close' />
                         </div>
                     </div>
                     <div className='body'>
