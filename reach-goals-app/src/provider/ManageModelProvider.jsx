@@ -119,13 +119,23 @@ const ManageModelProvider = ({ children }) => {
         }))
     }
 
-    const resetManageModel = () => {
-        setModel(prevModel => ({
-            ...manageModelMap,
-            dataModel: prevModel.dataModel,
-            filter: prevModel.filter,
-            formModel: prevModel.formModel
-        }))
+    const resetManageModel = (keys) => {
+        if (Array.isArray(keys)) {
+            setModel(prevModel => {
+                const updated = { ...prevModel }
+                keys.forEach(key => {
+                    updated[key] = manageModelMap[key]
+                })
+                return updated
+            })
+        } else {
+            setModel(prevModel => ({
+                ...manageModelMap,
+                dataModel: prevModel.dataModel,
+                filter: prevModel.filter,
+                formModel: prevModel.formModel
+            }))
+        }
     }
 
     console.log('MODEL READY TO MANAGE - ', model)
