@@ -18,7 +18,7 @@ const statusButton = (classBtn, providervisibleElements) => {
 const ButtonAction = (props) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { switchLayoutComponent } = useSwitchLayout()
-    const { resetManageModel } = useContext(ManageModelContext)
+    const { model, resetManageModel, updateFormModel, removeFromTransportModel } = useContext(ManageModelContext)
 
     const classBtn = props.classBtn.split(' ')[2]
     const isOn = statusButton(classBtn, visibleElements)
@@ -29,6 +29,10 @@ const ButtonAction = (props) => {
         if (props.target) toggleVisibility(props.target, e)
         if (props.switchLayout) switchLayoutComponent(props.switchLayout)
         if (props.nullForm) resetManageModel(['formModel', 'mainModelID', 'transportModel'])
+        if (props.unlinkGoal) { 
+            updateFormModel({ keyObject: 'goalID', value: null, action: 'remove' }) 
+            removeFromTransportModel({ id: model.formModel.goalID, type: 'goal' })
+        }
         if (props.standardRoute) navigate('/home') // return standard route if true 
 
         if (typeof props.onClick === 'function') {
