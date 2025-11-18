@@ -8,44 +8,15 @@ import { useAssignmentProvider } from '../../../../provider/model/AssignmentMode
 import { useTagProvider } from '../../../../provider/model/TagModelProvider.jsx'
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
 
-import { iconMap, targetMap } from '../../../../utils/mapping/mappingUtils.js'
+import { targetMap } from '../../../../utils/mapping/mappingUtils.js'
 import { formatDate } from '../../../../utils/utils.js'
 
-import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
-import Form from '../../items/forms/Form/Form.jsx'
+import Form from '../../items/forms/Form.jsx'
 import Loading from '../../items/elements/Loading/Loading.jsx'
+import ModelRelationAdd from '../../items/forms/ModelRelationAdd.jsx'
 
-const formsInputMap = (typeForm, model, exFunction) => {
-    const form = typeForm === 'assignment' &&
-        <div className='field-forms duration'>
-            <label>{iconMap['clock']}<span>duration</span></label>
-            <input id={`${typeForm}-duration`} className='input-form' type="text" placeholder='set duration' name='duration' onChange={exFunction} value={model?.duration} />
-        </div>
-
-    return form
-}
-
-const formsItemMap = (typeForm, modelComponent) => {
-    const visibilityRelation = typeForm === 'goal' ? 'assignment' : 'goal'
-    const messageRelation = typeForm === 'goal' ? 'assignments' : 'goals'
-
-    const formItem =
-        <div className={`item-forms ${typeForm === 'goal' ? 'assignment' : 'goal'}`}>
-            <div className='head'>
-                <div className='item-head-1'>
-                    <label>{iconMap[typeForm === 'goal' ? 'assignment' : 'goal']}{messageRelation}</label>
-                    <ButtonAction target={targetMap(`modal-list-${visibilityRelation}`, { add: true })}
-                        classBtn={`form-modallist-${typeForm} button-action plan-round add max-width small`}
-                        icon='plus' title='Add' />
-                </div>
-                <div className='item-head-2'></div>
-            </div>
-            <div className='body'>
-                {modelComponent}
-            </div>
-        </div>
-
-    return formItem
+const modelRelationAddMap = (type, children) => {
+    return <ModelRelationAdd type={type} children={children} />
 }
 
 const ModalForm = (props) => {
@@ -211,8 +182,7 @@ const ModalForm = (props) => {
     const functionFormMap = {
         mapToggleVisibility: toggleVisibility,
         mapHandleChange: handleChange,
-        mapFormsInputMap: formsInputMap,
-        mapFormsItemMap: formsItemMap,
+        mapModelRelationAddMap: modelRelationAddMap,
         mapHandleSubmit: handleSubmit,
         mapSetError: setError
     }
@@ -221,7 +191,6 @@ const ModalForm = (props) => {
         mapClassRemove: classRemove
     }
 
-    //TODO: Try to use a validation where render Form if the quantity of data is ONE (because FORM render only a one data), this might avoid unnecessary animation Loading
     return (
         (loadingGoal || loadingAssigment) && !isModalList ?
             <Loading /> :
