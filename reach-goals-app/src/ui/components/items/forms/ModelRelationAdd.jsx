@@ -1,0 +1,72 @@
+import { useContext } from 'react'
+import { ManageModelContext } from '../../../../provider/ManageModelProvider'
+
+import { iconMap, targetMap } from '../../../../utils/mapping/mappingUtils'
+
+import ButtonAction from '../elements/ButtonAction/ButtonAction'
+
+const ModelRelationAdd = (props) => {
+    const { model } = useContext(ManageModelContext)
+    const type = props.type
+    const children = props.children
+    const visibilityRelation = type === 'goal' ? 'assignment' : 'goal'
+    const messageRelation = type === 'goal' ? 'assignments' : 'goals'
+
+    const renderButtonAction = (type) => {
+        return (
+            typeof type === 'string' && type === 'assignment-relation' ?
+                <ButtonAction unlinkGoal={true} classBtn={'unlink-goal button-action plan-round add max-width small'}
+                    icon='cancel' title='Unlink' />
+                :
+                <ButtonAction target={targetMap(`modal-list-${visibilityRelation}`, { add: true })}
+                    classBtn={`form-modallist-${type} button-action plan-round add max-width small`}
+                    icon='plus' title='Add' />
+        )
+    }
+
+    if (type === 'assignment') {
+        const goal = model.transportModel.goal
+
+        return (
+            <div className={`item-forms goal ${goal.length ? 'selected' : ''}`}>
+                <div className='head'>
+                    <div className='item-head-1'>
+                        <label>
+                            {iconMap['goal']}{messageRelation}
+                            {
+                                goal.length > 0 &&
+                                <>
+                                    <span className='line' />
+                                    <span className='name-goal'>{goal[0].name}</span>
+                                </>
+                            }
+                        </label>
+                        {renderButtonAction(goal.length ? 'assignment-relation' : null)}
+                    </div>
+                    <div className='item-head-2'></div>
+                </div>
+            </div>
+        )
+    }
+
+    if (type === 'goal') {
+        return (
+            <div className='item-forms assignment'>
+                <div className='head'>
+                    <div className='item-head-1'>
+                        <label>{iconMap['assignment']}{messageRelation}</label>
+                        {renderButtonAction()}
+                    </div>
+                    <div className='item-head-2'></div>
+                </div>
+                <div className='body'>
+                    {children}
+                </div>
+            </div>
+        )
+    }
+
+    return null
+}
+
+export default ModelRelationAdd
