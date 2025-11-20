@@ -7,7 +7,7 @@ const ManageModelContext = React.createContext()
 const ManageModelProvider = ({ children }) => {
     const [model, setModel] = useState(manageModelMap)
 
-    const addToTransportModel = ({ id, name, type, color }) => {
+    const addToTransportModel = ({ id, name, type, color, custom }) => {
         if (!id || !name) return console.error('The model object must have an id and a name property')
         if (typeof type !== 'string') return console.error('The type is necessary and should be a string value. Did you send something like "tag" or "assignment"?')
 
@@ -25,7 +25,7 @@ const ManageModelProvider = ({ children }) => {
                         tagAdded ?
                             { [dynamicKey]: id, name: name, type: type, color: color }
                             :
-                            { [dynamicKey]: id, name: name, type: type }
+                            { [dynamicKey]: id, name: name, type: type, ...custom }
                     ]
                 }
             }
