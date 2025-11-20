@@ -1,15 +1,18 @@
+import { useNavigate } from 'react-router-dom'
+
+import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
+
 import { iconMap, targetMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import ButtonAction from '../../elements/ButtonAction/ButtonAction.jsx'
 import Assignment from '../../models/Assignment/Assignment.jsx'
-import Tag from '../../models/Tag/Tag.jsx'
 
 import moment from 'moment'
 
 import '../ModalDetailsSection/ModalDetailsSection.scss'
 
-const switchSectionLayout = (model, type) => {
-
+const switchSectionLayout = (model, type, handleClickButtonAction) => {
+    const renderButtonAction = <ButtonAction target={targetMap(null)} onClick={handleClickButtonAction} classBtn='button-action circle close' icon='close' />
     const modelRelationProps = {
         sourceForm: {
             assignments: model?.assignments,
@@ -24,7 +27,7 @@ const switchSectionLayout = (model, type) => {
                     <div className='header'>
                         <h2>{model?.name}</h2>
                         <h4>{model?.end && `Schedule to end on ${moment(model.end).format('MMMM DD')}`}</h4>
-                        <ButtonAction target={targetMap(null)} standardRoute="true" classBtn='button-action circle close' icon='close' />
+                        {renderButtonAction}
                     </div>
                     <div className='body'>
                         {
@@ -52,7 +55,7 @@ const switchSectionLayout = (model, type) => {
                     <div className='header'>
                         <h2>{model?.name}</h2>
                         <h4>{`Schedule to end on ${model?.end && moment(model.end).format('MMMM DD')}`}</h4>
-                        <ButtonAction target={targetMap(null)} standardRoute="true" classBtn='button-action circle close' icon='close' />
+                        {renderButtonAction}
                     </div>
                     <div className='body'>
                         {
@@ -70,10 +73,17 @@ const switchSectionLayout = (model, type) => {
 }
 
 const ModalDetailsSection = (props) => {
+    const { layoutComponent } = useSwitchLayout()
+    const navigate = useNavigate()
+
     const model = props?.model
     const type = props?.type
 
-    return (switchSectionLayout(model, type))
+    const handleClickButtonAction = () => {
+        navigate(`/${layoutComponent.page}`) // return standard route during handle
+    }
+
+    return (switchSectionLayout(model, type, handleClickButtonAction))
 }
 
 export default ModalDetailsSection

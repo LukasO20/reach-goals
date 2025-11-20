@@ -24,7 +24,7 @@ const ModalTag = () => {
 
     const isModalForm = ['tag', 'near-modalForm']
 
-    const handleClickConfig = (e) => {
+    const handleClickButtonAction = (e) => {
         if (e) setModel(prev => ({ ...prev, typeModel: 'config' }))
         navigate(`/${layoutComponent.page}`) // return standard route during handle   
     }
@@ -41,14 +41,14 @@ const ModalTag = () => {
         <div className='container-tag aside-content' onClick={(e) => e.stopPropagation()}>
             <div className='header'>
                 <h2>Tags</h2>
-                <ButtonAction target={targetMap(null)} standardRoute="true" classBtn='button-action circle close' icon='close' />
+                <ButtonAction target={targetMap(null)} onClick={handleClickButtonAction} classBtn='button-action circle close' icon='close' />
                 <div className='options'>
                     <ButtonAction target={targetMap('near-modalForm', { add: true })}
                         classBtn={`button-action create plan max-width ${isModalForm.every(e => visibleElements.includes(e)) ? 'active' : ''}`} icon='plus' title='create' />
                     {/* <ButtonCheckbox checkbox={checkboxMap({ id: 'checkbox-r-tag', value: false })} classBtn='checkbox-r-tag btn-checkbox'/> */}
                     {/* <ButtonDropdown target={targetMap('btn-filter-tag', { add: true })} classBtn='btn-option-r filter-content' iconFa='fa-solid fa-filter'/> */}
                     {/* Maybe a search bar can be better than a filter button, consider this aproach */}
-                    <ButtonAction classBtn='button-action circle max-width config' icon='config' onClick={(e) => handleClickConfig(e)}
+                    <ButtonAction classBtn='button-action circle max-width config' icon='config' onClick={(e) => handleClickButtonAction(e)}
                         target={targetMap(['panel-center', 'config'])} switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'center' })} />
                 </div>
             </div>

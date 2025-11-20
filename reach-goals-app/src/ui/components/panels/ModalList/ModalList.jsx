@@ -40,7 +40,7 @@ const ModalList = (props) => {
             <div className='head'>
                 <h2>{title}</h2>
                 <ButtonAction target={targetMap(`modal-list-${typeRelation}`, { remove: true })}
-                    standardRoute='true' classBtn='button-action circle close' icon='close' />
+                    classBtn='button-action circle close' icon='close' />
             </div>
             <div className='body scrollable'>
                 {

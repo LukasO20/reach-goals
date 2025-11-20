@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { VisibilityContext } from '../../../provider/VisibilityProvider.jsx'
 import { targetMap, switchLayoutMap } from '../../../utils/mapping/mappingUtils.js'
@@ -13,12 +14,20 @@ import '../navigate/Navigate.scss'
 const Navigate = () => {
     const { toggleVisibility } = useContext(VisibilityContext)
     const { layoutComponent } = useSwitchLayout()
+    const navigate = useNavigate()
 
     const isCalendarPage = layoutComponent.page === 'calendar'
     const isObjectivesPage = layoutComponent.page === 'objectives'
 
+    const handleClickNavigate = (e) => {
+        if (!e) return
+        
+        toggleVisibility(targetMap(), e)
+        navigate(`/${layoutComponent.page}`) // return standard route during handle
+    }
+
     return (
-        <div className="container-navigate aside-content" onClick={(e) => toggleVisibility(targetMap(), e)}>
+        <div className="container-navigate aside-content" onClick={(e) => handleClickNavigate(e)}>
             <div className="nav">
                 <div className='item-nav'>
                     <ButtonLink link={'/home'} classBtn={`button-action circle home`} img="/logo.png" alt="Home button" />                
