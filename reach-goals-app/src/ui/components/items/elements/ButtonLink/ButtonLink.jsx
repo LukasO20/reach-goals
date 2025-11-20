@@ -10,6 +10,7 @@ const ButtonLink = (props) => {
     const { switchLayoutComponent } = useSwitchLayout()
 
     const handleClick = (e) => {
+        e.stopPropagation()
         if (props.switchLayout) { switchLayoutComponent(props.switchLayout) }
     }
 
