@@ -1,7 +1,6 @@
 import { useContext } from 'react'
 
 import { VisibilityContext } from '../../../provider/VisibilityProvider.jsx'
-import { ManageModelContext } from '../../../provider/ManageModelProvider.jsx'
 
 import { useSwitchLayout } from '../../../provider/SwitchLayoutProvider.jsx'
 
@@ -33,22 +32,14 @@ const renderLayoutContentPanel = (panelPosition, renderConfig) => {
     }
 }
 
-const Panel = (props) => {
+const Panel = () => {
     const { visibleElements } = useContext(VisibilityContext)
-    const { model } = useContext(ManageModelContext)
     const { layoutComponent } = useSwitchLayout()
-
     const panelType = ['panel-left', 'panel-center', 'panel-right']
-    const formartType = model.typeModel && model.typeModel !== '' ? model.typeModel : visibleElements[1]
-    const renderConfig = {
-        type: formartType
-    }
-
-    //console.log('manage model from PANEL - ', model)
 
     return (
-        <div className={`content-${layoutComponent.panel.layout} ${panelType.some(panel => visibleElements.includes(panel)) ? 'show' : ''} ${renderConfig.type}`}>
-            {renderLayoutContentPanel(layoutComponent.panel.layout, renderConfig)}
+        <div className={`content-${layoutComponent.panel.layout} ${panelType.some(panel => visibleElements.includes(panel)) ? 'show' : ''} ${visibleElements[1]}`}>
+            {renderLayoutContentPanel(layoutComponent.panel.layout, { type: visibleElements[1] })}
         </div>
     )
 }
