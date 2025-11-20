@@ -1,5 +1,4 @@
 import { useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
@@ -22,7 +21,6 @@ const ButtonAction = (props) => {
 
     const classBtn = props.classBtn.split(' ')[2]
     const isOn = statusButton(classBtn, visibleElements)
-    const navigate = useNavigate()
 
     const handleClick = (e) => {
         e.stopPropagation()
@@ -33,7 +31,6 @@ const ButtonAction = (props) => {
             updateFormModel({ keyObject: 'goalID', value: null, action: 'remove' }) 
             removeFromTransportModel({ id: model.formModel.goalID, type: 'goal' })
         }
-        if (props.standardRoute) navigate('/home') // return standard route if true 
 
         if (typeof props.onClick === 'function') {
             props.onClick({props, e}) // execute external function from 'onClick' external attribute    
