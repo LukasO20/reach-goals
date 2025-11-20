@@ -26,6 +26,7 @@ const ModelRelationAdd = (props) => {
 
     if (type === 'assignment') {
         const goal = model.transportModel.goal
+        const goaLinked = goal.length || null
 
         return (
             <div className={`item-forms goal ${goal.length ? 'selected' : ''}`}>
@@ -34,7 +35,7 @@ const ModelRelationAdd = (props) => {
                         <label>
                             {iconMap['goal']}{messageRelation}
                             {
-                                goal.length > 0 &&
+                                goaLinked &&
                                 <>
                                     <span className='line' />
                                     <span className='name-goal'>{goal[0].name}</span>
@@ -43,7 +44,12 @@ const ModelRelationAdd = (props) => {
                         </label>
                         {renderButtonAction(goal.length ? 'assignment-relation' : null)}
                     </div>
-                    <div className='item-head-2'></div>
+                    {
+                        typeof goal[0]?.end === 'string' && goal[0]?.end !== 'Invalid date' && 
+                        <div className='item-head-2'>
+                            <span>schedule to end on {goal[0].end}</span>
+                        </div>
+                    }
                 </div>
             </div>
         )

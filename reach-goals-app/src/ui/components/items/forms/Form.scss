@@ -70,6 +70,50 @@
 
             >.item-forms {
 
+                &.goal {
+
+                    &.selected {
+                        background-color: $color-complementary-s;
+                        border-radius: 0.5rem;
+
+                        .head {
+
+                            .item-head-1 {
+                                border-bottom: none;
+
+                                * {
+                                    color: $color-white;
+                                }
+
+                                >label {
+
+                                    .line {
+                                        padding: 0.05rem;
+                                        background-color: $color-white;
+                                        border-radius: 0.5rem;
+                                    }
+                                }
+
+                                .unlink-goal {
+                                    background-color: $color-accent-p-30;
+
+                                    &:hover {
+                                        background-color: $color-accent-p;
+                                    }
+                                }
+                            }
+
+                            .item-head-2 {
+                                padding: 0rem 0.5rem 0.5rem 0.5rem;
+
+                                * {
+                                    color: $color-white;
+                                }
+                            }
+                        }
+                    }
+                }
+
                 /* DOUBLE APPLY */
                 &.assignment,
                 &.tag,
@@ -136,13 +180,6 @@
                                 height: 1rem;
                             }
                         }
-                    }
-                }
-
-                &.goal {
-
-                    &.selected {
-                        
                     }
                 }
             }

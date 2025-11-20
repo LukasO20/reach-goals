@@ -13,6 +13,8 @@ import CardItem from '../../elements/CardItem/CardItem.jsx'
 
 import '../Goal/Goal.scss'
 
+import moment from 'moment'
+
 const Goal = (props) => {
     const [erro, setErro] = useState(false)
 
@@ -49,7 +51,8 @@ const Goal = (props) => {
 
             if (model.transportModel.goal.length > 0) return
 
-            addToTransportModel({ ...selected, type: 'goal' })
+            addToTransportModel({ ...selected, type: 'goal', custom: { end: moment(selected.end).format('MMMM DD') } })
+            toggleVisibility(targetMap('modal-list-goal', { remove: true }))
             return updateFormModel({
                 keyObject: 'goalID',
                 value: goal.id
