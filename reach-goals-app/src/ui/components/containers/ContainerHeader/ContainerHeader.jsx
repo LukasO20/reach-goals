@@ -20,8 +20,8 @@ const ContainerH = () => {
     const { layoutComponent } = useSwitchLayout()
     const navigate = useNavigate()
 
-    const linkTagClick = (event) => {
-        if (event) setModel(prev => ({ ...prev, typeModel: 'tag' }))
+    const linkTagClick = (e) => {
+        if (e) setModel(prev => ({ ...prev, typeModel: 'tag' }))
     }
 
     const handleClickHeader = (e) => {
@@ -36,8 +36,9 @@ const ContainerH = () => {
                 <h1>{title.header}</h1>
             </div>
             <div className="nav">
-                <div className="item-nav" onClick={(e) => { toggleVisibility(targetMap(['panel-right', 'tag']), e); linkTagClick(e) }}>
-                    <ButtonLink switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'right' })}
+                <div className="item-nav">
+                    <ButtonLink onClick={linkTagClick} target={targetMap(['panel-right', 'tag'])}
+                        switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'right' })}
                         link={`/${layoutComponent.page}/tag`} classBtn="button-link circle tag" icon="tag"
                     />
                 </div>
