@@ -10,7 +10,7 @@ const ModelCopy = ({ displayRef, region }) => {
 
     const display = displayRef ?? {
         sideAction: true,
-        type: 'mini-list' //Right now, is necessary only one style
+        type: 'mini-card'
     }
 
     useEffect(() => {

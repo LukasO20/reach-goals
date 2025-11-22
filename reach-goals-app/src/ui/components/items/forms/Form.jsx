@@ -39,7 +39,7 @@ const Form = (props) => {
         sourceForm: modelForm,
         display: {
             sideAction: true,
-            type: 'mini-list'
+            type: 'mini-card'
         }
     }
 

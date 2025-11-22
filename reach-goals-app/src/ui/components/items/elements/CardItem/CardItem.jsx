@@ -9,7 +9,7 @@ import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 
 import moment from 'moment'
 
-const renderCard = ({ type, model, clickFunction, display }, page) => {   
+const renderCard = ({ type, model, clickFunction, display }, page) => {      
     return model.map(model => (
         model && 
             <div className={`${type} ${display.type}`} id={model.id || model.tagID} key={model.id || model.tagID}
@@ -37,9 +37,12 @@ const renderCard = ({ type, model, clickFunction, display }, page) => {
                             </div>
                         </Link>
                         :
-                        <div className='head'>
+                    display.type === 'mini-card' ?
+                        <Link to={`/${page}/details`}>
                             <label className='line-info'>{iconMap[type]}<label>{model.name}</label></label>
-                        </div>
+                        </Link>
+                        :
+                        <label className='line-info'>{iconMap[type]}<label>{model.name}</label></label>
                 }
                 {
                     display.sideAction &&
@@ -68,7 +71,7 @@ const CardItem = (props) => {
         type: props.type || 'undefined',
         model: props.model || {},
         clickFunction: props.clickFunction || null,
-        display: props.display || { type: 'mini-list', sideAction: false }
+        display: props.display || { type: 'mini-card', sideAction: false }
     }
 
     return (renderCard(cardProps, layoutComponent.page))

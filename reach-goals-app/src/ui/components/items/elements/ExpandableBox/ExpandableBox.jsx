@@ -141,11 +141,11 @@ const ExpandableBox = () => {
                         :
                         configType === 'default' ?
                             <>
-                                <Goal display={{ type: 'mini-list' }} />
-                                <Assignment display={{ type: 'mini-list' }} />
+                                <Goal display={{ type: 'mini-card' }} />
+                                <Assignment display={{ type: 'mini-card' }} />
                             </>
                             :
-                            <ModelSwitcher type={configType} propsReference={{ display: { type: 'mini-list' } }} />
+                            <ModelSwitcher type={configType} propsReference={{ display: { type: 'mini-card' } }} />
                 }
             </div>
         </div>
