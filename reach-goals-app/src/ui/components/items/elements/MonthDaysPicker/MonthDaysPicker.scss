@@ -4,6 +4,7 @@
 div.calendar {
     display: flex;
     flex-direction: column;
+    height: 98%;
     background-color: $color-complementary-p-30;
     border: solid 1px $color-complementary-s-15;
     border-radius: 0.5rem;
@@ -24,6 +25,8 @@ div.calendar {
     .body {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+        height: 100%;
         gap: 0.5rem;
 
         .day {
@@ -31,7 +34,6 @@ div.calendar {
             flex-direction: column;
             align-items: center;
             gap: 0.15rem;
-            height: 5.4rem;
             overflow-x: hidden;
             text-align: center;
             font-weight: 600;
@@ -47,6 +49,39 @@ div.calendar {
                 width: 2rem;
             }
 
+            .mini-card {
+                width: 85%;
+                overflow: hidden;
+                transition: .3s ease-in-out;
+
+                >a {
+                    overflow: hidden;
+
+                    .line-info {
+                        overflow: hidden;
+                        gap: 0.15rem;
+
+                        >label {
+                            display: inline-block;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            font-size: 0.85rem;
+                            flex: 5;
+                        }
+
+                        >svg {
+                            height: 1rem;
+                            flex: 1;
+                        }
+                    }
+                }
+
+                &:hover {
+                    background-color: $color-complementary-p-15;
+                }
+            }
+
             &.today {
 
                 .title {
@@ -54,38 +89,6 @@ div.calendar {
                     color: $color-white;
                     padding: 0.15rem 0.5rem;
                     border-radius: 1rem;
-                }
-            }
-
-            .activity {
-                overflow: hidden;
-                background-color: $color-accent-p-15;
-                transition: 0.3s ease-out;
-                cursor: pointer;
-                border-radius: 0.35rem;
-                font-size: $font-size-mini;
-                width: 100%;
-
-                .activity-name {
-                    display: inline-block;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    width: 100%;
-                }
-
-                * {
-                    cursor: pointer;
-                }
-
-                &:hover {
-                    background-color: $color-accent-p-70;
-                    color: $color-white;
-                }
-
-                &:active {
-                    background-color: $color-primary-50;
-                    transition: 0.1s ease-out;
                 }
             }
         }

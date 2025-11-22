@@ -37,21 +37,24 @@ const ContainerM = () => {
     return (
         <div className='container-main' onClick={(e) => handleClickContainer(e)}>
             <div className='head'>
-                <div className='line-p'>
-                    <div className='title-m'>
-                        <h2>Your control panel</h2>
-                    </div>
-                    <div className='options-m'>
-                        <div className='visibility-m'>
-                            <ButtonDropdown target={targetMap('btn-visibility')} classBtn={`button-dropdown visibility plan ${visibleElements.includes('btn-visibility') && 'active'}`}
-                                title='visibility' icon={'monitor'} />
+                {
+                    layoutComponent.page !== 'calendar' &&
+                    <div className='line-p'>
+                        <div className='title-m'>
+                            <h2>Your control panel</h2>
                         </div>
-                        <div className='more-m'>
-                            <ButtonDropdown target={targetMap('btn-more')} classBtn={`button-dropdown more plan max-width ${visibleElements.includes('btn-more') && 'active'}`}
-                                icon='ellipsisv' />
+                        <div className='options-m'>
+                            <div className='visibility-m'>
+                                <ButtonDropdown target={targetMap('btn-visibility')} classBtn={`button-dropdown visibility plan ${visibleElements.includes('btn-visibility') && 'active'}`}
+                                    title='visibility' icon={'monitor'} />
+                            </div>
+                            <div className='more-m'>
+                                <ButtonDropdown target={targetMap('btn-more')} classBtn={`button-dropdown more plan max-width ${visibleElements.includes('btn-more') && 'active'}`}
+                                    icon='ellipsisv' />
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
                 <div className='line-s'>
                     <div className='filter'>
                         {
