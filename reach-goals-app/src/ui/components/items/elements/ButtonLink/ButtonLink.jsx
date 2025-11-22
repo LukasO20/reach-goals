@@ -15,12 +15,12 @@ const ButtonLink = (props) => {
 
     const handleClick = (e) => {
         e.stopPropagation()
-        
+
         if (props.switchLayout) switchLayoutComponent(props.switchLayout)
         if (props.target) toggleVisibility(props.target, e)
 
         if (props.onClick && typeof props.onClick === 'function') {
-           props.onClick({props, e}) // execute external function from 'onClick' external attribute    
+            props.onClick({ props, e }) // execute external function from 'onClick' external attribute    
         }
 
         navigate(`${props.link || '/'}`)
@@ -28,9 +28,10 @@ const ButtonLink = (props) => {
 
     return (
         <span className={props.classBtn} onClick={handleClick}>
-            {props.img ?
-                <img src={props.img} alt={props.imgAlt} /> :
-                iconMap[props.icon]
+            {
+                props.img ?
+                    <img src={props.img} alt={props.imgAlt} /> :
+                    iconMap[props.icon]
             }
         </span>
     )

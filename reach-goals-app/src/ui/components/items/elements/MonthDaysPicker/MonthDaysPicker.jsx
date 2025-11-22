@@ -8,6 +8,8 @@ import { weekNames } from '../../../../../utils/reference.js'
 import { formatDate } from '../../../../../utils/utils.js'
 import { switchLayoutMap, targetMap } from '../../../../../utils/mapping/mappingUtils.js'
 
+import CardItem from '../CardItem/CardItem.jsx'
+
 import './MonthDaysPicker.scss'
 
 import moment from 'moment'
@@ -29,10 +31,10 @@ const MonthDaysPicker = (props) => {
         return days
     }
 
-    const activityClick = ({ id, type }) => {
-        setModel(prev => ({ ...prev, mainModelID: id, typeModel: type }))
+    const activityClick = (model) => {
+        setModel(prev => ({ ...prev, mainModelID: model.id, formModel: model, typeModel: model.type }))
         switchLayoutComponent(switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'right' }))
-        toggleVisibility(targetMap(['panel-right', type]))
+        toggleVisibility(targetMap(['panel-right', model.type]))
     }
 
     const days = getDaysInMonth(year, month)
@@ -49,6 +51,10 @@ const MonthDaysPicker = (props) => {
                 }
             )) : []
     )
+
+    const clickEvents = {
+        card: activityClick,
+    }
 
     return (
         <div className='calendar'>
@@ -70,21 +76,21 @@ const MonthDaysPicker = (props) => {
                 }
                 {
                     //Render actual days
-                    days.map(day => (                       
+                    days.map(day => (
                         <div key={day.toISOString()} day={day.getDate()} className={`day ${new Date().toDateString() === day.toDateString() ? 'today' : ''}`}>
                             <span className='title'>
                                 {day.getDate()}
                             </span>
                             {
-                                modelsCalendar.map(model => {
-                                    //Filter models that start on this day
-                                    return (
-                                        model.start ===  moment(day).format('DD/MM/YYYY') &&
-                                        <div key={model.id} className='activity' onClick={() => activityClick(model)}>
-                                            <label className='activity-name'>{model.name}</label>                                           
-                                        </div>
-                                    )
-                                })
+                                <CardItem
+                                    model={modelsCalendar.filter(model =>
+                                        model.start === moment(day).format('DD/MM/YYYY')
+                                    )}
+                                    type={modelsCalendar.filter(model =>
+                                        model.start === moment(day).format('DD/MM/YYYY')
+                                    ).map(model => model.type)}
+                                    display={{ type: 'mini-card' }}
+                                    clickFunction={clickEvents}/>
                             }
                         </div>
                     ))
