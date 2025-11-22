@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useContext } from 'react'
 
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
@@ -15,11 +15,11 @@ import './MonthDaysPicker.scss'
 import moment from 'moment'
 
 const MonthDaysPicker = (props) => {
-    const [year] = useState(new Date().getFullYear())
-    const [month, setMonth] = useState(new Date().getMonth())
     const { setModel } = useContext(ManageModelContext)
     const { toggleVisibility } = useContext(VisibilityContext)
     const { layoutComponent, switchLayoutComponent } = useSwitchLayout()
+    const year = new Date().getFullYear()
+    const month = new Date().getMonth()
 
     const getDaysInMonth = (year, month) => {
         const date = new Date(year, month, 1)
@@ -31,7 +31,9 @@ const MonthDaysPicker = (props) => {
         return days
     }
 
-    const activityClick = (model) => {
+    const activityClick = (model, e) => {
+        e.stopPropagation()
+
         setModel(prev => ({ ...prev, mainModelID: model.id, formModel: model, typeModel: model.type }))
         switchLayoutComponent(switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'right' }))
         toggleVisibility(targetMap(['panel-right', model.type]))
@@ -90,7 +92,7 @@ const MonthDaysPicker = (props) => {
                                         model.start === moment(day).format('DD/MM/YYYY')
                                     ).map(model => model.type)}
                                     display={{ type: 'mini-card' }}
-                                    clickFunction={clickEvents}/>
+                                    clickFunction={clickEvents} />
                             }
                         </div>
                     ))

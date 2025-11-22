@@ -42,7 +42,7 @@ const renderCard = ({ type, model, clickFunction, display }, page) => {
                             <label className='line-info'>{iconMap[type]}<label>{model.name}</label></label>
                         </Link>
                         :
-                        <label className='line-info'>{iconMap[type]}<label>{model.name}</label></label>
+                        null
                 }
                 {
                     display.sideAction &&
