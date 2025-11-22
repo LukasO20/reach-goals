@@ -54,7 +54,10 @@ const switchSectionLayout = (model, type, handleClickButtonAction) => {
                 <>
                     <div className='header'>
                         <h2>{model?.name}</h2>
-                        <h4>{`Schedule to end on ${model?.end && moment(model.end).format('MMMM DD')}`}</h4>
+                        {
+                            model?.end &&
+                            <h4>{`Schedule to end on ${moment(model.end).format('MMMM DD')}`}</h4>
+                        }
                         {renderButtonAction}
                     </div>
                     <div className='body'>
