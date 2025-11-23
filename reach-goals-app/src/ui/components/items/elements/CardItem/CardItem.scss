@@ -2,31 +2,26 @@
 
 .card {
     display: flex;
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: 0.75rem;
     padding: 1rem;
     border: 3.25px solid transparent;
     border-radius: 0.5rem;
     background-color: $color-white;
     margin: 0.5rem 0rem;
 
-    &:hover {
-        border-color: $color-accent-p-30;
-    }
+    .head {
 
-    >a {
-        flex: 1;
-        text-decoration: none;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        cursor: pointer;
-
-        * {
-            cursor: pointer;
-        }
-
-        .head {
+        >a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
             color: $color-complementary-s;
+
+            * {
+                cursor: pointer;
+            }
 
             .line-info {
                 display: flex;
@@ -42,15 +37,72 @@
                     flex: 1;
                 }
             }
+
+            .tag-box {
+                display: flex;
+                overflow: hidden;
+                gap: 0.25rem;
+
+                >label {
+                    display: inline-block;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    line-height: 1.45rem;
+                    height: 1.5rem;
+                    width: 3.5rem;
+                    border-radius: 0.5rem;
+                    padding: 0rem 0.35rem;
+                    font-weight: 500;
+                    font-size: 0.95rem;
+                }
+
+                .count {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: 600;
+                    height: 1.5rem;
+                    width: 2.5rem;
+                    border-radius: 2rem;
+                    background-color: $color-complementary-p-50;
+                    color: $color-complementary-s;
+
+                    .icon-st {
+                        height: 1.1rem;
+                    }
+                }
+            }
+        }
+    }
+
+    .body {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        color: $color-complementary-s-70;
+        max-height: 8rem;
+        overflow: hidden;
+
+        .line-info {
+
+            &.date {
+                flex: 2;
+                display: flex;
+                color: $color-complementary-s-70;
+                font-size: 0.85rem;
+                font-weight: 600;
+
+                .icon-st {
+                    height: 1rem;
+                }
+            }
         }
 
-        .body {
+        .item {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             gap: 0.5rem;
-            color: $color-complementary-s-70;
-            max-height: 8rem;
-            overflow: hidden;
 
             .line-info {
                 font-weight: 500;
@@ -60,31 +112,49 @@
                 text-overflow: ellipsis;
                 overflow: hidden;
 
-                &.date {
-                    flex: 2;
-                    color: $color-complementary-s-70;
-                    font-size: 0.85rem;
-                    font-weight: 600;
-
-                    .icon-st {
-                        height: 1rem;
-                    }
-                }
-
                 &.description {
                     display: -webkit-box;
                     -webkit-box-orient: vertical;
                     -webkit-line-clamp: 5;
+                    font-weight: 500;
+                }
+            }
+
+            .side-actions {
+                display: flex;
+                align-items: end;
+                justify-content: start;
+                gap: 0.5rem;
+                opacity: 0;
+                transition: .1s ease-in-out;
+
+                .item-actions {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    align-items: end;
+                    height: 100%;
+                    gap: 0.5rem;
+
+                    .item {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                    }
                 }
             }
         }
     }
 
-    .side-actions {
-        display: flex;
-        align-items: end;
-        justify-content: end;
-        gap: 0.5rem;
+    &:hover {
+        border-color: $color-accent-p-30;
+
+        .body {
+
+            .side-actions {
+                opacity: 1;
+            }
+        }
     }
 }
 
@@ -99,16 +169,8 @@
     color: $color-complementary-s;
 
     >a {
-        flex: 1;
         text-decoration: none;
-        display: flex;
-        gap: 0.5rem;
-        cursor: pointer;
-
-        * {
-            cursor: pointer;
-            color: $color-complementary-s;
-        }
+        color: $color-complementary-s;
 
         .line-info {
             display: flex;
