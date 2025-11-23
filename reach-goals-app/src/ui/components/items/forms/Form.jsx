@@ -24,13 +24,7 @@ const Form = (props) => {
     const isModalList = visibleElements.some(classItem => classItem === 'modal-list-goal' || classItem === 'modal-list-assignment')
     const isModalTagList = visibleElements.some(classItem => classItem === 'modal-list-tag')
 
-    const titleMap = {
-        assignment: `${typeof modelForm.id === 'number' ? 'Edit' : 'Create'} your assignment`,
-        goal: `${typeof modelForm.id === 'number' ? 'Edit' : 'Create'} your goal`
-    }
-
     const icon = iconMap[typeForm] || 'fa-solid fa-triangle-exclamation'
-    const titleForm = titleMap[typeForm] || 'Create your objective'
 
     const modelSwitcherRelation = typeForm === 'goal' ? 'goal-relation' : null
     const modelCopyRelation = typeForm === 'goal' ? 'assignment' : null
@@ -99,7 +93,6 @@ const Form = (props) => {
                     </div>
                     <div className='body'>
                         <form className='scrollable'>
-                            <h2>{titleForm}</h2>
                             <div className='fields'>
                                 <div className='field-forms name'>
                                     <label>{iconMap['editbox']}<span>name</span></label>
@@ -179,7 +172,7 @@ const Form = (props) => {
                         </form>
                     </div>
                     <div className='bottom'>
-                        <ButtonAction onClick={functionsForm.mapHandleSubmit} classBtn='button-action plan max-width save' icon='save' title='Save' />
+                        <ButtonAction onClick={functionsForm.mapHandleSubmit} classBtn='button-action plan max-width save' icon='save' title={typeof model.mainModelID === 'number' ? 'Save' : 'Create'} />
                     </div>
                     {
                         isModalList === true ? <ModalList title={`Assign ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} type={typeForm} from={'form'} exFunction={functionsForm.mapHandleChange} /> : null
