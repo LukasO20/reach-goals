@@ -9,7 +9,7 @@ import ButtonAction from '../ButtonAction/ButtonAction'
 
 import './MessageToast.scss'
 
-const MessageToast = (props) => {
+const MessageToast = () => {
     const [toastReady, setToastReady] = useState(false)
     const { title, update } = useTitle()
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)

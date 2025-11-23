@@ -7,7 +7,7 @@
     height: 100%;
     gap: 0.5rem;
 
-    > .head {
+    >.head {
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
@@ -21,19 +21,28 @@
         }
 
         /* DOUBLE APPLY */
-        .title, h2, .options {
+        .title,
+        h2,
+        .options {
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
     }
 
-    > .body {
+    >.body {
         position: relative;
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
         flex: 1;
         overflow-y: auto;
+
+        .mini-card {
+
+            &:hover {
+                background-color: $color-complementary-p-50;
+            }
+        }
     }
 }

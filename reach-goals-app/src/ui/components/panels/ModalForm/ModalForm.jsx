@@ -175,7 +175,9 @@ const ModalForm = (props) => {
     useEffect(() => {
         if (saveGoalSuccess || saveAssignmentSuccess || saveTagSuccess) {
             const messageToastSupport = typeof model.formModel.id === 'number' ? 'updated' : 'created'
-            update({ toast: `${typeForm} ${messageToastSupport} with success` })
+            const type = saveGoalSuccess ? 'Goal' : saveAssignmentSuccess ? 'Assignment' : 'Tag'
+
+            update({ toast: `${type} ${messageToastSupport} with success` })
         }
     }, [saveGoalSuccess, saveAssignmentSuccess, saveTagSuccess])
 
