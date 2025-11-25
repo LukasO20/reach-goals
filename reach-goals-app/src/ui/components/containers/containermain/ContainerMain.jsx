@@ -45,11 +45,11 @@ const ContainerM = () => {
                         </div>
                         <div className='options-m'>
                             <div className='visibility-m'>
-                                <ButtonDropdown target={targetMap('btn-visibility')} classBtn={`button-dropdown visibility plan ${visibleElements.includes('btn-visibility') && 'active'}`}
+                                <ButtonDropdown target={targetMap('btn-visibility')} classBtn={`visibility plan ${visibleElements.includes('btn-visibility') && 'active'}`}
                                     title='visibility' icon={'monitor'} />
                             </div>
                             <div className='more-m'>
-                                <ButtonDropdown target={targetMap('btn-more')} classBtn={`button-dropdown more plan max-width ${visibleElements.includes('btn-more') && 'active'}`}
+                                <ButtonDropdown target={targetMap('btn-more')} classBtn={`more plan max-width ${visibleElements.includes('btn-more') && 'active'}`}
                                     icon='ellipsisv' />
                             </div>
                         </div>

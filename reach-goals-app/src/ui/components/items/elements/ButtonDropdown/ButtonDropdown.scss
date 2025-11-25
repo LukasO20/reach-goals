@@ -7,6 +7,7 @@
     user-select: none;
     width: 5.85rem;
     z-index: 1;
+    transition: 0.3s ease-out;
 
     >span {
         display: flex;
@@ -55,6 +56,31 @@
                 width: 8rem;
                 justify-content: flex-start;
             }
+        }
+    }
+
+    &.circle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        height: 2.4rem;
+        width: 2.4rem;
+        background-color: $color-complementary-p-50;
+        color: $color-complementary-s;
+
+        &.small {
+            height: 1.8rem;
+            width: 1.8rem;
+
+            .icon-st {
+                height: 1rem;
+            }
+        }
+
+        &.close {
+            height: 1.8rem;
+            width: 1.8rem;
         }
     }
 

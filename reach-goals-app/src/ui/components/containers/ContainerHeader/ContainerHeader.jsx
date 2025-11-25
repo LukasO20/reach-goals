@@ -7,15 +7,16 @@ import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
 
-import { targetMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
+import { targetMap, switchLayoutMap, iconMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import ButtonLink from '../../items/elements/ButtonLink/ButtonLink.jsx'
+import ButtonDropdown from '../../items/elements/ButtonDropdown/ButtonDropdown.jsx'
 
 import './ContainerHeader.scss'
 
 const ContainerH = () => {
     const { title } = useTitle()
-    const { toggleVisibility } = useContext(VisibilityContext)
+    const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { setModel, resetManageModel } = useContext(ManageModelContext)
     const { layoutComponent } = useSwitchLayout()
     const navigate = useNavigate()
@@ -31,19 +32,20 @@ const ContainerH = () => {
     }
 
     return (
-        <div className="container-header main-content" onClick={(e) => handleClickHeader(e)}>
-            <div className="titles-header">
+        <div className='container-header main-content' onClick={(e) => handleClickHeader(e)}>
+            <div className='titles-header'>
                 <h1>{title.header}</h1>
             </div>
-            <div className="nav">
-                <div className="item-nav">
+            <div className='nav'>
+                <div className='item-nav'>
                     <ButtonLink onClick={linkTagClick} target={targetMap(['panel-right', 'tag'])}
                         switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'right' })}
-                        link={`/${layoutComponent.page}/tag`} classBtn="button-link circle tag" icon="tag"
+                        link={`/${layoutComponent.page}/tag`} classBtn='button-link circle tag' icon='tag'
                     />
                 </div>
                 <div className='item-nav'>
-                    <ButtonLink classBtn="button-link circle theme" icon="themes" />
+                    <ButtonDropdown target={targetMap('btn-themes')} icon='themes'
+                        classBtn={`circle themes ${visibleElements.includes('btn-themes') ? 'active' : ''}`} />
                 </div>
             </div>
         </div>
