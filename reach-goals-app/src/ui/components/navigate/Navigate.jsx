@@ -12,7 +12,7 @@ import ButtonLink from '../items/elements/ButtonLink/ButtonLink.jsx'
 import '../navigate/Navigate.scss'
 
 const Navigate = () => {
-    const { toggleVisibility } = useContext(VisibilityContext)
+    const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { layoutComponent } = useSwitchLayout()
     const navigate = useNavigate()
 
@@ -39,7 +39,8 @@ const Navigate = () => {
                     <ButtonLink link={'/objectives'} classBtn={`button-action circle objectives ${isObjectivesPage && 'active'}`} icon="objectives" />                
                 </div>
                 <div className="item-nav">
-                    <ButtonAction target={targetMap(['panel-center', 'config'])} switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'center' })} classBtn='button-action circle config' icon='config' />
+                    <ButtonAction target={targetMap(['panel-center', 'config'])} classBtn={`button-action circle config ${visibleElements.includes('config') ? 'active' : ''}`} icon='config'
+                        switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'center' })} />
                 </div>
             </div>
         </div>

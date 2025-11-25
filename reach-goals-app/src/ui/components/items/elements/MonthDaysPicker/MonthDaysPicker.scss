@@ -53,9 +53,14 @@ div.calendar {
                 width: 85%;
                 overflow: hidden;
                 transition: .3s ease-in-out;
+                cursor: pointer;
 
                 >a {
                     overflow: hidden;
+
+                    * {
+                        cursor: pointer;
+                    }
 
                     .line-info {
                         overflow: hidden;

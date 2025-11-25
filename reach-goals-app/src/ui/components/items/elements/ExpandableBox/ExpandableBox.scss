@@ -39,9 +39,18 @@
         overflow-y: auto;
 
         .mini-card {
+            cursor: pointer;
+
+            * {
+                cursor: pointer;
+            }
 
             &:hover {
                 background-color: $color-complementary-p-50;
+            }
+
+            &:active {
+                background-color: $color-complementary-s-30
             }
         }
     }

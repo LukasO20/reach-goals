@@ -102,6 +102,7 @@ export const iconMap = {
     cancel: <Unicons.UilTimesCircle className='icon-st' />,
     save: <Unicons.UilSave className='icon-st' />,
     progress: <Unicons.UilSpinnerAlt className='icon-st' />,
+    icons: <Unicons.UilIcons className='icon-st' />,
     undefined: <Unicons.UilExclamationOctagon className='icon-st' />
 }
 

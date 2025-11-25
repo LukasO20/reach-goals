@@ -13,7 +13,7 @@ import ModelSwitcher from '../../models/ModelSwitcher.jsx'
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 import Loading from '../Loading/Loading.jsx'
 
-import '../ExpandableBox/ExpandableBox.scss'
+import './ExpandableBox.scss'
 
 const boxConfigs = (type) => {
     const goal = [
@@ -123,7 +123,7 @@ const ExpandableBox = () => {
                 {
                     <>
                         <div className='title'>
-                            <h2>{iconMap[configType]}{configType}</h2>
+                            <h2>{iconMap[configType === 'default' ? 'icons' : configType]}{configType}</h2>
                         </div>
                         <div className='options'>
                             {
