@@ -13,6 +13,7 @@ import '../Home/Home.scss'
 import Goal from '../../items/models/Goal/Goal.jsx'
 import Assignment from '../../items/models/Assignment/Assignment.jsx'
 import Loading from '../../items/elements/Loading/Loading.jsx'
+import ChartPie from '../../items/elements/ChartPie/ChartPie.jsx'
 
 const Home = () => {
     const { update } = useTitle()
