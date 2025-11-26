@@ -32,6 +32,7 @@ const ContainerM = () => {
 
     const isSwitchLayoutAssignment = layoutComponent[layoutComponent.page]?.layout === 'assignment'
     const isSwitchLayoutGoal = layoutComponent[layoutComponent.page]?.layout === 'goal'
+    const isSwichPieChart = layoutComponent[layoutComponent.page]?.layout === 'pie-chart'
     const isSwitchLayoutActivities = layoutComponent[layoutComponent.page]?.layout === 'default'
 
     return (
@@ -62,10 +63,6 @@ const ContainerM = () => {
                             <ButtonCheckbox checkbox={checkboxMap({ id: 'checkbox-m', value: false })} classBtn='checkbox-m btn-checkbox' />
                         }
                         {
-                            layoutComponent.page === 'home' &&
-                            <ButtonAction classBtn='button-show-m chart' icon='chartbar' />
-                        }
-                        {
                             layoutComponent.page === 'calendar' &&
                             <div className='month-picker'>
                                 <span className='month-name'>{monthNames[new Date().getMonth()]}</span>
@@ -73,16 +70,24 @@ const ContainerM = () => {
                             </div>
                         }
                         <SearchBar />
-                        <ButtonAction classBtn={`button-action plan-round max-width goal ${isSwitchLayoutGoal && 'active'}`} title='goals'
+                        <ButtonAction classBtn={`button-action plan-round max-width goal ${isSwitchLayoutGoal ? 'active' : ''}`} title='goals'
                             switchLayout={switchLayoutMap({ page: layoutComponent.page, name: layoutComponent.page, layout: 'layout', value: 'goal' })}
                         />
-                        <ButtonAction classBtn={`button-action plan-round max-width assignment ${isSwitchLayoutAssignment && 'active'}`} title='assignments'
+                        <ButtonAction classBtn={`button-action plan-round max-width assignment ${isSwitchLayoutAssignment ? 'active' : ''}`} title='assignments'
                             switchLayout={switchLayoutMap({ page: layoutComponent.page, name: layoutComponent.page, layout: 'layout', value: 'assignment' })}
                         />
-                        {(layoutComponent.page === 'objectives' || layoutComponent.page === 'calendar') &&
-                            <ButtonAction classBtn={`button-action plan-round max-width all-activities ${isSwitchLayoutActivities && 'active'}`} title='all activities'
+                        {
+                            layoutComponent.page === 'home' &&
+                            <ButtonAction classBtn={`button-action plan-round max-width pie-chart ${isSwitchLayoutActivities ? 'active' : ''}`} icon='chartbar'
+                                switchLayout={switchLayoutMap({ page: layoutComponent.page, name: layoutComponent.page, layout: 'layout', value: 'pie-chart' })} 
+                            />
+                        }
+                        {
+                            (layoutComponent.page === 'objectives' || layoutComponent.page === 'calendar') &&
+                            <ButtonAction classBtn={`button-action plan-round max-width all-activities ${isSwitchLayoutActivities ? 'active' : ''}`} title='all activities'
                                 switchLayout={switchLayoutMap({ page: layoutComponent.page, name: layoutComponent.page, layout: 'layout', value: 'default' })}
-                            />}
+                            />
+                        }
                     </div>
                     <div className='action'>
                         <ButtonDropdown target={targetMap('btn-action-order')} classBtn={`order plan ${visibleElements.includes('btn-action-order') && 'active'}`}

@@ -88,6 +88,10 @@
         font-weight: 600;
     }
 
+    &.pie-chart {
+        gap: 0rem;
+    }
+
     /* Double application */
     &:hover,
     &.active {

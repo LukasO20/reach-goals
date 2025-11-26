@@ -7,7 +7,7 @@ export const SwitchLayoutProvider = ({ children }) => {
         return {
             page: 'home',
             home: {
-                layout: 'goal'
+                layout: 'goal',
             },
             calendar: {
                 layout: 'default'
