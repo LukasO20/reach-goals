@@ -32,19 +32,28 @@ const Home = () => {
     }, [])
 
     useEffect(() => {
-        const filter = currentLayout === 'assignment' ?
-            filterGetModelMap({
-                notGoalRelation: 'all',
-                type: currentLayout,
-                source: 'core'
-            }, currentLayout, 'core')
-            :
-            filterGetModelMap({
-                goalSomeID: 'all',
-                type: currentLayout,
-                source: 'core'
-            }, currentLayout, 'core')
-        updateFilterModel(filter, currentLayout, 'page')
+        if (currentLayout === 'goal' || currentLayout === 'assignment') {
+            const key = currentLayout === 'assignment' ? 'notGoalRelation' : 'goalSomeID'
+            const filter = filterGetModelMap(
+                {[key]: 'all', type: currentLayout, source: 'core' },
+                currentLayout,
+                'core'
+            )
+            updateFilterModel(filter, currentLayout, 'page')
+        }
+
+        if (currentLayout === 'pie-chart') {
+            const filterGoal = filterGetModelMap({
+                goalSomeID: 'all', type: 'goal', source: 'core'
+            }, 'goal', 'core')
+
+            const filterAssignment = filterGetModelMap({
+                assignmentSomeID: 'all', type: 'assignment', source: 'core'
+            }, 'assignment', 'core')
+
+            updateFilterModel(filterGoal, 'goal', 'page')
+            updateFilterModel(filterAssignment, 'assignment', 'page')
+        }
     }, [currentLayout])
 
     return (
@@ -52,7 +61,7 @@ const Home = () => {
             <Loading />
             :
             currentLayout === 'pie-chart' ?
-                <ContainerChartPie models={pieData} />
+                <ContainerChartPie data={pieData}/>
                 :
                 <ContainerColumn modelLayout={currentLayout} />
     )

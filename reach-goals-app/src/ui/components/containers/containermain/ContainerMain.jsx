@@ -78,7 +78,7 @@ const ContainerM = () => {
                         />
                         {
                             layoutComponent.page === 'home' &&
-                            <ButtonAction classBtn={`button-action plan-round max-width pie-chart ${isSwitchLayoutActivities ? 'active' : ''}`} icon='chartbar'
+                            <ButtonAction classBtn={`button-action plan-round max-width pie-chart ${isSwichPieChart ? 'active' : ''}`} icon='chartbar'
                                 switchLayout={switchLayoutMap({ page: layoutComponent.page, name: layoutComponent.page, layout: 'layout', value: 'pie-chart' })} 
                             />
                         }
