@@ -29,7 +29,7 @@
 
                 &:nth-child(1) {
 
-                    .head-column {
+                    >.head {
                         background-color: $color-complementary-s-15;
                         color: $color-complementary-s;
                     }
@@ -37,19 +37,19 @@
 
                 &:nth-child(2) {
 
-                    .head-column {
+                    >.head {
                         color: $color-complementary-s;
                     }
                 }
 
                 &:nth-child(3) {
 
-                    .head-column {
+                    >.head {
                         color: $color-complementary-s;
                     }
                 }
 
-                .head-column {
+                >.head {
                     height: 3rem;
                     display: flex;
                     align-items: center;
@@ -61,12 +61,32 @@
                     }
                 }
 
-                .body-column {
+                >.body {
                     height: 85%;
                     padding: 0rem 0.5em;
                     overflow-y: auto;
                 }
             }
+        }
+    }
+}
+
+.chart-pie {
+
+    &.home {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+
+        .head {
+            flex: 1;
+        }
+
+        .body {
+            flex: 10;
+            width: 100%;
         }
     }
 }

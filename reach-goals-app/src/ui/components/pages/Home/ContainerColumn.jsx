@@ -10,10 +10,10 @@ const ContainerColumn = (props) => {
         <div className='column home'>
             <div className='itens'>
                 <div className='itens-progress column'>
-                    <div className='head-column'>
+                    <div className='head'>
                         {iconMap['progress']}<label>in progress</label>
                     </div>
-                    <div className='body-column scrollable'>
+                    <div className='body scrollable'>
                         <div className='list'>
                             {
                                 currentLayout === 'goal' ?
@@ -25,10 +25,10 @@ const ContainerColumn = (props) => {
                     </div>
                 </div>
                 <div className='itens-conclude column scrollable'>
-                    <div className='head-column'>
+                    <div className='head'>
                         {iconMap['check']}<label>conclude</label>
                     </div>
-                    <div className='body-column'>
+                    <div className='body'>
                         <div className='list'>
                             {
                                 currentLayout === 'goal' ?
