@@ -28,10 +28,10 @@ const exportDataPie = (datapie) => {
 
 const ContainerChartPie = (props) => {
     const [dataPie, setDataPie] = useState(standardPieData)
-    const data = props.data
+    const chartData = exportDataPie(dataPie)
 
     useEffect(() => {
-        const { goal = [], assignment = [] } = data || {}
+        const { goal = [], assignment = [] } = props.data || {}
 
         if (goal.length && assignment.length) {
             setDataPie(prevData => (
@@ -50,13 +50,13 @@ const ContainerChartPie = (props) => {
                 }
             ))
         }
-    }, [data])
+    }, [])
 
     return (
         <div className='chart-pie home'>
             <div className='head'></div>
             <div className='body'>
-                <ChartPie data={exportDataPie(dataPie)} />
+                <ChartPie data={chartData} />
             </div>
         </div>
     )
