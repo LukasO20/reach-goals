@@ -1,0 +1,27 @@
+.react-datepicker {
+
+    .react-datepicker__month-container {
+
+        div[role="table"] {
+            display: flex;
+            flex-direction: column;
+
+            .react-datepicker__day-names {
+                display: flex;
+                gap: 0.25rem;
+
+                div[role="columnheader"] {
+
+                    .react-datepicker__sr-only {
+                        display: none;
+                    }
+                }
+            }
+
+            .react-datepicker__month {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+            }
+        }
+    }
+}

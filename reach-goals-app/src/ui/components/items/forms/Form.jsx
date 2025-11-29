@@ -5,6 +5,8 @@ import ButtonAction from '../elements/ButtonAction/ButtonAction.jsx'
 import ButtonDropdown from '../elements/ButtonDropdown/ButtonDropdown.jsx'
 import ModelSwitcher from '../models/ModelSwitcher.jsx'
 import ModelCopy from '../models/ModelCopy.jsx'
+import InputDate from '../elements/InputDate/InputDate.jsx'
+import InputTimer from '../elements/InputTimer/InputTimer.jsx'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
@@ -98,6 +100,9 @@ const Form = (props) => {
                                     <label>{iconMap['editbox']}<span>name</span></label>
                                     <input id={`${typeForm}-name`} className='input-form' type='text' placeholder={`${typeForm} name`}
                                         name='name' value={modelForm?.name || ''} onChange={functionsForm.mapHandleChange} />
+                                </div>
+                                <div>
+                                    <InputDate />
                                 </div>
                                 <div className='field-forms start-date'>
                                     <label>{iconMap['schedule']}<span>start date</span></label>
