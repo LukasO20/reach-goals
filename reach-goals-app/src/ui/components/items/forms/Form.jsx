@@ -101,18 +101,13 @@ const Form = (props) => {
                                     <input id={`${typeForm}-name`} className='input-form' type='text' placeholder={`${typeForm} name`}
                                         name='name' value={modelForm?.name || ''} onChange={functionsForm.mapHandleChange} />
                                 </div>
-                                <div>
-                                    <InputDate />
-                                </div>
                                 <div className='field-forms start-date'>
                                     <label>{iconMap['schedule']}<span>start date</span></label>
-                                    <input id={`${typeForm}-start-date`} className='input-form' type='text' placeholder='set dd/mm/yyyy'
-                                        name='start' value={modelForm?.start || ''} onChange={functionsForm.mapHandleChange} />
+                                    <InputDate id={`${typeForm}-start-date`} name='start' selected={modelForm?.start} onChange={functionsForm.mapHandleChange} />
                                 </div>
                                 <div className='field-forms end-date'>
                                     <label>{iconMap['schedule']}<span>end date</span></label>
-                                    <input id={`${typeForm}-end-date`} className='input-form' type='text' placeholder='set dd/mm/yyyy'
-                                        name='end' value={modelForm?.end || ''} onChange={functionsForm.mapHandleChange} />
+                                    <InputDate id={`${typeForm}-end-date`} name='end' selected={modelForm?.end} onChange={functionsForm.mapHandleChange} />
                                 </div>
                                 {
                                     typeForm === 'assignment' &&

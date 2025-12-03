@@ -91,11 +91,11 @@ const ModalForm = (props) => {
             }
 
             //Format object when is necessary
-            const formatted = { ...update, ...formatDate(update) }
+            //const formatted = { ...update, ...formatDate(update) }
 
             setModel(prevModel => ({
                 ...prevModel,
-                formModel: formatted
+                formModel: update
             }))
         } else if (typeForm === 'assignment') {
 
