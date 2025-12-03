@@ -1,20 +1,26 @@
-import { useState } from 'react'
 import { DatePicker } from 'react-datepicker'
 
 import './InputDate.scss'
 
-const InputDate = () => {
-    const [startDate, setStartDate] = useState(new Date())
+const InputDate = (props) => {
+    const handleChange = (newDate) => {
+        if (typeof props.onChange === 'function' && newDate instanceof Date) {
+            const fakeTarget = { target: { name: props.name, value: newDate } }
+            props.onChange({ ...fakeTarget }) // execute external function from 'onChange' external attribute    
+        }
+    }
 
     return (
         <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+            {...props}
+            selected={props.selected ? new Date(props.selected) : null}
+            onChange={handleChange}
             formatWeekDay={(nameOfDay) => {
                 return nameOfDay.substring(0, 3).toUpperCase()
             }}
             dateFormat='dd/MM/yyyy'
-            placeholderText='Escolha a data'
+            placeholderText='set dd/mm/yyyy'
+            className='input-form'
         />
     )
 }
