@@ -1,21 +1,33 @@
 import { useState } from 'react'
-import DurationPicker from 'react-duration-picker'
+import moment from 'moment'
 
-const InputTimer = () => {
-  const [duration, setDuration] = useState({ hours: 0, minutes: 0, seconds: 0 })
+const InputTimer = ({ name, onChange }) => {
+  const [value, setValue] = useState('')
+
+  const handleChange = (e) => {
+    setValue(e.target.value)
+
+    const m = moment(e.target.value, 'HH:mm:ss', true)
+
+    if (m.isValid()) {
+      const totalMinutes = m.hours() * 60 + m.minutes() + Math.floor(m.seconds() / 60)
+
+      if (typeof onChange === 'function') {
+        const fakeTarget = { target: { name, value: totalMinutes } }
+        onChange(fakeTarget)
+      }
+    }
+  }
 
   return (
-    <div>
-      <DurationPicker
-        onChange={(newDuration) => setDuration(newDuration)}
-        initialDuration={duration}
-        maxHours={72}
-        showSeconds={false}
-      />
-      <p>
-        Time ready: {duration.hours}h {duration.minutes}m
-      </p>
-    </div>
+    <input
+      type='text'
+      name={name}
+      value={value}
+      onChange={handleChange}
+      placeholder='hh:mm:ss'
+      autoComplete='off'
+    />
   )
 }
 

@@ -113,8 +113,8 @@ const Form = (props) => {
                                     typeForm === 'assignment' &&
                                     <div className='field-forms duration'>
                                         <label>{iconMap['clock']}<span>duration</span></label>
-                                        <input id={`${typeForm}-duration`} onChange={functionsForm.mapHandleChange} value={model?.duration}
-                                            className='input-form' type="text" placeholder='set duration' name='duration' />
+                                        <InputTimer id={`${typeForm}-duration`} className='input-form' name='duration'
+                                            onChange={functionsForm.mapHandleChange} value={model?.duration} />
                                     </div>
                                 }
                                 <div className='field-forms status'>

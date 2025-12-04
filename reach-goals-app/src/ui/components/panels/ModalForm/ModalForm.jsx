@@ -9,7 +9,6 @@ import { useTagProvider } from '../../../../provider/model/TagModelProvider.jsx'
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
 
 import { targetMap } from '../../../../utils/mapping/mappingUtils.js'
-import { formatDate } from '../../../../utils/utils.js'
 
 import Form from '../../items/forms/Form.jsx'
 import Loading from '../../items/elements/Loading/Loading.jsx'
