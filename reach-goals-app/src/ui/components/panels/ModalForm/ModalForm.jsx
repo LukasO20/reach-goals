@@ -90,9 +90,6 @@ const ModalForm = (props) => {
                 tags: [...tagsRelation]
             }
 
-            //Format object when is necessary
-            //const formatted = { ...update, ...formatDate(update) }
-
             setModel(prevModel => ({
                 ...prevModel,
                 formModel: update
@@ -106,12 +103,9 @@ const ModalForm = (props) => {
                 tags: [...tagsRelation]
             }
 
-            //Format object when is necessary
-            const formatted = { ...update, ...formatDate(update) }
-
             setModel(prevModel => ({
                 ...prevModel,
-                formModel: formatted
+                formModel: update
             }))
         } else {
 
