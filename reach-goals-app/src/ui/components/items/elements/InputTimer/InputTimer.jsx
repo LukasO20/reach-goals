@@ -1,8 +1,15 @@
-import { useState } from 'react'
-import moment from 'moment'
+import { useState, useEffect } from 'react'
 
-const InputTimer = ({ value, name, onChange }) => {
+const InputTimer = (props) => {
   const [valueTimer, setValueTimer] = useState('')
+
+  const minutesToTime = (minutes) => {
+    if (!minutes && minutes !== 0) return ''
+    const hh = String(Math.floor(minutes / 60)).padStart(2, '0')
+    const mm = String(minutes % 60).padStart(2, '0')
+    const ss = '00'
+    return `${hh}:${mm}:${ss}`
+  }
 
   const toMinutes = (timeStr) => {
     if (!timeStr) return 0
@@ -10,11 +17,8 @@ const InputTimer = ({ value, name, onChange }) => {
     return parseInt(hh, 10) * 60 + parseInt(mm, 10) + Math.floor(parseInt(ss, 10) / 60)
   }
 
-  const maskTimer = (target) => {
-    if (!target) return
-
-    let raw = target.value.replace(/\D/g, '')
-    if (raw.length > 6) raw = raw.slice(0, 6)
+  const handleChange = ({ target }) => {
+    const raw = target.value.replace(/\D/g, '').slice(0, 6)
 
     let hh = raw.slice(0, 2)
     let mm = raw.slice(2, 4)
@@ -29,25 +33,27 @@ const InputTimer = ({ value, name, onChange }) => {
     if (ss) formatted += ':' + ss
 
     setValueTimer(formatted)
-  }
 
-  const handleChange = ({ target }) => {
-    if (!target) return
-
-    maskTimer(target)
-
-    if (typeof onChange === 'function') {
-      const fakeTarget = { target: { name, value: toMinutes(valueTimer) } }
-      onChange({ ...fakeTarget }) // execute external function from 'onChange' external attribute     
+    if (typeof props.onChange === 'function') {
+      props.onChange({
+        target: { name: props.name, value: toMinutes(formatted) }
+      })
     }
   }
-  
-  //TODO: Try test a storaged minutes and shoe here as format HH:mm:ss
+
+  useEffect(() => {
+    if (props.value !== undefined && props.value !== null) {
+      setValueTimer(minutesToTime(props.value))
+    }
+  }, [props.value])
+
   return (
-    <div className='timer-container'>
-      <input type='text' value={value} name={name} placeholder='Set HH:mm:ss' onChange={handleChange} />
-      <label className='view-timer'>{valueTimer}</label>
-    </div>
+    <input
+      value={valueTimer}
+      type='text'
+      placeholder='Set HH:mm:ss'
+      onChange={handleChange}
+    />
   )
 }
 
