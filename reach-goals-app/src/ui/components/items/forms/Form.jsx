@@ -130,8 +130,8 @@ const Form = (props) => {
                                 <div className='field-forms status'>
                                     <label>{iconMap['progress']}<span>status</span></label>
                                     <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })}
-                                        classBtn={`button-dropdown-form plan small left status ${visibleElements.includes(`${typeForm}-status`) ? 'active' : ''}`}
-                                        title={titleDropdownStatus} opening='modal-form'
+                                        classBtn={`button-dropdown-form plan left status ${visibleElements.includes(`${typeForm}-status`) ? 'active' : ''}`}
+                                        title={titleDropdownStatus} opening='modal-form' arrow={true}
                                         dropdownValue={modelForm?.status || undefined} changeDropdownValue={functionsForm.mapHandleChange} dataSelectable={true} />
                                 </div>
                             </div>
@@ -186,10 +186,10 @@ const Form = (props) => {
                         <ButtonAction onClick={functionsForm.mapHandleSubmit} classBtn='button-action plan max-width save' icon='save' title={typeof model.mainModelID === 'number' ? 'Save' : 'Create'} />
                     </div>
                     {
-                        isModalList === true ? <ModalList title={`Assign ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} type={typeForm} from={'form'} exFunction={functionsForm.mapHandleChange} /> : null
+                        isModalList && <ModalList title={`Assign ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} type={typeForm} from={'form'} exFunction={functionsForm.mapHandleChange} />
                     }
                     {
-                        isModalTagList === true ? <ModalList title='Assign a tag' type='tag' from={'form'} exFunction={functionsForm.mapHandleChange} /> : null
+                        isModalTagList && <ModalList title='Assign a tag' type='tag' from={'form'} exFunction={functionsForm.mapHandleChange} />
                     }
                 </div>
             )

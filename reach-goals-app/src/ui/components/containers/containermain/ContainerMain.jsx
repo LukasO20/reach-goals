@@ -91,9 +91,9 @@ const ContainerM = () => {
                     </div>
                     <div className='action'>
                         <ButtonDropdown target={targetMap('btn-action-order')} classBtn={`order plan ${visibleElements.includes('btn-action-order') && 'active'}`}
-                            icon='arrowaltv' title='order' />
+                            icon='arrowaltv' title='order' arrow={true} />
                         <ButtonDropdown target={targetMap('btn-action-create')} classBtn={`create plan ${visibleElements.includes('btn-action-create') && 'active'}`}
-                            icon='plus' title='create' reference='panel-center' />
+                            icon='plus' title='create' reference='panel-center' arrow={true} />
                     </div>
                 </div>
             </div>
