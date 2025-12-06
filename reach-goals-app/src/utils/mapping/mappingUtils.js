@@ -96,6 +96,7 @@ export const iconMap = {
     monitor: <Unicons.UilMonitor className='icon-st' />,
     ellipsisv: <Unicons.UilEllipsisV className='icon-st' />,
     arrowaltv: <Unicons.UilArrowsVAlt className='icon-st' />,
+    arrowdown: <Unicons.UilAngleDown className='icon-st' />,
     plus: <Unicons.UilPlus className='icon-st' />,
     close: <Unicons.UilTimes className='icon-st' />,
     check: <Unicons.UilCheck className='icon-st' />,

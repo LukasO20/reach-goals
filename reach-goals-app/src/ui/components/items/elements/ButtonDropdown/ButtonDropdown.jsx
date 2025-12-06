@@ -30,12 +30,7 @@ const mapOptionDropdown = (type) => {
                 icon: 'cancel',
             },
         ]
-    } /*else if (type === 'reminder') {
-        return Array.from({ length: 30 }, (_, index) => ({
-            op: `day-${index + 1}`,
-            title: `${index + 1} day`
-        }))
-    }*/
+    }
 }
 
 const NullObject = (value) => {
@@ -94,23 +89,20 @@ const ButtonDropdown = (props) => {
                 titleDropdown = 'Select status'
                 optionsDropdown = mapOptionDropdown('status')
                 break
-            /*case 'goal-reminder-date':
-                titleDropdown = 'Select the day'
-                optionsDropdown = mapOptionDropdown('reminder')
-                break
-            case 'assignment-reminder-date':
-                titleDropdown = 'Select the day'
-                optionsDropdown = mapOptionDropdown('reminder')
-                break*/
         }
     }
 
     return (
         <div className={`button-dropdown ${props.classBtn}`} onClick={(e) => toggleVisibility(target, e)} onKeyDown={(e) => e.key === 'Enter' ? toggleVisibility(target, e) : ''} role='button' tabIndex='0'>
-            <span>
-                {props.icon && iconMap[props.icon]}
-                {props.title}
-            </span>
+            <div className='dropdown-title'>
+                <label>
+                    {props.icon && iconMap[props.icon]}
+                    {props.title}
+                </label>
+                {
+                    props.arrow && <label>{iconMap['arrowdown']}</label>
+                }
+            </div>
             <div className={`dropdown-menu ${props.classBtn.includes('left') && 'left'} ${visibleElements.includes(typeClass) ? 'show' : ''}`} onClick={(e) => e.stopPropagation()}>
                 {defineDropdown()}
                 <div className='dropdown-item item-element'>
