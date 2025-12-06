@@ -1,15 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 const InputTimer = (props) => {
-  const [valueTimer, setValueTimer] = useState('')
-
-  const minutesToTime = (minutes) => {
-    if (!minutes && minutes !== 0) return ''
-    const hh = String(Math.floor(minutes / 60)).padStart(2, '0')
-    const mm = String(minutes % 60).padStart(2, '0')
-    const ss = '00'
-    return `${hh}:${mm}:${ss}`
-  }
+  const [valueTimer, setValueTimer] = useState(undefined)
+  const valueLoaded = props.value
 
   const toMinutes = (timeStr) => {
     if (!timeStr) return 0
@@ -17,8 +10,9 @@ const InputTimer = (props) => {
     return parseInt(hh, 10) * 60 + parseInt(mm, 10) + Math.floor(parseInt(ss, 10) / 60)
   }
 
-  const handleChange = ({ target }) => {
-    const raw = target.value.replace(/\D/g, '').slice(0, 6)
+  const handleChange = (e) => {
+    const { value } = e.target
+    const raw = value.replace(/\D/g, '').slice(0, 6)
 
     let hh = raw.slice(0, 2)
     let mm = raw.slice(2, 4)
@@ -34,22 +28,14 @@ const InputTimer = (props) => {
 
     setValueTimer(formatted)
 
-    if (typeof props.onChange === 'function') {
-      props.onChange({
-        target: { name: props.name, value: toMinutes(formatted) }
-      })
-    }
+    props.onChange?.({
+      target: { name: props.name, value: toMinutes(formatted) }
+    })
   }
-
-  useEffect(() => {
-    if (props.value !== undefined && props.value !== null) {
-      setValueTimer(minutesToTime(props.value))
-    }
-  }, [props.value])
 
   return (
     <input
-      value={valueTimer}
+      value={valueTimer ?? valueLoaded}
       type='text'
       placeholder='Set HH:mm:ss'
       onChange={handleChange}
