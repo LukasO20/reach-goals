@@ -39,6 +39,7 @@ const InputTimer = (props) => {
 
   return (
     <input
+      {...props}
       value={valueTimer ?? toTime(valueLoaded)}
       type='text'
       placeholder='Set HH:mm'

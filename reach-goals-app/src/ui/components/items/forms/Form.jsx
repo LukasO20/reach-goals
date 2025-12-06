@@ -39,6 +39,13 @@ const Form = (props) => {
         }
     }
 
+    const titleDropdownStatus = modelForm?.status ?
+        <>
+            {iconMap[modelForm.status === 'conclude' ? 'check' : modelForm.status]}
+            {modelForm.status}
+        </>
+        : 'choose an option'
+
     switch (typeForm) {
         case 'tag':
             return (
@@ -103,23 +110,25 @@ const Form = (props) => {
                                 </div>
                                 <div className='field-forms start-date'>
                                     <label>{iconMap['schedule']}<span>start date</span></label>
-                                    <InputDate id={`${typeForm}-start-date`} name='start' selected={modelForm?.start} onChange={functionsForm.mapHandleChange} />
+                                    <InputDate id={`${typeForm}-start-date`} className='input-form start' name='start' selected={modelForm?.start} onChange={functionsForm.mapHandleChange} />
                                 </div>
                                 <div className='field-forms end-date'>
                                     <label>{iconMap['schedule']}<span>end date</span></label>
-                                    <InputDate id={`${typeForm}-end-date`} name='end' selected={modelForm?.end} onChange={functionsForm.mapHandleChange} />
+                                    <InputDate id={`${typeForm}-end-date`} className='input-form end' name='end' selected={modelForm?.end} onChange={functionsForm.mapHandleChange} />
                                 </div>
                                 {
                                     typeForm === 'assignment' &&
                                     <div className='field-forms duration'>
                                         <label>{iconMap['clock']}<span>duration</span></label>
-                                        <InputTimer id={`${typeForm}-duration`} className='input-form' name='duration' 
+                                        <InputTimer id={`${typeForm}-duration`} className='input-form' name='duration'
                                             onChange={functionsForm.mapHandleChange} value={modelForm.duration ?? null} />
                                     </div>
                                 }
                                 <div className='field-forms status'>
                                     <label>{iconMap['progress']}<span>status</span></label>
-                                    <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })} classBtn={`plan small max-width left status ${visibleElements.includes(`${typeForm}-status`) ? 'active' : ''}`} title='choose an option' opening='modal-form'
+                                    <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })}
+                                        classBtn={`plan small left status ${visibleElements.includes(`${typeForm}-status`) ? 'active' : ''}`}
+                                        title={titleDropdownStatus} opening='modal-form'
                                         dropdownValue={modelForm?.status || undefined} changeDropdownValue={functionsForm.mapHandleChange} dataSelectable={true} />
                                 </div>
                             </div>
@@ -149,7 +158,6 @@ const Form = (props) => {
                                 functionsForm.mapModelRelationAddMap(typeForm,
                                     <>
                                         {
-                                            //TODO: ModelSwitcher and ModelCopy will be use only with assignments and tags. Goals will use a new way to show relation (with assignment)
                                             typeof modelForm.id === 'number' ?
                                                 <ModelSwitcher type={modelSwitcherRelation} propsReference={modelSwitcherProps} />
                                                 :

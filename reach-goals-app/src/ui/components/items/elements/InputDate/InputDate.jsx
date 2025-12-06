@@ -20,7 +20,6 @@ const InputDate = (props) => {
             }}
             dateFormat='dd/MM/yyyy'
             placeholderText='set dd/mm/yyyy'
-            className='input-form'
         />
     )
 }
