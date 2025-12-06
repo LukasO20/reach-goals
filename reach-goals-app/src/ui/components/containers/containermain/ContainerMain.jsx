@@ -47,7 +47,7 @@ const ContainerM = () => {
                         <div className='options-m'>
                             <div className='visibility-m'>
                                 <ButtonDropdown target={targetMap('btn-visibility')} classBtn={`visibility plan ${visibleElements.includes('btn-visibility') && 'active'}`}
-                                    title='visibility' icon={'monitor'} />
+                                    title='visibility' arrow={true} />
                             </div>
                             <div className='more-m'>
                                 <ButtonDropdown target={targetMap('btn-more')} classBtn={`more plan max-width ${visibleElements.includes('btn-more') && 'active'}`}
