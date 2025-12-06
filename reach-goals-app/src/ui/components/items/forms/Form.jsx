@@ -7,6 +7,7 @@ import ModelSwitcher from '../models/ModelSwitcher.jsx'
 import ModelCopy from '../models/ModelCopy.jsx'
 import InputDate from '../elements/InputDate/InputDate.jsx'
 import InputTimer from '../elements/InputTimer/InputTimer.jsx'
+import InputText from '../elements/InputText/InputText.jsx'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
@@ -105,29 +106,31 @@ const Form = (props) => {
                             <div className='fields'>
                                 <div className='field-forms name'>
                                     <label>{iconMap['editbox']}<span>name</span></label>
-                                    <input id={`${typeForm}-name`} className='input-form' type='text' placeholder={`${typeForm} name`}
-                                        name='name' value={modelForm?.name || ''} onChange={functionsForm.mapHandleChange} />
+                                    <InputText 
+                                        id={`${typeForm}-name`} className='input-form input-text name' type='text' placeholder={`${typeForm} name`}
+                                        name='name' value={modelForm?.name || ''} onChange={functionsForm.mapHandleChange}
+                                    />
                                 </div>
                                 <div className='field-forms start-date'>
                                     <label>{iconMap['schedule']}<span>start date</span></label>
-                                    <InputDate id={`${typeForm}-start-date`} className='input-form start' name='start' selected={modelForm?.start} onChange={functionsForm.mapHandleChange} />
+                                    <InputDate id={`${typeForm}-start-date`} className='input-form input-date start' name='start' selected={modelForm?.start} onChange={functionsForm.mapHandleChange} />
                                 </div>
                                 <div className='field-forms end-date'>
                                     <label>{iconMap['schedule']}<span>end date</span></label>
-                                    <InputDate id={`${typeForm}-end-date`} className='input-form end' name='end' selected={modelForm?.end} onChange={functionsForm.mapHandleChange} />
+                                    <InputDate id={`${typeForm}-end-date`} className='input-form input-date end' name='end' selected={modelForm?.end} onChange={functionsForm.mapHandleChange} />
                                 </div>
                                 {
                                     typeForm === 'assignment' &&
                                     <div className='field-forms duration'>
                                         <label>{iconMap['clock']}<span>duration</span></label>
-                                        <InputTimer id={`${typeForm}-duration`} className='input-form' name='duration'
+                                        <InputTimer id={`${typeForm}-duration`} className='input-form input-timer timer' name='duration'
                                             onChange={functionsForm.mapHandleChange} value={modelForm.duration ?? null} />
                                     </div>
                                 }
                                 <div className='field-forms status'>
                                     <label>{iconMap['progress']}<span>status</span></label>
                                     <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })}
-                                        classBtn={`plan small left status ${visibleElements.includes(`${typeForm}-status`) ? 'active' : ''}`}
+                                        classBtn={`button-dropdown-form plan small left status ${visibleElements.includes(`${typeForm}-status`) ? 'active' : ''}`}
                                         title={titleDropdownStatus} opening='modal-form'
                                         dropdownValue={modelForm?.status || undefined} changeDropdownValue={functionsForm.mapHandleChange} dataSelectable={true} />
                                 </div>

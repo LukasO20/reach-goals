@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import './InputTimer.scss'
+
 const InputTimer = (props) => {
   const [valueTimer, setValueTimer] = useState(undefined)
   const valueLoaded = props.value

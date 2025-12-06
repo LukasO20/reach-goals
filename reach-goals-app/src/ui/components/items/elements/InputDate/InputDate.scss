@@ -1,5 +1,25 @@
 @import '../../../../themes/lighttheme.scss';
 
+.input-date {
+    height: 2.4rem;
+    box-sizing: border-box;
+    padding: 0rem 0.66rem;
+    border-radius: 0.5rem;
+    border: 3px solid transparent;
+    background-color: $color-complementary-p;
+    outline-color: $color-accent-p;
+    font-weight: 500;
+    caret-color: $color-complementary-s;
+
+    &:hover {
+        border-color: $color-accent-p-30;
+    }
+
+    &::placeholder {
+        font-weight: 600;
+    }
+}
+
 .react-datepicker {
     background-color: $color-white;
     box-shadow: $box-shadow-st;

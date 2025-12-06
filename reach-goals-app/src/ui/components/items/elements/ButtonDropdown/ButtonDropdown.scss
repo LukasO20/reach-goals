@@ -185,6 +185,12 @@
         }
     }
 
+    &.button-dropdown-form {
+        height: 2.4rem;
+        box-sizing: border-box;
+        padding: 0rem 0.66rem;
+    }
+
     /* Double Application */
     &:hover,
     &.active {
