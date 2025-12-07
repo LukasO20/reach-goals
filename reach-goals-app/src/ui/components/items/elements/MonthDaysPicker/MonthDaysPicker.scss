@@ -96,6 +96,10 @@ div.calendar {
                     border-radius: 1rem;
                 }
             }
+
+            &.approximate {
+                opacity: 0.6;
+            }
         }
     }
 }

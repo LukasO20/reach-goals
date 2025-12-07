@@ -24,10 +24,27 @@ const MonthDaysPicker = (props) => {
     const getDaysInMonth = (year, month) => {
         const date = new Date(year, month, 1)
         const days = []
+
+        //Current month days
         while (date.getMonth() === month) {
             days.push(new Date(date))
             date.setDate(date.getDate() + 1)
         }
+
+        const firstDayOfMonth = days[0].getDay()
+        for (let i = 1; i <= firstDayOfMonth; i++) {
+            const prevDate = new Date(days[0])
+            prevDate.setDate(prevDate.getDate() - i)
+            days.unshift(prevDate)
+        }
+
+        const lastDayOfMonth = days[days.length - 1].getDay()
+        for (let i = 1; i < 7 - lastDayOfMonth; i++) {
+            const nextDate = new Date(days[days.length - 1])
+            nextDate.setDate(nextDate.getDate() + i)
+            days.push(nextDate)
+        }
+
         return days
     }
 
@@ -78,24 +95,28 @@ const MonthDaysPicker = (props) => {
                 }
                 {
                     //Render actual days
-                    days.map(day => (
-                        <div key={day.toISOString()} day={day.getDate()} className={`day ${new Date().toDateString() === day.toDateString() ? 'today' : ''}`}>
-                            <span className='title'>
-                                {day.getDate()}
-                            </span>
-                            {
-                                <CardItem
-                                    model={modelsCalendar.filter(model =>
-                                        model.start === moment(day).format('DD/MM/YYYY')
-                                    )}
-                                    type={modelsCalendar.filter(model =>
-                                        model.start === moment(day).format('DD/MM/YYYY')
-                                    ).map(model => model.type)}
-                                    display={{ type: 'mini-card' }}
-                                    clickFunction={clickEvents} />
-                            }
-                        </div>
-                    ))
+                    days.map(day => {
+                        const isToday = new Date().toDateString() === day.toDateString()
+                        const isApproximateDay = new Date().getMonth() !== day.getMonth()
+                        const todayDate = day.getDate()
+
+                        return (
+                            <div key={day.toISOString()} day={todayDate} className={`day ${isToday ? 'today' : isApproximateDay  ? 'approximate' : ''}`}>
+                                <span className='title'>{todayDate}</span>
+                                {
+                                    <CardItem
+                                        model={modelsCalendar.filter(model =>
+                                            model.start === moment(day).format('DD/MM/YYYY')
+                                        )}
+                                        type={modelsCalendar.filter(model =>
+                                            model.start === moment(day).format('DD/MM/YYYY')
+                                        ).map(model => model.type)}
+                                        display={{ type: 'mini-card' }}
+                                        clickFunction={clickEvents} />
+                                }
+                            </div>
+                        )
+                    })
                 }
             </div>
         </div>
