@@ -1,6 +1,5 @@
 import { getGoal, updateGoal, deleteGoal, handleUpdateTagOnGoal } from './service.js'
 import { extractIds, formatObject } from '../utils/utils.js'
-import moment from 'moment'
 
 const handler = async (req, res) => {
 
@@ -19,9 +18,8 @@ const handler = async (req, res) => {
         const { goalID } = req.query
         const { name, description, status, start, end, assignments, tags } = req.body
 
-        const typeDate = ['DD/MM/YYYY', 'YYYY-MM-DD', 'YYYY/MM/DD']
-        const startDate = start ? moment(start, typeDate).toISOString() : new Date().toISOString()
-        const endDate = end ? moment(end, typeDate).toISOString() : null
+        const startDate = start ? start : new Date().toISOString()
+        const endDate = end ? end : null
 
         const assignmentIds = extractIds(assignments, 'id')
 

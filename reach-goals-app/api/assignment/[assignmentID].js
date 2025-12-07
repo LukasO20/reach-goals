@@ -1,6 +1,5 @@
 import { getAssignment, updateAssignment, deleteAssignment, handleUpdateTagOnAssignment } from './service.js'
 import { formatObject } from '../utils/utils.js'
-import moment from 'moment'
 
 const handler = async (req, res) => {
     
@@ -20,8 +19,8 @@ const handler = async (req, res) => {
         const { assignmentID } = req.query
         const { name, description, status, duration, start, end, goalID, tags } = req.body
 
-        const startDate = start ? moment(start, 'DD/MM/YYYY').toISOString() : new Date().toISOString()
-        const endDate = end ? moment(end, 'DD/MM/YYYY').toISOString() : null
+        const startDate = start ? start : new Date().toISOString()
+        const endDate = end ? end : null
         const durationFormat = duration ? parseInt(duration) : null
 
         const rawObject = {

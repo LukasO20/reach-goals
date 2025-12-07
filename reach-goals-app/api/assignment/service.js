@@ -45,14 +45,12 @@ const getAssignment = async (assignmentID) => {
             return await prisma.assignment.findUnique({
                 where: { id: Number(assignmentID) },
                 include: { 
-                    goal: true,
                     tags: { include: { tag: { select: { id: true, name: true, color: true } } } } 
                 }
             })
         } else if (assignmentID === 'all') {
             return await prisma.assignment.findMany({
                 include: { 
-                    goal: true,
                     tags: { include: { tag: { select: { id: true, name: true, color: true } } } }  
                 }
             })
@@ -75,7 +73,6 @@ const getAssignmentOnGoal = async (goalID) => {
             return await prisma.assignment.findMany({
                 where: { goalID: { not: null } },
                 include: { 
-                    goal: true,
                     tags: { include: { tag: { select: { id: true, name: true, color: true } } } }                         
                 }
             })
@@ -83,7 +80,6 @@ const getAssignmentOnGoal = async (goalID) => {
             return await prisma.assignment.findMany({
                 where: { goalID: Number(goalID) },
                 include: { 
-                    goal: true,
                     tags: { include: { tag: { select: { id: true, name: true, color: true } } } } 
                 }
             })
@@ -106,7 +102,6 @@ const getAssignmentOnTag = async (tagID) => {
             return await prisma.assignment.findMany({
                 where: { tags: { some: {} } },
                 include: { 
-                    goal: true,
                     tags: { include: { tag: { select: { id: true, name: true, color: true } } } } 
                 }
             })
@@ -114,7 +109,6 @@ const getAssignmentOnTag = async (tagID) => {
             return await prisma.assignment.findMany({
                 where: { tags: { id: Number(tagID) } },
                 include: { 
-                    goal: true,
                     tags: { include: { tag: { select: { id: true, name: true, color: true } } } }
                 }
             })
@@ -165,7 +159,8 @@ const updateTagOnAssignment = async (assignmentID, tags) => {
 }
 
 const handleUpdateTagOnAssignment = async (assignmentID, tags) => {
-    if (!assignmentID || !tags) return
+    const hasInvalidTagRelation = !assignmentID || !tags || tags.length === 0
+    if (hasInvalidTagRelation) return
 
     const assignment = await updateTagOnAssignment(assignmentID, tags)
     if (!assignment) {

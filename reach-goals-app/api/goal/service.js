@@ -180,7 +180,8 @@ const updateTagOnGoal = async (goalID, tags) => {
 }
 
 const handleUpdateTagOnGoal = async (goalID, tags) => {
-    if (!goalID || !tags) return
+    const hasInvalidTagRelation = !goalID || !tags || tags.length === 0
+    if (hasInvalidTagRelation) return
 
     const assignment = await updateTagOnGoal(goalID, tags)
     if (!assignment) {

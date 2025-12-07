@@ -1,6 +1,5 @@
 import { addGoal, getGoal, getGoalOnAssignment, getGoalOnTag, getGoalWithoutAssignment } from './service.js'
 import { formatObject } from '../utils/utils.js'
-import moment from 'moment'
 
 const handler = async (req, res) => {
     const { action } = req.query
@@ -10,9 +9,8 @@ const handler = async (req, res) => {
 
         if (!name) { return res.status(400).json({ error: 'Name is required.' }) }
 
-        const typeDate = ['DD/MM/YYYY', 'YYYY-MM-DD', 'YYYY/MM/DD']
-        const startDate = start ? moment(start, typeDate).toISOString() : new Date().toISOString()
-        const endDate = end ? moment(end, typeDate).toISOString() : null
+        const startDate = start ? start : new Date().toISOString()
+        const endDate = end ? end : null
 
         const rawObject = {
             name,
