@@ -5,7 +5,7 @@ import './InputDate.scss'
 const InputDate = (props) => {
     const handleChange = (newDate) => {
         if (typeof props.onChange === 'function' && newDate instanceof Date) {
-            const fakeTarget = { target: { name: props.name, value: newDate } }
+            const fakeTarget = { target: { name: props.name, value: newDate.toISOString() } }
             props.onChange({ ...fakeTarget }) // execute external function from 'onChange' external attribute    
         }
     }
