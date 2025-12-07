@@ -64,7 +64,8 @@ const Form = (props) => {
                             <div className='fields'>
                                 <div className='field-forms name'>
                                     <label>{iconMap['editbox']}<span>name</span></label>
-                                    <input id={`${typeForm}-name`} className='input-form' type='text' placeholder={`${typeForm} name`}
+                                    <InputText 
+                                        id={`${typeForm}-name`} className='input-form input-text name' placeholder={`${typeForm} name`}
                                         name='name' value={modelForm?.name || ''} onChange={functionsForm.mapHandleChange} />
                                 </div>
                                 <div className='field-forms color'>
@@ -107,9 +108,8 @@ const Form = (props) => {
                                 <div className='field-forms name'>
                                     <label>{iconMap['editbox']}<span>name</span></label>
                                     <InputText 
-                                        id={`${typeForm}-name`} className='input-form input-text name' type='text' placeholder={`${typeForm} name`}
-                                        name='name' value={modelForm?.name || ''} onChange={functionsForm.mapHandleChange}
-                                    />
+                                        id={`${typeForm}-name`} className='input-form input-text name' placeholder={`${typeForm} name`}
+                                        name='name' value={modelForm?.name || ''} onChange={functionsForm.mapHandleChange} />
                                 </div>
                                 <div className='field-forms start-date'>
                                     <label>{iconMap['schedule']}<span>start date</span></label>
