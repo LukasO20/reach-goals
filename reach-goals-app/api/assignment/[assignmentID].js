@@ -37,7 +37,7 @@ const handler = async (req, res) => {
         console.log('Assignment RECEVEID - ', rawObject)
         console.log('Assignment TO UPDATE - ', formattedData)
 
-        handleUpdateTagOnAssignment(assignmentID, tags)
+        await handleUpdateTagOnAssignment(assignmentID, tags)
         const assignment = await updateAssignment(assignmentID, formattedData)
 
         if (assignment) {

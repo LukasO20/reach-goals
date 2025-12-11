@@ -143,16 +143,13 @@ const updateTagOnAssignment = async (assignmentID, tags) => {
             where: { assignmentID: Number(assignmentID) }
         })
 
-        await prisma.tagOnAssignment.createMany({
+        return await prisma.tagOnAssignment.createMany({
             data: tags?.map(tag => ({
                 assignmentID: Number(assignmentID),
                 tagID: Number(tag.tagID)
             })),
             skipDuplicates: true
         })
-
-        return true
-
     } catch (error) {
         return false
     }

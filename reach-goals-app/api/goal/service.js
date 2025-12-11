@@ -164,16 +164,13 @@ const updateTagOnGoal = async (goalID, tags) => {
             where: { goalID: Number(goalID) }
         })
 
-        await prisma.tagOnGoal.createMany({
+        return await prisma.tagOnGoal.createMany({
             data: tags?.map(tag => ({
                 goalID: Number(goalID),
                 tagID: Number(tag.tagID)
             })),
             skipDuplicates: true
         })
-
-        return true
-
     } catch (error) {
         return false
     }
@@ -183,8 +180,8 @@ const handleUpdateTagOnGoal = async (goalID, tags) => {
     const hasInvalidTagRelation = !goalID || !tags || tags.length === 0
     if (hasInvalidTagRelation) return
 
-    const assignment = await updateTagOnGoal(goalID, tags)
-    if (!assignment) {
+    const goal = await updateTagOnGoal(goalID, tags)
+    if (!goal) {
         console.error("Failed to update this goal's tag relation")
     }
 }

@@ -27,9 +27,7 @@
     border-radius: 0.5em;
 
     .react-datepicker__aria-live {
-        margin-right: 0.5rem;
-        color: $color-complementary-s-70;
-        font-weight: 500;
+        display: none;
     }
 
     .react-datepicker__navigation {
@@ -80,7 +78,7 @@
                 font-size: 0.95rem;
                 font-weight: 600;
                 color: $color-complementary-s;
-                justify-content: center;
+                justify-content: space-between;
 
                 .react-datepicker__day-name {
                     display: flex;
