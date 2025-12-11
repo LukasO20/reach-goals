@@ -39,20 +39,22 @@ export const GoalModelProvider = ({ children, filters = {} }) => {
     enabled: !!validFilter(filters.panel),
   })
 
+  const queryKeyPage = ['goals', 'page', filters.page]
+
   const saveMutation = useMutation({
     mutationFn: (model) =>
       typeof model.id === 'number'
         ? goalService.updateGoal(model)
         : goalService.addGoal(model),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['goal'] })
+      queryClient.invalidateQueries({ queryKey: queryKeyPage })
     },
   })
 
   const removeMutation = useMutation({
     mutationFn: (id) => goalService.deleteGoal(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['goal'] })
+      queryClient.invalidateQueries({ queryKey: queryKeyPage })
     },
   })
 

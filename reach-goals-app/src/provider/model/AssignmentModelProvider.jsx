@@ -39,20 +39,22 @@ export const AssignmentModelProvider = ({ children, filters = {} }) => {
         enabled: !!validFilter(filters.panel),
     })
 
+    const queryKeyPage = ['assignments', 'page', filters.page]
+
     const saveMutation = useMutation({
         mutationFn: (model) =>
             typeof model.id === 'number'
                 ? assignmentService.updateAssignment(model)
                 : assignmentService.addAssignment(model),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['assignment'] })
+            queryClient.invalidateQueries({ queryKey: queryKeyPage })
         },
     })
 
     const removeMutation = useMutation({
         mutationFn: (id) => assignmentService.deleteAssignment(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['assignment'] })
+            queryClient.invalidateQueries({ queryKey: queryKeyPage })
         },
     })
 

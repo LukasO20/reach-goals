@@ -29,7 +29,6 @@ const ModalForm = (props) => {
 
     const typeForm = props.type
     const classRemove = visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
-    const currentKeySomeID = `${typeForm}SomeID`
     const isModalList = visibleElements.some(
         classItem => classItem === 'modal-list-goal' ||
             classItem === 'modal-list-assignment' ||
@@ -37,40 +36,36 @@ const ModalForm = (props) => {
 
     const [error, setError] = useState(null)
 
+    const callRefetch = (filter, scope) => {
+        const isValidParameters = typeof typeForm !== 'string' || !filter || (typeof scope !== 'string' && scope !== '')
+        if (isValidParameters) return
+
+        const refetchMap = {
+            goal: () => updateFilterModel(filter, 'goal', scope),
+            assignment: () => updateFilterModel(filter, 'assignment', scope),
+            tag: () => updateFilterModel(filter, 'tag'),
+        }
+
+        refetchMap[typeForm]()
+    }
+
     const loadModel = (id) => {
         if (!id) return
 
+        const keySomeID = `${typeForm}SomeID`
         const filterGetModel = {
             type: typeForm,
             source: 'formModel',
-            [currentKeySomeID]: id
+            [keySomeID]: id
         }
 
         try {
-            callRefetch(filterGetModel)
+            callRefetch(filterGetModel, 'panel')
             id === 'all' && resetManageModel()
         }
         catch (error) {
             setError('Ops, something wrong: ', error)
         }
-    }
-
-    const callRefetch = (filter) => {
-        if (typeof typeForm !== 'string') return
-
-        const filterGetModel = filter ?? {
-            [currentKeySomeID]: 'all',
-            type: typeForm,
-            source: 'core'
-        }
-
-        const refetchMap = {
-            goal: () => updateFilterModel(filterGetModel, 'goal', 'panel'),
-            assignment: () => updateFilterModel(filterGetModel, 'assignment', 'panel'),
-            tag: () => updateFilterModel(filterGetModel, 'tag'),
-        }
-
-        refetchMap[typeForm]()
     }
 
     const handleChange = (e) => {
@@ -130,7 +125,6 @@ const ModalForm = (props) => {
 
             const visibilityTag = typeForm === 'tag' ? targetMap('near-modalForm', { remove: true }) : null
             toggleVisibility(visibilityTag)
-            callRefetch()
 
         } catch (exception) {
             setError(exception.message)

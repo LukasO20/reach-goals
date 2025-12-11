@@ -34,10 +34,12 @@ export const TagModelProvider = ({ children, filters = {} }) => {
         error: panelError,
         isLoading: isPanelLoading,
     } = useQuery({
-        queryKey: ['tag', 'panel', filters.panel],
+        queryKey: ['tags', 'panel', filters.panel],
         queryFn: createQueryFn(filters.panel),
         enabled: !!validFilter(filters.panel),
     })
+
+    const queryKeyPanel = ['tags', 'panel', filters.panel]
 
     const saveMutation = useMutation({
         mutationFn: (model) =>
@@ -45,14 +47,14 @@ export const TagModelProvider = ({ children, filters = {} }) => {
                 ? tagService.updateTag(model)
                 : tagService.addTag(model),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['tags'] })
+            queryClient.invalidateQueries({ queryKey: queryKeyPanel })
         },
     })
 
     const removeMutation = useMutation({
         mutationFn: (id) => tagService.deleteTag(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['tags'] })
+            queryClient.invalidateQueries({ queryKey: queryKeyPanel })
         },
     })
 
