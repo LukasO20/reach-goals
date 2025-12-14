@@ -23,6 +23,11 @@ const ModalList = (props) => {
     const title = props.title
     const typeRelation = type === 'tag' ? 'tag' : type === 'goal' ? 'assignment' : 'goal'
     const typeSwitcherRelation = type === 'tag' ? 'tag' : type === 'goal' ? 'goal-relation' : 'assignment-relation'
+    const modelSwitcherProps = {
+        display: {
+            type: 'card-mini',
+        },
+    }
 
     useEffect(() => {
         const typeKey = typeRelation === 'tag' ? 'tagSomeID' : type === 'goal' ? 'notGoalRelation' : 'goalSomeID'
@@ -47,7 +52,7 @@ const ModalList = (props) => {
                     (loadingGoal || loadingAssigment || loadingTag) ?
                         <Loading />
                         :
-                        <ModelSwitcher type={typeSwitcherRelation} selectableModel={true} />}
+                        <ModelSwitcher type={typeSwitcherRelation} selectableModel={true} propsReference={modelSwitcherProps} />}
             </div>
         </div>
     )

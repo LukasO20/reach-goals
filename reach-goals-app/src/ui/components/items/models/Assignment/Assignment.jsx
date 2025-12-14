@@ -5,11 +5,10 @@ import { useAssignmentProvider } from '../../../../../provider/model/AssignmentM
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 
-import { useTitle } from '../../../../../provider/TitleProvider.jsx'
-
 import { switchLayoutMap, targetMap } from '../../../../../utils/mapping/mappingUtils.js'
 
-import CardItem from '../../elements/CardItem/CardItem.jsx'
+import Card from '../../elements/Card/Card.jsx'
+import CardMini from '../../elements/CardMini/CardMini.jsx'
 
 import '../Assignment/Assignment.scss'
 
@@ -19,8 +18,7 @@ const Assignment = (props) => {
     const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
     const { toggleVisibility } = useContext(VisibilityContext)
     const { switchLayoutComponent, layoutComponent } = useSwitchLayout()
-    const { update } = useTitle()
-    const { page: { data: dataPage }, panel: { data: dataPanel }, remove } = useAssignmentProvider()
+    const { page: { data: dataPage }, panel: { data: dataPanel }, remove, removeSuccess, removing, removingVariables } = useAssignmentProvider()
 
     const status = props.status
     const display = props.display
@@ -30,13 +28,26 @@ const Assignment = (props) => {
 
     const currentScope = model.filter.assignment.scope
     const currentFilter = model.filter.assignment[currentScope]
-    //First will be checked form source to render an assignment, if not, will be render according assignment filter
-    const render = sourceForm?.assignments ?? model.dataModel.assignment[currentFilter.source]?.data ?? dataPage
 
-    const deleteAssignment = async (id) => {
-        remove(id)
-        update({ toast: `assignment was deleted` })
+    //First will be checked form source to render an assignment, if not, will be render according assignment filter
+    const baseData =
+        sourceForm?.assignments ??
+        model.dataModel.assignment[currentFilter.source]?.data ??
+        dataPage
+
+    const renderCard = baseData?.filter(item =>
+        !(removeSuccess && removingVariables && item.id === removingVariables)
+        && item.status === status
+    ) ?? []
+
+    const renderCardMini = baseData ?? []
+
+    const pendingState = {
+        removing: removing,
+        removingVariables: removingVariables
     }
+
+    const deleteAssignment = async (id) => { remove(id) }
 
     const editAssignment = (id) => {
         try { setModel(prev => ({ ...prev, mainModelID: id, typeModel: 'assignment' })) }
@@ -87,18 +98,23 @@ const Assignment = (props) => {
         aux: removeElDOMClick
     }
 
-    //console.log('ASSIGNMENT LOADED - ', assignment)
+    const cardRender = display?.type === 'card' ?
+        <Card
+            type='assignment'
+            pendingState={pendingState}
+            model={renderCard}
+            clickFunction={clickEvents}
+            display={display}
+        />
+        :
+        <CardMini
+            type='assignment'
+            model={renderCardMini}
+            clickFunction={clickEvents}
+            display={display}
+        />
 
-    return (
-        render?.length ?
-            <CardItem type={'assignment'}
-                model={(() => {
-                    return typeof status === 'string' && status !== '' ?
-                        render.filter(item => item.status === status) : render
-                })()}
-                clickFunction={clickEvents} display={display} />
-            : null
-    )
+    return cardRender 
 }
 
 export default Assignment

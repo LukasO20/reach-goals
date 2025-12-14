@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 
-import CardItem from '../elements/CardItem/CardItem.jsx'
+import Card from '../elements/Card/Card.jsx'
 
 const ModelCopy = ({ displayRef, region }) => {
     const [modelCopy, setCopyModel] = useState([])
@@ -10,7 +10,7 @@ const ModelCopy = ({ displayRef, region }) => {
 
     const display = displayRef ?? {
         sideAction: true,
-        type: 'mini-card'
+        type: 'card-mini'
     }
 
     useEffect(() => {
@@ -39,7 +39,7 @@ const ModelCopy = ({ displayRef, region }) => {
         aux: removeElDOMClick
     }
 
-    return <CardItem type={modelCopy[0]?.type} model={modelCopy} clickFunction={clickEvents} display={display} />
+    return <Card type={modelCopy[0]?.type} model={modelCopy} clickFunction={clickEvents} display={display} />
 }
 
 export default ModelCopy

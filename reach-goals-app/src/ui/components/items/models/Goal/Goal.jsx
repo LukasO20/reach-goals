@@ -5,15 +5,14 @@ import { useGoalProvider } from '../../../../../provider/model/GoalModelProvider
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 
-import { useTitle } from '../../../../../provider/TitleProvider.jsx'
-
 import { switchLayoutMap, targetMap } from '../../../../../utils/mapping/mappingUtils.js'
 
-import CardItem from '../../elements/CardItem/CardItem.jsx'
+import Card from '../../elements/Card/Card.jsx'
 
 import '../Goal/Goal.scss'
 
 import moment from 'moment'
+import CardMini from '../../elements/CardMini/CardMini.jsx'
 
 const Goal = (props) => {
     const [erro, setErro] = useState(false)
@@ -21,8 +20,7 @@ const Goal = (props) => {
     const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
     const { toggleVisibility } = useContext(VisibilityContext)
     const { switchLayoutComponent, layoutComponent } = useSwitchLayout()
-    const { update } = useTitle()
-    const { page: { data: dataPage }, panel: { data: dataPanel }, remove } = useGoalProvider()
+    const { page: { data: dataPage }, panel: { data: dataPanel }, remove, removeSuccess, removing, removingVariables } = useGoalProvider()
 
     const status = props.status
     const display = props.display
@@ -31,12 +29,21 @@ const Goal = (props) => {
 
     const currentScope = model.filter.goal.scope
     const currentFilter = model.filter.goal[currentScope]
-    const render = model.dataModel.goal[currentFilter.source]?.data ?? dataPage
+    const baseData = model.dataModel.goal[currentFilter.source]?.data ?? dataPage
 
-    const deleteGoal = async (id) => {
-        remove(id)
-        update({ toast: `goal was deleted` })
+    const renderCard = baseData?.filter(item =>
+        !(removeSuccess && removingVariables && item.id === removingVariables)
+        && item.status === status
+    ) ?? []
+
+    const renderCardMini = baseData ?? []
+
+    const pendingState = {
+        removing: removing,
+        removingVariables: removingVariables
     }
+
+    const deleteGoal = async (id) => { remove(id) }
 
     const editGoal = (id) => {
         try { setModel(prev => ({ ...prev, mainModelID: id, typeModel: 'goal' })) }
@@ -47,7 +54,7 @@ const Goal = (props) => {
         e.stopPropagation()
 
         if (isSelectableModel) {
-            const selected = render.find(m => m.id === goal.id)
+            const selected = baseData.find(m => m.id === goal.id)
 
             if (model.transportModel.goal.length > 0) return
 
@@ -80,16 +87,24 @@ const Goal = (props) => {
         delete: deleteGoal
     }
 
-    return (
-        render?.length ?
-            <CardItem type={'goal'}
-                model={(() => {
-                    return typeof status === 'string' && status !== '' ?
-                        render.filter(item => item.status === status) : render
-                })()}
-                clickFunction={clickEvents} display={display} />
-            : null
-    )
+
+    const cardRender = display?.type === 'card' ?
+        <Card
+            type='goal'
+            pendingState={pendingState}
+            model={renderCard}
+            clickFunction={clickEvents}
+            display={display}
+        />
+        :
+        <CardMini
+            type='goal'
+            model={renderCardMini}
+            clickFunction={clickEvents}
+            display={display}
+        />
+
+    return cardRender
 }
 
 export default Goal

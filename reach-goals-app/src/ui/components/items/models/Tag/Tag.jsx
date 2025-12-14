@@ -1,14 +1,13 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
 
 import { useTagProvider } from '../../../../../provider/model/TagModelProvider.jsx'
-import { useTitle } from '../../../../../provider/TitleProvider.jsx'
 
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 
 import { targetMap } from '../../../../../utils/mapping/mappingUtils.js'
 
-import CardItem from '../../elements/CardItem/CardItem.jsx'
+import CardMini from '../../elements/CardMini/CardMini.jsx'
 
 import '../Tag/Tag.scss'
 
@@ -18,7 +17,6 @@ const Tag = (props) => {
     const { toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
     const { panel: { data }, remove } = useTagProvider()
-    const { update } = useTitle()
 
     const target = targetMap(['panel-right', 'tag'])
 
@@ -28,16 +26,14 @@ const Tag = (props) => {
 
     const currentScope = model.filter.tag.scope
     const currentFilter = model.filter.tag[currentScope]
+
     //First will be checked form source to render a tag, if not, will be render according tag filter
     const tagSourceAuxiliary = sourceForm?.tags.map(item => {
         return item.tag
     })
-    const render = tagSourceAuxiliary ?? model.dataModel.tag[currentFilter.source]?.data ?? data
+    const renderCardMini = tagSourceAuxiliary ?? model.dataModel.tag[currentFilter.source]?.data ?? data ?? []
 
-    const deleteTag = async (id) => {
-        remove(id)
-        update({ toast: `tag was deleted` })
-    }
+    const deleteTag = async (id) => { remove(id) }
 
     const editTag = useCallback((id) => {
         try { setModel({ ...model, mainModelID: id, typeModel: 'tag' }) }
@@ -84,14 +80,14 @@ const Tag = (props) => {
         aux: removeElDOMClick
     }
 
-    return (
-        render?.length ?
-            <CardItem type={'tag'}
-                model={render}
-                clickFunction={clickEvents}
-                display={display} />
-            : null
-    )
+    const cardRender = <CardMini
+        type='tag'
+        model={renderCardMini}
+        clickFunction={clickEvents}
+        display={display}
+    />
+
+    return cardRender
 }
 
 export default Tag

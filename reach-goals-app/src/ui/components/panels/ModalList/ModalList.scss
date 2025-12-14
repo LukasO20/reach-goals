@@ -6,7 +6,7 @@
     gap: 1rem;
     padding: 0.5rem;
 
-    > .head {
+    >.head {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -18,12 +18,12 @@
         }
     }
 
-    > .body {
+    >.body {
         position: relative;
         overflow-y: auto;
         min-height: 21.85rem;
 
-        .mini-card {
+        .card-mini {
             cursor: pointer;
 
             * {
