@@ -19,6 +19,7 @@ import './Form.scss'
 const Form = (props) => {
     const { visibleElements } = useContext(VisibilityContext)
     const { model, setModel } = useContext(ManageModelContext)
+    const { pendingState } = props
 
     const typeForm = props?.typeForm
     const functionsForm = props?.functionFormMap
@@ -36,7 +37,7 @@ const Form = (props) => {
         sourceForm: modelForm,
         display: {
             sideAction: true,
-            type: 'mini-card'
+            type: 'card-mini'
         }
     }
 
@@ -64,7 +65,7 @@ const Form = (props) => {
                             <div className='fields'>
                                 <div className='field-forms name'>
                                     <label>{iconMap['editbox']}<span>name</span></label>
-                                    <InputText 
+                                    <InputText
                                         id={`${typeForm}-name`} className='input-form input-text name' placeholder={`${typeForm} name`}
                                         name='name' value={modelForm?.name || ''} onChange={functionsForm.mapHandleChange} />
                                 </div>
@@ -107,7 +108,7 @@ const Form = (props) => {
                             <div className='fields'>
                                 <div className='field-forms name'>
                                     <label>{iconMap['editbox']}<span>name</span></label>
-                                    <InputText 
+                                    <InputText
                                         id={`${typeForm}-name`} className='input-form input-text name' placeholder={`${typeForm} name`}
                                         name='name' value={modelForm?.name || ''} onChange={functionsForm.mapHandleChange} />
                                 </div>
@@ -183,13 +184,15 @@ const Form = (props) => {
                         </form>
                     </div>
                     <div className='bottom'>
-                        <ButtonAction onClick={functionsForm.mapHandleSubmit} classBtn='button-action plan max-width save' icon='save' title={typeof model.mainModelID === 'number' ? 'Save' : 'Create'} />
+                        <ButtonAction pendingState={pendingState} onClick={functionsForm.mapHandleSubmit} classBtn='button-action plan max-width save' icon='save' title={typeof model.mainModelID === 'number' ? 'Save' : 'Create'} />
                     </div>
                     {
-                        isModalList && <ModalList title={`Assign ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} type={typeForm} from={'form'} exFunction={functionsForm.mapHandleChange} />
+                        isModalList &&
+                        <ModalList title={`Assign ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} type={typeForm} from={'form'} exFunction={functionsForm.mapHandleChange} />
                     }
                     {
-                        isModalTagList && <ModalList title='Assign a tag' type='tag' from={'form'} exFunction={functionsForm.mapHandleChange} />
+                        isModalTagList &&
+                        <ModalList title='Assign a tag' type='tag' from={'form'} exFunction={functionsForm.mapHandleChange} />
                     }
                 </div>
             )

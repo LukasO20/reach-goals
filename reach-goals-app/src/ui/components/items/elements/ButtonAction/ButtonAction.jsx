@@ -7,6 +7,8 @@ import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.js
 
 import { iconMap } from '../../../../../utils/mapping/mappingUtils.js'
 
+import Loading from '../Loading/Loading.jsx'
+
 import '../ButtonAction/ButtonAction.scss'
 
 const statusButton = (classBtn, providervisibleElements) => {
@@ -15,6 +17,7 @@ const statusButton = (classBtn, providervisibleElements) => {
 }
 
 const ButtonAction = (props) => {
+    const { pendingState } = props
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { switchLayoutComponent } = useSwitchLayout()
     const { model, resetManageModel, updateFormModel, removeFromTransportModel } = useContext(ManageModelContext)
@@ -38,8 +41,9 @@ const ButtonAction = (props) => {
     }
 
     return (
-        <span className={`${props.classBtn} ${isOn ? 'on' : ''}`} datavalue={props.datavalue} onClick={handleClick} onKeyDown={(e) => e.key === 'Enter' ? handleClick(e) : ''} role='button' tabIndex='0'>
-            {props.icon && iconMap[props.icon]}
+        <span className={`${props.classBtn} ${isOn ? 'on' : ''} ${pendingState ? 'pending' : ''}`} datavalue={props.datavalue} 
+            onClick={handleClick} onKeyDown={(e) => e.key === 'Enter' ? handleClick(e) : ''} role='button' tabIndex='0'>
+            {pendingState ? <Loading mode='inline' /> : props.icon && iconMap[props.icon]}
             <span className='button-title'>{props.title}</span>
         </span>
     )

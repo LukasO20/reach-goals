@@ -1,10 +1,19 @@
 import '../Loading/Loading.scss'
 
 const Loading = (props) => {
+    const { mode } = props
+
     return (
-        <div className="spinner-overlay">
-            <div className="spinner"></div>
-        </div>
+        <>
+            {
+                mode === 'inline' ?
+                    <div className="spinner-inline"></div>
+                    :
+                    <div className="spinner-overlay">
+                        <div className="spinner"></div>
+                    </div>
+            }
+        </>
     )
 }
 
