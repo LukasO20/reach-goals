@@ -3,6 +3,8 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import * as assignmentService from '../../services/assignmentService.js'
 
+import { useTitle } from '../../provider/TitleProvider.jsx'
+
 import { filterServiceFnMap } from '../../utils/mapping/mappingUtilsProvider.js'
 import { validFilter } from '../../utils/utilsProvider.js'
 
@@ -10,6 +12,7 @@ export const AssignmentModelContext = createContext()
 
 export const AssignmentModelProvider = ({ children, filters = {} }) => {
     const queryClient = useQueryClient()
+    const { update } = useTitle()
 
     const createQueryFn = (scopeFilter) => {
         const valid = validFilter(scopeFilter)
@@ -55,6 +58,7 @@ export const AssignmentModelProvider = ({ children, filters = {} }) => {
         mutationFn: (id) => assignmentService.deleteAssignment(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeyPage })
+            update({ toast: `assignment was deleted` })
         },
     })
 
@@ -71,10 +75,13 @@ export const AssignmentModelProvider = ({ children, filters = {} }) => {
                 loading: isPanelLoading,
             },
             save: saveMutation.mutate,
-            remove: removeMutation.mutate,
             saving: saveMutation.isPending,
             saveSuccess: saveMutation.isSuccess,
+            remove: removeMutation.mutate,
+            removeSuccess: removeMutation.isSuccess,
             removing: removeMutation.isPending,
+            removingVariables: removeMutation.variables,
+
         }}>
             {children}
         </AssignmentModelContext.Provider>

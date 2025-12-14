@@ -3,6 +3,8 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import * as tagService from '../../services/tagService.js'
 
+import { useTitle } from '../../provider/TitleProvider.jsx'
+
 import { filterServiceFnMap } from '../../utils/mapping/mappingUtilsProvider.js'
 import { validFilter } from '../../utils/utilsProvider.js'
 
@@ -10,6 +12,7 @@ export const TagModelContext = createContext()
 
 export const TagModelProvider = ({ children, filters = {} }) => {
     const queryClient = useQueryClient()
+    const { update } = useTitle()
 
     const createQueryFn = (scopeFilter) => {
         const valid = validFilter(scopeFilter)
@@ -55,6 +58,7 @@ export const TagModelProvider = ({ children, filters = {} }) => {
         mutationFn: (id) => tagService.deleteTag(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeyPanel })
+            update({ toast: `tag was deleted` })
         },
     })
 
@@ -71,10 +75,12 @@ export const TagModelProvider = ({ children, filters = {} }) => {
                 loading: isPanelLoading,
             },
             save: saveMutation.mutate,
-            remove: removeMutation.mutate,
             saving: saveMutation.isPending,
             saveSuccess: saveMutation.isSuccess,
+            remove: removeMutation.mutate,
+            removeSuccess: removeMutation.isSuccess,
             removing: removeMutation.isPending,
+            removingVariables: removeMutation.variables,
         }}>
             {children}
         </TagModelContext.Provider>

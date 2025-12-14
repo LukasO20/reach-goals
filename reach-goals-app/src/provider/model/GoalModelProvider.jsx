@@ -3,6 +3,8 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import * as goalService from '../../services/goalService.js'
 
+import { useTitle } from '../../provider/TitleProvider.jsx'
+
 import { filterServiceFnMap } from '../../utils/mapping/mappingUtilsProvider.js'
 import { validFilter } from '../../utils/utilsProvider.js'
 
@@ -10,6 +12,7 @@ const GoalModelContext = createContext()
 
 export const GoalModelProvider = ({ children, filters = {} }) => {
   const queryClient = useQueryClient()
+  const { update } = useTitle()
 
   const createQueryFn = (scopeFilter) => {
     const valid = validFilter(scopeFilter)
@@ -55,6 +58,7 @@ export const GoalModelProvider = ({ children, filters = {} }) => {
     mutationFn: (id) => goalService.deleteGoal(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeyPage })
+      update({ toast: `goal was deleted` })
     },
   })
 
@@ -71,10 +75,12 @@ export const GoalModelProvider = ({ children, filters = {} }) => {
         loading: isPanelLoading,
       },
       save: saveMutation.mutate,
-      remove: removeMutation.mutate,
       saving: saveMutation.isPending,
       saveSuccess: saveMutation.isSuccess,
+      remove: removeMutation.mutate,
+      removeSuccess: removeMutation.isSuccess,
       removing: removeMutation.isPending,
+      removingVariables: removeMutation.variables,
     }}>
       {children}
     </GoalModelContext.Provider>

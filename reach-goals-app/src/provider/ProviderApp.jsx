@@ -7,17 +7,18 @@ import { FilterModelProvider } from './model/FilterModelProvider.jsx'
 
 const ProviderApp = ({ children }) => (
     <ManageModelProvider>
-        <FilterModelProvider>
+        <TitleProvider>
             <VisibilityProvider>
-                <SwitchLayoutProvider>
-                    <TitleProvider>
+                <FilterModelProvider>
+                    <SwitchLayoutProvider>
                         <CheckboxProvider>
                             {children}
                         </CheckboxProvider>
-                    </TitleProvider>
-                </SwitchLayoutProvider>
+                    </SwitchLayoutProvider>
+                </FilterModelProvider>
             </VisibilityProvider>
-        </FilterModelProvider>
+
+        </TitleProvider>
     </ManageModelProvider>
 )
 
