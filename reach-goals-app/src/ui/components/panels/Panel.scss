@@ -61,25 +61,6 @@
             align-items: center;
             justify-content: center;
             padding: 1rem;
-
-            .button-action {
-
-                &.save {
-                    background-color: $color-primary;
-
-                    &:hover {
-                        background-color: $color-primary-70;
-                    }
-
-                    &:active {
-                        background-color: $color-primary-30;
-                    }
-
-                    * {
-                        color: $color-white;
-                    }
-                }
-            }
         }
     }
 
