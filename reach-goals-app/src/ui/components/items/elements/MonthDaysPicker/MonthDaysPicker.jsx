@@ -8,7 +8,7 @@ import { weekNames } from '../../../../../utils/reference.js'
 import { formatDate } from '../../../../../utils/utils.js'
 import { switchLayoutMap, targetMap } from '../../../../../utils/mapping/mappingUtils.js'
 
-import CardItem from '../CardItem/CardItem.jsx'
+import CardMini from '../CardMini/CardMini.jsx'
 
 import './MonthDaysPicker.scss'
 
@@ -99,19 +99,15 @@ const MonthDaysPicker = (props) => {
                         const isToday = new Date().toDateString() === day.toDateString()
                         const isApproximateDay = new Date().getMonth() !== day.getMonth()
                         const todayDate = day.getDate()
+                        const modelsOnDay = modelsCalendar.filter(model => model.start === moment(day).format('DD/MM/YYYY'))
 
                         return (
                             <div key={day.toISOString()} day={todayDate} className={`day ${isToday ? 'today' : isApproximateDay  ? 'approximate' : ''}`}>
                                 <span className='title'>{todayDate}</span>
                                 {
-                                    <CardItem
-                                        model={modelsCalendar.filter(model =>
-                                            model.start === moment(day).format('DD/MM/YYYY')
-                                        )}
-                                        type={modelsCalendar.filter(model =>
-                                            model.start === moment(day).format('DD/MM/YYYY')
-                                        ).map(model => model.type)}
-                                        display={{ type: 'mini-card' }}
+                                    <CardMini
+                                        model={modelsOnDay}
+                                        display={{ type: 'card-mini' }}
                                         clickFunction={clickEvents} />
                                 }
                             </div>

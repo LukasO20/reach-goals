@@ -113,7 +113,7 @@ const ExpandableBox = () => {
     }, [configType])
 
     const modelSwitcherProps = {
-        display: { type: 'mini-card' },
+        display: { type: 'card-mini' },
         detailsModel: true
     }
 
@@ -146,8 +146,8 @@ const ExpandableBox = () => {
                         :
                         configType === 'default' ?
                             <>
-                                <Goal display={{ type: 'mini-card' }} detailsModel={true} />
-                                <Assignment display={{ type: 'mini-card' }} detailsModel={true} />
+                                <Goal display={{ type: 'card-mini' }} detailsModel={true} />
+                                <Assignment display={{ type: 'card-mini' }} detailsModel={true} />
                             </>
                             :
                             <ModelSwitcher type={configType} propsReference={modelSwitcherProps} />
