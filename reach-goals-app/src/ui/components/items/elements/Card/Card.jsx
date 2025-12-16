@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 
 import { switchLayoutMap, targetMap, iconMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { hasRequiredProps } from '../../../../../utils/utils.js'
 
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
@@ -11,8 +12,11 @@ import moment from 'moment'
 import './Card.scss'
 
 const Card = (props) => {
-    const { type, model, clickFunction, display, pendingState } = props
+    const { type, model, display, pendingState, clickFunction } = props
     const { layoutComponent } = useSwitchLayout()
+
+    const requiredSuccessful = hasRequiredProps(props, ['type', 'model', 'display', 'pendingState', 'clickFunction'])
+    if (!requiredSuccessful) return null
 
     return model.map(item => {
         const isPending = pendingState?.removing && (item.id || item.tagID) === pendingState?.removingVariables

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider'
 
 import { iconMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { hasRequiredProps } from '../../../../../utils/utils.js'
 
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 
@@ -11,6 +12,9 @@ import './CardMini.scss'
 const CardMini = (props) => {
     const { type, model, display, clickFunction } = props
     const { layoutComponent } = useSwitchLayout()
+
+    const requiredSuccessful = hasRequiredProps(props, ['type', 'model', 'display', 'clickFunction'])
+    if (!requiredSuccessful) return null
 
     return model.map(item => {
         const itemID = item.id || item.tagID

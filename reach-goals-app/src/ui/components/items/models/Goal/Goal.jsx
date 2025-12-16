@@ -87,24 +87,25 @@ const Goal = (props) => {
         delete: deleteGoal
     }
 
+    const isCard = display?.type === 'card'
+    const isCardMini = display?.type === 'card-mini'
 
-    const cardRender = display?.type === 'card' ?
-        <Card
+    const componentsMap = {
+        card: Card,
+        cardMini: CardMini,
+    }
+
+    const ComponentToRender = isCard ? componentsMap.card : isCardMini ? componentsMap.cardMini : null
+
+    return ComponentToRender ? (
+        <ComponentToRender
             type='goal'
             pendingState={pendingState}
-            model={renderCard}
+            model={isCard ? renderCard : renderCardMini}
             clickFunction={clickEvents}
             display={display}
         />
-        :
-        <CardMini
-            type='goal'
-            model={renderCardMini}
-            clickFunction={clickEvents}
-            display={display}
-        />
-
-    return cardRender
+    ) : null
 }
 
 export default Goal

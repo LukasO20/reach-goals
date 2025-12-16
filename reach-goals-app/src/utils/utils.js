@@ -47,4 +47,8 @@ const formatDate = (model) => {
     }
 }
 
-export { formatDate }
+const hasRequiredProps = (props, requiredKeys = []) => {
+  return requiredKeys.every(key => Boolean(props[key]))
+}
+
+export { formatDate, hasRequiredProps }
