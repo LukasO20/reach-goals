@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
 import { iconMap, targetMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { hasRequiredProps } from '../../../../../utils/utils.js'
 
 import ButtonAction from '../../elements/ButtonAction/ButtonAction.jsx'
 import Assignment from '../../models/Assignment/Assignment.jsx'
@@ -20,7 +21,6 @@ const ModalDetailsSection = (props) => {
         navigate(`/${layoutComponent.page}`) // return standard route during handle
     }
 
-    const isValidProps = model && type
     const modelRelationProps = {
         display: { type: 'card-mini' },
         sourceForm: {
@@ -29,7 +29,8 @@ const ModalDetailsSection = (props) => {
         }
     }
 
-    if (!isValidProps) return null
+    const requiredSuccessful = hasRequiredProps(props, ['type', 'model'])
+    if (!requiredSuccessful) return null
 
     return (
         <>

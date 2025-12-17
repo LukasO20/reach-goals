@@ -25,16 +25,15 @@ const Card = (props) => {
         const hasEndDate = item?.end
         const isTypeTag = type === 'tag'
         const itemID = item.id || item.tagID
-        const avaiableType = type ?? item.type
 
         return (
-            <div className={`${avaiableType} ${display.type} ${isPending ? 'pending' : ''}`} id={itemID} key={itemID}
+            <div className={`${type} ${display.type} ${isPending ? 'pending' : ''}`} id={itemID} key={itemID}
                 onClick={validDisplayType ? (e) => clickFunction.card(item, e) : {}}
                 style={isTypeTag ? { backgroundColor: `${item.color}30`, borderColor: item.color } : {}}>
                 <div className='head'>
                     <Link to={`/${layoutComponent.page}/details`}>
                         <label className='line-info'>
-                            {iconMap[avaiableType]}<label>{item.name}</label>
+                            {iconMap[type]}<label>{item.name}</label>
                         </label>
                         {
                             hasTags && (
@@ -77,21 +76,21 @@ const Card = (props) => {
                                         <div className='item'>
                                             <ButtonAction
                                                 onClick={() => clickFunction.edit(itemID)}
-                                                target={targetMap(['panel-center', avaiableType])}
+                                                target={targetMap(['panel-center', type])}
                                                 switchLayout={switchLayoutMap({
                                                     page: layoutComponent.page,
                                                     name: 'panel',
                                                     layout: 'layout',
                                                     value: 'center'
                                                 })}
-                                                classBtn={`edit-${avaiableType} button-action circle small`}
+                                                classBtn={`edit-${type} button-action circle small`}
                                                 icon='edit'
                                             />
                                             <ButtonAction
                                                 pendingState={isPending}
                                                 onClick={() => clickFunction.delete(itemID)}
                                                 target={targetMap(null)}
-                                                classBtn={`remove-${avaiableType} button-action circle small`}
+                                                classBtn={`remove-${type} button-action circle small`}
                                                 icon='remove'
                                             />
                                         </div>

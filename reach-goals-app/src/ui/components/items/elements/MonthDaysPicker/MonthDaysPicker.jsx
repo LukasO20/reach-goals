@@ -5,7 +5,6 @@ import { VisibilityContext } from '../../../../../provider/VisibilityProvider.js
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
 import { weekNames } from '../../../../../utils/reference.js'
-import { formatDate } from '../../../../../utils/utils.js'
 import { switchLayoutMap, targetMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import CardMini from '../CardMini/CardMini.jsx'
@@ -61,14 +60,7 @@ const MonthDaysPicker = (props) => {
 
     const modelsCalendar = Object.entries(models || {}).flatMap(([key, value]) =>
         Array.isArray(value) ?
-            value.map(model => (
-                {
-                    ...model,
-                    type: key,
-                    start: formatDate(model).start,
-                    end: formatDate(model).end,
-                }
-            )) : []
+            value.map(model => ({ ...model, type: key })) : []
     )
 
     const clickEvents = {
@@ -80,9 +72,7 @@ const MonthDaysPicker = (props) => {
             <div className='header'>
                 {
                     weekNames.map(week => {
-                        return (
-                            <div key={week} className='day-name'>{week}</div>
-                        )
+                        return ( <div key={week} className='day-name'>{week}</div> )
                     })
                 }
             </div>
@@ -99,17 +89,34 @@ const MonthDaysPicker = (props) => {
                         const isToday = new Date().toDateString() === day.toDateString()
                         const isApproximateDay = new Date().getMonth() !== day.getMonth()
                         const todayDate = day.getDate()
-                        const modelsOnDay = modelsCalendar.filter(model => model.start === moment(day).format('DD/MM/YYYY'))
+                        const modelsOnDay = modelsCalendar.filter(model => {
+                            const formatModelDate = moment(model.start).format('DD/MM/YYYY')
+                            const formatDayDate = moment(day).format('DD/MM/YYYY')
+                            return (formatModelDate === formatDayDate)
+                        })
+
+                        const assignmentsOnDay = modelsOnDay.filter(m => m.type === 'assignment')
+                        const goalsOnDay = modelsOnDay.filter(m => m.type === 'goal')
 
                         return (
-                            <div key={day.toISOString()} day={todayDate} className={`day ${isToday ? 'today' : isApproximateDay  ? 'approximate' : ''}`}>
+                            <div key={day.toISOString()} day={todayDate} className={`day ${isToday ? 'today' : isApproximateDay ? 'approximate' : ''}`}>
                                 <span className='title'>{todayDate}</span>
                                 {
-                                    <CardMini
-                                        model={modelsOnDay}
-                                        display={{ type: 'card-mini' }}
-                                        clickFunction={clickEvents} />
-                                }
+                                    assignmentsOnDay.length > 0 && (
+                                        <CardMini
+                                            model={assignmentsOnDay}
+                                            type='assignment'
+                                            display={{ type: 'card-mini' }}
+                                            clickFunction={clickEvents} />
+                                    )}
+                                {
+                                    goalsOnDay.length > 0 && (
+                                        <CardMini
+                                            model={goalsOnDay}
+                                            type='goal'
+                                            display={{ type: 'card-mini' }}
+                                            clickFunction={clickEvents} />
+                                    )}
                             </div>
                         )
                     })
