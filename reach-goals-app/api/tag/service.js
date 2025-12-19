@@ -63,13 +63,61 @@ const getTag = async (tagID) => {
 }
 
 const getTagOnGoal = async (goalID) => {
-    if (!goalID) return
-
     try {
-        return await prisma.tagOnGoal.findMany({
-            where: { goalID: Number(goalID) },
-            include: { tag: { select: { id: true, name: true, color: true } } }
-        })
+        const isAll = goalID === 'all'
+        const isNumber = !isNaN(goalID) && typeof goalID !== 'number'
+
+        if (!isAll && !isNumber) return
+
+        if (isAll) {
+            return await prisma.tag.findMany({
+                where: {
+                    goals: {
+                        some: {}
+                    }
+                },
+                include: {
+                    goals: {
+                        include: {
+                            goal: {
+                                select: {
+                                    id: true,
+                                    name: true,
+                                    start: true,
+                                    end: true,
+                                    status: true,
+                                    description: true
+                                }
+                            }
+                        }
+                    }
+                }
+            })
+        } else if (isNumber) {
+            return await prisma.tag.findMany({
+                where: {
+                    goals: {
+                        some: { goalID: Number(goalID) }
+                    }
+                },
+                include: {
+                    goals: {
+                        include: {
+                            goal: {
+                                select: {
+                                    id: true,
+                                    name: true,
+                                    start: true,
+                                    end: true,
+                                    status: true,
+                                    description: true
+                                }
+                            }
+                        }
+                    }
+                }
+            })
+        }
     }
     catch (error) {
         console.error(error)
@@ -78,14 +126,65 @@ const getTagOnGoal = async (goalID) => {
 }
 
 const getTagOnAssignment = async (assignmentID) => {
-    if (!assignmentID) return
-
     try {
-        return await prisma.tagOnAssignment.findMany({
-            where: { assignmentID: Number(assignmentID) },
-            include: { tag: { select: { id: true, name: true, color: true } } }
-        })
-    } catch (error) {
+        const isAll = assignmentID === 'all'
+        const isNumber = !isNaN(assignmentID) && typeof assignmentID !== 'number'
+
+        if (!isAll && !isNumber) return
+
+        if (isAll) {
+            return await prisma.tag.findMany({
+                where: {
+                    assignments: {
+                        some: {}
+                    }
+                },
+                include: {
+                    assignments: {
+                        include: {
+                            assignment: {
+                                select: {
+                                    id: true,
+                                    name: true,
+                                    start: true,
+                                    end: true,
+                                    status: true,
+                                    duration: true,
+                                    description: true
+                                }
+                            }
+                        }
+                    }
+                }
+            })
+        } else if (isNumber) {
+            return await prisma.tag.findMany({
+                where: {
+                    assignments: {
+                        some: { assignmentID: Number(assignmentID) }
+                    }
+                },
+                include: {
+                    assignments: {
+                        include: {
+                            assignment: {
+                                select: {
+                                    id: true,
+                                    name: true,
+                                    start: true,
+                                    end: true,
+                                    status: true,
+                                    duration: true,
+                                    description: true
+                                }
+                            }
+                        }
+                    }
+                }
+            })
+        }
+    }
+    catch (error) {
         console.error(error)
         return false
     }
@@ -135,7 +234,7 @@ const getTagNotAssignment = async (assignmentID) => {
 }
 
 const unlinkTagOnGoal = async (tagID, goalID) => {
-    if (!tagID && !relationID) return
+    if (!tagID && !goalID) return
 
     try {
         return await prisma.tagOnGoal.delete({

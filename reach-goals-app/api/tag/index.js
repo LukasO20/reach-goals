@@ -32,27 +32,23 @@ const handler = async (req, res) => {
 
             if (action === 'tag-get') {
                 tag = await getTag()
-
                 if (tag) return res.status(200).json(Array.isArray(tag) ? tag : [tag])
             }
 
             if (action === 'tag-on-goal') {
                 const { goalID } = req.query
-                if (!goalID || isNaN(goalID)) return res.status(400).json({ error: "Parameter 'goalID' invalid." });
+                if (!goalID && isNaN(goalID)) return res.status(400).json({ error: "Parameter 'goalID' invalid." });
 
                 tag = await getTagOnGoal(goalID)
-
-                if (tag) return res.status(200).json(tag.map(tagRelation => tagRelation.tag))
+                if (tag) return res.status(200).json(Array.isArray(tag) ? tag : [tag])
             }
 
             if (action === 'tag-on-assignment') {
                 const { assignmentID } = req.query
-                if (!assignmentID || isNaN(assignmentID)) return res.status(400).json({ error: "Parameter 'assignmentID' invalid." });
-
+                if (!assignmentID && isNaN(assignmentID)) return res.status(400).json({ error: "Parameter 'assignmentID' invalid." });
 
                 tag = await getTagOnAssignment(assignmentID)
-
-                if (tag) return res.status(200).json(tag.map(tagRelation => tagRelation.tag))
+                if (tag) return res.status(200).json(Array.isArray(tag) ? tag : [tag])
             }
 
             if (action === 'tag-not-goal') {
