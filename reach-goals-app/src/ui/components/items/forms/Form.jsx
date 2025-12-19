@@ -77,7 +77,7 @@ const Form = (props) => {
                         </form>
                     </div>
                     <div className='bottom'>
-                        <ButtonAction onClick={functionsForm.mapHandleSubmit} classBtn='button-action plan max-width save' icon='save' title='Save' />
+                        <ButtonAction pendingState={pendingState} onClick={functionsForm.mapHandleSubmit} classBtn='button-action plan max-width save' icon='save' title='Save' />
                     </div>
                 </div>
             )

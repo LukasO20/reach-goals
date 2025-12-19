@@ -54,18 +54,18 @@ export const buildQueryParamsMap = ({ IDobject, action }) => {
 */
 export const filterGetModelMap = (props, type, source) => {
     if (!typeModel.includes(type)) return console.error('"type" parameter is invalid. Send a string supported type ["goal", "tag", "assignment"]')
-    if (!typeReduceModel.includes(source)) return console.error('"source" parameter is invalid. Send a string supported source ["core", "support"]') 
-    
+    if (!typeReduceModel.includes(source)) return console.error('"source" parameter is invalid. Send a string supported source ["core", "support"]')
+
     if (typeof props === 'object') {
         const [key, value] = Object.entries(props).find(
             ([k, v]) => typeFilterModel.includes(k) && (typeof v === 'number' || v === 'all')) ?? ['Without key', 'Without value']
 
-        if (key === 'Without key' && value === 'Without value' ) {
+        if (key === 'Without key' && value === 'Without value') {
             //This warn is used to show a function does not according with structure filter
             console.warn(`Current filter don't use an ID.`)
         }
 
-        return key && { 
+        return key && {
             type: type,
             source: source,
             [key]: value,
@@ -110,4 +110,57 @@ export const iconMap = {
 export const titleMap = {
     header: '',
     toast: ''
+}
+
+export const modelTabsMap = {
+    goal: [
+        {
+            currentfilter: { notAssignmentRelation: 'all' },
+            label: 'without assignments',
+        },
+        {
+            currentfilter: { goalAssignmentRelation: 'all' },
+            label: 'with assignments',
+        },
+        {
+            currentfilter: { goalTagRelation: 'all' },
+            label: 'with tags',
+        },
+        {
+            currentfilter: { goalSomeID: 'all' },
+            label: 'every goal',
+        },
+    ],
+    assignment: [
+        {
+            currentfilter: { notGoalRelation: 'all' },
+            label: 'without goals',
+        },
+        {
+            currentfilter: { assignmentGoalRelation: 'all' },
+            label: 'with goals',
+        },
+        {
+            currentfilter: { assignmentTagRelation: 'all' },
+            label: 'with tags',
+        },
+        {
+            currentfilter: { assignmentSomeID: 'all' },
+            label: 'every assignment',
+        }
+    ],
+    tag: [
+        {
+            currentfilter: { tagRelationGoal: 'all' },
+            label: 'with goals',
+        },
+        {
+            currentfilter: { tagRelationAssignment: 'all' },
+            label: 'with assignments',
+        },
+        {
+            currentfilter: { tagSomeID: 'all' },
+            label: 'every tag',
+        }
+    ]
 }
