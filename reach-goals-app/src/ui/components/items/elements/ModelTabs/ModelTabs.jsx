@@ -69,7 +69,7 @@ const ModelTabs = (props) => {
     const isLoading = loadingGoal || loadingAssignment || loadingTag
 
     return (
-        <div className='model-tabs'>
+        <div className={`model-tabs ${type}`}>
             <div className='head'>
                 {
                     modelTabsMap[type].map((tab, index) => {

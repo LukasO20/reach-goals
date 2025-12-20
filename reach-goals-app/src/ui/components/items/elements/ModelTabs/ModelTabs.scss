@@ -1,0 +1,28 @@
+@import '../../../../themes/lighttheme.scss';
+
+.model-tabs {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    &.tag {
+
+        .head {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border-bottom: 0.1em solid $color-complementary-s-15;
+        }
+
+        .body {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background-color: $color-complementary-s-05;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            height: 100%;
+            overflow-y: auto;
+        }
+    }
+}

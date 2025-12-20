@@ -11,8 +11,6 @@ import ModalForm from '../ModalForm/ModalForm.jsx'
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import ModelTabs from '../../items/elements/ModelTabs/ModelTabs.jsx'
 
-import './ModalTag.scss'
-
 const ModalTag = () => {
     const { visibleElements } = useContext(VisibilityContext)
     const { setModel, updateFilterModel } = useContext(ManageModelContext)
@@ -35,7 +33,7 @@ const ModalTag = () => {
     }, [])
 
     return (
-        <div className='container-tag aside-content' onClick={(e) => e.stopPropagation()}>
+        <>
             <div className='header'>
                 <h2>Tags</h2>
                 <ButtonAction target={targetMap(null)} onClick={handleClickButtonAction} classBtn='button-action circle close' icon='close' />
@@ -46,11 +44,11 @@ const ModalTag = () => {
                         target={targetMap(['panel-center', 'config'])} switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'center' })} />
                 </div>
             </div>
-            <div className='body scrollable'>
-                { isModalForm.every(e => visibleElements.includes(e)) && <ModalForm type='tag' /> }
+            <div className='body'>
+                {isModalForm.every(e => visibleElements.includes(e)) && <ModalForm type='tag' />}
                 <ModelTabs type='tag' />
             </div>
-        </div>
+        </>
     )
 }
 

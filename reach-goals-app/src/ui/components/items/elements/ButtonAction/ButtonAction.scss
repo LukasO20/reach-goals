@@ -117,6 +117,10 @@
         gap: 0rem;
     }
 
+    &.model-tabs {
+        background-color: $color-complementary-s-15;
+    }
+
     &.pending {
         pointer-events: none;
         opacity: 0.8;
