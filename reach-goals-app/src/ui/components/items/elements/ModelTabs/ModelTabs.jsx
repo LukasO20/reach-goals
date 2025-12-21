@@ -89,7 +89,7 @@ const ModelTabs = (props) => {
                     }
                 </div>
             </div>
-            <div className='body'>
+            <div className='body scrollable'>
                 {isLoading && <Loading />}
                 {isTypeModel && <ModelSwitcher type={type} propsReference={modelSwitcherProps} />}
                 {

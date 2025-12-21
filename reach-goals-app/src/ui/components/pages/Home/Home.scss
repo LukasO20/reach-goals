@@ -8,7 +8,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        height: 100%;
+        flex-grow: 1;
+        min-height: 0;
 
         .itens {
             display: flex;
@@ -62,9 +63,10 @@
                 }
 
                 >.body {
-                    height: 85%;
                     padding: 0rem 0.5em;
                     overflow-y: auto;
+                    flex-grow: 1;
+                    min-height: 0;
                 }
             }
         }

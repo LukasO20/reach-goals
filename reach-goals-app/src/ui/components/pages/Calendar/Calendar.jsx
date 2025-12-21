@@ -50,11 +50,13 @@ const Calendar = () => {
         ))
     }, [dataGoal, dataAssignment, layoutComponent.calendar])
 
+    const isLoading = !!loadingGoal || !!loadingAssignment
+
     return (
-        <div className="container-calendar">
-            { (loadingGoal || loadingAssignment) ? <Loading /> : null }
+        <>
+            {isLoading && <Loading />}
             <MonthDaysPicker model={dataModelSource} />
-        </div>
+        </>
     )
 }
 

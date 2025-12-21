@@ -29,7 +29,7 @@ const Sections = () => {
     }, [section])
 
     return (
-        <div className='container-dynamic'>
+        <div className='section'>
             { sectionRender(section) }
         </div>
     )

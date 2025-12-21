@@ -4,7 +4,7 @@
 div.calendar {
     display: flex;
     flex-direction: column;
-    height: 98%;
+    flex-grow: 1;
     background-color: $color-complementary-p-30;
     border: solid 1px $color-complementary-s-15;
     border-radius: 0.5rem;

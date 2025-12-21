@@ -38,11 +38,8 @@ const Objectives = () => {
         }
     }, [currentLayout])
 
-    return (
-        <div className='container-objectives'>
-            <ModelTabs type={type} />
-        </div>
-    )
+    return <ModelTabs type={type} />
+
 }
 
 export default Objectives

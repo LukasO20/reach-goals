@@ -97,7 +97,7 @@ const ContainerM = () => {
                     </div>
                 </div>
             </div>
-            <div className='body scrollable'>
+            <div className='body'>
                 <Routes />
             </div>
         </div>
