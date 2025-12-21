@@ -60,6 +60,8 @@ body {
     .container-main {
       grid-area: container-main;
       z-index: 0;
+      min-height: 0;
+      overflow: hidden;
     }
   }
 }

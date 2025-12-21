@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext } from 'react'
 
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
@@ -9,6 +9,8 @@ import { useTagProvider } from '../../../../../provider/model/TagModelProvider.j
 import { iconMap, filterGetModelMap, modelTabsMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { hasRequiredProps } from '../../../../../utils/utils.js'
 
+import Assignment from '../../models/Assignment/Assignment.jsx'
+import Goal from '../../models/Goal/Goal.jsx'
 import ModelSwitcher from '../../models/ModelSwitcher.jsx'
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 import Loading from '../Loading/Loading.jsx'
@@ -23,6 +25,10 @@ const ModelTabs = (props) => {
     const { page: { loading: loadingAssignment } } = useAssignmentProvider()
     const { panel: { loading: loadingTag } } = useTagProvider()
 
+    const isLoading = !!loadingGoal || !!loadingAssignment || !!loadingTag
+    const isAllModels = !isLoading && type === 'default'
+    const isTypeModel = (type === 'goal' || type === 'assignment' || type === 'tag') && !isLoading
+
     const [currentFilterData, setCurrentFilterData] = useState({
         assignment: {},
         goal: {},
@@ -33,8 +39,9 @@ const ModelTabs = (props) => {
     if (!requiredSuccessful) return null
 
     const isPanelScope = layoutComponent.panel.layout === 'right'
-    const isObjecttivePage = layoutComponent.page === 'objectives'
-    const typeFilter = isPanelScope ? 'tag' : isObjecttivePage ? layoutComponent.objectives.layout : null
+    const isObjectivePage = layoutComponent.page === 'objectives'
+    const isDetailsModel = type === 'goal' || type === 'assignment' || false
+    const typeFilter = isPanelScope ? 'tag' : isObjectivePage ? layoutComponent.objectives.layout : null
 
     const filterButtonActive = currentFilterData[typeFilter] ?
         Object.entries(currentFilterData[typeFilter]).find(([_, value]) => value === 'all')?.[0]
@@ -63,27 +70,35 @@ const ModelTabs = (props) => {
 
     const modelSwitcherProps = {
         display: { type: 'card-mini' },
-        detailsModel: isPanelScope
+        detailsModel: isDetailsModel,
     }
-
-    const isLoading = loadingGoal || loadingAssignment || loadingTag
 
     return (
         <div className={`model-tabs ${type}`}>
             <div className='head'>
-                {
-                    modelTabsMap[type].map((tab, index) => {
-                        const currentButton = Object.keys(tab.currentfilter)[0]
-                        const isNullFilter = !filterButtonActive && tab.label.includes('every')
+                <div className='options-sections'>
+                    {
+                        modelTabsMap[type]?.map((tab, index) => {
+                            const currentButton = Object.keys(tab.currentfilter)[0]
+                            const isNullFilter = !filterButtonActive && tab.label.includes('every')
 
-                        return <ButtonAction key={index} classBtn={`button-action plan-round max-width small model-tabs 
+                            return <ButtonAction key={index} classBtn={`button-action plan-round max-width small model-tabs 
                             ${currentButton === filterButtonActive ? 'active' : isNullFilter ? 'active' : ''}`}
-                            title={tab.label} onClick={(e) => { handleOptions(tab.currentfilter) }} />
-                    })
-                }
+                                title={tab.label} onClick={(e) => { handleOptions(tab.currentfilter) }} />
+                        })
+                    }
+                </div>
             </div>
-            <div className='body scrollable'>
-                { isLoading ? <Loading /> : <ModelSwitcher type={type} propsReference={modelSwitcherProps} /> }
+            <div className='body'>
+                {isLoading && <Loading />}
+                {isTypeModel && <ModelSwitcher type={type} propsReference={modelSwitcherProps} />}
+                {
+                    isAllModels &&
+                    <>
+                        <Goal display={{ type: 'card-mini' }} goalSomeID={'all'} detailsModel={true} />
+                        <Assignment display={{ type: 'card-mini' }} notGoalRelation={'all'} detailsModel={true} />
+                    </>
+                }
             </div>
         </div>
     )

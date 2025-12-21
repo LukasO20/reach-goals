@@ -17,9 +17,9 @@ const ContainerColumn = (props) => {
                         <div className='list'>
                             {
                                 currentLayout === 'goal' ?
-                                    <Goal display={{ sideAction: true, type: 'card' }} goalSomeID={'all'} detailsModel={true} status={'progress'} />
+                                    <Goal display={{ sideAction: true, type: 'card' }} detailsModel={true} status={'progress'} />
                                     :
-                                    <Assignment display={{ sideAction: true, type: 'card' }} notGoalRelation={'all'} detailsModel={true} status={'progress'} />
+                                    <Assignment display={{ sideAction: true, type: 'card' }} detailsModel={true} status={'progress'} />
                             }
                         </div>
                     </div>
@@ -32,9 +32,9 @@ const ContainerColumn = (props) => {
                         <div className='list'>
                             {
                                 currentLayout === 'goal' ?
-                                    <Goal display={{ sideAction: true, type: 'card' }} goalSomeID={'all'} detailsModel={true} status={'conclude'} />
+                                    <Goal display={{ sideAction: true, type: 'card' }} detailsModel={true} status={'conclude'} />
                                     :
-                                    <Assignment display={{ sideAction: true, type: 'card' }} notGoalRelation={'all'} detailsModel={true} status={'conclude'} />
+                                    <Assignment display={{ sideAction: true, type: 'card' }} detailsModel={true} status={'conclude'} />
                             }
                         </div>
                     </div>
