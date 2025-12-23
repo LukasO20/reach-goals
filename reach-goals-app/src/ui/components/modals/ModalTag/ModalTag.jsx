@@ -7,7 +7,7 @@ import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 
 import { targetMap, switchLayoutMap, filterGetModelMap } from '../../../../utils/mapping/mappingUtils.js'
 
-import ModalForm from '../ModalForm/ModalForm.jsx'
+import ModalForm from '../../panels/ModalForm/ModalForm.jsx'
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import ModelTabs from '../../items/elements/ModelTabs/ModelTabs.jsx'
 

@@ -68,8 +68,8 @@ const Goal = (props) => {
 
         if (isDetailsModel) {
             setModel(prev => ({ ...prev, mainModelID: goal.id, formModel: goal, typeModel: 'goal' }))
-            switchLayoutComponent(switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'right' }))
-            toggleVisibility(targetMap(['panel-right', 'goal']))
+            switchLayoutComponent(switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'details' }))
+            toggleVisibility(targetMap(['modal-right', 'goal']))
         }
     }
 

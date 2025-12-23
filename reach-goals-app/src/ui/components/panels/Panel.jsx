@@ -5,9 +5,7 @@ import { VisibilityContext } from '../../../provider/VisibilityProvider.jsx'
 import { useSwitchLayout } from '../../../provider/SwitchLayoutProvider.jsx'
 
 import ModalForm from './ModalForm/ModalForm.jsx'
-import ModalDetails from './ModalDetails/ModalDetails.jsx'
 import ModalConfig from './ModalConfig/ModalConfig.jsx'
-import ModalTag from './ModalTag/ModalTag.jsx'
 
 import '../panels/Panel.scss'
 
@@ -23,8 +21,8 @@ const renderLayoutContentPanel = (panelPosition, renderConfig) => {
         case 'right':
             return (
                 <>
-                    <ModalTag />
-                    <ModalDetails {...renderConfig} />
+                    {/* <ModalTag /> */}
+                    {/* <ModalDetails {...renderConfig} /> */}
                 </>
             )
         default:

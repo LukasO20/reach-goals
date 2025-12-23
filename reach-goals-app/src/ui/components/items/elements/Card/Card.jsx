@@ -18,6 +18,8 @@ const Card = (props) => {
     const requiredSuccessful = hasRequiredProps(props, ['type', 'model', 'display', 'pendingState', 'clickFunction'])
     if (!requiredSuccessful) return null
 
+    const layoutRoutePage = layoutComponent.page
+
     return model.map(item => {
         const isPending = pendingState?.removing && (item.id || item.tagID) === pendingState?.removingVariables
         const validDisplayType = typeof display.type === 'string' && display.type
@@ -31,7 +33,7 @@ const Card = (props) => {
                 onClick={validDisplayType ? (e) => clickFunction.card(item, e) : {}}
                 style={isTypeTag ? { backgroundColor: `${item.color}30`, borderColor: item.color } : {}}>
                 <div className='head'>
-                    <Link to={`/${layoutComponent.page}/details`}>
+                    <Link to={`/${layoutRoutePage}/modal-right/details`}>
                         <label className='line-info'>
                             {iconMap[type]}<label>{item.name}</label>
                         </label>

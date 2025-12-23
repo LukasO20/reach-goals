@@ -38,9 +38,9 @@ const ContainerH = () => {
             </div>
             <div className='nav'>
                 <div className='item-nav'>
-                    <ButtonLink onClick={linkTagClick} target={targetMap(['panel-right', 'tag'])}
-                        switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'right' })}
-                        link={`/${layoutComponent.page}/tag`} classBtn='button-link circle tag' icon='tag'
+                    <ButtonLink onClick={linkTagClick} target={targetMap(['modal-right', 'tag'])}
+                        switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'tag' })}
+                        link={`/${layoutComponent.page}/modal-right/tag`} classBtn='button-link circle tag' icon='tag'
                     />
                 </div>
                 <div className='item-nav'>

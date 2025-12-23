@@ -1,16 +1,20 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 
+import { useSwitchLayout } from '../provider/SwitchLayoutProvider.jsx'
+
 import Sections from '../ui/components/SectionLayout'
-import ModalTag from '../ui/components/panels/ModalTag/ModalTag.jsx'
-import ModalDetails from '../ui/components/panels/ModalDetails/ModalDetails.jsx'
+import ModalSwitcherRight from '../ui/components/modals/ModalSwitcherRight.jsx'
 
 const AppRoutes = () => {
+    const { layoutComponent } = useSwitchLayout()
+
+    const typeLayout = layoutComponent.panel.layout
+
     return (
         <Routes>
             <Route path='/' element={<Navigate to='/home' />} />
             <Route path='/:section' element={<Sections />}>
-                <Route path='tag' element={<ModalTag />} />
-                <Route path='details' element={<ModalDetails />} />
+                <Route path={`modal-right/${typeLayout}`} element={<ModalSwitcherRight />} />
             </Route>
         </Routes>
     )
