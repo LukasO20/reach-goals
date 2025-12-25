@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom'
-
 import { switchLayoutMap, targetMap, iconMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { hasRequiredProps } from '../../../../../utils/utils.js'
 
@@ -18,8 +16,6 @@ const Card = (props) => {
     const requiredSuccessful = hasRequiredProps(props, ['type', 'model', 'display', 'pendingState', 'clickFunction'])
     if (!requiredSuccessful) return null
 
-    const layoutRoutePage = layoutComponent.page
-
     return model.map(item => {
         const isPending = pendingState?.removing && (item.id || item.tagID) === pendingState?.removingVariables
         const validDisplayType = typeof display.type === 'string' && display.type
@@ -33,32 +29,30 @@ const Card = (props) => {
                 onClick={validDisplayType ? (e) => clickFunction.card(item, e) : {}}
                 style={isTypeTag ? { backgroundColor: `${item.color}30`, borderColor: item.color } : {}}>
                 <div className='head'>
-                    <Link to={`/${layoutRoutePage}/modal-right/details`}>
-                        <label className='line-info'>
-                            {iconMap[type]}<label>{item.name}</label>
-                        </label>
-                        {
-                            hasTags && (
-                                <div className='tag-box'>
-                                    {
-                                        item.tags.slice(0, 3).map(data => (
-                                            <label key={data.tag.name} style={{ backgroundColor: `${data.tag.color}30`, borderColor: data.tag.color }}>
-                                                {data.tag.name}
-                                            </label>
-                                        ))
-                                    }
-                                    {
-                                        item.tags.slice(3).length > 0 && (
-                                            <label className='count'>
-                                                <span className='icon-st'>{iconMap['plus']}</span>
-                                                {item.tags.slice(3).length}
-                                            </label>
-                                        )
-                                    }
-                                </div>
-                            )
-                        }
-                    </Link>
+                    <label className='line-info'>
+                        {iconMap[type]}<label>{item.name}</label>
+                    </label>
+                    {
+                        hasTags && (
+                            <div className='tag-box'>
+                                {
+                                    item.tags.slice(0, 3).map(data => (
+                                        <label key={data.tag.name} style={{ backgroundColor: `${data.tag.color}30`, borderColor: data.tag.color }}>
+                                            {data.tag.name}
+                                        </label>
+                                    ))
+                                }
+                                {
+                                    item.tags.slice(3).length > 0 && (
+                                        <label className='count'>
+                                            <span className='icon-st'>{iconMap['plus']}</span>
+                                            {item.tags.slice(3).length}
+                                        </label>
+                                    )
+                                }
+                            </div>
+                        )
+                    }
                 </div>
                 <div className='body'>
                     {
@@ -78,12 +72,12 @@ const Card = (props) => {
                                         <div className='item'>
                                             <ButtonAction
                                                 onClick={() => clickFunction.edit(itemID)}
-                                                target={targetMap(['panel-center', type])}
+                                                target={targetMap(['modal-center', type])}
                                                 switchLayout={switchLayoutMap({
                                                     page: layoutComponent.page,
                                                     name: 'panel',
                                                     layout: 'layout',
-                                                    value: 'center'
+                                                    value: 'form'
                                                 })}
                                                 classBtn={`edit-${type} button-action circle small`}
                                                 icon='edit'

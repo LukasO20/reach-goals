@@ -10,7 +10,7 @@ import SearchBar from '../../items/elements/SearchBar/SearchBar.jsx'
 
 import '../ModalConfig/ModalConfig.scss'
 
-const Config = () => {
+const ModalConfig = () => {
     const { visibleElements } = useContext(VisibilityContext)
     const typeSection = visibleElements[2] ?? ''
 
@@ -44,4 +44,4 @@ const Config = () => {
     )
 }
 
-export default Config
+export default ModalConfig

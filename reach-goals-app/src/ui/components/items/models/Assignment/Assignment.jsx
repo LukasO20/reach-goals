@@ -72,8 +72,8 @@ const Assignment = (props) => {
 
         if (isDetailsModel) {
             setModel(prev => ({ ...prev, mainModelID: assignment.id, formModel: assignment, typeModel: 'assignment' }))
-            switchLayoutComponent(switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'right' }))
-            toggleVisibility(targetMap(['panel-right', 'assignment']))
+            switchLayoutComponent(switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'details' }))
+            toggleVisibility(targetMap(['modal-right', 'assignment']))
         }
     }
 

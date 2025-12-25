@@ -34,7 +34,7 @@ const ModalDetailsSection = (props) => {
 
     return (
         <>
-            <div className='header'>
+            <div className='head'>
                 <h2>{model.name}</h2>
                 <h4>{model.end && `Schedule to end on ${moment(model.end).format('MMMM DD')}`}</h4>
                 <ButtonAction target={targetMap(null)} onClick={handleClickButtonAction} classBtn='button-action circle close' icon='close' />

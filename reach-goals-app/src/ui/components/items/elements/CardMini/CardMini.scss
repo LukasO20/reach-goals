@@ -10,15 +10,10 @@
     font-weight: 600;
     color: $color-complementary-s;
 
-    >a {
-        text-decoration: none;
-        color: $color-complementary-s;
-
-        .line-info {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+    .line-info {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
     }
 
     .side-actions {

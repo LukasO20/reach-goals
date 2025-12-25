@@ -1,7 +1,3 @@
-import { Link } from 'react-router-dom'
-
-import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider'
-
 import { iconMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { hasRequiredProps } from '../../../../../utils/utils.js'
 
@@ -11,7 +7,6 @@ import './CardMini.scss'
 
 const CardMini = (props) => {
     const { type, model, display, clickFunction } = props
-    const { layoutComponent } = useSwitchLayout()
 
     const requiredSuccessful = hasRequiredProps(props, ['type', 'model', 'display', 'clickFunction'])
     if (!requiredSuccessful) return null
@@ -24,12 +19,10 @@ const CardMini = (props) => {
             <div className={`${type} ${display.type}`} id={itemID} key={itemID}
                 onClick={typeof display.type === 'string' && display.type ? (e) => clickFunction.card(item, e) : {}}
                 style={isTypeTag ? { backgroundColor: `${item.color}30`, borderColor: item.color } : {}}>
-                <Link to={`/${layoutComponent.page}/details`}>
-                    <label className='line-info'>
-                        {iconMap[type]}
-                        <label>{item.name}</label>
-                    </label>
-                </Link>
+                <label className='line-info'>
+                    {iconMap[type]}
+                    <label>{item.name}</label>
+                </label>
                 {
                     display.sideAction && (
                         <div className='side-actions'>

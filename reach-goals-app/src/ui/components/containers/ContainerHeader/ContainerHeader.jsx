@@ -7,9 +7,9 @@ import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
 
-import { targetMap, switchLayoutMap, iconMap } from '../../../../utils/mapping/mappingUtils.js'
+import { targetMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
 
-import ButtonLink from '../../items/elements/ButtonLink/ButtonLink.jsx'
+import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import ButtonDropdown from '../../items/elements/ButtonDropdown/ButtonDropdown.jsx'
 
 import './ContainerHeader.scss'
@@ -38,9 +38,9 @@ const ContainerH = () => {
             </div>
             <div className='nav'>
                 <div className='item-nav'>
-                    <ButtonLink onClick={linkTagClick} target={targetMap(['modal-right', 'tag'])}
+                    <ButtonAction onClick={linkTagClick} target={targetMap(['modal-right', 'tag'])}
                         switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'tag' })}
-                        link={`/${layoutComponent.page}/modal-right/tag`} classBtn='button-link circle tag' icon='tag'
+                        classBtn='button-link circle tag' icon='tag'
                     />
                 </div>
                 <div className='item-nav'>

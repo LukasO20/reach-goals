@@ -1,35 +1,39 @@
 @import '../../../../themes/lighttheme.scss';
 
-.container-modaldetails {
+.container-modal {
 
-    .header {}
+    &.modal-right {
 
-    .body {
+        &.details {
 
-        .description {
-            background-color: $color-white;
-            border-radius: 0.5rem;
-            padding: 0.5rem;
-            margin: 1rem;
-            font-weight: 600;
-            height: 5rem;
-        }
+            .body {
 
-        .modaldetails {
-            background-color: $color-white;
-            border-radius: 0.5rem;
-            padding: 0.5rem;
-            margin: 1rem;
+                .description {
+                    background-color: $color-white;
+                    border-radius: 0.5rem;
+                    padding: 0.5rem;
+                    margin: 1rem;
+                    font-weight: 600;
+                    height: 5rem;
+                }
 
-            &.assignment-list {
+                .modaldetails {
+                    background-color: $color-white;
+                    border-radius: 0.5rem;
+                    padding: 0.5rem;
+                    margin: 1rem;
 
-                .header-assignment-list {
+                    &.assignment-list {
 
-                    h4 {
-                        display: flex;
-                        align-items: center;
-                        gap: 0.5rem;
-                        color: $color-complementary-s;
+                        .header-assignment-list {
+
+                            h4 {
+                                display: flex;
+                                align-items: center;
+                                gap: 0.5rem;
+                                color: $color-complementary-s;
+                            }
+                        }
                     }
                 }
             }

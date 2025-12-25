@@ -55,30 +55,26 @@ div.calendar {
                 transition: .3s ease-in-out;
                 cursor: pointer;
 
-                >a {
-                    overflow: hidden;
+                * {
+                    cursor: pointer;
+                }
 
-                    * {
-                        cursor: pointer;
+                .line-info {
+                    overflow: hidden;
+                    gap: 0.15rem;
+
+                    >label {
+                        display: inline-block;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        font-size: 0.85rem;
+                        flex: 5;
                     }
 
-                    .line-info {
-                        overflow: hidden;
-                        gap: 0.15rem;
-
-                        >label {
-                            display: inline-block;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
-                            white-space: nowrap;
-                            font-size: 0.85rem;
-                            flex: 5;
-                        }
-
-                        >svg {
-                            height: 1rem;
-                            flex: 1;
-                        }
+                    >svg {
+                        height: 1rem;
+                        flex: 1;
                     }
                 }
 

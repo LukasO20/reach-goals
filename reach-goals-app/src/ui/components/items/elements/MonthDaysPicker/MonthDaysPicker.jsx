@@ -51,8 +51,8 @@ const MonthDaysPicker = (props) => {
         e.stopPropagation()
 
         setModel(prev => ({ ...prev, mainModelID: model.id, formModel: model, typeModel: model.type }))
-        switchLayoutComponent(switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'right' }))
-        toggleVisibility(targetMap(['panel-right', model.type]))
+        switchLayoutComponent(switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'details' }))
+        toggleVisibility(targetMap(['modal-right', model.type]))
     }
 
     const days = getDaysInMonth(year, month)

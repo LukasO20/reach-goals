@@ -9,68 +9,66 @@
     border-radius: 0.5rem;
     background-color: $color-white;
     margin: 0.5rem 0rem;
+    cursor: pointer;
 
     .head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-decoration: none;
+        color: $color-complementary-s;
 
-        >a {
+        * {
+            cursor: pointer;
+        }
+
+        .line-info {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            text-decoration: none;
-            color: $color-complementary-s;
+            gap: 0.5rem;
+            font-weight: 600;
 
-            * {
-                cursor: pointer;
+            >label {
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                flex: 1;
+            }
+        }
+
+        .tag-box {
+            display: flex;
+            overflow: hidden;
+            gap: 0.25rem;
+
+            >label {
+                display: inline-block;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                line-height: 1.45rem;
+                height: 1.5rem;
+                width: 3.5rem;
+                border-radius: 0.5rem;
+                padding: 0rem 0.35rem;
+                font-weight: 500;
+                font-size: 0.95rem;
             }
 
-            .line-info {
+            .count {
                 display: flex;
                 align-items: center;
-                gap: 0.5rem;
+                justify-content: center;
                 font-weight: 600;
+                height: 1.5rem;
+                width: 2.5rem;
+                border-radius: 2rem;
+                background-color: $color-complementary-p-50;
+                color: $color-complementary-s;
 
-                >label {
-                    display: -webkit-box;
-                    -webkit-line-clamp: 2;
-                    -webkit-box-orient: vertical;
-                    overflow: hidden;
-                    flex: 1;
-                }
-            }
-
-            .tag-box {
-                display: flex;
-                overflow: hidden;
-                gap: 0.25rem;
-
-                >label {
-                    display: inline-block;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    line-height: 1.45rem;
-                    height: 1.5rem;
-                    width: 3.5rem;
-                    border-radius: 0.5rem;
-                    padding: 0rem 0.35rem;
-                    font-weight: 500;
-                    font-size: 0.95rem;
-                }
-
-                .count {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-weight: 600;
-                    height: 1.5rem;
-                    width: 2.5rem;
-                    border-radius: 2rem;
-                    background-color: $color-complementary-p-50;
-                    color: $color-complementary-s;
-
-                    .icon-st {
-                        height: 1.1rem;
-                    }
+                .icon-st {
+                    height: 1.1rem;
                 }
             }
         }

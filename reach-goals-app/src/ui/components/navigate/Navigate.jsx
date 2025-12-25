@@ -39,8 +39,8 @@ const Navigate = () => {
                     <ButtonLink link={'/objectives'} classBtn={`button-action circle objectives ${isObjectivesPage && 'active'}`} icon="objectives" />                
                 </div>
                 <div className="item-nav">
-                    <ButtonAction target={targetMap(['panel-center', 'config'])} classBtn={`button-action circle config ${visibleElements.includes('config') ? 'active' : ''}`} icon='config'
-                        switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'center' })} />
+                    <ButtonAction target={targetMap(['modal-center', 'config'])} classBtn={`button-action circle config ${visibleElements.includes('config') ? 'active' : ''}`} icon='config'
+                        switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'config' })} />
                 </div>
             </div>
         </div>
