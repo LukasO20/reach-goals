@@ -41,7 +41,7 @@ const ModalTag = () => {
                     <ButtonAction target={targetMap('near-modalForm', { add: true })}
                         classBtn={`button-action create plan max-width ${isModalForm.every(e => visibleElements.includes(e)) ? 'active' : ''}`} icon='plus' title='create' />
                     <ButtonAction classBtn='button-action circle max-width config' icon='config' onClick={(e) => handleClickButtonAction(e)}
-                        target={targetMap(['panel-center', 'config'])} switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'center' })} />
+                        target={targetMap(['modal-center', 'config'])} switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'config' })} />
                 </div>
             </div>
             <div className='body'>

@@ -41,21 +41,32 @@
             gap: 1em;
             color: $color-complementary-s;
 
-            .btn-option-r {
-
-                &:not(.create) {
-                    width: 1.25em;
-                }
+            .button-action {
 
                 &.create {
-                    padding: 0.15em;
+                    background-color: $color-accent-p;
+                    
+                    * {
+                        color: $color-white;
+                    }
 
-                    .icon-st {
-                        font-size: $font-size-st;
+                    &:hover {
+                        background-color: $color-complementary-s;
+                    }
+                    
+                    &:active {
+                        background-color: $color-complementary-s-30;
                     }
                 }
             }
         }
+    }
+
+    >.body {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        min-height: 0;
     }
 
     &.modal-right {

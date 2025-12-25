@@ -32,16 +32,16 @@ const ModelTabs = (props) => {
     const [currentFilterData, setCurrentFilterData] = useState({
         assignment: {},
         goal: {},
-        tab: {}
+        tag: {}
     })
 
     const requiredSuccessful = hasRequiredProps(props, ['type'])
     if (!requiredSuccessful) return null
 
-    const isPanelScope = layoutComponent.panel.layout === 'right'
+    const isPanelTagScope = layoutComponent.panel.layout === 'tag'
     const isObjectivePage = layoutComponent.page === 'objectives'
     const isDetailsModel = type === 'goal' || type === 'assignment' || false
-    const typeFilter = isPanelScope ? 'tag' : isObjectivePage ? layoutComponent.objectives.layout : null
+    const typeFilter = isPanelTagScope ? 'tag' : isObjectivePage ? layoutComponent.objectives.layout : null
 
     const filterButtonActive = currentFilterData[typeFilter] ?
         Object.entries(currentFilterData[typeFilter]).find(([_, value]) => value === 'all')?.[0]
