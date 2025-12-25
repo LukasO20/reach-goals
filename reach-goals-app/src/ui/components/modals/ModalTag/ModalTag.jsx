@@ -34,7 +34,7 @@ const ModalTag = () => {
 
     return (
         <>
-            <div className='header'>
+            <div className='head'>
                 <h2>Tags</h2>
                 <ButtonAction target={targetMap(null)} onClick={handleClickButtonAction} classBtn='button-action circle close' icon='close' />
                 <div className='options'>

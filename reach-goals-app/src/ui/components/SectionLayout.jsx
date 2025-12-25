@@ -1,4 +1,4 @@
-import { useParams, Outlet } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 
 import { useSwitchLayout } from '../../provider/SwitchLayoutProvider.jsx'
@@ -31,7 +31,6 @@ const Sections = () => {
     return (
         <div className='section'>
             { sectionRender(section) }
-            <Outlet />
         </div>
     )
 }
