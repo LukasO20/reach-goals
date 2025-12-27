@@ -1,10 +1,10 @@
 import { useContext } from 'react'
 
-import { VisibilityContext } from '../../../provider/VisibilityProvider'
-import { useSwitchLayout } from '../../../provider/SwitchLayoutProvider'
+import { VisibilityContext } from '../../../provider/VisibilityProvider.jsx'
+import { useSwitchLayout } from '../../../provider/SwitchLayoutProvider.jsx'
 
-import ModalForm from '../panels/ModalForm/ModalForm'
-import ModalConfig from '../panels/ModalConfig/ModalConfig'
+import ModalForm from './ModalForm/ModalForm.jsx'
+import ModalConfig from './ModalConfig/ModalConfig.jsx'
 
 import './ModalSwitcher.scss'
 

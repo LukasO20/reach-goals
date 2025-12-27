@@ -8,7 +8,7 @@ import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import ModalConfigSection from '../../items/modals/ModalConfigSection/ModalConfigSection.jsx'
 import SearchBar from '../../items/elements/SearchBar/SearchBar.jsx'
 
-import '../ModalConfig/ModalConfig.scss'
+import './ModalConfig.scss'
 
 const ModalConfig = () => {
     const { visibleElements } = useContext(VisibilityContext)

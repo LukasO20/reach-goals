@@ -21,8 +21,8 @@ const ModalList = (props) => {
 
     const type = props.type
     const title = props.title
-    const typeRelation = type === 'tag' ? 'tag' : type === 'goal' ? 'assignment' : 'goal'
-    const typeSwitcherRelation = type === 'tag' ? 'tag' : type === 'goal' ? 'goal-relation' : 'assignment-relation'
+    const typeRelation = type === 'tag' ? type : type === 'goal' ? 'assignment' : 'goal'
+    const typeSwitcherRelation = type === 'tag' ? type : type === 'goal' ? 'goal-relation' : 'assignment-relation'
     const modelSwitcherProps = {
         display: {
             type: 'card-mini',

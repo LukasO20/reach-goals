@@ -89,6 +89,8 @@ const ButtonDropdown = (props) => {
                 titleDropdown = 'Select status'
                 optionsDropdown = mapOptionDropdown('status')
                 break
+            default:
+                return null
         }
     }
 
@@ -111,8 +113,8 @@ const ButtonDropdown = (props) => {
                         {NullObject(optionsDropdown) ?
                             optionsDropdown.map((option, index) => {
                                 switch (reference) {
-                                    case 'panel-center':
-                                        classTargetDropdown = [['panel-center', `${option.op}`]]
+                                    case 'modal-center':
+                                        classTargetDropdown = [[reference, `${option.op}`]]
                                         break
                                     default:
                                         classTargetDropdown = [null, { remove: true }]
@@ -125,17 +127,13 @@ const ButtonDropdown = (props) => {
                                             <div className='item-title'>
                                                 <ButtonAction onClick={dropdownActionClick} datavalue={dropdownStatus ? option.op : null}
                                                     target={targetMap(...classTargetDropdown)}
-                                                    switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'center' })}
+                                                    switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'form' })}
                                                     classBtn={`form-${option.op} button-action plan-round ${model.formModel?.status === option.op ? 'active' : ''}`} icon={option.icon} title={`${option.title}`} type={option.op}
                                                 />
                                             </div>
-                                            <div className='item-details'>
-
-                                            </div>
+                                            <div className='item-details'></div>
                                         </div>
-                                        <div className='item-option-style'>
-
-                                        </div>
+                                        <div className='item-option-style'></div>
                                     </div>
                                 )
                             }) : undefined

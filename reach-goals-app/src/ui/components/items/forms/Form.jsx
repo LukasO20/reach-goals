@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 
-import ModalList from '../../panels/ModalList/ModalList.jsx'
+import ModalList from '../../modals/ModalList/ModalList.jsx'
 import ButtonAction from '../elements/ButtonAction/ButtonAction.jsx'
 import ButtonDropdown from '../elements/ButtonDropdown/ButtonDropdown.jsx'
 import ModelSwitcher from '../models/ModelSwitcher.jsx'
@@ -90,9 +90,9 @@ const Form = (props) => {
                         </div>
                         <div className='objective-options'>
                             <div className='objective-op'>
-                                <ButtonAction target={targetMap(['panel-center', 'assignment'], { maintain: true })} classBtn={`op-form-assignment button-action plan small ${typeForm === 'assignment' ? 'active' : ''}`}
-                                    title='assingments' nullForm={true} onClick={() => setModel(prev => ({ ...prev, typeModel: 'assignment' }))} />
-                                <ButtonAction target={targetMap(['panel-center', 'goal'], { maintain: true })} classBtn={`op-form-goal button-action plan small ${typeForm === 'goal' ? 'active' : ''}`}
+                                <ButtonAction target={targetMap(['modal-center', 'assignment'], { maintain: true })} classBtn={`op-form-assignment button-action plan small ${typeForm === 'assignment' ? 'active' : ''}`}
+                                    title='assignments' nullForm={true} onClick={() => setModel(prev => ({ ...prev, typeModel: 'assignment' }))} />
+                                <ButtonAction target={targetMap(['modal-center', 'goal'], { maintain: true })} classBtn={`op-form-goal button-action plan small ${typeForm === 'goal' ? 'active' : ''}`}
                                     title='goals' nullForm={true} onClick={() => setModel(prev => ({ ...prev, typeModel: 'goal' }))} />
                             </div>
                             <div className='objective-color'>
