@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import ChartPie from '../../items/elements/ChartPie/ChartPie.jsx'
 
+import PropTypes from 'prop-types'
+
 const standardPieData = {
     data: {
         goal: {
@@ -26,12 +28,12 @@ const exportDataPie = (datapie) => {
     }))
 }
 
-const ContainerChartPie = (props) => {
+const ContainerChartPie = ({ data }) => {
     const [dataPie, setDataPie] = useState(standardPieData)
     const chartData = exportDataPie(dataPie)
 
     useEffect(() => {
-        const { goal = [], assignment = [] } = props.data || {}
+        const { goal = [], assignment = [] } = data || {}
 
         if (goal.length && assignment.length) {
             setDataPie(prevData => (
@@ -50,7 +52,7 @@ const ContainerChartPie = (props) => {
                 }
             ))
         }
-    }, [])
+    }, [data])
 
     return (
         <div className='chart-pie home'>
@@ -60,6 +62,13 @@ const ContainerChartPie = (props) => {
             </div>
         </div>
     )
+}
+
+ContainerChartPie.propTypes = {
+    data: PropTypes.exact({
+        goal: PropTypes.array.isRequired,
+        assignment: PropTypes.array.isRequired
+    }).isRequired,
 }
 
 export default ContainerChartPie

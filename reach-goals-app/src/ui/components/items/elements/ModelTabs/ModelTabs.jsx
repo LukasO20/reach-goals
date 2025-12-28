@@ -6,8 +6,7 @@ import { useGoalProvider } from '../../../../../provider/model/GoalModelProvider
 import { useAssignmentProvider } from '../../../../../provider/model/AssignmentModelProvider.jsx'
 import { useTagProvider } from '../../../../../provider/model/TagModelProvider.jsx'
 
-import { iconMap, filterGetModelMap, modelTabsMap } from '../../../../../utils/mapping/mappingUtils.js'
-import { hasRequiredProps } from '../../../../../utils/utils.js'
+import { filterGetModelMap, modelTabsMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import Assignment from '../../models/Assignment/Assignment.jsx'
 import Goal from '../../models/Goal/Goal.jsx'
@@ -17,17 +16,14 @@ import Loading from '../Loading/Loading.jsx'
 
 import './ModelTabs.scss'
 
-const ModelTabs = (props) => {
-    const { type } = props
+const ModelTabs = () => {
     const { layoutComponent } = useSwitchLayout()
     const { updateFilterModel } = useContext(ManageModelContext)
     const { page: { loading: loadingGoal } } = useGoalProvider()
     const { page: { loading: loadingAssignment } } = useAssignmentProvider()
     const { panel: { loading: loadingTag } } = useTagProvider()
 
-    const isLoading = !!loadingGoal || !!loadingAssignment || !!loadingTag
-    const isAllModels = !isLoading && type === 'default'
-    const isTypeModel = (type === 'goal' || type === 'assignment' || type === 'tag') && !isLoading
+    const layoutObjectives = layoutComponent.objectives.layout
 
     const [currentFilterData, setCurrentFilterData] = useState({
         assignment: {},
@@ -35,12 +31,9 @@ const ModelTabs = (props) => {
         tag: {}
     })
 
-    const requiredSuccessful = hasRequiredProps(props, ['type'])
-    if (!requiredSuccessful) return null
-
     const isPanelTagScope = layoutComponent.panel.layout === 'tag'
     const isObjectivePage = layoutComponent.page === 'objectives'
-    const isDetailsModel = type === 'goal' || type === 'assignment' || false
+    const isDetailsModel = layoutObjectives === 'goal' || layoutObjectives === 'assignment' || false
     const typeFilter = isPanelTagScope ? 'tag' : isObjectivePage ? layoutComponent.objectives.layout : null
 
     const filterButtonActive = currentFilterData[typeFilter] ?
@@ -73,12 +66,16 @@ const ModelTabs = (props) => {
         detailsModel: isDetailsModel,
     }
 
+    const isLoading = !!loadingGoal || !!loadingAssignment || !!loadingTag
+    const isAllModels = !isLoading && layoutObjectives === 'default'
+    const isTypeModel = (layoutObjectives === 'goal' || layoutObjectives === 'assignment' || layoutObjectives === 'tag') && !isLoading
+
     return (
-        <div className={`model-tabs ${type}`}>
+        <div className={`model-tabs ${layoutObjectives}`}>
             <div className='head'>
                 <div className='options-sections'>
                     {
-                        modelTabsMap[type]?.map((tab, index) => {
+                        modelTabsMap[layoutObjectives]?.map((tab, index) => {
                             const currentButton = Object.keys(tab.currentfilter)[0]
                             const isNullFilter = !filterButtonActive && tab.label.includes('every')
 
@@ -91,7 +88,7 @@ const ModelTabs = (props) => {
             </div>
             <div className='body scrollable'>
                 {isLoading && <Loading />}
-                {isTypeModel && <ModelSwitcher type={type} propsReference={modelSwitcherProps} />}
+                {isTypeModel && <ModelSwitcher type={layoutObjectives} propsReference={modelSwitcherProps} />}
                 {
                     isAllModels &&
                     <>

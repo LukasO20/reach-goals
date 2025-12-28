@@ -16,15 +16,14 @@ const Objectives = () => {
     const { layoutComponent } = useSwitchLayout()
     const { updateFilterModel } = useContext(ManageModelContext)
 
-    const type = layoutComponent.objectives.layout
-    const currentLayout = layoutComponent.objectives.layout
+    const layoutObjectives = layoutComponent.objectives.layout
 
     useEffect(() => {
         update({ header: 'Manage your goals and assingments' })
     }, [])
 
     useEffect(() => {
-        if (currentLayout === 'default') {
+        if (layoutObjectives === 'default') {
             const filterGoal = filterGetModelMap({
                 goalSomeID: 'all', type: 'goal', source: 'core'
             }, 'goal', 'core')
@@ -36,9 +35,9 @@ const Objectives = () => {
             updateFilterModel(filterGoal, 'goal', 'page')
             updateFilterModel(filterAssignment, 'assignment', 'page')
         }
-    }, [currentLayout])
+    }, [layoutObjectives])
 
-    return <ModelTabs type={type} />
+    return <ModelTabs />
 
 }
 

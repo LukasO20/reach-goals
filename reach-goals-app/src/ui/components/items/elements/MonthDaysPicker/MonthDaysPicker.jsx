@@ -9,11 +9,12 @@ import { switchLayoutMap, targetMap } from '../../../../../utils/mapping/mapping
 
 import CardMini from '../CardMini/CardMini.jsx'
 
-import './MonthDaysPicker.scss'
+import PropTypes from 'prop-types'
 
 import moment from 'moment'
+import './MonthDaysPicker.scss'
 
-const MonthDaysPicker = (props) => {
+const MonthDaysPicker = ({ data }) => {
     const { setModel } = useContext(ManageModelContext)
     const { toggleVisibility } = useContext(VisibilityContext)
     const { layoutComponent, switchLayoutComponent } = useSwitchLayout()
@@ -56,7 +57,7 @@ const MonthDaysPicker = (props) => {
     }
 
     const days = getDaysInMonth(year, month)
-    const models = props.model || { goal: [], assignment: [] }
+    const models = data || { goal: [], assignment: [] }
 
     const modelsCalendar = Object.entries(models || {}).flatMap(([key, value]) =>
         Array.isArray(value) ?
@@ -124,6 +125,13 @@ const MonthDaysPicker = (props) => {
             </div>
         </div>
     )
+}
+
+MonthDaysPicker.propTypes = {
+    data: PropTypes.exact({
+        goal: PropTypes.array.isRequired,
+        assignment: PropTypes.array.isRequired
+    }).isRequired,
 }
 
 export default MonthDaysPicker

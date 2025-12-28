@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from 'react'
+import { useEffect, useContext } from 'react'
 
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
 import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
@@ -21,10 +21,11 @@ const Home = () => {
     const { page: { data: dataAssignment, loading: loadingAssignment } } = useAssignmentProvider()
     const { updateFilterModel } = useContext(ManageModelContext)
 
-    const currentLayout = layoutComponent.home.layout
+    const layoutHome = layoutComponent.home.layout
+    const validLayouts = ['pie-chart', 'goal', 'assignment']
     const pieData = {
-        goal: dataGoal,
-        assignment: dataAssignment
+        goal: dataGoal ?? [],
+        assignment: dataAssignment ?? []
     }
 
     useEffect(() => {
@@ -32,17 +33,17 @@ const Home = () => {
     }, [])
 
     useEffect(() => {
-        if (currentLayout === 'goal' || currentLayout === 'assignment') {
-            const key = currentLayout === 'assignment' ? 'notGoalRelation' : 'goalSomeID'
+        if (layoutHome === 'goal' || layoutHome === 'assignment') {
+            const key = layoutHome === 'assignment' ? 'notGoalRelation' : 'goalSomeID'
             const filter = filterGetModelMap(
-                {[key]: 'all', type: currentLayout, source: 'core' },
-                currentLayout,
+                { [key]: 'all', type: layoutHome, source: 'core' },
+                layoutHome,
                 'core'
             )
-            updateFilterModel(filter, currentLayout, 'page')
+            updateFilterModel(filter, layoutHome, 'page')
         }
 
-        if (currentLayout === 'pie-chart') {
+        if (layoutHome === 'pie-chart') {
             const filterGoal = filterGetModelMap({
                 goalSomeID: 'all', type: 'goal', source: 'core'
             }, 'goal', 'core')
@@ -54,17 +55,25 @@ const Home = () => {
             updateFilterModel(filterGoal, 'goal', 'page')
             updateFilterModel(filterAssignment, 'assignment', 'page')
         }
-    }, [currentLayout])
+    }, [layoutHome])
+
+    const isLoading = !!loadingGoal || !!loadingAssignment
 
     return (
-        (loadingGoal || loadingAssignment) ?
-            <Loading />
-            :
-            currentLayout === 'pie-chart' ?
-                <ContainerChartPie data={pieData}/>
-                :
-                <ContainerColumn modelLayout={currentLayout} />
+        <>
+            {isLoading && <Loading />}
+            {!isLoading && (
+                validLayouts.includes(layoutHome) && (
+                    layoutHome === 'pie-chart' ? (
+                        <ContainerChartPie data={pieData} />
+                    ) : (
+                        <ContainerColumn />
+                    )
+                )
+            )}
+        </>
     )
+
 }
 
 export default Home

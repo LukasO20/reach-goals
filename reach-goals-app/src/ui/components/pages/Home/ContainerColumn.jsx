@@ -1,10 +1,12 @@
+import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider'
 import { iconMap } from '../../../../utils/mapping/mappingUtils'
 
 import Assignment from '../../items/models/Assignment/Assignment'
 import Goal from '../../items/models/Goal/Goal'
 
-const ContainerColumn = (props) => {
-    const currentLayout = props.modelLayout
+const ContainerColumn = () => {
+    const { layoutComponent } = useSwitchLayout()
+    const layoutColumn = layoutComponent.home.layout
 
     return (
         <div className='column home'>
@@ -16,7 +18,7 @@ const ContainerColumn = (props) => {
                     <div className='body scrollable'>
                         <div className='list'>
                             {
-                                currentLayout === 'goal' ?
+                                layoutColumn === 'goal' ?
                                     <Goal display={{ sideAction: true, type: 'card' }} detailsModel={true} status={'progress'} />
                                     :
                                     <Assignment display={{ sideAction: true, type: 'card' }} detailsModel={true} status={'progress'} />
@@ -31,7 +33,7 @@ const ContainerColumn = (props) => {
                     <div className='body'>
                         <div className='list'>
                             {
-                                currentLayout === 'goal' ?
+                                layoutColumn === 'goal' ?
                                     <Goal display={{ sideAction: true, type: 'card' }} detailsModel={true} status={'conclude'} />
                                     :
                                     <Assignment display={{ sideAction: true, type: 'card' }} detailsModel={true} status={'conclude'} />
