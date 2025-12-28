@@ -25,14 +25,11 @@ const Form = (props) => {
     const functionsForm = props?.functionFormMap
     const modelForm = props?.model
     const booleanForm = props?.booleanFormMap
-    const isModalList = visibleElements.some(classItem => classItem === 'modal-list-goal' || classItem === 'modal-list-assignment')
-    const isModalTagList = visibleElements.some(classItem => classItem === 'modal-list-tag')
 
     const icon = iconMap[typeForm] || 'fa-solid fa-triangle-exclamation'
 
     const modelSwitcherRelation = typeForm === 'goal' ? 'goal-relation' : null
     const modelCopyRelation = typeForm === 'goal' ? 'assignment' : null
-
     const modelSwitcherProps = {
         sourceForm: modelForm,
         display: {
@@ -47,6 +44,15 @@ const Form = (props) => {
             {modelForm.status}
         </>
         : 'choose an option'
+        
+    const modalListShowed = visibleElements.find(classItem => classItem.includes('modal-list'))
+    const modalListType = modalListShowed?.split('-')[2] ?? null
+    const modalListTitle = {
+        goal: 'Choose a goal',
+        assignment: 'Choose an assignment',
+        tag: 'Choose a tag'
+    }
+    const modalListFrom = 'form'
 
     switch (typeForm) {
         case 'tag':
@@ -186,14 +192,7 @@ const Form = (props) => {
                     <div className='bottom'>
                         <ButtonAction pendingState={pendingState} onClick={functionsForm.mapHandleSubmit} classBtn='button-action plan max-width save' icon='save' title={typeof model.mainModelID === 'number' ? 'Save' : 'Create'} />
                     </div>
-                    {
-                        isModalList &&
-                        <ModalList title={`Assign ${typeForm === 'goal' ? 'an assignment' : 'a goal'}`} type={typeForm} from={'form'} exFunction={functionsForm.mapHandleChange} />
-                    }
-                    {
-                        isModalTagList &&
-                        <ModalList title='Assign a tag' type='tag' from={'form'} exFunction={functionsForm.mapHandleChange} />
-                    }
+                    { modalListType && <ModalList title={modalListTitle[modalListType]} type={modalListType} from={modalListFrom} exFunction={functionsForm.mapHandleChange} /> }
                 </div>
             )
     }
