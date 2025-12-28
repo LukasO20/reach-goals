@@ -20,36 +20,28 @@ const modelRelationAddMap = (type, children) => {
     return <ModelRelationAdd type={type} children={children} />
 }
 
-const ModalForm = (props) => {
-    const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
-    const { model, setModel, updateFilterModel, resetManageModel } = useContext(ManageModelContext)
-    const { update } = useTitle()
-
+const ModalForm = () => {
     const { panel: { data: dataAssignment, loading: loadingAssigment }, save: saveAssignment, saveSuccess: saveAssignmentSuccess, saving: savingAssignment } = useAssignmentProvider()
     const { panel: { data: dataGoal, loading: loadingGoal }, save: saveGoal, saveSuccess: saveGoalSuccess, saving: savingGoal } = useGoalProvider()
     const { save: saveTag, saveSuccess: saveTagSuccess, saving: savingTag } = useTagProvider()
-
-    const typeForm = props.type
-    const classRemove = visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
-    const isModalList = visibleElements.some(
-        classItem => classItem === 'modal-list-goal' ||
-            classItem === 'modal-list-assignment' ||
-            classItem === 'modal-list-tag')
-    const isSaving = savingGoal || savingAssignment || savingTag
-
+    const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
+    const { model, setModel, updateFilterModel, resetManageModel } = useContext(ManageModelContext)
+    const { update } = useTitle()
     const [error, setError] = useState(null)
+
+    const typeVisibility = visibleElements[1]
 
     const loadModel = (id) => {
         if (!id) return
 
-        const keySomeID = `${typeForm}SomeID`
+        const keySomeID = `${typeVisibility}SomeID`
         const filterGetModel = {
-            type: typeForm,
+            type: typeVisibility,
             source: 'formModel',
             [keySomeID]: id
         }
 
-        const isValidParameters = typeof typeForm !== 'string' || !filterGetModel
+        const isValidParameters = !filterGetModel
         if (isValidParameters) return
 
         try {
@@ -59,7 +51,7 @@ const ModalForm = (props) => {
                 tag: () => updateFilterModel(filterGetModel, 'tag'),
             }
 
-            refetchMap[typeForm]()
+            refetchMap[typeVisibility]()
 
             id === 'all' && resetManageModel()
         }
@@ -74,7 +66,7 @@ const ModalForm = (props) => {
         //Tag attributes
         const tagsRelation = e.tags ?? model.formModel.tags ?? []
 
-        if (typeForm === 'goal') {
+        if (typeVisibility === 'goal') {
             const assignmentsRelation = e.assignments ?? model.formModel.assignments ?? []
 
             const update = {
@@ -88,7 +80,7 @@ const ModalForm = (props) => {
                 ...prevModel,
                 formModel: update
             }))
-        } else if (typeForm === 'assignment') {
+        } else if (typeVisibility === 'assignment') {
 
             const update = {
                 ...model.formModel,
@@ -119,9 +111,9 @@ const ModalForm = (props) => {
         setError(null)
 
         try {
-            typeForm === 'goal' && await saveGoal(structuredClone(model.formModel))
-            typeForm === 'assignment' && await saveAssignment(structuredClone(model.formModel))
-            typeForm === 'tag' && await saveTag(structuredClone(model.formModel))
+            typeVisibility === 'goal' && await saveGoal(structuredClone(model.formModel))
+            typeVisibility === 'assignment' && await saveAssignment(structuredClone(model.formModel))
+            typeVisibility === 'tag' && await saveTag(structuredClone(model.formModel))
         } catch (exception) {
             setError(exception.message)
             update({ toast: "Ops something went wrong during save. Reload page and try again later." })
@@ -135,16 +127,50 @@ const ModalForm = (props) => {
         return `${type} ${messageToastSupport} with success`
     }
 
+    const functionFormMap = {
+        mapToggleVisibility: toggleVisibility,
+        mapHandleChange: handleChange,
+        mapModelRelationAddMap: modelRelationAddMap,
+        mapHandleSubmit: handleSubmit,
+        mapSetError: setError
+    }
+
+    const booleanFormMap = {
+        mapClassRemove: visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
+    }
+
+    const isSaving = !!savingGoal || !!savingAssignment || !!savingTag
+
+    const isModalList = visibleElements.some(
+        classItem => classItem === 'modal-list-goal' ||
+            classItem === 'modal-list-assignment' ||
+            classItem === 'modal-list-tag')
+
     useEffect(() => {
-        const currentScope = model.filter[typeForm]?.scope
+        if (typeof model.mainModelID === 'number') loadModel(model.mainModelID)
+    }, [model.mainModelID])
+
+    useEffect(() => {
+        if (saveGoalSuccess || saveAssignmentSuccess || saveTagSuccess) {
+            update({ toast: getToastMessage() })
+
+            if (!isSaving) {
+                const visibilityTag = typeVisibility === 'tag' ? targetMap('near-modalForm', { remove: true }) : null
+                toggleVisibility(visibilityTag)
+            }
+        }
+    }, [saveGoalSuccess, saveAssignmentSuccess, saveTagSuccess])
+
+    useEffect(() => {
+        const currentScope = model.filter[typeVisibility]?.scope
         if (!currentScope) return
 
-        const currentFilter = model.filter[typeForm][currentScope]
+        const currentFilter = model.filter[typeVisibility][currentScope]
         if (typeof model.mainModelID === 'number' && currentFilter.source === 'formModel') {
             const typeSelected =
-                typeForm === 'goal' ?
+                typeVisibility === 'goal' ?
                     dataGoal :
-                    typeForm === 'assignment' ?
+                    typeVisibility === 'assignment' ?
                         dataAssignment : null
 
             const selectedFormModel = Array.isArray(typeSelected) ? typeSelected[0] : typeSelected
@@ -157,37 +183,10 @@ const ModalForm = (props) => {
         }
     }, [dataGoal, dataAssignment])
 
-    useEffect(() => {
-        if (typeof model.mainModelID === 'number') loadModel(model.mainModelID)
-    }, [model.mainModelID])
-
-    useEffect(() => {
-        if (saveGoalSuccess || saveAssignmentSuccess || saveTagSuccess) {
-            update({ toast: getToastMessage() })
-
-            if (!isSaving) {
-                const visibilityTag = typeForm === 'tag' ? targetMap('near-modalForm', { remove: true }) : null
-                toggleVisibility(visibilityTag)
-            }
-        }
-    }, [saveGoalSuccess, saveAssignmentSuccess, saveTagSuccess])
-
-    const functionFormMap = {
-        mapToggleVisibility: toggleVisibility,
-        mapHandleChange: handleChange,
-        mapModelRelationAddMap: modelRelationAddMap,
-        mapHandleSubmit: handleSubmit,
-        mapSetError: setError
-    }
-
-    const booleanFormMap = {
-        mapClassRemove: classRemove
-    }
-
     return (
         (loadingGoal || loadingAssigment) && !isModalList ?
             <Loading /> :
-            <Form typeForm={typeForm} functionFormMap={functionFormMap}
+            <Form typeForm={typeVisibility} functionFormMap={functionFormMap}
                 model={model.formModel} booleanFormMap={booleanFormMap} pendingState={isSaving} />
     )
 }

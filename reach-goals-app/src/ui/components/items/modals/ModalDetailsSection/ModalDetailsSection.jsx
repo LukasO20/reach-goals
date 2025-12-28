@@ -1,9 +1,11 @@
+import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
+import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
+import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 
 import { iconMap, targetMap } from '../../../../../utils/mapping/mappingUtils.js'
-import { hasRequiredProps } from '../../../../../utils/utils.js'
 
 import ButtonAction from '../../elements/ButtonAction/ButtonAction.jsx'
 import Assignment from '../../models/Assignment/Assignment.jsx'
@@ -12,10 +14,13 @@ import moment from 'moment'
 
 import '../ModalDetailsSection/ModalDetailsSection.scss'
 
-const ModalDetailsSection = (props) => {
-    const { model, type } = props
+const ModalDetailsSection = () => {
     const { layoutComponent } = useSwitchLayout()
+    const { visibleElements } = useContext(VisibilityContext)
+    const { model: { formModel } } = useContext(ManageModelContext)
+
     const navigate = useNavigate()
+    const typeVisibility = visibleElements[1]
 
     const handleClickButtonAction = () => {
         navigate(`/${layoutComponent.page}`) // return standard route during handle
@@ -24,30 +29,27 @@ const ModalDetailsSection = (props) => {
     const modelRelationProps = {
         display: { type: 'card-mini' },
         sourceForm: {
-            assignments: model.assignments,
-            tags: model.tags,
+            assignments: formModel.assignments,
+            tags: formModel.tags,
         }
     }
-
-    const requiredSuccessful = hasRequiredProps(props, ['type', 'model'])
-    if (!requiredSuccessful) return null
 
     return (
         <>
             <div className='head'>
-                <h2>{model.name}</h2>
-                <h4>{model.end && `Schedule to end on ${moment(model.end).format('MMMM DD')}`}</h4>
+                <h2>{formModel.name}</h2>
+                <h4>{formModel.end && `Schedule to end on ${moment(formModel.end).format('MMMM DD')}`}</h4>
                 <ButtonAction target={targetMap(null)} onClick={handleClickButtonAction} classBtn='button-action circle close' icon='close' />
             </div>
             <div className='body'>
                 {
-                    model.description && (
+                    formModel.description && (
                         <div className='description'>
-                            {model.description}
+                            {formModel.description}
                         </div>
                     )}
                 {
-                    type === 'goal' && (
+                    typeVisibility === 'goal' && (
                         <div className='modaldetails assignment-list'>
                             <div className='header-assignment-list'>
                                 <h4>{iconMap['assignment']} Assignments</h4>

@@ -14,7 +14,6 @@ const ModalSwitcherRight = () => {
 
     const showModalRight = visibleElements.includes('modal-right') ? 'show' : ''
     const typeModalLayout = layoutComponent.panel.layout
-    const typeModelVisible = visibleElements[1]
 
     const renderModal = (type) => {
         if (!typeof type === 'string') return console.error('Invalid type for renderModal')
@@ -22,7 +21,7 @@ const ModalSwitcherRight = () => {
         if (type === 'tag') {
             return <ModalTag />
         } else if (type === 'details') {
-            return <ModalDetails type={typeModelVisible} />
+            return <ModalDetails />
         }
     }
 

@@ -52,7 +52,6 @@ const Form = (props) => {
         assignment: 'Choose an assignment',
         tag: 'Choose a tag'
     }
-    const modalListFrom = 'form'
 
     switch (typeForm) {
         case 'tag':
@@ -192,7 +191,7 @@ const Form = (props) => {
                     <div className='bottom'>
                         <ButtonAction pendingState={pendingState} onClick={functionsForm.mapHandleSubmit} classBtn='button-action plan max-width save' icon='save' title={typeof model.mainModelID === 'number' ? 'Save' : 'Create'} />
                     </div>
-                    { modalListType && <ModalList title={modalListTitle[modalListType]} type={modalListType} from={modalListFrom} exFunction={functionsForm.mapHandleChange} /> }
+                    { modalListType && <ModalList title={modalListTitle[modalListType]} typeVisibility={modalListType} /> }
                 </div>
             )
     }
