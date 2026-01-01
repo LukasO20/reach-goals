@@ -9,6 +9,8 @@ import { iconMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import Loading from '../Loading/Loading.jsx'
 
+import PropTypes from 'prop-types'
+
 import '../ButtonAction/ButtonAction.scss'
 
 const statusButton = (classBtn, providervisibleElements) => {
@@ -16,37 +18,61 @@ const statusButton = (classBtn, providervisibleElements) => {
     return providervisibleElements.includes(classBtn)
 }
 
-const ButtonAction = (props) => {
-    const { pendingState } = props
+const ButtonAction = ({ target, switchLayout, nullForm, unlinkGoal, onClick, pendingState, datavalue, icon, title, classBtn }) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { switchLayoutComponent } = useSwitchLayout()
     const { model, resetManageModel, updateFormModel, removeFromTransportModel } = useContext(ManageModelContext)
 
-    const classBtn = props.classBtn.split(' ')[2]
-    const isOn = statusButton(classBtn, visibleElements)
+    const classBtnAction = classBtn.split(' ')[2]
+    const isOn = statusButton(classBtnAction, visibleElements)
 
     const handleClick = (e) => {
         e.stopPropagation()
-        if (props.target) toggleVisibility(props.target, e)
-        if (props.switchLayout) switchLayoutComponent(props.switchLayout)
-        if (props.nullForm) resetManageModel(['formModel', 'mainModelID', 'transportModel'])
-        if (props.unlinkGoal) { 
-            updateFormModel({ keyObject: 'goalID', value: null, action: 'remove' }) 
+        if (target) toggleVisibility(target, e)
+        if (switchLayout) switchLayoutComponent(switchLayout)
+        if (nullForm) resetManageModel(['formModel', 'mainModelID', 'transportModel'])
+        if (unlinkGoal) {
+            updateFormModel({ keyObject: 'goalID', value: null, action: 'remove' })
             removeFromTransportModel({ id: model.formModel.goalID, type: 'goal' })
         }
 
-        if (typeof props.onClick === 'function') {
-            props.onClick({props, e}) // execute external function from 'onClick' external attribute    
+        if (typeof onClick === 'function') {
+            // execute external function from 'onClick' external attribute, and share properties according neccessity (can be expand)
+            const externalPropsShare = {
+                datavalue,
+                event: e
+            }
+            onClick(externalPropsShare)  
         }
     }
 
     return (
-        <span className={`${props.classBtn} ${isOn ? 'on' : ''} ${pendingState ? 'pending' : ''}`} datavalue={props.datavalue} 
+        <span className={`${classBtn} ${isOn ? 'on' : ''} ${pendingState ? 'pending' : ''}`} datavalue={datavalue}
             onClick={handleClick} onKeyDown={(e) => e.key === 'Enter' ? handleClick(e) : ''} role='button' tabIndex='0'>
-            {pendingState ? <Loading mode='inline' /> : props.icon && iconMap[props.icon]}
-            <span className='button-title'>{props.title}</span>
+            {pendingState ? <Loading mode='inline' /> : icon && iconMap[icon]}
+            <span className='button-title'>{title}</span>
         </span>
     )
+}
+
+ButtonAction.propTypes = {
+    target: PropTypes.shape({
+        class: PropTypes.array.isRequired,
+        operator: PropTypes.object.isRequired
+    }),
+    switchLayout: PropTypes.shape({
+        page: PropTypes.string.isRequired,
+        nameComponent: PropTypes.string.isRequired,
+        nameLayout: PropTypes.string.isRequired,
+        value: PropTypes.string.isRequired
+    }),
+    nullForm: PropTypes.bool,
+    unlinkGoal: PropTypes.bool,
+    onClick: PropTypes.func,
+    pendingState: PropTypes.bool,
+    icon: PropTypes.string,
+    title: PropTypes.string,
+    classBtn: PropTypes.string
 }
 
 export default ButtonAction

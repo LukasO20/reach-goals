@@ -1,40 +1,45 @@
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 
 import { iconMap } from '../../../../../utils/mapping/mappingUtils.js'
 
+import PropTypes from 'prop-types'
+
 import '../ButtonLink/ButtonLink.scss'
 
-const ButtonLink = (props) => {
+const ButtonLink = ({ target, onClick, link, classBtn, img, imgAlt, icon }) => {
     const navigate = useNavigate()
-    const { switchLayoutComponent } = useSwitchLayout()
     const { toggleVisibility } = useContext(VisibilityContext)
 
     const handleClick = (e) => {
         e.stopPropagation()
 
-        if (props.switchLayout) switchLayoutComponent(props.switchLayout)
-        if (props.target) toggleVisibility(props.target, e)
+        if (target) toggleVisibility(target, e)
 
-        if (props.onClick && typeof props.onClick === 'function') {
-            props.onClick({ props, e }) // execute external function from 'onClick' external attribute    
+        if (onClick && typeof onClick === 'function') {
+            onClick({ e }) // execute external function from 'onClick' external attribute    
         }
 
-        navigate(`${props.link || '/'}`)
+        navigate(`${link || '/'}`)
     }
 
     return (
-        <span className={props.classBtn} onClick={handleClick}>
-            {
-                props.img ?
-                    <img src={props.img} alt={props.imgAlt} /> :
-                    iconMap[props.icon]
-            }
+        <span className={classBtn} onClick={handleClick}>
+            { img ? <img src={img} alt={imgAlt} /> : iconMap[icon] }
         </span>
     )
+}
+
+ButtonLink.propTypes = {
+    target: PropTypes.func,
+    onClick: PropTypes.func,
+    link: PropTypes.string.isRequired,
+    classBtn: PropTypes.string,
+    img: PropTypes.string,
+    imgAlt: PropTypes.string,
+    icon: PropTypes.string 
 }
 
 export default ButtonLink

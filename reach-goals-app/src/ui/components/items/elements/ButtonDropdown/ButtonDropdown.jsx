@@ -9,6 +9,8 @@ import { targetMap, switchLayoutMap, iconMap } from '../../../../../utils/mappin
 
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 
+import PropTypes from 'prop-types'
+
 import '../ButtonDropdown/ButtonDropdown.scss'
 
 const mapOptionDropdown = (type) => {
@@ -37,29 +39,22 @@ const NullObject = (value) => {
     return (Array.isArray(value) || typeof value === "string") && value.length !== 0
 }
 
-const ButtonDropdown = (props) => {
+const ButtonDropdown = ({ target, reference, changeDropdownValue, icon, classBtn, title, arrow,  }) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel } = useContext(ManageModelContext)
     const { layoutComponent } = useSwitchLayout()
 
-    const target = props.target ?? { class: [] }
     const typeClass = target.class !== undefined ? target.class[0] : null
     const dropdownStatus = typeClass.includes('goal-status') || typeClass.includes('assignment-status')
-    const reference = props?.reference
 
     let titleDropdown = undefined
     let optionsDropdown = undefined
     let classTargetDropdown = undefined
 
-    const dropdownActionClick = (event) => {
-        if (event.props) {
-            const datavalue = event.props.datavalue
-            if (typeof props.changeDropdownValue === 'function' && dropdownStatus) {
-                props.changeDropdownValue({ name: 'status', value: datavalue })
-            }
-
-            if (typeClass === 'btn-action-create' && (event.props.type === 'goal' || event.props.type === 'assignment')) {
-                setModel(prev => ({ ...prev, typeModel: event.props.type, mainModelID: null, formModel: {} }))
+    const dropdownActionClick = ({ datavalue }) => {
+        if (datavalue) {
+            if (typeof changeDropdownValue === 'function' && dropdownStatus) {
+                changeDropdownValue({ name: 'status', value: datavalue })
             }
         }
     }
@@ -95,17 +90,15 @@ const ButtonDropdown = (props) => {
     }
 
     return (
-        <div className={`button-dropdown ${props.classBtn}`} onClick={(e) => toggleVisibility(target, e)} onKeyDown={(e) => e.key === 'Enter' ? toggleVisibility(target, e) : ''} role='button' tabIndex='0'>
+        <div className={`button-dropdown ${classBtn}`} onClick={(e) => toggleVisibility(target, e)} onKeyDown={(e) => e.key === 'Enter' ? toggleVisibility(target, e) : ''} role='button' tabIndex='0'>
             <div className='dropdown-title'>
                 <label>
-                    {props.icon && iconMap[props.icon]}
-                    {props.title}
+                    {icon && iconMap[icon]}
+                    {title}
                 </label>
-                {
-                    props.arrow && <label>{iconMap['arrowdown']}</label>
-                }
+                { arrow && <label>{iconMap['arrowdown']}</label> }
             </div>
-            <div className={`dropdown-menu ${props.classBtn.includes('left') && 'left'} ${visibleElements.includes(typeClass) ? 'show' : ''}`} onClick={(e) => e.stopPropagation()}>
+            <div className={`dropdown-menu ${classBtn?.includes('left') && 'left'} ${visibleElements.includes(typeClass) ? 'show' : ''}`} onClick={(e) => e.stopPropagation()}>
                 {defineDropdown()}
                 <div className='dropdown-item item-element'>
                     <div className='section-options'>
@@ -143,6 +136,16 @@ const ButtonDropdown = (props) => {
             </div>
         </div>
     )
+}
+
+ButtonDropdown.propTypes = {
+    target: PropTypes.shape({
+        class: PropTypes.array.isRequired
+    }),
+    reference: PropTypes.string,
+    changeDropdownValue: PropTypes.func,
+    classBtn: PropTypes.string,
+    icon: PropTypes.string 
 }
 
 export default ButtonDropdown

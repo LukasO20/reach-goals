@@ -185,7 +185,7 @@ const ModalForm = () => {
 
     return (
         (loadingGoal || loadingAssigment) && !isModalList ?
-            <Loading /> :
+            <Loading mode='block' /> :
             <Form typeForm={typeVisibility} functionFormMap={functionFormMap}
                 model={model.formModel} booleanFormMap={booleanFormMap} pendingState={isSaving} />
     )

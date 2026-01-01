@@ -1,10 +1,11 @@
 import { useState } from 'react'
 
+import PropTypes from 'prop-types'
+
 import './InputTimer.scss'
 
-const InputTimer = (props) => {
+const InputTimer = ({ id, className, placeholder, name, value, onChange }) => {
   const [valueTimer, setValueTimer] = useState(undefined)
-  const valueLoaded = props.value
 
   const toTime = (minutes) => {
     if (!minutes && minutes !== 0) return ''
@@ -34,20 +35,31 @@ const InputTimer = (props) => {
 
     setValueTimer(formatted)
 
-    props.onChange?.({
-      target: { name: props.name, value: toMinutes(formatted) }
+    onChange?.({
+      target: { name: name, value: toMinutes(formatted) }
     })
   }
 
   return (
     <input
-      {...props}
-      value={valueTimer ?? toTime(valueLoaded)}
+      id={id}
+      name={name}
+      className={className}
+      value={valueTimer ?? toTime(value)}
       type='text'
-      placeholder='Set HH:mm'
+      placeholder={placeholder || 'Set HH:mm'}
       onChange={handleChange}
     />
   )
+}
+
+InputTimer.propTypes = {
+      id: PropTypes.string.isRequired,
+      className: PropTypes.string,
+      placeholder: PropTypes.string,
+      name: PropTypes.string.isRequired,
+      value: PropTypes.number,
+      onChange: PropTypes.func.isRequired
 }
 
 export default InputTimer

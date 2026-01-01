@@ -45,7 +45,7 @@ const Form = (props) => {
         </>
         : 'choose an option'
         
-    const modalListShowed = visibleElements.find(classItem => classItem.includes('modal-list'))
+    const modalListShowed = visibleElements.find(classItem => classItem?.includes('modal-list'))
     const modalListType = modalListShowed?.split('-')[2] ?? null
     const modalListTitle = {
         goal: 'Choose a goal',
@@ -138,7 +138,7 @@ const Form = (props) => {
                                     <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })}
                                         classBtn={`button-dropdown-form plan left status ${visibleElements.includes(`${typeForm}-status`) ? 'active' : ''}`}
                                         title={titleDropdownStatus} opening='modal-form' arrow={true}
-                                        dropdownValue={modelForm?.status || undefined} changeDropdownValue={functionsForm.mapHandleChange} dataSelectable={true} />
+                                        dropdownValue={modelForm?.status || undefined} changeDropdownValue={functionsForm.mapHandleChange} />
                                 </div>
                             </div>
                             <div className='item-forms tag'>

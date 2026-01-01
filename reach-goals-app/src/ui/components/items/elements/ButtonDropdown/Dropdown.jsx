@@ -33,7 +33,6 @@ const Dropdown = (props) => {
             if (dropdownClosest) {
                 const inputClosest = dropdownClosest.querySelectorAll('#goal-status, #assignment-status')
             
-                console.log(inputClosest)
                 if (inputClosest) {
                     inputClosest.forEach(item => {
                         item.value = selectedValue

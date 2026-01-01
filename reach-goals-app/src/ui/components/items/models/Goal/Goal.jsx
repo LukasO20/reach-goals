@@ -8,13 +8,15 @@ import { VisibilityContext } from '../../../../../provider/VisibilityProvider.js
 import { switchLayoutMap, targetMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import Card from '../../elements/Card/Card.jsx'
+import CardMini from '../../elements/CardMini/CardMini.jsx'
+
+import PropTypes from 'prop-types'
+
+import moment from 'moment'
 
 import '../Goal/Goal.scss'
 
-import moment from 'moment'
-import CardMini from '../../elements/CardMini/CardMini.jsx'
-
-const Goal = (props) => {
+const Goal = ({ status, display, selectableModel = false, detailsModel = false }) => {
     const [erro, setErro] = useState(false)
 
     const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
@@ -22,21 +24,16 @@ const Goal = (props) => {
     const { switchLayoutComponent, layoutComponent } = useSwitchLayout()
     const { page: { data: dataPage }, panel: { data: dataPanel }, remove, removeSuccess, removing, removingVariables } = useGoalProvider()
 
-    const status = props.status
-    const display = props.display
-    const isSelectableModel = props.selectableModel ?? false
-    const isDetailsModel = props.detailsModel ?? false
-
     const currentScope = model.filter.goal.scope
     const currentFilter = model.filter.goal[currentScope]
-    const baseData = model.dataModel.goal[currentFilter.source]?.data ?? dataPage
+    const baseData = model.dataModel.goal[currentFilter.source]?.data ?? dataPage ?? []
 
     const renderCard = baseData?.filter(item =>
         !(removeSuccess && removingVariables && item.id === removingVariables)
         && item.status === status
-    ) ?? []
+    )
 
-    const renderCardMini = baseData ?? []
+    const renderCardMini = baseData
 
     const pendingState = {
         removing: removing,
@@ -53,7 +50,7 @@ const Goal = (props) => {
     const goalClick = (goal, e) => {
         e.stopPropagation()
 
-        if (isSelectableModel) {
+        if (selectableModel) {
             const selected = baseData.find(m => m.id === goal.id)
 
             if (model.transportModel.goal.length > 0) return
@@ -66,7 +63,7 @@ const Goal = (props) => {
             })
         }
 
-        if (isDetailsModel) {
+        if (detailsModel) {
             setModel(prev => ({ ...prev, mainModelID: goal.id, formModel: goal, typeModel: 'goal' }))
             switchLayoutComponent(switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'details' }))
             toggleVisibility(targetMap(['modal-right', 'goal']))
@@ -106,6 +103,15 @@ const Goal = (props) => {
             display={display}
         />
     ) : null
+}
+
+Goal.propTypes = {
+    display: PropTypes.exact({
+        type: PropTypes.string.isRequired,
+        sideAction: PropTypes.bool
+    }).isRequired,
+    selectableModel: PropTypes.bool,
+    detailsModel: PropTypes.bool
 }
 
 export default Goal

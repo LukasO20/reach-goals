@@ -54,7 +54,7 @@ const Calendar = () => {
 
     return (
         <>
-            {isLoading && <Loading />}
+            {isLoading && <Loading mode='block' />}
             <MonthDaysPicker data={dataModelSource} />
         </>
     )

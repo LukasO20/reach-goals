@@ -1,16 +1,12 @@
 import { iconMap } from '../../../../../utils/mapping/mappingUtils.js'
-import { hasRequiredProps } from '../../../../../utils/utils.js'
 
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 
+import PropTypes from 'prop-types'
+
 import './CardMini.scss'
 
-const CardMini = (props) => {
-    const { type, model, display, clickFunction } = props
-
-    const requiredSuccessful = hasRequiredProps(props, ['type', 'model', 'display', 'clickFunction'])
-    if (!requiredSuccessful) return null
-
+const CardMini = ({ type, model, display, clickFunction }) => {
     return model.map(item => {
         const itemID = item.id || item.tagID
         const isTypeTag = type === 'tag'
@@ -38,6 +34,19 @@ const CardMini = (props) => {
         )
     }
     )
+}
+
+CardMini.propTypes = {
+    type: PropTypes.string.isRequired,
+    model: PropTypes.array.isRequired,
+    display: PropTypes.exact({
+        type: PropTypes.string.isRequired,
+        sideAction: PropTypes.bool
+    }).isRequired,
+    clickFunction: PropTypes.shape({
+        card: PropTypes.func,
+        aux: PropTypes.func,
+    })
 }
 
 export default CardMini

@@ -87,7 +87,7 @@ const ModelTabs = () => {
                 </div>
             </div>
             <div className='body scrollable'>
-                {isLoading && <Loading />}
+                {isLoading && <Loading mode='block' />}
                 {isTypeModel && <ModelSwitcher type={layoutObjectives} propsReference={modelSwitcherProps} />}
                 {
                     isAllModels &&

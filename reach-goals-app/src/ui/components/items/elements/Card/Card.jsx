@@ -1,20 +1,17 @@
 import { switchLayoutMap, targetMap, iconMap } from '../../../../../utils/mapping/mappingUtils.js'
-import { hasRequiredProps } from '../../../../../utils/utils.js'
 
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 
+import PropTypes from 'prop-types'
+
 import moment from 'moment'
 
 import './Card.scss'
 
-const Card = (props) => {
-    const { type, model, display, pendingState, clickFunction } = props
+const Card = ({ type, model, display, pendingState, clickFunction }) => {
     const { layoutComponent } = useSwitchLayout()
-
-    const requiredSuccessful = hasRequiredProps(props, ['type', 'model', 'display', 'pendingState', 'clickFunction'])
-    if (!requiredSuccessful) return null
 
     return model.map(item => {
         const isPending = pendingState?.removing && (item.id || item.tagID) === pendingState?.removingVariables
@@ -98,6 +95,24 @@ const Card = (props) => {
                 </div>
             </div>
         )
+    })
+}
+
+Card.propTypes = {
+    type: PropTypes.string.isRequired,
+    model: PropTypes.array.isRequired,
+    display: PropTypes.exact({
+        type: PropTypes.string.isRequired,
+        sideAction: PropTypes.bool
+    }).isRequired,
+    pendingState: PropTypes.shape({
+        removing: PropTypes.bool,
+        removingVariables: PropTypes.number
+    }),
+    clickFunction: PropTypes.shape({
+        card: PropTypes.func,
+        edit: PropTypes.func,
+        delete: PropTypes.func
     })
 }
 

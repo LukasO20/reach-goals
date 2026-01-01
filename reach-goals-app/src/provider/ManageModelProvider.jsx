@@ -138,7 +138,7 @@ const ManageModelProvider = ({ children }) => {
         }
     }
 
-    //console.log('MODEL READY TO MANAGE - ', model)
+    console.log('MODEL READY TO MANAGE - ', model)
 
     return (
         <ManageModelContext.Provider value={{

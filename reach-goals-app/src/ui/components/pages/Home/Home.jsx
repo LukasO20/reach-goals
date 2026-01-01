@@ -61,7 +61,7 @@ const Home = () => {
 
     return (
         <>
-            {isLoading && <Loading />}
+            {isLoading && <Loading mode='block' />}
             {!isLoading && (
                 validLayouts.includes(layoutHome) && (
                     layoutHome === 'pie-chart' ? (

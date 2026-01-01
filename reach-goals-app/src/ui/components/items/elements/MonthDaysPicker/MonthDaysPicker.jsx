@@ -128,7 +128,7 @@ const MonthDaysPicker = ({ data }) => {
 }
 
 MonthDaysPicker.propTypes = {
-    data: PropTypes.exact({
+    data: PropTypes.shape({
         goal: PropTypes.array.isRequired,
         assignment: PropTypes.array.isRequired
     }).isRequired,

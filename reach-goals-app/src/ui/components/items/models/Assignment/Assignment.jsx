@@ -10,21 +10,17 @@ import { switchLayoutMap, targetMap } from '../../../../../utils/mapping/mapping
 import Card from '../../elements/Card/Card.jsx'
 import CardMini from '../../elements/CardMini/CardMini.jsx'
 
+import PropTypes from 'prop-types'
+
 import '../Assignment/Assignment.scss'
 
-const Assignment = (props) => {
+const Assignment = ({ status, display, sourceForm, selectableModel = false, detailsModel = false }) => {
     const [erro, setErro] = useState(false)
 
     const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
     const { toggleVisibility } = useContext(VisibilityContext)
     const { switchLayoutComponent, layoutComponent } = useSwitchLayout()
     const { page: { data: dataPage }, panel: { data: dataPanel }, remove, removeSuccess, removing, removingVariables } = useAssignmentProvider()
-
-    const status = props.status
-    const display = props.display
-    const sourceForm = props.sourceForm
-    const isSelectableModel = props.selectableModel ?? false
-    const isDetailsModel = props.detailsModel ?? false
 
     const currentScope = model.filter.assignment.scope
     const currentFilter = model.filter.assignment[currentScope]
@@ -33,14 +29,15 @@ const Assignment = (props) => {
     const baseData =
         sourceForm?.assignments ??
         model.dataModel.assignment[currentFilter.source]?.data ??
-        dataPage
+        dataPage ?? 
+        []
 
     const renderCard = baseData?.filter(item =>
         !(removeSuccess && removingVariables && item.id === removingVariables)
         && item.status === status
-    ) ?? []
+    )
 
-    const renderCardMini = baseData ?? []
+    const renderCardMini = baseData 
 
     const pendingState = {
         removing: removing,
@@ -57,7 +54,7 @@ const Assignment = (props) => {
     const assignmentClick = (assignment, e) => {
         e.stopPropagation()
 
-        if (isSelectableModel) {
+        if (selectableModel) {
             const selected = model.dataModel.assignment.support.data.find(m => m.id === assignment.id)
 
             addToTransportModel({ ...selected, type: 'assignment' })
@@ -70,7 +67,7 @@ const Assignment = (props) => {
             })
         }
 
-        if (isDetailsModel) {
+        if (detailsModel) {
             setModel(prev => ({ ...prev, mainModelID: assignment.id, formModel: assignment, typeModel: 'assignment' }))
             switchLayoutComponent(switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'details' }))
             toggleVisibility(targetMap(['modal-right', 'assignment']))
@@ -117,6 +114,18 @@ const Assignment = (props) => {
             display={display}
         />
     ) : null
+}
+
+Assignment.propTypes = {
+    display: PropTypes.exact({
+        type: PropTypes.string.isRequired,
+        sideAction: PropTypes.bool
+    }).isRequired,
+    sourceForm: PropTypes.shape({
+        assignments: PropTypes.array.isRequired
+    }),
+    selectableModel: PropTypes.bool,
+    detailsModel: PropTypes.bool
 }
 
 export default Assignment

@@ -1,8 +1,8 @@
+import PropTypes from 'prop-types'
+
 import '../Loading/Loading.scss'
 
-const Loading = (props) => {
-    const { mode } = props
-
+const Loading = ({ mode }) => {
     return (
         <>
             {
@@ -15,6 +15,10 @@ const Loading = (props) => {
             }
         </>
     )
+}
+
+Loading.propTypes = {
+    mode: PropTypes.oneOf(['inline', 'block']).isRequired
 }
 
 export default Loading
