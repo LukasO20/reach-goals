@@ -12,7 +12,7 @@ import InputText from '../elements/InputText/InputText.jsx'
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 
-import { targetMap, iconMap } from '../../../../utils/mapping/mappingUtils.js'
+import { visibilityMap, iconMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import './Form.scss'
 
@@ -62,7 +62,7 @@ const Form = (props) => {
                             <h2>{iconMap['tag']}Create a tag</h2>
                         </div>
                         <div className='objective-buttons-options'>
-                            <ButtonAction target={targetMap('near-modalForm', { remove: true })} classBtn='button-action circle close' icon='close' />
+                            <ButtonAction visibility={visibilityMap('near-modalForm', { remove: true })} classBtn='button-action circle close' icon='close' />
                         </div>
                     </div>
                     <div className='body'>
@@ -88,16 +88,16 @@ const Form = (props) => {
             )
         default:
             return (
-                <div className='container-form-modal center-content' onClick={(e) => functionsForm.mapToggleVisibility(targetMap(booleanForm.mapClassRemove), e)}>
+                <div className='container-form-modal center-content' onClick={(e) => functionsForm.mapToggleVisibility(visibilityMap(booleanForm.mapClassRemove), e)}>
                     <div className='head'>
                         <div className='objective-icon'>
                             {icon}
                         </div>
                         <div className='objective-options'>
                             <div className='objective-op'>
-                                <ButtonAction target={targetMap(['modal-center', 'assignment'], { maintain: true })} classBtn={`op-form-assignment button-action plan small ${typeForm === 'assignment' ? 'active' : ''}`}
+                                <ButtonAction visibility={visibilityMap(['modal-center', 'assignment'], { maintain: true })} classBtn={`op-form-assignment button-action plan small ${typeForm === 'assignment' ? 'active' : ''}`}
                                     title='assignments' nullForm={true} onClick={() => setModel(prev => ({ ...prev, typeModel: 'assignment' }))} />
-                                <ButtonAction target={targetMap(['modal-center', 'goal'], { maintain: true })} classBtn={`op-form-goal button-action plan small ${typeForm === 'goal' ? 'active' : ''}`}
+                                <ButtonAction visibility={visibilityMap(['modal-center', 'goal'], { maintain: true })} classBtn={`op-form-goal button-action plan small ${typeForm === 'goal' ? 'active' : ''}`}
                                     title='goals' nullForm={true} onClick={() => setModel(prev => ({ ...prev, typeModel: 'goal' }))} />
                             </div>
                             <div className='objective-color'>
@@ -105,7 +105,7 @@ const Form = (props) => {
                             </div>
                         </div>
                         <div className='objective-buttons-options'>
-                            <ButtonAction target={targetMap(null)} nullForm={true} classBtn='button-action circle close' icon='close' />
+                            <ButtonAction visibility={visibilityMap(null)} nullForm={true} classBtn='button-action circle close' icon='close' />
                         </div>
                     </div>
                     <div className='body'>
@@ -135,7 +135,7 @@ const Form = (props) => {
                                 }
                                 <div className='field-forms status'>
                                     <label>{iconMap['progress']}<span>status</span></label>
-                                    <ButtonDropdown target={targetMap(`${typeForm}-status`, { add: true })}
+                                    <ButtonDropdown visibility={visibilityMap(`${typeForm}-status`, { add: true })}
                                         classBtn={`button-dropdown-form plan left status ${visibleElements.includes(`${typeForm}-status`) ? 'active' : ''}`}
                                         title={titleDropdownStatus} opening='modal-form' arrow={true}
                                         dropdownValue={modelForm?.status || undefined} changeDropdownValue={functionsForm.mapHandleChange} />
@@ -145,7 +145,7 @@ const Form = (props) => {
                                 <div className='head'>
                                     <div className='item-head-1'>
                                         <label>{iconMap['tag']}<span>tags</span></label>
-                                        <ButtonAction target={targetMap('modal-list-tag', { add: true })}
+                                        <ButtonAction visibility={visibilityMap('modal-list-tag', { add: true })}
                                             classBtn={'button-action plan-round add max-width small'} icon='plus' title='Add' />
                                     </div>
                                     <div className='item-head-2'></div>

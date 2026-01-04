@@ -5,7 +5,7 @@ import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.js
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 
-import { iconMap, targetMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { iconMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import ButtonAction from '../../elements/ButtonAction/ButtonAction.jsx'
 import Assignment from '../../models/Assignment/Assignment.jsx'
@@ -39,7 +39,7 @@ const ModalDetailsSection = () => {
             <div className='head'>
                 <h2>{formModel.name}</h2>
                 <h4>{formModel.end && `Schedule to end on ${moment(formModel.end).format('MMMM DD')}`}</h4>
-                <ButtonAction target={targetMap(null)} onClick={handleClickButtonAction} classBtn='button-action circle close' icon='close' />
+                <ButtonAction visibility={visibilityMap(null)} onClick={handleClickButtonAction} classBtn='button-action circle close' icon='close' />
             </div>
             <div className='body'>
                 {

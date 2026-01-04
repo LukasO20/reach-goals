@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react'
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider'
 import { useTitle } from '../../../../../provider/TitleProvider'
 
-import { targetMap } from '../../../../../utils/mapping/mappingUtils'
+import { visibilityMap } from '../../../../../utils/mapping/mappingUtils'
 
 import ButtonAction from '../ButtonAction/ButtonAction'
 
@@ -24,7 +24,7 @@ const MessageToast = () => {
                 const element = document.querySelector('[data-slot="message-toast"]')
                 if (element?.classList.contains('message-toast')) {
                     update({ toast: '' })
-                    toggleVisibility(targetMap('message-toast', { remove: true }))
+                    toggleVisibility(visibilityMap('message-toast', { remove: true }))
                     setToastReady(false)
                 }
             }, 7500)
@@ -34,12 +34,12 @@ const MessageToast = () => {
     }, [visibleElements])
 
     useEffect(() => {
-        typeof title.toast === 'string' && title.toast !== '' && toggleVisibility(targetMap('message-toast', { add: true }))
+        typeof title.toast === 'string' && title.toast !== '' && toggleVisibility(visibilityMap('message-toast', { add: true }))
     }, [title.toast])
 
     const hideToast = () => {
         setToastReady(false)
-        toggleVisibility(targetMap('message-toast', { remove: true }))
+        toggleVisibility(visibilityMap('message-toast', { remove: true }))
     }
 
     return (

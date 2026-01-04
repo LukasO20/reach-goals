@@ -7,7 +7,7 @@ import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
 
-import { targetMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
+import { visibilityMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import ButtonDropdown from '../../items/elements/ButtonDropdown/ButtonDropdown.jsx'
@@ -26,7 +26,7 @@ const ContainerH = () => {
     }
 
     const handleClickHeader = (e) => {
-        toggleVisibility(targetMap(null), e)
+        toggleVisibility(visibilityMap(null), e)
         resetManageModel()
         navigate(`/${layout.page.pageName}`) // return standard route during handle
     }
@@ -38,13 +38,13 @@ const ContainerH = () => {
             </div>
             <div className='nav'>
                 <div className='item-nav'>
-                    <ButtonAction onClick={linkTagClick} target={targetMap(['modal-right', 'tag'])}
+                    <ButtonAction onClick={linkTagClick} visibility={visibilityMap(['modal-right', 'tag'])}
                         switchLayout={switchLayoutMap({ area: 'modal', state: { modalName: 'modal-right', layoutName: 'tag' } })}
                         classBtn='button-link circle tag' icon='tag'
                     />
                 </div>
                 <div className='item-nav'>
-                    <ButtonDropdown target={targetMap('btn-themes')} icon='themes'
+                    <ButtonDropdown visibility={visibilityMap('btn-themes')} icon='themes'
                         classBtn={`circle themes ${visibleElements.includes('btn-themes') ? 'active' : ''}`} />
                 </div>
             </div>

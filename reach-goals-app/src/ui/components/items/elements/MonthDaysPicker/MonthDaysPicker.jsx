@@ -5,7 +5,7 @@ import { VisibilityContext } from '../../../../../provider/VisibilityProvider.js
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
 import { weekNames } from '../../../../../utils/reference.js'
-import { switchLayoutMap, targetMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { switchLayoutMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import CardMini from '../CardMini/CardMini.jsx'
 
@@ -53,7 +53,7 @@ const MonthDaysPicker = ({ data }) => {
 
         setModel(prev => ({ ...prev, mainModelID: model.id, formModel: model, typeModel: model.type }))
         updateSwitchLayout(switchLayoutMap({ area: 'modal', state: { modalName: 'modal-center', layoutName: 'details' } }))
-        toggleVisibility(targetMap(['modal-right', model.type]))
+        toggleVisibility(visibilityMap(['modal-right', model.type]))
     }
 
     const days = getDaysInMonth(year, month)

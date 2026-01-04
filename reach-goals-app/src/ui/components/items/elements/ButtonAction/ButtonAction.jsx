@@ -17,7 +17,7 @@ const statusButton = (classBtn, providervisibleElements) => {
     return providervisibleElements.includes(classBtn)
 }
 
-const ButtonAction = ({ target, switchLayout, nullForm, unlinkGoal, onClick, pendingState, datavalue, icon, title, classBtn }) => {
+const ButtonAction = ({ visibility, switchLayout, nullForm, unlinkGoal, onClick, pendingState, datavalue, icon, title, classBtn }) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { updateSwitchLayout } = useSwitchLayout()
     const { model, resetManageModel, updateFormModel, removeFromTransportModel } = useContext(ManageModelContext)
@@ -27,7 +27,7 @@ const ButtonAction = ({ target, switchLayout, nullForm, unlinkGoal, onClick, pen
 
     const handleClick = (e) => {
         e.stopPropagation()
-        if (target) toggleVisibility(target, e)
+        if (visibility) toggleVisibility(visibility, e)
         if (switchLayout) updateSwitchLayout(switchLayout)
         if (nullForm) resetManageModel(['formModel', 'mainModelID', 'transportModel'])
         if (unlinkGoal) {

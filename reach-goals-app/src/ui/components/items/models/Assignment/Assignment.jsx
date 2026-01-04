@@ -5,7 +5,7 @@ import { useAssignmentProvider } from '../../../../../provider/model/AssignmentM
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 
-import { switchLayoutMap, targetMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { switchLayoutMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import Card from '../../elements/Card/Card.jsx'
 import CardMini from '../../elements/CardMini/CardMini.jsx'
@@ -70,7 +70,7 @@ const Assignment = ({ status, display, sourceForm, selectableModel = false, deta
         if (detailsModel) {
             setModel(prev => ({ ...prev, mainModelID: assignment.id, formModel: assignment, typeModel: 'assignment' }))
             updateSwitchLayout(switchLayoutMap({ area: 'modal', state: { modalName: 'modal-right', layoutName: 'details' } }))
-            toggleVisibility(targetMap(['modal-right', 'assignment']))
+            toggleVisibility(visibilityMap(['modal-right', 'assignment']))
         }
     }
 

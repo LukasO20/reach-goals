@@ -1,4 +1,4 @@
-import { switchLayoutMap, targetMap, iconMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { switchLayoutMap, visibilityMap, iconMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 
@@ -65,7 +65,7 @@ const Card = ({ type, model, display, pendingState, clickFunction }) => {
                                         <div className='item'>
                                             <ButtonAction
                                                 onClick={() => clickFunction.edit(itemID)}
-                                                target={targetMap(['modal-center', type])}
+                                                visibility={visibilityMap(['modal-center', type])}
                                                 switchLayout={switchLayoutMap({
                                                     area: 'modal',
                                                     state: { modalName: 'modal-center', layoutName: 'form' }
@@ -76,7 +76,7 @@ const Card = ({ type, model, display, pendingState, clickFunction }) => {
                                             <ButtonAction
                                                 pendingState={isPending}
                                                 onClick={() => clickFunction.delete(itemID)}
-                                                target={targetMap(null)}
+                                                visibility={visibilityMap(null)}
                                                 classBtn={`remove-${type} button-action circle small`}
                                                 icon='remove'
                                             />

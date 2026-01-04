@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 
 import { VisibilityContext } from '../../../provider/VisibilityProvider.jsx'
-import { targetMap, switchLayoutMap } from '../../../utils/mapping/mappingUtils.js'
+import { visibilityMap, switchLayoutMap } from '../../../utils/mapping/mappingUtils.js'
 
 import { useSwitchLayout } from '../../../provider/SwitchLayoutProvider.jsx'
 
@@ -23,7 +23,7 @@ const Navigate = () => {
     const handleClickNavigate = (e) => {
         if (!e) return
 
-        toggleVisibility(targetMap(), e)
+        toggleVisibility(visibilityMap(), e)
         navigate(`/${layout.page.pageName}`) // return standard route during handle
     }
 
@@ -46,7 +46,7 @@ const Navigate = () => {
                     />
                 </div>
                 <div className='item-nav'>
-                    <ButtonAction target={targetMap(['modal-center', 'config'])} classBtn={`button-action circle config ${visibleElements.includes('config') ? 'active' : ''}`} icon='config'
+                    <ButtonAction visibility={visibilityMap(['modal-center', 'config'])} classBtn={`button-action circle config ${visibleElements.includes('config') ? 'active' : ''}`} icon='config'
                         switchLayout={switchLayoutMap({ area: 'modal', state: { modalName: 'modal-center', layoutName: 'config' } })}
                     />
                 </div>

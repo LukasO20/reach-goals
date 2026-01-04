@@ -8,7 +8,7 @@ import { useAssignmentProvider } from '../../../../provider/model/AssignmentMode
 import { useTagProvider } from '../../../../provider/model/TagModelProvider.jsx'
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
 
-import { targetMap } from '../../../../utils/mapping/mappingUtils.js'
+import { visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import Form from '../../items/forms/Form.jsx'
 import Loading from '../../items/elements/Loading/Loading.jsx'
@@ -155,7 +155,7 @@ const ModalForm = () => {
             update({ toast: getToastMessage() })
 
             if (!isSaving) {
-                const visibilityTag = typeVisibility === 'tag' ? targetMap('near-modalForm', { remove: true }) : null
+                const visibilityTag = typeVisibility === 'tag' ? visibilityMap('near-modalForm', { remove: true }) : null
                 toggleVisibility(visibilityTag)
             }
         }

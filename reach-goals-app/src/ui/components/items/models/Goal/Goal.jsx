@@ -5,7 +5,7 @@ import { useGoalProvider } from '../../../../../provider/model/GoalModelProvider
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 
-import { switchLayoutMap, targetMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { switchLayoutMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import Card from '../../elements/Card/Card.jsx'
 import CardMini from '../../elements/CardMini/CardMini.jsx'
@@ -56,7 +56,7 @@ const Goal = ({ status, display, selectableModel = false, detailsModel = false }
             if (model.transportModel.goal.length > 0) return
 
             addToTransportModel({ ...selected, type: 'goal', custom: { end: moment(selected.end).format('MMMM DD') } })
-            toggleVisibility(targetMap('modal-list-goal', { remove: true }))
+            toggleVisibility(visibilityMap('modal-list-goal', { remove: true }))
             return updateFormModel({
                 keyObject: 'goalID',
                 value: goal.id
@@ -66,7 +66,7 @@ const Goal = ({ status, display, selectableModel = false, detailsModel = false }
         if (detailsModel) {
             setModel(prev => ({ ...prev, mainModelID: goal.id, formModel: goal, typeModel: 'goal' }))
             updateSwitchLayout(switchLayoutMap({ area: 'modal', state: { modalName: 'modal-right', layoutName: 'details' } }))
-            toggleVisibility(targetMap(['modal-right', 'goal']))
+            toggleVisibility(visibilityMap(['modal-right', 'goal']))
         }
     }
 

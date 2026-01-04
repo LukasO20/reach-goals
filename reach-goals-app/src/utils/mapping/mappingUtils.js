@@ -1,7 +1,7 @@
 import * as Unicons from '@iconscout/react-unicons'
 import { typeModel, typeReduceModel, typeFilterModel } from '../reference.js'
 
-export const targetMap = (classes, operator = {}) => {
+export const visibilityMap = (classes, operator = {}) => {
     const data = Array.isArray(classes) ? classes : [classes]
     const attributes = {
         class: data,

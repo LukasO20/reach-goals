@@ -3,9 +3,7 @@ import { useContext } from 'react'
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 
-import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
-
-import { targetMap, switchLayoutMap, iconMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { visibilityMap, switchLayoutMap, iconMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 
@@ -39,12 +37,11 @@ const NullObject = (value) => {
     return (Array.isArray(value) || typeof value === "string") && value.length !== 0
 }
 
-const ButtonDropdown = ({ target, reference, changeDropdownValue, icon, classBtn, title, arrow,  }) => {
+const ButtonDropdown = ({ visibility, reference, changeDropdownValue, icon, classBtn, title, arrow,  }) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { model } = useContext(ManageModelContext)
-    const { layout } = useSwitchLayout()
 
-    const typeClass = target.class !== undefined ? target.class[0] : null
+    const typeClass = visibility.class !== undefined ? visibility.class[0] : null
     const dropdownStatus = typeClass.includes('goal-status') || typeClass.includes('assignment-status')
 
     let titleDropdown = undefined
@@ -90,7 +87,7 @@ const ButtonDropdown = ({ target, reference, changeDropdownValue, icon, classBtn
     }
 
     return (
-        <div className={`button-dropdown ${classBtn}`} onClick={(e) => toggleVisibility(target, e)} onKeyDown={(e) => e.key === 'Enter' ? toggleVisibility(target, e) : ''} role='button' tabIndex='0'>
+        <div className={`button-dropdown ${classBtn}`} onClick={(e) => toggleVisibility(visibility, e)} onKeyDown={(e) => e.key === 'Enter' ? toggleVisibility(visibility, e) : ''} role='button' tabIndex='0'>
             <div className='dropdown-title'>
                 <label>
                     {icon && iconMap[icon]}
@@ -119,7 +116,7 @@ const ButtonDropdown = ({ target, reference, changeDropdownValue, icon, classBtn
                                         <div className='item-option'>
                                             <div className='item-title'>
                                                 <ButtonAction onClick={dropdownActionClick} datavalue={dropdownStatus ? option.op : null}
-                                                    target={targetMap(...classTargetDropdown)}
+                                                    visibility={visibilityMap(...classTargetDropdown)}
                                                     switchLayout={switchLayoutMap({ area: 'modal', state: { modalName: 'modal-center', layoutName: 'form' } })}
                                                     classBtn={`form-${option.op} button-action plan-round ${model.formModel?.status === option.op ? 'active' : ''}`} icon={option.icon} title={`${option.title}`} type={option.op}
                                                 />

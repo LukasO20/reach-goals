@@ -5,7 +5,7 @@ import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.js
 import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
 import { useTagProvider } from '../../../../provider/model/TagModelProvider.jsx'
 
-import { filterGetModelMap, targetMap } from '../../../../utils/mapping/mappingUtils.js'
+import { filterGetModelMap, visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import ModelSwitcher from '../../items/models/ModelSwitcher.jsx'
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
@@ -44,7 +44,7 @@ const ModalList = ({ title, typeVisibility }) => {
         <div className={`container-list-modal ${typeVisibility}`}>
             <div className='head'>
                 <h2>{title}</h2>
-                <ButtonAction target={targetMap(`modal-list-${typeRelation}`, { remove: true })}
+                <ButtonAction visibility={visibilityMap(`modal-list-${typeRelation}`, { remove: true })}
                     classBtn='button-action circle close' icon='close' />
             </div>
             <div className='body scrollable'>

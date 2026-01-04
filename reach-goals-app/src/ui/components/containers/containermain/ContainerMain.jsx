@@ -7,7 +7,7 @@ import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx
 import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 
-import { targetMap, switchLayoutMap, checkboxMap } from '../../../../utils/mapping/mappingUtils.js'
+import { visibilityMap, switchLayoutMap, checkboxMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import { monthNames } from '../../../../utils/reference.js'
 
@@ -25,7 +25,7 @@ const ContainerM = () => {
     const navigate = useNavigate()
 
     const handleClickContainer = (e) => {
-        toggleVisibility(targetMap(null), e)
+        toggleVisibility(visibilityMap(null), e)
         resetManageModel()
         navigate(`/${layout.page.pageName}`) // return standard route during handle
     }
@@ -46,11 +46,11 @@ const ContainerM = () => {
                         </div>
                         <div className='options-m'>
                             <div className='visibility-m'>
-                                <ButtonDropdown target={targetMap('btn-visibility')} classBtn={`visibility plan ${visibleElements.includes('btn-visibility') && 'active'}`}
+                                <ButtonDropdown visibility={visibilityMap('btn-visibility')} classBtn={`visibility plan ${visibleElements.includes('btn-visibility') && 'active'}`}
                                     title='visibility' arrow={true} />
                             </div>
                             <div className='more-m'>
-                                <ButtonDropdown target={targetMap('btn-more')} classBtn={`more plan max-width ${visibleElements.includes('btn-more') && 'active'}`}
+                                <ButtonDropdown visibility={visibilityMap('btn-more')} classBtn={`more plan max-width ${visibleElements.includes('btn-more') && 'active'}`}
                                     icon='ellipsisv' />
                             </div>
                         </div>
@@ -90,9 +90,9 @@ const ContainerM = () => {
                         }
                     </div>
                     <div className='action'>
-                        <ButtonDropdown target={targetMap('btn-action-order')} classBtn={`order plan ${visibleElements.includes('btn-action-order') && 'active'}`}
+                        <ButtonDropdown visibility={visibilityMap('btn-action-order')} classBtn={`order plan ${visibleElements.includes('btn-action-order') && 'active'}`}
                             icon='arrowaltv' title='order' arrow={true} />
-                        <ButtonDropdown target={targetMap('btn-action-create')} classBtn={`create plan ${visibleElements.includes('btn-action-create') && 'active'}`}
+                        <ButtonDropdown visibility={visibilityMap('btn-action-create')} classBtn={`create plan ${visibleElements.includes('btn-action-create') && 'active'}`}
                             icon='plus' title='create' reference='modal-center' arrow={true} />
                     </div>
                 </div>

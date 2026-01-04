@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { ManageModelContext } from '../../../../provider/ManageModelProvider'
 
-import { iconMap, targetMap } from '../../../../utils/mapping/mappingUtils'
+import { iconMap, visibilityMap } from '../../../../utils/mapping/mappingUtils'
 
 import ButtonAction from '../elements/ButtonAction/ButtonAction'
 
@@ -18,7 +18,7 @@ const ModelRelationAdd = (props) => {
                 <ButtonAction unlinkGoal={true} classBtn={'unlink-goal button-action plan-round add max-width small'}
                     icon='cancel' title='Unlink' />
                 :
-                <ButtonAction target={targetMap(`modal-list-${visibilityRelation}`, { add: true })}
+                <ButtonAction visibility={visibilityMap(`modal-list-${visibilityRelation}`, { add: true })}
                     classBtn={`form-modallist-${type} button-action plan-round add max-width small`}
                     icon='plus' title='Add' />
         )

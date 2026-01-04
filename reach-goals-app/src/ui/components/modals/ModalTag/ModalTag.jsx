@@ -5,7 +5,7 @@ import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 
-import { targetMap, switchLayoutMap, filterGetModelMap } from '../../../../utils/mapping/mappingUtils.js'
+import { visibilityMap, switchLayoutMap, filterGetModelMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import ModalForm from '../ModalForm/ModalForm.jsx'
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
@@ -36,13 +36,13 @@ const ModalTag = () => {
         <>
             <div className='head'>
                 <h2>Tags</h2>
-                <ButtonAction target={targetMap(null)} onClick={handleClickButtonAction} classBtn='button-action circle close' icon='close' />
+                <ButtonAction visibility={visibilityMap(null)} onClick={handleClickButtonAction} classBtn='button-action circle close' icon='close' />
                 <div className='options'>
-                    <ButtonAction target={targetMap('near-modalForm', { add: true })}
+                    <ButtonAction visibility={visibilityMap('near-modalForm', { add: true })}
                         classBtn={`button-action create plan max-width ${isModalForm.every(e => visibleElements.includes(e)) ? 'active' : ''}`} icon='plus' title='create' />
                     <ButtonAction classBtn='button-action circle max-width config' 
                         icon='config' onClick={(e) => handleClickButtonAction(e)}
-                        target={targetMap(['modal-center', 'config'])} 
+                        visibility={visibilityMap(['modal-center', 'config'])} 
                         switchLayout={switchLayoutMap({ area: 'modal', state: { modalName: 'modal-center', layoutName: 'config' } })}
                     />
                 </div>

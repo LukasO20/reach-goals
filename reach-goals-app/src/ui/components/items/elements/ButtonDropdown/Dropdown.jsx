@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 
-import { targetMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 const NullObject = (props) => {
     if (props !== undefined) {
@@ -52,7 +52,7 @@ const Dropdown = (props) => {
                             <div className={`option ${option.op}`} key={`op-${index}`}>
                                 <div className='item-option'>                                  
                                     <div className='item-title'>
-                                        <ButtonAction onClick={handleAction} datavalue={dropdownStatus ? option.op : null} target={targetMap(['panel-center', `${option.op}`])} classBtn={`form-${option.op} button-st`} icon='plus' title={`${option.title}`}/>
+                                        <ButtonAction onClick={handleAction} datavalue={dropdownStatus ? option.op : null} visibility={visibilityMap(['panel-center', `${option.op}`])} classBtn={`form-${option.op} button-st`} icon='plus' title={`${option.title}`}/>
                                     </div> 
                                     <div className='item-details'>
 

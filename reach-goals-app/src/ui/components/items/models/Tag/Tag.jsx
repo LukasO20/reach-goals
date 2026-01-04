@@ -5,7 +5,7 @@ import { useTagProvider } from '../../../../../provider/model/TagModelProvider.j
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 
-import { targetMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import CardMini from '../../elements/CardMini/CardMini.jsx'
 
@@ -20,7 +20,7 @@ const Tag = ({ display, sourceForm, selectableModel = false }) => {
     const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
     const { panel: { data }, remove } = useTagProvider()
 
-    const target = targetMap(['panel-right', 'tag'])
+    const target = visibilityMap(['panel-right', 'tag'])
 
     const currentScope = model.filter.tag.scope
     const currentFilter = model.filter.tag[currentScope]
