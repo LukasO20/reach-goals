@@ -1,7 +1,4 @@
 import { useParams } from 'react-router-dom'
-import { useEffect } from 'react'
-
-import { useSwitchLayout } from '../../provider/SwitchLayoutProvider.jsx'
 
 import Home from './pages/Home/Home.jsx'
 import Calendar from './pages/Calendar/Calendar.jsx'
@@ -22,11 +19,6 @@ const sectionRender = (section) => {
 
 const Sections = () => {
     const { section } = useParams()
-    const { switchLayoutComponent } = useSwitchLayout()
-
-    useEffect(() => {
-        switchLayoutComponent({ page: section })
-    }, [section])
 
     return (
         <div className='section'>

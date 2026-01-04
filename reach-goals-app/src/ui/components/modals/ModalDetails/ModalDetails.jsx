@@ -12,7 +12,7 @@ const ModalDetails = () => {
 
     return (
         <>
-            {isLoading ? <Loading /> : <ModalDetailsSection />}
+            {isLoading ? <Loading mode='block' /> : <ModalDetailsSection />}
         </>
     )
 }

@@ -14,14 +14,14 @@ import ModelTabs from '../../items/elements/ModelTabs/ModelTabs.jsx'
 const ModalTag = () => {
     const { visibleElements } = useContext(VisibilityContext)
     const { setModel, updateFilterModel } = useContext(ManageModelContext)
-    const { layoutComponent } = useSwitchLayout()
+    const { layout } = useSwitchLayout()
     const navigate = useNavigate()
 
     const isModalForm = ['tag', 'near-modalForm']
 
     const handleClickButtonAction = (e) => {
         if (e) setModel(prev => ({ ...prev, typeModel: 'config' }))
-        navigate(`/${layoutComponent.page}`) // return standard route during handle   
+        navigate(`/${layout.page.pageName}`) // return standard route during handle   
     }
 
     useEffect(() => {
@@ -40,8 +40,11 @@ const ModalTag = () => {
                 <div className='options'>
                     <ButtonAction target={targetMap('near-modalForm', { add: true })}
                         classBtn={`button-action create plan max-width ${isModalForm.every(e => visibleElements.includes(e)) ? 'active' : ''}`} icon='plus' title='create' />
-                    <ButtonAction classBtn='button-action circle max-width config' icon='config' onClick={(e) => handleClickButtonAction(e)}
-                        target={targetMap(['modal-center', 'config'])} switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'config' })} />
+                    <ButtonAction classBtn='button-action circle max-width config' 
+                        icon='config' onClick={(e) => handleClickButtonAction(e)}
+                        target={targetMap(['modal-center', 'config'])} 
+                        switchLayout={switchLayoutMap({ area: 'modal', state: { modalName: 'modal-center', layoutName: 'config' } })}
+                    />
                 </div>
             </div>
             <div className='body'>

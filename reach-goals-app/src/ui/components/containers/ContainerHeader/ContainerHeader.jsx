@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
-
 import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
+
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
 
 import { targetMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
@@ -18,7 +18,7 @@ const ContainerH = () => {
     const { title } = useTitle()
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { setModel, resetManageModel } = useContext(ManageModelContext)
-    const { layoutComponent } = useSwitchLayout()
+    const { layout } = useSwitchLayout()
     const navigate = useNavigate()
 
     const linkTagClick = (e) => {
@@ -28,7 +28,7 @@ const ContainerH = () => {
     const handleClickHeader = (e) => {
         toggleVisibility(targetMap(null), e)
         resetManageModel()
-        navigate(`/${layoutComponent.page}`) // return standard route during handle
+        navigate(`/${layout.page.pageName}`) // return standard route during handle
     }
 
     return (
@@ -39,7 +39,7 @@ const ContainerH = () => {
             <div className='nav'>
                 <div className='item-nav'>
                     <ButtonAction onClick={linkTagClick} target={targetMap(['modal-right', 'tag'])}
-                        switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'tag' })}
+                        switchLayout={switchLayoutMap({ area: 'modal', state: { modalName: 'modal-right', layoutName: 'tag' } })}
                         classBtn='button-link circle tag' icon='tag'
                     />
                 </div>

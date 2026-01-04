@@ -10,10 +10,10 @@ import './ModalSwitcher.scss'
 
 const ModalSwitcherRight = () => {
     const { visibleElements } = useContext(VisibilityContext)
-    const { layoutComponent } = useSwitchLayout()
+    const { layout } = useSwitchLayout()
 
     const showModalRight = visibleElements.includes('modal-right') ? 'show' : ''
-    const typeModalLayout = layoutComponent.panel.layout
+    const typeModalLayout = layout.modal.layoutName
 
     const renderModal = (type) => {
         if (!typeof type === 'string') return console.error('Invalid type for renderModal')

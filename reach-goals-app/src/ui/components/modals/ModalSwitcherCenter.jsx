@@ -10,10 +10,10 @@ import './ModalSwitcher.scss'
 
 const ModalSwitcherCenter = () => {
     const { visibleElements } = useContext(VisibilityContext)
-    const { layoutComponent } = useSwitchLayout()
+    const { layout } = useSwitchLayout()
 
     const showModalCenter = visibleElements.includes('modal-center') ? 'show' : ''
-    const typeModalLayout = layoutComponent.panel.layout
+    const typeModalLayout = layout.modal.layoutName
     const typeVisibility = visibleElements[1]
 
     const renderModal = (type) => {

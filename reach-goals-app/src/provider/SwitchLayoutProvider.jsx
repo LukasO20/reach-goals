@@ -1,52 +1,32 @@
 import { useState, useContext, createContext } from 'react'
 
+import { switchLayoutMap } from '../utils/mapping/mappingUtilsProvider'
+
 const SwitchLayoutContext = createContext()
 
 export const SwitchLayoutProvider = ({ children }) => {
-    const standardSwitchLayout = () => {
-        return {
-            page: 'home',
-            home: {
-                layout: 'goal',
-            },
-            calendar: {
-                layout: 'default'
-            },
-            objectives: {
-                layout: 'default'
-            },
-            configModal: {
-                layout: 'config-theme'
-            },
-            panel: {
-                layout: ''
-            }
-        }
-    }
-
-    const [layoutComponent, setLayoutComponent] = useState(standardSwitchLayout)
-    const updateLayoutComponent = (switchLayout) => {
-        if (switchLayout) {
-            setLayoutComponent({
-                ...layoutComponent,
-                page: switchLayout.page ?? layoutComponent.page,
-                [switchLayout.nameComponent]: {
-                    ...layoutComponent[switchLayout.nameComponent],
-                    [switchLayout.nameLayout]: switchLayout.value
+    const [layout, setLayout] = useState(switchLayoutMap)
+    const update = (switcher) => {
+        if (switcher.area && switcher.state) {
+            setLayout((prev) => ({
+                ...prev,
+                [switcher.area]: {
+                    ...prev[switcher.area],
+                    ...switcher.state
                 }
-            })
+            }))
         }
     }
 
-    const switchLayoutComponent = (switchLayout, event) => {
-        event?.stopPropagation()
-        updateLayoutComponent(switchLayout)
+    const updateSwitchLayout = (switcher, e) => {
+        e?.stopPropagation()
+        update(switcher)
     }
 
-    //console.log('LAYPROVIDER - ', layoutComponent)
+    console.log('LAYPROVIDER NEW - ', layout)
 
     return (
-        <SwitchLayoutContext.Provider value={{ layoutComponent, switchLayoutComponent }}>
+        <SwitchLayoutContext.Provider value={{ layout, updateSwitchLayout }}>
             {children}
         </SwitchLayoutContext.Provider>
     )

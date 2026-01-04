@@ -17,7 +17,7 @@ import './MonthDaysPicker.scss'
 const MonthDaysPicker = ({ data }) => {
     const { setModel } = useContext(ManageModelContext)
     const { toggleVisibility } = useContext(VisibilityContext)
-    const { layoutComponent, switchLayoutComponent } = useSwitchLayout()
+    const { updateSwitchLayout} = useSwitchLayout()
     const year = new Date().getFullYear()
     const month = new Date().getMonth()
 
@@ -52,7 +52,7 @@ const MonthDaysPicker = ({ data }) => {
         e.stopPropagation()
 
         setModel(prev => ({ ...prev, mainModelID: model.id, formModel: model, typeModel: model.type }))
-        switchLayoutComponent(switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'details' }))
+        updateSwitchLayout(switchLayoutMap({ area: 'modal', state: { modalName: 'modal-center', layoutName: 'details' } }))
         toggleVisibility(targetMap(['modal-right', model.type]))
     }
 

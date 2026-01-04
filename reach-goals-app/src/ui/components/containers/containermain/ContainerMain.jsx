@@ -21,25 +21,25 @@ import './ContainerMain.scss'
 const ContainerM = () => {
     const { resetManageModel } = useContext(ManageModelContext)
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
-    const { layoutComponent } = useSwitchLayout()
+    const { layout } = useSwitchLayout()
     const navigate = useNavigate()
 
     const handleClickContainer = (e) => {
         toggleVisibility(targetMap(null), e)
         resetManageModel()
-        navigate(`/${layoutComponent.page}`) // return standard route during handle
+        navigate(`/${layout.page.pageName}`) // return standard route during handle
     }
 
-    const isSwitchLayoutAssignment = layoutComponent[layoutComponent.page]?.layout === 'assignment'
-    const isSwitchLayoutGoal = layoutComponent[layoutComponent.page]?.layout === 'goal'
-    const isSwichPieChart = layoutComponent[layoutComponent.page]?.layout === 'pie-chart'
-    const isSwitchLayoutActivities = layoutComponent[layoutComponent.page]?.layout === 'default'
+    const isSwitchLayoutAssignment = layout.page.layoutName === 'assignment'
+    const isSwitchLayoutGoal = layout.page.layoutName === 'goal'
+    const isSwichPieChart = layout.page.layoutName === 'pie-chart'
+    const isSwitchLayoutActivities = layout.page.layoutName === 'all'
 
     return (
         <div className='container-main' onClick={(e) => handleClickContainer(e)}>
             <div className='head'>
                 {
-                    layoutComponent.page !== 'calendar' &&
+                    layout.page.pageName !== 'calendar' &&
                     <div className='line-p'>
                         <div className='title-m'>
                             <h2>Your control panel</h2>
@@ -59,11 +59,11 @@ const ContainerM = () => {
                 <div className='line-s'>
                     <div className='filter'>
                         {
-                            layoutComponent.page !== 'calendar' &&
+                            layout.page.pageName !== 'calendar' &&
                             <ButtonCheckbox checkbox={checkboxMap({ id: 'checkbox-m', value: false })} classBtn='checkbox-m btn-checkbox' />
                         }
                         {
-                            layoutComponent.page === 'calendar' &&
+                            layout.page.pageName === 'calendar' &&
                             <div className='month-picker'>
                                 <span className='month-name'>{monthNames[new Date().getMonth()]}</span>
                                 <span className='year-number'>{new Date().getFullYear()}</span>
@@ -71,21 +71,21 @@ const ContainerM = () => {
                         }
                         <SearchBar />
                         <ButtonAction classBtn={`button-action plan-round max-width goal ${isSwitchLayoutGoal ? 'active' : ''}`} title='goals'
-                            switchLayout={switchLayoutMap({ page: layoutComponent.page, name: layoutComponent.page, layout: 'layout', value: 'goal' })}
+                            switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'goal' } })}
                         />
                         <ButtonAction classBtn={`button-action plan-round max-width assignment ${isSwitchLayoutAssignment ? 'active' : ''}`} title='assignments'
-                            switchLayout={switchLayoutMap({ page: layoutComponent.page, name: layoutComponent.page, layout: 'layout', value: 'assignment' })}
+                            switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'assignment' } })}
                         />
                         {
-                            layoutComponent.page === 'home' &&
+                            layout.page.pageName === 'home' &&
                             <ButtonAction classBtn={`button-action plan-round max-width pie-chart ${isSwichPieChart ? 'active' : ''}`} icon='chartbar'
-                                switchLayout={switchLayoutMap({ page: layoutComponent.page, name: layoutComponent.page, layout: 'layout', value: 'pie-chart' })} 
+                                switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'pie-chart' } })}
                             />
                         }
                         {
-                            (layoutComponent.page === 'objectives' || layoutComponent.page === 'calendar') &&
+                            (layout.page.pageName === 'objectives' || layout.page.pageName === 'calendar') &&
                             <ButtonAction classBtn={`button-action plan-round max-width all-activities ${isSwitchLayoutActivities ? 'active' : ''}`} title='all activities'
-                                switchLayout={switchLayoutMap({ page: layoutComponent.page, name: layoutComponent.page, layout: 'layout', value: 'default' })}
+                                switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'all' } })}
                             />
                         }
                     </div>

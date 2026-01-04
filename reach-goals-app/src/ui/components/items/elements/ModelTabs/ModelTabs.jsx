@@ -17,13 +17,13 @@ import Loading from '../Loading/Loading.jsx'
 import './ModelTabs.scss'
 
 const ModelTabs = () => {
-    const { layoutComponent } = useSwitchLayout()
+    const { layout } = useSwitchLayout()
     const { updateFilterModel } = useContext(ManageModelContext)
     const { page: { loading: loadingGoal } } = useGoalProvider()
     const { page: { loading: loadingAssignment } } = useAssignmentProvider()
     const { panel: { loading: loadingTag } } = useTagProvider()
 
-    const layoutObjectives = layoutComponent.objectives.layout
+    const layoutObjectives = layout.page.layoutName
 
     const [currentFilterData, setCurrentFilterData] = useState({
         assignment: {},
@@ -31,10 +31,10 @@ const ModelTabs = () => {
         tag: {}
     })
 
-    const isPanelTagScope = layoutComponent.panel.layout === 'tag'
-    const isObjectivePage = layoutComponent.page === 'objectives'
+    const isPanelTagScope = layout.modal.layoutName === 'tag'
+    const isObjectivePage = layout.page.pageName === 'objectives'
     const isDetailsModel = layoutObjectives === 'goal' || layoutObjectives === 'assignment' || false
-    const typeFilter = isPanelTagScope ? 'tag' : isObjectivePage ? layoutComponent.objectives.layout : null
+    const typeFilter = isPanelTagScope ? 'tag' : isObjectivePage ? layout.page.layoutName : null
 
     const filterButtonActive = currentFilterData[typeFilter] ?
         Object.entries(currentFilterData[typeFilter]).find(([_, value]) => value === 'all')?.[0]
@@ -67,7 +67,7 @@ const ModelTabs = () => {
     }
 
     const isLoading = !!loadingGoal || !!loadingAssignment || !!loadingTag
-    const isAllModels = !isLoading && layoutObjectives === 'default'
+    const isAllModels = !isLoading && layoutObjectives === 'all'
     const isTypeModel = (layoutObjectives === 'goal' || layoutObjectives === 'assignment' || layoutObjectives === 'tag') && !isLoading
 
     return (

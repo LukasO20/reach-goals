@@ -11,9 +11,9 @@ const ProviderApp = ({ children }) => (
             <VisibilityProvider>
                 <FilterModelProvider>
                     <SwitchLayoutProvider>
-                        <CheckboxProvider>
-                            {children}
-                        </CheckboxProvider>
+                            <CheckboxProvider>
+                                {children}
+                            </CheckboxProvider>
                     </SwitchLayoutProvider>
                 </FilterModelProvider>
             </VisibilityProvider>

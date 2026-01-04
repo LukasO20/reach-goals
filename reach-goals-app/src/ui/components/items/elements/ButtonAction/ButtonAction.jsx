@@ -20,7 +20,7 @@ const statusButton = (classBtn, providervisibleElements) => {
 
 const ButtonAction = ({ target, switchLayout, nullForm, unlinkGoal, onClick, pendingState, datavalue, icon, title, classBtn }) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
-    const { switchLayoutComponent } = useSwitchLayout()
+    const { updateSwitchLayout } = useSwitchLayout()
     const { model, resetManageModel, updateFormModel, removeFromTransportModel } = useContext(ManageModelContext)
 
     const classBtnAction = classBtn.split(' ')[2]
@@ -29,7 +29,7 @@ const ButtonAction = ({ target, switchLayout, nullForm, unlinkGoal, onClick, pen
     const handleClick = (e) => {
         e.stopPropagation()
         if (target) toggleVisibility(target, e)
-        if (switchLayout) switchLayoutComponent(switchLayout)
+        if (switchLayout) updateSwitchLayout(switchLayout)
         if (nullForm) resetManageModel(['formModel', 'mainModelID', 'transportModel'])
         if (unlinkGoal) {
             updateFormModel({ keyObject: 'goalID', value: null, action: 'remove' })
@@ -55,24 +55,24 @@ const ButtonAction = ({ target, switchLayout, nullForm, unlinkGoal, onClick, pen
     )
 }
 
-ButtonAction.propTypes = {
-    target: PropTypes.shape({
-        class: PropTypes.array.isRequired,
-        operator: PropTypes.object.isRequired
-    }),
-    switchLayout: PropTypes.shape({
-        page: PropTypes.string.isRequired,
-        nameComponent: PropTypes.string.isRequired,
-        nameLayout: PropTypes.string.isRequired,
-        value: PropTypes.string.isRequired
-    }),
-    nullForm: PropTypes.bool,
-    unlinkGoal: PropTypes.bool,
-    onClick: PropTypes.func,
-    pendingState: PropTypes.bool,
-    icon: PropTypes.string,
-    title: PropTypes.string,
-    classBtn: PropTypes.string
-}
+// ButtonAction.propTypes = {
+//     target: PropTypes.shape({
+//         class: PropTypes.array.isRequired,
+//         operator: PropTypes.object.isRequired
+//     }),
+//     switchLayout: PropTypes.shape({
+//         page: PropTypes.string.isRequired,
+//         nameComponent: PropTypes.string.isRequired,
+//         nameLayout: PropTypes.string.isRequired,
+//         value: PropTypes.string.isRequired
+//     }),
+//     nullForm: PropTypes.bool,
+//     unlinkGoal: PropTypes.bool,
+//     onClick: PropTypes.func,
+//     pendingState: PropTypes.bool,
+//     icon: PropTypes.string,
+//     title: PropTypes.string,
+//     classBtn: PropTypes.string
+// }
 
 export default ButtonAction

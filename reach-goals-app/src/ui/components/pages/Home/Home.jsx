@@ -16,12 +16,12 @@ import './Home.scss'
 
 const Home = () => {
     const { update } = useTitle()
-    const { layoutComponent } = useSwitchLayout()
+    const { layout } = useSwitchLayout()
     const { page: { data: dataGoal, loading: loadingGoal } } = useGoalProvider()
     const { page: { data: dataAssignment, loading: loadingAssignment } } = useAssignmentProvider()
     const { updateFilterModel } = useContext(ManageModelContext)
 
-    const layoutHome = layoutComponent.home.layout
+    const layoutHome = layout.page.layoutName
     const validLayouts = ['pie-chart', 'goal', 'assignment']
     const pieData = {
         goal: dataGoal ?? [],

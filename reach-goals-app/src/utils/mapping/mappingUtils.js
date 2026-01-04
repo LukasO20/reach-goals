@@ -10,12 +10,10 @@ export const targetMap = (classes, operator = {}) => {
     return attributes
 }
 
-export const switchLayoutMap = ({ page, name, layout, value }) => {
+export const switchLayoutMap = ({ area, state }) => {
     return {
-        page: page ?? 'home',
-        nameComponent: name,
-        nameLayout: layout,
-        value: value
+        area,
+        state
     }
 }
 

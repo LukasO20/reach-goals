@@ -1,7 +1,5 @@
 import { switchLayoutMap, targetMap, iconMap } from '../../../../../utils/mapping/mappingUtils.js'
 
-import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
-
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 
 import PropTypes from 'prop-types'
@@ -11,8 +9,6 @@ import moment from 'moment'
 import './Card.scss'
 
 const Card = ({ type, model, display, pendingState, clickFunction }) => {
-    const { layoutComponent } = useSwitchLayout()
-
     return model.map(item => {
         const isPending = pendingState?.removing && (item.id || item.tagID) === pendingState?.removingVariables
         const validDisplayType = typeof display.type === 'string' && display.type
@@ -71,10 +67,8 @@ const Card = ({ type, model, display, pendingState, clickFunction }) => {
                                                 onClick={() => clickFunction.edit(itemID)}
                                                 target={targetMap(['modal-center', type])}
                                                 switchLayout={switchLayoutMap({
-                                                    page: layoutComponent.page,
-                                                    name: 'panel',
-                                                    layout: 'layout',
-                                                    value: 'form'
+                                                    area: 'modal',
+                                                    state: { modalName: 'modal-center', layoutName: 'form' }
                                                 })}
                                                 classBtn={`edit-${type} button-action circle small`}
                                                 icon='edit'

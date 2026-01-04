@@ -15,7 +15,7 @@ import moment from 'moment'
 import '../ModalDetailsSection/ModalDetailsSection.scss'
 
 const ModalDetailsSection = () => {
-    const { layoutComponent } = useSwitchLayout()
+    const { layout } = useSwitchLayout()
     const { visibleElements } = useContext(VisibilityContext)
     const { model: { formModel } } = useContext(ManageModelContext)
 
@@ -23,7 +23,7 @@ const ModalDetailsSection = () => {
     const typeVisibility = visibleElements[1]
 
     const handleClickButtonAction = () => {
-        navigate(`/${layoutComponent.page}`) // return standard route during handle
+        navigate(`/${layout.page.pageName}`) // return standard route during handle
     }
 
     const modelRelationProps = {

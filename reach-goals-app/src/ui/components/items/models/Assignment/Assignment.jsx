@@ -19,7 +19,7 @@ const Assignment = ({ status, display, sourceForm, selectableModel = false, deta
 
     const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
     const { toggleVisibility } = useContext(VisibilityContext)
-    const { switchLayoutComponent, layoutComponent } = useSwitchLayout()
+    const { layout, updateSwitchLayout } = useSwitchLayout()
     const { page: { data: dataPage }, panel: { data: dataPanel }, remove, removeSuccess, removing, removingVariables } = useAssignmentProvider()
 
     const currentScope = model.filter.assignment.scope
@@ -69,7 +69,7 @@ const Assignment = ({ status, display, sourceForm, selectableModel = false, deta
 
         if (detailsModel) {
             setModel(prev => ({ ...prev, mainModelID: assignment.id, formModel: assignment, typeModel: 'assignment' }))
-            switchLayoutComponent(switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'details' }))
+            updateSwitchLayout(switchLayoutMap({ area: 'modal', state: { modalName: 'modal-right', layoutName: 'details' } }))
             toggleVisibility(targetMap(['modal-right', 'assignment']))
         }
     }

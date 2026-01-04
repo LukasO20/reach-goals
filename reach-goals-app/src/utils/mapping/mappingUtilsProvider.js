@@ -67,3 +67,14 @@ export const initialStateMap = {
     removed: {},
     saved: {}
 }
+
+export const switchLayoutMap = {
+    page: {
+        pageName: 'home',
+        layoutName: 'goal'
+    },
+    modal: {
+        modalName: null,
+        layoutName: null
+    }
+}

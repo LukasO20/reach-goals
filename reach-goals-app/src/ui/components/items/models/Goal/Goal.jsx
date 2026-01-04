@@ -21,7 +21,7 @@ const Goal = ({ status, display, selectableModel = false, detailsModel = false }
 
     const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
     const { toggleVisibility } = useContext(VisibilityContext)
-    const { switchLayoutComponent, layoutComponent } = useSwitchLayout()
+    const { updateSwitchLayout } = useSwitchLayout()
     const { page: { data: dataPage }, panel: { data: dataPanel }, remove, removeSuccess, removing, removingVariables } = useGoalProvider()
 
     const currentScope = model.filter.goal.scope
@@ -65,7 +65,7 @@ const Goal = ({ status, display, selectableModel = false, detailsModel = false }
 
         if (detailsModel) {
             setModel(prev => ({ ...prev, mainModelID: goal.id, formModel: goal, typeModel: 'goal' }))
-            switchLayoutComponent(switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'details' }))
+            updateSwitchLayout(switchLayoutMap({ area: 'modal', state: { modalName: 'modal-right', layoutName: 'details' } }))
             toggleVisibility(targetMap(['modal-right', 'goal']))
         }
     }

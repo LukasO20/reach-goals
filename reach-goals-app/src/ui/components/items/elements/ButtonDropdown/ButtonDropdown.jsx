@@ -41,8 +41,8 @@ const NullObject = (value) => {
 
 const ButtonDropdown = ({ target, reference, changeDropdownValue, icon, classBtn, title, arrow,  }) => {
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
-    const { model, setModel } = useContext(ManageModelContext)
-    const { layoutComponent } = useSwitchLayout()
+    const { model } = useContext(ManageModelContext)
+    const { layout } = useSwitchLayout()
 
     const typeClass = target.class !== undefined ? target.class[0] : null
     const dropdownStatus = typeClass.includes('goal-status') || typeClass.includes('assignment-status')
@@ -120,7 +120,7 @@ const ButtonDropdown = ({ target, reference, changeDropdownValue, icon, classBtn
                                             <div className='item-title'>
                                                 <ButtonAction onClick={dropdownActionClick} datavalue={dropdownStatus ? option.op : null}
                                                     target={targetMap(...classTargetDropdown)}
-                                                    switchLayout={switchLayoutMap({ page: layoutComponent.page, name: 'panel', layout: 'layout', value: 'form' })}
+                                                    switchLayout={switchLayoutMap({ area: 'modal', state: { modalName: 'modal-center', layoutName: 'form' } })}
                                                     classBtn={`form-${option.op} button-action plan-round ${model.formModel?.status === option.op ? 'active' : ''}`} icon={option.icon} title={`${option.title}`} type={option.op}
                                                 />
                                             </div>

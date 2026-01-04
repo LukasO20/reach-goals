@@ -5,8 +5,8 @@ import Assignment from '../../items/models/Assignment/Assignment'
 import Goal from '../../items/models/Goal/Goal'
 
 const ContainerColumn = () => {
-    const { layoutComponent } = useSwitchLayout()
-    const layoutColumn = layoutComponent.home.layout
+    const { layout } = useSwitchLayout()
+    const layoutColumn = layout.page.layoutName
 
     return (
         <div className='column home'>
