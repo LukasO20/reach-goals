@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 
-import Card from '../elements/Card/Card.jsx'
+import CardMini from '../elements/CardMini/CardMini.jsx'
 
 const ModelCopy = ({ displayRef, region }) => {
     const [modelCopy, setCopyModel] = useState([])
@@ -24,13 +24,13 @@ const ModelCopy = ({ displayRef, region }) => {
 
         switch (type) {
             case 'goal':
-                updateFormModel({ keyObject: 'goalID', value: null, action: 'remove' })
-                break
+                return updateFormModel({ keyObject: 'goalID', value: null, action: 'remove' })
             case 'assignment':
-                updateFormModel({ keyObject: 'assignments', value: { id: id }, type: 'array', action: 'remove' })
-                break
+                return updateFormModel({ keyObject: 'assignments', value: { id: id }, type: 'array', action: 'remove' })
             case 'tag':
-                updateFormModel({ keyObject: 'tags', value: { tagID: tagID }, type: 'array', action: 'remove' })
+                return updateFormModel({ keyObject: 'tags', value: { tagID: tagID }, type: 'array', action: 'remove' })
+            default:
+                return null
         }
     }
 
@@ -39,7 +39,7 @@ const ModelCopy = ({ displayRef, region }) => {
         aux: removeElDOMClick
     }
 
-    return <Card type={modelCopy[0]?.type} model={modelCopy} clickFunction={clickEvents} display={display} />
+    return <CardMini type={region} model={modelCopy} clickFunction={clickEvents} display={display} />
 }
 
 export default ModelCopy

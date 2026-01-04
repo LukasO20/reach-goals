@@ -23,8 +23,6 @@ export const SwitchLayoutProvider = ({ children }) => {
         update(switcher)
     }
 
-    console.log('LAYPROVIDER NEW - ', layout)
-
     return (
         <SwitchLayoutContext.Provider value={{ layout, updateSwitchLayout }}>
             {children}

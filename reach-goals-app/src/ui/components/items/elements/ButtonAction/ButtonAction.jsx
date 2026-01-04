@@ -2,7 +2,6 @@ import { useContext } from 'react'
 
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
-
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
 import { iconMap } from '../../../../../utils/mapping/mappingUtils.js'
@@ -42,7 +41,7 @@ const ButtonAction = ({ target, switchLayout, nullForm, unlinkGoal, onClick, pen
                 datavalue,
                 event: e
             }
-            onClick(externalPropsShare)  
+            onClick(externalPropsShare)
         }
     }
 
@@ -55,24 +54,31 @@ const ButtonAction = ({ target, switchLayout, nullForm, unlinkGoal, onClick, pen
     )
 }
 
-// ButtonAction.propTypes = {
-//     target: PropTypes.shape({
-//         class: PropTypes.array.isRequired,
-//         operator: PropTypes.object.isRequired
-//     }),
-//     switchLayout: PropTypes.shape({
-//         page: PropTypes.string.isRequired,
-//         nameComponent: PropTypes.string.isRequired,
-//         nameLayout: PropTypes.string.isRequired,
-//         value: PropTypes.string.isRequired
-//     }),
-//     nullForm: PropTypes.bool,
-//     unlinkGoal: PropTypes.bool,
-//     onClick: PropTypes.func,
-//     pendingState: PropTypes.bool,
-//     icon: PropTypes.string,
-//     title: PropTypes.string,
-//     classBtn: PropTypes.string
-// }
+ButtonAction.propTypes = {
+    target: PropTypes.shape({
+        class: PropTypes.array.isRequired,
+        operator: PropTypes.object.isRequired
+    }),
+    switchLayout: PropTypes.shape({
+        area: PropTypes.string.isRequired,
+        state: PropTypes.oneOfType([
+            PropTypes.shape({
+                modalName: PropTypes.string.isRequired,
+                layoutName: PropTypes.string.isRequired
+            }),
+            PropTypes.shape({
+                pageName: PropTypes.string.isRequired,
+                layoutName: PropTypes.string.isRequired
+            })
+        ])
+    }),
+    nullForm: PropTypes.bool,
+    unlinkGoal: PropTypes.bool,
+    onClick: PropTypes.func,
+    pendingState: PropTypes.bool,
+    icon: PropTypes.string,
+    title: PropTypes.string,
+    classBtn: PropTypes.string
+}
 
 export default ButtonAction

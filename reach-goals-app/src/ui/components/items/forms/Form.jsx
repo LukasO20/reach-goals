@@ -29,7 +29,7 @@ const Form = (props) => {
     const icon = iconMap[typeForm] || 'fa-solid fa-triangle-exclamation'
 
     const modelSwitcherRelation = typeForm === 'goal' ? 'goal-relation' : null
-    const modelCopyRelation = typeForm === 'goal' ? 'assignment' : null
+    const modelCopyRelation = typeForm === 'goal' ? 'assignment' : ''
     const modelSwitcherProps = {
         sourceForm: modelForm,
         display: {
