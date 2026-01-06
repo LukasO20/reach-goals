@@ -21,7 +21,7 @@ const ModelTabs = () => {
     const { updateFilterModel } = useContext(ManageModelContext)
     const { page: { loading: loadingGoal } } = useGoalProvider()
     const { page: { loading: loadingAssignment } } = useAssignmentProvider()
-    const { panel: { loading: loadingTag } } = useTagProvider()
+    const { modal: { loading: loadingTag } } = useTagProvider()
 
     const layoutObjectives = layout.page.layoutName
 
@@ -53,7 +53,7 @@ const ModelTabs = () => {
 
         if (typeFilter === 'tag') {
             const filterGetTag = filterGetModelMap({ ...currentfilter }, 'tag', 'core')
-            updateFilterModel(filterGetTag, 'tag', 'panel')
+            updateFilterModel(filterGetTag, 'tag', 'modal')
         }
 
         setCurrentFilterData(() => ({

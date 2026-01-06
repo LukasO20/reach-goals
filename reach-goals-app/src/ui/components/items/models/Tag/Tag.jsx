@@ -18,7 +18,7 @@ const Tag = ({ display, sourceForm, selectableModel = false }) => {
 
     const { toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
-    const { panel: { data }, remove } = useTagProvider()
+    const { modal: { data }, remove } = useTagProvider()
 
     const target = visibilityMap(['panel-right', 'tag'])
 

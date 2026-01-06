@@ -17,9 +17,9 @@ import './ModalList.scss'
 
 const ModalList = ({ title, typeVisibility }) => {
     const { updateFilterModel } = useContext(ManageModelContext)
-    const { panel: { loading: loadingGoal } } = useGoalProvider()
-    const { panel: { loading: loadingAssigment } } = useAssignmentProvider()
-    const { panel: { loading: loadingTag } } = useTagProvider()
+    const { modal: { loading: loadingGoal } } = useGoalProvider()
+    const { modal: { loading: loadingAssigment } } = useAssignmentProvider()
+    const { modal: { loading: loadingTag } } = useTagProvider()
 
     const typeRelation = typeVisibility === 'tag' ? typeVisibility : typeVisibility === 'goal' ? 'assignment' : 'goal'
     const typeSwitcherRelation = typeVisibility === 'tag' ? typeVisibility : typeVisibility === 'goal' ? 'goal-relation' : 'assignment-relation'
@@ -37,7 +37,7 @@ const ModalList = ({ title, typeVisibility }) => {
             'support'
         )
 
-        updateFilterModel(filterGetModel, typeRelation, 'panel')
+        updateFilterModel(filterGetModel, typeRelation, 'modal')
     }, [typeRelation, typeVisibility])
 
     return (

@@ -29,7 +29,7 @@ const ModalTag = () => {
             tagSomeID: 'all', type: 'tag', source: 'core'
         }, 'tag', 'core')
 
-        updateFilterModel(filter, 'tag', 'panel')
+        updateFilterModel(filter, 'tag', 'modal')
     }, [])
 
     return (

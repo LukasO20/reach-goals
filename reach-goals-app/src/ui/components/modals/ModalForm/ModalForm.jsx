@@ -21,8 +21,8 @@ const modelRelationAddMap = (type, children) => {
 }
 
 const ModalForm = () => {
-    const { panel: { data: dataAssignment, loading: loadingAssigment }, save: saveAssignment, saveSuccess: saveAssignmentSuccess, saving: savingAssignment } = useAssignmentProvider()
-    const { panel: { data: dataGoal, loading: loadingGoal }, save: saveGoal, saveSuccess: saveGoalSuccess, saving: savingGoal } = useGoalProvider()
+    const { modal: { data: dataAssignment, loading: loadingAssigment }, save: saveAssignment, saveSuccess: saveAssignmentSuccess, saving: savingAssignment } = useAssignmentProvider()
+    const { modal: { data: dataGoal, loading: loadingGoal }, save: saveGoal, saveSuccess: saveGoalSuccess, saving: savingGoal } = useGoalProvider()
     const { save: saveTag, saveSuccess: saveTagSuccess, saving: savingTag } = useTagProvider()
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateFilterModel, resetManageModel } = useContext(ManageModelContext)
@@ -46,8 +46,8 @@ const ModalForm = () => {
 
         try {
             const refetchMap = {
-                goal: () => updateFilterModel(filterGetModel, 'goal', 'panel'),
-                assignment: () => updateFilterModel(filterGetModel, 'assignment', 'panel'),
+                goal: () => updateFilterModel(filterGetModel, 'goal', 'modal'),
+                assignment: () => updateFilterModel(filterGetModel, 'assignment', 'modal'),
                 tag: () => updateFilterModel(filterGetModel, 'tag'),
             }
 

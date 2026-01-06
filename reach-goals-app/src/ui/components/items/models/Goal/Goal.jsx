@@ -22,7 +22,7 @@ const Goal = ({ status, display, selectableModel = false, detailsModel = false }
     const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
     const { toggleVisibility } = useContext(VisibilityContext)
     const { updateSwitchLayout } = useSwitchLayout()
-    const { page: { data: dataPage }, panel: { data: dataPanel }, remove, removeSuccess, removing, removingVariables } = useGoalProvider()
+    const { page: { data: dataPage }, modal: { data: dataPanel }, remove, removeSuccess, removing, removingVariables } = useGoalProvider()
 
     const currentScope = model.filter.goal.scope
     const currentFilter = model.filter.goal[currentScope]

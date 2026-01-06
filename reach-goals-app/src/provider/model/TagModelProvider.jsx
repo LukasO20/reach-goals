@@ -33,16 +33,16 @@ export const TagModelProvider = ({ children, filters = {} }) => {
     })
 
     const {
-        data: panelData,
-        error: panelError,
-        isLoading: isPanelLoading,
+        data: modalData,
+        error: modalError,
+        isLoading: isModalLoading,
     } = useQuery({
         queryKey: ['tags', 'panel', filters.panel],
         queryFn: createQueryFn(filters.panel),
         enabled: !!validFilter(filters.panel),
     })
 
-    const queryKeyPanel = ['tags', 'panel', filters.panel]
+    const queryKeyModal = ['tags', 'modal', filters.modal]
 
     const saveMutation = useMutation({
         mutationFn: (model) =>
@@ -50,14 +50,14 @@ export const TagModelProvider = ({ children, filters = {} }) => {
                 ? tagService.updateTag(model)
                 : tagService.addTag(model),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: queryKeyPanel })
+            queryClient.invalidateQueries({ queryKey: queryKeyModal })
         },
     })
 
     const removeMutation = useMutation({
         mutationFn: (id) => tagService.deleteTag(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: queryKeyPanel })
+            queryClient.invalidateQueries({ queryKey: queryKeyModal })
             update({ toast: `tag was deleted` })
         },
     })
@@ -69,10 +69,10 @@ export const TagModelProvider = ({ children, filters = {} }) => {
                 error: pageError,
                 loading: isPageLoading,
             },
-            panel: {
-                data: panelData,
-                error: panelError,
-                loading: isPanelLoading,
+            modal: {
+                data: modalData,
+                error: modalError,
+                loading: isModalLoading,
             },
             save: saveMutation.mutate,
             saving: saveMutation.isPending,

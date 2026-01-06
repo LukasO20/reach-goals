@@ -33,13 +33,13 @@ export const GoalModelProvider = ({ children, filters = {} }) => {
   })
 
   const {
-    data: panelData,
-    error: panelError,
-    isLoading: isPanelLoading,
+    data: modalData,
+    error: modalError,
+    isLoading: isModalLoading,
   } = useQuery({
-    queryKey: ['goal', 'panel', filters.panel],
-    queryFn: createQueryFn(filters.panel),
-    enabled: !!validFilter(filters.panel),
+    queryKey: ['goal', 'modal', filters.modal],
+    queryFn: createQueryFn(filters.modal),
+    enabled: !!validFilter(filters.modal),
   })
 
   const queryKeyPage = ['goals', 'page', filters.page]
@@ -69,10 +69,10 @@ export const GoalModelProvider = ({ children, filters = {} }) => {
         error: pageError,
         loading: isPageLoading,
       },
-      panel: {
-        data: panelData,
-        error: panelError,
-        loading: isPanelLoading,
+      modal: {
+        data: modalData,
+        error: modalError,
+        loading: isModalLoading,
       },
       save: saveMutation.mutate,
       saving: saveMutation.isPending,

@@ -24,17 +24,17 @@ export const manageModelMap = {
         goal: {
             scope: 'page',
             page: {},
-            panel: {}
+            modal: {}
         },
         assignment: {
             scope: 'page',
             page: {},
-            panel: {}
+            modal: {}
         },
         tag: {
             scope: 'page',
             page: {},
-            panel: {}
+            modal: {}
         }
     },
     formModel: {}

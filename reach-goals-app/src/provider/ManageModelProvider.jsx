@@ -86,7 +86,7 @@ const ManageModelProvider = ({ children }) => {
 
     const updateFilterModel = (filter = {}, model, scope) => {
         if (!model) return console.error('To update a filterModel is necessary a model.')
-        if (scope !== 'page' && scope !== 'panel') return console.error('To update a filterModel is necessary a scope value. Send "page" or "panel" scope.')
+        if (scope !== 'page' && scope !== 'modal') return console.error('To update a filterModel is necessary a scope value. Send "page" or "modal" scope.')
 
         setModel(prevModel => ({
             ...prevModel,

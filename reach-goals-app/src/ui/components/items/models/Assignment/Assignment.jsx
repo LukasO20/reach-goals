@@ -19,8 +19,8 @@ const Assignment = ({ status, display, sourceForm, selectableModel = false, deta
 
     const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
     const { toggleVisibility } = useContext(VisibilityContext)
-    const { layout, updateSwitchLayout } = useSwitchLayout()
-    const { page: { data: dataPage }, panel: { data: dataPanel }, remove, removeSuccess, removing, removingVariables } = useAssignmentProvider()
+    const { updateSwitchLayout } = useSwitchLayout()
+    const { page: { data: dataPage }, modal: { data: dataPanel }, remove, removeSuccess, removing, removingVariables } = useAssignmentProvider()
 
     const currentScope = model.filter.assignment.scope
     const currentFilter = model.filter.assignment[currentScope]
