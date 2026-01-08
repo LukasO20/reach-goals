@@ -37,9 +37,9 @@ export const TagModelProvider = ({ children, filters = {} }) => {
         error: modalError,
         isLoading: isModalLoading,
     } = useQuery({
-        queryKey: ['tags', 'panel', filters.panel],
-        queryFn: createQueryFn(filters.panel),
-        enabled: !!validFilter(filters.panel),
+        queryKey: ['tags', 'modal', filters.modal],
+        queryFn: createQueryFn(filters.modal),
+        enabled: !!validFilter(filters.modal),
     })
 
     const queryKeyModal = ['tags', 'modal', filters.modal]

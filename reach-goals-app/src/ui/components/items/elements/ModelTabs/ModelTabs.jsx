@@ -1,29 +1,18 @@
 import { useState, useContext } from 'react'
 
-import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
-import { useGoalProvider } from '../../../../../provider/model/GoalModelProvider.jsx'
-import { useAssignmentProvider } from '../../../../../provider/model/AssignmentModelProvider.jsx'
-import { useTagProvider } from '../../../../../provider/model/TagModelProvider.jsx'
 
 import { filterGetModelMap, modelTabsMap } from '../../../../../utils/mapping/mappingUtils.js'
 
-import Assignment from '../../models/Assignment/Assignment.jsx'
-import Goal from '../../models/Goal/Goal.jsx'
-import ModelSwitcher from '../../models/ModelSwitcher.jsx'
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 import Loading from '../Loading/Loading.jsx'
 
+import Proptypes from 'prop-types'
+
 import './ModelTabs.scss'
 
-const ModelTabs = () => {
-    const { layout } = useSwitchLayout()
+const ModelTabs = ({ type, children, loading }) => {
     const { updateFilterModel } = useContext(ManageModelContext)
-    const { page: { loading: loadingGoal } } = useGoalProvider()
-    const { page: { loading: loadingAssignment } } = useAssignmentProvider()
-    const { modal: { loading: loadingTag } } = useTagProvider()
-
-    const layoutObjectives = layout.page.layoutName
 
     const [currentFilterData, setCurrentFilterData] = useState({
         assignment: {},
@@ -31,51 +20,37 @@ const ModelTabs = () => {
         tag: {}
     })
 
-    const isPanelTagScope = layout.modal.layoutName === 'tag'
-    const isObjectivePage = layout.page.pageName === 'objectives'
-    const isDetailsModel = layoutObjectives === 'goal' || layoutObjectives === 'assignment' || false
-    const typeFilter = isPanelTagScope ? 'tag' : isObjectivePage ? layout.page.layoutName : null
-
-    const filterButtonActive = currentFilterData[typeFilter] ?
-        Object.entries(currentFilterData[typeFilter]).find(([_, value]) => value === 'all')?.[0]
+    const filterButtonActive = currentFilterData[type] ?
+        Object.entries(currentFilterData[type]).find(([_, value]) => value === 'all')?.[0]
         : null
 
     const handleOptions = (currentfilter) => {
-        if (typeFilter === 'goal') {
+        if (type === 'goal') {
             const filterGetGoal = filterGetModelMap({ ...currentfilter }, 'goal', 'core')
             updateFilterModel(filterGetGoal, 'goal', 'page')
         }
 
-        if (typeFilter === 'assignment') {
+        if (type === 'assignment') {
             const filterGetAssignment = filterGetModelMap({ ...currentfilter }, 'assignment', 'core')
             updateFilterModel(filterGetAssignment, 'assignment', 'page')
         }
 
-        if (typeFilter === 'tag') {
+        if (type === 'tag') {
             const filterGetTag = filterGetModelMap({ ...currentfilter }, 'tag', 'core')
             updateFilterModel(filterGetTag, 'tag', 'modal')
         }
 
         setCurrentFilterData(() => ({
-            [typeFilter]: { ...currentfilter }
+            [type]: { ...currentfilter }
         }))
     }
 
-    const modelSwitcherProps = {
-        display: { type: 'card-mini' },
-        detailsModel: isDetailsModel,
-    }
-
-    const isLoading = !!loadingGoal || !!loadingAssignment || !!loadingTag
-    const isAllModels = !isLoading && layoutObjectives === 'all'
-    const isTypeModel = (layoutObjectives === 'goal' || layoutObjectives === 'assignment' || layoutObjectives === 'tag') && !isLoading
-
     return (
-        <div className={`model-tabs ${layoutObjectives}`}>
+        <div className={`model-tabs ${type}`}>
             <div className='head'>
                 <div className='options-sections'>
                     {
-                        modelTabsMap[layoutObjectives]?.map((tab, index) => {
+                        modelTabsMap[type]?.map((tab, index) => {
                             const currentButton = Object.keys(tab.currentfilter)[0]
                             const isNullFilter = !filterButtonActive && tab.label.includes('every')
 
@@ -87,18 +62,17 @@ const ModelTabs = () => {
                 </div>
             </div>
             <div className='body scrollable'>
-                {isLoading && <Loading mode='block' />}
-                {isTypeModel && <ModelSwitcher type={layoutObjectives} propsReference={modelSwitcherProps} />}
-                {
-                    isAllModels &&
-                    <>
-                        <Goal display={{ type: 'card-mini' }} goalSomeID={'all'} detailsModel={true} />
-                        <Assignment display={{ type: 'card-mini' }} notGoalRelation={'all'} detailsModel={true} />
-                    </>
-                }
+                {loading && <Loading mode='block' />}
+                {children}
             </div>
         </div>
     )
+}
+
+ModelTabs.propTypes = {
+    type: Proptypes.string.isRequired,
+    children: Proptypes.element.isRequired,
+    loading: Proptypes.bool.isRequired
 }
 
 export default ModelTabs

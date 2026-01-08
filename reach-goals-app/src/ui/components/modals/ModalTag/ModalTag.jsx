@@ -4,20 +4,24 @@ import { useNavigate } from 'react-router-dom'
 import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
+import { useTagProvider } from '../../../../provider/model/TagModelProvider.jsx'
 
 import { visibilityMap, switchLayoutMap, filterGetModelMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import ModalForm from '../ModalForm/ModalForm.jsx'
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import ModelTabs from '../../items/elements/ModelTabs/ModelTabs.jsx'
+import CardMini from '../../items/elements/CardMini/CardMini.jsx'
 
 const ModalTag = () => {
     const { visibleElements } = useContext(VisibilityContext)
     const { setModel, updateFilterModel } = useContext(ManageModelContext)
+    const { modal: { data: dataTag = [], loading: loadingTag } } = useTagProvider()
     const { layout } = useSwitchLayout()
     const navigate = useNavigate()
 
     const isModalForm = ['tag', 'near-modalForm']
+    const display = { type: 'card-mini' }
 
     const handleClickButtonAction = (e) => {
         if (e) setModel(prev => ({ ...prev, typeModel: 'config' }))
@@ -31,6 +35,8 @@ const ModalTag = () => {
 
         updateFilterModel(filter, 'tag', 'modal')
     }, [])
+
+    const content = <CardMini type='tag' model={dataTag} display={display}  />
 
     return (
         <>
@@ -49,7 +55,7 @@ const ModalTag = () => {
             </div>
             <div className='body'>
                 {isModalForm.every(e => visibleElements.includes(e)) && <ModalForm type='tag' />}
-                <ModelTabs type='tag' />
+                <ModelTabs type='tag' children={content} loading={loadingTag} />
             </div>
         </>
     )
