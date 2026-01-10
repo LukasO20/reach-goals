@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 
 import './CardMini.scss'
 
-const CardMini = ({ type, model, display, clickFunction }) => {
+const CardMini = ({ type, model = [], display, clickFunction }) => {
     return model.map(item => {
         const itemID = item.id || item.tagID
         const isTypeTag = type === 'tag'

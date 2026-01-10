@@ -8,7 +8,7 @@ import moment from 'moment'
 
 import './Card.scss'
 
-const Card = ({ type, model, display, pendingState, clickFunction }) => {
+const Card = ({ type, model = [], display, pendingState, clickFunction }) => {
     return model.map(item => {
         const isPending = pendingState?.removing && (item.id || item.tagID) === pendingState?.removingVariables
         const validDisplayType = typeof display.type === 'string' && display.type

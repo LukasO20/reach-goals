@@ -10,7 +10,9 @@ import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 import { filterGetModelMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import ModelTabs from '../../items/elements/ModelTabs/ModelTabs.jsx'
-import CardMini from '../../items/elements/CardMini/CardMini.jsx'
+import Goal from '../../items/models/Goal/Goal.jsx'
+import Assignment from '../../items/models/Assignment/Assignment.jsx'
+import ModelSwitcher from '../../items/models/ModelSwitcher.jsx'
 
 import '../Objectives/Objectives.scss'
 
@@ -18,22 +20,17 @@ const Objectives = () => {
     const { update } = useTitle()
     const { layout, updateSwitchLayout } = useSwitchLayout()
     const { updateFilterModel } = useContext(ManageModelContext)
-    const { page: { data: dataGoal = [], loading: loadingGoal } } = useGoalProvider()
-    const { page: { data: dataAssignment = [], loading: loadingAssignment } } = useAssignmentProvider()
+    const { page: { loading: loadingGoal } } = useGoalProvider()
+    const { page: { loading: loadingAssignment } } = useAssignmentProvider()
     const location = useLocation()
 
     const typeLayout = layout.page.layoutName
-    const display = { type: 'card-mini' }
-    const models =
-        Array.isArray(dataGoal) || Array.isArray(dataAssignment) ?
-            {
-                goal: dataGoal,
-                assignment: dataAssignment
-            } :
-            {
-                goal: [],
-                assignment: []
-            }
+    const modelProps = {
+        display: {
+            type: 'card-mini'
+        },
+        detailsModel: true
+    }
 
     const isAllModels = typeLayout === 'all'
     const isOnlyTypeModel = typeLayout === 'goal' || typeLayout === 'assignment'
@@ -64,12 +61,12 @@ const Objectives = () => {
     if (isAllModels) {
         content = (
             <>
-                <CardMini type='goal' model={models.goal} display={display} />
-                <CardMini type='assignment' model={models.assignment} display={display} />
+                <Goal display={modelProps.display} detailsModel={true} />
+                <Assignment display={modelProps.display} detailsModel={true} />
             </>
         )
     } else if (isOnlyTypeModel) {
-        content = <CardMini type={typeLayout} model={models[typeLayout]} display={display} />
+        content = <ModelSwitcher type={typeLayout} propsReference={modelProps} />
     }
 
     return <ModelTabs type={typeLayout} children={content} loading={isLoading} />

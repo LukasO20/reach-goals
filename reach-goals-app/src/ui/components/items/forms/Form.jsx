@@ -143,34 +143,24 @@ const Form = ({ typeForm, functionFormMap, model: modelForm, booleanFormMap, pen
                                         dropdownValue={modelForm?.status || undefined} changeDropdownValue={functionFormMap.mapHandleChange} />
                                 </div>
                             </div>
-                            <div className='item-forms tag'>
-                                <div className='head'>
-                                    <div className='item-head-1'>
-                                        <label>{iconMap['tag']}<span>tags</span></label>
-                                        <ButtonAction visibility={visibilityMap('modal-model-list-tag', { add: true })}
-                                            classBtn={'button-action plan-round add max-width small'} icon='plus' title='Add' />
-                                    </div>
-                                    <div className='item-head-2'></div>
-                                </div>
-                                <div className='body'>
-                                    {
-                                        <>
-                                            {
-                                                typeof modelForm.id === 'number' ?
-                                                    <ModelSwitcher type={'tag'} propsReference={modelSwitcherBy} />
-                                                    :
-                                                    <ModelCopy type={model.typeModel} region={'tag'} />
-                                            }
-                                        </>
-                                    }
-                                </div>
-                            </div>
+                            {
+                                functionFormMap.mapModelRelationAddMap('tag',
+                                    <>
+                                        {
+                                            typeof modelForm.id === 'number' ?
+                                                <ModelSwitcher type='tag' propsReference={modelSwitcherBy} />
+                                                :
+                                                <ModelCopy type={model.typeModel} region='tag' />
+                                        }
+                                    </>
+                                )
+                            }
                             {
                                 functionFormMap.mapModelRelationAddMap(typeForm,
                                     <>
                                         {
                                             typeof modelForm.id === 'number' && isGoalForm ?
-                                                <ModelSwitcher type={'assignment'} propsReference={modelSwitcherBy} />
+                                                <ModelSwitcher type='assignment' propsReference={modelSwitcherBy} />
                                                 :
                                                 <ModelCopy type={model.typeModel} region={modelCopyRelation} />
                                         }

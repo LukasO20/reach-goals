@@ -16,7 +16,7 @@ import moment from 'moment'
 
 import '../Goal/Goal.scss'
 
-const Goal = ({ status, display, selectableModel = false, detailsModel = false }) => {
+const Goal = ({ status, display, sourceForm, selectableModel = false, detailsModel = false }) => {
     const [erro, setErro] = useState(false)
 
     const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
@@ -26,7 +26,13 @@ const Goal = ({ status, display, selectableModel = false, detailsModel = false }
 
     const currentScope = model.filter.goal.scope
     const currentFilter = model.filter.goal[currentScope]
-    const baseData = model.dataModel.goal[currentFilter.source]?.data ?? dataPage ?? []
+
+    //First will be checked form source to render an goal, if not, will be render according goal filter
+    const baseData =
+        sourceForm?.goals ??
+        model.dataModel.goal[currentFilter.source]?.data ??
+        dataPage ??
+        []
 
     const renderCard = baseData?.filter(item =>
         !(removeSuccess && removingVariables && item.id === removingVariables)
@@ -84,8 +90,8 @@ const Goal = ({ status, display, selectableModel = false, detailsModel = false }
         delete: deleteGoal
     }
 
-    const isCard = display?.type === 'card'
-    const isCardMini = display?.type === 'card-mini'
+    const isCard = display.type === 'card'
+    const isCardMini = display.type === 'card-mini'
 
     const componentsMap = {
         card: Card,
@@ -106,10 +112,14 @@ const Goal = ({ status, display, selectableModel = false, detailsModel = false }
 }
 
 Goal.propTypes = {
+    status: PropTypes.string,
     display: PropTypes.exact({
         type: PropTypes.string.isRequired,
         sideAction: PropTypes.bool
     }).isRequired,
+    sourceForm: PropTypes.shape({
+        goals: PropTypes.array.isRequired
+    }),
     selectableModel: PropTypes.bool,
     detailsModel: PropTypes.bool
 }
