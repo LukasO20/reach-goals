@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 
-import ModalList from '../../modals/ModalList/ModalList.jsx'
+import ModalModelList from '../../modals/ModalModelList/ModalModelList.jsx'
 import ButtonAction from '../elements/ButtonAction/ButtonAction.jsx'
 import ButtonDropdown from '../elements/ButtonDropdown/ButtonDropdown.jsx'
 import ModelSwitcher from '../models/ModelSwitcher.jsx'
@@ -14,23 +14,20 @@ import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 
 import { visibilityMap, iconMap } from '../../../../utils/mapping/mappingUtils.js'
 
+import PropTypes from 'prop-types'
+
 import './Form.scss'
 
-const Form = (props) => {
+const Form = ({ typeForm, functionFormMap, model: modelForm, booleanFormMap, pendingState }) => {
     const { visibleElements } = useContext(VisibilityContext)
     const { model, setModel } = useContext(ManageModelContext)
-    const { pendingState } = props
-
-    const typeForm = props?.typeForm
-    const functionsForm = props?.functionFormMap
-    const modelForm = props?.model
-    const booleanForm = props?.booleanFormMap
 
     const icon = iconMap[typeForm] || 'fa-solid fa-triangle-exclamation'
 
-    const modelSwitcherRelation = typeForm === 'goal' ? 'goal-relation' : null
     const modelCopyRelation = typeForm === 'goal' ? 'assignment' : ''
-    const modelSwitcherProps = {
+    const isGoalForm = typeForm === 'goal'
+
+    const modelSwitcherBy = {
         sourceForm: modelForm,
         display: {
             sideAction: true,
@@ -38,19 +35,24 @@ const Form = (props) => {
         }
     }
 
-    const titleDropdownStatus = modelForm?.status ?
+    const titleDropdownStatus = modelForm.status ?
         <>
             {iconMap[modelForm.status === 'conclude' ? 'check' : modelForm.status]}
             {modelForm.status}
         </>
         : 'choose an option'
-        
-    const modalListShowed = visibleElements.find(classItem => classItem?.includes('modal-list'))
-    const modalListType = modalListShowed?.split('-')[2] ?? null
-    const modalListTitle = {
+
+    const modalModelShowed = visibleElements.find(classItem => classItem?.includes('modal-model-list')) ?? ''
+    const modalModelListType = modalModelShowed.split('-')[3]
+    const titlesModalModelList = {
         goal: 'Choose a goal',
         assignment: 'Choose an assignment',
         tag: 'Choose a tag'
+    }
+    const filtersKeys = {
+        goal: 'goalSomeID',
+        assignment: 'notGoalRelation',
+        tag: 'tagSomeID'
     }
 
     switch (typeForm) {
@@ -72,23 +74,23 @@ const Form = (props) => {
                                     <label>{iconMap['editbox']}<span>name</span></label>
                                     <InputText
                                         id={`${typeForm}-name`} className='input-form input-text name' placeholder={`${typeForm} name`}
-                                        name='name' value={modelForm?.name || ''} onChange={functionsForm.mapHandleChange} />
+                                        name='name' value={modelForm?.name || ''} onChange={functionFormMap.mapHandleChange} />
                                 </div>
                                 <div className='field-forms color'>
                                     <label><span>color</span></label>
-                                    <input id={`${typeForm}-color`} name='color' type='color' onChange={functionsForm.mapHandleChange} />
+                                    <input id={`${typeForm}-color`} name='color' type='color' onChange={functionFormMap.mapHandleChange} />
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div className='bottom'>
-                        <ButtonAction pendingState={pendingState} onClick={functionsForm.mapHandleSubmit} classBtn='button-action plan max-width save' icon='save' title='Save' />
+                        <ButtonAction pendingState={pendingState} onClick={functionFormMap.mapHandleSubmit} classBtn='button-action plan max-width save' icon='save' title='Save' />
                     </div>
                 </div>
             )
         default:
             return (
-                <div className='container-form-modal center-content' onClick={(e) => functionsForm.mapToggleVisibility(visibilityMap(booleanForm.mapClassRemove), e)}>
+                <div className='container-form-modal center-content' onClick={(e) => functionFormMap.mapToggleVisibility(visibilityMap(booleanFormMap.mapClassRemove), e)}>
                     <div className='head'>
                         <div className='objective-icon'>
                             {icon}
@@ -115,22 +117,22 @@ const Form = (props) => {
                                     <label>{iconMap['editbox']}<span>name</span></label>
                                     <InputText
                                         id={`${typeForm}-name`} className='input-form input-text name' placeholder={`${typeForm} name`}
-                                        name='name' value={modelForm?.name || ''} onChange={functionsForm.mapHandleChange} />
+                                        name='name' value={modelForm?.name || ''} onChange={functionFormMap.mapHandleChange} />
                                 </div>
                                 <div className='field-forms start-date'>
                                     <label>{iconMap['schedule']}<span>start date</span></label>
-                                    <InputDate id={`${typeForm}-start-date`} className='input-form input-date start' name='start' selected={modelForm?.start} onChange={functionsForm.mapHandleChange} />
+                                    <InputDate id={`${typeForm}-start-date`} className='input-form input-date start' name='start' selected={modelForm?.start} onChange={functionFormMap.mapHandleChange} />
                                 </div>
                                 <div className='field-forms end-date'>
                                     <label>{iconMap['schedule']}<span>end date</span></label>
-                                    <InputDate id={`${typeForm}-end-date`} className='input-form input-date end' name='end' selected={modelForm?.end} onChange={functionsForm.mapHandleChange} />
+                                    <InputDate id={`${typeForm}-end-date`} className='input-form input-date end' name='end' selected={modelForm?.end} onChange={functionFormMap.mapHandleChange} />
                                 </div>
                                 {
                                     typeForm === 'assignment' &&
                                     <div className='field-forms duration'>
                                         <label>{iconMap['clock']}<span>duration</span></label>
                                         <InputTimer id={`${typeForm}-duration`} className='input-form input-timer timer' name='duration'
-                                            onChange={functionsForm.mapHandleChange} value={modelForm.duration ?? null} />
+                                            onChange={functionFormMap.mapHandleChange} value={modelForm.duration ?? null} />
                                     </div>
                                 }
                                 <div className='field-forms status'>
@@ -138,14 +140,14 @@ const Form = (props) => {
                                     <ButtonDropdown visibility={visibilityMap(`${typeForm}-status`, { add: true })}
                                         classBtn={`button-dropdown-form plan left status ${visibleElements.includes(`${typeForm}-status`) ? 'active' : ''}`}
                                         title={titleDropdownStatus} opening='modal-form' arrow={true}
-                                        dropdownValue={modelForm?.status || undefined} changeDropdownValue={functionsForm.mapHandleChange} />
+                                        dropdownValue={modelForm?.status || undefined} changeDropdownValue={functionFormMap.mapHandleChange} />
                                 </div>
                             </div>
                             <div className='item-forms tag'>
                                 <div className='head'>
                                     <div className='item-head-1'>
                                         <label>{iconMap['tag']}<span>tags</span></label>
-                                        <ButtonAction visibility={visibilityMap('modal-list-tag', { add: true })}
+                                        <ButtonAction visibility={visibilityMap('modal-model-list-tag', { add: true })}
                                             classBtn={'button-action plan-round add max-width small'} icon='plus' title='Add' />
                                     </div>
                                     <div className='item-head-2'></div>
@@ -155,7 +157,7 @@ const Form = (props) => {
                                         <>
                                             {
                                                 typeof modelForm.id === 'number' ?
-                                                    <ModelSwitcher type={'tag'} propsReference={modelSwitcherProps} />
+                                                    <ModelSwitcher type={'tag'} propsReference={modelSwitcherBy} />
                                                     :
                                                     <ModelCopy type={model.typeModel} region={'tag'} />
                                             }
@@ -164,11 +166,11 @@ const Form = (props) => {
                                 </div>
                             </div>
                             {
-                                functionsForm.mapModelRelationAddMap(typeForm,
+                                functionFormMap.mapModelRelationAddMap(typeForm,
                                     <>
                                         {
-                                            typeof modelForm.id === 'number' ?
-                                                <ModelSwitcher type={modelSwitcherRelation} propsReference={modelSwitcherProps} />
+                                            typeof modelForm.id === 'number' && isGoalForm ?
+                                                <ModelSwitcher type={'assignment'} propsReference={modelSwitcherBy} />
                                                 :
                                                 <ModelCopy type={model.typeModel} region={modelCopyRelation} />
                                         }
@@ -183,18 +185,38 @@ const Form = (props) => {
                                 </div>
                                 <div className='body'>
                                     <textarea id={`${typeForm}-details`} className='input-form scrollable' placeholder='details here...'
-                                        name='description' value={modelForm?.description || ''} onChange={functionsForm.mapHandleChange}></textarea>
+                                        name='description' value={modelForm?.description || ''} onChange={functionFormMap.mapHandleChange}></textarea>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div className='bottom'>
-                        <ButtonAction pendingState={pendingState} onClick={functionsForm.mapHandleSubmit} classBtn='button-action plan max-width save' icon='save' title={typeof model.mainModelID === 'number' ? 'Save' : 'Create'} />
+                        <ButtonAction pendingState={pendingState} onClick={functionFormMap.mapHandleSubmit} classBtn='button-action plan max-width save' icon='save' title={typeof model.mainModelID === 'number' ? 'Save' : 'Create'} />
                     </div>
-                    { modalListType && <ModalList title={modalListTitle[modalListType]} typeVisibility={modalListType} /> }
+                    {
+                        !!modalModelShowed &&
+                        <ModalModelList title={titlesModalModelList[modalModelListType]}
+                            type={modalModelListType} typeFilterKey={filtersKeys[modalModelListType]} />
+                    }
                 </div>
             )
     }
+}
+
+Form.propTypes = {
+    typeForm: PropTypes.string.isRequired,
+    functionFormMap: PropTypes.shape({
+        mapToggleVisibility: PropTypes.func,
+        mapHandleChange: PropTypes.func,
+        mapModelRelationAddMap: PropTypes.func,
+        mapHandleSubmit: PropTypes.func,
+        mapSetError: PropTypes.func
+    }).isRequired,
+    model: PropTypes.shape({
+        formModel: PropTypes.object
+    }).isRequired,
+    booleanFormMap: PropTypes.object,
+    pendingState: PropTypes.bool.isRequired
 }
 
 export default Form

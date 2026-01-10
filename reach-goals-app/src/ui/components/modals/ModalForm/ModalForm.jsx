@@ -139,13 +139,6 @@ const ModalForm = () => {
         mapClassRemove: visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
     }
 
-    const isSaving = !!savingGoal || !!savingAssignment || !!savingTag
-
-    const isModalList = visibleElements.some(
-        classItem => classItem === 'modal-list-goal' ||
-            classItem === 'modal-list-assignment' ||
-            classItem === 'modal-list-tag')
-
     useEffect(() => {
         if (typeof model.mainModelID === 'number') loadModel(model.mainModelID)
     }, [model.mainModelID])
@@ -183,11 +176,25 @@ const ModalForm = () => {
         }
     }, [dataGoal, dataAssignment])
 
+    const isLoading = !!loadingGoal || !!loadingAssigment
+    const isSaving = !!savingGoal || !!savingAssignment || !!savingTag
+    const isModalModelList = visibleElements.some(
+        classItem => classItem === 'modal-model-list-goal' ||
+            classItem === 'modal-model-list-assignment' ||
+            classItem === 'modal-model-list-tag')
+
     return (
-        (loadingGoal || loadingAssigment) && !isModalList ?
-            <Loading mode='block' /> :
-            <Form typeForm={typeVisibility} functionFormMap={functionFormMap}
-                model={model.formModel} booleanFormMap={booleanFormMap} pendingState={isSaving} />
+        isLoading && !isModalModelList ? (
+            <Loading mode="block" />
+        ) : (
+            <Form
+                typeForm={typeVisibility}
+                functionFormMap={functionFormMap}
+                model={model.formModel}
+                booleanFormMap={booleanFormMap}
+                pendingState={isSaving}
+            />
+        )
     )
 }
 

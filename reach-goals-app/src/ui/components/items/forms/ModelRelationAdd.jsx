@@ -18,8 +18,8 @@ const ModelRelationAdd = (props) => {
                 <ButtonAction unlinkGoal={true} classBtn={'unlink-goal button-action plan-round add max-width small'}
                     icon='cancel' title='Unlink' />
                 :
-                <ButtonAction visibility={visibilityMap(`modal-list-${visibilityRelation}`, { add: true })}
-                    classBtn={`form-modallist-${type} button-action plan-round add max-width small`}
+                <ButtonAction visibility={visibilityMap(`modal-model-list-${visibilityRelation}`, { add: true })}
+                    classBtn={`form-modal-model-list-${type} button-action plan-round add max-width small`}
                     icon='plus' title='Add' />
         )
     }
