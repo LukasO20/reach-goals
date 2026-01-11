@@ -83,7 +83,7 @@ const Assignment = ({ status, display, sourceForm, selectableModel = false, deta
     useEffect(() => {
         const currentData = currentScope === 'page' ? dataPage : dataPanel
 
-        if (currentFilter.source === 'core' || currentFilter.source === 'support') {
+        if ((currentFilter.source === 'core' || currentFilter.source === 'support') && Array.isArray(currentData)) {
             updateDataModel(currentData, 'assignment', currentFilter.source)
         }
     }, [dataPage, dataPanel])

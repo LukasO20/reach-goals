@@ -66,7 +66,7 @@ const Tag = ({ display, sourceForm, selectableModel = false }) => {
     }
 
     useEffect(() => {
-        if (currentFilter.source === 'core' || currentFilter.source === 'support') {
+        if ((currentFilter.source === 'core' || currentFilter.source === 'support') && Array.isArray(data)) {
             updateDataModel(data, 'tag', currentFilter.source)
         }
     }, [data])

@@ -79,7 +79,7 @@ const Goal = ({ status, display, sourceForm, selectableModel = false, detailsMod
     useEffect(() => {
         const currentData = currentScope === 'page' ? dataPage : dataPanel
 
-        if (currentFilter.source === 'core' || currentFilter.source === 'support') {
+        if ((currentFilter.source === 'core' || currentFilter.source === 'support') && Array.isArray(currentData)) {
             updateDataModel(currentData, 'goal', currentFilter.source)
         }
     }, [dataPage, dataPanel])

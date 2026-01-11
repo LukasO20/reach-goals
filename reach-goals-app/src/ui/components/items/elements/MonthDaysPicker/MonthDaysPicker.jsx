@@ -17,7 +17,7 @@ import './MonthDaysPicker.scss'
 const MonthDaysPicker = ({ data }) => {
     const { setModel } = useContext(ManageModelContext)
     const { toggleVisibility } = useContext(VisibilityContext)
-    const { updateSwitchLayout} = useSwitchLayout()
+    const { updateSwitchLayout } = useSwitchLayout()
     const year = new Date().getFullYear()
     const month = new Date().getMonth()
 
@@ -32,17 +32,17 @@ const MonthDaysPicker = ({ data }) => {
         }
 
         const firstDayOfMonth = days[0].getDay()
+        let prevDate = new Date(days[0])
         for (let i = 1; i <= firstDayOfMonth; i++) {
-            const prevDate = new Date(days[0])
-            prevDate.setDate(prevDate.getDate() - i)
-            days.unshift(prevDate)
+            prevDate.setDate(prevDate.getDate() - 1)
+            days.unshift(new Date(prevDate))
         }
 
         const lastDayOfMonth = days[days.length - 1].getDay()
+        let nextDate = new Date(days[days.length - 1])
         for (let i = 1; i < 7 - lastDayOfMonth; i++) {
-            const nextDate = new Date(days[days.length - 1])
-            nextDate.setDate(nextDate.getDate() + i)
-            days.push(nextDate)
+            nextDate.setDate(nextDate.getDate() + 1)
+            days.push(new Date(nextDate))
         }
 
         return days
@@ -58,7 +58,6 @@ const MonthDaysPicker = ({ data }) => {
 
     const days = getDaysInMonth(year, month)
     const models = data || { goal: [], assignment: [] }
-
     const modelsCalendar = Object.entries(models || {}).flatMap(([key, value]) =>
         Array.isArray(value) ?
             value.map(model => ({ ...model, type: key })) : []
@@ -73,7 +72,7 @@ const MonthDaysPicker = ({ data }) => {
             <div className='header'>
                 {
                     weekNames.map(week => {
-                        return ( <div key={week} className='day-name'>{week}</div> )
+                        return (<div key={week} className='day-name'>{week}</div>)
                     })
                 }
             </div>
