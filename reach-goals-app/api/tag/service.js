@@ -48,11 +48,53 @@ const getTag = async (tagID) => {
         if (tagID !== undefined && !isNaN(tagID)) {
             return await prisma.tag.findUnique({
                 where: { id: Number(tagID) },
-                include: { goals: true, assignments: true }
+                include: {
+                    goals: {
+                        include: {
+                            goal: {
+                                select: {
+                                    name: true,
+                                    status: true,
+                                }
+                            }
+                        }
+                    },
+                    assignments: {
+                        include: {
+                            assignment: {
+                                select: {
+                                    name: true,
+                                    status: true,
+                                }
+                            }
+                        }
+                    }
+                }
             })
         } else if (tagID === 'all') {
             return await prisma.tag.findMany({
-                include: { goals: true, assignments: true }
+                include: {
+                    goals: {
+                        include: {
+                            goal: {
+                                select: {
+                                    name: true,
+                                    status: true,
+                                }
+                            }
+                        }
+                    },
+                    assignments: {
+                        include: {
+                            assignment: {
+                                select: {
+                                    name: true,
+                                    status: true,
+                                }
+                            }
+                        }
+                    }
+                }
             })
         }
     }
@@ -81,12 +123,8 @@ const getTagOnGoal = async (goalID) => {
                         include: {
                             goal: {
                                 select: {
-                                    id: true,
                                     name: true,
-                                    start: true,
-                                    end: true,
                                     status: true,
-                                    description: true
                                 }
                             }
                         }
@@ -105,12 +143,8 @@ const getTagOnGoal = async (goalID) => {
                         include: {
                             goal: {
                                 select: {
-                                    id: true,
                                     name: true,
-                                    start: true,
-                                    end: true,
                                     status: true,
-                                    description: true
                                 }
                             }
                         }
@@ -144,13 +178,8 @@ const getTagOnAssignment = async (assignmentID) => {
                         include: {
                             assignment: {
                                 select: {
-                                    id: true,
                                     name: true,
-                                    start: true,
-                                    end: true,
-                                    status: true,
-                                    duration: true,
-                                    description: true
+                                    status: true
                                 }
                             }
                         }
@@ -169,13 +198,8 @@ const getTagOnAssignment = async (assignmentID) => {
                         include: {
                             assignment: {
                                 select: {
-                                    id: true,
                                     name: true,
-                                    start: true,
-                                    end: true,
                                     status: true,
-                                    duration: true,
-                                    description: true
                                 }
                             }
                         }

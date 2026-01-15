@@ -11,17 +11,16 @@ import { visibilityMap, switchLayoutMap, filterGetModelMap } from '../../../../u
 import ModalForm from '../ModalForm/ModalForm.jsx'
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import ModelTabs from '../../items/elements/ModelTabs/ModelTabs.jsx'
-import CardMini from '../../items/elements/CardMini/CardMini.jsx'
+import TagRelationCard from '../../items/models/Tag/TagRelationCard.jsx'
 
 const ModalTag = () => {
     const { visibleElements } = useContext(VisibilityContext)
     const { setModel, updateFilterModel } = useContext(ManageModelContext)
-    const { modal: { data: dataTag = [], loading: loadingTag } } = useTagProvider()
+    const { modal: { data = [], loading: loadingTag } } = useTagProvider()    
     const { layout } = useSwitchLayout()
     const navigate = useNavigate()
 
     const isModalForm = ['tag', 'near-modalForm']
-    const display = { type: 'card-mini' }
 
     const handleClickButtonAction = (e) => {
         if (e) setModel(prev => ({ ...prev, typeModel: 'config' }))
@@ -36,7 +35,7 @@ const ModalTag = () => {
         updateFilterModel(filter, 'tag', 'modal')
     }, [])
 
-    const content = <CardMini type='tag' model={dataTag} display={display}  />
+    const content = <TagRelationCard tagRelation={data} />
 
     return (
         <>
@@ -46,9 +45,9 @@ const ModalTag = () => {
                 <div className='options'>
                     <ButtonAction visibility={visibilityMap('near-modalForm', { add: true })}
                         classBtn={`button-action create plan max-width ${isModalForm.every(e => visibleElements.includes(e)) ? 'active' : ''}`} icon='plus' title='create' />
-                    <ButtonAction classBtn='button-action circle max-width config' 
+                    <ButtonAction classBtn='button-action circle max-width config'
                         icon='config' onClick={(e) => handleClickButtonAction(e)}
-                        visibility={visibilityMap(['modal-center', 'config'])} 
+                        visibility={visibilityMap(['modal-center', 'config'])}
                         switchLayout={switchLayoutMap({ area: 'modal', state: { modalName: 'modal-center', layoutName: 'config' } })}
                     />
                 </div>

@@ -1,0 +1,97 @@
+@import '../../../../themes/lighttheme.scss';
+
+.tag {
+
+    &.card-relation {
+        display: flex;
+        flex-direction: column;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        transition: max-height 0.3s ease-in-out;
+        overflow: hidden;
+        max-height: 2.05rem;
+        flex-shrink: 0;
+
+        >.head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 0.5rem;
+            padding: 0.15rem 0.5rem;
+            transition: 0.3s ease-in-out;
+
+            >label {
+                display: flex;
+                gap: 0.35rem;
+                font-weight: 600;
+            }
+        }
+
+        >.body {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+
+            .content {
+                display: flex;
+                flex-direction: column;
+                gap: 0.35rem;
+                background-color: $color-white;
+                padding: 0.5rem 0.35rem 0.35rem 0.35rem;
+                border-radius: 0.5rem;
+
+                .message {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.35rem;
+                    font-weight: 600;
+                    font-size: 0.9rem;
+                    height: 2rem;
+
+                    .icon-st {
+                        height: 1.25rem;
+                    }
+                }
+            }
+        }
+
+        &.relationed {
+            gap: 0.5rem;
+
+            >.head {
+                cursor: pointer;
+
+                * {
+                    cursor: pointer;
+                }
+
+                &:active {
+                    background-color: $color-white-15;
+                }
+            }
+        }
+
+        &.open {
+            max-height: 120rem;
+
+            >.head {
+
+                >.button-action {
+
+                    &.expand {
+                        background-color: $color-complementary-s;
+
+                        .icon-st {
+                            color: $color-white;
+                            transform: rotate(180deg);
+                        }
+
+                        &:active {
+                            background-color: $color-complementary-s-30;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

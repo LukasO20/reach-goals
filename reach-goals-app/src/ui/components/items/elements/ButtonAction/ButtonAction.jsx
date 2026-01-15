@@ -78,7 +78,7 @@ ButtonAction.propTypes = {
     pendingState: PropTypes.bool,
     icon: PropTypes.string,
     title: PropTypes.string,
-    classBtn: PropTypes.string
+    classBtn: PropTypes.string.isRequired
 }
 
 export default ButtonAction
