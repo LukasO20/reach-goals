@@ -90,8 +90,12 @@ const Tag = ({ display, sourceForm, selectableModel = false }) => {
 
 Tag.propTypes = {
     display: PropTypes.exact({
-        type: PropTypes.string.isRequired,
-        sideAction: PropTypes.bool
+        type: PropTypes.arrayOf(
+            PropTypes.oneOf(['card', 'card-mini'])
+        ).isRequired,
+        actions: PropTypes.arrayOf(
+            PropTypes.oneOf(['edit', 'delete', 'details', 'remove'])
+        )
     }).isRequired,
     sourceForm: PropTypes.shape({
         tags: PropTypes.arrayOf(

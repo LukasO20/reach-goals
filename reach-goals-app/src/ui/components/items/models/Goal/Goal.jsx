@@ -90,8 +90,8 @@ const Goal = ({ status, display, sourceForm, selectableModel = false, detailsMod
         delete: deleteGoal
     }
 
-    const isCard = display.type === 'card'
-    const isCardMini = display.type === 'card-mini'
+    const isCard = display.type.includes('card')
+    const isCardMini = display.type.includes('card-mini')
 
     const componentsMap = {
         card: Card,
@@ -114,8 +114,12 @@ const Goal = ({ status, display, sourceForm, selectableModel = false, detailsMod
 Goal.propTypes = {
     status: PropTypes.string,
     display: PropTypes.exact({
-        type: PropTypes.string.isRequired,
-        sideAction: PropTypes.bool
+        type: PropTypes.arrayOf(
+            PropTypes.oneOf(['card', 'card-mini'])
+        ).isRequired,
+        actions: PropTypes.arrayOf(
+            PropTypes.oneOf(['edit', 'delete', 'details', 'remove'])
+        )
     }).isRequired,
     sourceForm: PropTypes.shape({
         goals: PropTypes.array.isRequired

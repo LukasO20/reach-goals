@@ -7,6 +7,10 @@ import Goal from '../../items/models/Goal/Goal'
 const ContainerColumn = () => {
     const { layout } = useSwitchLayout()
     const layoutColumn = layout.page.layoutName
+    const displayModesProps = {
+        type: ['card'],
+        actions: ['edit', 'delete']
+    }
 
     return (
         <div className='column home'>
@@ -19,9 +23,9 @@ const ContainerColumn = () => {
                         <div className='list'>
                             {
                                 layoutColumn === 'goal' ?
-                                    <Goal display={{ sideAction: true, type: 'card' }} detailsModel={true} status={'progress'} />
+                                    <Goal display={displayModesProps} detailsModel={true} status={'progress'} />
                                     :
-                                    <Assignment display={{ sideAction: true, type: 'card' }} detailsModel={true} status={'progress'} />
+                                    <Assignment display={displayModesProps} detailsModel={true} status={'progress'} />
                             }
                         </div>
                     </div>
@@ -34,9 +38,9 @@ const ContainerColumn = () => {
                         <div className='list'>
                             {
                                 layoutColumn === 'goal' ?
-                                    <Goal display={{ sideAction: true, type: 'card' }} detailsModel={true} status={'conclude'} />
+                                    <Goal display={displayModesProps} detailsModel={true} status={'conclude'} />
                                     :
-                                    <Assignment display={{ sideAction: true, type: 'card' }} detailsModel={true} status={'conclude'} />
+                                    <Assignment display={displayModesProps} detailsModel={true} status={'conclude'} />
                             }
                         </div>
                     </div>

@@ -128,17 +128,8 @@
 
                 .item-actions {
                     display: flex;
-                    flex-direction: column;
-                    justify-content: space-between;
                     align-items: end;
-                    height: 100%;
                     gap: 0.5rem;
-
-                    .item {
-                        display: flex;
-                        align-items: center;
-                        gap: 0.5rem;
-                    }
                 }
             }
         }

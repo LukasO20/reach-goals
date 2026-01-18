@@ -30,8 +30,8 @@ const Form = ({ typeForm, functionFormMap, model: modelForm, booleanFormMap, pen
     const modelSwitcherBy = {
         sourceForm: modelForm,
         display: {
-            sideAction: true,
-            type: 'card-mini'
+            type: ['card-mini'],
+            actions: ['remove']
         }
     }
 
@@ -194,7 +194,7 @@ const Form = ({ typeForm, functionFormMap, model: modelForm, booleanFormMap, pen
 }
 
 Form.propTypes = {
-    typeForm: PropTypes.string.isRequired,
+    typeForm: PropTypes.string,
     functionFormMap: PropTypes.shape({
         mapToggleVisibility: PropTypes.func,
         mapHandleChange: PropTypes.func,

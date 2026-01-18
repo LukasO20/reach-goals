@@ -9,8 +9,8 @@ const ModelCopy = ({ displayRef, region }) => {
     const { model, removeFromTransportModel, updateFormModel } = useContext(ManageModelContext)
 
     const display = displayRef ?? {
-        sideAction: true,
-        type: 'card-mini'
+        type: ['card-mini'],
+        actions: []
     }
 
     useEffect(() => {

@@ -112,6 +112,16 @@
         font-weight: 600;
     }
 
+    &.text {
+        height: 1rem;
+        width: auto;
+    }
+
+    &.text-icon {
+        height: 1rem;
+        width: 1rem;
+    }
+
     &.pie-chart {
         gap: 0rem;
     }

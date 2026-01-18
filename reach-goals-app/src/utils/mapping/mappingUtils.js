@@ -162,3 +162,8 @@ export const modelTabsMap = {
         }
     ]
 }
+
+export const displayModesMap = {
+    type: ['card', 'card-mini'],
+    actions: ['edit', 'delete', 'details', 'remove']
+}

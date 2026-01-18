@@ -54,6 +54,11 @@ const TagRelationCard = ({ tagRelation }) => {
             const quantityGoalMessage = goal.goals.length > 1 ? `${goal.goals.length} Goals` : `${goal.goals.length} Goal`
             const quantityAssigmentMessage = assignment.assignments.length > 1 ? `${assignment.assignments.length} Assignments` : `${assignment.assignments.length} Assignment`
 
+            const displayModesProps = {
+                type: ['card-mini'],
+                actions: ['edit']
+            }
+
             return (
                 <div className={`tag card-relation ${(hasGoal || hasAssignment) ? 'relationed' : ''} ${isOpen ? 'open' : ''}`} key={item.id} style={{ backgroundColor: `${colorTag}50`, borderColor: colorTag }}>
                     <div className='head' onClick={() => handleSetOpenCard(item)}>
@@ -74,7 +79,7 @@ const TagRelationCard = ({ tagRelation }) => {
                                     {iconMap['goal']}
                                     {quantityGoalMessage}
                                 </label>
-                                <Goal sourceForm={goal} display={{ type: 'card-mini' }} />
+                                <Goal sourceForm={goal} display={displayModesProps} />
                             </div>
                         }
                         {
@@ -84,7 +89,7 @@ const TagRelationCard = ({ tagRelation }) => {
                                     {iconMap['assignment']}
                                     {quantityAssigmentMessage}
                                 </label>
-                                <Assignment sourceForm={assignment} display={{ type: 'card-mini' }} />
+                                <Assignment sourceForm={assignment} display={displayModesProps} />
                             </div>
                         }
                     </div>
