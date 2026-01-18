@@ -102,7 +102,7 @@ const Card = ({ type, model = [], display, pendingState, clickFunction }) => {
 Card.propTypes = {
     type: PropTypes.string.isRequired,
     model: PropTypes.array.isRequired,
-    display: PropTypes.exact({
+    display: PropTypes.shape({
         type: PropTypes.arrayOf(
             PropTypes.oneOf(['card', 'card-mini'])
         ).isRequired,

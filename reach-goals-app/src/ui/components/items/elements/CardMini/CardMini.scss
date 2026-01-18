@@ -3,6 +3,7 @@
 .card-mini {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     background-color: $color-complementary-p;
     border-radius: 0.5rem;
     padding: 0.25rem 0.5rem;
@@ -28,6 +29,26 @@
             display: flex;
             align-items: end;
             gap: 0.5rem;
+
+            .button-action {
+                background-color: $color-complementary-s;
+                
+                * {
+                    color: $color-white;
+                }
+
+                &:hover {
+                    background-color: $color-complementary-s-30;
+
+                    * {
+                       color: $color-complementary-s; 
+                    }
+                }
+
+                &:active {
+                    background-color: $color-complementary-s-15;
+                }
+            }
         }
     }
 

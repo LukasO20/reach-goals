@@ -31,6 +31,11 @@ const ModalModelList = ({ title, type, typeFilterKey }) => {
         updateFilterModel(filterGetModel, type, 'modal')
     }, [type, typeFilterKey])
 
+    const displayModesProps = {
+        type: ['card-mini'],
+        actions: []
+    }
+
     const isLoading = !!loadingGoal || !!loadingAssigment || !!loadingTag
 
     return (
@@ -41,7 +46,7 @@ const ModalModelList = ({ title, type, typeFilterKey }) => {
                     classBtn='button-action circle close' icon='close' />
             </div>
             <div className='body scrollable'>
-                {isLoading ? <Loading mode='block' /> : <ModelSwitcher type={type} selectableModel={true} propsReference={{ display: { type: 'card-mini' }}} />}
+                {isLoading ? <Loading mode='block' /> : <ModelSwitcher type={type} selectableModel={true} propsReference={{ display: displayModesProps }} />}
             </div>
         </div>
     )
