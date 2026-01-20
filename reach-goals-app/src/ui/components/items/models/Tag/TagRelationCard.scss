@@ -9,7 +9,7 @@
         padding: 0.5rem;
         transition: max-height 0.3s ease-in-out;
         overflow: hidden;
-        max-height: 2.05rem;
+        max-height: 2.55rem;
         flex-shrink: 0;
 
         >.head {
@@ -24,6 +24,23 @@
                 display: flex;
                 gap: 0.35rem;
                 font-weight: 600;
+            }
+
+            .side-actions {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                border-radius: 1rem;
+                overflow: hidden;
+                padding: 0.25rem;
+
+                .button-action {
+                    flex-shrink: 0;
+
+                    &.delete {
+                        opacity: 0;
+                    }
+                }
             }
         }
 
@@ -65,8 +82,23 @@
                     cursor: pointer;
                 }
 
+                .side-actions {
+                    background-color: $color-white-15;
+                    width: 1.8rem;
+                }
+
                 &:active {
                     background-color: $color-white-15;
+                }
+            }
+
+            &:hover {
+
+                >.head {
+
+                    .side-actions {
+                        width: 4rem;
+                    }
                 }
             }
         }
@@ -76,18 +108,68 @@
 
             >.head {
 
-                >.button-action {
+                .side-actions {
 
-                    &.expand {
-                        background-color: $color-complementary-s;
+                    .button-action {
 
-                        .icon-st {
-                            color: $color-white;
-                            transform: rotate(180deg);
+                        &.expand {
+                            background-color: $color-complementary-s;
+
+                            .icon-st {
+                                color: $color-white;
+                                transform: rotate(180deg);
+                            }
+
+                            &:active {
+                                background-color: $color-complementary-s-30;
+                            }
                         }
+                    }
+                }
+            }
+        }
 
-                        &:active {
-                            background-color: $color-complementary-s-30;
+        &.pending {
+            pointer-events: none;
+            opacity: 0.7;
+
+            >.head {
+
+                .side-actions {
+
+                    .button-action {
+
+                        &.delete {
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+
+            &.relationed {
+
+                >.head {
+
+                    .side-actions {
+                        width: 4rem;
+                    }
+                }
+            }
+        }
+
+        &:hover {
+
+            >.head {
+
+                .side-actions {
+                    background-color: $color-white-15;
+                    justify-content: center;
+                    width: 1.8rem;
+
+                    .button-action {
+
+                        &.delete {
+                            opacity: 1;
                         }
                     }
                 }

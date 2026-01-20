@@ -18,7 +18,7 @@ const Tag = ({ display, sourceForm, selectableModel = false }) => {
 
     const { toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
-    const { modal: { data }, remove } = useTagProvider()
+    const { modal: { data }, remove, removeSuccess, removingVariables } = useTagProvider()
 
     const target = visibilityMap(['panel-right', 'tag'])
 
@@ -29,7 +29,16 @@ const Tag = ({ display, sourceForm, selectableModel = false }) => {
     const tagSourceAuxiliary = sourceForm?.tags.map(item => {
         return item.tag
     })
-    const renderCardMini = tagSourceAuxiliary ?? model.dataModel.tag[currentFilter.source]?.data ?? data ?? []
+
+    const baseData =
+        tagSourceAuxiliary ??
+        model.dataModel.tag[currentFilter.source]?.data ??
+        data ??
+        []
+
+    const renderCardMini = baseData.filter(item =>
+        !(removeSuccess && removingVariables && item.id === removingVariables)
+    )
 
     const deleteTag = async (id) => { remove(id) }
 
@@ -78,14 +87,7 @@ const Tag = ({ display, sourceForm, selectableModel = false }) => {
         aux: removeElDOMClick
     }
 
-    const cardRender = <CardMini
-        type='tag'
-        model={renderCardMini}
-        clickFunction={clickEvents}
-        display={display}
-    />
-
-    return cardRender
+    return <CardMini type='tag' model={renderCardMini} clickFunction={clickEvents} display={display} />
 }
 
 Tag.propTypes = {

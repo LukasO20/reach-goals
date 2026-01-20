@@ -32,12 +32,14 @@ const Assignment = ({ status, display, sourceForm, selectableModel = false, deta
         dataPage ?? 
         []
 
-    const renderCard = baseData?.filter(item =>
+    const renderCard = baseData.filter(item =>
         !(removeSuccess && removingVariables && item.id === removingVariables)
         && item.status === status
     )
 
-    const renderCardMini = baseData 
+    const renderCardMini = baseData.filter(item =>
+        !(removeSuccess && removingVariables && item.id === removingVariables)
+    ) 
 
     const pendingState = {
         removing: removing,

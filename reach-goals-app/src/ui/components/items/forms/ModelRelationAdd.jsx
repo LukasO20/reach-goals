@@ -108,7 +108,7 @@ const ModelRelationAdd = ({ type, children }) => {
 }
 
 ModelRelationAdd.propTypes = {
-    type: PropTypes.string.isRequired,
+    type: PropTypes.string,
     children: PropTypes.element.isRequired
 }
 

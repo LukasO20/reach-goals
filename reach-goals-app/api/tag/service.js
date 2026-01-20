@@ -33,6 +33,9 @@ const deleteTag = async (tagID) => {
     if (!tagID) return
 
     try {
+        const unlinkTag = await unlinkAllTagById(tagID)
+        if(!unlinkTag) throw new Error('Failed to unlink tag from related goals and assignments.')
+
         return await prisma.tag.delete({
             where: { id: Number(tagID) }
         })
@@ -318,6 +321,33 @@ const unlinkAllTagOnAssignment = async (assignmentID) => {
                 assignmentID: Number(assignmentID),
             }
         })
+
+    } catch (error) {
+        console.error(error)
+        return false
+    }
+}
+
+const unlinkAllTagById = async (tagID) => {
+    if (!tagID) return
+
+    try {
+        const deletedTagOnGoal = await prisma.tagOnGoal.deleteMany({
+            where: {
+                tagID: Number(tagID),
+            }
+        })
+
+        const deletedTagOnAssignment = await prisma.tagOnAssignment.deleteMany({
+            where: {
+                tagID: Number(tagID),
+            }
+        })
+
+        return {
+            goal: deletedTagOnGoal,
+            assignment: deletedTagOnAssignment
+        }
 
     } catch (error) {
         console.error(error)
