@@ -107,7 +107,7 @@ Card.propTypes = {
             PropTypes.oneOf(['card', 'card-mini'])
         ).isRequired,
         actions: PropTypes.arrayOf(
-            PropTypes.oneOf(['edit', 'delete', 'details'])
+            PropTypes.oneOf(['edit', 'delete'])
         )
     }).isRequired,
     pendingState: PropTypes.shape({

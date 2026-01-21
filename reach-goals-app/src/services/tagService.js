@@ -1,7 +1,7 @@
 import { buildQueryParamsMap } from '../utils/mapping/mappingUtils.js'
 
-const apiURL = window.location.origin.includes("localhost")
-    && "http://localhost:5000" //Standard URL to use with a local custom server. Insert it like ${apiURL}/api/...
+// const apiURL = window.location.origin.includes("localhost")
+//     && "http://localhost:5000" //Standard URL to use with a local custom server. Insert it like ${apiURL}/api/...
 
 export const addTag = async (tag) => {
     try {

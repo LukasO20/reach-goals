@@ -54,11 +54,12 @@ const Calendar = () => {
     }, [dataGoal, dataAssignment, layout.page.layoutName])
 
     const isLoading = !!loadingGoal || !!loadingAssignment
+    const isValidData = Array.isArray(dataModelSource.goal) && Array.isArray(dataModelSource.assignment)
 
     return (
         <>
             {isLoading && <Loading mode='block' />}
-            <MonthDaysPicker data={dataModelSource} />
+            {isValidData && <MonthDaysPicker data={dataModelSource} />}
         </>
     )
 }

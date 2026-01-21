@@ -27,7 +27,8 @@ const Objectives = () => {
     const typeLayout = layout.page.layoutName
     const modelProps = {
         display: {
-            type: 'card-mini'
+            type: ['card-mini'],
+            actions: []
         },
         detailsModel: true
     }

@@ -63,11 +63,9 @@ const VisibilityProvider = ({ children }) => {
             }
         }
         const isVisible = visibleElements.some(classes => {
-            const classType = Array.isArray(parameterTarget.class)
+            const isArrayClass = Array.isArray(parameterTarget.class)
 
-            if (classType) {
-                return parameterTarget.class.includes(classes)
-            }
+            return isArrayClass ? parameterTarget.class.includes(classes) : false
         })
         isVisible ? removeVisibility(parameterTarget) : updateVisibility(parameterTarget)
     }

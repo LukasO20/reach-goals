@@ -98,6 +98,11 @@ const MonthDaysPicker = ({ data }) => {
                         const assignmentsOnDay = modelsOnDay.filter(m => m.type === 'assignment')
                         const goalsOnDay = modelsOnDay.filter(m => m.type === 'goal')
 
+                        const displayModesProps = {
+                            type: ['card-mini'],
+                            actions: []
+                        }
+
                         return (
                             <div key={day.toISOString()} day={todayDate} className={`day ${isToday ? 'today' : isApproximateDay ? 'approximate' : ''}`}>
                                 <span className='title'>{todayDate}</span>
@@ -106,7 +111,7 @@ const MonthDaysPicker = ({ data }) => {
                                         <CardMini
                                             model={assignmentsOnDay}
                                             type='assignment'
-                                            display={{ type: 'card-mini' }}
+                                            display={displayModesProps}
                                             clickFunction={clickEvents} />
                                     )}
                                 {
@@ -114,7 +119,7 @@ const MonthDaysPicker = ({ data }) => {
                                         <CardMini
                                             model={goalsOnDay}
                                             type='goal'
-                                            display={{ type: 'card-mini' }}
+                                            display={displayModesProps}
                                             clickFunction={clickEvents} />
                                     )}
                             </div>
@@ -130,7 +135,7 @@ MonthDaysPicker.propTypes = {
     data: PropTypes.shape({
         goal: PropTypes.array.isRequired,
         assignment: PropTypes.array.isRequired
-    }).isRequired,
+    }),
 }
 
 export default MonthDaysPicker
