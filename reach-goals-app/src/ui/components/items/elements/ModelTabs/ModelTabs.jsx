@@ -2,7 +2,7 @@ import { useState, useContext } from 'react'
 
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 
-import { filterGetModelMap, modelTabsMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { filterBuildModelMap, modelTabsMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 import Loading from '../Loading/Loading.jsx'
@@ -26,17 +26,17 @@ const ModelTabs = ({ type, children, loading }) => {
 
     const handleOptions = (currentfilter) => {
         if (type === 'goal') {
-            const filterGetGoal = filterGetModelMap({ ...currentfilter }, 'goal', 'core')
+            const filterGetGoal = filterBuildModelMap({ ...currentfilter }, 'goal', 'core')
             updateFilterModel(filterGetGoal, 'goal', 'page')
         }
 
         if (type === 'assignment') {
-            const filterGetAssignment = filterGetModelMap({ ...currentfilter }, 'assignment', 'core')
+            const filterGetAssignment = filterBuildModelMap({ ...currentfilter }, 'assignment', 'core')
             updateFilterModel(filterGetAssignment, 'assignment', 'page')
         }
 
         if (type === 'tag') {
-            const filterGetTag = filterGetModelMap({ ...currentfilter }, 'tag', 'core')
+            const filterGetTag = filterBuildModelMap({ ...currentfilter }, 'tag', 'core')
             updateFilterModel(filterGetTag, 'tag', 'modal')
         }
 

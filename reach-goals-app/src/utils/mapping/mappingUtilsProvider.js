@@ -78,3 +78,27 @@ export const switchLayoutMap = {
         layoutName: null
     }
 }
+
+export const updateFilterModelMap = (filter = {}, model = '', scope = '') => {
+    return { filter, model, scope }
+}
+
+export const updateDataModelMap = (data = [], type = '', scope = '') => {
+    return { data, type, scope }
+}
+
+export const resetManageModelMap = (keys = []) => {
+    return { keys }
+}
+
+export const updateFormModelMap = (keyObject = '', value, type = '', action = '') => {
+    return { keyObject, value, type, action }
+}
+
+export const removeFromTransportModelMap = (id, type = '') => {
+    return { id, type }
+}
+
+export const addToTransportModelMap = (id, name = '', type = '', color = '', custom) => {
+    return { id, name, type, color, custom }
+}

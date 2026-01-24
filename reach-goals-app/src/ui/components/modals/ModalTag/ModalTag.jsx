@@ -6,7 +6,7 @@ import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx
 import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 import { useTagProvider } from '../../../../provider/model/TagModelProvider.jsx'
 
-import { visibilityMap, switchLayoutMap, filterGetModelMap } from '../../../../utils/mapping/mappingUtils.js'
+import { visibilityMap, switchLayoutMap, filterBuildModelMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import ModalForm from '../ModalForm/ModalForm.jsx'
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
@@ -28,7 +28,7 @@ const ModalTag = () => {
     }
 
     useEffect(() => {
-        const filter = filterGetModelMap({
+        const filter = filterBuildModelMap({
             tagSomeID: 'all', type: 'tag', source: 'core'
         }, 'tag', 'core')
 

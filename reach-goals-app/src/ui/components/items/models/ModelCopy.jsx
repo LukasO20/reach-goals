@@ -2,6 +2,8 @@ import { useState, useEffect, useContext } from 'react'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 
+import { removeFromTransportModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
+
 import CardMini from '../elements/CardMini/CardMini.jsx'
 
 const ModelCopy = ({ displayRef, region }) => {
@@ -18,7 +20,8 @@ const ModelCopy = ({ displayRef, region }) => {
     }, [model.transportModel])
 
     const removeElDOMClick = ({ id, tagID }, type) => {
-        removeFromTransportModel({ id: id ?? tagID, type: type })
+        const dataRemoveFromTransportModel = removeFromTransportModelMap(id ?? tagID, type)
+        removeFromTransportModel(dataRemoveFromTransportModel)
 
         if (!type) { return console.error('No type provided for model copy delete action. Send a goal, assignment or tag type') }
 

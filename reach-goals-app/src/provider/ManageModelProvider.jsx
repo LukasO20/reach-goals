@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback, useMemo } from 'react'
 
 import { manageModelMap } from '../utils/mapping/mappingUtilsProvider.js'
 
@@ -7,7 +7,7 @@ const ManageModelContext = React.createContext()
 const ManageModelProvider = ({ children }) => {
     const [model, setModel] = useState(manageModelMap)
 
-    const addToTransportModel = ({ id, name, type, color, custom }) => {
+    const addToTransportModel = useCallback(({ id, name, type, color, custom }) => {
         if (!id || !name) return console.error('The model object must have an id and a name property')
         if (typeof type !== 'string') return console.error('The type is necessary and should be a string value. Did you send something like "tag" or "assignment"?')
 
@@ -30,9 +30,9 @@ const ManageModelProvider = ({ children }) => {
                 }
             }
         })
-    }
+    }, [])
 
-    const removeFromTransportModel = ({ id, type }) => {
+    const removeFromTransportModel = useCallback(({ id, type }) => {
         setModel(prevModel => {
             const updatedTransportModel = prevModel.transportModel[type].filter(item => (item.id ?? item.tagID) !== id)
             return {
@@ -43,9 +43,9 @@ const ManageModelProvider = ({ children }) => {
                 }
             }
         })
-    }
+    }, [])
 
-    const updateFormModel = ({ keyObject, value, type = 'single', action = 'add' }) => {
+    const updateFormModel = useCallback(({ keyObject, value, type = 'single', action = 'add' }) => {
         if (!keyObject) return console.error('To update a formModel is necessary a key')
 
         const submitToAdd = (prevValue) => {
@@ -82,9 +82,9 @@ const ManageModelProvider = ({ children }) => {
                 }
             }
         })
-    }
+    }, [])
 
-    const updateFilterModel = (filter = {}, model, scope) => {
+    const updateFilterModel = useCallback(({ filter = {}, model, scope }) => {
         if (!model) return console.error('To update a filterModel is necessary a model.')
         if (scope !== 'page' && scope !== 'modal') return console.error('To update a filterModel is necessary a scope value. Send "page" or "modal" scope.')
 
@@ -99,11 +99,11 @@ const ManageModelProvider = ({ children }) => {
                 },
             }
         }))
-    }
+    }, [])
 
-    const updateDataModel = (data, type, typesource) => {
-        if (typeof type !== 'string' || type === "") return console.error('To update a dataModel is necessary a type')
-        if (typeof typesource !== 'string' || typesource === "") return console.error('To update a dataModel is necessary a typesource')
+    const updateDataModel = useCallback(({ data, type, scope }) => {
+        if (typeof type !== 'string' || type === '') return console.error('To update a dataModel is necessary a type')
+        if (typeof scope !== 'string' || scope === '') return console.error('To update a dataModel is necessary a typesource')
 
         setModel(prevModel => ({
             ...prevModel,
@@ -111,15 +111,15 @@ const ManageModelProvider = ({ children }) => {
                 ...prevModel.dataModel,
                 [type]: {
                     ...prevModel.dataModel[type],
-                    [typesource]: {
-                        ...prevModel.dataModel[type][typesource], data,
+                    [scope]: {
+                        ...prevModel.dataModel[type][scope], data,
                     },
                 },
             },
         }))
-    }
+    }, [])
 
-    const resetManageModel = (keys) => {
+    const resetManageModel = useCallback(({ keys }) => {
         if (Array.isArray(keys)) {
             setModel(prevModel => {
                 const updated = { ...prevModel }
@@ -136,21 +136,25 @@ const ManageModelProvider = ({ children }) => {
                 formModel: prevModel.formModel
             }))
         }
-    }
+    }, [])
 
-    //console.log('MODEL READY TO MANAGE - ', model)
+    console.log('MODEL READY TO MANAGE - ', model)
+    const value = useMemo(() => ({
+        model,
+        setModel,
+        addToTransportModel,
+        removeFromTransportModel,
+        updateFormModel,
+        updateFilterModel,
+        updateDataModel,
+        resetManageModel
+    }), [
+        model, addToTransportModel, removeFromTransportModel,
+        updateFormModel, updateFilterModel, updateDataModel, resetManageModel
+    ])
 
     return (
-        <ManageModelContext.Provider value={{
-            model,
-            setModel,
-            addToTransportModel,
-            removeFromTransportModel,
-            updateFormModel,
-            updateFilterModel,
-            updateDataModel,
-            resetManageModel
-        }}>
+        <ManageModelContext.Provider value={value}>
             {children}
         </ManageModelContext.Provider>
     )

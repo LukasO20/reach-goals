@@ -6,6 +6,7 @@ import { ManageModelContext } from '../../../../../provider/ManageModelProvider.
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 
 import { switchLayoutMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { updateDataModelMap, updateFormModelMap, addToTransportModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
 import Card from '../../elements/Card/Card.jsx'
 import CardMini from '../../elements/CardMini/CardMini.jsx'
@@ -58,15 +59,11 @@ const Assignment = ({ status, display, sourceForm, selectableModel = false, deta
 
         if (selectableModel) {
             const selected = model.dataModel.assignment.support.data.find(m => m.id === assignment.id)
+            const dataUpdateFormModel = updateFormModelMap('assignments', { id: assignment.id, name: assignment.name }, 'array')
+            const dataAddToTransportModel = addToTransportModelMap(selected.id, selected.name, 'assignment', null)
 
-            addToTransportModel({ ...selected, type: 'assignment' })
-            return updateFormModel({
-                keyObject: 'assignments',
-                value: {
-                    id: assignment.id, name: assignment.name
-                },
-                type: 'array'
-            })
+            addToTransportModel(dataAddToTransportModel)
+            return updateFormModel(dataUpdateFormModel)
         }
 
         if (detailsModel) {
@@ -78,7 +75,8 @@ const Assignment = ({ status, display, sourceForm, selectableModel = false, deta
 
     const removeElDOMClick = ({ id }) => {
         if (id) {
-            updateFormModel({ keyObject: 'assignments', value: { id: id }, type: 'array', action: 'remove' })
+            const dataUpdateFormModelMap = updateFormModelMap('assignments', { id: id }, 'array', 'remove')
+            updateFormModel(dataUpdateFormModelMap)
         }
     }
 
@@ -86,9 +84,10 @@ const Assignment = ({ status, display, sourceForm, selectableModel = false, deta
         const currentData = currentScope === 'page' ? dataPage : dataPanel
 
         if ((currentFilter.source === 'core' || currentFilter.source === 'support') && Array.isArray(currentData)) {
-            updateDataModel(currentData, 'assignment', currentFilter.source)
+            const dataUpdateDataModel = updateDataModelMap(currentData, 'assignment', currentFilter.source)
+            updateDataModel(dataUpdateDataModel)
         }
-    }, [dataPage, dataPanel])
+    }, [dataPage, dataPanel, currentFilter.source, currentScope, updateDataModel])
 
     const clickEvents = {
         card: assignmentClick,

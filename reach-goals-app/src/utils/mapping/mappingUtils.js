@@ -50,7 +50,7 @@ export const buildQueryParamsMap = ({ IDobject, action }) => {
     type => type of model. Can use 'goal', 'tag' or 'assignment'
     source => type of list according 'reduceModelMap'. 'support' to FETCH_SUPPORT_LIST or 'core' to FETCH_LIST
 */
-export const filterGetModelMap = (props, type, source) => {
+export const filterBuildModelMap = (props, type, source) => {
     if (!typeModel.includes(type)) return console.error('"type" parameter is invalid. Send a string supported type ["goal", "tag", "assignment"]')
     if (!typeReduceModel.includes(source)) return console.error('"source" parameter is invalid. Send a string supported source ["core", "support"]')
 

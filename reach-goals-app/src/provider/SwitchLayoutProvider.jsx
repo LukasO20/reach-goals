@@ -1,4 +1,4 @@
-import { useState, useContext, createContext } from 'react'
+import { useState, useContext, createContext, useCallback, useMemo } from 'react'
 
 import { switchLayoutMap } from '../utils/mapping/mappingUtilsProvider'
 
@@ -18,13 +18,15 @@ export const SwitchLayoutProvider = ({ children }) => {
         }
     }
 
-    const updateSwitchLayout = (switcher, e) => {
+    const updateSwitchLayout = useCallback(({ area, state }, e) => {
         e?.stopPropagation()
-        update(switcher)
-    }
+        update({ area, state })
+    }, [])
+
+    const value = useMemo(() => ({ layout, updateSwitchLayout }), [layout, updateSwitchLayout])
 
     return (
-        <SwitchLayoutContext.Provider value={{ layout, updateSwitchLayout }}>
+        <SwitchLayoutContext.Provider value={value}>
             {children}
         </SwitchLayoutContext.Provider>
     )

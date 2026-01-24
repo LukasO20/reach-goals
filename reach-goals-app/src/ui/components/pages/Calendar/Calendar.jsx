@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useState, useContext, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
@@ -8,7 +8,8 @@ import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 
-import { filterGetModelMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
+import { filterBuildModelMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
+import { updateFilterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
 import MonthDaysPicker from '../../items/elements/MonthDaysPicker/MonthDaysPicker.jsx'
 import Loading from '../../items/elements/Loading/Loading.jsx'
@@ -28,15 +29,20 @@ const Calendar = () => {
         assignment: []
     })
 
-    const filterGetGoal = filterGetModelMap({ goalSomeID: 'all' }, 'goal', 'core')
-    const filterGetAssignment = filterGetModelMap({ notGoalRelation: 'all' }, 'assignment', 'core')
-
     useEffect(() => {
+        const filterGoal = filterBuildModelMap({ goalSomeID: 'all' }, 'goal', 'core')
+        const filterAssignment = filterBuildModelMap({ notGoalRelation: 'all' }, 'assignment', 'core')
+
+        const dataUpdateFilterModelGoal = updateFilterModelMap(filterGoal, 'goal', 'page')
+        const dataUpdateFilterModelAssignment = updateFilterModelMap(filterAssignment, 'assignment', 'page')
+
         update({ header: 'Manage your goals and assignments' })
-        updateFilterModel(filterGetGoal, 'goal', 'page')
-        updateFilterModel(filterGetAssignment, 'assignment', 'page')
-        updateSwitchLayout(switchLayoutMap({ area: 'page', state: { pageName: location.pathname.slice(1), layoutName: 'all' } }))
-    }, [])
+        updateFilterModel(dataUpdateFilterModelGoal)
+        updateFilterModel(dataUpdateFilterModelAssignment)
+
+        const dataSwitchLayout = switchLayoutMap({ area: 'page', state: { pageName: location.pathname.slice(1), layoutName: 'all' } })
+        updateSwitchLayout(dataSwitchLayout)
+    }, [update, updateFilterModel, updateSwitchLayout, location.pathname])
 
     useEffect(() => {
         const currentLayout = layout.page.layoutName

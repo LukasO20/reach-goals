@@ -6,6 +6,7 @@ import { ManageModelContext } from '../../../../../provider/ManageModelProvider.
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 
 import { visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { addToTransportModelMap, updateDataModelMap, updateFormModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
 import CardMini from '../../elements/CardMini/CardMini.jsx'
 
@@ -45,23 +46,21 @@ const Tag = ({ display, sourceForm, selectableModel = false }) => {
     const editTag = useCallback((id) => {
         try { setModel({ ...model, mainModelID: id, typeModel: 'tag' }) }
         catch (error) { setErro(`Failed to edit this tag: ${erro.message}`) }
-    }, [setModel])
+    }, [setModel, erro.message, model])
 
     const tagClick = (tag, e) => {
         e.stopPropagation()
 
         if (selectableModel) {
             const selected = model.dataModel.tag.support.data.find(m => m.id === tag.id)
-
-            addToTransportModel({ ...selected, type: 'tag' })
-            return updateFormModel({
-                keyObject: 'tags',
-                value: {
-                    tagID: tag.id,
-                    tag: { id: tag.id, name: tag.name, color: tag.color }
-                },
-                type: 'array'
-            })
+            const dataUpdateFormModelMap =
+                updateFormModelMap('tags',
+                    { tagID: tag.id, tag: { id: tag.id, name: tag.name, color: tag.color } },
+                    'array')
+            const dataAddToTransportModel = addToTransportModelMap(selected.id, selected.name, 'tag', selected.color)
+                    
+            addToTransportModel(dataAddToTransportModel)
+            return updateFormModel(dataUpdateFormModelMap)
         }
 
         setModel({ ...model, mainModelID: tag.id })
@@ -70,13 +69,15 @@ const Tag = ({ display, sourceForm, selectableModel = false }) => {
 
     const removeElDOMClick = ({ id }) => {
         if (id) {
-            updateFormModel({ keyObject: 'tags', value: { tagID: id }, type: 'array', action: 'remove' })
+            const dataUpdateFormModelMap = updateFormModelMap('tags', { tagID: id }, 'array', 'remove')
+            updateFormModel(dataUpdateFormModelMap)
         }
     }
 
     useEffect(() => {
         if ((currentFilter.source === 'core' || currentFilter.source === 'support') && Array.isArray(data)) {
-            updateDataModel(data, 'tag', currentFilter.source)
+            const dataUpdateDataModel = updateDataModelMap(data, 'tag', currentFilter.source)
+            updateDataModel(dataUpdateDataModel)
         }
     }, [data])
 

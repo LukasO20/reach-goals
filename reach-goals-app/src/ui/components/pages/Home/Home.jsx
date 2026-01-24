@@ -6,7 +6,8 @@ import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.js
 import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
 
-import { filterGetModelMap } from '../../../../utils/mapping/mappingUtils.js'
+import { filterBuildModelMap } from '../../../../utils/mapping/mappingUtils.js'
+import { updateFilterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
 import Loading from '../../items/elements/Loading/Loading.jsx'
 import ContainerColumn from './ContainerColumn.jsx'
@@ -30,32 +31,24 @@ const Home = () => {
 
     useEffect(() => {
         update({ header: `Welcome. Let's produce?` })
-    }, [])
+    }, [update])
 
     useEffect(() => {
         if (layoutHome === 'goal' || layoutHome === 'assignment') {
             const key = layoutHome === 'assignment' ? 'notGoalRelation' : 'goalSomeID'
-            const filter = filterGetModelMap(
-                { [key]: 'all', type: layoutHome, source: 'core' },
-                layoutHome,
-                'core'
-            )
-            updateFilterModel(filter, layoutHome, 'page')
+            const filter = filterBuildModelMap({ [key]: 'all', type: layoutHome, source: 'core' }, layoutHome, 'core')   
+            const data = updateFilterModelMap(filter, layoutHome, 'page')
+            updateFilterModel(data)
         }
 
         if (layoutHome === 'pie-chart') {
-            const filterGoal = filterGetModelMap({
-                goalSomeID: 'all', type: 'goal', source: 'core'
-            }, 'goal', 'core')
-
-            const filterAssignment = filterGetModelMap({
-                assignmentSomeID: 'all', type: 'assignment', source: 'core'
-            }, 'assignment', 'core')
-
-            updateFilterModel(filterGoal, 'goal', 'page')
-            updateFilterModel(filterAssignment, 'assignment', 'page')
+            ['goal', 'assignment'].forEach(type => {
+                const filter = filterBuildModelMap({ [`${type}SomeID`]: 'all', type, source: 'core' }, type, 'core')
+                const data = updateFilterModelMap(filter, type, 'page')
+                updateFilterModel(data)
+            })
         }
-    }, [layoutHome])
+    }, [layoutHome, updateFilterModel])
 
     const isLoading = !!loadingGoal || !!loadingAssignment
 

@@ -27,7 +27,10 @@ const ModalDetailsSection = () => {
     }
 
     const modelRelationProps = {
-        display: { type: 'card-mini' },
+        display: {
+            type: ['card-mini'],
+            actions: []
+        },
         sourceForm: {
             assignments: formModel.assignments,
             tags: formModel.tags,

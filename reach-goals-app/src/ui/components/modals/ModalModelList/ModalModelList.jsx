@@ -5,7 +5,7 @@ import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.js
 import { useTagProvider } from '../../../../provider/model/TagModelProvider.jsx'
 import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
 
-import { filterGetModelMap, visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
+import { filterBuildModelMap, visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import Loading from '../../items/elements/Loading/Loading.jsx'
@@ -22,7 +22,7 @@ const ModalModelList = ({ title, type, typeFilterKey }) => {
     const { modal: { loading: loadingTag } } = useTagProvider()
 
     useEffect(() => {
-        const filterGetModel = filterGetModelMap(
+        const filterGetModel = filterBuildModelMap(
             { [typeFilterKey]: 'all', type, source: 'support' },
             type,
             'support'

@@ -7,7 +7,8 @@ import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
 import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 
-import { filterGetModelMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
+import { filterBuildModelMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
+import { updateFilterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
 import ModelTabs from '../../items/elements/ModelTabs/ModelTabs.jsx'
 import Goal from '../../items/models/Goal/Goal.jsx'
@@ -38,24 +39,29 @@ const Objectives = () => {
     const isLoading = !!loadingGoal || !!loadingAssignment
 
     useEffect(() => {
+        const dataSwitchLayout = switchLayoutMap({ area: 'page', state: { pageName: location.pathname.slice(1), layoutName: 'all' } })
+
         update({ header: 'Manage your goals and assingments' })
-        updateSwitchLayout(switchLayoutMap({ area: 'page', state: { pageName: location.pathname.slice(1), layoutName: 'all' } }))
-    }, [])
+        updateSwitchLayout(dataSwitchLayout)
+    }, [update, updateSwitchLayout, location.pathname])
 
     useEffect(() => {
         if (typeLayout === 'all') {
-            const filterGoal = filterGetModelMap({
+            const filterGoal = filterBuildModelMap({
                 goalSomeID: 'all', type: 'goal', source: 'core'
             }, 'goal', 'core')
 
-            const filterAssignment = filterGetModelMap({
+            const filterAssignment = filterBuildModelMap({
                 assignmentSomeID: 'all', type: 'assignment', source: 'core'
             }, 'assignment', 'core')
 
-            updateFilterModel(filterGoal, 'goal', 'page')
-            updateFilterModel(filterAssignment, 'assignment', 'page')
+            const dataUpdateFilterModelGoal = updateFilterModelMap(filterGoal, 'goal', 'page')
+            const dataUpdateFilterModelAssignment = updateFilterModelMap(filterAssignment, 'assignment', 'page')
+
+            updateFilterModel(dataUpdateFilterModelGoal)
+            updateFilterModel(dataUpdateFilterModelAssignment)
         }
-    }, [typeLayout])
+    }, [typeLayout, updateFilterModel])
 
     let content = null
 

@@ -5,6 +5,7 @@ import { ManageModelContext } from '../../../../../provider/ManageModelProvider.
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
 import { iconMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { resetManageModelMap, updateFormModelMap, removeFromTransportModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
 import Loading from '../Loading/Loading.jsx'
 
@@ -27,12 +28,17 @@ const ButtonAction = ({ visibility, switchLayout, nullForm, unlinkGoal, onClick,
 
     const handleClick = (e) => {
         e.stopPropagation()
+
+        const dataResetManageModel = resetManageModelMap(['formModel', 'mainModelID', 'transportModel'])
+        const dataUpdateFormModel = updateFormModelMap('goalID', null, 'remove')
+        const dataRemoveFromTransportModel = removeFromTransportModelMap(model.formModel.goalID, 'goal')
+
         if (visibility) toggleVisibility(visibility, e)
         if (switchLayout) updateSwitchLayout(switchLayout)
-        if (nullForm) resetManageModel(['formModel', 'mainModelID', 'transportModel'])
+        if (nullForm) resetManageModel(dataResetManageModel)
         if (unlinkGoal) {
-            updateFormModel({ keyObject: 'goalID', value: null, action: 'remove' })
-            removeFromTransportModel({ id: model.formModel.goalID, type: 'goal' })
+            updateFormModel(dataUpdateFormModel)
+            removeFromTransportModel(dataRemoveFromTransportModel)
         }
 
         if (typeof onClick === 'function') {

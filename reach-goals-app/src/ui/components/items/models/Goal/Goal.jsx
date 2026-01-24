@@ -6,6 +6,7 @@ import { ManageModelContext } from '../../../../../provider/ManageModelProvider.
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 
 import { switchLayoutMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { addToTransportModelMap, updateDataModelMap, updateFormModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
 import Card from '../../elements/Card/Card.jsx'
 import CardMini from '../../elements/CardMini/CardMini.jsx'
@@ -60,15 +61,14 @@ const Goal = ({ status, display, sourceForm, selectableModel = false, detailsMod
 
         if (selectableModel) {
             const selected = baseData.find(m => m.id === goal.id)
+            const dataUpdateFormModelMap = updateFormModelMap('goalID', { id: goal.id })
+            const dataAddToTransportModel = addToTransportModelMap(selected.id, selected.name, 'goal', null, { end: moment(selected.end).format('MMMM DD') })
 
             if (model.transportModel.goal.length > 0) return
 
-            addToTransportModel({ ...selected, type: 'goal', custom: { end: moment(selected.end).format('MMMM DD') } })
+            addToTransportModel(dataAddToTransportModel)
             toggleVisibility(visibilityMap('modal-list-goal', { remove: true }))
-            return updateFormModel({
-                keyObject: 'goalID',
-                value: goal.id
-            })
+            return updateFormModel(dataUpdateFormModelMap)
         }
 
         if (detailsModel) {
@@ -82,9 +82,10 @@ const Goal = ({ status, display, sourceForm, selectableModel = false, detailsMod
         const currentData = currentScope === 'page' ? dataPage : dataPanel
 
         if ((currentFilter.source === 'core' || currentFilter.source === 'support') && Array.isArray(currentData)) {
-            updateDataModel(currentData, 'goal', currentFilter.source)
+            const dataUpdateDataModel = updateDataModelMap(currentData, 'goal', currentFilter.source)
+            updateDataModel(dataUpdateDataModel)
         }
-    }, [dataPage, dataPanel])
+    }, [dataPage, dataPanel, updateDataModel, currentScope, currentFilter.source])
 
     const clickEvents = {
         card: goalClick,
