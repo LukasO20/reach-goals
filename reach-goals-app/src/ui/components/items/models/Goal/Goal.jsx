@@ -72,8 +72,10 @@ const Goal = ({ status, display, sourceForm, selectableModel = false, detailsMod
         }
 
         if (detailsModel) {
+            const dataSwitchLayout = switchLayoutMap({ area: 'modal', state: { modalName: 'modal-right', layoutName: 'details' } })
+
             setModel(prev => ({ ...prev, mainModelID: goal.id, formModel: goal, typeModel: 'goal' }))
-            updateSwitchLayout(switchLayoutMap({ area: 'modal', state: { modalName: 'modal-right', layoutName: 'details' } }))
+            updateSwitchLayout(dataSwitchLayout)
             toggleVisibility(visibilityMap(['modal-right', 'goal']))
         }
     }

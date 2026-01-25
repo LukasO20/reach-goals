@@ -50,9 +50,10 @@ const MonthDaysPicker = ({ data }) => {
 
     const activityClick = (model, e) => {
         e.stopPropagation()
+        const dataSwitchLayout = switchLayoutMap({ area: 'modal', state: { modalName: 'modal-center', layoutName: 'details' } })
 
         setModel(prev => ({ ...prev, mainModelID: model.id, formModel: model, typeModel: model.type }))
-        updateSwitchLayout(switchLayoutMap({ area: 'modal', state: { modalName: 'modal-center', layoutName: 'details' } }))
+        updateSwitchLayout(dataSwitchLayout)
         toggleVisibility(visibilityMap(['modal-right', model.type]))
     }
 
