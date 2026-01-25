@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState, useCallback } from 'react'
 
 import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
 import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
@@ -9,6 +9,7 @@ import { useTagProvider } from '../../../../provider/model/TagModelProvider.jsx'
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
 
 import { visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
+import { updateFilterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
 import Form from '../../items/forms/Form.jsx'
 import Loading from '../../items/elements/Loading/Loading.jsx'
@@ -31,7 +32,7 @@ const ModalForm = () => {
 
     const typeVisibility = visibleElements[1]
 
-    const loadModel = (id) => {
+    const loadModel = useCallback((id) => {
         if (!id) return
 
         const keySomeID = `${typeVisibility}SomeID`
@@ -45,10 +46,12 @@ const ModalForm = () => {
         if (isValidParameters) return
 
         try {
+            const dataFilter = updateFilterModelMap(filterGetModel, typeVisibility, 'modal')
+            
             const refetchMap = {
-                goal: () => updateFilterModel(filterGetModel, 'goal', 'modal'),
-                assignment: () => updateFilterModel(filterGetModel, 'assignment', 'modal'),
-                tag: () => updateFilterModel(filterGetModel, 'tag'),
+                goal: () => updateFilterModel(dataFilter),
+                assignment: () => updateFilterModel(dataFilter),
+                tag: () => updateFilterModel(dataFilter),
             }
 
             refetchMap[typeVisibility]()
@@ -58,7 +61,7 @@ const ModalForm = () => {
         catch (error) {
             setError('Ops, something wrong: ', error)
         }
-    }
+    }, [resetManageModel, typeVisibility, updateFilterModel])
 
     const handleChange = (e) => {
         const { name, value } = e.target || e
@@ -141,7 +144,7 @@ const ModalForm = () => {
 
     useEffect(() => {
         if (typeof model.mainModelID === 'number') loadModel(model.mainModelID)
-    }, [model.mainModelID])
+    }, [model.mainModelID, loadModel])
 
     useEffect(() => {
         if (saveGoalSuccess || saveAssignmentSuccess || saveTagSuccess) {
@@ -174,7 +177,7 @@ const ModalForm = () => {
                 }))
             }
         }
-    }, [dataGoal, dataAssignment])
+    }, [dataGoal, dataAssignment, model.filter, model.mainModelID, typeVisibility, setModel])
 
     const isLoading = !!loadingGoal || !!loadingAssigment
     const isSaving = !!savingGoal || !!savingAssignment || !!savingTag

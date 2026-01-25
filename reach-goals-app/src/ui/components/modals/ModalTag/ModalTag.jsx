@@ -7,6 +7,7 @@ import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 import { useTagProvider } from '../../../../provider/model/TagModelProvider.jsx'
 
 import { visibilityMap, switchLayoutMap, filterBuildModelMap } from '../../../../utils/mapping/mappingUtils.js'
+import { updateFilterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
 import ModalForm from '../ModalForm/ModalForm.jsx'
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
@@ -31,9 +32,10 @@ const ModalTag = () => {
         const filter = filterBuildModelMap({
             tagSomeID: 'all', type: 'tag', source: 'core'
         }, 'tag', 'core')
-
-        updateFilterModel(filter, 'tag', 'modal')
-    }, [])
+        const dataFilter = updateFilterModelMap(filter, 'tag', 'modal')
+        
+        updateFilterModel(dataFilter)
+    }, [updateFilterModel])
 
     const content = <TagRelationCard tagRelation={data} />
 

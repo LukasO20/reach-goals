@@ -6,6 +6,7 @@ import { useTagProvider } from '../../../../provider/model/TagModelProvider.jsx'
 import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
 
 import { filterBuildModelMap, visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
+import { updateFilterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import Loading from '../../items/elements/Loading/Loading.jsx'
@@ -27,9 +28,9 @@ const ModalModelList = ({ title, type, typeFilterKey }) => {
             type,
             'support'
         )
-
-        updateFilterModel(filterGetModel, type, 'modal')
-    }, [type, typeFilterKey])
+        const dataFilter = updateFilterModelMap(filterGetModel, type, 'modal')
+        updateFilterModel(dataFilter)
+    }, [type, typeFilterKey, updateFilterModel])
 
     const displayModesProps = {
         type: ['card-mini'],
