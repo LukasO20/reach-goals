@@ -1,4 +1,4 @@
-import { useState, createContext } from 'react'
+import { useState, createContext,useCallback, useMemo } from 'react'
 
 const VisibilityContext = createContext()
 
@@ -12,54 +12,54 @@ const VisibilityProvider = ({ children }) => {
         })
     }
 
-    const updateVisibility = (target) => {
+    const updateVisibility = useCallback(({ class: classTarget, operator }) => {
         setSafeVisibleElement((prev) => {
-            const classType = Array.isArray(target.class)
+            const classType = Array.isArray(classTarget)
 
             if (classType) {
                 let filter = [...prev]
 
-                if (target.operator.add) {
+                if (operator.add) {
                     filter = filter.slice(0, 2)
-                    filter.push(...target.class)
+                    filter.push(...classTarget)
                     return filter
                 }
 
-                if (target.operator.remove) {
-                    if (target.class) {
-                        filter = filter.filter(classPrevious => target.class.some(el => el !== classPrevious))
+                if (operator.remove) {
+                    if (classTarget) {
+                        filter = filter.filter(classPrevious => classTarget.some(el => el !== classPrevious))
                     }
 
                     filter.pop()
                     return filter
                 }
 
-                return target.class
+                return classTarget
             }
         })
-    }
+    }, [])
 
-    const removeVisibility = (target) => {
+    const removeVisibility = useCallback(({ class: classTarget, operator }) => {
         setSafeVisibleElement((prev) => {
-            const classType = Array.isArray(target.class)
+            const classType = Array.isArray(classTarget)
             if (classType) {
-                if (target.operator.maintain) {
-                    return target.class
+                if (operator.maintain) {
+                    return classTarget
                 }
 
-                return prev.filter(classPrevious => target.class.some(el => el !== classPrevious))
+                return prev.filter(classPrevious => classTarget.some(el => el !== classPrevious))
             }
         })
-    }
+    }, [])
 
-    const toggleVisibility = (target, event) => {
+    const toggleVisibility = useCallback(({ class: classTarget, operator }, event) => {
         event?.stopPropagation()
         const parameterTarget = {
-            class: target?.class ?? null,
+            class: classTarget ?? null,
             operator: {
-                add: target?.operator?.add ?? false,
-                remove: target?.operator?.remove ?? false,
-                maintain: target?.operator?.maintain ?? false
+                add: operator?.add ?? false,
+                remove: operator?.remove ?? false,
+                maintain: operator?.maintain ?? false
             }
         }
         const isVisible = visibleElements.some(classes => {
@@ -68,12 +68,13 @@ const VisibilityProvider = ({ children }) => {
             return isArrayClass ? parameterTarget.class.includes(classes) : false
         })
         isVisible ? removeVisibility(parameterTarget) : updateVisibility(parameterTarget)
-    }
+    }, [visibleElements, updateVisibility, removeVisibility])
 
+    const value = useMemo(() => ({ toggleVisibility, visibleElements }), [toggleVisibility, visibleElements])
     //console.log('VISIBLES - ', visibleElements)
 
     return (
-        <VisibilityContext.Provider value={{ visibleElements, toggleVisibility }}>
+        <VisibilityContext.Provider value={value}>
             {children}
         </VisibilityContext.Provider>
     )

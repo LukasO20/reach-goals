@@ -119,7 +119,7 @@ const ManageModelProvider = ({ children }) => {
         }))
     }, [])
 
-    const resetManageModel = useCallback(({ keys }) => {
+    const resetManageModel = useCallback(({ keys } = {}) => {
         if (Array.isArray(keys)) {
             setModel(prevModel => {
                 const updated = { ...prevModel }
@@ -138,7 +138,6 @@ const ManageModelProvider = ({ children }) => {
         }
     }, [])
 
-    console.log('MODEL READY TO MANAGE - ', model)
     const value = useMemo(() => ({
         model,
         setModel,
@@ -152,6 +151,8 @@ const ManageModelProvider = ({ children }) => {
         model, addToTransportModel, removeFromTransportModel,
         updateFormModel, updateFilterModel, updateDataModel, resetManageModel
     ])
+
+    //console.log('MODEL READY TO MANAGE - ', model)
 
     return (
         <ManageModelContext.Provider value={value}>
