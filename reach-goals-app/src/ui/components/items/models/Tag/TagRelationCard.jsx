@@ -125,7 +125,7 @@ TagRelationCard.propTypes = {
                         status: PropTypes.string.isRequired
                     }),
                 })
-            ).isRequired,
+            ),
             goals: PropTypes.arrayOf(
                 PropTypes.shape({
                     goal: PropTypes.shape({
@@ -133,7 +133,7 @@ TagRelationCard.propTypes = {
                         status: PropTypes.string.isRequired
                     }),
                 })
-            ).isRequired
+            )
         })
     ).isRequired
 }

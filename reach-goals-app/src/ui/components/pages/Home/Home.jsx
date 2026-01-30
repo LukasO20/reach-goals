@@ -37,14 +37,14 @@ const Home = () => {
         if (layoutHome === 'goal' || layoutHome === 'assignment') {
             const key = layoutHome === 'assignment' ? 'notGoalRelation' : 'goalSomeID'
             const filter = filterBuildModelMap({ [key]: 'all', type: layoutHome, source: 'core' }, layoutHome, 'core')   
-            const data = updateFilterModelMap(filter, layoutHome, 'page')
+            const data = updateFilterModelMap({ filter, model: layoutHome, scope: 'page' })
             updateFilterModel(data)
         }
 
         if (layoutHome === 'pie-chart') {
             ['goal', 'assignment'].forEach(type => {
                 const filter = filterBuildModelMap({ [`${type}SomeID`]: 'all', type, source: 'core' }, type, 'core')
-                const data = updateFilterModelMap(filter, type, 'page')
+                const data = updateFilterModelMap({ filter, model: type, scope: 'page' })
                 updateFilterModel(data)
             })
         }

@@ -28,7 +28,7 @@ const ModalModelList = ({ title, type, typeFilterKey }) => {
             type,
             'support'
         )
-        const dataFilter = updateFilterModelMap(filterGetModel, type, 'modal')
+        const dataFilter = updateFilterModelMap({ filter: filterGetModel, model: type, scope: 'modal' })
         updateFilterModel(dataFilter)
     }, [type, typeFilterKey, updateFilterModel])
 
@@ -40,7 +40,7 @@ const ModalModelList = ({ title, type, typeFilterKey }) => {
     const isLoading = !!loadingGoal || !!loadingAssigment || !!loadingTag
 
     return (
-        <div className={`container-list-modal ${type}`}>
+        <div className={`container-list-modal ${type}`} onClick={(e) => e.stopPropagation()}>
             <div className='head'>
                 <h2>{title}</h2>
                 <ButtonAction visibility={visibilityMap(`modal-model-list-${type}`, { remove: true })}

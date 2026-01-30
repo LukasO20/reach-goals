@@ -30,8 +30,8 @@ const ButtonAction = ({ visibility, switchLayout, nullForm, unlinkGoal, onClick,
         e.stopPropagation()
 
         const dataResetManageModel = resetManageModelMap(['formModel', 'mainModelID', 'transportModel'])
-        const dataUpdateFormModel = updateFormModelMap('goalID', null, 'remove')
-        const dataRemoveFromTransportModel = removeFromTransportModelMap(model.formModel.goalID, 'goal')
+        const dataUpdateFormModel = updateFormModelMap({ keyObject: 'goalID', value: null, action: 'remove' })
+        const dataRemoveFromTransportModel = removeFromTransportModelMap({ id: model.formModel.goalID, type:  'goal' })
 
         if (visibility) toggleVisibility(visibility, e)
         if (switchLayout) updateSwitchLayout(switchLayout)

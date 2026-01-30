@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext, useMemo } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
@@ -33,8 +33,8 @@ const Calendar = () => {
         const filterGoal = filterBuildModelMap({ goalSomeID: 'all' }, 'goal', 'core')
         const filterAssignment = filterBuildModelMap({ notGoalRelation: 'all' }, 'assignment', 'core')
 
-        const dataUpdateFilterModelGoal = updateFilterModelMap(filterGoal, 'goal', 'page')
-        const dataUpdateFilterModelAssignment = updateFilterModelMap(filterAssignment, 'assignment', 'page')
+        const dataUpdateFilterModelGoal = updateFilterModelMap({ filter: filterGoal, model: 'goal', scope: 'page' })
+        const dataUpdateFilterModelAssignment = updateFilterModelMap({ filter: filterAssignment, model: 'assignment', scope: 'page' })
 
         update({ header: 'Manage your goals and assignments' })
         updateFilterModel(dataUpdateFilterModelGoal)

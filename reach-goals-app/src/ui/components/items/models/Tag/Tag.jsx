@@ -53,12 +53,19 @@ const Tag = ({ display, sourceForm, selectableModel = false }) => {
 
         if (selectableModel) {
             const selected = model.dataModel.tag.support.data.find(m => m.id === tag.id)
-            const dataUpdateFormModelMap =
-                updateFormModelMap('tags',
-                    { tagID: tag.id, tag: { id: tag.id, name: tag.name, color: tag.color } },
-                    'array')
-            const dataAddToTransportModel = addToTransportModelMap(selected.id, selected.name, 'tag', selected.color)
-                    
+            const dataUpdateFormModelMap = updateFormModelMap({
+                keyObject: 'tags',
+                value: { tagID: tag.id, tag: { id: tag.id, name: tag.name, color: tag.color } },
+                type: 'array',
+                action: 'add'
+            })
+            const dataAddToTransportModel = addToTransportModelMap({
+                id: selected.id,
+                name: selected.name,
+                type: 'tag',
+                color: selected.color
+            })
+
             addToTransportModel(dataAddToTransportModel)
             return updateFormModel(dataUpdateFormModelMap)
         }
@@ -76,10 +83,14 @@ const Tag = ({ display, sourceForm, selectableModel = false }) => {
 
     useEffect(() => {
         if ((currentFilter.source === 'core' || currentFilter.source === 'support') && Array.isArray(data)) {
-            const dataUpdateDataModel = updateDataModelMap(data, 'tag', currentFilter.source)
+            const dataUpdateDataModel = updateDataModelMap({
+                data: data,
+                type: 'tag',
+                scope: currentFilter.source
+            })
             updateDataModel(dataUpdateDataModel)
         }
-    }, [data])
+    }, [data, updateDataModel, currentFilter.source])
 
     const clickEvents = {
         card: tagClick,

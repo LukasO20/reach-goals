@@ -1,9 +1,6 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { VisibilityContext } from '../../../../../provider/VisibilityProvider'
 import { useTitle } from '../../../../../provider/TitleProvider'
-
-import { visibilityMap } from '../../../../../utils/mapping/mappingUtils'
 
 import ButtonAction from '../ButtonAction/ButtonAction'
 
@@ -12,40 +9,31 @@ import './MessageToast.scss'
 const MessageToast = () => {
     const [toastReady, setToastReady] = useState(false)
     const { title, update } = useTitle()
-    const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
 
     useEffect(() => {
-        const isVisible = visibleElements.includes('message-toast')
-
-        if (isVisible) {
-            setToastReady(true)
-
+        if (toastReady) {
             const timeout = setTimeout(() => {
                 const element = document.querySelector('[data-slot="message-toast"]')
                 if (element?.classList.contains('message-toast')) {
                     update({ toast: '' })
-                    toggleVisibility(visibilityMap('message-toast', { remove: true }))
                     setToastReady(false)
                 }
             }, 7500)
 
             return () => clearTimeout(timeout)
         }
-    }, [visibleElements])
+    }, [toastReady, update])
 
     useEffect(() => {
-        typeof title.toast === 'string' && title.toast !== '' && toggleVisibility(visibilityMap('message-toast', { add: true }))
+        !!title.toast && setToastReady(true)
     }, [title.toast])
 
-    const hideToast = () => {
-        setToastReady(false)
-        toggleVisibility(visibilityMap('message-toast', { remove: true }))
-    }
+    const hideToast = () => setToastReady(false)
 
     return (
         toastReady ?
             <div className='message-toast' data-slot='message-toast'>
-                <span className='title'>{title.toast}</span> 
+                <span className='title'>{title.toast}</span>
                 <ButtonAction classBtn='button-action circle close' icon='close' onClick={hideToast} />
             </div>
             : null

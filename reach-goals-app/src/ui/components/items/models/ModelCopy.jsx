@@ -6,21 +6,16 @@ import { removeFromTransportModelMap } from '../../../../utils/mapping/mappingUt
 
 import CardMini from '../elements/CardMini/CardMini.jsx'
 
-const ModelCopy = ({ displayRef, region }) => {
+const ModelCopy = ({ propsReference, region }) => {
     const [modelCopy, setCopyModel] = useState([])
     const { model, removeFromTransportModel, updateFormModel } = useContext(ManageModelContext)
 
-    const display = displayRef ?? {
-        type: ['card-mini'],
-        actions: []
-    }
-
     useEffect(() => {
         setCopyModel(model.transportModel[region] || [])
-    }, [model.transportModel])
+    }, [model.transportModel, setCopyModel, region])
 
     const removeElDOMClick = ({ id, tagID }, type) => {
-        const dataRemoveFromTransportModel = removeFromTransportModelMap(id ?? tagID, type)
+        const dataRemoveFromTransportModel = removeFromTransportModelMap({ id: id ?? tagID, type })
         removeFromTransportModel(dataRemoveFromTransportModel)
 
         if (!type) { return console.error('No type provided for model copy delete action. Send a goal, assignment or tag type') }
@@ -42,7 +37,7 @@ const ModelCopy = ({ displayRef, region }) => {
         aux: removeElDOMClick
     }
 
-    return <CardMini type={region} model={modelCopy} clickFunction={clickEvents} display={display} />
+    return <CardMini type={region} model={modelCopy} clickFunction={clickEvents} {...propsReference} />
 }
 
 export default ModelCopy

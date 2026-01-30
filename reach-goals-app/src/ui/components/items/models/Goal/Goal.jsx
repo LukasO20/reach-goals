@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 import { useGoalProvider } from '../../../../../provider/model/GoalModelProvider.jsx'
@@ -18,8 +18,6 @@ import moment from 'moment'
 import '../Goal/Goal.scss'
 
 const Goal = ({ status, display, sourceForm, selectableModel = false, detailsModel = false }) => {
-    const [erro, setErro] = useState(false)
-
     const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
     const { toggleVisibility } = useContext(VisibilityContext)
     const { updateSwitchLayout } = useSwitchLayout()
@@ -53,7 +51,7 @@ const Goal = ({ status, display, sourceForm, selectableModel = false, detailsMod
 
     const editGoal = (id) => {
         try { setModel(prev => ({ ...prev, mainModelID: id, typeModel: 'goal' })) }
-        catch (error) { setErro(`Failed to edit this goal: ${error}`) }
+        catch (error) { console.error(`Failed to edit this goal: ${error}`) }
     }
 
     const goalClick = (goal, e) => {
@@ -61,8 +59,13 @@ const Goal = ({ status, display, sourceForm, selectableModel = false, detailsMod
 
         if (selectableModel) {
             const selected = baseData.find(m => m.id === goal.id)
-            const dataUpdateFormModelMap = updateFormModelMap('goalID', { id: goal.id })
-            const dataAddToTransportModel = addToTransportModelMap(selected.id, selected.name, 'goal', null, { end: moment(selected.end).format('MMMM DD') })
+            const dataUpdateFormModelMap = updateFormModelMap({ keyObject: 'goalID', value: goal.id, action: 'add' })
+            const dataAddToTransportModel = addToTransportModelMap({
+                id: selected.id,
+                name: selected.name,
+                type: 'goal',
+                custom: { end: moment(selected.end).format('MMMM DD') }
+            })
 
             if (model.transportModel.goal.length > 0) return
 
@@ -84,7 +87,11 @@ const Goal = ({ status, display, sourceForm, selectableModel = false, detailsMod
         const currentData = currentScope === 'page' ? dataPage : dataPanel
 
         if ((currentFilter.source === 'core' || currentFilter.source === 'support') && Array.isArray(currentData)) {
-            const dataUpdateDataModel = updateDataModelMap(currentData, 'goal', currentFilter.source)
+            const dataUpdateDataModel = updateDataModelMap({
+                data: currentData,
+                type: 'goal',
+                scope: currentFilter.source
+            })
             updateDataModel(dataUpdateDataModel)
         }
     }, [dataPage, dataPanel, updateDataModel, currentScope, currentFilter.source])

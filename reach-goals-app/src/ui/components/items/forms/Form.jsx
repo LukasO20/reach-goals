@@ -22,18 +22,9 @@ const Form = ({ typeForm, functionFormMap, model: modelForm, booleanFormMap, pen
     const { visibleElements } = useContext(VisibilityContext)
     const { model, setModel } = useContext(ManageModelContext)
 
+    const modelCopyRegion = typeForm === 'goal' ? 'assignment' : ''
     const icon = iconMap[typeForm] || 'fa-solid fa-triangle-exclamation'
-
-    const modelCopyRelation = typeForm === 'goal' ? 'assignment' : ''
-    const isGoalForm = typeForm === 'goal'
-
-    const modelSwitcherBy = {
-        sourceForm: modelForm,
-        display: {
-            type: ['card-mini'],
-            actions: ['remove']
-        }
-    }
+    const display = { type: ['card-mini'], actions: ['remove'] }
 
     const titleDropdownStatus = modelForm.status ?
         <>
@@ -54,6 +45,10 @@ const Form = ({ typeForm, functionFormMap, model: modelForm, booleanFormMap, pen
         assignment: 'notGoalRelation',
         tag: 'tagSomeID'
     }
+    const modelSwitcherBy = { sourceForm: modelForm, display }
+    const modelCopyBy = { display }
+
+    const isGoalForm = typeForm === 'goal'
 
     switch (typeForm) {
         case 'tag':
@@ -150,7 +145,7 @@ const Form = ({ typeForm, functionFormMap, model: modelForm, booleanFormMap, pen
                                             typeof modelForm.id === 'number' ?
                                                 <ModelSwitcher type='tag' propsReference={modelSwitcherBy} />
                                                 :
-                                                <ModelCopy type={model.typeModel} region='tag' />
+                                                <ModelCopy type={model.typeModel} region='tag' propsReference={modelCopyBy} />
                                         }
                                     </>
                                 )
@@ -162,7 +157,7 @@ const Form = ({ typeForm, functionFormMap, model: modelForm, booleanFormMap, pen
                                             typeof modelForm.id === 'number' && isGoalForm ?
                                                 <ModelSwitcher type='assignment' propsReference={modelSwitcherBy} />
                                                 :
-                                                <ModelCopy type={model.typeModel} region={modelCopyRelation} />
+                                                <ModelCopy type={model.typeModel} region={modelCopyRegion} propsReference={modelCopyBy} />
                                         }
                                     </>
                                 )

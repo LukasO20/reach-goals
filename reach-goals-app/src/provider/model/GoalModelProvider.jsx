@@ -14,6 +14,9 @@ export const GoalModelProvider = ({ children, filters = {} }) => {
   const queryClient = useQueryClient()
   const { update } = useTitle()
 
+  const queryKeyPage = ['goals', 'page', filters.page]
+  const queryKeyModal = ['goal', 'modal', filters.modal]
+
   const createQueryFn = (scopeFilter) => {
     const valid = validFilter(scopeFilter)
     if (!valid) return () => Promise.resolve([])
@@ -27,7 +30,7 @@ export const GoalModelProvider = ({ children, filters = {} }) => {
     error: pageError,
     isLoading: isPageLoading,
   } = useQuery({
-    queryKey: ['goals', 'page', filters.page],
+    queryKey: queryKeyPage,
     queryFn: createQueryFn(filters.page),
     enabled: !!validFilter(filters.page),
   })
@@ -37,12 +40,10 @@ export const GoalModelProvider = ({ children, filters = {} }) => {
     error: modalError,
     isLoading: isModalLoading,
   } = useQuery({
-    queryKey: ['goal', 'modal', filters.modal],
+    queryKey: queryKeyModal,
     queryFn: createQueryFn(filters.modal),
     enabled: !!validFilter(filters.modal),
   })
-
-  const queryKeyPage = ['goals', 'page', filters.page]
 
   const saveMutation = useMutation({
     mutationFn: (model) =>
@@ -51,14 +52,15 @@ export const GoalModelProvider = ({ children, filters = {} }) => {
         : goalService.addGoal(model),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeyPage })
-    },
+      update({ toast: `Goal save with success` })
+    }
   })
 
   const removeMutation = useMutation({
     mutationFn: (id) => goalService.deleteGoal(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeyPage })
-      update({ toast: `goal was deleted` })
+      update({ toast: `Goal was deleted` })
     },
   })
 

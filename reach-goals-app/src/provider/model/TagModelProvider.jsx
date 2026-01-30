@@ -14,6 +14,9 @@ export const TagModelProvider = ({ children, filters = {} }) => {
     const queryClient = useQueryClient()
     const { update } = useTitle()
 
+    const queryKeyPage = ['tags', 'page', filters.page]
+    const queryKeyModal = ['tags', 'modal', filters.modal]
+
     const createQueryFn = (scopeFilter) => {
         const valid = validFilter(scopeFilter)
         if (!valid) return () => Promise.resolve([])
@@ -27,7 +30,7 @@ export const TagModelProvider = ({ children, filters = {} }) => {
         error: pageError,
         isLoading: isPageLoading,
     } = useQuery({
-        queryKey: ['tags', 'page', filters.page],
+        queryKey: queryKeyPage,
         queryFn: createQueryFn(filters.page),
         enabled: !!validFilter(filters.page),
     })
@@ -37,12 +40,10 @@ export const TagModelProvider = ({ children, filters = {} }) => {
         error: modalError,
         isLoading: isModalLoading,
     } = useQuery({
-        queryKey: ['tags', 'modal', filters.modal],
+        queryKey: queryKeyModal,
         queryFn: createQueryFn(filters.modal),
         enabled: !!validFilter(filters.modal),
     })
-
-    const queryKeyModal = ['tags', 'modal', filters.modal]
 
     const saveMutation = useMutation({
         mutationFn: (model) =>
@@ -51,6 +52,7 @@ export const TagModelProvider = ({ children, filters = {} }) => {
                 : tagService.addTag(model),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeyModal })
+            update({ toast: `Tag save with success` })
         },
     })
 
@@ -58,7 +60,7 @@ export const TagModelProvider = ({ children, filters = {} }) => {
         mutationFn: (id) => tagService.deleteTag(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeyModal })
-            update({ toast: `tag was deleted` })
+            update({ toast: `Tag was deleted` })
         },
     })
 

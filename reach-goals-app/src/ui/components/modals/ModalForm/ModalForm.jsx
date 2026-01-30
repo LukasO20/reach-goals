@@ -32,6 +32,15 @@ const ModalForm = () => {
 
     const typeVisibility = visibleElements[1]
 
+    const isLoading = !!loadingGoal || !!loadingAssigment
+    const isSaving = !!savingGoal || !!savingAssignment || !!savingTag
+    const isModalModelList = visibleElements.some(
+        classItem => classItem === 'modal-model-list-goal' ||
+            classItem === 'modal-model-list-assignment' ||
+            classItem === 'modal-model-list-tag')
+
+    const isSaveSuccess = !!saveGoalSuccess || !!saveAssignmentSuccess || !!saveTagSuccess
+
     const loadModel = useCallback((id) => {
         if (!id) return
 
@@ -46,8 +55,8 @@ const ModalForm = () => {
         if (isValidParameters) return
 
         try {
-            const dataFilter = updateFilterModelMap(filterGetModel, typeVisibility, 'modal')
-            
+            const dataFilter = updateFilterModelMap({ filter: filterGetModel, model: typeVisibility, scope: 'modal' })
+
             const refetchMap = {
                 goal: () => updateFilterModel(dataFilter),
                 assignment: () => updateFilterModel(dataFilter),
@@ -117,17 +126,12 @@ const ModalForm = () => {
             typeVisibility === 'goal' && await saveGoal(structuredClone(model.formModel))
             typeVisibility === 'assignment' && await saveAssignment(structuredClone(model.formModel))
             typeVisibility === 'tag' && await saveTag(structuredClone(model.formModel))
+
         } catch (exception) {
             setError(exception.message)
             update({ toast: "Ops something went wrong during save. Reload page and try again later." })
             console.error(`Error during save: ${error}`)
         }
-    }
-
-    const getToastMessage = () => {
-        const messageToastSupport = typeof model.formModel.id === 'number' ? 'updated' : 'created'
-        const type = saveGoalSuccess ? 'Goal' : saveAssignmentSuccess ? 'Assignment' : 'Tag'
-        return `${type} ${messageToastSupport} with success`
     }
 
     const functionFormMap = {
@@ -147,15 +151,11 @@ const ModalForm = () => {
     }, [model.mainModelID, loadModel])
 
     useEffect(() => {
-        if (saveGoalSuccess || saveAssignmentSuccess || saveTagSuccess) {
-            update({ toast: getToastMessage() })
-
-            if (!isSaving) {
-                const visibilityTag = typeVisibility === 'tag' ? visibilityMap('near-modalForm', { remove: true }) : null
-                toggleVisibility(visibilityTag)
-            }
+        if (isSaveSuccess) {
+            const visibilityTag = typeVisibility === 'tag' ? visibilityMap('near-modalForm', { remove: true }) : visibilityMap(null)
+            toggleVisibility(visibilityTag)
         }
-    }, [saveGoalSuccess, saveAssignmentSuccess, saveTagSuccess])
+    }, [isSaveSuccess, toggleVisibility, typeVisibility])
 
     useEffect(() => {
         const currentScope = model.filter[typeVisibility]?.scope
@@ -178,13 +178,6 @@ const ModalForm = () => {
             }
         }
     }, [dataGoal, dataAssignment, model.filter, model.mainModelID, typeVisibility, setModel])
-
-    const isLoading = !!loadingGoal || !!loadingAssigment
-    const isSaving = !!savingGoal || !!savingAssignment || !!savingTag
-    const isModalModelList = visibleElements.some(
-        classItem => classItem === 'modal-model-list-goal' ||
-            classItem === 'modal-model-list-assignment' ||
-            classItem === 'modal-model-list-tag')
 
     return (
         isLoading && !isModalModelList ? (

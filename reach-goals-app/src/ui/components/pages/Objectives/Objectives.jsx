@@ -55,8 +55,8 @@ const Objectives = () => {
                 assignmentSomeID: 'all', type: 'assignment', source: 'core'
             }, 'assignment', 'core')
 
-            const dataUpdateFilterModelGoal = updateFilterModelMap(filterGoal, 'goal', 'page')
-            const dataUpdateFilterModelAssignment = updateFilterModelMap(filterAssignment, 'assignment', 'page')
+            const dataUpdateFilterModelGoal = updateFilterModelMap({ filter: filterGoal, model: 'goal', scope: 'page' })
+            const dataUpdateFilterModelAssignment = updateFilterModelMap({ filter: filterAssignment, model: 'assignment', scope: 'page' })
 
             updateFilterModel(dataUpdateFilterModelGoal)
             updateFilterModel(dataUpdateFilterModelAssignment)

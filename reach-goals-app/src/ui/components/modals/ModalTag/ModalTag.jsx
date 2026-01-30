@@ -32,7 +32,7 @@ const ModalTag = () => {
         const filter = filterBuildModelMap({
             tagSomeID: 'all', type: 'tag', source: 'core'
         }, 'tag', 'core')
-        const dataFilter = updateFilterModelMap(filter, 'tag', 'modal')
+        const dataFilter = updateFilterModelMap({ filter, model: 'tag', scope: 'modal' })
         
         updateFilterModel(dataFilter)
     }, [updateFilterModel])

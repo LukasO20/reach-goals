@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 import { useAssignmentProvider } from '../../../../../provider/model/AssignmentModelProvider.jsx'
@@ -16,8 +16,6 @@ import PropTypes from 'prop-types'
 import '../Assignment/Assignment.scss'
 
 const Assignment = ({ status, display, sourceForm, selectableModel = false, detailsModel = false }) => {
-    const [erro, setErro] = useState(false)
-
     const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
     const { toggleVisibility } = useContext(VisibilityContext)
     const { updateSwitchLayout } = useSwitchLayout()
@@ -30,7 +28,7 @@ const Assignment = ({ status, display, sourceForm, selectableModel = false, deta
     const baseData =
         sourceForm?.assignments ??
         model.dataModel.assignment[currentFilter.source]?.data ??
-        dataPage ?? 
+        dataPage ??
         []
 
     const renderCard = baseData.filter(item =>
@@ -40,7 +38,7 @@ const Assignment = ({ status, display, sourceForm, selectableModel = false, deta
 
     const renderCardMini = baseData.filter(item =>
         !(removeSuccess && removingVariables && item.id === removingVariables)
-    ) 
+    )
 
     const pendingState = {
         removing: removing,
@@ -51,7 +49,7 @@ const Assignment = ({ status, display, sourceForm, selectableModel = false, deta
 
     const editAssignment = (id) => {
         try { setModel(prev => ({ ...prev, mainModelID: id, typeModel: 'assignment' })) }
-        catch (error) { setErro(`Failed to edit this assignment: ${error}`) }
+        catch (error) { console.error(`Failed to edit this assignment: ${error}`) }
     }
 
     const assignmentClick = (assignment, e) => {
@@ -59,8 +57,17 @@ const Assignment = ({ status, display, sourceForm, selectableModel = false, deta
 
         if (selectableModel) {
             const selected = model.dataModel.assignment.support.data.find(m => m.id === assignment.id)
-            const dataUpdateFormModel = updateFormModelMap('assignments', { id: assignment.id, name: assignment.name }, 'array')
-            const dataAddToTransportModel = addToTransportModelMap(selected.id, selected.name, 'assignment', null)
+            const dataUpdateFormModel = updateFormModelMap({
+                keyObject: 'assignments',
+                value: { id: assignment.id, name: assignment.name },
+                action: 'add',
+                type: 'array'
+            })
+            const dataAddToTransportModel = addToTransportModelMap({
+                id: selected.id,
+                name: selected.name,
+                type: 'assignment'
+            })
 
             addToTransportModel(dataAddToTransportModel)
             return updateFormModel(dataUpdateFormModel)
@@ -86,7 +93,11 @@ const Assignment = ({ status, display, sourceForm, selectableModel = false, deta
         const currentData = currentScope === 'page' ? dataPage : dataPanel
 
         if ((currentFilter.source === 'core' || currentFilter.source === 'support') && Array.isArray(currentData)) {
-            const dataUpdateDataModel = updateDataModelMap(currentData, 'assignment', currentFilter.source)
+            const dataUpdateDataModel = updateDataModelMap({
+                data: currentData,
+                type: 'assignment',
+                scope: currentFilter.source
+            })
             updateDataModel(dataUpdateDataModel)
         }
     }, [dataPage, dataPanel, currentFilter.source, currentScope, updateDataModel])

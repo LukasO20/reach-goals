@@ -1,4 +1,4 @@
-import { useState, createContext,useCallback, useMemo } from 'react'
+import { useState, createContext, useCallback, useMemo } from 'react'
 
 const VisibilityContext = createContext()
 
@@ -12,47 +12,29 @@ const VisibilityProvider = ({ children }) => {
         })
     }
 
-    const updateVisibility = useCallback(({ class: classTarget, operator }) => {
-        setSafeVisibleElement((prev) => {
-            const classType = Array.isArray(classTarget)
+    const updateVisibility = useCallback((prev = [], { class: classTarget, operator }) => {
+        const classType = Array.isArray(classTarget)
 
-            if (classType) {
-                let filter = [...prev]
-
-                if (operator.add) {
-                    filter = filter.slice(0, 2)
-                    filter.push(...classTarget)
-                    return filter
-                }
-
-                if (operator.remove) {
-                    if (classTarget) {
-                        filter = filter.filter(classPrevious => classTarget.some(el => el !== classPrevious))
-                    }
-
-                    filter.pop()
-                    return filter
-                }
-
-                return classTarget
+        if (classType) {
+            if (operator.add) return [...prev.slice(0, 2), ...classTarget]
+            if (operator.remove) {
+                const filtered = prev.filter(c => !classTarget.includes(c))
+                return filtered.slice(0, -1)
             }
-        })
+
+            return classTarget
+        }
     }, [])
 
-    const removeVisibility = useCallback(({ class: classTarget, operator }) => {
-        setSafeVisibleElement((prev) => {
-            const classType = Array.isArray(classTarget)
-            if (classType) {
-                if (operator.maintain) {
-                    return classTarget
-                }
-
-                return prev.filter(classPrevious => classTarget.some(el => el !== classPrevious))
-            }
-        })
+    const removeVisibility = useCallback((prev = [], { class: classTarget, operator }) => {
+        const classType = Array.isArray(classTarget)
+        if (classType) {
+            if (operator.maintain) return classTarget
+            return prev.filter(classPrevious => classTarget.some(el => el !== classPrevious))
+        }
     }, [])
 
-    const toggleVisibility = useCallback(({ class: classTarget, operator }, event) => {
+    const toggleVisibility = useCallback(({ class: classTarget, operator } = {}, event) => {
         event?.stopPropagation()
         const parameterTarget = {
             class: classTarget ?? null,
@@ -62,13 +44,14 @@ const VisibilityProvider = ({ children }) => {
                 maintain: operator?.maintain ?? false
             }
         }
-        const isVisible = visibleElements.some(classes => {
-            const isArrayClass = Array.isArray(parameterTarget.class)
 
-            return isArrayClass ? parameterTarget.class.includes(classes) : false
+        setSafeVisibleElement((prev) => {
+            const isArrayClass = Array.isArray(parameterTarget.class)
+            const isVisible = isArrayClass ? parameterTarget.class.some(c => prev.includes(c)) : false
+            return isVisible ? removeVisibility(prev, parameterTarget) : updateVisibility(prev, parameterTarget)
         })
-        isVisible ? removeVisibility(parameterTarget) : updateVisibility(parameterTarget)
-    }, [visibleElements, updateVisibility, removeVisibility])
+
+    }, [updateVisibility, removeVisibility])
 
     const value = useMemo(() => ({ toggleVisibility, visibleElements }), [toggleVisibility, visibleElements])
     //console.log('VISIBLES - ', visibleElements)

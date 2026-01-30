@@ -23,7 +23,7 @@ const ModelTabs = ({ type, children, loading }) => {
 
     const handleFilterUpdate = (filterObject, type, scope) => {
         if (!filterObject || !type || !scope) return console.error('To update the filter model is necessary a filterObject, type and scope')
-        return updateFilterModelMap(filterObject, type, scope)   
+        return updateFilterModelMap({ filter: filterObject, model: type, scope })   
     }
 
     const filterButtonActive = currentFilterData[type] ?

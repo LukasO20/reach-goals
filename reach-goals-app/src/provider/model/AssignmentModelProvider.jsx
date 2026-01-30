@@ -14,6 +14,9 @@ export const AssignmentModelProvider = ({ children, filters = {} }) => {
     const queryClient = useQueryClient()
     const { update } = useTitle()
 
+    const queryKeyPage = ['assignments', 'page', filters.page]
+    const queryKeyModal = ['assignment', 'modal', filters.modal]
+
     const createQueryFn = (scopeFilter) => {
         const valid = validFilter(scopeFilter)
         if (!valid) return () => Promise.resolve([])
@@ -27,7 +30,7 @@ export const AssignmentModelProvider = ({ children, filters = {} }) => {
         error: pageError,
         isLoading: isPageLoading,
     } = useQuery({
-        queryKey: ['assignments', 'page', filters.page],
+        queryKey: queryKeyPage,
         queryFn: createQueryFn(filters.page),
         enabled: !!validFilter(filters.page),
     })
@@ -37,12 +40,10 @@ export const AssignmentModelProvider = ({ children, filters = {} }) => {
         error: modalError,
         isLoading: isModalLoading,
     } = useQuery({
-        queryKey: ['assignment', 'modal', filters.modal],
+        queryKey: queryKeyModal,
         queryFn: createQueryFn(filters.modal),
         enabled: !!validFilter(filters.modal),
     })
-
-    const queryKeyPage = ['assignments', 'page', filters.page]
 
     const saveMutation = useMutation({
         mutationFn: (model) =>
@@ -51,6 +52,7 @@ export const AssignmentModelProvider = ({ children, filters = {} }) => {
                 : assignmentService.addAssignment(model),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeyPage })
+            update({ toast: `Assignment save with success` })
         },
     })
 
@@ -58,7 +60,7 @@ export const AssignmentModelProvider = ({ children, filters = {} }) => {
         mutationFn: (id) => assignmentService.deleteAssignment(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeyPage })
-            update({ toast: `assignment was deleted` })
+            update({ toast: `Assignment was deleted` })
         },
     })
 
