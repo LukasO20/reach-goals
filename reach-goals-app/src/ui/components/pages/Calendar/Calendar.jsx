@@ -60,7 +60,7 @@ const Calendar = () => {
     }, [dataGoal, dataAssignment, layout.page.layoutName])
 
     const isLoading = !!loadingGoal || !!loadingAssignment
-    const isValidData = Array.isArray(dataModelSource.goal) && Array.isArray(dataModelSource.assignment)
+    const isValidData = Array.isArray(dataModelSource.goal) || Array.isArray(dataModelSource.assignment)
 
     return (
         <>

@@ -17,7 +17,7 @@ import './MonthDaysPicker.scss'
 const MonthDaysPicker = ({ data }) => {
     const { setModel } = useContext(ManageModelContext)
     const { toggleVisibility } = useContext(VisibilityContext)
-    const { updateSwitchLayout } = useSwitchLayout()
+    const { layout, updateSwitchLayout } = useSwitchLayout()
     const year = new Date().getFullYear()
     const month = new Date().getMonth()
 
@@ -50,7 +50,7 @@ const MonthDaysPicker = ({ data }) => {
 
     const activityClick = (model, e) => {
         e.stopPropagation()
-        const dataSwitchLayout = switchLayoutMap({ area: 'modal', state: { modalName: 'modal-center', layoutName: 'details' } })
+        const dataSwitchLayout = switchLayoutMap({ area: 'modal', state: { modalName: 'modal-right', layoutName: 'details' } })
 
         setModel(prev => ({ ...prev, mainModelID: model.id, formModel: model, typeModel: model.type }))
         updateSwitchLayout(dataSwitchLayout)
@@ -68,8 +68,10 @@ const MonthDaysPicker = ({ data }) => {
         card: activityClick,
     }
 
+    const typeLayout = layout.page.layoutName
+
     return (
-        <div className='calendar'>
+        <div className={`calendar ${typeLayout}`}>
             <div className='header'>
                 {
                     weekNames.map(week => {
@@ -134,8 +136,8 @@ const MonthDaysPicker = ({ data }) => {
 
 MonthDaysPicker.propTypes = {
     data: PropTypes.shape({
-        goal: PropTypes.array.isRequired,
-        assignment: PropTypes.array.isRequired
+        goal: PropTypes.array,
+        assignment: PropTypes.array
     }),
 }
 
