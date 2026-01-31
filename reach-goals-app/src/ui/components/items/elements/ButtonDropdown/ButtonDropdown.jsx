@@ -43,6 +43,7 @@ const ButtonDropdown = ({ visibility, reference, changeDropdownValue, icon, clas
 
     const typeClass = visibility.class !== undefined ? visibility.class[0] : null
     const dropdownStatus = typeClass.includes('goal-status') || typeClass.includes('assignment-status')
+    const isCreateDropdown = typeClass === 'btn-action-create'
 
     let titleDropdown = undefined
     let optionsDropdown = undefined
@@ -115,10 +116,12 @@ const ButtonDropdown = ({ visibility, reference, changeDropdownValue, icon, clas
                                     <div className={`option ${option.op}`} key={`op-${index}`}>
                                         <div className='item-option'>
                                             <div className='item-title'>
-                                                <ButtonAction onClick={dropdownActionClick} datavalue={dropdownStatus ? option.op : null}
+                                                <ButtonAction 
+                                                    onClick={dropdownActionClick} datavalue={dropdownStatus ? option.op : null}
                                                     visibility={visibilityMap(...classTargetDropdown)}
                                                     switchLayout={switchLayoutMap({ area: 'modal', state: { modalName: 'modal-center', layoutName: 'form' } })}
-                                                    classBtn={`form-${option.op} button-action plan-round ${model.formModel?.status === option.op ? 'active' : ''}`} icon={option.icon} title={`${option.title}`} type={option.op}
+                                                    classBtn={`form-${option.op} button-action plan-round ${model.formModel?.status === option.op ? 'active' : ''}`}
+                                                    icon={option.icon} title={`${option.title}`} type={option.op} nullForm={isCreateDropdown}
                                                 />
                                             </div>
                                             <div className='item-details'></div>
