@@ -133,7 +133,7 @@ const getGoalWithoutAssignment = async (assignmentID) => {
         const isAll = assignmentID === 'all'
         const isNumeric = !isNaN(assignmentID) && typeof assignmentID !== 'boolean';
 
-        if (!isAll && !isNumeric) return res.status(400).json({ error: 'Invalid assignmentID' })
+        if (!isAll && !isNumeric) return 
 
         if (isAll) {
             return await prisma.goal.findMany({

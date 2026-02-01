@@ -48,6 +48,7 @@ const handler = async (req, res) => {
         let goal = undefined
 
         try {
+            
             if (action === 'goal-get') {
                 goal = await getGoal()
 
