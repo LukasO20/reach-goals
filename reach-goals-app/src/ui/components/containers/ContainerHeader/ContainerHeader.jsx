@@ -13,6 +13,7 @@ import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import ButtonDropdown from '../../items/elements/ButtonDropdown/ButtonDropdown.jsx'
 
 import './ContainerHeader.scss'
+import SearchBar from '../../items/elements/SearchBar/SearchBar.jsx'
 
 const ContainerH = () => {
     const { title } = useTitle()
@@ -37,6 +38,9 @@ const ContainerH = () => {
                 <h1>{title.header}</h1>
             </div>
             <div className='nav'>
+                <div className='item-nav'>
+                    <SearchBar mode='service' placeholder='search an activity' />
+                </div>
                 <div className='item-nav'>
                     <ButtonAction onClick={linkTagClick} visibility={visibilityMap(['modal-right', 'tag'])}
                         switchLayout={switchLayoutMap({ area: 'modal', state: { modalName: 'modal-right', layoutName: 'tag' } })}

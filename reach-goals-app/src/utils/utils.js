@@ -48,7 +48,15 @@ const formatDate = (model) => {
 }
 
 const hasRequiredProps = (props, requiredKeys = []) => {
-  return requiredKeys.every(key => Boolean(props[key]))
+    return requiredKeys.every(key => Boolean(props[key]))
 }
 
-export { formatDate, hasRequiredProps }
+const debounce = (func, delay) => {
+    let timeout
+    return (...args) => {
+        clearTimeout(timeout)
+        timeout = setTimeout(() => func(...args), delay)
+    }
+}
+
+export { formatDate, hasRequiredProps, debounce }

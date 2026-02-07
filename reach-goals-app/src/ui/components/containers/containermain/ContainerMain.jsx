@@ -14,7 +14,6 @@ import { monthNames } from '../../../../utils/reference.js'
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import ButtonDropdown from '../../items/elements/ButtonDropdown/ButtonDropdown.jsx'
 import ButtonCheckbox from '../../items/elements/ButtonCheckbox/ButtonCheckbox.jsx'
-import SearchBar from '../../items/elements/SearchBar/SearchBar.jsx'
 
 import './ContainerMain.scss'
 
@@ -69,7 +68,6 @@ const ContainerM = () => {
                                 <span className='year-number'>{new Date().getFullYear()}</span>
                             </div>
                         }
-                        <SearchBar />
                         <ButtonAction classBtn={`button-action plan-round max-width goal ${isSwitchLayoutGoal ? 'active' : ''}`} title='goals'
                             switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'goal' } })}
                         />

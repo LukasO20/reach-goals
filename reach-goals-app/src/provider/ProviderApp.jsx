@@ -4,20 +4,22 @@ import { CheckboxProvider } from './CheckboxProvider.jsx'
 import { ManageModelProvider } from './ManageModelProvider.jsx'
 import { SwitchLayoutProvider } from './SwitchLayoutProvider.jsx'
 import { FilterModelProvider } from './model/FilterModelProvider.jsx'
+import { SearchBarProvider } from './SearchBarProvider.jsx'
 
 const ProviderApp = ({ children }) => (
     <ManageModelProvider>
         <TitleProvider>
             <VisibilityProvider>
                 <FilterModelProvider>
-                    <SwitchLayoutProvider>
+                    <SearchBarProvider>
+                        <SwitchLayoutProvider>
                             <CheckboxProvider>
                                 {children}
                             </CheckboxProvider>
-                    </SwitchLayoutProvider>
+                        </SwitchLayoutProvider>
+                    </SearchBarProvider>
                 </FilterModelProvider>
             </VisibilityProvider>
-
         </TitleProvider>
     </ManageModelProvider>
 )

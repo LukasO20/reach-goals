@@ -6,7 +6,6 @@ import { visibilityMap, iconMap } from '../../../../utils/mapping/mappingUtils.j
 
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import ModalConfigSection from '../../items/modals/ModalConfigSection/ModalConfigSection.jsx'
-import SearchBar from '../../items/elements/SearchBar/SearchBar.jsx'
 
 import './ModalConfig.scss'
 
@@ -23,9 +22,6 @@ const ModalConfig = () => {
             <div className='body'>
                 <div className='aside-config'>
                     <div className='nav-itens'>
-                        <div className='head'>
-                            <SearchBar />
-                        </div>
                         <div className='body'>
                             <ButtonAction visibility={visibilityMap('config-theme', { add: true })} 
                                 classBtn={`button-action ${typeSection === 'config-theme' ? 'active' : ''} plan config-theme`} title='themes' icon='themes'/>

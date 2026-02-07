@@ -13,9 +13,7 @@ const VisibilityProvider = ({ children }) => {
     }
 
     const updateVisibility = useCallback((prev = [], { class: classTarget, operator }) => {
-        const classType = Array.isArray(classTarget)
-
-        if (classType) {
+        if (Array.isArray(classTarget)) {
             if (operator.add) return [...prev.slice(0, 2), ...classTarget]
             if (operator.remove) {
                 const filtered = prev.filter(c => !classTarget.includes(c))
@@ -24,14 +22,15 @@ const VisibilityProvider = ({ children }) => {
 
             return classTarget
         }
+        return prev
     }, [])
 
     const removeVisibility = useCallback((prev = [], { class: classTarget, operator }) => {
-        const classType = Array.isArray(classTarget)
-        if (classType) {
+        if (Array.isArray(classTarget)) {
             if (operator.maintain) return classTarget
-            return prev.filter(classPrevious => classTarget.some(el => el !== classPrevious))
+            return prev.filter(classPrevious => !classTarget.includes(classPrevious))
         }
+        return prev
     }, [])
 
     const toggleVisibility = useCallback(({ class: classTarget, operator } = {}, event) => {

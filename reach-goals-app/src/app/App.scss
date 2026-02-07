@@ -47,19 +47,14 @@ body {
 
     .container-header {
       grid-area: container-header;
-      z-index: 0;
-
     }
 
     .container-navigate {
       grid-area: container-navigate;
-      z-index: 0;
-
     }
 
     .container-main {
       grid-area: container-main;
-      z-index: 0;
       min-height: 0;
       overflow: hidden;
     }
