@@ -18,7 +18,10 @@ const SearchBar = ({ mode = 'service', placeholder }) => {
 
     const isShowSearchBoxResults = visibleElements.includes('search-bar') && mode === 'service'
 
-    const handleSearchBarClick = () =>  toggleVisibility(visibilityMap('search-bar', isShowSearchBoxResults ? { maintain: true } : { add: true }))
+    const handleSearchBarClick = (e) =>  {
+        e.stopPropagation()
+        toggleVisibility(visibilityMap('search-bar', isShowSearchBoxResults ? { maintain: true } : { add: true }))
+    }
 
     const handleCleanSearchBar = () => { reset(); setParam('') }
 

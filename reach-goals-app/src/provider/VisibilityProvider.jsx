@@ -22,7 +22,6 @@ const VisibilityProvider = ({ children }) => {
 
             return classTarget
         }
-        return prev
     }, [])
 
     const removeVisibility = useCallback((prev = [], { class: classTarget, operator }) => {
@@ -30,7 +29,6 @@ const VisibilityProvider = ({ children }) => {
             if (operator.maintain) return classTarget
             return prev.filter(classPrevious => !classTarget.includes(classPrevious))
         }
-        return prev
     }, [])
 
     const toggleVisibility = useCallback(({ class: classTarget, operator } = {}, event) => {

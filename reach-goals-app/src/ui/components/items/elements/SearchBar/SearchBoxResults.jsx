@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import React, { useContext } from 'react'
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
@@ -54,16 +54,16 @@ const SearchBoxResults = ({ data, loading, status }) => {
                                 <label className='message'>{message}</label>
                             </div>
                         </div>) :
-                        (dataResult.map((item) => {
+                        (dataResult.map((item, i) => {
                             const type = item.type
                             const useSearchItem = type === 'assignment' || type === 'goal'
                             const useResourcesTag = type === 'tag'
 
                             return (
-                                <>
+                                <React.Fragment key={item.id}>
                                     {
                                         useSearchItem && (
-                                            <SearchItem key={item.id} type={type} item={item}
+                                            <SearchItem  type={type} item={item}
                                                 onItemClick={handleItemClick}
                                                 onButtonClick={handleEditModel}
                                             />
@@ -71,12 +71,12 @@ const SearchBoxResults = ({ data, loading, status }) => {
                                     }
                                     {
                                         useResourcesTag && (
-                                            <SearchItemTag key={item.id} type={type} item={item}
+                                            <SearchItemTag type={type} item={item}
                                                 onButtonClick={handleEditModel}
                                             />
                                         )
                                     }
-                                </>
+                                </React.Fragment>
                             )
                         }))
             }
