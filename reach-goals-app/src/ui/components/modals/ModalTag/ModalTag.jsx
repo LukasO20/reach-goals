@@ -16,12 +16,10 @@ import TagRelationCard from '../../items/models/Tag/TagRelationCard.jsx'
 
 const ModalTag = () => {
     const { visibleElements } = useContext(VisibilityContext)
-    const { setModel, updateFilterModel } = useContext(ManageModelContext)
-    const { modal: { data = [], loading: loadingTag } } = useTagProvider()    
+    const { model, setModel, updateFilterModel } = useContext(ManageModelContext)
+    const { modal: { loading } } = useTagProvider()    
     const { layout } = useSwitchLayout()
     const navigate = useNavigate()
-
-    const isModalForm = ['tag', 'near-modalForm']
 
     const handleClickButtonAction = (e) => {
         if (e) setModel(prev => ({ ...prev, typeModel: 'config' }))
@@ -37,7 +35,10 @@ const ModalTag = () => {
         updateFilterModel(dataFilter)
     }, [updateFilterModel])
 
-    const content = <TagRelationCard tagRelation={data} />
+    const content = <TagRelationCard />
+
+    const isModalForm = ['tag', 'near-modalForm']
+    const isLoadingTag = !!loading && !model.mainModelID
 
     return (
         <>
@@ -56,7 +57,7 @@ const ModalTag = () => {
             </div>
             <div className='body'>
                 {isModalForm.every(e => visibleElements.includes(e)) && <ModalForm type='tag' />}
-                <ModelTabs type='tag' children={content} loading={loadingTag} />
+                <ModelTabs type='tag' children={content} loading={isLoadingTag} />
             </div>
         </>
     )

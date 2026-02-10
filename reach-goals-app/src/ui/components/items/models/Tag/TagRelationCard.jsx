@@ -1,22 +1,43 @@
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { useTagProvider } from '../../../../../provider/model/TagModelProvider'
+import { ManageModelContext } from '../../../../../provider/ManageModelProvider'
 
-import { iconMap } from '../../../../../utils/mapping/mappingUtils'
+import { iconMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils'
+import { updateDataModelMap } from '../../../../../utils/mapping/mappingUtilsProvider'
 
 import ButtonAction from '../../elements/ButtonAction/ButtonAction'
 import Goal from '../Goal/Goal'
 import Assignment from '../Assignment/Assignment'
 
-import PropTypes from 'prop-types'
-
 import './TagRelationCard.scss'
 
 const standarOpenCard = [{ id: null, open: false }]
 
-const TagRelationCard = ({ tagRelation }) => {
+const TagRelationCard = () => {
     const [openCard, setOpenCard] = useState(standarOpenCard)
-    const { remove, removing, removeSuccess, removingVariables } = useTagProvider()
+    const { model, setModel, updateDataModel } = useContext(ManageModelContext)
+    const { modal: { data: dataPanel }, remove, removing, removeSuccess, removingVariables } = useTagProvider()
+    const currentFilter = model.filter.tag.modal
+
+    //First will be checked form source to render an goal, if not, will be render according goal filter
+    const baseData =
+        model.dataModel.tag.core.data ??
+        dataPanel ?? 
+        []
+
+    useEffect(() => {
+        const currentData = dataPanel
+
+        if (currentFilter.source === 'core' && Array.isArray(currentData)) {
+            const dataUpdateDataModel = updateDataModelMap({
+                data: currentData,
+                type: 'tag',
+                scope: currentFilter.source
+            })
+            updateDataModel(dataUpdateDataModel)
+        }
+    }, [dataPanel, updateDataModel, currentFilter.source])
 
     const handleSetOpenCard = (item) => {
         setOpenCard(prev => {
@@ -26,10 +47,15 @@ const TagRelationCard = ({ tagRelation }) => {
         })
     }
 
+    const editTag = (id) => {
+        try { setModel(prev => ({ ...prev, mainModelID: id, typeModel: 'tag' })) }
+        catch (error) { console.error(`Failed to edit this goal: ${error}`) }
+    }
+
     const deleteTag = async (id) => { remove(id) }
 
     return (
-        tagRelation
+        baseData
             .filter(tag => !(removeSuccess && removingVariables && tag.id === removingVariables))
             .map(item => {
                 const { goals = [], assignments = [] } = item
@@ -75,13 +101,14 @@ const TagRelationCard = ({ tagRelation }) => {
                                 {item.name}
                             </label>
                             <div className='side-actions'>
-                                {
-                                    (hasGoal || hasAssignment) &&
-                                    <ButtonAction classBtn='expand button-action circle small' icon='arrowdown' onClick={() => handleSetOpenCard(item)} />
-                                }
-                                {
-                                    <ButtonAction classBtn='delete button-action circle small' icon='remove' pendingState={isRemoving} onClick={() => deleteTag(item.id)} />
-                                }
+                                {(hasGoal || hasAssignment) && 
+                                    <ButtonAction classBtn='expand button-action circle small' icon='arrowdown' 
+                                    onClick={() => handleSetOpenCard(item)} />}
+                                {<ButtonAction classBtn='edit button-action circle small' icon='edit' 
+                                    onClick={() => editTag(item.id)} visibility={visibilityMap('near-modalForm', { add: true })} />}
+                                {<ButtonAction classBtn='delete button-action circle small' icon='remove' 
+                                    pendingState={isRemoving} 
+                                    onClick={() => deleteTag(item.id)} />}
                             </div>
                         </div>
                         <div className='body'>
@@ -110,32 +137,6 @@ const TagRelationCard = ({ tagRelation }) => {
                 )
             })
     )
-}
-
-TagRelationCard.propTypes = {
-    tagRelation: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.number.isRequired,
-            name: PropTypes.string.isRequired,
-            color: PropTypes.string.isRequired,
-            assignments: PropTypes.arrayOf(
-                PropTypes.shape({
-                    assignment: PropTypes.shape({
-                        name: PropTypes.string.isRequired,
-                        status: PropTypes.string.isRequired
-                    }),
-                })
-            ),
-            goals: PropTypes.arrayOf(
-                PropTypes.shape({
-                    goal: PropTypes.shape({
-                        name: PropTypes.string.isRequired,
-                        status: PropTypes.string.isRequired
-                    }),
-                })
-            )
-        })
-    ).isRequired
 }
 
 export default TagRelationCard

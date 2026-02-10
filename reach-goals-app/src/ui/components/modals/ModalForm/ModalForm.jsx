@@ -24,7 +24,7 @@ const modelRelationAddMap = (type, children) => {
 const ModalForm = () => {
     const { modal: { data: dataAssignment, loading: loadingAssigment }, save: saveAssignment, saveSuccess: saveAssignmentSuccess, saving: savingAssignment } = useAssignmentProvider()
     const { modal: { data: dataGoal, loading: loadingGoal }, save: saveGoal, saveSuccess: saveGoalSuccess, saving: savingGoal } = useGoalProvider()
-    const { save: saveTag, saveSuccess: saveTagSuccess, saving: savingTag } = useTagProvider()
+    const { modal: { data: dataTag }, loading: loadingTag, save: saveTag, saveSuccess: saveTagSuccess, saving: savingTag } = useTagProvider()
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateFilterModel, resetManageModel } = useContext(ManageModelContext)
     const { update } = useTitle()
@@ -32,7 +32,7 @@ const ModalForm = () => {
 
     const typeVisibility = visibleElements[1]
 
-    const isLoading = !!loadingGoal || !!loadingAssigment
+    const isLoading = !!loadingGoal || !!loadingAssigment || !!loadingTag
     const isSaving = !!savingGoal || !!savingAssignment || !!savingTag
     const isModalModelList = visibleElements.some(
         classItem => classItem === 'modal-model-list-goal' ||
@@ -167,7 +167,9 @@ const ModalForm = () => {
                 typeVisibility === 'goal' ?
                     dataGoal :
                     typeVisibility === 'assignment' ?
-                        dataAssignment : null
+                        dataAssignment :
+                        typeVisibility === 'tag' ?
+                            dataTag : null
 
             const selectedFormModel = Array.isArray(typeSelected) ? typeSelected[0] : typeSelected
             if (selectedFormModel && Object.keys(selectedFormModel).length) {
@@ -177,7 +179,13 @@ const ModalForm = () => {
                 }))
             }
         }
-    }, [dataGoal, dataAssignment, model.filter, model.mainModelID, typeVisibility, setModel])
+    }, [dataGoal,
+        dataAssignment,
+        dataTag,
+        model.filter,
+        model.mainModelID,
+        typeVisibility,
+        setModel])
 
     return (
         isLoading && !isModalModelList ? (

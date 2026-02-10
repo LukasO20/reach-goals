@@ -56,12 +56,12 @@
                     }
 
                     /* DOUBLE APPLY */
-                    >label, 
+                    >label,
                     >div {
                         width: 100%;
                     }
 
-                    .input-form, 
+                    .input-form,
                     .button-dropdown-form {
                         width: 100%;
                     }
@@ -183,6 +183,55 @@
 
                             .icon-st {
                                 height: 1rem;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.tag {
+
+        >.body {
+
+            form {
+
+                >.fields {
+                    grid-template-columns: none;
+                    grid-template-rows: repeat(2, 1fr);
+
+                    .field-forms {
+
+                        &.color {
+
+                            .field-form-info {
+                                display: flex;
+                                align-items: center;
+                                gap: 0.5rem;
+                                background-color: $color-complementary-p;
+                                height: 2.4rem;
+                                box-sizing: border-box;
+                                padding: 0rem 0.66rem;
+                                border-radius: 0.5rem;
+                                border: 3px solid transparent;
+
+                                input {
+                                    border-radius: 100%;
+                                    width: 1.75rem;
+                                    border: 3px solid;
+                                    font-weight: 500;
+                                    transition: .3s ease-in-out;
+                                    cursor: pointer;
+                                }
+
+                                >span {
+                                    padding: 0.25rem 1rem;
+                                    border-radius: 0.5rem;
+                                    font-weight: 500;
+                                    font-size: 0.9rem;
+                                    background-color: $color-white-70;
+                                }
                             }
                         }
                     }
