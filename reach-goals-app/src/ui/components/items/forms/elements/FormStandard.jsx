@@ -12,15 +12,20 @@ import InputText from '../../elements/InputText/InputText.jsx'
 import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
 import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
 
-import { visibilityMap, iconMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { visibilityMap, iconMap,  } from '../../../../../utils/mapping/mappingUtils.js'
 
 import PropTypes from 'prop-types'
 
 import '../Form.scss'
 
-const FormStandard = ({ type, functionFormMap, model: modelForm, booleanFormMap, pendingState }) => {
-    const { visibleElements } = useContext(VisibilityContext)
+const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState }) => {
+    const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel } = useContext(ManageModelContext)
+
+    const handleClickForm = () => {
+        const isButtonDropdown = !!visibleElements.includes(`${type}-status`)
+        isButtonDropdown && toggleVisibility(visibilityMap(`${type}-status`, { remove: true }))
+    }
 
     const modelCopyRegion = type === 'goal' ? 'assignment' : ''
     const icon = iconMap[type] || 'fa-solid fa-triangle-exclamation'
@@ -51,7 +56,7 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, booleanFormMap,
     const isGoalForm = type === 'goal'
 
     return (
-        <div className='container-form-modal center-content' onClick={(e) => functionFormMap.mapToggleVisibility(visibilityMap(booleanFormMap.mapClassRemove), e)}>
+        <div className='container-form-modal center-content' onClick={handleClickForm}>
             <div className='head'>
                 <div className='objective-icon'>
                     {icon}

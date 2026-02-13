@@ -16,20 +16,17 @@ const ModalSwitcherCenter = () => {
     const typeModalLayout = layout.modal.layoutName
     const typeVisibility = visibleElements[1]
 
-    const renderModal = (type) => {
-        if (!typeof type === 'string') return console.error('Invalid type for renderModal')
-
-        if (type === 'form') {
-            return <ModalForm />
-        } else if (type === 'config') {
-            return <ModalConfig />
-        }
-    }
+    const isVisible = !!typeModalLayout && !!typeVisibility && showModalCenter === 'show'
+    const isModalForm = typeModalLayout === 'form'
+    const isModalConfig = typeModalLayout === 'config'
 
     return (
-        <div className={`container-modal modal-center ${typeModalLayout} ${typeVisibility} ${showModalCenter}`}>
-            {renderModal(typeModalLayout)}
-        </div>
+        isVisible && (
+            <div className={`container-modal modal-center ${typeModalLayout} ${typeVisibility} ${showModalCenter}`}>
+                {isModalForm && (<ModalForm />)}
+                {isModalConfig && (<ModalConfig />)}
+            </div>
+        )
     )
 }
 

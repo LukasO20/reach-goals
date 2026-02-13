@@ -83,6 +83,7 @@ export const TagModelProvider = ({ children, filters = {} }) => {
             removeSuccess: removeMutation.isSuccess,
             removing: removeMutation.isPending,
             removingVariables: removeMutation.variables,
+            resetSave: saveMutation.reset
         }}>
             {children}
         </TagModelContext.Provider>

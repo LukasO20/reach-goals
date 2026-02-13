@@ -83,6 +83,7 @@ export const GoalModelProvider = ({ children, filters = {} }) => {
       removeSuccess: removeMutation.isSuccess,
       removing: removeMutation.isPending,
       removingVariables: removeMutation.variables,
+      resetSave: saveMutation.reset
     }}>
       {children}
     </GoalModelContext.Provider>

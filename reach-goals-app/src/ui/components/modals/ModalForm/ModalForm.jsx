@@ -9,7 +9,7 @@ import { useTagProvider } from '../../../../provider/model/TagModelProvider.jsx'
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
 
 import { visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
-import { updateFilterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
+import { updateFilterModelMap, resetManageModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
 import Form from '../../items/forms/Form.jsx'
 import Loading from '../../items/elements/Loading/Loading.jsx'
@@ -22,9 +22,9 @@ const modelRelationAddMap = (type, children) => {
 }
 
 const ModalForm = () => {
-    const { modal: { data: dataAssignment, loading: loadingAssigment }, save: saveAssignment, saveSuccess: saveAssignmentSuccess, saving: savingAssignment } = useAssignmentProvider()
-    const { modal: { data: dataGoal, loading: loadingGoal }, save: saveGoal, saveSuccess: saveGoalSuccess, saving: savingGoal } = useGoalProvider()
-    const { modal: { data: dataTag }, loading: loadingTag, save: saveTag, saveSuccess: saveTagSuccess, saving: savingTag } = useTagProvider()
+    const { modal: { data: dataAssignment, loading: loadingAssigment }, save: saveAssignment, saveSuccess: saveAssignmentSuccess, saving: savingAssignment, resetSave: resetSaveAssignment } = useAssignmentProvider()
+    const { modal: { data: dataGoal, loading: loadingGoal }, save: saveGoal, saveSuccess: saveGoalSuccess, saving: savingGoal, resetSave: resetSaveGoal } = useGoalProvider()
+    const { modal: { data: dataTag }, loading: loadingTag, save: saveTag, saveSuccess: saveTagSuccess, saving: savingTag, resetSave: resetSaveTag } = useTagProvider()
     const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
     const { model, setModel, updateFilterModel, resetManageModel } = useContext(ManageModelContext)
     const { update } = useTitle()
@@ -71,6 +71,15 @@ const ModalForm = () => {
             setError('Ops, something wrong: ', error)
         }
     }, [resetManageModel, typeVisibility, updateFilterModel])
+
+    const resetMutation = useCallback(() => {
+        const resetSaveMap = {
+            goal: () => resetSaveGoal(),
+            assignment: () => resetSaveAssignment(),
+            tag: () => resetSaveTag(),
+        }
+        resetSaveMap[typeVisibility]()
+    }, [resetSaveGoal, resetSaveAssignment, resetSaveTag, typeVisibility])
 
     const handleChange = (e) => {
         const { name, value } = e.target || e
@@ -142,20 +151,22 @@ const ModalForm = () => {
         mapSetError: setError
     }
 
-    const booleanFormMap = {
-        mapClassRemove: visibleElements.length > 2 ? visibleElements.slice(2) : visibleElements.slice(0, 2)
-    }
-
     useEffect(() => {
         if (typeof model.mainModelID === 'number') loadModel(model.mainModelID)
     }, [model.mainModelID, loadModel])
 
     useEffect(() => {
         if (isSaveSuccess) {
-            const visibilityTag = typeVisibility === 'tag' ? visibilityMap('near-modalForm', { remove: true }) : visibilityMap(null)
-            toggleVisibility(visibilityTag)
+            const visibility = typeVisibility === 'tag'
+                ? visibilityMap('near-modalForm', { remove: true })
+                : visibilityMap(['modal-center', typeVisibility], { remove: true })
+
+            toggleVisibility(visibility)
+            const resetKeys = resetManageModelMap(['formModel', 'mainModelID', 'typeModel'])
+            resetManageModel(resetKeys)
+            resetMutation()
         }
-    }, [isSaveSuccess, toggleVisibility, typeVisibility])
+    }, [isSaveSuccess, toggleVisibility, typeVisibility, resetManageModel, resetMutation])
 
     useEffect(() => {
         const currentScope = model.filter[typeVisibility]?.scope
@@ -189,13 +200,12 @@ const ModalForm = () => {
 
     return (
         isLoading && !isModalModelList ? (
-            <Loading mode="block" />
+            <Loading mode='block' />
         ) : (
             <Form
                 typeForm={typeVisibility}
                 functionFormMap={functionFormMap}
                 model={model.formModel}
-                booleanFormMap={booleanFormMap}
                 pendingState={isSaving}
             />
         )

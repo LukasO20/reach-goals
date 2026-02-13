@@ -8,7 +8,6 @@ import './Form.scss'
 const Form = ({ typeForm,
     functionFormMap: formMapFunc,
     model: modelForm,
-    booleanFormMap: formMapBoll,
     pendingState: formPendingState }) => {
 
     const isFormTag = typeForm === 'tag'
@@ -29,7 +28,6 @@ const Form = ({ typeForm,
                     type={typeForm}
                     functionFormMap={formMapFunc}
                     model={modelForm}
-                    booleanFormMap={formMapBoll}
                     pendingState={formPendingState}
                 />
             )}

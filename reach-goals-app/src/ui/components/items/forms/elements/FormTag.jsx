@@ -38,7 +38,7 @@ const FormTag = ({ type, functionFormMap, model: modelForm, pendingState }) => {
                                         name='name' value={modelForm?.name || ''} onChange={functionFormMap.mapHandleChange} />
                                 </div>
                                 <div className='field-forms color'>
-                                    <label><span>color</span></label>
+                                    <label>{iconMap['color']}<span>color</span></label>
                                     <div className='field-form-info'>
                                         <input id={`${type}-color`} name='color' type='color' value={modelForm?.color || '#000000'}
                                             style={{ borderColor: `${modelForm?.color || '#000000'}` }}

@@ -27,7 +27,7 @@ const VisibilityProvider = ({ children }) => {
     const removeVisibility = useCallback((prev = [], { class: classTarget, operator }) => {
         if (Array.isArray(classTarget)) {
             if (operator.maintain) return classTarget
-            return prev.filter(classPrevious => !classTarget.includes(classPrevious))
+            return prev.filter(c => !classTarget.includes(c))
         }
     }, [])
 

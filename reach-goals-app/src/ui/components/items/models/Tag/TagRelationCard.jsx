@@ -23,7 +23,7 @@ const TagRelationCard = () => {
     //First will be checked form source to render an goal, if not, will be render according goal filter
     const baseData =
         model.dataModel.tag.core.data ??
-        dataPanel ?? 
+        dataPanel ??
         []
 
     useEffect(() => {
@@ -101,13 +101,13 @@ const TagRelationCard = () => {
                                 {item.name}
                             </label>
                             <div className='side-actions'>
-                                {(hasGoal || hasAssignment) && 
-                                    <ButtonAction classBtn='expand button-action circle small' icon='arrowdown' 
-                                    onClick={() => handleSetOpenCard(item)} />}
-                                {<ButtonAction classBtn='edit button-action circle small' icon='edit' 
+                                {(hasGoal || hasAssignment) &&
+                                    <ButtonAction classBtn='expand button-action circle small' icon='arrowdown'
+                                        onClick={() => handleSetOpenCard(item)} />}
+                                {<ButtonAction classBtn='edit button-action circle small' icon='edit'
                                     onClick={() => editTag(item.id)} visibility={visibilityMap('near-modalForm', { add: true })} />}
-                                {<ButtonAction classBtn='delete button-action circle small' icon='remove' 
-                                    pendingState={isRemoving} 
+                                {<ButtonAction classBtn='delete button-action circle small' icon='remove'
+                                    pendingState={isRemoving}
                                     onClick={() => deleteTag(item.id)} />}
                             </div>
                         </div>

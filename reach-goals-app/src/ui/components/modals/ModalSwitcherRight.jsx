@@ -15,20 +15,17 @@ const ModalSwitcherRight = () => {
     const showModalRight = visibleElements.includes('modal-right') ? 'show' : ''
     const typeModalLayout = layout.modal.layoutName
 
-    const renderModal = (type) => {
-        if (!typeof type === 'string') return console.error('Invalid type for renderModal')
-
-        if (type === 'tag') {
-            return <ModalTag />
-        } else if (type === 'details') {
-            return <ModalDetails />
-        }
-    }
+    const isVisible = !!typeModalLayout && showModalRight === 'show'
+    const isModalTag = typeModalLayout === 'tag'
+    const isModalDetails = typeModalLayout === 'details'
 
     return (
-        <div className={`container-modal modal-right ${typeModalLayout} ${showModalRight}`}>
-            {renderModal(typeModalLayout)}
-        </div>
+        isVisible && (
+            <div className={`container-modal modal-right ${typeModalLayout || ''} ${showModalRight}`}>
+                {isModalTag && (<ModalTag />)}
+                {isModalDetails && (<ModalDetails />)}
+            </div>
+        )
     )
 }
 

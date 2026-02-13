@@ -76,6 +76,7 @@ export const iconMap = {
     assignment: <Unicons.UilListUiAlt className='icon-st' />,
     tag: <Unicons.UilLabelAlt className='icon-st' />,
     themes: <Unicons.UilSwatchbook className='icon-st' />,
+    color: <Unicons.UilPalette className='icon-st' />,
     user: <Unicons.UilUser className='icon-st' />,
     config: <Unicons.UilSlidersVAlt className='icon-st' />,
     calendar: <Unicons.UilCalendar className='icon-st' />,
