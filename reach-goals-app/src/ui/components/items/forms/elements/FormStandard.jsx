@@ -48,7 +48,7 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
     const filtersKeys = {
         goal: 'goalSomeID',
         assignment: 'notGoalRelation',
-        tag: 'tagSomeID'
+        tag: type === 'goal' ? 'tagNotRelationGoal' : 'tagNotRelationAssignment' 
     }
     const modelSwitcherBy = { sourceForm: modelForm, display }
     const modelCopyBy = { display }

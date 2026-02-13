@@ -17,20 +17,23 @@ import PropTypes from 'prop-types'
 import './ModalModelList.scss'
 
 const ModalModelList = ({ title, type, typeFilterKey }) => {
-    const { updateFilterModel } = useContext(ManageModelContext)
+    const { model, updateFilterModel } = useContext(ManageModelContext)
     const { modal: { loading: loadingGoal } } = useGoalProvider()
     const { modal: { loading: loadingAssigment } } = useAssignmentProvider()
     const { modal: { loading: loadingTag } } = useTagProvider()
 
     useEffect(() => {
+        const isModalModelListTag = typeof model.mainModelID === 'number' && (typeFilterKey === 'tagNotRelationGoal' || typeFilterKey === 'tagNotRelationAssignment')
+        const typeFilterKeyValue = isModalModelListTag ? model.mainModelID : 'all'
+
         const filterGetModel = filterBuildModelMap(
-            { [typeFilterKey]: 'all', type, source: 'support' },
+            { [typeFilterKey]: typeFilterKeyValue, type, source: 'support' },
             type,
             'support'
         )
         const dataFilter = updateFilterModelMap({ filter: filterGetModel, model: type, scope: 'modal' })
         updateFilterModel(dataFilter)
-    }, [type, typeFilterKey, updateFilterModel])
+    }, [type, typeFilterKey, updateFilterModel, model.mainModelID])
 
     const displayModesProps = {
         type: ['card-mini'],
@@ -57,7 +60,7 @@ ModalModelList.propTypes = {
     title: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     typeFilterKey: PropTypes.oneOf([
-        'tagSomeID', 'notGoalRelation', 'goalSomeID'
+        'tagNotRelationGoal', 'tagNotRelationAssignment', 'notGoalRelation', 'goalSomeID'
     ]).isRequired
 }
 

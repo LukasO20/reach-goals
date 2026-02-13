@@ -140,7 +140,7 @@ Assignment.propTypes = {
         )
     }).isRequired,
     sourceForm: PropTypes.shape({
-        assignments: PropTypes.array.isRequired
+        assignments: PropTypes.array
     }),
     selectableModel: PropTypes.bool,
     detailsModel: PropTypes.bool
