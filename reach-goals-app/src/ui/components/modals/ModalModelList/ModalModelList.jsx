@@ -60,7 +60,7 @@ ModalModelList.propTypes = {
     title: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     typeFilterKey: PropTypes.oneOf([
-        'tagNotRelationGoal', 'tagNotRelationAssignment', 'notGoalRelation', 'goalSomeID'
+        'tagSomeID', 'tagNotRelationGoal', 'tagNotRelationAssignment', 'notGoalRelation', 'goalSomeID'
     ]).isRequired
 }
 

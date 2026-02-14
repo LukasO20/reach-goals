@@ -10,7 +10,7 @@ import InputText from '../../elements/InputText/InputText.jsx'
 import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
 import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
 
-import { visibilityMap, iconMap,  } from '../../../../../utils/mapping/mappingUtils.js'
+import { visibilityMap, iconMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import PropTypes from 'prop-types'
 
@@ -20,21 +20,32 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
     const { visibleElements, toggleVisibility } = useVisibility()
     const { model, setModel } = useManageModel()
 
+    const modelCopyRegion = type === 'goal' ? 'assignment' : ''
+    const icon = iconMap[type] || 'fa-solid fa-triangle-exclamation'
+    const isEmptyForm = typeof model.mainModelID === 'number'
+    const display = { type: ['card-mini'], actions: ['remove'] }
+
     const handleClickForm = () => {
         const isButtonDropdown = !!visibleElements.includes(`${type}-status`)
         isButtonDropdown && toggleVisibility(visibilityMap(`${type}-status`, { remove: true }))
     }
 
-    const modelCopyRegion = type === 'goal' ? 'assignment' : ''
-    const icon = iconMap[type] || 'fa-solid fa-triangle-exclamation'
-    const display = { type: ['card-mini'], actions: ['remove'] }
+    const renderDropdownStatusTitle = (status) => {
+        if (!!status) return <>{iconMap[status] || iconMap['check']}{status}</>
+        return 'choose an option'
+    }
 
-    const titleDropdownStatus = modelForm.status ?
-        <>
-            {iconMap[modelForm.status === 'conclude' ? 'check' : modelForm.status]}
-            {modelForm.status}
-        </>
-        : 'choose an option'
+    const renderModelEnviroment = (goalForm = false) => {
+        const goalEnviroment = !!isEmptyForm && goalForm
+
+        if (goalEnviroment) return <ModelSwitcher type='assignment' propsReference={modelSwitcherBy} />
+        else return <ModelCopy type={model.typeModel} region={modelCopyRegion} propsReference={modelCopyBy} />
+    }
+
+    const renderModelTagEnviroment = () => {
+        if (!!isEmptyForm) return <ModelSwitcher type='tag' propsReference={modelSwitcherBy} />
+        else return <ModelCopy type={model.typeModel} region='tag' propsReference={modelCopyBy} />
+    }
 
     const modalModelShowed = visibleElements.find(classItem => classItem?.includes('modal-model-list')) ?? ''
     const modalModelListType = modalModelShowed.split('-')[3]
@@ -46,7 +57,7 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
     const filtersKeys = {
         goal: 'goalSomeID',
         assignment: 'notGoalRelation',
-        tag: type === 'goal' ? 'tagNotRelationGoal' : 'tagNotRelationAssignment' 
+        tag: !isEmptyForm ? 'tagSomeID' : type === 'goal' ? 'tagNotRelationGoal' : 'tagNotRelationAssignment'
     }
     const modelSwitcherBy = { sourceForm: modelForm, display }
     const modelCopyBy = { display }
@@ -56,9 +67,7 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
     return (
         <div className='container-form-modal center-content' onClick={handleClickForm}>
             <div className='head'>
-                <div className='objective-icon'>
-                    {icon}
-                </div>
+                <div className='objective-icon'>{icon}</div>
                 <div className='objective-options'>
                     <div className='objective-op'>
                         <ButtonAction visibility={visibilityMap(['modal-center', 'assignment'], { maintain: true })} classBtn={`op-form-assignment button-action plan small ${type === 'assignment' ? 'active' : ''}`}
@@ -92,45 +101,24 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
                             <InputDate id={`${type}-end-date`} className='input-form input-date end' name='end' selected={modelForm?.end} onChange={functionFormMap.mapHandleChange} />
                         </div>
                         {
-                            type === 'assignment' &&
-                            <div className='field-forms duration'>
-                                <label>{iconMap['clock']}<span>duration</span></label>
-                                <InputTimer id={`${type}-duration`} className='input-form input-timer timer' name='duration'
-                                    onChange={functionFormMap.mapHandleChange} value={modelForm.duration ?? null} />
-                            </div>
+                            type === 'assignment' && (
+                                <div className='field-forms duration'>
+                                    <label>{iconMap['clock']}<span>duration</span></label>
+                                    <InputTimer id={`${type}-duration`} className='input-form input-timer timer' name='duration'
+                                        onChange={functionFormMap.mapHandleChange} value={modelForm.duration ?? null} />
+                                </div>
+                            )
                         }
                         <div className='field-forms status'>
                             <label>{iconMap['progress']}<span>status</span></label>
                             <ButtonDropdown visibility={visibilityMap(`${type}-status`, { add: true })}
                                 classBtn={`button-dropdown-form plan left status ${visibleElements.includes(`${type}-status`) ? 'active' : ''}`}
-                                title={titleDropdownStatus} opening='modal-form' arrow={true}
+                                title={renderDropdownStatusTitle(modelForm.status)} opening='modal-form' arrow={true}
                                 dropdownValue={modelForm?.status || undefined} changeDropdownValue={functionFormMap.mapHandleChange} />
                         </div>
                     </div>
-                    {
-                        functionFormMap.mapModelRelationAddMap('tag',
-                            <>
-                                {
-                                    typeof modelForm.id === 'number' ?
-                                        <ModelSwitcher type='tag' propsReference={modelSwitcherBy} />
-                                        :
-                                        <ModelCopy type={model.typeModel} region='tag' propsReference={modelCopyBy} />
-                                }
-                            </>
-                        )
-                    }
-                    {
-                        functionFormMap.mapModelRelationAddMap(type,
-                            <>
-                                {
-                                    typeof modelForm.id === 'number' && isGoalForm ?
-                                        <ModelSwitcher type='assignment' propsReference={modelSwitcherBy} />
-                                        :
-                                        <ModelCopy type={model.typeModel} region={modelCopyRegion} propsReference={modelCopyBy} />
-                                }
-                            </>
-                        )
-                    }
+                    {functionFormMap.mapModelRelationAddMap('tag', renderModelTagEnviroment())}
+                    {functionFormMap.mapModelRelationAddMap(type, renderModelEnviroment(isGoalForm))}
                     <div className='item-forms details'>
                         <div className='head'>
                             <div className='item-head-1'>

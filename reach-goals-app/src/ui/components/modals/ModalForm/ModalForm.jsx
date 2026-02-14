@@ -18,7 +18,7 @@ import ModelRelationAdd from '../../items/forms/ModelRelationAdd.jsx'
 import './ModalForm.scss'
 
 const modelRelationAddMap = (type, children) => {
-    return <ModelRelationAdd type={type} children={children} />
+    return <ModelRelationAdd type={type}>{children}</ModelRelationAdd>
 }
 
 const ModalForm = () => {

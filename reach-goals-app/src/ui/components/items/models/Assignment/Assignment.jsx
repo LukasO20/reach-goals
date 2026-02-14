@@ -84,7 +84,12 @@ const Assignment = ({ status, display, sourceForm, selectableModel = false, deta
 
     const removeElDOMClick = ({ id }) => {
         if (id) {
-            const dataUpdateFormModelMap = updateFormModelMap('assignments', { id: id }, 'array', 'remove')
+            const dataUpdateFormModelMap = updateFormModelMap({
+                keyObject: 'assignments',
+                value: { id },
+                type: 'array',
+                action: 'remove'
+            })
             updateFormModel(dataUpdateFormModelMap)
         }
     }

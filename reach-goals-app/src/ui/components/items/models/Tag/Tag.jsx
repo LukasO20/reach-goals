@@ -26,7 +26,7 @@ const Tag = ({ display, sourceForm, selectableModel = false }) => {
     const currentFilter = model.filter.tag[currentScope]
 
     //First will be checked form source to render a tag, if not, will be render according tag filter
-    const tagSourceAuxiliary = sourceForm?.tags.map(item => {
+    const tagSourceAuxiliary = sourceForm?.tags?.map(item => {
         return item.tag
     })
 
@@ -75,7 +75,12 @@ const Tag = ({ display, sourceForm, selectableModel = false }) => {
 
     const removeElDOMClick = ({ id }) => {
         if (id) {
-            const dataUpdateFormModelMap = updateFormModelMap('tags', { tagID: id }, 'array', 'remove')
+            const dataUpdateFormModelMap = updateFormModelMap({
+                keyObject: 'tags',
+                value: { tagID: id },
+                type: 'array',
+                action: 'remove'
+            })
             updateFormModel(dataUpdateFormModelMap)
         }
     }
