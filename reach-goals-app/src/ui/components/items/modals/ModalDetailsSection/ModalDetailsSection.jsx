@@ -21,10 +21,8 @@ const ModalDetailsSection = () => {
     const navigate = useNavigate()
     const typeVisibility = visibleElements[1]
 
-    const handleClickButtonAction = () => {
-        navigate(`/${layout.page.pageName}`) // return standard route during handle
-    }
-
+    const handleClickButtonAction = () => navigate(`/${layout.page.pageName}`) // return standard route during handle
+    
     const modelRelationProps = {
         display: {
             type: ['card-mini'],
@@ -44,24 +42,21 @@ const ModalDetailsSection = () => {
                 <ButtonAction visibility={visibilityMap(null)} onClick={handleClickButtonAction} classBtn='button-action circle close' icon='close' />
             </div>
             <div className='body'>
-                {
-                    formModel.description && (
-                        <div className='description'>
-                            {formModel.description}
+                {formModel.description && (
+                    <div className='description'>
+                        {formModel.description}
+                    </div>
+                )}
+                {typeVisibility === 'goal' && (
+                    <div className='modaldetails assignment-list'>
+                        <div className='header-assignment-list'>
+                            <h4>{iconMap['assignment']} Assignments</h4>
                         </div>
-                    )}
-                {
-                    typeVisibility === 'goal' && (
-                        <div className='modaldetails assignment-list'>
-                            <div className='header-assignment-list'>
-                                <h4>{iconMap['assignment']} Assignments</h4>
-                            </div>
-                            <div className='body-assignment-list'>
-                                <Assignment {...modelRelationProps} />
-                            </div>
+                        <div className='body-assignment-list'>
+                            <Assignment {...modelRelationProps} />
                         </div>
-                    )
-                }
+                    </div>
+                )}
             </div>
         </>
     )

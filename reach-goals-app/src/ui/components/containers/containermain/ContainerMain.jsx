@@ -33,39 +33,46 @@ const ContainerM = () => {
     const isSwichPieChart = layout.page.layoutName === 'pie-chart'
     const isSwitchLayoutActivities = layout.page.layoutName === 'all'
 
+    const isPageCalendar = layout.page.pageName === 'calendar'
+    const isPageHome = layout.page.pageName === 'home'
+    const isPageObjectives = layout.page.pageName === 'objectives'
+
     return (
         <div className='container-main' onClick={(e) => handleClickContainer(e)}>
             <div className='head'>
                 {
-                    layout.page.pageName !== 'calendar' &&
-                    <div className='line-p'>
-                        <div className='title-m'>
-                            <h2>Your control panel</h2>
-                        </div>
-                        <div className='options-m'>
-                            <div className='visibility-m'>
-                                <ButtonDropdown visibility={visibilityMap('btn-visibility')} classBtn={`visibility plan ${visibleElements.includes('btn-visibility') && 'active'}`}
-                                    title='visibility' arrow={true} />
+                    !isPageCalendar && (
+                        <div className='line-p'>
+                            <div className='title-m'>
+                                <h2>Your control panel</h2>
                             </div>
-                            <div className='more-m'>
-                                <ButtonDropdown visibility={visibilityMap('btn-more')} classBtn={`more plan max-width ${visibleElements.includes('btn-more') && 'active'}`}
-                                    icon='ellipsisv' />
+                            <div className='options-m'>
+                                <div className='visibility-m'>
+                                    <ButtonDropdown visibility={visibilityMap('btn-visibility')} classBtn={`visibility plan ${visibleElements.includes('btn-visibility') && 'active'}`}
+                                        title='visibility' arrow={true} />
+                                </div>
+                                <div className='more-m'>
+                                    <ButtonDropdown visibility={visibilityMap('btn-more')} classBtn={`more plan max-width ${visibleElements.includes('btn-more') && 'active'}`}
+                                        icon='ellipsisv' />
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    )
                 }
                 <div className='line-s'>
                     <div className='filter'>
                         {
-                            layout.page.pageName !== 'calendar' &&
-                            <ButtonCheckbox checkbox={checkboxMap({ id: 'checkbox-m', value: false })} classBtn='checkbox-m btn-checkbox' />
+                            !isPageCalendar && (
+                                <ButtonCheckbox checkbox={checkboxMap({ id: 'checkbox-m', value: false })} classBtn='checkbox-m btn-checkbox' />
+                            )
                         }
                         {
-                            layout.page.pageName === 'calendar' &&
-                            <div className='month-picker'>
-                                <span className='month-name'>{monthNames[new Date().getMonth()]}</span>
-                                <span className='year-number'>{new Date().getFullYear()}</span>
-                            </div>
+                            isPageCalendar && (
+                                <div className='month-picker'>
+                                    <span className='month-name'>{monthNames[new Date().getMonth()]}</span>
+                                    <span className='year-number'>{new Date().getFullYear()}</span>
+                                </div>
+                            )
                         }
                         <ButtonAction classBtn={`button-action plan-round max-width goal ${isSwitchLayoutGoal ? 'active' : ''}`} title='goals'
                             switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'goal' } })}
@@ -74,16 +81,18 @@ const ContainerM = () => {
                             switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'assignment' } })}
                         />
                         {
-                            layout.page.pageName === 'home' &&
-                            <ButtonAction classBtn={`button-action plan-round max-width pie-chart ${isSwichPieChart ? 'active' : ''}`} icon='chartbar'
-                                switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'pie-chart' } })}
-                            />
+                            isPageHome && (
+                                <ButtonAction classBtn={`button-action plan-round max-width pie-chart ${isSwichPieChart ? 'active' : ''}`} icon='chartbar'
+                                    switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'pie-chart' } })}
+                                />
+                            )
                         }
                         {
-                            (layout.page.pageName === 'objectives' || layout.page.pageName === 'calendar') &&
-                            <ButtonAction classBtn={`button-action plan-round max-width all-activities ${isSwitchLayoutActivities ? 'active' : ''}`} title='all activities'
-                                switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'all' } })}
-                            />
+                            (isPageObjectives || isPageCalendar) && (
+                                <ButtonAction classBtn={`button-action plan-round max-width all-activities ${isSwitchLayoutActivities ? 'active' : ''}`} title='all activities'
+                                    switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'all' } })}
+                                />
+                            )
                         }
                     </div>
                     <div className='action'>

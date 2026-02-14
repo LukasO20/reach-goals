@@ -98,8 +98,8 @@ const ButtonDropdown = ({ visibility, reference, changeDropdownValue, icon, clas
                 {defineDropdown()}
                 <div className='dropdown-item item-element'>
                     <div className='section-options'>
-                        {NullObject(titleDropdown) ? <span>{titleDropdown}</span> : ''}
-                        {NullObject(optionsDropdown) ?
+                        {NullObject(titleDropdown) && <span>{titleDropdown}</span>}
+                        {NullObject(optionsDropdown) &&
                             optionsDropdown.map((option, index) => {
                                 switch (reference) {
                                     case 'modal-center':
@@ -127,7 +127,7 @@ const ButtonDropdown = ({ visibility, reference, changeDropdownValue, icon, clas
                                         <div className='item-option-style'></div>
                                     </div>
                                 )
-                            }) : undefined
+                            })
                         }
                     </div>
                 </div>

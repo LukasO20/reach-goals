@@ -7,14 +7,14 @@ const Loading = ({ mode, title }) => {
         <>
             {
                 mode === 'inline' ?
-                    <div className='spinner-inline'>
+                    (<div className='spinner-inline'>
                         <div className='spinner'></div>
                         {!!title && (<label>{title}</label>)}
-                    </div>
+                    </div>)
                     :
-                    <div className='spinner-overlay'>
+                    (<div className='spinner-overlay'>
                         <div className='spinner'></div>
-                    </div>
+                    </div>)
             }
         </>
     )

@@ -66,12 +66,12 @@ const Card = ({ type, model = [], display, pendingState, clickFunction }) => {
                     {hasTags && renderTagBox()}
                 </div>
                 <div className='body'>
-                    {hasEndDate && renderEndDate()}
+                    {!!hasEndDate && renderEndDate()}
                     <div className='item'>
                         <label className='line-info description'>{item.description}</label>
                         <div className='side-actions'>
                             <div className='item-actions'>
-                                {isDisplayActionEdit &&
+                                {isDisplayActionEdit && (
                                     <ButtonAction
                                         onClick={() => clickFunction.edit(itemID)}
                                         visibility={visibilityMap(['modal-center', type])}
@@ -81,15 +81,17 @@ const Card = ({ type, model = [], display, pendingState, clickFunction }) => {
                                         })}
                                         classBtn={`edit-${type} button-action circle small`}
                                         icon='edit'
-                                    />}
-                                {isDisplayActionDelete &&
+                                    />
+                                )}
+                                {isDisplayActionDelete && (
                                     <ButtonAction
                                         pendingState={isPending}
                                         onClick={() => clickFunction.delete(itemID)}
                                         visibility={visibilityMap(null)}
                                         classBtn={`remove-${type} button-action circle small`}
                                         icon='remove'
-                                    />}
+                                    />
+                                )}
                             </div>
                         </div>
                     </div>

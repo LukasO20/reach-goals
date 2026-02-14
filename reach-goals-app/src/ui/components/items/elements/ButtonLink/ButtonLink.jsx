@@ -19,10 +19,8 @@ const ButtonLink = ({ target, switchLayout, onClick, link, classBtn, img, imgAlt
 
         if (target) toggleVisibility(target, e)
         if (switchLayout) updateSwitchLayout(switchLayout)
-        if (onClick && typeof onClick === 'function') {
-            onClick({ e }) // execute external function from 'onClick' external attribute    
-        }
-
+        if (onClick && typeof onClick === 'function') onClick({ e }) // execute external function from 'onClick' external attribute    
+        
         navigate(`${link || '/'}`)
     }
 

@@ -16,8 +16,7 @@ export const addTag = async (tag) => {
             throw new Error(error.error || 'Failed to add tag.')
         }
 
-        const data = await response.json()
-        return data
+        return await response.json()
     } catch (error) {
         console.error('Error adding tag: ', error.message)
         throw error
@@ -72,8 +71,7 @@ export const getTag = async (tagID) => {
             headers: { 'Content-Type': 'application/json' },
         })
 
-        const data = await response.json()
-        return data
+        return await response.json()
     } catch (error) {
         console.error('Error get tag: ', error.message)
         throw error
@@ -97,8 +95,7 @@ export const getTagOnGoal = async (goalID) => {
             throw new Error(error.error || 'Failed to fetch tags on goal.')
         }
 
-        const data = await response.json()
-        return data
+        return await response.json()
     } catch (error) {
         console.error('Error get tag on goal: ', error.message)
         throw error
@@ -147,8 +144,7 @@ export const getTagNotGoal = async (goalID) => {
             throw new Error(error.error || 'Failed to fetch tags.')
         }
 
-        const data = await response.json()
-        return data
+        return await response.json()
     } catch (error) {
         console.error('Error get tag without relation: ', error.message)
         throw error
@@ -172,8 +168,7 @@ export const getTagNotAssignment = async (assignmentID) => {
             throw new Error(error.error || 'Failed to fetch tags.')
         }
 
-        const data = await response.json()
-        return data
+        return await response.json()
     } catch (error) {
         console.error('Error get tag without relation: ', error.message)
         throw error
@@ -192,8 +187,7 @@ export const unlinkTagOnGoal = async (tagID, goalID) => {
             throw new Error(error.error || 'Failed to unlink this tag.')
         }
 
-        const data = await response.json()
-        return data
+        return await response.json()
     } catch (error) {
         console.error('Error to unlink tag: ', error.message)
         throw error

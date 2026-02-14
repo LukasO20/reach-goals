@@ -16,8 +16,7 @@ export const addAssignment = async (assignment) => {
             throw new Error(error.error || 'Failed to add assignment.')
         }
 
-        const data = await response.json()
-        return data
+        return await response.json()
     } catch (error) {
         console.error('Error adding assignment: ', error.message)
         throw error
@@ -93,8 +92,7 @@ export const getAssignment = async (assignmentID) => {
             throw new Error(error.error || 'Failed to fetch assignments.')
         }
 
-        const data = await response.json()
-        return data
+        return await response.json()
     } catch (error) {
         console.error('Error get assignment: ', error.message)
         throw error
@@ -119,9 +117,7 @@ export const getAssignmentOnTag = async (tagID) => {
             throw new Error(error.error || 'Failed to fetch assignments.')
         }
 
-        const data = await response.json()
-        return data
-
+        return await response.json()
     } catch (error) {
         console.error('Error get assignment: ', error.message)
         throw error
@@ -146,9 +142,7 @@ export const getAssignmentOnGoal = async (goalID) => {
             throw new Error(error.error || 'Failed to fetch assignments.')
         }
 
-        const data = await response.json()
-        return data
-
+        return await response.json()
     } catch (error) {
         console.error('Error get assignment: ', error.message)
         throw error
@@ -168,9 +162,7 @@ export const getAssignmentWithoutGoal = async () => {
             throw new Error(error.error || 'Failed to fetch assignments.')
         }
 
-        const data = await response.json()
-        return data
-
+        return await response.json()
     } catch (error) {
         console.error('Error get assignment: ', error.message)
         throw error

@@ -32,7 +32,7 @@ const CardMini = ({ type, model = [], display, pendingState, clickFunction }) =>
                 </label>
                 <div className='side-actions'>
                     <div className='item-actions'>
-                        {isDisplayActionEdit &&
+                        {isDisplayActionEdit && (
                             <ButtonAction
                                 onClick={() => clickFunction.edit(itemID)}
                                 visibility={visibilityMap(['modal-center', type])}
@@ -42,21 +42,24 @@ const CardMini = ({ type, model = [], display, pendingState, clickFunction }) =>
                                 })}
                                 classBtn={`edit-${type} button-action circle small`}
                                 icon='edit'
-                            />}
-                        {isDisplayActionDelete &&
+                            />
+                        )}
+                        {isDisplayActionDelete && (
                             <ButtonAction
                                 pendingState={isPending}
                                 onClick={() => clickFunction.delete(itemID)}
                                 visibility={visibilityMap(null)}
                                 classBtn={`remove-${type} button-action circle small`}
                                 icon='remove'
-                            />}
-                        {isDisplayActionRemove &&
+                            />
+                        )}
+                        {isDisplayActionRemove && (
                             <ButtonAction
                                 onClick={() => clickFunction.aux(item, type)}
                                 classBtn={`remove-${type}-dom button-action text-icon circle`}
                                 icon='close'
-                            />}
+                            />
+                        )}
                     </div>
                 </div>
             </div>

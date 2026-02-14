@@ -113,13 +113,13 @@ Tag.propTypes = {
     sourceForm: PropTypes.shape({
         tags: PropTypes.arrayOf(
             PropTypes.shape({
-                id: PropTypes.number.isRequired,
-                tagID: PropTypes.number.isRequired,
+                id: PropTypes.number,
+                tagID: PropTypes.number,
                 tag: PropTypes.shape({
-                    id: PropTypes.number.isRequired,
-                    name: PropTypes.string.isRequired,
-                    color: PropTypes.string.isRequired
-                }).isRequired
+                    id: PropTypes.number,
+                    name: PropTypes.string,
+                    color: PropTypes.string
+                })
             })
         )
     }),
