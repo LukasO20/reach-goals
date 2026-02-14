@@ -1,6 +1,4 @@
-import { useContext } from 'react'
-
-import { VisibilityContext } from '../../../provider/VisibilityProvider'
+import { useVisibility } from '../../../provider/VisibilityProvider'
 import { useSwitchLayout } from '../../../provider/SwitchLayoutProvider'
 
 import ModalTag from './ModalTag/ModalTag'
@@ -9,7 +7,7 @@ import ModalDetails from './ModalDetails/ModalDetails'
 import './ModalSwitcher.scss'
 
 const ModalSwitcherRight = () => {
-    const { visibleElements } = useContext(VisibilityContext)
+    const { visibleElements } = useVisibility()
     const { layout } = useSwitchLayout()
 
     const showModalRight = visibleElements.includes('modal-right') ? 'show' : ''

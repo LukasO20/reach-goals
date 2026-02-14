@@ -1,10 +1,9 @@
-import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import Routes from '../../../../app/Routes.jsx'
 
-import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
-import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
+import { useManageModel } from '../../../../provider/ManageModelProvider.jsx'
+import { useVisibility } from '../../../../provider/VisibilityProvider.jsx'
 import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 
 import { visibilityMap, switchLayoutMap, checkboxMap } from '../../../../utils/mapping/mappingUtils.js'
@@ -18,8 +17,8 @@ import ButtonCheckbox from '../../items/elements/ButtonCheckbox/ButtonCheckbox.j
 import './ContainerMain.scss'
 
 const ContainerM = () => {
-    const { resetManageModel } = useContext(ManageModelContext)
-    const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
+    const { resetManageModel } = useManageModel()
+    const { visibleElements, toggleVisibility } = useVisibility()
     const { layout } = useSwitchLayout()
     const navigate = useNavigate()
 

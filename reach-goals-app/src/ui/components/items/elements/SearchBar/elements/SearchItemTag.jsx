@@ -1,8 +1,8 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 
 import { useSwitchLayout } from '../../../../../../provider/SwitchLayoutProvider.jsx'
-import { VisibilityContext } from '../../../../../../provider/VisibilityProvider.jsx'
-import { ManageModelContext } from '../../../../../../provider/ManageModelProvider.jsx'
+import { useVisibility } from '../../../../../../provider/VisibilityProvider.jsx'
+import { useManageModel } from '../../../../../../provider/ManageModelProvider.jsx'
 
 import PropTypes from 'prop-types'
 
@@ -11,9 +11,9 @@ import { iconMap, visibilityMap, switchLayoutMap } from '../../../../../../utils
 import ButtonAction from '../../ButtonAction/ButtonAction'
 
 const SearchItemTag = ({ item, type, onButtonClick }) => {
-    const { toggleVisibility } = useContext(VisibilityContext)
+    const { toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
-    const { setModel } = useContext(ManageModelContext)
+    const { setModel } = useManageModel()
     const [open, setOpen] = useState(false)
 
     const hasAssignmentRelation = !!item.assignments.length

@@ -1,8 +1,7 @@
-import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
-import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
+import { useManageModel } from '../../../../provider/ManageModelProvider.jsx'
+import { useVisibility } from '../../../../provider/VisibilityProvider.jsx'
 import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
@@ -17,8 +16,8 @@ import SearchBar from '../../items/elements/SearchBar/SearchBar.jsx'
 
 const ContainerH = () => {
     const { title } = useTitle()
-    const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
-    const { setModel, resetManageModel } = useContext(ManageModelContext)
+    const { visibleElements, toggleVisibility } = useVisibility()
+    const { setModel, resetManageModel } = useManageModel()
     const { layout } = useSwitchLayout()
     const navigate = useNavigate()
 

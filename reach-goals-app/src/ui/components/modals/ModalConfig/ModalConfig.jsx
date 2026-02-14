@@ -1,6 +1,4 @@
-import { useContext } from 'react'
-
-import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
+import { useVisibility } from '../../../../provider/VisibilityProvider.jsx'
 
 import { visibilityMap, iconMap } from '../../../../utils/mapping/mappingUtils.js'
 
@@ -10,7 +8,7 @@ import ModalConfigSection from '../../items/modals/ModalConfigSection/ModalConfi
 import './ModalConfig.scss'
 
 const ModalConfig = () => {
-    const { visibleElements } = useContext(VisibilityContext)
+    const { visibleElements } = useVisibility()
     const typeSection = visibleElements[2] ?? ''
 
     return (

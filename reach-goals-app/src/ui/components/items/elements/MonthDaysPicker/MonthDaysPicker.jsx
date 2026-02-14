@@ -1,7 +1,5 @@
-import { useContext } from 'react'
-
-import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
-import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
+import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
+import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
 import { weekNames } from '../../../../../utils/reference.js'
@@ -15,8 +13,8 @@ import moment from 'moment'
 import './MonthDaysPicker.scss'
 
 const MonthDaysPicker = ({ data }) => {
-    const { setModel } = useContext(ManageModelContext)
-    const { toggleVisibility } = useContext(VisibilityContext)
+    const { setModel } = useManageModel()
+    const { toggleVisibility } = useVisibility()
     const { layout, updateSwitchLayout } = useSwitchLayout()
     const year = new Date().getFullYear()
     const month = new Date().getMonth()

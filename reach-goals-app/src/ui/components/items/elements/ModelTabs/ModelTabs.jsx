@@ -1,6 +1,6 @@
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 
-import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
+import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
 
 import { filterBuildModelMap, modelTabsMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { updateFilterModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
@@ -13,7 +13,7 @@ import Proptypes from 'prop-types'
 import './ModelTabs.scss'
 
 const ModelTabs = ({ type, children, loading }) => {
-    const { updateFilterModel } = useContext(ManageModelContext)
+    const { updateFilterModel } = useManageModel()
 
     const [currentFilterData, setCurrentFilterData] = useState({
         assignment: {},

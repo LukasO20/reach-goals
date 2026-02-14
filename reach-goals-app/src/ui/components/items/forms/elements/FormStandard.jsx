@@ -1,5 +1,3 @@
-import { useContext } from 'react'
-
 import ModalModelList from '../../../modals/ModalModelList/ModalModelList.jsx'
 import ButtonAction from '../../elements/ButtonAction/ButtonAction.jsx'
 import ButtonDropdown from '../../elements/ButtonDropdown/ButtonDropdown.jsx'
@@ -9,8 +7,8 @@ import InputDate from '../../elements/InputDate/InputDate.jsx'
 import InputTimer from '../../elements/InputTimer/InputTimer.jsx'
 import InputText from '../../elements/InputText/InputText.jsx'
 
-import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
-import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
+import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
+import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
 
 import { visibilityMap, iconMap,  } from '../../../../../utils/mapping/mappingUtils.js'
 
@@ -19,8 +17,8 @@ import PropTypes from 'prop-types'
 import '../Form.scss'
 
 const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState }) => {
-    const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
-    const { model, setModel } = useContext(ManageModelContext)
+    const { visibleElements, toggleVisibility } = useVisibility()
+    const { model, setModel } = useManageModel()
 
     const handleClickForm = () => {
         const isButtonDropdown = !!visibleElements.includes(`${type}-status`)

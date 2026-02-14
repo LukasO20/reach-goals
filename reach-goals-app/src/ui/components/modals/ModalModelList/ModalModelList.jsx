@@ -1,6 +1,6 @@
-import { useEffect, useContext } from 'react'
+import { useEffect } from 'react'
 
-import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
+import { useManageModel } from '../../../../provider/ManageModelProvider.jsx'
 import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
 import { useTagProvider } from '../../../../provider/model/TagModelProvider.jsx'
 import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
@@ -17,7 +17,7 @@ import PropTypes from 'prop-types'
 import './ModalModelList.scss'
 
 const ModalModelList = ({ title, type, typeFilterKey }) => {
-    const { model, updateFilterModel } = useContext(ManageModelContext)
+    const { model, updateFilterModel } = useManageModel()
     const { modal: { loading: loadingGoal } } = useGoalProvider()
     const { modal: { loading: loadingAssigment } } = useAssignmentProvider()
     const { modal: { loading: loadingTag } } = useTagProvider()

@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useTagProvider } from '../../../../../provider/model/TagModelProvider'
-import { ManageModelContext } from '../../../../../provider/ManageModelProvider'
+import { useManageModel } from '../../../../../provider/ManageModelProvider'
 
 import { iconMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils'
 import { updateDataModelMap } from '../../../../../utils/mapping/mappingUtilsProvider'
@@ -16,7 +16,7 @@ const standarOpenCard = [{ id: null, open: false }]
 
 const TagRelationCard = () => {
     const [openCard, setOpenCard] = useState(standarOpenCard)
-    const { model, setModel, updateDataModel } = useContext(ManageModelContext)
+    const { model, setModel, updateDataModel } = useManageModel()
     const { modal: { data: dataPanel }, remove, removing, removeSuccess, removingVariables } = useTagProvider()
     const currentFilter = model.filter.tag.modal
 

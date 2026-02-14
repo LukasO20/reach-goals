@@ -1,7 +1,6 @@
-import { useContext } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 
-import { VisibilityContext } from '../../../provider/VisibilityProvider.jsx'
+import { useVisibility } from '../../../provider/VisibilityProvider.jsx'
 import { visibilityMap, switchLayoutMap } from '../../../utils/mapping/mappingUtils.js'
 
 import { useSwitchLayout } from '../../../provider/SwitchLayoutProvider.jsx'
@@ -12,7 +11,7 @@ import ButtonLink from '../items/elements/ButtonLink/ButtonLink.jsx'
 import '../navigate/Navigate.scss'
 
 const Navigate = () => {
-    const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
+    const { visibleElements, toggleVisibility } = useVisibility()
     const { layout } = useSwitchLayout()
     const navigate = useNavigate()
     const location = useLocation()

@@ -1,9 +1,9 @@
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
 import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
-import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
+import { useManageModel } from '../../../../provider/ManageModelProvider.jsx'
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
 import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 
@@ -20,7 +20,7 @@ import '../Objectives/Objectives.scss'
 const Objectives = () => {
     const { update } = useTitle()
     const { layout, updateSwitchLayout } = useSwitchLayout()
-    const { updateFilterModel } = useContext(ManageModelContext)
+    const { updateFilterModel } = useManageModel()
     const { page: { loading: loadingGoal } } = useGoalProvider()
     const { page: { loading: loadingAssignment } } = useAssignmentProvider()
     const location = useLocation()

@@ -1,7 +1,5 @@
-import { useContext } from 'react'
-
-import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
-import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
+import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
+import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
 
 import { visibilityMap, switchLayoutMap, iconMap } from '../../../../../utils/mapping/mappingUtils.js'
 
@@ -38,8 +36,8 @@ const NullObject = (value) => {
 }
 
 const ButtonDropdown = ({ visibility, reference, changeDropdownValue, icon, classBtn, title, arrow,  }) => {
-    const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
-    const { model } = useContext(ManageModelContext)
+    const { visibleElements, toggleVisibility } = useVisibility()
+    const { model } = useManageModel()
 
     const typeClass = visibility.class !== undefined ? visibility.class[0] : null
     const dropdownStatus = typeClass.includes('goal-status') || typeClass.includes('assignment-status')

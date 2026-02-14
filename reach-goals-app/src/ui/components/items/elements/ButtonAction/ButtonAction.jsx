@@ -1,7 +1,5 @@
-import { useContext } from 'react'
-
-import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
-import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
+import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
+import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
 import { iconMap } from '../../../../../utils/mapping/mappingUtils.js'
@@ -19,9 +17,9 @@ const statusButton = (classBtn, providervisibleElements) => {
 }
 
 const ButtonAction = ({ visibility, switchLayout, nullForm, unlinkGoal, onClick, pendingState, datavalue, icon, title, classBtn }) => {
-    const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
+    const { visibleElements, toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
-    const { model, resetManageModel, updateFormModel, removeFromTransportModel } = useContext(ManageModelContext)
+    const { model, resetManageModel, updateFormModel, removeFromTransportModel } = useManageModel()
 
     const classBtnAction = classBtn.split(' ')[2]
     const isOn = statusButton(classBtnAction, visibleElements)

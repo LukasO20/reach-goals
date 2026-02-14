@@ -1,9 +1,9 @@
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 import { useGoalProvider } from '../../../../../provider/model/GoalModelProvider.jsx'
-import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
-import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
+import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
+import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
 
 import { switchLayoutMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { addToTransportModelMap, updateDataModelMap, updateFormModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
@@ -18,8 +18,8 @@ import moment from 'moment'
 import '../Goal/Goal.scss'
 
 const Goal = ({ status, display, sourceForm, selectableModel = false, detailsModel = false }) => {
-    const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
-    const { toggleVisibility } = useContext(VisibilityContext)
+    const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useManageModel()
+    const { toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
     const { page: { data: dataPage }, modal: { data: dataPanel }, remove, removeSuccess, removing, removingVariables } = useGoalProvider()
 

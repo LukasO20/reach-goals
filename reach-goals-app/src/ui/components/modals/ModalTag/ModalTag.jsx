@@ -1,8 +1,8 @@
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
-import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
+import { useVisibility } from '../../../../provider/VisibilityProvider.jsx'
+import { useManageModel } from '../../../../provider/ManageModelProvider.jsx'
 import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 import { useTagProvider } from '../../../../provider/model/TagModelProvider.jsx'
 
@@ -15,8 +15,8 @@ import ModelTabs from '../../items/elements/ModelTabs/ModelTabs.jsx'
 import TagRelationCard from '../../items/models/Tag/TagRelationCard.jsx'
 
 const ModalTag = () => {
-    const { visibleElements } = useContext(VisibilityContext)
-    const { model, setModel, updateFilterModel, resetManageModel } = useContext(ManageModelContext)
+    const { visibleElements } = useVisibility()
+    const { model, setModel, updateFilterModel, resetManageModel } = useManageModel()
     const { modal: { loading } } = useTagProvider()    
     const { layout } = useSwitchLayout()
     const navigate = useNavigate()

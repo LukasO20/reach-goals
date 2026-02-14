@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 
-import { VisibilityContext } from '../../../../provider/VisibilityProvider.jsx'
-import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
+import { useVisibility } from '../../../../provider/VisibilityProvider.jsx'
+import { useManageModel } from '../../../../provider/ManageModelProvider.jsx'
 
 import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
 import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
@@ -25,8 +25,8 @@ const ModalForm = () => {
     const { modal: { data: dataAssignment, loading: loadingAssigment }, save: saveAssignment, saveSuccess: saveAssignmentSuccess, saving: savingAssignment, resetSave: resetSaveAssignment } = useAssignmentProvider()
     const { modal: { data: dataGoal, loading: loadingGoal }, save: saveGoal, saveSuccess: saveGoalSuccess, saving: savingGoal, resetSave: resetSaveGoal } = useGoalProvider()
     const { modal: { data: dataTag }, loading: loadingTag, save: saveTag, saveSuccess: saveTagSuccess, saving: savingTag, resetSave: resetSaveTag } = useTagProvider()
-    const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
-    const { model, setModel, updateFilterModel, resetManageModel } = useContext(ManageModelContext)
+    const { visibleElements, toggleVisibility } = useVisibility()
+    const { model, setModel, updateFilterModel, resetManageModel } = useManageModel()
     const { update } = useTitle()
     const [error, setError] = useState(null)
 

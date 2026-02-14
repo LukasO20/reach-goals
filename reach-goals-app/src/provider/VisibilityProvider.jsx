@@ -1,8 +1,8 @@
-import { useState, createContext, useCallback, useMemo } from 'react'
+import { useState, createContext, useCallback, useMemo, useContext } from 'react'
 
 const VisibilityContext = createContext()
 
-const VisibilityProvider = ({ children }) => {
+export const VisibilityProvider = ({ children }) => {
     const [visibleElements, setVisibleElement] = useState([])
 
     const setSafeVisibleElement = (updateFn) => {
@@ -51,7 +51,6 @@ const VisibilityProvider = ({ children }) => {
     }, [updateVisibility, removeVisibility])
 
     const value = useMemo(() => ({ toggleVisibility, visibleElements }), [toggleVisibility, visibleElements])
-    //console.log('VISIBLES - ', visibleElements)
 
     return (
         <VisibilityContext.Provider value={value}>
@@ -60,4 +59,4 @@ const VisibilityProvider = ({ children }) => {
     )
 }
 
-export { VisibilityContext, VisibilityProvider }
+export const useVisibility = () => useContext(VisibilityContext)

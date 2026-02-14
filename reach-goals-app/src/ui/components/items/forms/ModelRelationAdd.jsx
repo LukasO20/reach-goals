@@ -1,5 +1,4 @@
-import { useContext } from 'react'
-import { ManageModelContext } from '../../../../provider/ManageModelProvider'
+import { useManageModel } from '../../../../provider/ManageModelProvider'
 
 import { iconMap, visibilityMap } from '../../../../utils/mapping/mappingUtils'
 
@@ -8,7 +7,7 @@ import ButtonAction from '../elements/ButtonAction/ButtonAction'
 import PropTypes from 'prop-types'
 
 const ModelRelationAdd = ({ type, children }) => {
-    const { model } = useContext(ManageModelContext)
+    const { model } = useManageModel()
     const tittleRelation = type === 'goal' ? 'assignments' : 'goals'
     const visibilityRelation = {
         goal: 'assignment',

@@ -1,10 +1,10 @@
-import React, { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useContext, createContext } from 'react'
 
 import { manageModelMap } from '../utils/mapping/mappingUtilsProvider.js'
 
-const ManageModelContext = React.createContext()
+const ManageModelContext = createContext()
 
-const ManageModelProvider = ({ children }) => {
+export const ManageModelProvider = ({ children }) => {
     const [model, setModel] = useState(manageModelMap)
 
     const addToTransportModel = useCallback(({ id, name, type, color, custom }) => {
@@ -161,4 +161,4 @@ const ManageModelProvider = ({ children }) => {
     )
 }
 
-export { ManageModelContext, ManageModelProvider }
+export const useManageModel = () => useContext(ManageModelContext)

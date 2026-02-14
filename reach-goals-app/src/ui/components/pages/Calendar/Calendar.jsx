@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
@@ -6,7 +6,7 @@ import { useAssignmentProvider } from '../../../../provider/model/AssignmentMode
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
 import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 
-import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
+import { useManageModel } from '../../../../provider/ManageModelProvider.jsx'
 
 import { filterBuildModelMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
 import { updateFilterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
@@ -21,7 +21,7 @@ const Calendar = () => {
     const { layout, updateSwitchLayout } = useSwitchLayout()
     const { page: { loading: loadingGoal, data: dataGoal } } = useGoalProvider()
     const { page: { loading: loadingAssignment, data: dataAssignment } } = useAssignmentProvider()
-    const { updateFilterModel } = useContext(ManageModelContext)
+    const { updateFilterModel } = useManageModel()
     const location = useLocation()
 
     const [dataModelSource, setDataModelSource] = useState({

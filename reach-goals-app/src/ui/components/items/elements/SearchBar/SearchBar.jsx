@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState, useMemo, useRef } from 'react'
+import { useEffect, useState, useMemo, useRef } from 'react'
 
 import { iconMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils'
 import { debounce } from '../../../../../utils/utils'
-import { VisibilityContext } from '../../../../../provider/VisibilityProvider'
+import { useVisibility } from '../../../../../provider/VisibilityProvider'
 import { useSearchBarProvider } from '../../../../../provider/SearchBarProvider'
 
 import SearchBoxResults from './SearchBoxResults'
@@ -13,7 +13,7 @@ import ButtonAction from '../ButtonAction/ButtonAction'
 
 const SearchBar = ({ mode = 'service', placeholder }) => {
     const [param, setParam] = useState('')
-    const { visibleElements, toggleVisibility } = useContext(VisibilityContext)
+    const { visibleElements, toggleVisibility } = useVisibility()
     const { data, search, reset, isSearching, status } = useSearchBarProvider()
 
     const isShowSearchBoxResults = visibleElements.includes('search-bar') && mode === 'service'

@@ -1,9 +1,8 @@
-import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
-import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
-import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
+import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
+import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
 
 import { iconMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
 
@@ -16,8 +15,8 @@ import '../ModalDetailsSection/ModalDetailsSection.scss'
 
 const ModalDetailsSection = () => {
     const { layout } = useSwitchLayout()
-    const { visibleElements } = useContext(VisibilityContext)
-    const { model: { formModel } } = useContext(ManageModelContext)
+    const { visibleElements } = useVisibility()
+    const { model: { formModel } } = useManageModel()
 
     const navigate = useNavigate()
     const typeVisibility = visibleElements[1]

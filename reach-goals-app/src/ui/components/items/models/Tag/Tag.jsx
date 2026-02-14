@@ -1,9 +1,8 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
 
 import { useTagProvider } from '../../../../../provider/model/TagModelProvider.jsx'
-
-import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
-import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
+import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
+import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
 
 import { visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { addToTransportModelMap, updateDataModelMap, updateFormModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
@@ -17,8 +16,8 @@ import '../Tag/Tag.scss'
 const Tag = ({ display, sourceForm, selectableModel = false }) => {
     const [erro, setErro] = useState(false)
 
-    const { toggleVisibility } = useContext(VisibilityContext)
-    const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useContext(ManageModelContext)
+    const { toggleVisibility } = useVisibility()
+    const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useManageModel()
     const { modal: { data }, remove, removeSuccess, removingVariables } = useTagProvider()
 
     const target = visibilityMap(['panel-right', 'tag'])

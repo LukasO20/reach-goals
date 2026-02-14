@@ -1,6 +1,4 @@
-import { useContext } from 'react'
-
-import { VisibilityContext } from '../../../provider/VisibilityProvider.jsx'
+import { useVisibility } from '../../../provider/VisibilityProvider.jsx'
 import { useSwitchLayout } from '../../../provider/SwitchLayoutProvider.jsx'
 
 import ModalForm from './ModalForm/ModalForm.jsx'
@@ -9,7 +7,7 @@ import ModalConfig from './ModalConfig/ModalConfig.jsx'
 import './ModalSwitcher.scss'
 
 const ModalSwitcherCenter = () => {
-    const { visibleElements } = useContext(VisibilityContext)
+    const { visibleElements } = useVisibility()
     const { layout } = useSwitchLayout()
 
     const showModalCenter = visibleElements.includes('modal-center') ? 'show' : ''

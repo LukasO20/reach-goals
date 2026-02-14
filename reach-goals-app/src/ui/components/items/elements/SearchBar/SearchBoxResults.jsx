@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'
-import { ManageModelContext } from '../../../../../provider/ManageModelProvider.jsx'
-import { VisibilityContext } from '../../../../../provider/VisibilityProvider.jsx'
+import React from 'react'
+import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
+import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
 import PropTypes from 'prop-types'
@@ -18,8 +18,8 @@ const standardData = {
 }
 
 const SearchBoxResults = ({ data, loading, status }) => {
-    const { setModel } = useContext(ManageModelContext)
-    const { toggleVisibility } = useContext(VisibilityContext)
+    const { setModel } = useManageModel()
+    const { toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
     const { goals, assignments, tags } = data ?? standardData
 

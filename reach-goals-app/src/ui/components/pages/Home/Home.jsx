@@ -1,10 +1,10 @@
-import { useEffect, useContext } from 'react'
+import { useEffect } from 'react'
 
 import { useTitle } from '../../../../provider/TitleProvider.jsx'
 import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
 import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
-import { ManageModelContext } from '../../../../provider/ManageModelProvider.jsx'
+import { useManageModel } from '../../../../provider/ManageModelProvider.jsx'
 
 import { filterBuildModelMap } from '../../../../utils/mapping/mappingUtils.js'
 import { updateFilterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
@@ -20,7 +20,7 @@ const Home = () => {
     const { layout } = useSwitchLayout()
     const { page: { data: dataGoal, loading: loadingGoal } } = useGoalProvider()
     const { page: { data: dataAssignment, loading: loadingAssignment } } = useAssignmentProvider()
-    const { updateFilterModel } = useContext(ManageModelContext)
+    const { updateFilterModel } = useManageModel()
 
     const layoutHome = layout.page.layoutName
     const validLayouts = ['pie-chart', 'goal', 'assignment']
