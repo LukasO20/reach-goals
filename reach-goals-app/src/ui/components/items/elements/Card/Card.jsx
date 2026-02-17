@@ -1,6 +1,7 @@
 import { switchLayoutMap, visibilityMap, iconMap, displayModesMap } from '../../../../../utils/mapping/mappingUtils.js'
 
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
+import { Draggable } from 'react-beautiful-dnd'
 
 import PropTypes from 'prop-types'
 
@@ -8,8 +9,8 @@ import moment from 'moment'
 
 import './Card.scss'
 
-const Card = ({ type, model = [], display, pendingState, clickFunction }) => {
-    return model.map(item => {
+const Card = ({ type, model = [], display, pendingState, clickFunction, draggable }) => {
+    return model.map((item, index) => {
         const hasTags = item.tags?.length > 0
         const hasEndDate = item.end
         const itemID = item.id || item.tagID
@@ -56,9 +57,17 @@ const Card = ({ type, model = [], display, pendingState, clickFunction }) => {
             )
         }
 
-        return (
-            <div className={`${type} ${selectedDisplayType} ${isPending ? 'pending' : ''}`} id={itemID} key={itemID}
-                onClick={(e) => clickFunction?.card(item, e)} style={tagCardStyle}>
+        const renderCard = (dragProvided) => (
+            <div
+                className={`${type} ${selectedDisplayType} ${isPending ? 'pending' : ''}`}
+                id={itemID}
+                key={!draggable ? itemID : null}
+                onClick={(e) => clickFunction?.card(item, e)}
+                style={tagCardStyle}
+                ref={dragProvided?.innerRef}
+                {...dragProvided?.draggableProps}
+                {...dragProvided?.dragHandleProps}
+            >
                 <div className='head'>
                     <label className='line-info'>
                         {iconMap[type]}<label>{item.name}</label>
@@ -98,12 +107,21 @@ const Card = ({ type, model = [], display, pendingState, clickFunction }) => {
                 </div>
             </div>
         )
+
+        return draggable ? (
+            <Draggable draggableId={String(itemID)} index={index} key={String(itemID)}>
+                {(provided) => renderCard(provided)}
+            </Draggable>
+        ) : (
+            renderCard()
+        )
     })
 }
 
 Card.propTypes = {
     type: PropTypes.string.isRequired,
     model: PropTypes.array.isRequired,
+    draggable: PropTypes.bool,
     display: PropTypes.shape({
         type: PropTypes.arrayOf(
             PropTypes.oneOf(['card', 'card-mini'])

@@ -10,8 +10,8 @@ import { filterBuildModelMap } from '../../../../utils/mapping/mappingUtils.js'
 import { updateFilterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
 import Loading from '../../items/elements/Loading/Loading.jsx'
-import ContainerColumn from './ContainerColumn.jsx'
-import ContainerChartPie from './ContainerChartPie.jsx'
+import ContainerColumn from './elements/ContainerColumn.jsx'
+import ContainerChartPie from './elements/ContainerChartPie.jsx'
 
 import './Home.scss'
 

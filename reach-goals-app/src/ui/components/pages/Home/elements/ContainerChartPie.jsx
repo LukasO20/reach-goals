@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import ChartPie from '../../items/elements/ChartPie/ChartPie.jsx'
+import ChartPie from '../../../items/elements/ChartPie/ChartPie.jsx'
 
 import PropTypes from 'prop-types'
 
