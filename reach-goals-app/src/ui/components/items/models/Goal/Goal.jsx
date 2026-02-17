@@ -1,12 +1,10 @@
-import { useEffect } from 'react'
-
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 import { useGoalProvider } from '../../../../../provider/model/GoalModelProvider.jsx'
 import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
 import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
 
 import { switchLayoutMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
-import { addToTransportModelMap, updateDataModelMap, updateFormModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
+import { addToTransportModelMap, updateFormModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
 import Card from '../../elements/Card/Card.jsx'
 import CardMini from '../../elements/CardMini/CardMini.jsx'
@@ -17,28 +15,20 @@ import moment from 'moment'
 
 import '../Goal/Goal.scss'
 
-const Goal = ({ status, display, sourceForm, selectableModel = false, detailsModel = false }) => {
-    const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useManageModel()
+const Goal = ({ status, display, source = [], selectableModel = false, detailsModel = false, draggable = false }) => {
+    const { model, setModel, updateFormModel, addToTransportModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
-    const { page: { data: dataPage }, modal: { data: dataPanel }, remove, removeSuccess, removing, removingVariables } = useGoalProvider()
+    const { remove, removeSuccess, removing, removingVariables } = useGoalProvider()
 
-    const currentScope = model.filter.goal.scope
-    const currentFilter = model.filter.goal[currentScope]
+    const sourceData = source.goals ?? source
 
-    //First will be checked form source to render an goal, if not, will be render according goal filter
-    const baseData =
-        sourceForm?.goals ??
-        model.dataModel.goal[currentFilter.source]?.data ??
-        dataPage ??
-        []
-
-    const renderCard = baseData.filter(item =>
+    const renderCard = sourceData.filter(item =>
         !(removeSuccess && removingVariables && item.id === removingVariables)
         && item.status === status
     )
 
-    const renderCardMini = baseData.filter(item =>
+    const renderCardMini = sourceData.filter(item =>
         !(removeSuccess && removingVariables && item.id === removingVariables)
     )
 
@@ -58,7 +48,7 @@ const Goal = ({ status, display, sourceForm, selectableModel = false, detailsMod
         e.stopPropagation()
 
         if (selectableModel) {
-            const selected = baseData.find(m => m.id === goal.id)
+            const selected = sourceData.find(m => m.id === goal.id)
             const dataUpdateFormModelMap = updateFormModelMap({ keyObject: 'goalID', value: goal.id, action: 'add' })
             const dataAddToTransportModel = addToTransportModelMap({
                 id: selected.id,
@@ -83,19 +73,6 @@ const Goal = ({ status, display, sourceForm, selectableModel = false, detailsMod
         }
     }
 
-    useEffect(() => {
-        const currentData = currentScope === 'page' ? dataPage : dataPanel
-
-        if ((currentFilter.source === 'core' || currentFilter.source === 'support') && Array.isArray(currentData)) {
-            const dataUpdateDataModel = updateDataModelMap({
-                data: currentData,
-                type: 'goal',
-                scope: currentFilter.source
-            })
-            updateDataModel(dataUpdateDataModel)
-        }
-    }, [dataPage, dataPanel, updateDataModel, currentScope, currentFilter.source])
-
     const clickEvents = {
         card: goalClick,
         edit: editGoal,
@@ -119,6 +96,7 @@ const Goal = ({ status, display, sourceForm, selectableModel = false, detailsMod
             model={isCard ? renderCard : renderCardMini}
             clickFunction={clickEvents}
             display={display}
+            draggable={draggable}
         />
     ) : null
 }
@@ -133,11 +111,15 @@ Goal.propTypes = {
             PropTypes.oneOf(['edit', 'delete', 'details', 'remove'])
         )
     }).isRequired,
-    sourceForm: PropTypes.shape({
-        goals: PropTypes.array.isRequired
-    }),
+    source: PropTypes.oneOfType([
+        PropTypes.shape({
+            goals: PropTypes.array
+        }),
+        PropTypes.array
+    ]),
     selectableModel: PropTypes.bool,
-    detailsModel: PropTypes.bool
+    detailsModel: PropTypes.bool,
+    draggable: PropTypes.bool
 }
 
 export default Goal

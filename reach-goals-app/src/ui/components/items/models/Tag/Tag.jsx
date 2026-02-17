@@ -1,11 +1,11 @@
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback } from 'react'
 
 import { useTagProvider } from '../../../../../provider/model/TagModelProvider.jsx'
 import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
 import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
 
 import { visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
-import { addToTransportModelMap, updateDataModelMap, updateFormModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
+import { addToTransportModelMap, updateFormModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
 import CardMini from '../../elements/CardMini/CardMini.jsx'
 
@@ -13,30 +13,16 @@ import PropTypes from 'prop-types'
 
 import '../Tag/Tag.scss'
 
-const Tag = ({ display, sourceForm, selectableModel = false }) => {
-    const [erro, setErro] = useState(false)
-
+const Tag = ({ display, source = [], selectableModel = false }) => {
     const { toggleVisibility } = useVisibility()
-    const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useManageModel()
-    const { modal: { data }, remove, removeSuccess, removingVariables } = useTagProvider()
+    const { model, setModel, updateFormModel, addToTransportModel } = useManageModel()
+    const { remove, removeSuccess, removingVariables } = useTagProvider()
 
     const target = visibilityMap(['panel-right', 'tag'])
 
-    const currentScope = model.filter.tag.scope
-    const currentFilter = model.filter.tag[currentScope]
+    const sourceData = source.tags ? source.tags.map(item => (item.tag)) : source
 
-    //First will be checked form source to render a tag, if not, will be render according tag filter
-    const tagSourceAuxiliary = sourceForm?.tags?.map(item => {
-        return item.tag
-    })
-
-    const baseData =
-        tagSourceAuxiliary ??
-        model.dataModel.tag[currentFilter.source]?.data ??
-        data ??
-        []
-
-    const renderCardMini = baseData.filter(item =>
+    const renderCardMini = sourceData.filter(item =>
         !(removeSuccess && removingVariables && item.id === removingVariables)
     )
 
@@ -44,8 +30,8 @@ const Tag = ({ display, sourceForm, selectableModel = false }) => {
 
     const editTag = useCallback((id) => {
         try { setModel({ ...model, mainModelID: id, typeModel: 'tag' }) }
-        catch (error) { setErro(`Failed to edit this tag: ${erro.message}`) }
-    }, [setModel, erro.message, model])
+        catch (error) { console.error(`Failed to edit this tag: ${error.message}`) }
+    }, [setModel, model])
 
     const tagClick = (tag, e) => {
         e.stopPropagation()
@@ -85,17 +71,6 @@ const Tag = ({ display, sourceForm, selectableModel = false }) => {
         }
     }
 
-    useEffect(() => {
-        if ((currentFilter.source === 'core' || currentFilter.source === 'support') && Array.isArray(data)) {
-            const dataUpdateDataModel = updateDataModelMap({
-                data: data,
-                type: 'tag',
-                scope: currentFilter.source
-            })
-            updateDataModel(dataUpdateDataModel)
-        }
-    }, [data, updateDataModel, currentFilter.source])
-
     const clickEvents = {
         card: tagClick,
         edit: editTag,
@@ -115,19 +90,22 @@ Tag.propTypes = {
             PropTypes.oneOf(['edit', 'delete', 'details', 'remove'])
         )
     }).isRequired,
-    sourceForm: PropTypes.shape({
-        tags: PropTypes.arrayOf(
-            PropTypes.shape({
-                id: PropTypes.number,
-                tagID: PropTypes.number,
-                tag: PropTypes.shape({
+    source: PropTypes.oneOfType([
+        PropTypes.shape({
+            tags: PropTypes.arrayOf(
+                PropTypes.shape({
                     id: PropTypes.number,
-                    name: PropTypes.string,
-                    color: PropTypes.string
+                    tagID: PropTypes.number,
+                    tag: PropTypes.shape({
+                        id: PropTypes.number,
+                        name: PropTypes.string,
+                        color: PropTypes.string
+                    })
                 })
-            })
-        )
-    }),
+            )
+        }),
+        PropTypes.array
+    ]),
     selectableModel: PropTypes.bool
 }
 

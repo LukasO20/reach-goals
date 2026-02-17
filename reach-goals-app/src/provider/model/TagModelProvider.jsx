@@ -1,17 +1,19 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import * as tagService from '../../services/tagService.js'
 
+import { useManageModel } from '../ManageModelProvider.jsx'
 import { useTitle } from '../../provider/TitleProvider.jsx'
 
-import { filterServiceFnMap } from '../../utils/mapping/mappingUtilsProvider.js'
+import { filterServiceFnMap, updateDataModelMap } from '../../utils/mapping/mappingUtilsProvider.js'
 import { validFilter } from '../../utils/utilsProvider.js'
 
 export const TagModelContext = createContext()
 
 export const TagModelProvider = ({ children, filters = {} }) => {
     const queryClient = useQueryClient()
+    const { updateDataModel } = useManageModel()
     const { update } = useTitle()
 
     const queryKeyPage = ['tags', 'page', filters.page]
@@ -32,7 +34,7 @@ export const TagModelProvider = ({ children, filters = {} }) => {
     } = useQuery({
         queryKey: queryKeyPage,
         queryFn: createQueryFn(filters.page),
-        enabled: !!validFilter(filters.page),
+        enabled: !!validFilter(filters.page)
     })
 
     const {
@@ -42,12 +44,12 @@ export const TagModelProvider = ({ children, filters = {} }) => {
     } = useQuery({
         queryKey: queryKeyModal,
         queryFn: createQueryFn(filters.modal),
-        enabled: !!validFilter(filters.modal),
+        enabled: !!validFilter(filters.modal)
     })
 
     const saveMutation = useMutation({
         mutationFn: (model) =>
-            typeof model.id === 'number'
+            !!model.id
                 ? tagService.updateTag(model)
                 : tagService.addTag(model),
         onSuccess: () => {
@@ -63,6 +65,16 @@ export const TagModelProvider = ({ children, filters = {} }) => {
             update({ toast: `Tag was deleted` })
         },
     })
+
+    useEffect(() => {
+        const dataUpdateDataModel = updateDataModelMap({ data: pageData, type: 'tag', scope: 'core' })
+        updateDataModel(dataUpdateDataModel)
+    }, [pageData, updateDataModel])
+
+    useEffect(() => {
+        const dataUpdateDataModel = updateDataModelMap({ data: modalData, type: 'tag', scope: 'support' })
+        updateDataModel(dataUpdateDataModel)
+    }, [modalData, updateDataModel])
 
     return (
         <TagModelContext.Provider value={{

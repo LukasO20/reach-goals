@@ -1,12 +1,10 @@
-import { useEffect } from 'react'
-
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 import { useAssignmentProvider } from '../../../../../provider/model/AssignmentModelProvider.jsx'
 import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
 import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
 
 import { switchLayoutMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
-import { updateDataModelMap, updateFormModelMap, addToTransportModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
+import { updateFormModelMap, addToTransportModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
 import Card from '../../elements/Card/Card.jsx'
 import CardMini from '../../elements/CardMini/CardMini.jsx'
@@ -15,28 +13,20 @@ import PropTypes from 'prop-types'
 
 import '../Assignment/Assignment.scss'
 
-const Assignment = ({ status, display, sourceForm, selectableModel = false, detailsModel = false }) => {
-    const { model, setModel, updateFormModel, updateDataModel, addToTransportModel } = useManageModel()
+const Assignment = ({ status, display, source = [], selectableModel = false, detailsModel = false }) => {
+    const { model, setModel, updateFormModel, addToTransportModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
-    const { page: { data: dataPage }, modal: { data: dataPanel }, remove, removeSuccess, removing, removingVariables } = useAssignmentProvider()
+    const { remove, removeSuccess, removing, removingVariables } = useAssignmentProvider()
 
-    const currentScope = model.filter.assignment.scope
-    const currentFilter = model.filter.assignment[currentScope]
+    const sourceData = source.assignments ?? source
 
-    //First will be checked form source to render an assignment, if not, will be render according assignment filter
-    const baseData =
-        sourceForm?.assignments ??
-        model.dataModel.assignment[currentFilter.source]?.data ??
-        dataPage ??
-        []
-
-    const renderCard = baseData.filter(item =>
+    const renderCard = sourceData.filter(item =>
         !(removeSuccess && removingVariables && item.id === removingVariables)
         && item.status === status
     )
 
-    const renderCardMini = baseData.filter(item =>
+    const renderCardMini = sourceData.filter(item =>
         !(removeSuccess && removingVariables && item.id === removingVariables)
     )
 
@@ -94,19 +84,6 @@ const Assignment = ({ status, display, sourceForm, selectableModel = false, deta
         }
     }
 
-    useEffect(() => {
-        const currentData = currentScope === 'page' ? dataPage : dataPanel
-
-        if ((currentFilter.source === 'core' || currentFilter.source === 'support') && Array.isArray(currentData)) {
-            const dataUpdateDataModel = updateDataModelMap({
-                data: currentData,
-                type: 'assignment',
-                scope: currentFilter.source
-            })
-            updateDataModel(dataUpdateDataModel)
-        }
-    }, [dataPage, dataPanel, currentFilter.source, currentScope, updateDataModel])
-
     const clickEvents = {
         card: assignmentClick,
         edit: editAssignment,
@@ -144,9 +121,12 @@ Assignment.propTypes = {
             PropTypes.oneOf(['edit', 'delete', 'details', 'remove'])
         )
     }).isRequired,
-    sourceForm: PropTypes.shape({
-        assignments: PropTypes.array
-    }),
+    source: PropTypes.oneOfType([
+        PropTypes.shape({
+            assignments: PropTypes.array
+        }),
+        PropTypes.array
+    ]),
     selectableModel: PropTypes.bool,
     detailsModel: PropTypes.bool
 }
