@@ -28,7 +28,7 @@ const ModalDetailsSection = () => {
             type: ['card-mini'],
             actions: []
         },
-        sourceForm: {
+        source: {
             assignments: formModel.assignments,
             tags: formModel.tags,
         }

@@ -38,12 +38,12 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
     const renderModelEnviroment = (goalForm = false) => {
         const goalEnviroment = !!isEmptyForm && goalForm
 
-        if (goalEnviroment) return <ModelSwitcher type='assignment' propsReference={modelSwitcherBy} />
+        if (goalEnviroment && Object.keys(modelForm).length > 0) return <ModelSwitcher type='assignment' propsReference={modelSwitcherBy} />
         else return <ModelCopy type={model.typeModel} region={modelCopyRegion} propsReference={modelCopyBy} />
     }
 
     const renderModelTagEnviroment = () => {
-        if (!!isEmptyForm) return <ModelSwitcher type='tag' propsReference={modelSwitcherBy} />
+        if (!!isEmptyForm && Object.keys(modelForm).length > 0) return <ModelSwitcher type='tag' propsReference={modelSwitcherBy} />
         else return <ModelCopy type={model.typeModel} region='tag' propsReference={modelCopyBy} />
     }
 
@@ -59,7 +59,7 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
         assignment: 'notGoalRelation',
         tag: !isEmptyForm ? 'tagSomeID' : type === 'goal' ? 'tagNotRelationGoal' : 'tagNotRelationAssignment'
     }
-    const modelSwitcherBy = { sourceForm: modelForm, display }
+    const modelSwitcherBy = { source: modelForm, display }
     const modelCopyBy = { display }
 
     const isGoalForm = type === 'goal'

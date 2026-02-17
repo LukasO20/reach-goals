@@ -18,9 +18,11 @@ import './ModalModelList.scss'
 
 const ModalModelList = ({ title, type, typeFilterKey }) => {
     const { model, updateFilterModel } = useManageModel()
-    const { modal: { loading: loadingGoal } } = useGoalProvider()
-    const { modal: { loading: loadingAssigment } } = useAssignmentProvider()
-    const { modal: { loading: loadingTag } } = useTagProvider()
+    const { modal: { data: dataGoal, loading: loadingGoal } } = useGoalProvider()
+    const { modal: { data: dataAssignment, loading: loadingAssigment } } = useAssignmentProvider()
+    const { modal: { data: dataTag, loading: loadingTag } } = useTagProvider()
+
+    const currentData = type === 'goal' ? dataGoal : type === 'assignment' ? dataAssignment : dataTag
 
     useEffect(() => {
         const isModalModelListTag = typeof model.mainModelID === 'number' && (typeFilterKey === 'tagNotRelationGoal' || typeFilterKey === 'tagNotRelationAssignment')
@@ -39,6 +41,10 @@ const ModalModelList = ({ title, type, typeFilterKey }) => {
         type: ['card-mini'],
         actions: []
     }
+    const propsReference = {
+        display: displayModesProps,
+        source: currentData
+    }
 
     const isLoading = !!loadingGoal || !!loadingAssigment || !!loadingTag
 
@@ -50,7 +56,7 @@ const ModalModelList = ({ title, type, typeFilterKey }) => {
                     classBtn='button-action circle close' icon='close' />
             </div>
             <div className='body scrollable'>
-                {isLoading ? <Loading mode='block' /> : <ModelSwitcher type={type} selectableModel={true} propsReference={{ display: displayModesProps }} />}
+                {isLoading ? <Loading mode='block' /> : <ModelSwitcher type={type} selectableModel={true} propsReference={propsReference} />}
             </div>
         </div>
     )

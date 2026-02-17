@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { useTagProvider } from '../../../../../provider/model/TagModelProvider'
 import { useManageModel } from '../../../../../provider/ManageModelProvider'
 
 import { iconMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils'
-import { updateDataModelMap } from '../../../../../utils/mapping/mappingUtilsProvider'
 
 import ButtonAction from '../../elements/ButtonAction/ButtonAction'
 import Goal from '../Goal/Goal'
@@ -16,28 +15,8 @@ const standarOpenCard = [{ id: null, open: false }]
 
 const TagRelationCard = () => {
     const [openCard, setOpenCard] = useState(standarOpenCard)
-    const { model, setModel, updateDataModel } = useManageModel()
-    const { modal: { data: dataPanel }, remove, removing, removeSuccess, removingVariables } = useTagProvider()
-    const currentFilter = model.filter.tag.modal
-
-    //First will be checked form source to render an goal, if not, will be render according goal filter
-    const baseData =
-        model.dataModel.tag.core.data ??
-        dataPanel ??
-        []
-
-    useEffect(() => {
-        const currentData = dataPanel
-
-        if (currentFilter.source === 'core' && Array.isArray(currentData)) {
-            const dataUpdateDataModel = updateDataModelMap({
-                data: currentData,
-                type: 'tag',
-                scope: currentFilter.source
-            })
-            updateDataModel(dataUpdateDataModel)
-        }
-    }, [dataPanel, updateDataModel, currentFilter.source])
+    const { setModel } = useManageModel()
+    const { modal: { data = [] }, remove, removing, removeSuccess, removingVariables } = useTagProvider()
 
     const handleSetOpenCard = (item) => {
         setOpenCard(prev => {
@@ -55,7 +34,7 @@ const TagRelationCard = () => {
     const deleteTag = async (id) => { remove(id) }
 
     return (
-        baseData
+        data
             .filter(tag => !(removeSuccess && removingVariables && tag.id === removingVariables))
             .map(item => {
                 const { goals = [], assignments = [] } = item
@@ -119,7 +98,7 @@ const TagRelationCard = () => {
                                         {iconMap['goal']}
                                         {quantityGoalMessage}
                                     </label>
-                                    <Goal sourceForm={goal} display={displayModesProps} />
+                                    <Goal source={goal} display={displayModesProps} />
                                 </div>
                             }
                             {
@@ -129,7 +108,7 @@ const TagRelationCard = () => {
                                         {iconMap['assignment']}
                                         {quantityAssigmentMessage}
                                     </label>
-                                    <Assignment sourceForm={assignment} display={displayModesProps} />
+                                    <Assignment source={assignment} display={displayModesProps} />
                                 </div>
                             }
                         </div>

@@ -21,17 +21,19 @@ const Objectives = () => {
     const { update } = useTitle()
     const { layout, updateSwitchLayout } = useSwitchLayout()
     const { updateFilterModel } = useManageModel()
-    const { page: { loading: loadingGoal } } = useGoalProvider()
-    const { page: { loading: loadingAssignment } } = useAssignmentProvider()
+    const { page: { data: dataGoal, loading: loadingGoal } } = useGoalProvider()
+    const { page: { data: dataAssignment, loading: loadingAssignment } } = useAssignmentProvider()
     const location = useLocation()
 
     const typeLayout = layout.page.layoutName
+    const currentData = typeLayout === 'goal' ? dataGoal : typeLayout === 'assignment' ? dataAssignment : []
     const modelProps = {
         display: {
             type: ['card-mini'],
             actions: []
         },
-        detailsModel: true
+        detailsModel: true,
+        source: currentData
     }
 
     const isAllModels = typeLayout === 'all'
@@ -68,8 +70,8 @@ const Objectives = () => {
     if (isAllModels) {
         content = (
             <>
-                <Goal display={modelProps.display} detailsModel={true} />
-                <Assignment display={modelProps.display} detailsModel={true} />
+                <Goal display={modelProps.display} detailsModel={true} source={dataGoal} />
+                <Assignment display={modelProps.display} detailsModel={true} source={dataAssignment} />
             </>
         )
     } else if (isOnlyTypeModel) {
