@@ -48,10 +48,7 @@ export const AssignmentModelProvider = ({ children, filters = {} }) => {
     })
 
     const saveMutation = useMutation({
-        mutationFn: (model) =>
-            typeof model.id === 'number'
-                ? assignmentService.updateAssignment(model)
-                : assignmentService.addAssignment(model),
+        mutationFn: (model) => !!model.id ? assignmentService.updateAssignment(model) : assignmentService.addAssignment(model),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeyPage })
             update({ toast: `Assignment save with success` })

@@ -1,3 +1,4 @@
+import { isDate } from 'moment'
 import { useManageModel } from '../../../../provider/ManageModelProvider'
 
 import { iconMap, visibilityMap } from '../../../../utils/mapping/mappingUtils'
@@ -9,11 +10,7 @@ import PropTypes from 'prop-types'
 const ModelRelationAdd = ({ type, children }) => {
     const { model } = useManageModel()
     const tittleRelation = type === 'goal' ? 'assignments' : 'goals'
-    const visibilityRelation = {
-        goal: 'assignment',
-        assignment: 'goal',
-        tag: 'tag'
-    }
+    const visibilityRelation = { goal: 'assignment', assignment: 'goal', tag: 'tag' }
 
     const renderButtonAction = (currentType) => {
         switch (currentType) {
@@ -39,31 +36,29 @@ const ModelRelationAdd = ({ type, children }) => {
     }
 
     if (type === 'assignment') {
-        const goal = model.transportModel.goal
-        const goaLinked = goal.length || null
+        const goals = model.transportModel.goal
+        const goaLinked = goals.length || null
+        const goalData = goals[0]
 
         return (
-            <div className={`item-forms goal ${goal.length ? 'selected' : ''}`}>
+            <div className={`item-forms goal ${goals.length ? 'selected' : ''}`}>
                 <div className='head'>
                     <div className='item-head-1'>
                         <label>
                             {iconMap['goal']}{tittleRelation}
-                            {
-                                goaLinked &&
-                                <>
+                            {goaLinked &&
+                                (<>
                                     <span className='line' />
-                                    <span className='name-goal'>{goal[0].name}</span>
-                                </>
-                            }
+                                    <span className='name-goal'>{goalData.name}</span>
+                                </>)}
                         </label>
-                        {renderButtonAction(!!goal.length ? 'assignment' : null)}
+                        {renderButtonAction(!!goals.length ? 'assignment' : null)}
                     </div>
-                    {
-                        typeof goal[0]?.end === 'string' && goal[0]?.end !== 'Invalid date' &&
+                    {!!goalData && goalData.end && goalData.end !== 'Invalid date' && (
                         <div className='item-head-2'>
-                            <span>schedule to end on {goal[0].end}</span>
+                            <span>schedule to end on {goalData.end}</span>
                         </div>
-                    }
+                    )}
                 </div>
             </div>
         )

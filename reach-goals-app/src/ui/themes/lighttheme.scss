@@ -4,6 +4,8 @@ $color-white: #fff;
 $color-complementary-p: #EAEAEA;
 $color-complementary-s: #5E5850;
 $color-accent-p: #16B0F7;
+$color-success: #00d057;
+$color-cancel: #242424;
 
 /* COLORS OPACITY */
 
@@ -13,6 +15,8 @@ $color-white-05: rgba($color-white, 0.05);
 $color-complementary-p-05: rgba($color-complementary-p, 0.05);
 $color-complementary-s-05: rgba($color-complementary-s, 0.05);
 $color-accent-p-05: rgba($color-accent-p, 0.05);
+$color-success-05: rgba($color-success, 0.05);
+$color-cancel-05: rgba($color-cancel, 0.05);
 
 // 15%
 $color-primary-15: rgba($color-primary, 0.15);
@@ -20,6 +24,8 @@ $color-white-15: rgba($color-white, 0.15);
 $color-complementary-p-15: rgba($color-complementary-p, 0.15);
 $color-complementary-s-15: rgba($color-complementary-s, 0.15);
 $color-accent-p-15: rgba($color-accent-p, 0.15);
+$color-success-15: rgba($color-success, 0.15);
+$color-cancel-15: rgba($color-cancel, 0.15);
 
 // 30%
 $color-primary-30: rgba($color-primary, 0.30);
@@ -27,6 +33,8 @@ $color-white-30: rgba($color-white, 0.30);
 $color-complementary-p-30: rgba($color-complementary-p, 0.30);
 $color-complementary-s-30: rgba($color-complementary-s, 0.30);
 $color-accent-p-30: rgba($color-accent-p, 0.30);
+$color-success-30: rgba($color-success, 0.30);
+$color-cancel-30: rgba($color-cancel, 0.30);
 
 // 50%
 $color-primary-50: rgba($color-primary, 0.50);
@@ -34,6 +42,8 @@ $color-white-50: rgba($color-white, 0.50);
 $color-complementary-p-50: rgba($color-complementary-p, 0.50);
 $color-complementary-s-50: rgba($color-complementary-s, 0.50);
 $color-accent-p-50: rgba($color-accent-p, 0.50);
+$color-success-50: rgba($color-success, 0.50);
+$color-cancel-50: rgba($color-cancel, 0.50);
 
 // 70%
 $color-primary-70: rgba($color-primary, 0.70);
@@ -41,6 +51,8 @@ $color-white-70: rgba($color-white, 0.70);
 $color-complementary-p-70: rgba($color-complementary-p, 0.70);
 $color-complementary-s-70: rgba($color-complementary-s, 0.70);
 $color-accent-p-70: rgba($color-accent-p, 0.70);
+$color-success-70: rgba($color-success, 0.70);
+$color-cancel-70: rgba($color-cancel, 0.70);
 
 /* SHADOW */
 $box-shadow-st: 0.01em 0.01em 0.45em 0.01em $color-complementary-s-30;

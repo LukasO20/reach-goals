@@ -13,7 +13,7 @@ import PropTypes from 'prop-types'
 
 import '../Assignment/Assignment.scss'
 
-const Assignment = ({ status, display, source = [], selectableModel = false, detailsModel = false }) => {
+const Assignment = ({ status, display, source = [], selectableModel = false, detailsModel = false, draggable = false }) => {
     const { model, setModel, updateFormModel, addToTransportModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
@@ -108,6 +108,7 @@ const Assignment = ({ status, display, source = [], selectableModel = false, det
             model={isCard ? renderCard : renderCardMini}
             clickFunction={clickEvents}
             display={display}
+            draggable={draggable}
         />
     ) : null
 }
@@ -128,7 +129,8 @@ Assignment.propTypes = {
         PropTypes.array
     ]),
     selectableModel: PropTypes.bool,
-    detailsModel: PropTypes.bool
+    detailsModel: PropTypes.bool,
+    draggable: PropTypes.bool
 }
 
 export default Assignment

@@ -25,6 +25,7 @@
                 background-color: $color-complementary-p;
                 flex: 1;
                 border-radius: 0.35em;
+                border: 3px solid transparent;
                 overflow: hidden;
                 gap: 0.5rem;
 
@@ -39,23 +40,33 @@
                 &:nth-child(2) {
 
                     >.head {
-                        color: $color-complementary-s;
+                        background-color: $color-success-70;
+                        color: $color-white;
+
+                        * {
+                            color: $color-white;   
+                        }
                     }
                 }
 
                 &:nth-child(3) {
 
                     >.head {
-                        color: $color-complementary-s;
-                    }
+                        background-color: $color-cancel-70;
+                        color: $color-white;
+
+                        * {
+                            color: $color-white;   
+                        }                    }
                 }
 
                 >.head {
-                    height: 3rem;
+                    padding: 1.15rem;
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     gap: 0.5rem;
+                    border-radius: 0.35em;
 
                     label {
                         font-weight: 600;
@@ -67,6 +78,10 @@
                     overflow-y: auto;
                     flex-grow: 1;
                     min-height: 0;
+
+                    .list {
+                        min-height: 55dvh;
+                    }
                 }
             }
         }
