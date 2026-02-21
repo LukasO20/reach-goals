@@ -12,6 +12,7 @@ model Goal {
   id          Int          @id @default(autoincrement())
   name        String
   description String?
+  order       Int?
   create      DateTime     @default(now())
   start       DateTime     @default(now())
   end         DateTime?
@@ -26,6 +27,7 @@ model Assignment {
   name        String
   description String?
   duration    Int?
+  order       Int?
   create      DateTime          @default(now())
   end         DateTime?
   remember    DateTime?
