@@ -2,14 +2,28 @@ import { prisma } from '../connectdb.js'
 
 const handler = async (req, res) => {
     const { action, params } = req.query
+    const { data, typeModel } = req.body
+    let results = undefined
 
     if (req.method === 'GET') {
 
         try {
-            let results = undefined
 
             if (action === 'search-model') {
                 results = await searchResults(params)
+                if (results) return res.status(200).json(results)
+            }
+        }
+        catch (err) {
+            return res.status(500).json({ error: err.message || 'Internal Server Error' })
+        }
+    }
+
+    if (req.method === 'PUT') {
+        try {
+
+            if (action === 'update-dragdrop') {
+                results = await updateModelDragDrop(data, typeModel)
                 if (results) return res.status(200).json(results)
             }
         }
@@ -62,6 +76,29 @@ const searchResults = async (params = '') => {
     }
 
     return { goals: [], assignments: [], tags: [] }
+}
+
+const updateModelDragDrop = async (data = [], typeModel = '') => {
+    const allowTypesModel = ['goal', 'assignment']
+
+    if (allowTypesModel.includes(typeModel)) {
+
+        try {
+            return await prisma.$transaction(
+                data.map(item =>
+                    prisma[typeModel].update({
+                        where: { id: item.id },
+                        data: { order: item.order, status: item.status }
+                    })
+                )
+            )
+        }
+        catch (err) {
+            return console.error('Error update status and order model:', err)
+        }
+    }
+
+    return console.error(`Something went wrong during update drag drop model: type is ${typeModel}. Send 'goal' or 'assignment'`)
 }
 
 export default handler

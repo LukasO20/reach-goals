@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import * as assignmentService from '../../services/assignmentService.js'
+import * as commonService from '../../services/common.js'
 
 import { useManageModel } from '../ManageModelProvider.jsx'
 import { useTitle } from '../../provider/TitleProvider.jsx'
@@ -55,6 +56,14 @@ export const AssignmentModelProvider = ({ children, filters = {} }) => {
         },
     })
 
+  const saveDragDropMutation = useMutation({
+    mutationFn: (model) => commonService.updateModelDragDrop({ data: model, typeModel: 'assignment' }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeyPage })
+      update({ toast: `Assignment status save with success` })
+    }
+  })
+
     const removeMutation = useMutation({
         mutationFn: (id) => assignmentService.deleteAssignment(id),
         onSuccess: () => {
@@ -88,6 +97,7 @@ export const AssignmentModelProvider = ({ children, filters = {} }) => {
             save: saveMutation.mutate,
             saving: saveMutation.isPending,
             saveSuccess: saveMutation.isSuccess,
+            saveDragDrop: saveDragDropMutation.mutate,
             remove: removeMutation.mutate,
             removeSuccess: removeMutation.isSuccess,
             removing: removeMutation.isPending,

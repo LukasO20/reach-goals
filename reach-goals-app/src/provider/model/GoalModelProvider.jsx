@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import * as goalService from '../../services/goalService.js'
+import * as commonService from '../../services/common.js'
 
 import { useManageModel } from '../ManageModelProvider.jsx'
 import { useTitle } from '../../provider/TitleProvider.jsx'
@@ -55,6 +56,14 @@ export const GoalModelProvider = ({ children, filters = {} }) => {
     }
   })
 
+  const saveDragDropMutation = useMutation({
+    mutationFn: (model) => commonService.updateModelDragDrop({ data: model, typeModel: 'goal' }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeyPage })
+      update({ toast: `Goal status save with success` })
+    }
+  })
+
   const removeMutation = useMutation({
     mutationFn: (id) => goalService.deleteGoal(id),
     onSuccess: () => {
@@ -88,6 +97,7 @@ export const GoalModelProvider = ({ children, filters = {} }) => {
       save: saveMutation.mutate,
       saving: saveMutation.isPending,
       saveSuccess: saveMutation.isSuccess,
+      saveDragDrop: saveDragDropMutation.mutate,
       remove: removeMutation.mutate,
       removeSuccess: removeMutation.isSuccess,
       removing: removeMutation.isPending,

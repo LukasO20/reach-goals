@@ -8,13 +8,8 @@ const DragDrop = ({ onDragEnd, onDragUpdate, children }) => {
     onDragEnd(result)
   }
 
-  const handleDragUpdate = (result) => {
-    if (!result.source && !result.destination) return
-    onDragUpdate(result)
-  }
-
   return (
-    <DragDropContext onDragEnd={handleDragEnd} onDragUpdate={handleDragUpdate}>
+    <DragDropContext onDragEnd={handleDragEnd}>
       {children}
     </DragDropContext>
   )
@@ -35,7 +30,6 @@ const DragDropDroppable = ({ dragDropID, children, className }) => {
 
 DragDrop.propTypes = {
   onDragEnd: PropTypes.func.isRequired,
-  onDragUpdate: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired
 }
 

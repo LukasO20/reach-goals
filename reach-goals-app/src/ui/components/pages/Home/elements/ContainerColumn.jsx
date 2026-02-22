@@ -4,7 +4,6 @@ import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider'
 import { useGoalProvider } from '../../../../../provider/model/GoalModelProvider'
 import { useAssignmentProvider } from '../../../../../provider/model/AssignmentModelProvider'
 import { useTitle } from '../../../../../provider/TitleProvider'
-import { useManageModel } from '../../../../../provider/ManageModelProvider'
 
 import { iconMap } from '../../../../../utils/mapping/mappingUtils'
 
@@ -15,9 +14,8 @@ import { DragDrop, DragDropDroppable } from '../../../items/elements/DragDrop/Dr
 const ContainerColumn = () => {
     const { layout } = useSwitchLayout()
     const { update } = useTitle()
-    const { model, setModel } = useManageModel()
-    const { page: { data: dataGoal = [] }, save: saveGoal } = useGoalProvider()
-    const { page: { data: dataAssignment = [] }, save: saveAssignment } = useAssignmentProvider()
+    const { page: { data: dataGoal = [] }, saveDragDrop: saveDragDropGoal } = useGoalProvider()
+    const { page: { data: dataAssignment = [] }, saveDragDrop: saveDragDropAssignment } = useAssignmentProvider()
 
     const [dataList, setDataList] = useState({
         progress: { goal: dataGoal.filter(g => g.status === 'progress'), assignment: dataAssignment.filter(a => a.status === 'progress') },
@@ -31,16 +29,28 @@ const ContainerColumn = () => {
         actions: ['edit', 'delete']
     }
 
-    const changeStatusItemUI = (dataList = []) => {
-        const formData = model.formModel
-        return dataList.map((item) =>
-            item?.id.toString() === formData?.id ? { ...item, status: formData.status } : item
+    const updateStatusItemUI = (dataList = [], draggableId, status) => {
+        if (!status) return dataList
+        const data = dataList.map((item, index) =>
+            item?.id.toString() === draggableId ?
+                { ...item, status, order: index } : { ...item, order: index }
         )
+
+        try {
+            layoutColumn === 'goal' && saveDragDropGoal(data)
+            layoutColumn === 'assignment' && saveDragDropAssignment(data)
+
+        } catch (exception) {
+            update({ toast: 'Ops something went wrong during save. Reload page and try again later.' })
+            console.error(`Error during save: ${exception}`)
+        }
+
+        return data
     }
 
     const changePosition = (resultDrangEnd) => {
-        const { source, destination } = resultDrangEnd
-        if (!destination) return
+        const { source, destination, draggableId } = resultDrangEnd
+        if (!destination || !draggableId) return
 
         const sKey = source.droppableId
         const dKey = destination.droppableId
@@ -53,7 +63,7 @@ const ContainerColumn = () => {
                 sourceItems.splice(destination.index, 0, moved)
                 return {
                     ...prev,
-                    [sKey]: { ...prev[sKey], [layoutColumn]: sourceItems }
+                    [sKey]: { ...prev[sKey], [layoutColumn]: updateStatusItemUI(sourceItems, draggableId, sKey) }
                 }
             }
 
@@ -63,52 +73,16 @@ const ContainerColumn = () => {
             return {
                 ...prev,
                 [sKey]: { ...prev[sKey], [layoutColumn]: sourceItems },
-                [dKey]: { ...prev[dKey], [layoutColumn]: changeStatusItemUI(destItems) }
+                [dKey]: { ...prev[dKey], [layoutColumn]: updateStatusItemUI(destItems, draggableId, dKey) }
             }
         })
     }
 
-    const disstructureDragResult = (result) => {
-        const { destination, draggableId } = result
-
-        const isProgressDroppable = destination?.droppableId === 'progress'
-        const isConcludeDroppable = destination?.droppableId === 'conclude'
-
-        return { draggableId, isProgressDroppable, isConcludeDroppable }
-    }
-
-    const handleOnDragUpdate = (result) => {
-        const { draggableId, isProgressDroppable, isConcludeDroppable } = disstructureDragResult(result)
-
-        setModel(prev => ({
-            ...prev,
-            formModel: {
-                ...prev.formModel,
-                id: draggableId,
-                status: isProgressDroppable ? 'progress' : isConcludeDroppable ? 'conclude' : 'cancel'
-            },
-            typeModel: layoutColumn
-        }))
-    }
-
-    const handleOnEndDrag = async (result) => {
-        changePosition(result)
-
-        if (model.formModel) {
-            try {
-                layoutColumn === 'goal' && await saveGoal(structuredClone(model.formModel))
-                layoutColumn === 'assignment' && await saveAssignment(structuredClone(model.formModel))
-
-            } catch (exception) {
-                update({ toast: 'Ops something went wrong during save. Reload page and try again later.' })
-                console.error(`Error during save: ${exception}`)
-            }
-        }
-    }
+    const handleOnEndDrag = (result) => changePosition(result)
 
     return (
         <div className='column home'>
-            <DragDrop onDragEnd={handleOnEndDrag} onDragUpdate={handleOnDragUpdate}>
+            <DragDrop onDragEnd={handleOnEndDrag}>
                 <div className='list-container'>
                     <div className='itens-progress column'>
                         <div className='head'>
