@@ -37,3 +37,41 @@ export const updateModelDragDrop = async (data) => {
         throw error
     }
 }
+
+export const removeModels = async (data) => {
+    try {
+        const url = `/api/common?action=remove-models`
+        const response = await fetch(url, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+
+        const result = await response.json()
+        if (!response.ok) throw new Error(result.error || 'Failed to remove models.')
+
+        return result
+    } catch (error) {
+        console.error('Error to remove models: ', error.message)
+        throw error
+    }
+}
+
+export const updateModelStatus = async (data, status) => {
+    try {
+        const url = `/api/common?action=update-status`
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ data, status })
+        })
+
+        const result = await response.json()
+        if (!response.ok) throw new Error(result.error || 'Failed to update model status.')
+
+        return result
+    } catch (error) {
+        console.error('Error updating model status: ', error.message)
+        throw error
+    }
+}

@@ -10,7 +10,9 @@ import moment from 'moment'
 import './Card.scss'
 
 const Card = ({ type, model = [], display, pendingState, clickFunction, draggable }) => {
-    return model.map((item, index) => {
+    return model
+        .sort((a, b) => a.order - b.order)
+        .map((item, index) => {
         const hasTags = item.tags?.length > 0
         const hasEndDate = item.end
         const itemID = item.id || item.tagID

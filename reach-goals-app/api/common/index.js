@@ -2,7 +2,7 @@ import { prisma } from '../connectdb.js'
 
 const handler = async (req, res) => {
     const { action, params } = req.query
-    const { data, typeModel } = req.body
+    const { data, typeModel, status } = req.body
     let results = undefined
 
     if (req.method === 'GET') {
@@ -20,10 +20,30 @@ const handler = async (req, res) => {
     }
 
     if (req.method === 'PUT') {
+
         try {
 
             if (action === 'update-dragdrop') {
                 results = await updateModelDragDrop(data, typeModel)
+                if (results) return res.status(200).json(results)
+            }
+
+            if (action === 'update-status') {
+                results = await updateModelStatus(data, status)
+                if (results) return res.status(200).json(results)
+            }
+        }
+        catch (err) {
+            return res.status(500).json({ error: err.message || 'Internal Server Error' })
+        }
+    }
+
+    if (req.method === 'DELETE') {
+
+        try {
+
+            if (action === 'remove-models') {
+                results = await removeModels(data)
                 if (results) return res.status(200).json(results)
             }
         }
@@ -99,6 +119,58 @@ const updateModelDragDrop = async (data = [], typeModel = '') => {
     }
 
     return console.error(`Something went wrong during update drag drop model: type is ${typeModel}. Send 'goal' or 'assignment'`)
+}
+
+const removeModels = async (ids = []) => {
+
+    try {
+        const removedGoal = await prisma.goal.deleteMany({
+            where: { id: { in: ids } }
+        })
+
+        const removedAssignment = await prisma.assignment.deleteMany({
+            where: { id: { in: ids } }
+        })
+
+        const removedTag = await prisma.tag.deleteMany({
+            where: { id: { in: ids } }
+        })
+
+        const isTrue = !!removedGoal || !!removedAssignment || !!removedTag
+        return isTrue
+    }
+    catch (err) {
+        return console.error('Error removing models:', err)
+    }
+}
+
+const updateModelStatus = async (ids = [], status = '') => {
+    const allowStatus = ['progress', 'conclude', 'cancel']
+
+    if (allowStatus.includes(status)) {
+
+        try {
+            const statusGoal = await prisma.goal.updateMany({
+                where: { id: { in: ids } },
+                data: { status }
+            })
+
+            const statusAssignment = await prisma.assignment.updateMany({
+                where: { id: { in: ids } },
+                data: { status }
+            })
+
+            const statusTag = await prisma.tag.updateMany({
+                where: { id: { in: ids } },
+                data: { status }
+            })
+
+            return { goal: statusGoal, assignment: statusAssignment, tag: statusTag }
+        }
+        catch (err) {
+            return console.error('Error updating model status:', err)
+        }
+    }
 }
 
 export default handler
