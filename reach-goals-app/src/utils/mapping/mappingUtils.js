@@ -1,5 +1,6 @@
 import * as Unicons from '@iconscout/react-unicons'
 import { typeModel, typeReduceModel, typeFilterModel } from '../reference.js'
+import { checkboxMap } from './mappingUtilsProvider.js'
 
 export const visibilityMap = (classes, operator = {}) => {
     const data = Array.isArray(classes) ? classes : [classes]
@@ -17,17 +18,12 @@ export const switchLayoutMap = ({ area, state }) => {
     }
 }
 
-export const checkboxMap = (checkbox) => {
-    const data = typeof checkbox === 'object' && checkbox !== null ? true : false
-    if (data) {
-        const attributes = {
-            id: checkbox.id,
-            value: checkbox.value ?? false
-        }
-
-        return attributes
+export const buildCheckboxMap = (checkbox = checkboxMap) => {
+    return {
+        page: { ...checkboxMap.page, ...checkbox.page },
+        modal: { ...checkboxMap.modal, ...checkbox.modal },
+        scope: checkbox.scope
     }
-    return null
 }
 
 export const buildQueryParamsMap = ({ IDobject, action }) => {

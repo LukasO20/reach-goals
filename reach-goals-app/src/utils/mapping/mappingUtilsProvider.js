@@ -79,6 +79,20 @@ export const switchLayoutMap = {
     }
 }
 
+export const checkboxMap = {
+    page: {
+        pageName: 'home',
+        checked: false,
+        selected: []
+    },
+    modal: {
+        modalName: null,
+        checked: false,
+        selected: []
+    },
+    scope: ''
+}
+
 export const updateFilterModelMap = ({ filter = {}, model = '', scope = '' }) => {
     return { filter, model, scope }
 }

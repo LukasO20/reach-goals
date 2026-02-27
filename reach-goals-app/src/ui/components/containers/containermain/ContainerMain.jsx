@@ -6,7 +6,7 @@ import { useManageModel } from '../../../../provider/ManageModelProvider.jsx'
 import { useVisibility } from '../../../../provider/VisibilityProvider.jsx'
 import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
 
-import { visibilityMap, switchLayoutMap, checkboxMap } from '../../../../utils/mapping/mappingUtils.js'
+import { visibilityMap, switchLayoutMap, buildCheckboxMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import { monthNames } from '../../../../utils/reference.js'
 
@@ -63,7 +63,7 @@ const ContainerM = () => {
                     <div className='filter'>
                         {
                             !isPageCalendar && (
-                                <ButtonCheckbox checkbox={checkboxMap({ id: 'checkbox-m', value: false })} classBtn='checkbox-m btn-checkbox' />
+                                <ButtonCheckbox classBtn='checkbox-m btn-checkbox' checkbox={buildCheckboxMap({ page: { pageName: layout.page.pageName }, scope: 'page' })} />
                             )
                         }
                         {

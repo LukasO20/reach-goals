@@ -1,18 +1,23 @@
-import { useBool } from '../../../../../provider/CheckboxProvider.jsx'
+import { useCheckbox } from '../../../../../provider/CheckboxProvider'
+
+import { checkboxMap } from '../../../../../utils/mapping/mappingUtilsProvider'
 
 import '../ButtonCheckbox/ButtonCheckbox.scss'
 
-const statusButton = (classBtn, dataCheckboxProvider) => {
-    return dataCheckboxProvider.some(item => item.id === classBtn && item.value)
+const statusButton = (classBtn, dataCheckbox) => {
+    return dataCheckbox.some(item => item.id === classBtn && item.value)
 }
 
-const ButtonCheckbox = (props) => {
-    const { valuesCheckbox, toggleValueByID } = useBool()
-    const classBtn = props.classBtn.split(' ')[0]
-    const isChecked = statusButton(classBtn, valuesCheckbox)
+const ButtonCheckbox = ({ classBtn, checkbox = checkboxMap }) => {
+    const isChecked = false
+    const { toggleCheckbox } = useCheckbox()
 
     return (
-        <span className={`${props.classBtn} button-st ${isChecked ? 'checked' : ''}`} onClick={(e) => toggleValueByID(props.checkbox)} onKeyDown={(e) => e.key === 'Enter' ? toggleValueByID(props.checkbox) : ''} role='button' tabIndex='0'>
+        <span className={`${classBtn} button-st ${isChecked ? 'checked' : ''}`} 
+            onClick={() => toggleCheckbox(checkbox)}
+            onKeyDown={(e) => e.key === 'Enter' ? '' : ''}
+            role='button' tabIndex='0'
+        >
             <label className='checkbox-container'>
                 <i className={`icon-st fa-solid ${isChecked ? 'fa-check' : ''}`}></i>
             </label>
