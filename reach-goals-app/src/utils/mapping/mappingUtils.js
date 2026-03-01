@@ -1,4 +1,3 @@
-import * as Unicons from '@iconscout/react-unicons'
 import { typeModel, typeReduceModel, typeFilterModel } from '../reference.js'
 import { checkboxMap } from './mappingUtilsProvider.js'
 
@@ -65,41 +64,6 @@ export const filterBuildModelMap = (props, type, source) => {
             [key]: value,
         }
     }
-}
-
-export const iconMap = {
-    goal: <Unicons.UilBullseye className='icon-st' />,
-    assignment: <Unicons.UilListUiAlt className='icon-st' />,
-    tag: <Unicons.UilLabelAlt className='icon-st' />,
-    themes: <Unicons.UilSwatchbook className='icon-st' />,
-    color: <Unicons.UilPalette className='icon-st' />,
-    user: <Unicons.UilUser className='icon-st' />,
-    config: <Unicons.UilSlidersVAlt className='icon-st' />,
-    calendar: <Unicons.UilCalendar className='icon-st' />,
-    schedule: <Unicons.UilCalendarAlt className='icon-st' />,
-    comment: <Unicons.UilCommentAltNotes className='icon-st' />,
-    clock: <Unicons.UilClock className='icon-st' />,
-    objectives: <Unicons.UilCreateDashboard className='icon-st' />,
-    edit: <Unicons.UilPen className='icon-st' />,
-    editbox: <Unicons.UilEdit className='icon-st' />,
-    remove: <Unicons.UilTrashAlt className='icon-st' />,
-    searchalt: <Unicons.UilSearchAlt className='icon-st' />,
-    search: <Unicons.UilSearch className='icon-st' />,
-    layoutgrid: <Unicons.UilWebGrid className='icon-st' />,
-    chartbar: <Unicons.UilChartBar className='icon-st' />,
-    filter: <Unicons.UilFilter className='icon-st' />,
-    monitor: <Unicons.UilMonitor className='icon-st' />,
-    ellipsisv: <Unicons.UilEllipsisV className='icon-st' />,
-    arrowaltv: <Unicons.UilArrowsVAlt className='icon-st' />,
-    arrowdown: <Unicons.UilAngleDown className='icon-st' />,
-    plus: <Unicons.UilPlus className='icon-st' />,
-    close: <Unicons.UilTimes className='icon-st' />,
-    check: <Unicons.UilCheck className='icon-st' />,
-    cancel: <Unicons.UilTimesCircle className='icon-st' />,
-    save: <Unicons.UilSave className='icon-st' />,
-    progress: <Unicons.UilSpinnerAlt className='icon-st' />,
-    icons: <Unicons.UilIcons className='icon-st' />,
-    undefined: <Unicons.UilExclamationOctagon className='icon-st' />
 }
 
 export const titleMap = {

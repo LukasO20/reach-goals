@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo, useRef } from 'react'
 
-import { iconMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils'
+import { visibilityMap } from '../../../../../utils/mapping/mappingUtils'
+import { iconMap } from '../../../../../utils/mapping/mappingIcons'
 import { debounce } from '../../../../../utils/utils'
 import { useVisibility } from '../../../../../provider/VisibilityProvider'
 import { useSearchBarProvider } from '../../../../../provider/SearchBarProvider'
@@ -8,7 +9,7 @@ import { useSearchBarProvider } from '../../../../../provider/SearchBarProvider'
 import SearchBoxResults from './SearchBoxResults'
 import PropTypes from 'prop-types'
 
-import '../SearchBar/SearchBar.scss'
+import './SearchBar.scss'
 import ButtonAction from '../ButtonAction/ButtonAction'
 
 const SearchBar = ({ mode = 'service', placeholder }) => {

@@ -11,8 +11,6 @@ import CardMini from '../../elements/CardMini/CardMini.jsx'
 
 import PropTypes from 'prop-types'
 
-import '../Tag/Tag.scss'
-
 const Tag = ({ display, source = [], selectableModel = false }) => {
     const { toggleVisibility } = useVisibility()
     const { model, setModel, updateFormModel, addToTransportModel } = useManageModel()

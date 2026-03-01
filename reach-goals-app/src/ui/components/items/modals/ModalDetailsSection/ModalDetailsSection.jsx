@@ -4,14 +4,15 @@ import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.js
 import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
 import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
 
-import { iconMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 
 import ButtonAction from '../../elements/ButtonAction/ButtonAction.jsx'
 import Assignment from '../../models/Assignment/Assignment.jsx'
 
 import moment from 'moment'
 
-import '../ModalDetailsSection/ModalDetailsSection.scss'
+import './ModalDetailsSection.scss'
 
 const ModalDetailsSection = () => {
     const { layout } = useSwitchLayout()

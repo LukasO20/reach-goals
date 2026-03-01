@@ -13,8 +13,6 @@ import PropTypes from 'prop-types'
 
 import moment from 'moment'
 
-import '../Goal/Goal.scss'
-
 const Goal = ({ status, display, source = [], selectableModel = false, detailsModel = false, draggable = false }) => {
     const { model, setModel, updateFormModel, addToTransportModel } = useManageModel()
     const { toggleVisibility } = useVisibility()

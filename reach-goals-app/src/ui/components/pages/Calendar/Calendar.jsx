@@ -14,8 +14,6 @@ import { updateFilterModelMap } from '../../../../utils/mapping/mappingUtilsProv
 import MonthDaysPicker from '../../items/elements/MonthDaysPicker/MonthDaysPicker.jsx'
 import Loading from '../../items/elements/Loading/Loading.jsx'
 
-import '../Calendar/Calendar.scss'
-
 const Calendar = () => {
     const { update } = useTitle()
     const { layout, updateSwitchLayout } = useSwitchLayout()

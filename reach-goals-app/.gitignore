@@ -29,5 +29,7 @@ yarn-error.log*
 
 .vscode
 
+dist
+
 package-lock.json
 package.json

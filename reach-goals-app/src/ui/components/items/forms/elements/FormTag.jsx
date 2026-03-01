@@ -4,11 +4,12 @@ import ButtonAction from '../../elements/ButtonAction/ButtonAction.jsx'
 import InputText from '../../elements/InputText/InputText.jsx'
 import Loading from '../../elements/Loading/Loading.jsx'
 
-import { visibilityMap, iconMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 
 import PropTypes from 'prop-types'
 
-import '../Form.scss'
+import '../Form'
 import { useTagProvider } from '../../../../../provider/model/TagModelProvider.jsx'
 
 const FormTag = ({ type, functionFormMap, model: modelForm, pendingState }) => {

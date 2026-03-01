@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo, useContext, createContext } from 'react'
 
-import { manageModelMap } from '../utils/mapping/mappingUtilsProvider.js'
+import { manageModelMap } from '../utils/mapping/mappingUtilsProvider'
 
 const ManageModelContext = createContext()
 

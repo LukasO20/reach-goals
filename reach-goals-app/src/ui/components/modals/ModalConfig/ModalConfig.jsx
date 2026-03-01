@@ -1,6 +1,7 @@
 import { useVisibility } from '../../../../provider/VisibilityProvider.jsx'
 
-import { visibilityMap, iconMap } from '../../../../utils/mapping/mappingUtils.js'
+import { visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
+import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
 
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import ModalConfigSection from '../../items/modals/ModalConfigSection/ModalConfigSection.jsx'

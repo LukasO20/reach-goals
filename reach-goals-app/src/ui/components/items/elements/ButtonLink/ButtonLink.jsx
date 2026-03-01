@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom'
 import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
-import { iconMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 
 import PropTypes from 'prop-types'
 
-import '../ButtonLink/ButtonLink.scss'
+import './ButtonLink.scss'
 
 const ButtonLink = ({ target, switchLayout, onClick, link, classBtn, img, imgAlt, icon }) => {
     const navigate = useNavigate()

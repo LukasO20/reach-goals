@@ -5,7 +5,7 @@ import { useGoalProvider } from '../../../../../provider/model/GoalModelProvider
 import { useAssignmentProvider } from '../../../../../provider/model/AssignmentModelProvider'
 import { useTitle } from '../../../../../provider/TitleProvider'
 
-import { iconMap } from '../../../../../utils/mapping/mappingUtils'
+import { iconMap } from '../../../../../utils/mapping/mappingIcons'
 
 import Assignment from '../../../items/models/Assignment/Assignment'
 import Goal from '../../../items/models/Goal/Goal'

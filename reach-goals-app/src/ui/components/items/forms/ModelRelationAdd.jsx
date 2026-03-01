@@ -1,6 +1,7 @@
 import { useManageModel } from '../../../../provider/ManageModelProvider'
 
-import { iconMap, visibilityMap } from '../../../../utils/mapping/mappingUtils'
+import { visibilityMap } from '../../../../utils/mapping/mappingUtils'
+import { iconMap } from '../../../../utils/mapping/mappingIcons'
 
 import ButtonAction from '../elements/ButtonAction/ButtonAction'
 

@@ -6,7 +6,8 @@ import { useManageModel } from '../../../../../../provider/ManageModelProvider.j
 
 import PropTypes from 'prop-types'
 
-import { iconMap, visibilityMap, switchLayoutMap } from '../../../../../../utils/mapping/mappingUtils.js'
+import { visibilityMap, switchLayoutMap } from '../../../../../../utils/mapping/mappingUtils.js'
+import { iconMap } from '../../../../../../utils/mapping/mappingIcons.jsx'
 
 import ButtonAction from '../../ButtonAction/ButtonAction'
 

@@ -10,6 +10,7 @@ import CardMini from '../CardMini/CardMini.jsx'
 import PropTypes from 'prop-types'
 
 import moment from 'moment'
+
 import './MonthDaysPicker.scss'
 
 const MonthDaysPicker = ({ data }) => {

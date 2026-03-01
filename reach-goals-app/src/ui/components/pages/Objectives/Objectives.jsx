@@ -15,8 +15,6 @@ import Goal from '../../items/models/Goal/Goal.jsx'
 import Assignment from '../../items/models/Assignment/Assignment.jsx'
 import ModelSwitcher from '../../items/models/ModelSwitcher.jsx'
 
-import '../Objectives/Objectives.scss'
-
 const Objectives = () => {
     const { update } = useTitle()
     const { layout, updateSwitchLayout } = useSwitchLayout()

@@ -11,8 +11,6 @@ import CardMini from '../../elements/CardMini/CardMini.jsx'
 
 import PropTypes from 'prop-types'
 
-import '../Assignment/Assignment.scss'
-
 const Assignment = ({ status, display, source = [], selectableModel = false, detailsModel = false, draggable = false }) => {
     const { model, setModel, updateFormModel, addToTransportModel } = useManageModel()
     const { toggleVisibility } = useVisibility()

@@ -1,4 +1,4 @@
-import { DragDropContext, Droppable } from 'react-beautiful-dnd'
+import { DragDropContext, Droppable } from '@adaptabletools/react-beautiful-dnd'
 
 import PropTypes from 'prop-types'
 

@@ -1,7 +1,8 @@
 import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
 import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
 
-import { visibilityMap, switchLayoutMap, iconMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { visibilityMap, switchLayoutMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 

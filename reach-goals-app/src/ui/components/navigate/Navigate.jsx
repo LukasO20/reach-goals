@@ -8,7 +8,7 @@ import { useSwitchLayout } from '../../../provider/SwitchLayoutProvider.jsx'
 import ButtonAction from '../items/elements/ButtonAction/ButtonAction.jsx'
 import ButtonLink from '../items/elements/ButtonLink/ButtonLink.jsx'
 
-import '../navigate/Navigate.scss'
+import './Navigate.scss'
 
 const Navigate = () => {
     const { visibleElements, toggleVisibility } = useVisibility()

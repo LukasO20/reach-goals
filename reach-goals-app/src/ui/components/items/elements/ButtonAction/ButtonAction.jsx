@@ -2,7 +2,7 @@ import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
 import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
-import { iconMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 import { resetManageModelMap, updateFormModelMap, removeFromTransportModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
 import Loading from '../Loading/Loading.jsx'

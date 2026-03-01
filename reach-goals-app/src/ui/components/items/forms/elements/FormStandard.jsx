@@ -10,11 +10,12 @@ import InputText from '../../elements/InputText/InputText.jsx'
 import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
 import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
 
-import { visibilityMap, iconMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 
 import PropTypes from 'prop-types'
 
-import '../Form.scss'
+import '../Form'
 
 const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState }) => {
     const { visibleElements, toggleVisibility } = useVisibility()

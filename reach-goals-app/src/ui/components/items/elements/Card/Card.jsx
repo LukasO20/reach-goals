@@ -1,7 +1,8 @@
-import { switchLayoutMap, visibilityMap, iconMap, displayModesMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { switchLayoutMap, visibilityMap, displayModesMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
-import { Draggable } from 'react-beautiful-dnd'
+import { Draggable } from '@adaptabletools/react-beautiful-dnd'
 
 import PropTypes from 'prop-types'
 

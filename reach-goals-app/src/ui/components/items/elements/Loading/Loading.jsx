@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-import '../Loading/Loading.scss'
+import './Loading.scss'
 
 const Loading = ({ mode, title }) => {
     return (

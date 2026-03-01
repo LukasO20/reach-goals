@@ -1,4 +1,5 @@
-import { iconMap, displayModesMap, visibilityMap, switchLayoutMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { displayModesMap, visibilityMap, switchLayoutMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 

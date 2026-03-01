@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 
-import { iconMap, visibilityMap, switchLayoutMap } from '../../../../../../utils/mapping/mappingUtils'
+import { visibilityMap, switchLayoutMap } from '../../../../../../utils/mapping/mappingUtils'
+import { iconMap } from '../../../../../../utils/mapping/mappingIcons'
 
 import ButtonAction from '../../ButtonAction/ButtonAction'
 

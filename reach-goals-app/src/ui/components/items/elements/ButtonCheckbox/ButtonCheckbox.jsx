@@ -1,6 +1,6 @@
 import { useCheckbox } from '../../../../../provider/CheckboxProvider'
 
-import { checkboxMap } from '../../../../../utils/mapping/mappingUtilsProvider'
+import { checkboxMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
 import '../ButtonCheckbox/ButtonCheckbox.scss'
 
