@@ -7,28 +7,44 @@ const CheckboxContext = createContext()
 export const CheckboxProvider = ({ children }) => {
     const [valuesCheckbox, setCheckbox] = useState(checkboxMap)
 
-    const toggleCheckbox = useCallback((checkbox) => {
-        console.log('I RECEIVE - ', checkbox)
+
+    const setSafeCheckbox = (updateFn) => {
         setCheckbox((prev) => {
-            return {
-                ...prev,
-                [checkbox.scope]: {
-                    ...prev[checkbox.scope],
-                    checked: !prev.page.checked
-                }
-            }
-            //TODO: receive checkbox object like checkboxMap
+            const safeValue = updateFn(prev) ?? checkboxMap
+            return safeValue
+        })
+    }
 
-            //TODO: only use ...prev to add new objects on selected, don`t erase the previous 
+    const updateCheckbox = useCallback((prev = checkboxMap, checkbox) => (
+        {
+            ...prev,
+            checkboxID: checkbox.checkboxID,
+            [checkbox.scope]: {
+                selected: [...prev[checkbox.scope].selected, checkbox.checkboxID]
+            },
+            scope: checkbox.scope
+        }
+    ), [])
 
-            //TODO: with prev true on page scope. enable all checkboxes selected from checkboxMap.page.selected
-            //TODO: with prev false on page scope. disable all checkboxes selected from checkboxMap.page.selected
-            
-            //TODO: with prev true on modal scope. enable all checkboxes selected from checkboxMap.modal.selected
-            //TODO: with prev false on modal scope. disable all checkboxes selected from checkboxMap.modal.selected
+    const removeCheckbox = useCallback((prev = checkboxMap, checkbox) => (
+        {
+            ...prev,
+            checkboxID: checkbox.checkboxID,
+            [checkbox.scope]: {
+                selected: prev[checkbox.scope].selected.filter((c) => c !== checkbox.checkboxID)
+            },
+            scope: checkbox.scope
+        }
+    ), [])
+
+    const toggleCheckbox = useCallback((checkbox) => {
+        setSafeCheckbox((prev) => {
+            const hasCheckboxID = !!prev[checkbox.scope]?.selected?.includes(checkbox.checkboxID)
+
+            return hasCheckboxID ?
+                removeCheckbox(prev, checkbox) : updateCheckbox(prev, checkbox)
         })
     }, [])
-
 
     const resetCheckbox = useCallback(({ keys } = {}) => {
         if (Array.isArray(keys)) {
@@ -45,6 +61,7 @@ export const CheckboxProvider = ({ children }) => {
     }, [])
 
     const value = useMemo(() => ({ valuesCheckbox, toggleCheckbox, resetCheckbox }), [valuesCheckbox, toggleCheckbox, resetCheckbox])
+    console.log('VALUESCHECK ', valuesCheckbox)
 
     return (
         <CheckboxContext.Provider value={value}>
