@@ -1,0 +1,39 @@
+.container-popup {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 2rem;
+    background-color: $color-white;
+    box-shadow: $box-shadow-st;
+    width: max-content;
+
+    .button-action {
+        width: 7.5rem;
+
+        &:hover {
+            background-color: $color-complementary-s;
+        }
+
+        &.conclude {
+
+            &:hover {
+                background-color: $color-success-70;
+            }
+        }
+
+        &.cancel {
+
+            &:hover {
+                background-color: $color-cancel-70;
+            }
+        }
+
+        &.delete {
+
+            &:hover {
+                background-color: $color-delete-70;
+            }
+        }
+    }
+}
