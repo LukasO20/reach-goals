@@ -4,9 +4,11 @@
 
     .checkbox-container {
         display: flex;
+        justify-content: center;
+        align-items: center;
         border: 0.125em solid $color-complementary-s;
-        width: 0.95em;
-        height: 0.95em;
+        width: 0.975rem;
+        height: 0.975rem;
         border-radius: 0.25em;
         padding: 0.035em;
         cursor: pointer;
@@ -17,6 +19,13 @@
             font-size: 1em;
             width: 1em;
             margin: 0em;
+        }
+    }
+
+    &.checked {
+
+        .checkbox-container {
+            background-color: $color-complementary-s-05;
         }
     }
 }

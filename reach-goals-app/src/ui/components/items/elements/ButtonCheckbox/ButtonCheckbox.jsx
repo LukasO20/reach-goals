@@ -1,25 +1,31 @@
 import { useCheckbox } from '../../../../../provider/CheckboxProvider'
 
+import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 import { checkboxMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
-import '../ButtonCheckbox/ButtonCheckbox.scss'
+import './ButtonCheckbox.scss'
 
-const statusButton = (classBtn, dataCheckbox) => {
-    return dataCheckbox.some(item => item.id === classBtn && item.value)
+const statusButton = (checkboxID, selected = []) => {
+    return selected.includes(checkboxID)
 }
 
 const ButtonCheckbox = ({ classBtn, checkbox = checkboxMap }) => {
-    const isChecked = false
-    const { toggleCheckbox } = useCheckbox()
+    const { valuesCheckbox, toggleCheckbox } = useCheckbox()
+
+    const checkboxScope = valuesCheckbox.scope
+    const checkboxID = valuesCheckbox.checkboxID
+    const isChecked = statusButton(
+        checkboxID, valuesCheckbox[checkboxScope]?.selected
+    )
 
     return (
         <span className={`${classBtn} button-st ${isChecked ? 'checked' : ''}`} 
             onClick={() => toggleCheckbox(checkbox)}
-            onKeyDown={(e) => e.key === 'Enter' ? '' : ''}
+            onKeyDown={(e) => e.key === 'Enter' ? toggleCheckbox(checkbox) : ''}
             role='button' tabIndex='0'
         >
             <label className='checkbox-container'>
-                <i className={`icon-st fa-solid ${isChecked ? 'fa-check' : ''}`}></i>
+                {isChecked ? iconMap['check'] : null}
             </label>
         </span>
     )

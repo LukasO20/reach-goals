@@ -63,7 +63,8 @@ const ContainerM = () => {
                     <div className='filter'>
                         {
                             !isPageCalendar && (
-                                <ButtonCheckbox classBtn='checkbox-m btn-checkbox' checkbox={buildCheckboxMap({ page: { pageName: layout.page.pageName }, scope: 'page' })} />
+                                <ButtonCheckbox classBtn='checkbox-m btn-checkbox' id={`checkbox-${layout.page.pageName}`} 
+                                    checkbox={buildCheckboxMap({ checkboxID: `checkbox-${layout.page.pageName}`, scope: 'page' })} />
                             )
                         }
                         {
