@@ -6,6 +6,8 @@ $color-complementary-s: #5E5850;
 $color-accent-p: #16B0F7;
 $color-success: #00d057;
 $color-cancel: #242424;
+$color-black: #181818;
+$color-delete: #b31818;
 
 /* COLORS OPACITY */
 
@@ -17,6 +19,8 @@ $color-complementary-s-05: rgba($color-complementary-s, 0.05);
 $color-accent-p-05: rgba($color-accent-p, 0.05);
 $color-success-05: rgba($color-success, 0.05);
 $color-cancel-05: rgba($color-cancel, 0.05);
+$color-black-05: rgba($color-black, 0.05);
+$color-delete-05: rgba($color-delete, 0.05);
 
 // 15%
 $color-primary-15: rgba($color-primary, 0.15);
@@ -26,6 +30,8 @@ $color-complementary-s-15: rgba($color-complementary-s, 0.15);
 $color-accent-p-15: rgba($color-accent-p, 0.15);
 $color-success-15: rgba($color-success, 0.15);
 $color-cancel-15: rgba($color-cancel, 0.15);
+$color-black-15: rgba($color-black, 0.15);
+$color-delete-15: rgba($color-delete, 0.15);
 
 // 30%
 $color-primary-30: rgba($color-primary, 0.30);
@@ -35,6 +41,8 @@ $color-complementary-s-30: rgba($color-complementary-s, 0.30);
 $color-accent-p-30: rgba($color-accent-p, 0.30);
 $color-success-30: rgba($color-success, 0.30);
 $color-cancel-30: rgba($color-cancel, 0.30);
+$color-black-30: rgba($color-black, 0.30);
+$color-delete-30: rgba($color-delete, 0.30);
 
 // 50%
 $color-primary-50: rgba($color-primary, 0.50);
@@ -44,6 +52,8 @@ $color-complementary-s-50: rgba($color-complementary-s, 0.50);
 $color-accent-p-50: rgba($color-accent-p, 0.50);
 $color-success-50: rgba($color-success, 0.50);
 $color-cancel-50: rgba($color-cancel, 0.50);
+$color-black-50: rgba($color-black, 0.50);
+$color-delete-50: rgba($color-delete, 0.50);
 
 // 70%
 $color-primary-70: rgba($color-primary, 0.70);
@@ -53,9 +63,12 @@ $color-complementary-s-70: rgba($color-complementary-s, 0.70);
 $color-accent-p-70: rgba($color-accent-p, 0.70);
 $color-success-70: rgba($color-success, 0.70);
 $color-cancel-70: rgba($color-cancel, 0.70);
+$color-black-70: rgba($color-black, 0.70);
+$color-delete-70: rgba($color-delete, 0.70);
 
 /* SHADOW */
 $box-shadow-st: 0.01em 0.01em 0.45em 0.01em $color-complementary-s-30;
+$box-shadow-md: 0.05em 0.05em 1.5em 0.05em $color-complementary-s-30;
 
 /* SCROLLBAR */
 $scrollbar-color: $color-complementary-s;

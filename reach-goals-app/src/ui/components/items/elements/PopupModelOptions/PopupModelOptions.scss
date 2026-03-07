@@ -5,8 +5,9 @@
     padding: 0.5rem;
     border-radius: 2rem;
     background-color: $color-white;
-    box-shadow: $box-shadow-st;
+    box-shadow: $box-shadow-md;
     width: max-content;
+    //transition: ease-out forwards;
 
     .button-action {
         width: 7.5rem;
@@ -15,10 +16,18 @@
             background-color: $color-complementary-s;
         }
 
+        &:active {
+            background-color: $color-complementary-s-70;
+        }
+
         &.conclude {
 
             &:hover {
                 background-color: $color-success-70;
+            }
+
+            &:active {
+                background-color: $color-success-50;
             }
         }
 
@@ -27,12 +36,20 @@
             &:hover {
                 background-color: $color-cancel-70;
             }
+
+            &:active {
+                background-color: $color-cancel-50;
+            }
         }
 
         &.delete {
 
             &:hover {
                 background-color: $color-delete-70;
+            }
+
+            &:active {
+                background-color: $color-delete-50;
             }
         }
     }

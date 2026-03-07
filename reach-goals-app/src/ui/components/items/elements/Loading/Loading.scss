@@ -12,7 +12,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 0.35rem;
-  animation: fade-in 0.8s ease-out forwards;
+  animation: $fade-in 0.8s ease-out forwards;
 
   .spinner {
     width: 3.75rem;
@@ -20,7 +20,7 @@
     border: 6px solid rgba($color-complementary-s, 0.2);
     border-top-color: $color-complementary-s;
     border-radius: 50%;
-    animation: spin 2s ease-out infinite;
+    animation: $spin 2s ease-out infinite;
   }
 }
 
@@ -41,22 +41,5 @@
   >label {
     font-weight: 500;
     color: $color-complementary-s;
-  }
-}
-
-// Animations
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
   }
 }
