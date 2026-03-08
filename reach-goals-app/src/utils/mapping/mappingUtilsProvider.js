@@ -87,7 +87,9 @@ export const checkboxMap = {
         selected: []
     },
     scope: '',
-    checkboxID: null
+    checkboxID: null,
+    checkboxIDMain: null,
+    checkboxRegistry: []
 }
 
 export const updateFilterModelMap = ({ filter = {}, model = '', scope = '' }) => {

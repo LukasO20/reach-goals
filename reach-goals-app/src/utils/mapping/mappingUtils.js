@@ -17,10 +17,11 @@ export const switchLayoutMap = ({ area, state }) => {
     }
 }
 
-export const buildCheckboxMap = ({ checkboxID, scope } = checkboxMap) => {
+export const buildCheckboxMap = ({ checkboxID, scope, checkboxIDMain } = checkboxMap) => {
     return {
         scope,
-        checkboxID
+        checkboxID,
+        checkboxIDMain
     }
 }
 

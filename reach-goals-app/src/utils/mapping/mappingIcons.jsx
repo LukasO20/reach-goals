@@ -30,6 +30,7 @@ export const iconMap = {
     check: <Unicons.UilCheck className='icon-st' />,
     cancel: <Unicons.UilTimesCircle className='icon-st' />,
     save: <Unicons.UilSave className='icon-st' />,
+    square: <Unicons.UilSquareShape className='icon-st' />,
     progress: <Unicons.UilSpinnerAlt className='icon-st' />,
     icons: <Unicons.UilIcons className='icon-st' />,
     undefined: <Unicons.UilExclamationOctagon className='icon-st' />

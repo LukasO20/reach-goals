@@ -1,6 +1,4 @@
-
-
-.btn-checkbox {
+.button-checkbox {
 
     .checkbox-container {
         display: flex;
@@ -12,6 +10,7 @@
         border-radius: 0.25em;
         padding: 0.035em;
         cursor: pointer;
+        transition: .3s ease-in-out;
 
         .icon-st {
             display: inline-flex;
@@ -22,10 +21,19 @@
         }
     }
 
+    /* DOUBLE APPLY */
+    &:hover,
     &.checked {
 
         .checkbox-container {
             background-color: $color-complementary-s-05;
+        }
+    }
+
+    &:active {
+
+        .checkbox-container {
+            background-color: $color-complementary-s-50;
         }
     }
 }
