@@ -56,13 +56,53 @@ export const AssignmentModelProvider = ({ children, filters = {} }) => {
         },
     })
 
-  const saveDragDropMutation = useMutation({
-    mutationFn: (model) => commonService.updateModelDragDrop({ data: model, typeModel: 'assignment' }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeyPage })
-      update({ toast: `Assignment status save with success` })
-    }
-  })
+    const saveDragDropMutation = useMutation({
+        mutationFn: (dragDropResult) => {
+            const updatedDataQuery = queryClient.getQueryData(queryKeyPage)
+
+            const updatedModel = updatedDataQuery.filter((item) => item.status === dragDropResult.destination.droppableId)
+            commonService.updateModelDragDrop({ data: updatedModel, typeModel: 'assignment' })
+        },
+        onMutate: async (newData) => {
+            await queryClient.cancelQueries({ queryKey: queryKeyPage })
+
+            const previousDataQuery = queryClient.getQueryData(queryKeyPage)
+
+            queryClient.setQueryData(queryKeyPage, (oldData) => {
+                if (!oldData) return []
+
+                const { destination, draggableId } = newData
+
+                let newArray = [...oldData]
+
+                const itemIndex = newArray.findIndex(i => i.id === Number(draggableId))
+                const movedItem = { ...newArray[itemIndex] }
+
+                movedItem.status = destination.droppableId
+
+                newArray.splice(itemIndex, 1)
+
+                const columnItems = newArray
+                    .filter(i => i.status === destination.droppableId)
+                    .sort((a, b) => a.order - b.order)
+
+                columnItems.splice(destination.index, 0, movedItem)
+
+                columnItems.forEach((item, idx) => {
+                    item.order = idx
+                })
+
+                const otherItems = newArray.filter(i => !(i.status === destination.droppableId))
+
+                return [...otherItems, ...columnItems]
+            })
+
+            return { previousDataQuery }
+        },
+        onSuccess: () => {
+            update({ toast: `Assignment status save with success` })
+        }
+    })
 
     const removeMutation = useMutation({
         mutationFn: (id) => assignmentService.deleteAssignment(id),

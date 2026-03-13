@@ -160,12 +160,7 @@ const updateModelStatus = async (ids = [], status = '') => {
                 data: { status }
             })
 
-            const statusTag = await prisma.tag.updateMany({
-                where: { id: { in: ids } },
-                data: { status }
-            })
-
-            return { goal: statusGoal, assignment: statusAssignment, tag: statusTag }
+            return { goal: statusGoal, assignment: statusAssignment }
         }
         catch (err) {
             return console.error('Error updating model status:', err)
