@@ -16,7 +16,14 @@ const stateCheckboxMain = (selected = [], total = []) => {
     return selected.length > 0 && selected.length < total.length
 }
 
-const ButtonCheckbox = ({ classBtn, checkboxID, checkbox = checkboxMap }) => {
+export const ButtonCheckboxMap = {
+    classBtn: '',
+    checkboxID: '',
+    title: '',
+    checkbox: checkboxMap
+}
+
+const ButtonCheckbox = ({ classBtn, checkboxID, title, checkbox } = ButtonCheckboxMap) => {
     const { valuesCheckbox, toggleCheckbox, registerCheckbox, unregisterCheckbox } = useCheckbox()
     const { layout } = useSwitchLayout()
 
@@ -49,6 +56,9 @@ const ButtonCheckbox = ({ classBtn, checkboxID, checkbox = checkboxMap }) => {
                         iconMap['square'] : isChecked ? iconMap['check'] : null
                 }
             </label>
+            {!!title && (
+                <label className='title'>{title}</label>
+            )}
         </span>
     )
 }

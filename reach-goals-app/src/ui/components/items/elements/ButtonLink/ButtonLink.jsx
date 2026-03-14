@@ -25,7 +25,7 @@ const ButtonLink = ({ target, switchLayout, onClick, link, classBtn, img, imgAlt
     }
 
     return (
-        <span className={classBtn} onClick={handleClick}>
+        <span className={`button-link ${classBtn}`} onClick={handleClick}>
             { img ? <img src={img} alt={imgAlt} /> : iconMap[icon] }
         </span>
     )

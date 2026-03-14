@@ -22,13 +22,17 @@ const ContainerM = () => {
     const { resetManageModel } = useManageModel()
     const { visibleElements, toggleVisibility } = useVisibility()
     const { layout } = useSwitchLayout()
-    const { valuesCheckbox } = useCheckbox()
+    const { valuesCheckbox, resetCheckbox } = useCheckbox()
     const navigate = useNavigate()
 
     const handleClickContainer = (e) => {
         toggleVisibility(visibilityMap(null), e)
         resetManageModel()
         navigate(`/${layout.page.pageName}`) // return standard route during handle
+    }
+
+    const handleButtonActionClick = () => {
+        resetCheckbox({ keys: ['page'] })
     }
 
     const isSwitchLayoutAssignment = layout.page.layoutName === 'assignment'
@@ -68,9 +72,11 @@ const ContainerM = () => {
                 <div className='line-s'>
                     <div className='filter'>
                         {
-                            !isPageCalendar && (
-                                <ButtonCheckbox classBtn='checkbox-m button-checkbox' checkboxID={`checkbox-${layout.page.pageName}`}
-                                    checkbox={buildCheckboxMap({ checkboxIDMain: `checkbox-${layout.page.pageName}`, scope: 'page' })} />
+                            !isPageCalendar && hasSelectedModel && (
+                                <ButtonCheckbox classBtn='checkbox-main' checkboxID={`checkbox-${layout.page.pageName}`}
+                                    checkbox={buildCheckboxMap({ checkboxIDMain: `checkbox-${layout.page.pageName}`, scope: 'page' })}
+                                    title='Select all'
+                                />
                             )
                         }
                         {
@@ -83,14 +89,18 @@ const ContainerM = () => {
                         }
                         <ButtonAction classBtn={`button-action plan-round max-width goal ${isSwitchLayoutGoal ? 'active' : ''}`} title='goals'
                             switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'goal' } })}
+                            onClick={handleButtonActionClick}
                         />
                         <ButtonAction classBtn={`button-action plan-round max-width assignment ${isSwitchLayoutAssignment ? 'active' : ''}`} title='assignments'
                             switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'assignment' } })}
+                            onClick={handleButtonActionClick}
                         />
                         {
                             isPageHome && (
                                 <ButtonAction classBtn={`button-action plan-round max-width pie-chart ${isSwichPieChart ? 'active' : ''}`} icon='chartbar'
                                     switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'pie-chart' } })}
+                                    onClick={handleButtonActionClick}
+
                                 />
                             )
                         }

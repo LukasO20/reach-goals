@@ -1,5 +1,3 @@
-
-
 .button-link {
     display: flex;
     justify-content: center;
@@ -14,16 +12,35 @@
         border-radius: 50%;
     }
 
+    /* DOUBLE APPLY */
     &:hover,
     &.active {
         background-color: $color-complementary-s;
-        
+
         .icon-st {
             color: $color-white;
         }
 
         &.home {
             background-color: $color-complementary-p-70;
+        }
+    }
+
+    &.home {
+        padding: 0.15rem;
+
+        &.active {
+            background-color: $color-accent-p-15;
+        }
+    }
+
+    /* Last application */
+    &:active {
+        background-color: $color-complementary-s-30;
+        transition: 0.1s ease-in-out;
+
+        &.home {
+            background-color: $color-accent-p-05;
         }
     }
 }
