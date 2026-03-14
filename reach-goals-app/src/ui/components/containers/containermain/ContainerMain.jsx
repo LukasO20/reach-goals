@@ -5,6 +5,7 @@ import Routes from '../../../../app/Routes.jsx'
 import { useManageModel } from '../../../../provider/ManageModelProvider.jsx'
 import { useVisibility } from '../../../../provider/VisibilityProvider.jsx'
 import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
+import { useCheckbox } from '../../../../provider/CheckboxProvider.jsx'
 
 import { visibilityMap, switchLayoutMap, buildCheckboxMap } from '../../../../utils/mapping/mappingUtils.js'
 
@@ -13,6 +14,7 @@ import { monthNames } from '../../../../utils/reference.js'
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import ButtonDropdown from '../../items/elements/ButtonDropdown/ButtonDropdown.jsx'
 import ButtonCheckbox from '../../items/elements/ButtonCheckbox/ButtonCheckbox.jsx'
+import PopupModelOptions from '../../items/elements/PopupModelOptions/PopupModelOptions.jsx'
 
 import './ContainerMain.scss'
 
@@ -20,6 +22,7 @@ const ContainerM = () => {
     const { resetManageModel } = useManageModel()
     const { visibleElements, toggleVisibility } = useVisibility()
     const { layout } = useSwitchLayout()
+    const { valuesCheckbox } = useCheckbox()
     const navigate = useNavigate()
 
     const handleClickContainer = (e) => {
@@ -36,6 +39,9 @@ const ContainerM = () => {
     const isPageCalendar = layout.page.pageName === 'calendar'
     const isPageHome = layout.page.pageName === 'home'
     const isPageObjectives = layout.page.pageName === 'objectives'
+
+    const checkboxScope = valuesCheckbox.scope
+    const hasSelectedModel = !!valuesCheckbox[checkboxScope]?.selected.length
 
     return (
         <div className='container-main' onClick={(e) => handleClickContainer(e)}>
@@ -63,8 +69,8 @@ const ContainerM = () => {
                     <div className='filter'>
                         {
                             !isPageCalendar && (
-                                <ButtonCheckbox classBtn='checkbox-m btn-checkbox' id={`checkbox-${layout.page.pageName}`} 
-                                    checkbox={buildCheckboxMap({ checkboxID: `checkbox-${layout.page.pageName}`, scope: 'page' })} />
+                                <ButtonCheckbox classBtn='checkbox-m button-checkbox' checkboxID={`checkbox-${layout.page.pageName}`}
+                                    checkbox={buildCheckboxMap({ checkboxIDMain: `checkbox-${layout.page.pageName}`, scope: 'page' })} />
                             )
                         }
                         {
@@ -104,6 +110,7 @@ const ContainerM = () => {
                     </div>
                 </div>
             </div>
+            {hasSelectedModel && (<PopupModelOptions />)}
             <div className='body'>
                 <Routes />
             </div>

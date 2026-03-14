@@ -1,5 +1,3 @@
-
-
 .card {
     display: flex;
     flex-direction: column;
@@ -14,12 +12,17 @@
     .head {
         display: flex;
         align-items: center;
-        justify-content: space-between;
         text-decoration: none;
         color: $color-complementary-s;
+        gap: 0.5rem;
 
         * {
             cursor: pointer;
+        }
+
+
+        .button-checkbox {
+            display: none;
         }
 
         .line-info {
@@ -154,6 +157,22 @@
 
             .side-actions {
                 opacity: 1;
+            }
+        }
+    }
+
+    &.selected {
+        background-color: $color-complementary-s-15;
+    }
+
+    /* DOUBLE APPLY */
+    &:hover,
+    &.selected {
+
+        .head {
+
+            .button-checkbox {
+                display: flex;
             }
         }
     }

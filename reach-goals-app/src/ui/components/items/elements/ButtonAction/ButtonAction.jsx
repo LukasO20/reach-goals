@@ -16,7 +16,7 @@ const statusButton = (classBtn, providervisibleElements) => {
     return providervisibleElements.includes(classBtn)
 }
 
-const ButtonAction = ({ visibility, switchLayout, nullForm, unlinkGoal, onClick, pendingState, datavalue, icon, title, classBtn }) => {
+const ButtonAction = ({ visibility, switchLayout, nullForm, unlinkGoal, onClick, pendingState, disable, datavalue, icon, title, classBtn }) => {
     const { visibleElements, toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
     const { model, resetManageModel, updateFormModel, removeFromTransportModel } = useManageModel()
@@ -50,7 +50,7 @@ const ButtonAction = ({ visibility, switchLayout, nullForm, unlinkGoal, onClick,
     }
 
     return (
-        <span className={`${classBtn} ${isOn ? 'on' : ''} ${pendingState ? 'pending' : ''}`} datavalue={datavalue}
+        <span className={`${classBtn} ${isOn ? 'on' : ''} ${pendingState ? 'pending' : ''} ${disable ? 'disable' : ''}`} datavalue={datavalue}
             onClick={handleClick} onKeyDown={(e) => e.key === 'Enter' ? handleClick(e) : ''} role='button' tabIndex='0'>
             {pendingState ? <Loading mode='inline' /> : icon && iconMap[icon]}
             <span className='button-title'>{title}</span>
@@ -80,6 +80,7 @@ ButtonAction.propTypes = {
     unlinkGoal: PropTypes.bool,
     onClick: PropTypes.func,
     pendingState: PropTypes.bool,
+    disable: PropTypes.bool,
     icon: PropTypes.string,
     title: PropTypes.string,
     classBtn: PropTypes.string.isRequired

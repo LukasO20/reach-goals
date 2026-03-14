@@ -1,7 +1,9 @@
-import { switchLayoutMap, visibilityMap, displayModesMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { checkboxMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
+import { switchLayoutMap, visibilityMap, displayModesMap, buildCheckboxMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
+import ButtonCheckbox from '../ButtonCheckbox/ButtonCheckbox.jsx'
 import { Draggable } from '@adaptabletools/react-beautiful-dnd'
 
 import PropTypes from 'prop-types'
@@ -10,115 +12,123 @@ import moment from 'moment'
 
 import './Card.scss'
 
-const Card = ({ type, model = [], display, pendingState, clickFunction, draggable }) => {
+const Card = ({ type, model = [], display, pendingState, checkboxState = checkboxMap, clickFunction, draggable }) => {         
     return model
         .sort((a, b) => a.order - b.order)
         .map((item, index) => {
-        const hasTags = item.tags?.length > 0
-        const hasEndDate = item.end
-        const itemID = item.id || item.tagID
+            const hasTags = item.tags?.length > 0
+            const hasEndDate = item.end
+            const itemID = item.id || item.tagID
 
-        const tagCardStyle = type === 'tag' ? { backgroundColor: `${item.color}30`, borderColor: item.color } : null
+            const tagCardStyle = type === 'tag' ? { backgroundColor: `${item.color}30`, borderColor: item.color } : null
 
-        const selectedDisplayType = display.type[0]
+            const selectedDisplayType = display.type[0]
 
-        const isPending = pendingState?.removing && (item.id || item.tagID) === pendingState?.removingVariables
+            const selectedCheckboxList = checkboxState.page.selected
+            
+            const isPending =
+                (pendingState?.removing && (item.id || item.tagID) === pendingState?.removingVariables) ?
+                    'pending' : ''
 
-        const isDisplayActionEdit = display.actions.includes('edit')
-            && displayModesMap.actions.includes('edit')
+            const isSelected = selectedCheckboxList.includes(`checkbox-${itemID}`) ? 'selected' : ''
 
-        const isDisplayActionDelete = display.actions.includes('delete')
-            && displayModesMap.actions.includes('delete')
+            const isDisplayActionEdit = display.actions.includes('edit')
+                && displayModesMap.actions.includes('edit')
 
-        const renderTagBox = () => {
-            return (
-                <div className='tag-box'>
-                    {item.tags.slice(0, 3).map(data => {
-                        const styleProps = { backgroundColor: `${data.tag.color}30`, borderColor: data.tag.color }
-                        return (
-                            <label key={data.tag.name} style={styleProps}>
-                                {data.tag.name}
+            const isDisplayActionDelete = display.actions.includes('delete')
+                && displayModesMap.actions.includes('delete')
+
+            const renderTagBox = () => {
+                return (
+                    <div className='tag-box'>
+                        {item.tags.slice(0, 3).map(data => {
+                            const styleProps = { backgroundColor: `${data.tag.color}30`, borderColor: data.tag.color }
+                            return (
+                                <label key={data.tag.name} style={styleProps}>
+                                    {data.tag.name}
+                                </label>
+                            )
+                        })}
+                        {item.tags.slice(3).length > 0 && (
+                            <label className='count'>
+                                <span className='icon-st'>{iconMap['plus']}</span>
+                                {item.tags.slice(3).length}
                             </label>
-                        )
-                    })}
-                    {item.tags.slice(3).length > 0 && (
-                        <label className='count'>
-                            <span className='icon-st'>{iconMap['plus']}</span>
-                            {item.tags.slice(3).length}
-                        </label>
-                    )}
-                </div>
-            )
-        }
+                        )}
+                    </div>
+                )
+            }
 
-        const renderEndDate = () => {
-            return (
-                <label className='line-info date'>
-                    {iconMap['schedule']}
-                    <span>Ends on {moment(item.end).format('DD MMMM')}</span>
-                </label>
-            )
-        }
-
-        const renderCard = (dragProvided) => (
-            <div
-                className={`${type} ${selectedDisplayType} ${isPending ? 'pending' : ''}`}
-                id={itemID}
-                key={!draggable ? itemID : null}
-                onClick={(e) => clickFunction?.card(item, e)}
-                style={tagCardStyle}
-                ref={dragProvided?.innerRef}
-                {...dragProvided?.draggableProps}
-                {...dragProvided?.dragHandleProps}
-            >
-                <div className='head'>
-                    <label className='line-info'>
-                        {iconMap[type]}<label>{item.name}</label>
+            const renderEndDate = () => {
+                return (
+                    <label className='line-info date'>
+                        {iconMap['schedule']}
+                        <span>Ends on {moment(item.end).format('DD MMMM')}</span>
                     </label>
-                    {hasTags && renderTagBox()}
-                </div>
-                <div className='body'>
-                    {!!hasEndDate && renderEndDate()}
-                    <div className='item'>
-                        <label className='line-info description'>{item.description}</label>
-                        <div className='side-actions'>
-                            <div className='item-actions'>
-                                {isDisplayActionEdit && (
-                                    <ButtonAction
-                                        onClick={() => clickFunction.edit(itemID)}
-                                        visibility={visibilityMap(['modal-center', type])}
-                                        switchLayout={switchLayoutMap({
-                                            area: 'modal',
-                                            state: { modalName: 'modal-center', layoutName: 'form' }
-                                        })}
-                                        classBtn={`edit-${type} button-action circle small`}
-                                        icon='edit'
-                                    />
-                                )}
-                                {isDisplayActionDelete && (
-                                    <ButtonAction
-                                        pendingState={isPending}
-                                        onClick={() => clickFunction.delete(itemID)}
-                                        visibility={visibilityMap(null)}
-                                        classBtn={`remove-${type} button-action circle small`}
-                                        icon='remove'
-                                    />
-                                )}
+                )
+            }
+
+            const renderCard = (dragProvided) => (
+                <div
+                    className={`${type} ${selectedDisplayType} ${isPending} ${isSelected}`}
+                    id={itemID}
+                    key={!draggable ? itemID : null}
+                    onClick={(e) => clickFunction?.card(item, e)}
+                    style={tagCardStyle}
+                    ref={dragProvided?.innerRef}
+                    {...dragProvided?.draggableProps}
+                    {...dragProvided?.dragHandleProps}
+                >
+                    <div className='head'>
+                        <ButtonCheckbox classBtn='checkbox-m' checkboxID={`checkbox-${itemID}`}
+                            checkbox={buildCheckboxMap({ checkboxID: `checkbox-${itemID}`, scope: 'page' })} />
+                        <label className='line-info'>
+                            {iconMap[type]}<label>{item.name}</label>
+                        </label>
+                        {hasTags && renderTagBox()}
+                    </div>
+                    <div className='body'>
+                        {!!hasEndDate && renderEndDate()}
+                        <div className='item'>
+                            <label className='line-info description'>{item.description}</label>
+                            <div className='side-actions'>
+                                <div className='item-actions'>
+                                    {isDisplayActionEdit && (
+                                        <ButtonAction
+                                            onClick={() => clickFunction.edit(itemID)}
+                                            visibility={visibilityMap(['modal-center', type])}
+                                            switchLayout={switchLayoutMap({
+                                                area: 'modal',
+                                                state: { modalName: 'modal-center', layoutName: 'form' }
+                                            })}
+                                            classBtn={`edit-${type} button-action circle small`}
+                                            icon='edit'
+                                        />
+                                    )}
+                                    {isDisplayActionDelete && (
+                                        <ButtonAction
+                                            pendingState={isPending}
+                                            onClick={() => clickFunction.delete(itemID)}
+                                            visibility={visibilityMap(null)}
+                                            classBtn={`remove-${type} button-action circle small`}
+                                            icon='remove'
+                                        />
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        )
+            )
 
-        return draggable ? (
-            <Draggable draggableId={String(itemID)} index={index} key={String(itemID)}>
-                {(provided) => renderCard(provided)}
-            </Draggable>
-        ) : (
-            renderCard()
-        )
-    })
+            return draggable ? (
+                <Draggable draggableId={String(itemID)} index={index} key={String(itemID)}>
+                    {(provided) => renderCard(provided)}
+                </Draggable>
+            ) : (
+                renderCard()
+            )
+        })
 }
 
 Card.propTypes = {

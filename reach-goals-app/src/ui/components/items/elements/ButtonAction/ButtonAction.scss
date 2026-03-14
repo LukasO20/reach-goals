@@ -1,5 +1,3 @@
-
-
 .button-action {
     display: flex;
     justify-content: center;
@@ -142,6 +140,11 @@
     &.pending {
         pointer-events: none;
         opacity: 0.8;
+    }
+
+    &.disable {
+        pointer-events: none;
+        opacity: 0.6;
     }
 
     /* Double application */

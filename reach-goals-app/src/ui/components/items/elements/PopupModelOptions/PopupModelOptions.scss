@@ -7,7 +7,7 @@
     background-color: $color-white;
     box-shadow: $box-shadow-md;
     width: max-content;
-    //transition: ease-out forwards;
+    animation: $fade-in 0.3s ease-out forwards;
 
     .button-action {
         width: 7.5rem;

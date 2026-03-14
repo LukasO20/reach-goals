@@ -2,6 +2,7 @@ import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.js
 import { useAssignmentProvider } from '../../../../../provider/model/AssignmentModelProvider.jsx'
 import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
 import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
+import { useCheckbox } from '../../../../../provider/CheckboxProvider.jsx'
 
 import { switchLayoutMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { updateFormModelMap, addToTransportModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
@@ -16,6 +17,7 @@ const Assignment = ({ status, display, source = [], selectableModel = false, det
     const { toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
     const { remove, removeSuccess, removing, removingVariables } = useAssignmentProvider()
+    const { valuesCheckbox } = useCheckbox()
 
     const sourceData = source.assignments ?? source
 
@@ -103,6 +105,7 @@ const Assignment = ({ status, display, source = [], selectableModel = false, det
         <ComponentToRender
             type='assignment'
             pendingState={pendingState}
+            checkboxState={valuesCheckbox}
             model={isCard ? renderCard : renderCardMini}
             clickFunction={clickEvents}
             display={display}

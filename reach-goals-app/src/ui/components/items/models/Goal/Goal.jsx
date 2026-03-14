@@ -2,6 +2,7 @@ import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.js
 import { useGoalProvider } from '../../../../../provider/model/GoalModelProvider.jsx'
 import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
 import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
+import { useCheckbox } from '../../../../../provider/CheckboxProvider.jsx'
 
 import { switchLayoutMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { addToTransportModelMap, updateFormModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
@@ -18,6 +19,7 @@ const Goal = ({ status, display, source = [], selectableModel = false, detailsMo
     const { toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
     const { remove, removeSuccess, removing, removingVariables } = useGoalProvider()
+    const { valuesCheckbox } = useCheckbox()
 
     const sourceData = source.goals ?? source
 
@@ -91,6 +93,7 @@ const Goal = ({ status, display, source = [], selectableModel = false, detailsMo
         <ComponentToRender
             type='goal'
             pendingState={pendingState}
+            checkboxState={valuesCheckbox}
             model={isCard ? renderCard : renderCardMini}
             clickFunction={clickEvents}
             display={display}
