@@ -121,19 +121,19 @@ const updateModelDragDrop = async (data = [], typeModel = '') => {
     return console.error(`Something went wrong during update drag drop model: type is ${typeModel}. Send 'goal' or 'assignment'`)
 }
 
-const removeModels = async (ids = []) => {
+const removeModels = async (data = []) => {
 
     try {
         const removedGoal = await prisma.goal.deleteMany({
-            where: { id: { in: ids } }
+            where: { id: { in: data } }
         })
 
         const removedAssignment = await prisma.assignment.deleteMany({
-            where: { id: { in: ids } }
+            where: { id: { in: data } }
         })
 
         const removedTag = await prisma.tag.deleteMany({
-            where: { id: { in: ids } }
+            where: { id: { in: data } }
         })
 
         const isTrue = !!removedGoal || !!removedAssignment || !!removedTag

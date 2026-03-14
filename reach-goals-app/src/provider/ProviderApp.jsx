@@ -5,6 +5,7 @@ import { ManageModelProvider } from './ManageModelProvider.jsx'
 import { SwitchLayoutProvider } from './SwitchLayoutProvider.jsx'
 import { FilterModelProvider } from './model/FilterModelProvider.jsx'
 import { SearchBarProvider } from './SearchBarProvider.jsx'
+import { UtilityProvider } from './model/UtilityProvider.jsx'
 
 const ProviderApp = ({ children }) => (
     <ManageModelProvider>
@@ -14,7 +15,9 @@ const ProviderApp = ({ children }) => (
                     <SearchBarProvider>
                         <SwitchLayoutProvider>
                             <CheckboxProvider>
-                                {children}
+                                <UtilityProvider>
+                                    {children}
+                                </UtilityProvider>
                             </CheckboxProvider>
                         </SwitchLayoutProvider>
                     </SearchBarProvider>
