@@ -16,10 +16,11 @@ export const ModelTabsMap = {
     type: '',
     classModelTabs: '',
     children: React.ReactNode,
+    headLeftChildren: React.ReactNode,
     loading: false
 }
 
-const ModelTabs = ({ type, classModelTabs, children, loading } = ModelTabsMap) => {
+const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, loading } = ModelTabsMap) => {
     const { updateFilterModel } = useManageModel()
 
     const [currentFilterData, setCurrentFilterData] = useState({
@@ -67,6 +68,7 @@ const ModelTabs = ({ type, classModelTabs, children, loading } = ModelTabsMap) =
     return (
         <div className={`model-tabs ${type} ${classModelTabs}`}>
             <div className='head'>
+                {headLeftChildren}
                 <div className='options-sections'>
                     {
                         modelTabsMap[type]?.map((tab, index) => {

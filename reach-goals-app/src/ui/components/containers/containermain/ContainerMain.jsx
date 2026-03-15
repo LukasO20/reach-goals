@@ -44,8 +44,7 @@ const ContainerM = () => {
     const isPageHome = layout.page.pageName === 'home'
     const isPageObjectives = layout.page.pageName === 'objectives'
 
-    const checkboxScope = valuesCheckbox.scope
-    const hasSelectedModel = !!valuesCheckbox[checkboxScope]?.selected.length
+    const hasSelectedModel = !!valuesCheckbox.page?.selected.length
 
     return (
         <div className='container-main' onClick={(e) => handleClickContainer(e)}>

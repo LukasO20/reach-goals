@@ -35,6 +35,14 @@
         user-select: none;
     }
 
+    &.small {
+
+        .checkbox-container {
+            width: 0.805rem;
+            height: 0.805rem;
+        }
+    }
+
     &.checkbox-main {
         animation: $fade-in 0.3s ease-out forwards;
     }

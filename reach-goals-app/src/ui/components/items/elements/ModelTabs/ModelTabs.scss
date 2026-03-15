@@ -9,6 +9,7 @@
 
     >.head {
         display: flex;
+        justify-content: space-between;
         padding: 0.5rem;
         gap: 0.5rem;
         border-bottom: 0.1em solid $color-complementary-s-15;

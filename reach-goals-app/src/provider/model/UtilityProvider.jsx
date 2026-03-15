@@ -19,6 +19,7 @@ export const UtilityProvider = ({ children }) => {
 
     const queryKeyGoalPage = ['goals', 'page', model.filter.goal.page]
     const queryKeyAssignmentPage = ['assignments', 'page', model.filter.assignment.page]
+    const queryKeyTagModal = ['tags', 'modal', model.filter.tag.modal]
 
     const saveModelStatus = useMutation({
         mutationFn: ({ data, status }) => commonService.updateModelStatus(data, status),
@@ -38,6 +39,7 @@ export const UtilityProvider = ({ children }) => {
 
             queryClient.invalidateQueries({ queryKey: queryKeyGoalPage })
             queryClient.invalidateQueries({ queryKey: queryKeyAssignmentPage })
+            queryClient.invalidateQueries({ queryKey: queryKeyTagModal })
             resetCheckbox({ keys: [resetKey] })
             update({ toast: `Activities removed` })
         }

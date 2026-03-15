@@ -28,7 +28,7 @@ const CardMini = ({ type, model, display, pendingState, checkboxState, clickFunc
         const itemID = item.id || item.tagID
         const tagCardStyle = type === 'tag' ? { backgroundColor: `${item.color}30`, borderColor: item.color } : null
         const selectedDisplayType = display.type[0]
-        const selectedCheckboxList = checkboxState.page.selected
+        const selectedCheckboxList = checkboxState?.page?.selected ?? []
 
         const isPending = pendingState?.removing && (item.id || item.tagID) === pendingState?.removingVariables
 

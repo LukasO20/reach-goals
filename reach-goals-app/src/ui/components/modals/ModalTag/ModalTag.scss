@@ -1,0 +1,13 @@
+.modal-right.tag {
+
+    .body {
+
+        >.container-popup {
+            position: absolute;
+            bottom: 0%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+    }
+}

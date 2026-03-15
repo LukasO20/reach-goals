@@ -3,7 +3,8 @@ import { useState } from 'react'
 import { useTagProvider } from '../../../../../provider/model/TagModelProvider'
 import { useManageModel } from '../../../../../provider/ManageModelProvider'
 
-import { visibilityMap } from '../../../../../utils/mapping/mappingUtils'
+import { checkboxMap } from '../../../../../utils/mapping/mappingUtilsProvider'
+import { buildCheckboxMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils'
 import { iconMap } from '../../../../../utils/mapping/mappingIcons'
 
 import ButtonAction from '../../elements/ButtonAction/ButtonAction'
@@ -11,10 +12,15 @@ import Goal from '../Goal/Goal'
 import Assignment from '../Assignment/Assignment'
 
 import './TagRelationCard.scss'
+import ButtonCheckbox from '../../elements/ButtonCheckbox/ButtonCheckbox'
 
 const standarOpenCard = [{ id: null, open: false }]
 
-const TagRelationCard = () => {
+export const TagRelationCardMap = {
+    checkboxState: checkboxMap
+}
+
+const TagRelationCard = ({ checkboxState } = TagRelationCardMap) => {
     const [openCard, setOpenCard] = useState(standarOpenCard)
     const { setModel } = useManageModel()
     const { modal: { data = [] }, remove, removing, removeSuccess, removingVariables } = useTagProvider()
@@ -39,8 +45,6 @@ const TagRelationCard = () => {
             .filter(tag => !(removeSuccess && removingVariables && tag.id === removingVariables))
             .map(item => {
                 const { goals = [], assignments = [] } = item
-                const isOpen = openCard.some(card => card.id === item.id && card.open === true)
-                const isRemoving = !!removing && removingVariables === item.id
 
                 const goal = {
                     goals: goals.filter(goalItem => !!goalItem?.goal).map(goalItem => {
@@ -61,22 +65,34 @@ const TagRelationCard = () => {
                     })
                 }
 
-                const hasGoal = !!goal.goals.length
-                const hasAssignment = !!assignment.assignments.length
+                const selectedCheckboxList = checkboxState.modal.selected
                 const colorTag = item.color
 
-                const quantityGoalMessage = goal.goals.length > 1 ? `${goal.goals.length} Goals` : `${goal.goals.length} Goal`
-                const quantityAssigmentMessage = assignment.assignments.length > 1 ? `${assignment.assignments.length} Assignments` : `${assignment.assignments.length} Assignment`
+                const quantityGoalMessage = goal.goals.length > 1 ? 
+                    `${goal.goals.length} Goals` : `${goal.goals.length} Goal`
+                const quantityAssigmentMessage = assignment.assignments.length > 1 ? 
+                    `${assignment.assignments.length} Assignments` : `${assignment.assignments.length} Assignment`
 
                 const displayModesProps = {
                     type: ['card-mini'],
                     actions: ['edit']
                 }
 
+                const hasGoal = !!goal.goals.length
+                const hasAssignment = !!assignment.assignments.length
+                const hasSomeRelation = hasGoal || hasAssignment ? 'relationed' : ''
+                const isOpen = openCard.some(card => card.id === item.id && card.open === true) ? 'open' : ''
+                const isRemoving = !!removing && removingVariables === item.id ? 'pending' : ''
+                const isSelected = selectedCheckboxList.includes(`checkbox-${item.id}`) ? 'selected' : ''
+
                 return (
-                    <div className={`tag card-relation ${isOpen ? 'open' : ''} ${(hasGoal || hasAssignment) ? 'relationed' : ''} ${isRemoving ? 'pending' : ''}`} key={item.id} style={{ backgroundColor: `${colorTag}50`, borderColor: colorTag }}>
+                    <div className={`tag card-relation ${isOpen} ${hasSomeRelation} ${isRemoving} ${isSelected}`}
+                        key={item.id}
+                        style={{ backgroundColor: `${colorTag}50`, borderColor: colorTag }}>
                         <div className='head' onClick={() => handleSetOpenCard(item)}>
                             <label>
+                                <ButtonCheckbox classBtn='checkbox-tag-card small' checkboxID={`checkbox-${item.id}`}
+                                    checkbox={buildCheckboxMap({ checkboxID: `checkbox-${item.id}`, scope: 'modal' })} />
                                 {iconMap['tag']}
                                 {item.name}
                             </label>
@@ -84,11 +100,11 @@ const TagRelationCard = () => {
                                 {(hasGoal || hasAssignment) &&
                                     <ButtonAction classBtn='expand button-action circle small' icon='arrowdown'
                                         onClick={() => handleSetOpenCard(item)} />}
-                                {<ButtonAction classBtn='edit button-action circle small' icon='edit'
-                                    onClick={() => editTag(item.id)} visibility={visibilityMap('near-modalForm', { add: true })} />}
-                                {<ButtonAction classBtn='delete button-action circle small' icon='remove'
+                                <ButtonAction classBtn='edit button-action circle small' icon='edit'
+                                    onClick={() => editTag(item.id)} visibility={visibilityMap('near-modalForm', { add: true })} />
+                                <ButtonAction classBtn='delete button-action circle small' icon='remove'
                                     pendingState={isRemoving}
-                                    onClick={() => deleteTag(item.id)} />}
+                                    onClick={() => deleteTag(item.id)} />
                             </div>
                         </div>
                         <div className='body'>
