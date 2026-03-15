@@ -51,7 +51,7 @@ model TagOnGoal {
   goalID Int
   tagID  Int
   goal   Goal @relation(fields: [goalID], references: [id])
-  tag    Tag  @relation(fields: [tagID], references: [id])
+  tag    Tag  @relation(fields: [tagID], references: [id], onDelete: Cascade)
 
   @@unique([goalID, tagID])
 }
@@ -61,7 +61,7 @@ model TagOnAssignment {
   assignmentID Int
   tagID        Int
   assignment   Assignment @relation(fields: [assignmentID], references: [id])
-  tag          Tag        @relation(fields: [tagID], references: [id])
+  tag          Tag        @relation(fields: [tagID], references: [id], onDelete: Cascade)
 
   @@unique([assignmentID, tagID])
 }
