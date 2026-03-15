@@ -4,7 +4,7 @@ import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
 import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
 import { useCheckbox } from '../../../../../provider/CheckboxProvider.jsx'
 
-import { switchLayoutMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { displayModesMap, switchLayoutMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { updateFormModelMap, addToTransportModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
 import Card from '../../elements/Card/Card.jsx'
@@ -12,14 +12,24 @@ import CardMini from '../../elements/CardMini/CardMini.jsx'
 
 import PropTypes from 'prop-types'
 
-const Assignment = ({ status, display, source = [], selectableModel = false, detailsModel = false, draggable = false }) => {
+export const AssignmentMap = {
+    status: '',
+    display: displayModesMap,
+    source: null,
+    selectableModel: false,
+    detailsModel: false,
+    draggable: false,
+    checkboxModel: false
+} 
+
+const Assignment = ({ status, display, source, selectableModel, detailsModel, draggable, checkboxModel } = AssignmentMap) => {
     const { model, setModel, updateFormModel, addToTransportModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
     const { remove, removeSuccess, removing, removingVariables } = useAssignmentProvider()
     const { valuesCheckbox } = useCheckbox()
 
-    const sourceData = source.assignments ?? source
+    const sourceData = source?.assignments ?? source ?? []
 
     const renderCard = sourceData.filter(item =>
         !(removeSuccess && removingVariables && item.id === removingVariables)
@@ -110,6 +120,7 @@ const Assignment = ({ status, display, source = [], selectableModel = false, det
             clickFunction={clickEvents}
             display={display}
             draggable={draggable}
+            checkboxModel={checkboxModel}
         />
     ) : null
 }

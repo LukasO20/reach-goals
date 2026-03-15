@@ -15,6 +15,8 @@ import Goal from '../../items/models/Goal/Goal.jsx'
 import Assignment from '../../items/models/Assignment/Assignment.jsx'
 import ModelSwitcher from '../../items/models/ModelSwitcher.jsx'
 
+import './Objectives.scss'
+
 const Objectives = () => {
     const { update } = useTitle()
     const { layout, updateSwitchLayout } = useSwitchLayout()
@@ -31,7 +33,8 @@ const Objectives = () => {
             actions: []
         },
         detailsModel: true,
-        source: currentData
+        source: currentData,
+        checkboxModel: true
     }
 
     const isAllModels = typeLayout === 'all'
@@ -68,15 +71,15 @@ const Objectives = () => {
     if (isAllModels) {
         content = (
             <>
-                <Goal display={modelProps.display} detailsModel={true} source={dataGoal} />
-                <Assignment display={modelProps.display} detailsModel={true} source={dataAssignment} />
+                <Goal display={modelProps.display} detailsModel={true} source={dataGoal} checkboxModel={true} />
+                <Assignment display={modelProps.display} detailsModel={true} source={dataAssignment} checkboxModel={true} />
             </>
         )
     } else if (isOnlyTypeModel) {
         content = <ModelSwitcher type={typeLayout} propsReference={modelProps} />
     }
 
-    return <ModelTabs type={typeLayout} children={content} loading={isLoading} />
+    return <ModelTabs type={typeLayout} children={content} loading={isLoading} classModelTabs='objectives' />
 }
 
 export default Objectives

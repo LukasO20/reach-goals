@@ -1,5 +1,3 @@
-
-
 .card-mini {
     display: flex;
     align-items: center;
@@ -15,6 +13,10 @@
         display: flex;
         align-items: center;
         gap: 0.5rem;
+
+        .button-checkbox {
+            display: none;
+        }
     }
 
     .side-actions {
@@ -32,7 +34,7 @@
 
             .button-action {
                 background-color: $color-complementary-s;
-                
+
                 * {
                     color: $color-white;
                 }
@@ -41,7 +43,7 @@
                     background-color: $color-complementary-s-30;
 
                     * {
-                       color: $color-complementary-s; 
+                        color: $color-complementary-s;
                     }
                 }
 
@@ -52,7 +54,25 @@
         }
     }
 
+    &.selected {
+
+        .line-info {
+
+            .button-checkbox {
+                display: flex;
+            }
+        }
+    }
+
     &:hover {
+        background-color: $color-complementary-p-50;
+
+        .line-info {
+
+            .button-checkbox {
+                display: flex;
+            }
+        }
 
         .side-actions {
             opacity: 1;

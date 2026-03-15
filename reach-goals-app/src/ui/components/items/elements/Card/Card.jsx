@@ -80,7 +80,7 @@ const Card = ({ type, model = [], display, pendingState, checkboxState = checkbo
                     {...dragProvided?.dragHandleProps}
                 >
                     <div className='head'>
-                        <ButtonCheckbox classBtn='checkbox-m' checkboxID={`checkbox-${itemID}`}
+                        <ButtonCheckbox classBtn='checkbox-card' checkboxID={`checkbox-${itemID}`}
                             checkbox={buildCheckboxMap({ checkboxID: `checkbox-${itemID}`, scope: 'page' })} />
                         <label className='line-info'>
                             {iconMap[type]}<label>{item.name}</label>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
 
@@ -12,7 +12,14 @@ import Proptypes from 'prop-types'
 
 import './ModelTabs.scss'
 
-const ModelTabs = ({ type, children, loading }) => {
+export const ModelTabsMap = {
+    type: '',
+    classModelTabs: '',
+    children: React.ReactNode,
+    loading: false
+}
+
+const ModelTabs = ({ type, classModelTabs, children, loading } = ModelTabsMap) => {
     const { updateFilterModel } = useManageModel()
 
     const [currentFilterData, setCurrentFilterData] = useState({
@@ -58,7 +65,7 @@ const ModelTabs = ({ type, children, loading }) => {
     }
 
     return (
-        <div className={`model-tabs ${type}`}>
+        <div className={`model-tabs ${type} ${classModelTabs}`}>
             <div className='head'>
                 <div className='options-sections'>
                     {

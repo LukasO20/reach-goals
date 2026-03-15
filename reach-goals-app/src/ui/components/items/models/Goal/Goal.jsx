@@ -4,7 +4,7 @@ import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
 import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
 import { useCheckbox } from '../../../../../provider/CheckboxProvider.jsx'
 
-import { switchLayoutMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { switchLayoutMap, visibilityMap, displayModesMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { addToTransportModelMap, updateFormModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
 import Card from '../../elements/Card/Card.jsx'
@@ -14,14 +14,24 @@ import PropTypes from 'prop-types'
 
 import moment from 'moment'
 
-const Goal = ({ status, display, source = [], selectableModel = false, detailsModel = false, draggable = false }) => {
+export const GoalMap = {
+    status: '',
+    display: displayModesMap,
+    source: null,
+    selectableModel: false,
+    detailsModel: false,
+    draggable: false,
+    checkboxModel: false
+} 
+
+const Goal = ({ status, display, source, selectableModel, detailsModel, draggable, checkboxModel } = GoalMap) => {
     const { model, setModel, updateFormModel, addToTransportModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
     const { remove, removeSuccess, removing, removingVariables } = useGoalProvider()
     const { valuesCheckbox } = useCheckbox()
 
-    const sourceData = source.goals ?? source
+    const sourceData = source?.goals ?? source ?? []
 
     const renderCard = sourceData.filter(item =>
         !(removeSuccess && removingVariables && item.id === removingVariables)
@@ -98,6 +108,7 @@ const Goal = ({ status, display, source = [], selectableModel = false, detailsMo
             clickFunction={clickEvents}
             display={display}
             draggable={draggable}
+            checkboxModel={checkboxModel}
         />
     ) : null
 }

@@ -1,17 +1,34 @@
-import { displayModesMap, visibilityMap, switchLayoutMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { displayModesMap, visibilityMap, switchLayoutMap, buildCheckboxMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { checkboxMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
+import ButtonCheckbox from '../ButtonCheckbox/ButtonCheckbox.jsx'
 
 import PropTypes from 'prop-types'
 
 import './CardMini.scss'
 
-const CardMini = ({ type, model = [], display, pendingState, clickFunction }) => {
+export const CardMiniMap = {
+    type: '',
+    model: [],
+    display: displayModesMap,
+    pendingState: false,
+    checkboxState: checkboxMap,
+    checkboxModel: false,
+    clickFunction: {
+        card: () => null,
+        edit: () => null,
+        delete: () => null
+    }
+}
+
+const CardMini = ({ type, model, display, pendingState, checkboxState, clickFunction, checkboxModel } = CardMiniMap) => {
     return model.map(item => {
         const itemID = item.id || item.tagID
         const tagCardStyle = type === 'tag' ? { backgroundColor: `${item.color}30`, borderColor: item.color } : null
         const selectedDisplayType = display.type[0]
+        const selectedCheckboxList = checkboxState.page.selected
 
         const isPending = pendingState?.removing && (item.id || item.tagID) === pendingState?.removingVariables
 
@@ -24,10 +41,16 @@ const CardMini = ({ type, model = [], display, pendingState, clickFunction }) =>
         const isDisplayActionDelete = display.actions.includes('delete')
             && displayModesMap.actions.includes('delete')
 
+        const isSelected = selectedCheckboxList.includes(`checkbox-${itemID}`) ? 'selected' : ''
+
         return (
-            <div className={`${type} ${selectedDisplayType}`} id={itemID} key={itemID}
-                onClick={(e) => clickFunction?.card(item, e)} style={tagCardStyle}>
+            <div className={`${type} ${selectedDisplayType} ${isSelected}`} id={itemID} key={itemID}
+                onClick={(e) => clickFunction.card(item, e)} style={tagCardStyle}>
                 <label className='line-info'>
+                    {checkboxModel && (
+                        <ButtonCheckbox classBtn='checkbox-card-mini' checkboxID={`checkbox-${itemID}`}
+                            checkbox={buildCheckboxMap({ checkboxID: `checkbox-${itemID}`, scope: 'page' })} />
+                    )}
                     {iconMap[type]}
                     <label>{item.name}</label>
                 </label>
