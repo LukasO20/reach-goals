@@ -21,10 +21,12 @@ export const GoalMap = {
     selectableModel: false,
     detailsModel: false,
     draggable: false,
-    checkboxModel: false
+    checkboxModel: false,
+    showTags: false,
+    showStatus: false
 } 
 
-const Goal = ({ status, display, source, selectableModel, detailsModel, draggable, checkboxModel } = GoalMap) => {
+const Goal = ({ status, display, source, selectableModel, detailsModel, draggable, checkboxModel, showTags, showStatus } = GoalMap) => {
     const { model, setModel, updateFormModel, addToTransportModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
@@ -109,6 +111,8 @@ const Goal = ({ status, display, source, selectableModel, detailsModel, draggabl
             display={display}
             draggable={draggable}
             checkboxModel={checkboxModel}
+            showStatus={showStatus}
+            showTags={showTags}
         />
     ) : null
 }

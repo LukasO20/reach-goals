@@ -2,5 +2,20 @@
 
     .card-mini {
         cursor: pointer;
+
+        .card-mini-tag {
+
+            >label {
+                width: 5rem;
+            }
+
+            .count {
+                width: 2.5rem;
+            }
+        }
+
+        * {
+            cursor: pointer;
+        }
     }
 }

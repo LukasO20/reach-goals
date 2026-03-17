@@ -34,7 +34,9 @@ const Objectives = () => {
         },
         detailsModel: true,
         source: currentData,
-        checkboxModel: true
+        checkboxModel: true,
+        showStatus: true, 
+        showTags: true
     }
 
     const isAllModels = typeLayout === 'all'
@@ -71,8 +73,10 @@ const Objectives = () => {
     if (isAllModels) {
         content = (
             <>
-                <Goal display={modelProps.display} detailsModel={true} source={dataGoal} checkboxModel={true} />
-                <Assignment display={modelProps.display} detailsModel={true} source={dataAssignment} checkboxModel={true} />
+                <Goal display={modelProps.display} detailsModel={true} 
+                    source={dataGoal} checkboxModel={true} showStatus={true} showTags={true} />
+                <Assignment display={modelProps.display} detailsModel={true} 
+                    source={dataAssignment} checkboxModel={true} showStatus={true} showTags={true} />
             </>
         )
     } else if (isOnlyTypeModel) {

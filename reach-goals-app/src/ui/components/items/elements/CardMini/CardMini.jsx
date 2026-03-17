@@ -4,6 +4,7 @@ import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 import ButtonCheckbox from '../ButtonCheckbox/ButtonCheckbox.jsx'
+import CardMiniTag from '../CardMiniTag/CardMiniTag.jsx'
 
 import PropTypes from 'prop-types'
 
@@ -20,10 +21,22 @@ export const CardMiniMap = {
         card: () => null,
         edit: () => null,
         delete: () => null
-    }
+    },
+    showTags: false,
+    showStatus: false
 }
 
-const CardMini = ({ type, model, display, pendingState, checkboxState, clickFunction, checkboxModel } = CardMiniMap) => {
+const CardMini = ({
+    type,
+    model,
+    display,
+    pendingState,
+    checkboxState,
+    clickFunction,
+    checkboxModel,
+    showTags,
+    showStatus
+} = CardMiniMap) => {
     return model.map(item => {
         const itemID = item.id || item.tagID
         const tagCardStyle = type === 'tag' ? { backgroundColor: `${item.color}30`, borderColor: item.color } : null
@@ -43,49 +56,67 @@ const CardMini = ({ type, model, display, pendingState, checkboxState, clickFunc
 
         const isSelected = selectedCheckboxList.includes(`checkbox-${itemID}`) ? 'selected' : ''
 
+        const isShowTags = showTags && type !== 'tag'
+
+        const isShowStatus = showStatus
+
+        const hasSideActions = isDisplayActionEdit || isDisplayActionRemove || isDisplayActionDelete
+
+        const iconStatus = item.status === 'conclude' ? 'check' : item.status 
+
         return (
             <div className={`${type} ${selectedDisplayType} ${isSelected}`} id={itemID} key={itemID}
                 onClick={(e) => clickFunction.card(item, e)} style={tagCardStyle}>
-                <label className='line-info'>
-                    {checkboxModel && (
-                        <ButtonCheckbox classBtn='checkbox-card-mini' checkboxID={`checkbox-${itemID}`}
-                            checkbox={buildCheckboxMap({ checkboxID: `checkbox-${itemID}`, scope: 'page' })} />
-                    )}
-                    {iconMap[type]}
-                    <label>{item.name}</label>
-                </label>
-                <div className='side-actions'>
-                    <div className='item-actions'>
-                        {isDisplayActionEdit && (
-                            <ButtonAction
-                                onClick={() => clickFunction.edit(itemID)}
-                                visibility={visibilityMap(['modal-center', type])}
-                                switchLayout={switchLayoutMap({
-                                    area: 'modal',
-                                    state: { modalName: 'modal-center', layoutName: 'form' }
-                                })}
-                                classBtn={`edit-${type} button-action circle small`}
-                                icon='edit'
-                            />
+                <div className='line-info'>
+                    <div className='info-up'>
+                        {checkboxModel && (
+                            <ButtonCheckbox classBtn='checkbox-card-mini' checkboxID={`checkbox-${itemID}`}
+                                checkbox={buildCheckboxMap({ checkboxID: `checkbox-${itemID}`, scope: 'page' })} />
                         )}
-                        {isDisplayActionDelete && (
-                            <ButtonAction
-                                pendingState={isPending}
-                                onClick={() => clickFunction.delete(itemID)}
-                                visibility={visibilityMap(null)}
-                                classBtn={`remove-${type} button-action circle small`}
-                                icon='remove'
-                            />
+                        {isShowStatus && (
+                            <label className={`status ${item.status}`}>
+                                {iconMap[iconStatus]}
+                            </label>
                         )}
-                        {isDisplayActionRemove && (
-                            <ButtonAction
-                                onClick={() => clickFunction.aux(item, type)}
-                                classBtn={`remove-${type}-dom button-action text-icon circle`}
-                                icon='close'
-                            />
-                        )}
+                        {iconMap[type]}
+                        <span>{item.name}</span>
                     </div>
                 </div>
+                {isShowTags && (<CardMiniTag tags={item.tags} />)}
+                {hasSideActions && (
+                    <div className='side-actions'>
+                        <div className='item-actions'>
+                            {isDisplayActionEdit && (
+                                <ButtonAction
+                                    onClick={() => clickFunction.edit(itemID)}
+                                    visibility={visibilityMap(['modal-center', type])}
+                                    switchLayout={switchLayoutMap({
+                                        area: 'modal',
+                                        state: { modalName: 'modal-center', layoutName: 'form' }
+                                    })}
+                                    classBtn={`edit-${type} button-action circle small`}
+                                    icon='edit'
+                                />
+                            )}
+                            {isDisplayActionDelete && (
+                                <ButtonAction
+                                    pendingState={isPending}
+                                    onClick={() => clickFunction.delete(itemID)}
+                                    visibility={visibilityMap(null)}
+                                    classBtn={`remove-${type} button-action circle small`}
+                                    icon='remove'
+                                />
+                            )}
+                            {isDisplayActionRemove && (
+                                <ButtonAction
+                                    onClick={() => clickFunction.aux(item, type)}
+                                    classBtn={`remove-${type}-dom button-action text-icon circle`}
+                                    icon='close'
+                                />
+                            )}
+                        </div>
+                    </div>
+                )}
             </div>
         )
     }

@@ -1,0 +1,36 @@
+.card-mini-tag {
+    display: flex;
+    overflow: hidden;
+    gap: 0.25rem;
+
+    >label {
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.45rem;
+        text-align: center;
+        height: 1.5rem;
+        width: 3.5rem;
+        border-radius: 0.5rem;
+        padding: 0rem 0.35rem;
+        font-size: 0.95rem;
+    }
+
+    .count {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        height: 1.5rem;
+        width: 2.5rem;
+        border-radius: 2rem;
+        background-color: $color-complementary-s;
+        color: $color-white;
+
+        .icon-st {
+            height: 1.1rem;
+            color: $color-white;
+        }
+    }
+}

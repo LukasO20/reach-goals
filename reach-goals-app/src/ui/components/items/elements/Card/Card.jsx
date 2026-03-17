@@ -4,6 +4,7 @@ import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 import ButtonCheckbox from '../ButtonCheckbox/ButtonCheckbox.jsx'
+import CardMiniTag from '../CardMiniTag/CardMiniTag.jsx'
 import { Draggable } from '@adaptabletools/react-beautiful-dnd'
 
 import PropTypes from 'prop-types'
@@ -38,27 +39,6 @@ const Card = ({ type, model = [], display, pendingState, checkboxState = checkbo
             const isDisplayActionDelete = display.actions.includes('delete')
                 && displayModesMap.actions.includes('delete')
 
-            const renderTagBox = () => {
-                return (
-                    <div className='tag-box'>
-                        {item.tags.slice(0, 3).map(data => {
-                            const styleProps = { backgroundColor: `${data.tag.color}30`, borderColor: data.tag.color }
-                            return (
-                                <label key={data.tag.name} style={styleProps}>
-                                    {data.tag.name}
-                                </label>
-                            )
-                        })}
-                        {item.tags.slice(3).length > 0 && (
-                            <label className='count'>
-                                <span className='icon-st'>{iconMap['plus']}</span>
-                                {item.tags.slice(3).length}
-                            </label>
-                        )}
-                    </div>
-                )
-            }
-
             const renderEndDate = () => {
                 return (
                     <label className='line-info date'>
@@ -85,7 +65,7 @@ const Card = ({ type, model = [], display, pendingState, checkboxState = checkbo
                         <label className='line-info'>
                             {iconMap[type]}<label>{item.name}</label>
                         </label>
-                        {hasTags && renderTagBox()}
+                        {hasTags && (<CardMiniTag tags={item.tags} />)}
                     </div>
                     <div className='body'>
                         {!!hasEndDate && renderEndDate()}

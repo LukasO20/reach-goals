@@ -11,11 +11,50 @@
 
     .line-info {
         display: flex;
-        align-items: center;
-        gap: 0.5rem;
+        flex-direction: column;
+        gap: 0.25rem;
 
-        .button-checkbox {
-            display: none;
+        .info-up {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            .status {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                opacity: 0.8;
+
+                .icon-st {
+                    height: 1.1rem;
+                    width: 1.1rem;
+                }
+
+                &.progress {
+                    background-color: $color-complementary-s-15;
+                }
+
+                &.conclude {
+                    background-color: $color-success-70;
+
+                    .icon-st {
+                        color: $color-white;
+                    }
+                }
+
+                &.cancel {
+                    background-color: $color-cancel-70;
+
+                    .icon-st {
+                        color: $color-white;
+                    }
+                }
+            }
+
+            .button-checkbox {
+                display: none;
+            }
         }
     }
 
@@ -58,8 +97,11 @@
 
         .line-info {
 
-            .button-checkbox {
-                display: flex;
+            .info-up {
+
+                .button-checkbox {
+                    display: flex;
+                }
             }
         }
     }
@@ -69,8 +111,11 @@
 
         .line-info {
 
-            .button-checkbox {
-                display: flex;
+            .info-up {
+
+                .button-checkbox {
+                    display: flex;
+                }
             }
         }
 

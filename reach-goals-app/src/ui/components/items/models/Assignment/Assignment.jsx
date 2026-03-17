@@ -19,10 +19,12 @@ export const AssignmentMap = {
     selectableModel: false,
     detailsModel: false,
     draggable: false,
-    checkboxModel: false
+    checkboxModel: false,
+    showTags: false,
+    showStatus: false
 } 
 
-const Assignment = ({ status, display, source, selectableModel, detailsModel, draggable, checkboxModel } = AssignmentMap) => {
+const Assignment = ({ status, display, source, selectableModel, detailsModel, draggable, checkboxModel, showTags, showStatus } = AssignmentMap) => {
     const { model, setModel, updateFormModel, addToTransportModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
@@ -121,6 +123,8 @@ const Assignment = ({ status, display, source, selectableModel, detailsModel, dr
             display={display}
             draggable={draggable}
             checkboxModel={checkboxModel}
+            showTags={showTags}
+            showStatus={showStatus}
         />
     ) : null
 }
