@@ -1,7 +1,7 @@
 export const manageModelMap = {
     typeModel: '',
     mainModelID: null,
-    transportModel: {
+    selectedModel: {
         tag: [],
         assignment: [],
         goal: []
@@ -108,10 +108,10 @@ export const updateFormModelMap = ({ keyObject = '', value, type = '', action = 
     return { keyObject, value, type, action }
 }
 
-export const removeFromTransportModelMap = ({ id, type = '' }) => {
+export const removeFromSelectedModelMap = ({ id, type = '' }) => {
     return { id, type }
 }
 
-export const addToTransportModelMap = ({ id, name = '', type = '', color = '', custom }) => {
+export const addToSelectedModelMap = ({ id, name = '', type = '', color = '', custom }) => {
     return { id, name, type, color, custom }
 }

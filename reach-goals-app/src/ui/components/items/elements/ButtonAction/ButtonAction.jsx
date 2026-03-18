@@ -3,7 +3,7 @@ import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
 import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
-import { resetManageModelMap, updateFormModelMap, removeFromTransportModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
+import { resetManageModelMap, updateFormModelMap, removeFromSelectedModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
 import Loading from '../Loading/Loading.jsx'
 
@@ -19,7 +19,7 @@ const statusButton = (classBtn, providervisibleElements) => {
 const ButtonAction = ({ visibility, switchLayout, nullForm, unlinkGoal, onClick, pendingState, disable, datavalue, icon, title, classBtn }) => {
     const { visibleElements, toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
-    const { model, resetManageModel, updateFormModel, removeFromTransportModel } = useManageModel()
+    const { model, resetManageModel, updateFormModel, removeFromSelectedModel } = useManageModel()
 
     const classBtnAction = classBtn.split(' ')[2]
     const isOn = statusButton(classBtnAction, visibleElements)
@@ -27,16 +27,16 @@ const ButtonAction = ({ visibility, switchLayout, nullForm, unlinkGoal, onClick,
     const handleClick = (e) => {
         e.stopPropagation()
 
-        const dataResetManageModel = resetManageModelMap(['formModel', 'mainModelID', 'transportModel'])
+        const dataResetManageModel = resetManageModelMap(['formModel', 'mainModelID', 'selectedModel'])
         const dataUpdateFormModel = updateFormModelMap({ keyObject: 'goalID', value: null, action: 'remove' })
-        const dataRemoveFromTransportModel = removeFromTransportModelMap({ id: model.formModel.goalID, type:  'goal' })
+        const dataRemoveFromSelectedModel = removeFromSelectedModelMap({ id: model.formModel.goalID, type:  'goal' })
 
         if (visibility) toggleVisibility(visibility, e)
         if (switchLayout) updateSwitchLayout(switchLayout)
         if (nullForm) resetManageModel(dataResetManageModel)
         if (unlinkGoal) {
             updateFormModel(dataUpdateFormModel)
-            removeFromTransportModel(dataRemoveFromTransportModel)
+            removeFromSelectedModel(dataRemoveFromSelectedModel)
         }
 
         if (typeof onClick === 'function') {

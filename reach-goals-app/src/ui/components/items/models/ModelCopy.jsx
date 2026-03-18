@@ -2,21 +2,21 @@ import { useState, useEffect } from 'react'
 
 import { useManageModel } from '../../../../provider/ManageModelProvider.jsx'
 
-import { removeFromTransportModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
+import { removeFromSelectedModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
 import CardMini from '../elements/CardMini/CardMini.jsx'
 
 const ModelCopy = ({ propsReference, region }) => {
     const [modelCopy, setCopyModel] = useState([])
-    const { model, removeFromTransportModel, updateFormModel } = useManageModel()
+    const { model, removeFromSelectedModel, updateFormModel } = useManageModel()
 
     useEffect(() => {
-        setCopyModel(model.transportModel[region] || [])
-    }, [model.transportModel, setCopyModel, region])
+        setCopyModel(model.selectedModel[region] || [])
+    }, [model.selectedModel, setCopyModel, region])
 
     const removeElDOMClick = ({ id, tagID }, type) => {
-        const dataRemoveFromTransportModel = removeFromTransportModelMap({ id: id ?? tagID, type })
-        removeFromTransportModel(dataRemoveFromTransportModel)
+        const dataRemoveFromSelectedModel = removeFromSelectedModelMap({ id: id ?? tagID, type })
+        removeFromSelectedModel(dataRemoveFromSelectedModel)
 
         if (!type) { return console.error('No type provided for model copy delete action. Send a goal, assignment or tag type') }
 

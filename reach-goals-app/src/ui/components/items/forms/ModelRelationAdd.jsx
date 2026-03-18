@@ -36,7 +36,7 @@ const ModelRelationAdd = ({ type, children }) => {
     }
 
     if (type === 'assignment') {
-        const goals = model.transportModel.goal
+        const goals = model.selectedModel.goal
         const goaLinked = goals.length || null
         const goalData = goals[0]
 

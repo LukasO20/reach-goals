@@ -46,7 +46,7 @@ const Objectives = () => {
     useEffect(() => {
         const dataSwitchLayout = switchLayoutMap({ area: 'page', state: { pageName: location.pathname.slice(1), layoutName: 'all' } })
 
-        update({ header: 'Manage your goals and assingments' })
+        update({ header: 'Manage your goals and assignments' })
         updateSwitchLayout(dataSwitchLayout)
     }, [update, updateSwitchLayout, location.pathname])
 

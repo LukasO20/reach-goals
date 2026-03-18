@@ -5,7 +5,7 @@ import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
 import { useCheckbox } from '../../../../../provider/CheckboxProvider.jsx'
 
 import { switchLayoutMap, visibilityMap, displayModesMap } from '../../../../../utils/mapping/mappingUtils.js'
-import { addToTransportModelMap, updateFormModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
+import { addToSelectedModelMap, updateFormModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
 import Card from '../../elements/Card/Card.jsx'
 import CardMini from '../../elements/CardMini/CardMini.jsx'
@@ -27,7 +27,7 @@ export const GoalMap = {
 } 
 
 const Goal = ({ status, display, source, selectableModel, detailsModel, draggable, checkboxModel, showTags, showStatus } = GoalMap) => {
-    const { model, setModel, updateFormModel, addToTransportModel } = useManageModel()
+    const { model, setModel, updateFormModel, addToSelectedModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
     const { remove, removeSuccess, removing, removingVariables } = useGoalProvider()
@@ -62,16 +62,16 @@ const Goal = ({ status, display, source, selectableModel, detailsModel, draggabl
         if (selectableModel) {
             const selected = sourceData.find(m => m.id === goal.id)
             const dataUpdateFormModelMap = updateFormModelMap({ keyObject: 'goalID', value: goal.id, action: 'add' })
-            const dataAddToTransportModel = addToTransportModelMap({
+            const dataAddToSelectedModel = addToSelectedModelMap({
                 id: selected.id,
                 name: selected.name,
                 type: 'goal',
                 custom: { end: moment(selected.end).format('MMMM DD') }
             })
 
-            if (model.transportModel.goal.length > 0) return
+            if (model.selectedModel.goal.length > 0) return
 
-            addToTransportModel(dataAddToTransportModel)
+            addToSelectedModel(dataAddToSelectedModel)
             toggleVisibility(visibilityMap('modal-list-goal', { remove: true }))
             return updateFormModel(dataUpdateFormModelMap)
         }

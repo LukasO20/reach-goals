@@ -7,7 +7,7 @@ const ManageModelContext = createContext()
 export const ManageModelProvider = ({ children }) => {
     const [model, setModel] = useState(manageModelMap)
 
-    const addToTransportModel = useCallback(({ id, name, type, color, custom }) => {
+    const addToSelectedModel = useCallback(({ id, name, type, color, custom }) => {
         if (!id || !name) return console.error('The model object must have an id and a name property')
         if (typeof type !== 'string') return console.error('The type is necessary and should be a string value. Did you send something like "tag" or "assignment"?')
 
@@ -15,13 +15,13 @@ export const ManageModelProvider = ({ children }) => {
         const tagAdded = type === 'tag'
 
         setModel(prevModel => {
-            const alreadyExists = prevModel.transportModel[type].some(item => (item.id ?? item.tagID) === id)
+            const alreadyExists = prevModel.selectedModel[type].some(item => (item.id ?? item.tagID) === id)
             return alreadyExists ? prevModel : {
                 ...prevModel,
-                transportModel: {
-                    ...prevModel.transportModel,
+                selectedModel: {
+                    ...prevModel.selectedModel,
                     [type]: [
-                        ...prevModel.transportModel[type],
+                        ...prevModel.selectedModel[type],
                         tagAdded ?
                             { [dynamicKey]: id, name: name, type: type, color: color }
                             :
@@ -32,14 +32,14 @@ export const ManageModelProvider = ({ children }) => {
         })
     }, [])
 
-    const removeFromTransportModel = useCallback(({ id, type }) => {
+    const removeFromSelectedModel = useCallback(({ id, type }) => {
         setModel(prevModel => {
-            const updatedTransportModel = prevModel.transportModel[type].filter(item => (item.id ?? item.tagID) !== id)
+            const updatedSelectedModel = prevModel.selectedModel[type].filter(item => (item.id ?? item.tagID) !== id)
             return {
                 ...prevModel,
-                transportModel: {
-                    ...prevModel.transportModel,
-                    [type]: updatedTransportModel
+                selectedModel: {
+                    ...prevModel.selectedModel,
+                    [type]: updatedSelectedModel 
                 }
             }
         })
@@ -141,14 +141,14 @@ export const ManageModelProvider = ({ children }) => {
     const value = useMemo(() => ({
         model,
         setModel,
-        addToTransportModel,
-        removeFromTransportModel,
+        addToSelectedModel,
+        removeFromSelectedModel,
         updateFormModel,
         updateFilterModel,
         updateDataModel,
         resetManageModel
     }), [
-        model, addToTransportModel, removeFromTransportModel,
+        model, addToSelectedModel, removeFromSelectedModel,
         updateFormModel, updateFilterModel, updateDataModel, resetManageModel
     ])
 

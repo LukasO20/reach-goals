@@ -5,7 +5,7 @@ import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
 import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
 
 import { visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
-import { addToTransportModelMap, updateFormModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
+import { addToSelectedModelMap, updateFormModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
 import CardMini from '../../elements/CardMini/CardMini.jsx'
 
@@ -13,7 +13,7 @@ import PropTypes from 'prop-types'
 
 const Tag = ({ display, source = [], selectableModel = false }) => {
     const { toggleVisibility } = useVisibility()
-    const { model, setModel, updateFormModel, addToTransportModel } = useManageModel()
+    const { model, setModel, updateFormModel, addToSelectedModel } = useManageModel()
     const { remove, removeSuccess, removingVariables } = useTagProvider()
 
     const target = visibilityMap(['panel-right', 'tag'])
@@ -42,14 +42,14 @@ const Tag = ({ display, source = [], selectableModel = false }) => {
                 type: 'array',
                 action: 'add'
             })
-            const dataAddToTransportModel = addToTransportModelMap({
+            const dataAddToSelectedModel = addToSelectedModelMap({
                 id: selected.id,
                 name: selected.name,
                 type: 'tag',
                 color: selected.color
             })
 
-            addToTransportModel(dataAddToTransportModel)
+            addToSelectedModel(dataAddToSelectedModel)
             return updateFormModel(dataUpdateFormModelMap)
         }
 

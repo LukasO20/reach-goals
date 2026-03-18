@@ -5,7 +5,7 @@ import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
 import { useCheckbox } from '../../../../../provider/CheckboxProvider.jsx'
 
 import { displayModesMap, switchLayoutMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
-import { updateFormModelMap, addToTransportModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
+import { updateFormModelMap, addToSelectedModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
 import Card from '../../elements/Card/Card.jsx'
 import CardMini from '../../elements/CardMini/CardMini.jsx'
@@ -25,7 +25,7 @@ export const AssignmentMap = {
 } 
 
 const Assignment = ({ status, display, source, selectableModel, detailsModel, draggable, checkboxModel, showTags, showStatus } = AssignmentMap) => {
-    const { model, setModel, updateFormModel, addToTransportModel } = useManageModel()
+    const { model, setModel, updateFormModel, addToSelectedModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
     const { remove, removeSuccess, removing, removingVariables } = useAssignmentProvider()
@@ -65,13 +65,13 @@ const Assignment = ({ status, display, source, selectableModel, detailsModel, dr
                 action: 'add',
                 type: 'array'
             })
-            const dataAddToTransportModel = addToTransportModelMap({
+            const dataAddToSelectedModel = addToSelectedModelMap({
                 id: selected.id,
                 name: selected.name,
                 type: 'assignment'
             })
 
-            addToTransportModel(dataAddToTransportModel)
+            addToSelectedModel(dataAddToSelectedModel)
             return updateFormModel(dataUpdateFormModel)
         }
 
