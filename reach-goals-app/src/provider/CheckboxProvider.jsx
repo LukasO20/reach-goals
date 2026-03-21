@@ -98,7 +98,6 @@ export const CheckboxProvider = ({ children }) => {
 
     const value = useMemo(() => ({ valuesCheckbox, toggleCheckbox, registerCheckbox, unregisterCheckbox, resetCheckbox }),
         [valuesCheckbox, toggleCheckbox, registerCheckbox, unregisterCheckbox, resetCheckbox])
-    console.log('VALUESCHECK ', valuesCheckbox)
 
     return (
         <CheckboxContext.Provider value={value}>

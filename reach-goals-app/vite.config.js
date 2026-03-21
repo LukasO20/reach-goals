@@ -20,8 +20,5 @@ export default defineConfig({
     watch: {
       ignored: ['**/api/**']
     }
-  },
-  optimizeDeps: {
-    exclude: ['prisma', '@prisma/client'],
-  },
+  }
 })

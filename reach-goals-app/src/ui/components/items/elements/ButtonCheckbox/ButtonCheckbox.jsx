@@ -18,7 +18,7 @@ const stateCheckboxMain = (selected = [], total = []) => {
 
 export const ButtonCheckboxMap = {
     classBtn: '',
-    checkboxID: '',
+    checkboxID: null,
     title: '',
     checkbox: checkboxMap
 }

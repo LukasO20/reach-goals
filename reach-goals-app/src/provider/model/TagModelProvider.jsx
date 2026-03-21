@@ -34,7 +34,8 @@ export const TagModelProvider = ({ children, filters = {} }) => {
     } = useQuery({
         queryKey: queryKeyPage,
         queryFn: createQueryFn(filters.page),
-        enabled: !!validFilter(filters.page)
+        enabled: !!validFilter(filters.page),
+        staleTime: 1000 * 60 * 5 //5 minutes for new data
     })
 
     const {
@@ -44,7 +45,8 @@ export const TagModelProvider = ({ children, filters = {} }) => {
     } = useQuery({
         queryKey: queryKeyModal,
         queryFn: createQueryFn(filters.modal),
-        enabled: !!validFilter(filters.modal)
+        enabled: !!validFilter(filters.modal),
+        staleTime: 1000 * 60 * 5 //5 minutes for new data
     })
 
     const saveMutation = useMutation({
