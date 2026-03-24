@@ -59,4 +59,10 @@ const debounce = (func, delay) => {
     }
 }
 
-export { formatDate, hasRequiredProps, debounce }
+const cx = (str = '') => {
+    return str.replace(/\b(undefined|null|false)\b/g, '')
+        .replace(/\s+/g, ' ')
+        .trim()
+}
+
+export { formatDate, hasRequiredProps, debounce, cx }
