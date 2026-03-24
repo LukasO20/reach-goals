@@ -29,11 +29,9 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "vite build",
+    "build": "prisma generate && vite build",
     "serve": "vite preview",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "postinstall": "prisma generate"
+    "test": "vitest"
   },
   "eslintConfig": {
     "extends": [

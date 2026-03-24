@@ -11,13 +11,13 @@ import { validFilter } from '../../utils/utilsProvider.js'
 
 export const TagModelContext = createContext()
 
-export const TagModelProvider = ({ children, filters = {} }) => {
+export const TagModelProvider = ({ children }) => {
     const queryClient = useQueryClient()
-    const { updateDataModel } = useManageModel()
+    const { model, updateDataModel } = useManageModel()
     const { update } = useTitle()
 
-    const queryKeyPage = ['tags', 'page', filters.page]
-    const queryKeyModal = ['tags', 'modal', filters.modal]
+    const queryKeyPage = ['tags', 'page', model.filter.tag.page]
+    const queryKeyModal = ['tags', 'modal', model.filter.tag.modal]
 
     const createQueryFn = (scopeFilter) => {
         const valid = validFilter(scopeFilter)
@@ -33,8 +33,8 @@ export const TagModelProvider = ({ children, filters = {} }) => {
         isLoading: isPageLoading,
     } = useQuery({
         queryKey: queryKeyPage,
-        queryFn: createQueryFn(filters.page),
-        enabled: !!validFilter(filters.page),
+        queryFn: createQueryFn(model.filter.tag.page),
+        enabled: validFilter(model.filter.tag.page, 'some'),
         staleTime: 1000 * 60 * 5 //5 minutes for new data
     })
 
@@ -44,8 +44,8 @@ export const TagModelProvider = ({ children, filters = {} }) => {
         isLoading: isModalLoading,
     } = useQuery({
         queryKey: queryKeyModal,
-        queryFn: createQueryFn(filters.modal),
-        enabled: !!validFilter(filters.modal),
+        queryFn: createQueryFn(model.filter.tag.modal),
+        enabled: validFilter(model.filter.tag.modal, 'some'),
         staleTime: 1000 * 60 * 5 //5 minutes for new data
     })
 

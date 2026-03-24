@@ -12,13 +12,13 @@ import { validFilter } from '../../utils/utilsProvider.js'
 
 export const AssignmentModelContext = createContext()
 
-export const AssignmentModelProvider = ({ children, filters = {} }) => {
+export const AssignmentModelProvider = ({ children }) => {
     const queryClient = useQueryClient()
-    const { updateDataModel } = useManageModel()
+    const { model, updateDataModel } = useManageModel()
     const { update } = useTitle()
 
-    const queryKeyPage = ['assignments', 'page', filters.page]
-    const queryKeyModal = ['assignment', 'modal', filters.modal]
+    const queryKeyPage = ['assignments', 'page', model.filter.assignment.page]
+    const queryKeyModal = ['assignment', 'modal', model.filter.assignment.modal]
 
     const createQueryFn = (scopeFilter) => {
         const valid = validFilter(scopeFilter)
@@ -34,8 +34,8 @@ export const AssignmentModelProvider = ({ children, filters = {} }) => {
         isLoading: isPageLoading,
     } = useQuery({
         queryKey: queryKeyPage,
-        queryFn: createQueryFn(filters.page),
-        enabled: !!validFilter(filters.page),
+        queryFn: createQueryFn(model.filter.assignment.page),
+        enabled: validFilter(model.filter.assignment.page, 'some'),
         staleTime: 1000 * 60 * 5 //5 minutes for new data
     })
 
@@ -45,8 +45,8 @@ export const AssignmentModelProvider = ({ children, filters = {} }) => {
         isLoading: isModalLoading,
     } = useQuery({
         queryKey: queryKeyModal,
-        queryFn: createQueryFn(filters.modal),
-        enabled: !!validFilter(filters.modal),
+        queryFn: createQueryFn(model.filter.assignment.modal),
+        enabled: validFilter(model.filter.assignment.modal, 'some'),
         staleTime: 1000 * 60 * 5 //5 minutes for new data
     })
 

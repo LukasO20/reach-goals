@@ -12,13 +12,14 @@ import { validFilter } from '../../utils/utilsProvider.js'
 
 const GoalModelContext = createContext()
 
-export const GoalModelProvider = ({ children, filters = {} }) => {
+export const GoalModelProvider = ({ children }) => {
   const queryClient = useQueryClient()
-  const { updateDataModel } = useManageModel()
+  const { model, updateDataModel } = useManageModel()
   const { update } = useTitle()
 
-  const queryKeyPage = ['goals', 'page', filters.page]
-  const queryKeyModal = ['goal', 'modal', filters.modal]
+
+  const queryKeyPage = ['goals', 'page', model.filter.goal.page]
+  const queryKeyModal = ['goal', 'modal', model.filter.goal.modal]
 
   const createQueryFn = (scopeFilter) => {
     const valid = validFilter(scopeFilter)
@@ -34,8 +35,8 @@ export const GoalModelProvider = ({ children, filters = {} }) => {
     isLoading: isPageLoading,
   } = useQuery({
     queryKey: queryKeyPage,
-    queryFn: createQueryFn(filters.page),
-    enabled: !!validFilter(filters.page),
+    queryFn: createQueryFn(model.filter.goal.page),
+    enabled: validFilter(model.filter.goal.page, 'some'),
     staleTime: 1000 * 60 * 5 //5 minutes for new data
   })
 
@@ -45,9 +46,9 @@ export const GoalModelProvider = ({ children, filters = {} }) => {
     isLoading: isModalLoading,
   } = useQuery({
     queryKey: queryKeyModal,
-    queryFn: createQueryFn(filters.modal),
-    enabled: !!validFilter(filters.modal),
-        staleTime: 1000 * 60 * 5 //5 minutes for new data
+    queryFn: createQueryFn(model.filter.goal.modal),
+    enabled: validFilter(model.filter.goal.modal, 'some'),
+    staleTime: 1000 * 60 * 5 //5 minutes for new data
   })
 
   const saveMutation = useMutation({

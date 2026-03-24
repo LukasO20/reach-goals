@@ -1,13 +1,13 @@
 import { PrismaClient } from "@prisma/client"
 
-let prisma = undefined
-if (process.env.REACHGOALS_URL === 'production') {
-    prisma = new PrismaClient()
-} else {
-    if (!global.prisma) {
-      global.prisma = new PrismaClient()
-    }
-    prisma = global.prisma
-}
+const globalForPrisma = global
 
-export { prisma }
+export const prisma =
+  globalForPrisma.prisma ||
+  new PrismaClient({
+    log: ['query', 'error', 'warn']
+  })
+
+if (process.env.NODE_ENV !== 'production') {
+  globalForPrisma.prisma = prisma;
+}

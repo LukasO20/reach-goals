@@ -1,19 +1,17 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { GoalModelProvider } from './GoalModelProvider.jsx'
 import { AssignmentModelProvider } from './AssignmentModelProvider.jsx'
 import { TagModelProvider } from './TagModelProvider.jsx'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { useManageModel } from '../ManageModelProvider.jsx'
 
 const queryClient = new QueryClient()
 
-export const FilterModelProvider = ({ children }) => {
-    const { model } = useManageModel()
-
+export const ModelQueryClientProvider = ({ children }) => {
+    
     return (
         <QueryClientProvider client={queryClient}>
-            <GoalModelProvider filters={model.filter.goal}>
-                <AssignmentModelProvider filters={model.filter.assignment}>
-                    <TagModelProvider filters={model.filter.tag}>
+            <GoalModelProvider>
+                <AssignmentModelProvider>
+                    <TagModelProvider>
                         {children}
                     </TagModelProvider>
                 </AssignmentModelProvider>
