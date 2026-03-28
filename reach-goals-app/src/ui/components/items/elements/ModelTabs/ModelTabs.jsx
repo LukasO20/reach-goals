@@ -38,7 +38,7 @@ const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, loading }
 
     const handleFilterUpdate = (filterObject, type, scope) => {
         if (!filterObject || !type || !scope) return console.error('To update the filter model is necessary a filterObject, type and scope')
-        return updateFilterModelMap({ filter: filterObject, model: type, scope })   
+        return updateFilterModelMap({ filter: filterObject, model: type, scope })
     }
 
     const filterButtonActive = currentFilterData[type] ?
@@ -82,9 +82,15 @@ const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, loading }
                             const currentButton = Object.keys(tab.currentfilter)[0]
                             const isNullFilter = !filterButtonActive && tab.label.includes('every')
 
-                            return <ButtonAction key={index} classBtn={`button-action plan-round max-width small model-tabs 
-                            ${currentButton === filterButtonActive ? 'active' : isNullFilter ? 'active' : ''}`}
-                                title={tab.label} onClick={(e) => { handleFilterClick(tab.currentfilter) }} />
+                            return (
+                                <ButtonAction
+                                    key={index}
+                                    classBtn={`button-action plan-round max-width small model-tabs 
+                                        ${currentButton === filterButtonActive ? 'active' : isNullFilter ? 'active' : ''}`}
+                                    title={tab.label}
+                                    onClick={(e) => { handleFilterClick(tab.currentfilter) }}
+                                />
+                            )
                         })
                     }
                 </div>

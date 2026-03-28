@@ -33,7 +33,7 @@ const SearchBoxResults = ({ data, loading, status } = SearchBoxResultsMap) => {
     const { setModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
-    const { goals, assignments, tags } = data
+    const { goals = [], assignments = [], tags = [] } = data
 
     const dataResult = [
         ...goals.map((g) => ({ ...g, type: 'goal' })),

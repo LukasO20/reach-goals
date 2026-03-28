@@ -1,11 +1,12 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 
 import { useCheckbox } from '../../../provider/CheckboxProvider'
-
 import { useVisibility } from '../../../provider/VisibilityProvider.jsx'
+import { useSwitchLayout } from '../../../provider/SwitchLayoutProvider.jsx'
+
 import { visibilityMap, switchLayoutMap } from '../../../utils/mapping/mappingUtils.js'
 
-import { useSwitchLayout } from '../../../provider/SwitchLayoutProvider.jsx'
+import { cx } from '../../../utils/utils.js'
 
 import ButtonAction from '../items/elements/ButtonAction/ButtonAction.jsx'
 import ButtonLink from '../items/elements/ButtonLink/ButtonLink.jsx'
@@ -36,29 +37,57 @@ const Navigate = () => {
         resetCheckbox({ keys: ['page'] })
     }
 
+    const buttonLinkHomeClass = cx(
+        `circle
+        home
+        ${isHomePage && 'active'}
+        `
+    )
+
+    const buttonLinkCalendarClass = cx(
+        `circle
+        calendar
+        ${isCalendarPage && 'active'}
+        `
+    )
+
+    const buttonLinkObjectivesClass = cx(
+        `circle
+        objectives
+        ${isObjectivesPage && 'active'}
+        `
+    )
+
+    const buttonLinkConfigClass = cx(
+        `circle
+        config
+        ${visibleElements.includes('config') && 'active'}
+        `
+    )
+
     return (
         <div className='container-navigate aside-content' onClick={(e) => handleClickNavigate(e)}>
             <div className='nav'>
                 <div className='item-nav'>
-                    <ButtonLink link={'/home'} classBtn={`circle home ${isHomePage ? 'active' : ''}`} img='/logo.png' alt='Home button'
+                    <ButtonLink link={'/home'} classBtn={buttonLinkHomeClass} img='/logo.png' alt='Home button'
                         switchLayout={switchLayoutMap({ area: 'page', state: { pageName: 'home', layoutName: 'goal' } })}
                         onClick={() => handleButtonLinkClick('home')}
                     />
                 </div>
                 <div className='item-nav'>
-                    <ButtonLink link='/calendar' classBtn={`circle calendar ${isCalendarPage ? 'active' : ''}`} icon='calendar'
+                    <ButtonLink link='/calendar' classBtn={buttonLinkCalendarClass} icon='calendar'
                         switchLayout={switchLayoutMap({ area: 'page', state: { pageName: 'calendar', layoutName: 'all' } })}
                         onClick={() => handleButtonLinkClick('calendar')}
                     />
                 </div>
                 <div className='item-nav'>
-                    <ButtonLink link='/objectives' classBtn={`circle objectives ${isObjectivesPage ? 'active' : ''}`} icon='objectives'
+                    <ButtonLink link='/objectives' classBtn={buttonLinkObjectivesClass} icon='objectives'
                         switchLayout={switchLayoutMap({ area: 'page', state: { pageName: 'objectives', layoutName: 'all' } })}
                         onClick={() => handleButtonLinkClick('objectives')}
                     />
                 </div>
                 <div className='item-nav'>
-                    <ButtonAction visibility={visibilityMap(['modal-center', 'config'])} classBtn={`button-action circle config ${visibleElements.includes('config') ? 'active' : ''}`} icon='config'
+                    <ButtonAction visibility={visibilityMap(['modal-center', 'config'])} classBtn={buttonLinkConfigClass} icon='config'
                         switchLayout={switchLayoutMap({ area: 'modal', state: { modalName: 'modal-center', layoutName: 'config' } })}
                     />
                 </div>

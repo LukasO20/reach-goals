@@ -66,8 +66,7 @@ const Card = ({
                 && displayModesMap.actions.includes('delete')
 
             const cardClass = cx(
-                `
-                ${type}
+                `${type}
                 ${selectedDisplayType}
                 ${isPending && 'pending'}
                 ${isSelected && 'selected'}

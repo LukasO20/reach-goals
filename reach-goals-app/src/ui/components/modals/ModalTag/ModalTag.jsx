@@ -17,6 +17,8 @@ import ModelTabs from '../../items/elements/ModelTabs/ModelTabs.jsx'
 import TagRelationCard from '../../items/models/Tag/TagRelationCard.jsx'
 import PopupModelOptions from '../../items/elements/PopupModelOptions/PopupModelOptions.jsx'
 
+import { cx } from '../../../../utils/utils.js'
+
 import './ModalTag.scss'
 
 const ModalTag = () => {
@@ -60,6 +62,14 @@ const ModalTag = () => {
     const isModalForm = ['tag', 'near-modalForm']
     const isLoadingTag = !!loading && !model.mainModelID
 
+    const buttonCreateClass = cx(
+        `create
+        plan
+        max-width
+        ${isModalForm.every(e => visibleElements.includes(e)) && 'active'}
+        `
+    )
+
     return (
         <>
             <div className='head'>
@@ -69,10 +79,14 @@ const ModalTag = () => {
                     <ButtonAction
                         onClick={handleClickButtonActionCreate}
                         visibility={visibilityMap('near-modalForm', { add: true })}
-                        classBtn={`button-action create plan max-width ${isModalForm.every(e => visibleElements.includes(e)) ? 'active' : ''}`} icon='plus' title='create' />
+                        classBtn={buttonCreateClass} 
+                        icon='plus' 
+                        title='create' 
+                    />
                     <ButtonAction
-                        classBtn='button-action circle max-width config'
-                        icon='config' onClick={(e) => handleClickButtonAction(e)}
+                        classBtn='circle max-width config'
+                        icon='config' 
+                        onClick={(e) => handleClickButtonAction(e)}
                         visibility={visibilityMap(['modal-center', 'config'])}
                         switchLayout={switchLayoutMap({ area: 'modal', state: { modalName: 'modal-center', layoutName: 'config' } })}
                     />

@@ -7,13 +7,15 @@ import { useManageModel } from '../../../../../../provider/ManageModelProvider.j
 import { visibilityMap, switchLayoutMap } from '../../../../../../utils/mapping/mappingUtils.js'
 import { iconMap } from '../../../../../../utils/mapping/mappingIcons.jsx'
 
+import { cx } from '../../../../../../utils/utils.js'
+
 import ButtonAction from '../../ButtonAction/ButtonAction'
 
 export const SearchItemTagMap = {
     item: {},
     type: '',
-    onItemClick: () => {},
-    onButtonClick: () => {}
+    onItemClick: () => { },
+    onButtonClick: () => { }
 }
 
 /**
@@ -32,8 +34,15 @@ const SearchItemTag = ({ item, type, onButtonClick } = SearchItemTagMap) => {
     const hasAssignmentRelation = !!item.assignments.length
     const hasGoalRelation = !!item.goals.length
 
+    const searchItemTagClass = cx(
+        `item
+        ${type}
+        ${open && 'open'}
+        `
+    )
+
     return (
-        <div className={`item ${type} ${open ? 'open' : ''}`} style={{ backgroundColor: `${item.color}30` }}
+        <div className={searchItemTagClass} style={{ backgroundColor: `${item.color}30` }}
             onClick={() => {
                 setModel(prev => ({ ...prev, typeModel: 'tag' }))
                 toggleVisibility(visibilityMap(['modal-right', 'tag']));

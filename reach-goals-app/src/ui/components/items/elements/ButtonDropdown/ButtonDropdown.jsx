@@ -4,6 +4,8 @@ import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
 import { visibilityMap, switchLayoutMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 
+import { cx } from '../../../../../utils/utils.js'
+
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 
 import '../ButtonDropdown/ButtonDropdown.scss'
@@ -113,6 +115,13 @@ const ButtonDropdown = ({
         }
     }
 
+    const dropdownMenuClass = cx(
+        `dropdown-menu
+        ${!!classBtn?.includes('left') && 'left'}
+        ${visibleElements.includes(typeClass) && 'show'}
+        `
+    )
+
     return (
         <div className={`button-dropdown ${classBtn}`}
             onClick={(e) => toggleVisibility(visibility, e)}
@@ -127,7 +136,7 @@ const ButtonDropdown = ({
                 </label>
                 {arrow && <label>{iconMap['arrowdown']}</label>}
             </div>
-            <div className={`dropdown-menu ${classBtn?.includes('left') && 'left'} ${visibleElements.includes(typeClass) ? 'show' : ''}`} onClick={(e) => e.stopPropagation()}>
+            <div className={dropdownMenuClass} onClick={(e) => e.stopPropagation()}>
                 {defineDropdown()}
                 <div className='dropdown-item item-element'>
                     <div className='section-options'>
@@ -151,7 +160,10 @@ const ButtonDropdown = ({
                                                     onClick={dropdownActionClick} datavalue={dropdownStatus ? option.op : null}
                                                     visibility={visibilityMap(...classTargetDropdown)}
                                                     switchLayout={switchLayoutMap({ area: 'modal', state: { modalName: 'modal-center', layoutName: 'form' } })}
-                                                    classBtn={`form-${option.op} button-action plan-round ${model.formModel?.status === option.op ? 'active' : ''}`}
+                                                    classBtn={`form-${option.op} 
+                                                            plan-round 
+                                                            ${model.formModel?.status === option.op ? 'active' : ''
+                                                        }`}
                                                     icon={option.icon} title={`${option.title}`} type={option.op} nullForm={isCreateDropdown}
                                                 />
                                             </div>

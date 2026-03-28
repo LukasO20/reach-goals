@@ -6,6 +6,8 @@ import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider'
 import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 import { checkboxMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
+import { cx } from '../../../../../utils/utils.js'
+
 import './ButtonCheckbox.scss'
 
 const stateCheckbox = (checkboxID, selected = []) => {
@@ -52,8 +54,15 @@ const ButtonCheckbox = ({ classBtn, checkboxID, title, checkbox } = ButtonCheckb
     )
     const isCheckboxMainID = checkboxMain === checkboxID
 
+    const buttonCheckboxClass = cx(
+        `button-checkbox
+        ${classBtn} 
+        ${isChecked && 'checked'} 
+        `
+    )
+
     return (
-        <span className={`${classBtn} button-checkbox ${isChecked ? 'checked' : ''}`}
+        <span className={buttonCheckboxClass}
             onClick={(e) => { toggleCheckbox(checkbox); e.stopPropagation() }}
             onKeyDown={(e) => e.key === 'Enter' ? toggleCheckbox(checkbox) : ''}
             role='button' tabIndex='0'

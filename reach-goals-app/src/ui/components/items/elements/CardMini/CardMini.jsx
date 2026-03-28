@@ -82,8 +82,7 @@ const CardMini = ({
         const iconStatus = item.status === 'conclude' ? 'check' : item.status
 
         const cardMiniClass = cx(
-            `
-            ${type}
+            `${type}
             ${selectedDisplayType}
             ${isSelected && 'selected'}
             `

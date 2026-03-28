@@ -18,7 +18,7 @@ export const PopupModelOptionsMap = {
 
 /**
  * @param {Object} PopupModelOptionsMap
- * @param {'tag' | 'goal' | 'assignment'} [PopupModelOptionsMap.type='']
+ * @param {'tag' | 'goal' | 'assignment'} [PopupModelOptionsMap.type]
  */
 
 const PopupModelOptions = ({ type } = PopupModelOptionsMap) => {

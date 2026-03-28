@@ -4,6 +4,8 @@ import { useManageModel } from '../../../../provider/ManageModelProvider'
 import { visibilityMap } from '../../../../utils/mapping/mappingUtils'
 import { iconMap } from '../../../../utils/mapping/mappingIcons'
 
+import { cx } from '../../../../utils/utils'
+
 import ButtonAction from '../elements/ButtonAction/ButtonAction'
 
 export const ModelRelationAddMap = {
@@ -50,8 +52,15 @@ const ModelRelationAdd = ({ type, children } = ModelRelationAddMap) => {
         const goaLinked = goals.length || null
         const goalData = goals[0]
 
+        const modelRelationAddClass = cx(
+            `item-forms
+            goal
+            ${!!goals.length && 'selected'}
+            `
+        )
+
         return (
-            <div className={`item-forms goal ${goals.length ? 'selected' : ''}`}>
+            <div className={modelRelationAddClass}>
                 <div className='head'>
                     <div className='item-head-1'>
                         <label>

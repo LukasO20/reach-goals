@@ -10,6 +10,8 @@ import InputText from '../../elements/InputText/InputText.jsx'
 import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
 import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
 
+import { cx } from '../../../../../utils/utils.js'
+
 import { visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 
@@ -94,16 +96,42 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState } 
 
     const isGoalForm = type === 'goal'
 
+    const buttonAssignmentClass = cx(
+        `op-form-assignment
+        plan
+        small
+        ${type === 'assignment' && 'active'}
+        `
+    )
+
+    const buttonGoalClass = cx(
+        `op-form-goal
+        plan
+        small
+        ${type === 'goal' && 'active'}
+        `
+    )
+
     return (
         <div className='container-form-modal center-content' onClick={handleClickForm}>
             <div className='head'>
                 <div className='objective-icon'>{icon}</div>
                 <div className='objective-options'>
                     <div className='objective-op'>
-                        <ButtonAction visibility={visibilityMap(['modal-center', 'assignment'], { maintain: true })} classBtn={`op-form-assignment button-action plan small ${type === 'assignment' ? 'active' : ''}`}
-                            title='assignments' nullForm={true} onClick={() => setModel(prev => ({ ...prev, typeModel: 'assignment' }))} />
-                        <ButtonAction visibility={visibilityMap(['modal-center', 'goal'], { maintain: true })} classBtn={`op-form-goal button-action plan small ${type === 'goal' ? 'active' : ''}`}
-                            title='goals' nullForm={true} onClick={() => setModel(prev => ({ ...prev, typeModel: 'goal' }))} />
+                        <ButtonAction
+                            visibility={visibilityMap(['modal-center', 'assignment'], { maintain: true })}
+                            classBtn={buttonAssignmentClass}
+                            title='assignments'
+                            nullForm={true}
+                            onClick={() => setModel(prev => ({ ...prev, typeModel: 'assignment' }))}
+                        />
+                        <ButtonAction 
+                            visibility={visibilityMap(['modal-center', 'goal'], { maintain: true })} 
+                            classBtn={buttonGoalClass}
+                            title='goals' 
+                            nullForm={true} 
+                            onClick={() => setModel(prev => ({ ...prev, typeModel: 'goal' }))} 
+                        />
                     </div>
                     <div className='objective-color'>
                         <label className='color'></label>
