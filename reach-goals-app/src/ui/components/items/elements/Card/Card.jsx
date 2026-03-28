@@ -1,19 +1,47 @@
 import { checkboxMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 import { switchLayoutMap, visibilityMap, displayModesMap, buildCheckboxMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { cx } from '../../../../../utils/utils.js'
 import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
+import { Draggable } from '@adaptabletools/react-beautiful-dnd'
 
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 import ButtonCheckbox from '../ButtonCheckbox/ButtonCheckbox.jsx'
 import CardMiniTag from '../CardMiniTag/CardMiniTag.jsx'
-import { Draggable } from '@adaptabletools/react-beautiful-dnd'
-
-import PropTypes from 'prop-types'
 
 import moment from 'moment'
 
 import './Card.scss'
 
-const Card = ({ type, model = [], display, pendingState, checkboxState = checkboxMap, clickFunction, draggable }) => {         
+export const CardMap = {
+    type: '',
+    model: [],
+    display: {},
+    pendingState: false,
+    checkboxState: checkboxMap,
+    clickFunction: () => { },
+    draggable: false
+}
+
+/**
+ * @param {Object} CardMap
+ * @param {string} CardMap.type
+ * @param {Array} CardMap.model
+ * @param {Object} CardMap.display
+ * @param {boolean} CardMap.pendingState
+ * @param {Object} CardMap.checkboxState
+ * @param {Function} CardMap.clickFunction
+ * @param {boolean} CardMap.draggable
+ */
+
+const Card = ({
+    type,
+    model,
+    display,
+    pendingState,
+    checkboxState,
+    clickFunction,
+    draggable
+} = CardMap) => {
     return model
         .sort((a, b) => a.order - b.order)
         .map((item, index) => {
@@ -26,18 +54,25 @@ const Card = ({ type, model = [], display, pendingState, checkboxState = checkbo
             const selectedDisplayType = display.type[0]
 
             const selectedCheckboxList = checkboxState.page.selected
-            
-            const isPending =
-                (pendingState?.removing && (item.id || item.tagID) === pendingState?.removingVariables) ?
-                    'pending' : ''
 
-            const isSelected = selectedCheckboxList.includes(`checkbox-${itemID}`) ? 'selected' : ''
+            const isPending = !!(pendingState?.removing && (item.id || item.tagID) === pendingState?.removingVariables)
+
+            const isSelected = !!selectedCheckboxList.includes(`checkbox-${itemID}`)
 
             const isDisplayActionEdit = display.actions.includes('edit')
                 && displayModesMap.actions.includes('edit')
 
             const isDisplayActionDelete = display.actions.includes('delete')
                 && displayModesMap.actions.includes('delete')
+
+            const cardClass = cx(
+                `
+                ${type}
+                ${selectedDisplayType}
+                ${isPending && 'pending'}
+                ${isSelected && 'selected'}
+                `
+            )
 
             const renderEndDate = () => {
                 return (
@@ -50,7 +85,7 @@ const Card = ({ type, model = [], display, pendingState, checkboxState = checkbo
 
             const renderCard = (dragProvided) => (
                 <div
-                    className={`${type} ${selectedDisplayType} ${isPending} ${isSelected}`}
+                    className={cardClass}
                     id={itemID}
                     key={!draggable ? itemID : null}
                     onClick={(e) => clickFunction?.card(item, e)}
@@ -109,29 +144,6 @@ const Card = ({ type, model = [], display, pendingState, checkboxState = checkbo
                 renderCard()
             )
         })
-}
-
-Card.propTypes = {
-    type: PropTypes.string.isRequired,
-    model: PropTypes.array.isRequired,
-    draggable: PropTypes.bool,
-    display: PropTypes.shape({
-        type: PropTypes.arrayOf(
-            PropTypes.oneOf(['card', 'card-mini'])
-        ).isRequired,
-        actions: PropTypes.arrayOf(
-            PropTypes.oneOf(['edit', 'delete'])
-        )
-    }).isRequired,
-    pendingState: PropTypes.shape({
-        removing: PropTypes.bool,
-        removingVariables: PropTypes.number
-    }),
-    clickFunction: PropTypes.shape({
-        card: PropTypes.func,
-        edit: PropTypes.func,
-        delete: PropTypes.func
-    })
 }
 
 export default Card

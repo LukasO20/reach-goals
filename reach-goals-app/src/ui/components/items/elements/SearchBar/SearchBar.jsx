@@ -7,19 +7,29 @@ import { useVisibility } from '../../../../../provider/VisibilityProvider'
 import { useSearchBarProvider } from '../../../../../provider/SearchBarProvider'
 
 import SearchBoxResults from './SearchBoxResults'
-import PropTypes from 'prop-types'
-
-import './SearchBar.scss'
 import ButtonAction from '../ButtonAction/ButtonAction'
 
-const SearchBar = ({ mode = 'service', placeholder }) => {
+import './SearchBar.scss'
+
+export const SearchBarMap = {
+    mode: 'service',
+    placeholder: 'search'
+}
+
+/**
+ * @param {Object} props
+ * @param {'service' | 'ui'} [props.mode='service']
+ * @param {string} [props.placeholder='search']
+ */
+
+const SearchBar = ({ mode = SearchBarMap.mode, placeholder = SearchBarMap.placeholder }) => {
     const [param, setParam] = useState('')
     const { visibleElements, toggleVisibility } = useVisibility()
     const { data, search, reset, isSearching, status } = useSearchBarProvider()
 
     const isShowSearchBoxResults = visibleElements.includes('search-bar') && mode === 'service'
 
-    const handleSearchBarClick = (e) =>  {
+    const handleSearchBarClick = (e) => {
         e.stopPropagation()
         toggleVisibility(visibilityMap('search-bar', isShowSearchBoxResults ? { maintain: true } : { add: true }))
     }
@@ -42,8 +52,9 @@ const SearchBar = ({ mode = 'service', placeholder }) => {
         <div className='search-container'>
             <label className='search-bar' onClick={handleSearchBarClick}>
                 {iconMap['search']}
-                <input type='text' role='search' placeholder={placeholder || 'search'} id='search-content-m' className='search-content'
-                    value={param} onChange={(e) => setParam(e.target.value)} />
+                <input type='text' role='search' 
+                    placeholder={placeholder || 'search'} id='search-content-m' 
+                    className='search-content' value={param} onChange={(e) => setParam(e.target.value)} />
                 {!!param && (
                     <ButtonAction
                         onClick={handleCleanSearchBar}
@@ -56,11 +67,6 @@ const SearchBar = ({ mode = 'service', placeholder }) => {
             {isShowSearchBoxResults && (<SearchBoxResults data={data} loading={isSearching} status={status} />)}
         </div>
     )
-}
-
-SearchBar.propTypes = {
-    mode: PropTypes.oneOf(['service', 'ui']),
-    placeholder: PropTypes.string
 }
 
 export default SearchBar

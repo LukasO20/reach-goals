@@ -1,8 +1,15 @@
 import { ResponsivePie } from '@nivo/pie'
 
-import PropTypes from 'prop-types'
+export const ChartPieMap = {
+    data: []
+}
 
-const ChartPie = ({ data }) => {
+/**
+ * @param {Object} ChartPieMap
+ * @param {Array} ChartPieMap.data
+ */
+
+const ChartPie = ({ data } = ChartPieMap) => {
     if (data.some(item => item.id === '')) return null
 
     return <ResponsivePie
@@ -45,10 +52,6 @@ const ChartPie = ({ data }) => {
             }
         }}
     />
-}
-
-ChartPie.propTypes = {
-  data: PropTypes.array.isRequired
 }
 
 export default ChartPie

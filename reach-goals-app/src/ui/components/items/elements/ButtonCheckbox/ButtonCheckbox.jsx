@@ -23,6 +23,14 @@ export const ButtonCheckboxMap = {
     checkbox: checkboxMap
 }
 
+/**
+ * @param {Object} ButtonCheckboxMap
+ * @param {string} ButtonCheckboxMap.classBtn
+ * @param {string|null} ButtonCheckboxMap.checkboxID
+ * @param {string} ButtonCheckboxMap.title
+ * @param {Object} ButtonCheckboxMap.checkbox
+ */
+
 const ButtonCheckbox = ({ classBtn, checkboxID, title, checkbox } = ButtonCheckboxMap) => {
     const { valuesCheckbox, toggleCheckbox, registerCheckbox, unregisterCheckbox } = useCheckbox()
     const { layout } = useSwitchLayout()

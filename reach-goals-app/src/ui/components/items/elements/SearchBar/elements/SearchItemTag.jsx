@@ -4,14 +4,26 @@ import { useSwitchLayout } from '../../../../../../provider/SwitchLayoutProvider
 import { useVisibility } from '../../../../../../provider/VisibilityProvider.jsx'
 import { useManageModel } from '../../../../../../provider/ManageModelProvider.jsx'
 
-import PropTypes from 'prop-types'
-
 import { visibilityMap, switchLayoutMap } from '../../../../../../utils/mapping/mappingUtils.js'
 import { iconMap } from '../../../../../../utils/mapping/mappingIcons.jsx'
 
 import ButtonAction from '../../ButtonAction/ButtonAction'
 
-const SearchItemTag = ({ item, type, onButtonClick }) => {
+export const SearchItemTagMap = {
+    item: {},
+    type: '',
+    onItemClick: () => {},
+    onButtonClick: () => {}
+}
+
+/**
+ * @param {Object} SearchItemTagMap
+ * @param {Object} SearchItemTagMap.item
+ * @param {string} SearchItemTagMap.type
+ * @param {Function} [SearchItemTagMap.onButtonClick]
+ */
+
+const SearchItemTag = ({ item, type, onButtonClick } = SearchItemTagMap) => {
     const { toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
     const { setModel } = useManageModel()
@@ -87,13 +99,6 @@ const SearchItemTag = ({ item, type, onButtonClick }) => {
             </div>
         </div>
     )
-}
-
-SearchItemTag.propTypes = {
-    item: PropTypes.object.isRequired,
-    type: PropTypes.string.isRequired,
-    onItemClick: PropTypes.func,
-    onButtonClick: PropTypes.func
 }
 
 export default SearchItemTag

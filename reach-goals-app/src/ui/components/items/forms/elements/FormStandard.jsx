@@ -13,11 +13,40 @@ import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
 import { visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 
-import PropTypes from 'prop-types'
-
 import '../Form'
 
-const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState }) => {
+export const FormStandardMap = {
+    type: '',
+    functionFormMap: {
+        mapToggleVisibility: () => { },
+        mapHandleChange: () => { },
+        mapModelRelationAddMap: () => { },
+        mapHandleSubmit: () => { },
+        mapSetError: () => { },
+    },
+    model: {
+        formModel: {},
+    },
+    booleanFormMap: {},
+    pendingState: false
+}
+
+/**
+ * @param {Object} FormStandardMap
+ * @param {string} [FormStandardMap.type]
+ * @param {Object} FormStandardMap.functionFormMap
+ * @param {Function} [FormStandardMap.functionFormMap.mapToggleVisibility]
+ * @param {Function} [FormStandardMap.functionFormMap.mapHandleChange]
+ * @param {Function} [FormStandardMap.functionFormMap.mapModelRelationAddMap]
+ * @param {Function} [FormStandardMap.functionFormMap.mapHandleSubmit]
+ * @param {Function} [FormStandardMap.functionFormMap.mapSetError]
+ * @param {Object} FormStandardMap.model
+ * @param {Object} FormStandardMap.model.formModel
+ * @param {Object} [FormStandardMap.booleanFormMap]
+ * @param {boolean} FormStandardMap.pendingState
+ */
+
+const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState } = FormStandardMap) => {
     const { visibleElements, toggleVisibility } = useVisibility()
     const { model, setModel } = useManageModel()
 
@@ -143,22 +172,6 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
             }
         </div>
     )
-}
-
-FormStandard.propTypes = {
-    type: PropTypes.string,
-    functionFormMap: PropTypes.shape({
-        mapToggleVisibility: PropTypes.func,
-        mapHandleChange: PropTypes.func,
-        mapModelRelationAddMap: PropTypes.func,
-        mapHandleSubmit: PropTypes.func,
-        mapSetError: PropTypes.func
-    }).isRequired,
-    model: PropTypes.shape({
-        formModel: PropTypes.object
-    }).isRequired,
-    booleanFormMap: PropTypes.object,
-    pendingState: PropTypes.bool.isRequired
 }
 
 export default FormStandard

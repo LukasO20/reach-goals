@@ -1,14 +1,25 @@
 import FormStandard from './elements/FormStandard.jsx'
 import FormTag from './elements/FormTag.jsx'
 
-import PropTypes from 'prop-types'
-
 import './Form.scss'
+
+export const FormMap = {
+    functionFormMap: { },
+    model: { },
+    pendingState: false
+}
+
+/**
+ * @param {Object} FormTagMap
+ * @param {Object} FormTagMap.functionFormMap
+ * @param {Object} FormTagMap.model
+ * @param {boolean} FormTagMap.pendingState
+ */
 
 const Form = ({ typeForm,
     functionFormMap: formMapFunc,
     model: modelForm,
-    pendingState: formPendingState }) => {
+    pendingState: formPendingState } = FormMap) => {
 
     const isFormTag = typeForm === 'tag'
     const isFormStandard = typeForm === 'goal' || typeForm === 'assignment'
@@ -33,22 +44,6 @@ const Form = ({ typeForm,
             )}
         </>
     )
-}
-
-Form.propTypes = {
-    typeForm: PropTypes.string,
-    functionFormMap: PropTypes.shape({
-        mapToggleVisibility: PropTypes.func,
-        mapHandleChange: PropTypes.func,
-        mapModelRelationAddMap: PropTypes.func,
-        mapHandleSubmit: PropTypes.func,
-        mapSetError: PropTypes.func
-    }),
-    model: PropTypes.shape({
-        formModel: PropTypes.object
-    }),
-    booleanFormMap: PropTypes.object,
-    pendingState: PropTypes.bool
 }
 
 export default Form

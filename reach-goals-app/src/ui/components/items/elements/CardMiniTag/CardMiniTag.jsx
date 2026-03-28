@@ -1,11 +1,16 @@
 import { iconMap } from "../../../../../utils/mapping/mappingIcons"
+import './CardMiniTag.scss'
 
 export const CardMiniTagMap = {
     tags: [],
     quantity: null
 }
 
-import './CardMiniTag.scss'
+/**
+ * @param {Object} CardMiniTagMap
+ * @param {Array} CardMiniTagMap.tags
+ * @param {number|null} CardMiniTagMap.quantity
+ */
 
 const CardMiniTag = ({ tags, quantity = 3 } = CardMiniTagMap) => {
     return (

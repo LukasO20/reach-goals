@@ -10,9 +10,9 @@ import { visibilityMap, switchLayoutMap } from '../../../../utils/mapping/mappin
 
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import ButtonDropdown from '../../items/elements/ButtonDropdown/ButtonDropdown.jsx'
+import SearchBar from '../../items/elements/SearchBar/SearchBar.jsx'
 
 import './ContainerHeader.scss'
-import SearchBar from '../../items/elements/SearchBar/SearchBar.jsx'
 
 const ContainerH = () => {
     const { title } = useTitle()
@@ -43,7 +43,7 @@ const ContainerH = () => {
                 <div className='item-nav'>
                     <ButtonAction onClick={linkTagClick} visibility={visibilityMap(['modal-right', 'tag'])}
                         switchLayout={switchLayoutMap({ area: 'modal', state: { modalName: 'modal-right', layoutName: 'tag' } })}
-                        classBtn='button-link circle tag' icon='tag'
+                        classBtn='circle tag' icon='tag'
                     />
                 </div>
                 <div className='item-nav'>

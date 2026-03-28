@@ -1,12 +1,11 @@
 import { displayModesMap, visibilityMap, switchLayoutMap, buildCheckboxMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { checkboxMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
+import { cx } from '../../../../../utils/utils.js'
 
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 import ButtonCheckbox from '../ButtonCheckbox/ButtonCheckbox.jsx'
 import CardMiniTag from '../CardMiniTag/CardMiniTag.jsx'
-
-import PropTypes from 'prop-types'
 
 import './CardMini.scss'
 
@@ -25,6 +24,24 @@ export const CardMiniMap = {
     showTags: false,
     showStatus: false
 }
+
+/**
+ * @param {Object} CardMiniMap
+ * @param {string} CardMiniMap.type
+ * @param {Array} CardMiniMap.model
+ * @param {Object} CardMiniMap.display
+ * @param {('card'|'card-mini')[]} CardMiniMap.display.type
+ * @param {('edit'|'delete'|'details'|'remove')[]} [CardMiniMap.display.actions]
+ * @param {boolean} CardMiniMap.pendingState
+ * @param {Object} CardMiniMap.checkboxState
+ * @param {boolean} CardMiniMap.checkboxModel
+ * @param {Object} CardMiniMap.clickFunction
+ * @param {Function} CardMiniMap.clickFunction.card
+ * @param {Function} CardMiniMap.clickFunction.edit
+ * @param {Function} CardMiniMap.clickFunction.delete
+ * @param {boolean} CardMiniMap.showTags
+ * @param {boolean} CardMiniMap.showStatus
+ */
 
 const CardMini = ({
     type,
@@ -54,7 +71,7 @@ const CardMini = ({
         const isDisplayActionDelete = display.actions.includes('delete')
             && displayModesMap.actions.includes('delete')
 
-        const isSelected = selectedCheckboxList.includes(`checkbox-${itemID}`) ? 'selected' : ''
+        const isSelected = !!selectedCheckboxList.includes(`checkbox-${itemID}`)
 
         const isShowTags = showTags && type !== 'tag'
 
@@ -62,10 +79,18 @@ const CardMini = ({
 
         const hasSideActions = isDisplayActionEdit || isDisplayActionRemove || isDisplayActionDelete
 
-        const iconStatus = item.status === 'conclude' ? 'check' : item.status 
+        const iconStatus = item.status === 'conclude' ? 'check' : item.status
+
+        const cardMiniClass = cx(
+            `
+            ${type}
+            ${selectedDisplayType}
+            ${isSelected && 'selected'}
+            `
+        )
 
         return (
-            <div className={`${type} ${selectedDisplayType} ${isSelected}`} id={itemID} key={itemID}
+            <div className={cardMiniClass} id={itemID} key={itemID}
                 onClick={(e) => clickFunction.card(item, e)} style={tagCardStyle}>
                 <div className='line-info'>
                     <div className='info-up'>
@@ -121,23 +146,6 @@ const CardMini = ({
         )
     }
     )
-}
-
-CardMini.propTypes = {
-    type: PropTypes.string.isRequired,
-    model: PropTypes.array.isRequired,
-    display: PropTypes.shape({
-        type: PropTypes.arrayOf(
-            PropTypes.oneOf(['card', 'card-mini'])
-        ).isRequired,
-        actions: PropTypes.arrayOf(
-            PropTypes.oneOf(['edit', 'remove'])
-        )
-    }).isRequired,
-    clickFunction: PropTypes.shape({
-        card: PropTypes.func,
-        aux: PropTypes.func,
-    })
 }
 
 export default CardMini

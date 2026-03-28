@@ -12,7 +12,16 @@ const formatCheckboxID = (ids = []) => {
     })
 }
 
-const PopupModelOptions = ({ type }) => {
+export const PopupModelOptionsMap = {
+    type: ''
+}
+
+/**
+ * @param {Object} PopupModelOptionsMap
+ * @param {'tag' | 'goal' | 'assignment'} [PopupModelOptionsMap.type='']
+ */
+
+const PopupModelOptions = ({ type } = PopupModelOptionsMap) => {
     const { saveStatus, savedStatusData, savingStatus, removeModels, removingModels } = useUtilityProvider()
     const { valuesCheckbox } = useCheckbox()
 

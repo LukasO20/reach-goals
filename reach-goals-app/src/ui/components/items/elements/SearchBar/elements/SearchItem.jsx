@@ -1,11 +1,24 @@
-import PropTypes from 'prop-types'
-
 import { visibilityMap, switchLayoutMap } from '../../../../../../utils/mapping/mappingUtils'
 import { iconMap } from '../../../../../../utils/mapping/mappingIcons'
 
 import ButtonAction from '../../ButtonAction/ButtonAction'
 
-const SearchItem = ({ item, type, onItemClick, onButtonClick }) => {
+export const SearchItemMap = {
+    item: {},
+    type: '',
+    onItemClick: () => {},
+    onButtonClick: () => {}
+}
+
+/**
+ * @param {Object} SearchItemMap
+ * @param {Object} SearchItemMap.item
+ * @param {string} SearchItemMap.type
+ * @param {Function} [SearchItemMap.onItemClick]
+ * @param {Function} [SearchItemMap.onButtonClick]
+ */
+
+const SearchItem = ({ item, type, onItemClick, onButtonClick } = SearchItemMap) => {
     return (
         <div className={`item ${type}`}>
             <div className='head'>
@@ -26,13 +39,6 @@ const SearchItem = ({ item, type, onItemClick, onButtonClick }) => {
             </div>
         </div>
     )
-}
-
-SearchItem.propTypes = {
-    item: PropTypes.object.isRequired,
-    type: PropTypes.string.isRequired,
-    onItemClick: PropTypes.func,
-    onButtonClick: PropTypes.func
 }
 
 export default SearchItem

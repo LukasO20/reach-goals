@@ -12,11 +12,22 @@ import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import Loading from '../../items/elements/Loading/Loading.jsx'
 import ModelSwitcher from '../../items/models/ModelSwitcher.jsx'
 
-import PropTypes from 'prop-types'
-
 import './ModalModelList.scss'
 
-const ModalModelList = ({ title, type, typeFilterKey }) => {
+export const ModalModelListMap = {
+    title: '',
+    type: '',
+    typeFilterKey: ''
+}
+
+/**
+ * @param {Object} ModalModelListMap
+ * @param {string} ModalModelListMap.title
+ * @param {string} ModalModelListMap.type
+ * @param {'tagSomeID'|'tagNotRelationGoal'|'tagNotRelationAssignment'|'notGoalRelation'|'goalSomeID'} ModalModelListMap.typeFilterKey
+ */
+
+const ModalModelList = ({ title, type, typeFilterKey } = ModalModelListMap) => {
     const { model, updateFilterModel } = useManageModel()
     const { modal: { data: dataGoal, loading: loadingGoal } } = useGoalProvider()
     const { modal: { data: dataAssignment, loading: loadingAssigment } } = useAssignmentProvider()
@@ -60,14 +71,6 @@ const ModalModelList = ({ title, type, typeFilterKey }) => {
             </div>
         </div>
     )
-}
-
-ModalModelList.propTypes = {
-    title: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    typeFilterKey: PropTypes.oneOf([
-        'tagSomeID', 'tagNotRelationGoal', 'tagNotRelationAssignment', 'notGoalRelation', 'goalSomeID'
-    ]).isRequired
 }
 
 export default ModalModelList

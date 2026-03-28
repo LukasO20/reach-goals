@@ -7,13 +7,25 @@ import { switchLayoutMap, visibilityMap } from '../../../../../utils/mapping/map
 
 import CardMini from '../CardMini/CardMini.jsx'
 
-import PropTypes from 'prop-types'
-
 import moment from 'moment'
 
 import './MonthDaysPicker.scss'
 
-const MonthDaysPicker = ({ data }) => {
+export const MonthDaysPickerMap = {
+    data: {
+        goal: [],
+        assignment: []
+    }
+}
+
+/**
+ * @param {Object} MonthDaysPickerMap
+ * @param {Object} MonthDaysPickerMap.data
+ * @param {Array} [MonthDaysPickerMap.data.goal]
+ * @param {Array} [MonthDaysPickerMap.data.assignment]
+ */
+
+const MonthDaysPicker = ({ data } = MonthDaysPickerMap) => {
     const { setModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
     const { layout, updateSwitchLayout } = useSwitchLayout()
@@ -131,13 +143,6 @@ const MonthDaysPicker = ({ data }) => {
             </div>
         </div>
     )
-}
-
-MonthDaysPicker.propTypes = {
-    data: PropTypes.shape({
-        goal: PropTypes.array,
-        assignment: PropTypes.array
-    }),
 }
 
 export default MonthDaysPicker

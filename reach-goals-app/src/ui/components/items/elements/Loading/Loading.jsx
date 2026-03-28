@@ -1,8 +1,17 @@
-import PropTypes from 'prop-types'
-
 import './Loading.scss'
 
-const Loading = ({ mode, title }) => {
+export const LoadingMap = {
+    mode: 'inline',
+    title: ''
+}
+
+/**
+ * @param {Object} LoadingMap
+ * @param {'inline'|'block'} LoadingMap.mode
+ * @param {string} LoadingMap.title
+ */
+
+const Loading = ({ mode, title } = LoadingMap) => {
     return (
         <>
             {
@@ -18,11 +27,6 @@ const Loading = ({ mode, title }) => {
             }
         </>
     )
-}
-
-Loading.propTypes = {
-    mode: PropTypes.oneOf(['inline', 'block']).isRequired,
-    title: PropTypes.string
 }
 
 export default Loading

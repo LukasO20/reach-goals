@@ -1,18 +1,40 @@
 import { useState } from 'react'
 
-import ButtonAction from '../../elements/ButtonAction/ButtonAction.jsx'
-import InputText from '../../elements/InputText/InputText.jsx'
-import Loading from '../../elements/Loading/Loading.jsx'
+import { useTagProvider } from '../../../../../provider/model/TagModelProvider.jsx'
 
 import { visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 
-import PropTypes from 'prop-types'
+import ButtonAction from '../../elements/ButtonAction/ButtonAction.jsx'
+import InputText from '../../elements/InputText/InputText.jsx'
+import Loading from '../../elements/Loading/Loading.jsx'
 
 import '../Form'
-import { useTagProvider } from '../../../../../provider/model/TagModelProvider.jsx'
 
-const FormTag = ({ type, functionFormMap, model: modelForm, pendingState }) => {
+export const FormTagMap = {
+    type: '',
+    functionFormMap: {
+        mapHandleChange: () => { },
+        mapHandleSubmit: () => { },
+    },
+    model: {
+        formModel: {},
+    },
+    pendingState: false
+}
+
+/**
+ * @param {Object} FormTagMap
+ * @param {string} [FormTagMap.type]
+ * @param {Object} FormTagMap.functionFormMap
+ * @param {Function} [FormTagMap.functionFormMap.mapHandleChange]
+ * @param {Function} [FormTagMap.functionFormMap.mapHandleSubmit]
+ * @param {Object} FormTagMap.model
+ * @param {Object} FormTagMap.model.formModel
+ * @param {boolean} FormTagMap.pendingState
+ */
+
+const FormTag = ({ type, functionFormMap, model: modelForm, pendingState } = FormTagMap) => {
     const { modal: { loading } } = useTagProvider()
     const [color, setColor] = useState('')
 
@@ -43,8 +65,8 @@ const FormTag = ({ type, functionFormMap, model: modelForm, pendingState }) => {
                                     <div className='field-form-info'>
                                         <input id={`${type}-color`} name='color' type='color' value={modelForm?.color || '#000000'}
                                             style={{ borderColor: `${modelForm?.color || '#000000'}` }}
-                                            onChange={(e) => { setColor(e.target.value); functionFormMap.mapHandleChange(e) }}/>
-                                            <span>{color || modelForm?.color}</span>
+                                            onChange={(e) => { setColor(e.target.value); functionFormMap.mapHandleChange(e) }} />
+                                        <span>{color || modelForm?.color}</span>
                                     </div>
                                 </div>
                             </div>
@@ -58,21 +80,6 @@ const FormTag = ({ type, functionFormMap, model: modelForm, pendingState }) => {
                 </>)}
         </div>
     )
-}
-
-FormTag.propTypes = {
-    type: PropTypes.string,
-    functionFormMap: PropTypes.shape({
-        mapToggleVisibility: PropTypes.func,
-        mapHandleChange: PropTypes.func,
-        mapModelRelationAddMap: PropTypes.func,
-        mapHandleSubmit: PropTypes.func,
-        mapSetError: PropTypes.func
-    }).isRequired,
-    model: PropTypes.shape({
-        formModel: PropTypes.object
-    }).isRequired,
-    pendingState: PropTypes.bool.isRequired
 }
 
 export default FormTag

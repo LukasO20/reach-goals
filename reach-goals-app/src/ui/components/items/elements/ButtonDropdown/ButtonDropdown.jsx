@@ -6,9 +6,28 @@ import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 
-import PropTypes from 'prop-types'
-
 import '../ButtonDropdown/ButtonDropdown.scss'
+
+export const ButtonDropdownMap = {
+    visibility: {},
+    reference: '',
+    changeDropdownValue: () => { },
+    icon: '',
+    classBtn: '',
+    title: '',
+    arrow: false
+}
+
+/**
+ * @param {Object} ButtonDropdownMap
+ * @param {Object} ButtonDropdownMap.visibility
+ * @param {string} ButtonDropdownMap.reference
+ * @param {Function} ButtonDropdownMap.changeDropdownValue
+ * @param {string} ButtonDropdownMap.icon
+ * @param {string} ButtonDropdownMap.classBtn
+ * @param {string} ButtonDropdownMap.title
+ * @param {boolean} ButtonDropdownMap.arrow
+ */
 
 const mapOptionDropdown = (type) => {
     if (type === 'status') {
@@ -36,7 +55,15 @@ const NullObject = (value) => {
     return (Array.isArray(value) || typeof value === "string") && value.length !== 0
 }
 
-const ButtonDropdown = ({ visibility, reference, changeDropdownValue, icon, classBtn, title, arrow,  }) => {
+const ButtonDropdown = ({
+    visibility,
+    reference,
+    changeDropdownValue,
+    icon,
+    classBtn,
+    title,
+    arrow
+} = ButtonDropdownMap) => {
     const { visibleElements, toggleVisibility } = useVisibility()
     const { model } = useManageModel()
 
@@ -87,13 +114,18 @@ const ButtonDropdown = ({ visibility, reference, changeDropdownValue, icon, clas
     }
 
     return (
-        <div className={`button-dropdown ${classBtn}`} onClick={(e) => toggleVisibility(visibility, e)} onKeyDown={(e) => e.key === 'Enter' ? toggleVisibility(visibility, e) : ''} role='button' tabIndex='0'>
+        <div className={`button-dropdown ${classBtn}`}
+            onClick={(e) => toggleVisibility(visibility, e)}
+            onKeyDown={(e) => e.key === 'Enter' ? toggleVisibility(visibility, e) : ''}
+            role='button'
+            tabIndex='0'
+        >
             <div className='dropdown-title'>
                 <label>
                     {icon && iconMap[icon]}
                     {title}
                 </label>
-                { arrow && <label>{iconMap['arrowdown']}</label> }
+                {arrow && <label>{iconMap['arrowdown']}</label>}
             </div>
             <div className={`dropdown-menu ${classBtn?.includes('left') && 'left'} ${visibleElements.includes(typeClass) ? 'show' : ''}`} onClick={(e) => e.stopPropagation()}>
                 {defineDropdown()}
@@ -115,7 +147,7 @@ const ButtonDropdown = ({ visibility, reference, changeDropdownValue, icon, clas
                                     <div className={`option ${option.op}`} key={`op-${index}`}>
                                         <div className='item-option'>
                                             <div className='item-title'>
-                                                <ButtonAction 
+                                                <ButtonAction
                                                     onClick={dropdownActionClick} datavalue={dropdownStatus ? option.op : null}
                                                     visibility={visibilityMap(...classTargetDropdown)}
                                                     switchLayout={switchLayoutMap({ area: 'modal', state: { modalName: 'modal-center', layoutName: 'form' } })}
@@ -135,16 +167,6 @@ const ButtonDropdown = ({ visibility, reference, changeDropdownValue, icon, clas
             </div>
         </div>
     )
-}
-
-ButtonDropdown.propTypes = {
-    target: PropTypes.shape({
-        class: PropTypes.array.isRequired
-    }),
-    reference: PropTypes.string,
-    changeDropdownValue: PropTypes.func,
-    classBtn: PropTypes.string,
-    icon: PropTypes.string 
 }
 
 export default ButtonDropdown

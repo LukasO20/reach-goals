@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
 import ChartPie from '../../../items/elements/ChartPie/ChartPie.jsx'
 
-import PropTypes from 'prop-types'
-
 const standardPieData = {
     data: {
         goal: {
@@ -28,7 +26,21 @@ const exportDataPie = (datapie) => {
     }))
 }
 
-const ContainerChartPie = ({ data }) => {
+export const ContainerChartPieMap = {
+    data: {
+        goal: [],
+        assignment: []
+    }
+}
+
+/**
+ * @param {Object} ContainerChartPieMap
+ * @param {Object} ContainerChartPieMap.data
+ * @param {Array} ContainerChartPieMap.data.goal
+ * @param {Array} ContainerChartPieMap.data.assignment
+ */
+
+const ContainerChartPie = ({ data } = ContainerChartPieMap) => {
     const [dataPie, setDataPie] = useState(standardPieData)
     const chartData = exportDataPie(dataPie)
 
@@ -62,13 +74,6 @@ const ContainerChartPie = ({ data }) => {
             </div>
         </div>
     )
-}
-
-ContainerChartPie.propTypes = {
-    data: PropTypes.exact({
-        goal: PropTypes.array.isRequired,
-        assignment: PropTypes.array.isRequired
-    }).isRequired,
 }
 
 export default ContainerChartPie

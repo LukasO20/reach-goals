@@ -1,10 +1,27 @@
 import { useState } from 'react'
 
-import PropTypes from 'prop-types'
-
 import './InputText.scss'
 
-const InputText = ({ id, className, placeholder, name, value, onChange }) => {
+export const InputTextMap = {
+    id: null,
+    className: '',
+    placeholder: '',
+    name: '',
+    value: null,
+    onChange: () => {}
+}
+
+/**
+ * @param {Object} InputTextMap
+ * @param {string|number|null} InputTextMap.id
+ * @param {string} InputTextMap.className
+ * @param {string} InputTextMap.placeholder
+ * @param {string} InputTextMap.name
+ * @param {string|number|null} InputTextMap.value
+ * @param {Function} InputTextMap.onChange
+ */
+
+const InputText = ({ id, className, placeholder, name, value, onChange } = InputTextMap) => {
   const [valueText, setValueText] = useState(undefined)
 
   const handleChange = (e) => {
@@ -27,15 +44,6 @@ const InputText = ({ id, className, placeholder, name, value, onChange }) => {
       onChange={handleChange}
     />
   )
-}
-
-InputText.propTypes = {
-  id: PropTypes.string.isRequired,
-  className: PropTypes.string,
-  placeholder: PropTypes.string,
-  name: PropTypes.string.isRequired,
-  value: PropTypes.string,
-  onChange: PropTypes.func.isRequired
 }
 
 export default InputText

@@ -8,11 +8,11 @@ import { buildCheckboxMap, visibilityMap } from '../../../../../utils/mapping/ma
 import { iconMap } from '../../../../../utils/mapping/mappingIcons'
 
 import ButtonAction from '../../elements/ButtonAction/ButtonAction'
+import ButtonCheckbox from '../../elements/ButtonCheckbox/ButtonCheckbox'
 import Goal from '../Goal/Goal'
 import Assignment from '../Assignment/Assignment'
 
 import './TagRelationCard.scss'
-import ButtonCheckbox from '../../elements/ButtonCheckbox/ButtonCheckbox'
 
 const standarOpenCard = [{ id: null, open: false }]
 

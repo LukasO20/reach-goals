@@ -1,22 +1,60 @@
-import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
-import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
-import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
+import { useVisibility } from '../../../../../provider/VisibilityProvider'
+import { useManageModel } from '../../../../../provider/ManageModelProvider'
+import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider'
 
-import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
-import { resetManageModelMap, updateFormModelMap, removeFromSelectedModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
+import { cx } from '../../../../../utils/utils'
+import { iconMap } from '../../../../../utils/mapping/mappingIcons'
+import { resetManageModelMap, updateFormModelMap, removeFromSelectedModelMap } from '../../../../../utils/mapping/mappingUtilsProvider'
 
 import Loading from '../Loading/Loading.jsx'
 
-import PropTypes from 'prop-types'
-
 import '../ButtonAction/ButtonAction.scss'
 
-const statusButton = (classBtn, providervisibleElements) => {
+export const ButtonActionMap = {
+    target: {},
+    switchLayout: {},
+    nullForm: false,
+    unlinkGoal: false,
+    pendingState: false,
+    disable: false,
+    onClick: () => { },
+    icon: '',
+    title: '',
+    classBtn: ''
+}
+
+/**
+ * @param {Object} props
+ * @param {Object} [props.target]
+ * @param {Object} [props.switchLayout]
+ * @param {boolean} [props.nullForm]
+ * @param {boolean} [props.unlinkGoal]
+ * @param {boolean} [props.pendingState]
+ * @param {boolean} [props.disable]
+ * @param {function} [props.onClick]
+ * @param {string} [props.icon]
+ * @param {string} [props.title]
+ * @param {string} [props.classBtn]
+ */
+
+const statusButton = (classBtn, providervisibleElements = []) => {
     if (!providervisibleElements) { return false }
     return providervisibleElements.includes(classBtn)
 }
 
-const ButtonAction = ({ visibility, switchLayout, nullForm, unlinkGoal, onClick, pendingState, disable, datavalue, icon, title, classBtn }) => {
+const ButtonAction = ({ 
+    visibility, 
+    switchLayout, 
+    nullForm, 
+    unlinkGoal, 
+    onClick, 
+    pendingState, 
+    disable, 
+    datavalue, 
+    icon, 
+    title, 
+    classBtn 
+} = ButtonActionMap) => {
     const { visibleElements, toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
     const { model, resetManageModel, updateFormModel, removeFromSelectedModel } = useManageModel()
@@ -29,7 +67,7 @@ const ButtonAction = ({ visibility, switchLayout, nullForm, unlinkGoal, onClick,
 
         const dataResetManageModel = resetManageModelMap(['formModel', 'mainModelID', 'selectedModel'])
         const dataUpdateFormModel = updateFormModelMap({ keyObject: 'goalID', value: null, action: 'remove' })
-        const dataRemoveFromSelectedModel = removeFromSelectedModelMap({ id: model.formModel.goalID, type:  'goal' })
+        const dataRemoveFromSelectedModel = removeFromSelectedModelMap({ id: model.formModel.goalID, type: 'goal' })
 
         if (visibility) toggleVisibility(visibility, e)
         if (switchLayout) updateSwitchLayout(switchLayout)
@@ -49,41 +87,22 @@ const ButtonAction = ({ visibility, switchLayout, nullForm, unlinkGoal, onClick,
         }
     }
 
+    const buttonActionClass = cx(
+        `button-action 
+        ${classBtn} 
+        ${isOn && 'on'} 
+        ${pendingState && 'pending'} 
+        ${disable && 'disable'}
+        `
+    )
+
     return (
-        <span className={`${classBtn} ${isOn ? 'on' : ''} ${pendingState ? 'pending' : ''} ${disable ? 'disable' : ''}`} datavalue={datavalue}
+        <span className={buttonActionClass} datavalue={datavalue}
             onClick={handleClick} onKeyDown={(e) => e.key === 'Enter' ? handleClick(e) : ''} role='button' tabIndex='0'>
             {pendingState ? <Loading mode='inline' /> : icon && iconMap[icon]}
             <span className='button-title'>{title}</span>
         </span>
     )
-}
-
-ButtonAction.propTypes = {
-    target: PropTypes.shape({
-        class: PropTypes.array.isRequired,
-        operator: PropTypes.object.isRequired
-    }),
-    switchLayout: PropTypes.shape({
-        area: PropTypes.string.isRequired,
-        state: PropTypes.oneOfType([
-            PropTypes.shape({
-                modalName: PropTypes.string.isRequired,
-                layoutName: PropTypes.string.isRequired
-            }),
-            PropTypes.shape({
-                pageName: PropTypes.string.isRequired,
-                layoutName: PropTypes.string.isRequired
-            })
-        ])
-    }),
-    nullForm: PropTypes.bool,
-    unlinkGoal: PropTypes.bool,
-    onClick: PropTypes.func,
-    pendingState: PropTypes.bool,
-    disable: PropTypes.bool,
-    icon: PropTypes.string,
-    title: PropTypes.string,
-    classBtn: PropTypes.string.isRequired
 }
 
 export default ButtonAction

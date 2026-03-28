@@ -1,3 +1,4 @@
+import React from 'react'
 import { useManageModel } from '../../../../provider/ManageModelProvider'
 
 import { visibilityMap } from '../../../../utils/mapping/mappingUtils'
@@ -5,9 +6,18 @@ import { iconMap } from '../../../../utils/mapping/mappingIcons'
 
 import ButtonAction from '../elements/ButtonAction/ButtonAction'
 
-import PropTypes from 'prop-types'
+export const ModelRelationAddMap = {
+    type: '',
+    children: null
+}
 
-const ModelRelationAdd = ({ type, children }) => {
+/**
+ * @param {Object} FormTagMap
+ * @param {React.ReactNode} FormTagMap.children
+ * @param {string} FormTagMap.type
+ */
+
+const ModelRelationAdd = ({ type, children } = ModelRelationAddMap) => {
     const { model } = useManageModel()
     const tittleRelation = type === 'goal' ? 'assignments' : 'goals'
     const visibilityRelation = { goal: 'assignment', assignment: 'goal', tag: 'tag' }
@@ -99,11 +109,6 @@ const ModelRelationAdd = ({ type, children }) => {
     }
 
     return null
-}
-
-ModelRelationAdd.propTypes = {
-    type: PropTypes.string,
-    children: PropTypes.element.isRequired
 }
 
 export default ModelRelationAdd

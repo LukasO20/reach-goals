@@ -10,30 +10,53 @@ import { addToSelectedModelMap, updateFormModelMap } from '../../../../../utils/
 import Card from '../../elements/Card/Card.jsx'
 import CardMini from '../../elements/CardMini/CardMini.jsx'
 
-import PropTypes from 'prop-types'
-
 import moment from 'moment'
 
 export const GoalMap = {
     status: '',
     display: displayModesMap,
-    source: null,
+    source: [],
     selectableModel: false,
     detailsModel: false,
     draggable: false,
     checkboxModel: false,
     showTags: false,
     showStatus: false
-} 
+}
 
-const Goal = ({ status, display, source, selectableModel, detailsModel, draggable, checkboxModel, showTags, showStatus } = GoalMap) => {
+/**
+ * @param {Object} GoalMap
+ * @param {string} GoalMap.status
+ * @param {Object} GoalMap.display
+ * @param {('card'|'card-mini')[]} GoalMap.display.type
+ * @param {('edit'|'delete'|'details'|'remove')[]} [GoalMap.display.actions]
+ * @param {Array} GoalMap.source
+ * @param {boolean} GoalMap.selectableModel
+ * @param {boolean} GoalMap.detailsModel
+ * @param {boolean} GoalMap.draggable
+ * @param {boolean} GoalMap.checkboxModel
+ * @param {boolean} GoalMap.showTags
+ * @param {boolean} GoalMap.showStatus
+ */
+
+const Goal = ({
+    status,
+    display,
+    source,
+    selectableModel,
+    detailsModel,
+    draggable,
+    checkboxModel,
+    showTags,
+    showStatus
+} = GoalMap) => {
     const { model, setModel, updateFormModel, addToSelectedModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
     const { remove, removeSuccess, removing, removingVariables } = useGoalProvider()
     const { valuesCheckbox } = useCheckbox()
 
-    const sourceData = source?.goals ?? source ?? []
+    const sourceData = source?.goals ?? source
 
     const renderCard = sourceData.filter(item =>
         !(removeSuccess && removingVariables && item.id === removingVariables)
@@ -115,27 +138,6 @@ const Goal = ({ status, display, source, selectableModel, detailsModel, draggabl
             showTags={showTags}
         />
     ) : null
-}
-
-Goal.propTypes = {
-    status: PropTypes.string,
-    display: PropTypes.exact({
-        type: PropTypes.arrayOf(
-            PropTypes.oneOf(['card', 'card-mini'])
-        ).isRequired,
-        actions: PropTypes.arrayOf(
-            PropTypes.oneOf(['edit', 'delete', 'details', 'remove'])
-        )
-    }).isRequired,
-    source: PropTypes.oneOfType([
-        PropTypes.shape({
-            goals: PropTypes.array
-        }),
-        PropTypes.array
-    ]),
-    selectableModel: PropTypes.bool,
-    detailsModel: PropTypes.bool,
-    draggable: PropTypes.bool
 }
 
 export default Goal

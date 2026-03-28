@@ -1,8 +1,17 @@
 import { DragDropContext, Droppable } from '@adaptabletools/react-beautiful-dnd'
 
-import PropTypes from 'prop-types'
+export const DragDropMap = {
+  onDragEnd: () => {},
+  children: null
+}
 
-const DragDrop = ({ onDragEnd, onDragUpdate, children }) => {
+/**
+ * @param {Object} DragDropMap
+ * @param {Function} DragDropMap.onDragEnd
+ * @param {any} DragDropMap.children
+ */
+
+const DragDrop = ({ onDragEnd, children } = DragDropMap) => {
   const handleDragEnd = (result) => {
     if (!result.destination) return
     onDragEnd(result)
@@ -26,16 +35,6 @@ const DragDropDroppable = ({ dragDropID, children, className }) => {
       )}
     </Droppable>
   )
-}
-
-DragDrop.propTypes = {
-  onDragEnd: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired
-}
-
-DragDropDroppable.propTypes = {
-  dragDropID: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired
 }
 
 export { DragDrop, DragDropDroppable }

@@ -1,10 +1,27 @@
 import { useState } from 'react'
 
-import PropTypes from 'prop-types'
-
 import './InputTimer.scss'
 
-const InputTimer = ({ id, className, placeholder, name, value, onChange }) => {
+export const InputTimerMap = {
+    id: null,
+    className: '',
+    placeholder: '',
+    name: '',
+    value: null,
+    onChange: () => {}
+}
+
+/**
+ * @param {Object} InputTimerMap
+ * @param {string|number|null} InputTimerMap.id
+ * @param {string} InputTimerMap.className
+ * @param {string} InputTimerMap.placeholder
+ * @param {string} InputTimerMap.name
+ * @param {string|number|null} InputTimerMap.value
+ * @param {Function} InputTimerMap.onChange
+ */
+
+const InputTimer = ({ id, className, placeholder, name, value, onChange } = InputTimer) => {
   const [valueTimer, setValueTimer] = useState(undefined)
 
   const toTime = (minutes) => {
@@ -51,15 +68,6 @@ const InputTimer = ({ id, className, placeholder, name, value, onChange }) => {
       onChange={handleChange}
     />
   )
-}
-
-InputTimer.propTypes = {
-      id: PropTypes.string.isRequired,
-      className: PropTypes.string,
-      placeholder: PropTypes.string,
-      name: PropTypes.string.isRequired,
-      value: PropTypes.number,
-      onChange: PropTypes.func.isRequired
 }
 
 export default InputTimer

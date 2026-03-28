@@ -8,8 +8,6 @@ import { updateFilterModelMap } from '../../../../../utils/mapping/mappingUtilsP
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 import Loading from '../Loading/Loading.jsx'
 
-import Proptypes from 'prop-types'
-
 import './ModelTabs.scss'
 
 export const ModelTabsMap = {
@@ -19,6 +17,15 @@ export const ModelTabsMap = {
     headLeftChildren: React.ReactNode,
     loading: false
 }
+
+/**
+ * @param {Object} ModelTabsMap
+ * @param {string} ModelTabsMap.type
+ * @param {string} [ModelTabsMap.classModelTabs]
+ * @param {React.ReactNode} ModelTabsMap.children
+ * @param {React.ReactNode} [ModelTabsMap.headLeftChildren]
+ * @param {boolean} ModelTabsMap.loading
+ */
 
 const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, loading } = ModelTabsMap) => {
     const { updateFilterModel } = useManageModel()
@@ -88,12 +95,6 @@ const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, loading }
             </div>
         </div>
     )
-}
-
-ModelTabs.propTypes = {
-    type: Proptypes.string.isRequired,
-    children: Proptypes.element.isRequired,
-    loading: Proptypes.bool.isRequired
 }
 
 export default ModelTabs

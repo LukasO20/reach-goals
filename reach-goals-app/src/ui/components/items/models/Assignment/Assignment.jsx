@@ -10,28 +10,51 @@ import { updateFormModelMap, addToSelectedModelMap } from '../../../../../utils/
 import Card from '../../elements/Card/Card.jsx'
 import CardMini from '../../elements/CardMini/CardMini.jsx'
 
-import PropTypes from 'prop-types'
-
 export const AssignmentMap = {
     status: '',
     display: displayModesMap,
-    source: null,
+    source: [],
     selectableModel: false,
     detailsModel: false,
     draggable: false,
     checkboxModel: false,
     showTags: false,
     showStatus: false
-} 
+}
 
-const Assignment = ({ status, display, source, selectableModel, detailsModel, draggable, checkboxModel, showTags, showStatus } = AssignmentMap) => {
+/**
+ * @param {Object} AssignmentMap
+ * @param {string} AssignmentMap.status
+ * @param {Object} AssignmentMap.display
+ * @param {('card'|'card-mini')[]} AssignmentMap.display.type
+ * @param {('edit'|'delete'|'details'|'remove')[]} [AssignmentMap.display.actions]
+ * @param {Array} AssignmentMap.source
+ * @param {boolean} AssignmentMap.selectableModel
+ * @param {boolean} AssignmentMap.detailsModel
+ * @param {boolean} AssignmentMap.draggable
+ * @param {boolean} AssignmentMap.checkboxModel
+ * @param {boolean} AssignmentMap.showTags
+ * @param {boolean} AssignmentMap.showStatus
+ */
+
+const Assignment = ({
+    status,
+    display,
+    source,
+    selectableModel,
+    detailsModel,
+    draggable,
+    checkboxModel,
+    showTags,
+    showStatus
+} = AssignmentMap) => {
     const { model, setModel, updateFormModel, addToSelectedModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
     const { remove, removeSuccess, removing, removingVariables } = useAssignmentProvider()
     const { valuesCheckbox } = useCheckbox()
 
-    const sourceData = source?.assignments ?? source ?? []
+    const sourceData = source?.assignments ?? source
 
     const renderCard = sourceData.filter(item =>
         !(removeSuccess && removingVariables && item.id === removingVariables)
@@ -127,26 +150,6 @@ const Assignment = ({ status, display, source, selectableModel, detailsModel, dr
             showStatus={showStatus}
         />
     ) : null
-}
-
-Assignment.propTypes = {
-    display: PropTypes.exact({
-        type: PropTypes.arrayOf(
-            PropTypes.oneOf(['card', 'card-mini'])
-        ).isRequired,
-        actions: PropTypes.arrayOf(
-            PropTypes.oneOf(['edit', 'delete', 'details', 'remove'])
-        )
-    }).isRequired,
-    source: PropTypes.oneOfType([
-        PropTypes.shape({
-            assignments: PropTypes.array
-        }),
-        PropTypes.array
-    ]),
-    selectableModel: PropTypes.bool,
-    detailsModel: PropTypes.bool,
-    draggable: PropTypes.bool
 }
 
 export default Assignment

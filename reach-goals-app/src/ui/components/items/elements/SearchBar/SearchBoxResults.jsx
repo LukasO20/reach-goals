@@ -3,25 +3,37 @@ import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
 import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
 import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
 
-import PropTypes from 'prop-types'
-
 import Loading from '../Loading/Loading.jsx'
 import SearchItem from './elements/SearchItem.jsx'
 import SearchItemTag from './elements/SearchItemTag.jsx'
 
 import { switchLayoutMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils'
 
-const standardData = {
-    goals: [],
-    assignments: [],
-    tags: []
+export const SearchBoxResultsMap = {
+    data: {
+        goals: [],
+        assignments: [],
+        tags: []
+    },
+    loading: false,
+    status: ''
 }
 
-const SearchBoxResults = ({ data, loading, status }) => {
+/**
+ * @param {Object} SearchBoxResultsMap
+ * @param {Object} SearchBoxResultsMap.data
+ * @param {Array} SearchBoxResultsMap.data.goals
+ * @param {Array} SearchBoxResultsMap.data.assignments
+ * @param {Array} SearchBoxResultsMap.data.tags
+ * @param {boolean} SearchBoxResultsMap.loading
+ * @param {string} SearchBoxResultsMap.status
+ */
+
+const SearchBoxResults = ({ data, loading, status } = SearchBoxResultsMap) => {
     const { setModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
-    const { goals, assignments, tags } = data ?? standardData
+    const { goals, assignments, tags } = data
 
     const dataResult = [
         ...goals.map((g) => ({ ...g, type: 'goal' })),
@@ -63,7 +75,7 @@ const SearchBoxResults = ({ data, loading, status }) => {
                                 <React.Fragment key={item.id}>
                                     {
                                         useSearchItem && (
-                                            <SearchItem  type={type} item={item}
+                                            <SearchItem type={type} item={item}
                                                 onItemClick={handleItemClick}
                                                 onButtonClick={handleEditModel}
                                             />
@@ -82,16 +94,6 @@ const SearchBoxResults = ({ data, loading, status }) => {
             }
         </div>
     )
-}
-
-SearchBoxResults.propTypes = {
-    data: PropTypes.shape({
-        goals: PropTypes.array,
-        assignments: PropTypes.array,
-        tags: PropTypes.array
-    }),
-    loading: PropTypes.bool,
-    status: PropTypes.string
 }
 
 export default SearchBoxResults

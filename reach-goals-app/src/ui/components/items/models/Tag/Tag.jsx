@@ -4,14 +4,34 @@ import { useTagProvider } from '../../../../../provider/model/TagModelProvider.j
 import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
 import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
 
-import { visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { visibilityMap, displayModesMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { addToSelectedModelMap, updateFormModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
 import CardMini from '../../elements/CardMini/CardMini.jsx'
 
-import PropTypes from 'prop-types'
+export const TagMap = {
+    display: displayModesMap,
+    source: [],
+    selectableModel: false
+}
 
-const Tag = ({ display, source = [], selectableModel = false }) => {
+/**
+ * @param {Object} TagMap
+ * @param {Object} TagMap.display
+ * @param {('card'|'card-mini')[]} TagMap.display.type
+ * @param {('edit'|'delete'|'details'|'remove')[]} [TagMap.display.actions]
+ * @param {Array} TagMap.source
+ * @param {Object[]} TagMap.source.tags
+ * @param {number} [TagMap.source.tags[].id]
+ * @param {number} [TagMap.source.tags[].tagID]
+ * @param {Object} [TagMap.source.tags[].tag]
+ * @param {number} [TagMap.source.tags[].tag.id]
+ * @param {string} [TagMap.source.tags[].tag.name]
+ * @param {string} [TagMap.source.tags[].tag.color]
+ * @param {boolean} TagMap.selectableModel
+ */
+
+const Tag = ({ display, source, selectableModel } = TagMap) => {
     const { toggleVisibility } = useVisibility()
     const { model, setModel, updateFormModel, addToSelectedModel } = useManageModel()
     const { remove, removeSuccess, removingVariables } = useTagProvider()
@@ -77,34 +97,6 @@ const Tag = ({ display, source = [], selectableModel = false }) => {
     }
 
     return <CardMini type='tag' model={renderCardMini} clickFunction={clickEvents} display={display} />
-}
-
-Tag.propTypes = {
-    display: PropTypes.exact({
-        type: PropTypes.arrayOf(
-            PropTypes.oneOf(['card', 'card-mini'])
-        ).isRequired,
-        actions: PropTypes.arrayOf(
-            PropTypes.oneOf(['edit', 'delete', 'details', 'remove'])
-        )
-    }).isRequired,
-    source: PropTypes.oneOfType([
-        PropTypes.shape({
-            tags: PropTypes.arrayOf(
-                PropTypes.shape({
-                    id: PropTypes.number,
-                    tagID: PropTypes.number,
-                    tag: PropTypes.shape({
-                        id: PropTypes.number,
-                        name: PropTypes.string,
-                        color: PropTypes.string
-                    })
-                })
-            )
-        }),
-        PropTypes.array
-    ]),
-    selectableModel: PropTypes.bool
 }
 
 export default Tag
