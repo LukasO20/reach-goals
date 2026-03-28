@@ -8,6 +8,8 @@ import { useTitle } from '../../../../provider/TitleProvider.jsx'
 
 import { visibilityMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
 
+import { cx } from '../../../../utils/utils.js'
+
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
 import ButtonDropdown from '../../items/elements/ButtonDropdown/ButtonDropdown.jsx'
 import SearchBar from '../../items/elements/SearchBar/SearchBar.jsx'
@@ -31,6 +33,14 @@ const ContainerH = () => {
         navigate(`/${layout.page.pageName}`) // return standard route during handle
     }
 
+    const buttonDropdownClass = cx(
+        `
+        circle
+        themes
+        ${visibleElements.includes('btn-themes') && 'active'}
+        `
+    )
+
     return (
         <div className='container-header main-content' onClick={(e) => handleClickHeader(e)}>
             <div className='titles-header'>
@@ -48,7 +58,7 @@ const ContainerH = () => {
                 </div>
                 <div className='item-nav'>
                     <ButtonDropdown visibility={visibilityMap('btn-themes')} icon='themes'
-                        classBtn={`circle themes ${visibleElements.includes('btn-themes') ? 'active' : ''}`} />
+                        classBtn={buttonDropdownClass} />
                 </div>
             </div>
         </div>

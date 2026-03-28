@@ -16,7 +16,7 @@ export const SearchBoxResultsMap = {
         tags: []
     },
     loading: false,
-    status: ''
+    status: null
 }
 
 /**
@@ -29,7 +29,12 @@ export const SearchBoxResultsMap = {
  * @param {string} SearchBoxResultsMap.status
  */
 
-const SearchBoxResults = ({ data, loading, status } = SearchBoxResultsMap) => {
+const SearchBoxResults = ({ 
+    data = SearchBoxResultsMap.data, 
+    loading, 
+    status
+} = SearchBoxResultsMap) => { 
+    
     const { setModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
