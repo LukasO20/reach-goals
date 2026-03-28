@@ -1,12 +1,12 @@
 import { useEffect, useState, useCallback } from 'react'
 
-import { useVisibility } from '../../../../provider/VisibilityProvider.jsx'
-import { useManageModel } from '../../../../provider/ManageModelProvider.jsx'
+import { useVisibility } from '../../../../provider/ui/VisibilityProvider.jsx'
+import { useManageModel } from '../../../../provider/model/ManageModelProvider.jsx'
 
 import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
 import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
 import { useTagProvider } from '../../../../provider/model/TagModelProvider.jsx'
-import { useTitle } from '../../../../provider/TitleProvider.jsx'
+import { useTitle } from '../../../../provider/ui/TitleProvider.jsx'
 
 import { visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
 import { updateFilterModelMap, resetManageModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'

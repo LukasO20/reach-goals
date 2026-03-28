@@ -1,10 +1,10 @@
-import { TitleProvider } from './TitleProvider.jsx'
-import { VisibilityProvider } from './VisibilityProvider.jsx'
-import { CheckboxProvider } from './CheckboxProvider.jsx'
-import { ManageModelProvider } from './ManageModelProvider.jsx'
-import { SwitchLayoutProvider } from './SwitchLayoutProvider.jsx'
+import { TitleProvider } from './ui/TitleProvider.jsx'
+import { VisibilityProvider } from './ui/VisibilityProvider.jsx'
+import { CheckboxProvider } from './ui/CheckboxProvider.jsx'
+import { ManageModelProvider } from './model/ManageModelProvider.jsx'
+import { SwitchLayoutProvider } from './ui/SwitchLayoutProvider.jsx'
 import { ModelQueryClientProvider } from './model/ModelQueryClientProvider.jsx'
-import { SearchBarProvider } from './SearchBarProvider.jsx'
+import { SearchBarProvider } from './ui/SearchBarProvider.jsx'
 import { UtilityProvider } from './model/UtilityProvider.jsx'
 
 const ProviderApp = ({ children }) => (

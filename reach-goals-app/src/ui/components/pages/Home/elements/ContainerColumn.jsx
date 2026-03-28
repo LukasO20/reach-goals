@@ -1,7 +1,7 @@
-import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider'
+import { useSwitchLayout } from '../../../../../provider/ui/SwitchLayoutProvider'
 import { useGoalProvider } from '../../../../../provider/model/GoalModelProvider'
 import { useAssignmentProvider } from '../../../../../provider/model/AssignmentModelProvider'
-import { useTitle } from '../../../../../provider/TitleProvider'
+import { useTitle } from '../../../../../provider/ui/TitleProvider'
 
 import { iconMap } from '../../../../../utils/mapping/mappingIcons'
 

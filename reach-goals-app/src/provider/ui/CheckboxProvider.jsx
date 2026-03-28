@@ -1,6 +1,6 @@
 import { useContext, useState, createContext, useMemo, useCallback } from 'react'
 
-import { checkboxMap } from '../utils/mapping/mappingUtilsProvider'
+import { checkboxMap } from '../../utils/mapping/mappingUtilsProvider'
 
 const CheckboxContext = createContext()
 

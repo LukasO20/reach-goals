@@ -1,5 +1,5 @@
-import { useVisibility } from '../../../provider/VisibilityProvider.jsx'
-import { useSwitchLayout } from '../../../provider/SwitchLayoutProvider.jsx'
+import { useVisibility } from '../../../provider/ui/VisibilityProvider.jsx'
+import { useSwitchLayout } from '../../../provider/ui/SwitchLayoutProvider.jsx'
 
 import ModalForm from './ModalForm/ModalForm.jsx'
 import ModalConfig from './ModalConfig/ModalConfig.jsx'

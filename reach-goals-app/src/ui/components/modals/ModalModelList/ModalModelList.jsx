@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { useManageModel } from '../../../../provider/ManageModelProvider.jsx'
+import { useManageModel } from '../../../../provider/model/ManageModelProvider.jsx'
 import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
 import { useTagProvider } from '../../../../provider/model/TagModelProvider.jsx'
 import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'

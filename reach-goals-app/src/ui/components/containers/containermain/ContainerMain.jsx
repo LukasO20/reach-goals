@@ -2,10 +2,10 @@ import { useNavigate } from 'react-router-dom'
 
 import Routes from '../../../../app/Routes.jsx'
 
-import { useManageModel } from '../../../../provider/ManageModelProvider.jsx'
-import { useVisibility } from '../../../../provider/VisibilityProvider.jsx'
-import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
-import { useCheckbox } from '../../../../provider/CheckboxProvider.jsx'
+import { useManageModel } from '../../../../provider/model/ManageModelProvider.jsx'
+import { useVisibility } from '../../../../provider/ui/VisibilityProvider.jsx'
+import { useSwitchLayout } from '../../../../provider/ui/SwitchLayoutProvider.jsx'
+import { useCheckbox } from '../../../../provider/ui/CheckboxProvider.jsx'
 
 import { visibilityMap, switchLayoutMap, buildCheckboxMap } from '../../../../utils/mapping/mappingUtils.js'
 

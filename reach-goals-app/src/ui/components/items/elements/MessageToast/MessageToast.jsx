@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { useTitle } from '../../../../../provider/TitleProvider'
+import { useTitle } from '../../../../../provider/ui/TitleProvider'
 
 import ButtonAction from '../ButtonAction/ButtonAction'
 

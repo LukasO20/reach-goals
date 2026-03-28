@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react'
 import { useMutation } from '@tanstack/react-query'
 
-import * as searchBarService from '../services/common.js'
+import * as searchBarService from '../../services/common.js'
 
 export const SearchBarContext = createContext()
 

@@ -1,5 +1,5 @@
 import { useUtilityProvider } from '../../../../../provider/model/UtilityProvider'
-import { useCheckbox } from '../../../../../provider/CheckboxProvider'
+import { useCheckbox } from '../../../../../provider/ui/CheckboxProvider'
 
 import ButtonAction from '../ButtonAction/ButtonAction'
 

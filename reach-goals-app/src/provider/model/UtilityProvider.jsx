@@ -1,10 +1,10 @@
 import { createContext, useContext } from 'react'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 
-import { useTitle } from '../../provider/TitleProvider'
-import { useManageModel } from '../ManageModelProvider'
-import { useCheckbox } from '../CheckboxProvider'
-import { useVisibility } from '../VisibilityProvider'
+import { useTitle } from '../ui/TitleProvider'
+import { useManageModel } from './ManageModelProvider'
+import { useCheckbox } from '../ui/CheckboxProvider'
+import { useVisibility } from '../ui/VisibilityProvider'
 
 import * as commonService from '../../services/common'
 

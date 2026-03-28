@@ -3,9 +3,9 @@ import { useLocation } from 'react-router-dom'
 
 import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
 import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
-import { useManageModel } from '../../../../provider/ManageModelProvider.jsx'
-import { useTitle } from '../../../../provider/TitleProvider.jsx'
-import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
+import { useManageModel } from '../../../../provider/model/ManageModelProvider.jsx'
+import { useTitle } from '../../../../provider/ui/TitleProvider.jsx'
+import { useSwitchLayout } from '../../../../provider/ui/SwitchLayoutProvider.jsx'
 
 import { filterBuildModelMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
 import { updateFilterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'

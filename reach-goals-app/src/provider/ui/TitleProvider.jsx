@@ -1,6 +1,6 @@
 import { useState, useContext, useCallback, useMemo, createContext } from 'react'
 
-import { titleMap } from '../utils/mapping/mappingUtils'
+import { titleMap } from '../../utils/mapping/mappingUtils'
 
 const TitleContext = createContext()
 

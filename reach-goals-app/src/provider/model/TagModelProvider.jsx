@@ -3,8 +3,8 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import * as tagService from '../../services/tagService.js'
 
-import { useManageModel } from '../ManageModelProvider.jsx'
-import { useTitle } from '../../provider/TitleProvider.jsx'
+import { useManageModel } from './ManageModelProvider.jsx'
+import { useTitle } from '../../provider/ui/TitleProvider.jsx'
 
 import { filterServiceFnMap, updateDataModelMap } from '../../utils/mapping/mappingUtilsProvider.js'
 import { validFilter } from '../../utils/utilsProvider.js'

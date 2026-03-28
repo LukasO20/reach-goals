@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { useVisibility } from '../../../../provider/VisibilityProvider.jsx'
-import { useManageModel } from '../../../../provider/ManageModelProvider.jsx'
-import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
+import { useVisibility } from '../../../../provider/ui/VisibilityProvider.jsx'
+import { useManageModel } from '../../../../provider/model/ManageModelProvider.jsx'
+import { useSwitchLayout } from '../../../../provider/ui/SwitchLayoutProvider.jsx'
 import { useTagProvider } from '../../../../provider/model/TagModelProvider.jsx'
-import { useCheckbox } from '../../../../provider/CheckboxProvider.jsx'
+import { useCheckbox } from '../../../../provider/ui/CheckboxProvider.jsx'
 
 import { visibilityMap, switchLayoutMap, filterBuildModelMap, buildCheckboxMap } from '../../../../utils/mapping/mappingUtils.js'
 import { updateFilterModelMap, resetManageModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'

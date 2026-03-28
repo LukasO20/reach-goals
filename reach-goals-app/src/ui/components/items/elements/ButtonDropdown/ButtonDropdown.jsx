@@ -1,5 +1,5 @@
-import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
-import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
+import { useVisibility } from '../../../../../provider/ui/VisibilityProvider.jsx'
+import { useManageModel } from '../../../../../provider/model/ManageModelProvider.jsx'
 
 import { visibilityMap, switchLayoutMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'

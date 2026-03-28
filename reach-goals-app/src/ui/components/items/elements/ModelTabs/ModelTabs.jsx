@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
+import { useManageModel } from '../../../../../provider/model/ManageModelProvider.jsx'
 
 import { filterBuildModelMap, modelTabsMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { updateFilterModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'

@@ -1,6 +1,6 @@
 import { useState, useContext, createContext, useCallback, useMemo } from 'react'
 
-import { switchLayoutMap } from '../utils/mapping/mappingUtilsProvider'
+import { switchLayoutMap } from '../../utils/mapping/mappingUtilsProvider'
 
 const SwitchLayoutContext = createContext()
 

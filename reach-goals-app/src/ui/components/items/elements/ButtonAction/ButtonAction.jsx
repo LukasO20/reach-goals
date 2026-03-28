@@ -1,6 +1,6 @@
-import { useVisibility } from '../../../../../provider/VisibilityProvider'
-import { useManageModel } from '../../../../../provider/ManageModelProvider'
-import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider'
+import { useVisibility } from '../../../../../provider/ui/VisibilityProvider.jsx'
+import { useManageModel } from '../../../../../provider/model/ManageModelProvider.jsx'
+import { useSwitchLayout } from '../../../../../provider/ui/SwitchLayoutProvider'
 
 import { cx } from '../../../../../utils/utils'
 import { iconMap } from '../../../../../utils/mapping/mappingIcons'

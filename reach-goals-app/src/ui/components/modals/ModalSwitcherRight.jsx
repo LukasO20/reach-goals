@@ -1,5 +1,5 @@
-import { useVisibility } from '../../../provider/VisibilityProvider'
-import { useSwitchLayout } from '../../../provider/SwitchLayoutProvider'
+import { useVisibility } from '../../../provider/ui/VisibilityProvider'
+import { useSwitchLayout } from '../../../provider/ui/SwitchLayoutProvider'
 
 import ModalTag from './ModalTag/ModalTag'
 import ModalDetails from './ModalDetails/ModalDetails'

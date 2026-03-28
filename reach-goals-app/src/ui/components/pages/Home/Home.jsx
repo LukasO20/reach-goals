@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 
-import { useTitle } from '../../../../provider/TitleProvider.jsx'
-import { useSwitchLayout } from '../../../../provider/SwitchLayoutProvider.jsx'
+import { useTitle } from '../../../../provider/ui/TitleProvider.jsx'
+import { useSwitchLayout } from '../../../../provider/ui/SwitchLayoutProvider.jsx'
 import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
 import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
-import { useManageModel } from '../../../../provider/ManageModelProvider.jsx'
+import { useManageModel } from '../../../../provider/model/ManageModelProvider.jsx'
 
 import { filterBuildModelMap } from '../../../../utils/mapping/mappingUtils.js'
 import { updateFilterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'

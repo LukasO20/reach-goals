@@ -1,8 +1,8 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 
-import { useCheckbox } from '../../../provider/CheckboxProvider'
-import { useVisibility } from '../../../provider/VisibilityProvider.jsx'
-import { useSwitchLayout } from '../../../provider/SwitchLayoutProvider.jsx'
+import { useCheckbox } from '../../../provider/ui/CheckboxProvider'
+import { useVisibility } from '../../../provider/ui/VisibilityProvider.jsx'
+import { useSwitchLayout } from '../../../provider/ui/SwitchLayoutProvider.jsx'
 
 import { visibilityMap, switchLayoutMap } from '../../../utils/mapping/mappingUtils.js'
 

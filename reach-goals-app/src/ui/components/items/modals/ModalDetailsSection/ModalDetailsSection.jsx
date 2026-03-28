@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom'
 
-import { useSwitchLayout } from '../../../../../provider/SwitchLayoutProvider.jsx'
-import { useVisibility } from '../../../../../provider/VisibilityProvider.jsx'
-import { useManageModel } from '../../../../../provider/ManageModelProvider.jsx'
+import { useSwitchLayout } from '../../../../../provider/ui/SwitchLayoutProvider.jsx'
+import { useVisibility } from '../../../../../provider/ui/VisibilityProvider.jsx'
+import { useManageModel } from '../../../../../provider/model/ManageModelProvider.jsx'
 
 import { visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
