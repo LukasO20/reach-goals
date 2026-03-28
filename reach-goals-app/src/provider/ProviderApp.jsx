@@ -7,24 +7,29 @@ import { ModelQueryClientProvider } from './model/ModelQueryClientProvider.jsx'
 import { SearchBarProvider } from './ui/SearchBarProvider.jsx'
 import { UtilityProvider } from './model/UtilityProvider.jsx'
 
-const ProviderApp = ({ children }) => (
-    <ManageModelProvider>
-        <TitleProvider>
-            <VisibilityProvider>
-                <ModelQueryClientProvider>
-                    <SearchBarProvider>
-                        <SwitchLayoutProvider>
-                            <CheckboxProvider>
-                                <UtilityProvider>
-                                    {children}
-                                </UtilityProvider>
-                            </CheckboxProvider>
-                        </SwitchLayoutProvider>
-                    </SearchBarProvider>
-                </ModelQueryClientProvider>
-            </VisibilityProvider>
-        </TitleProvider>
-    </ManageModelProvider>
-)
+const Compose = ({ providers, children }) => {
+    return providers.reduceRight((acc, Provider) => {
+        return <Provider>{acc}</Provider>
+    }, children)
+}
+
+const providers = [
+    ManageModelProvider,
+    TitleProvider,     
+    ModelQueryClientProvider,
+    VisibilityProvider,
+    SearchBarProvider,
+    SwitchLayoutProvider,
+    CheckboxProvider,
+    UtilityProvider
+];
+
+const ProviderApp = ({ children }) => {
+    return (
+        <Compose providers={providers}>
+            {children}
+        </Compose>
+    )
+}
 
 export default ProviderApp
