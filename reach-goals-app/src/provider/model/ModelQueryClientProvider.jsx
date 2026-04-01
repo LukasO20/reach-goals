@@ -1,21 +1,27 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import React from 'react'
 import { GoalModelProvider } from './GoalModelProvider.jsx'
 import { AssignmentModelProvider } from './AssignmentModelProvider.jsx'
 import { TagModelProvider } from './TagModelProvider.jsx'
+import { filerFetchModelMap } from '../../utils/mapping/mappingUtilsProvider.js'
 
-const queryClient = new QueryClient()
+const ModelQueryClientProviderMap = {
+    children: React.ReactNode,
+    filter: filerFetchModelMap
+}
 
-export const ModelQueryClientProvider = ({ children }) => {
-    
+export const ModelQueryClientProvider = ({
+    children, filter = ModelQueryClientProviderMap.filter
+} = ModelQueryClientProviderMap) => {
+
+    console.log('WHAT - ', filter)
+
     return (
-        <QueryClientProvider client={queryClient}>
-            <GoalModelProvider>
-                <AssignmentModelProvider>
-                    <TagModelProvider>
-                        {children}
-                    </TagModelProvider>
-                </AssignmentModelProvider>
-            </GoalModelProvider>
-        </QueryClientProvider>
+        <GoalModelProvider filter={filter.goal}>
+            <AssignmentModelProvider filter={filter.assignment}>
+                <TagModelProvider>
+                    {children}
+                </TagModelProvider>
+            </AssignmentModelProvider>
+        </GoalModelProvider>
     )
 }

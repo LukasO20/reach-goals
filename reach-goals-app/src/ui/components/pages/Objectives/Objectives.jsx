@@ -3,12 +3,10 @@ import { useLocation } from 'react-router-dom'
 
 import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
 import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
-import { useManageModel } from '../../../../provider/model/ManageModelProvider.jsx'
 import { useTitle } from '../../../../provider/ui/TitleProvider.jsx'
 import { useSwitchLayout } from '../../../../provider/ui/SwitchLayoutProvider.jsx'
 
-import { filterBuildModelMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
-import { updateFilterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
+import { switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import ModelTabs from '../../items/elements/ModelTabs/ModelTabs.jsx'
 import Goal from '../../items/models/Goal/Goal.jsx'
@@ -20,9 +18,8 @@ import './Objectives.scss'
 const Objectives = () => {
     const { update } = useTitle()
     const { layout, updateSwitchLayout } = useSwitchLayout()
-    const { updateFilterModel } = useManageModel()
-    const { page: { data: dataGoal, loading: loadingGoal } } = useGoalProvider()
-    const { page: { data: dataAssignment, loading: loadingAssignment } } = useAssignmentProvider()
+    const { page: { data: dataGoal = [], loading: loadingGoal } } = useGoalProvider()
+    const { page: { data: dataAssignment = [], loading: loadingAssignment } } = useAssignmentProvider()
     const location = useLocation()
 
     const typeLayout = layout.page.layoutName
@@ -49,24 +46,6 @@ const Objectives = () => {
         update({ header: 'Manage your goals and assignments' })
         updateSwitchLayout(dataSwitchLayout)
     }, [update, updateSwitchLayout, location.pathname])
-
-    useEffect(() => {
-        if (typeLayout === 'all') {
-            const filterGoal = filterBuildModelMap({
-                goalSomeID: 'all', type: 'goal', source: 'core'
-            }, 'goal', 'core')
-
-            const filterAssignment = filterBuildModelMap({
-                assignmentSomeID: 'all', type: 'assignment', source: 'core'
-            }, 'assignment', 'core')
-
-            const dataUpdateFilterModelGoal = updateFilterModelMap({ filter: filterGoal, model: 'goal', scope: 'page' })
-            const dataUpdateFilterModelAssignment = updateFilterModelMap({ filter: filterAssignment, model: 'assignment', scope: 'page' })
-
-            updateFilterModel(dataUpdateFilterModelGoal)
-            updateFilterModel(dataUpdateFilterModelAssignment)
-        }
-    }, [typeLayout, updateFilterModel])
 
     let content = null
 

@@ -9,13 +9,25 @@ import Assignment from '../../../items/models/Assignment/Assignment'
 import Goal from '../../../items/models/Goal/Goal'
 import { DragDrop, DragDropDroppable } from '../../../items/elements/DragDrop/DragDrop'
 
-const ContainerColumn = () => {
+export const ContainerColumnMap = {
+    data: {
+        goal: [],
+        assignment: []
+    }
+}
+
+const ContainerColumn = ({ data = ContainerColumnMap.data } = ContainerColumnMap) => {
     const { layout } = useSwitchLayout()
     const { update } = useTitle()
-    const { page: { data: dataGoal = [] }, saveDragDrop: saveDragDropGoal } = useGoalProvider()
-    const { page: { data: dataAssignment = [] }, saveDragDrop: saveDragDropAssignment } = useAssignmentProvider()
+    const { saveDragDrop: saveDragDropGoal } = useGoalProvider()
+    const { saveDragDrop: saveDragDropAssignment } = useAssignmentProvider()
+        
+    const { 
+        goal: dataGoal = [], 
+        assignment: dataAssignment = [] 
+    } = data
 
-    const data = {
+    const dataColumn = {
         progress: { goal: dataGoal.filter(g => g.status === 'progress'), assignment: dataAssignment.filter(a => a.status === 'progress') },
         conclude: { goal: dataGoal.filter(g => g.status === 'conclude'), assignment: dataAssignment.filter(a => a.status === 'conclude') },
         cancel: { goal: dataGoal.filter(g => g.status === 'cancel'), assignment: dataAssignment.filter(a => a.status === 'cancel') }
@@ -56,9 +68,9 @@ const ContainerColumn = () => {
                             <DragDropDroppable dragDropID='progress' className='list'>
                                 {
                                     layoutColumn === 'goal' ?
-                                        <Goal display={displayModesProps} detailsModel={true} source={data.progress.goal} status='progress' draggable={true} />
+                                        <Goal display={displayModesProps} detailsModel={true} source={dataColumn.progress.goal} status='progress' draggable={true} />
                                         :
-                                        <Assignment display={displayModesProps} detailsModel={true} source={data.progress.assignment} status={'progress'} draggable={true} />
+                                        <Assignment display={displayModesProps} detailsModel={true} source={dataColumn.progress.assignment} status={'progress'} draggable={true} />
                                 }
                             </DragDropDroppable>
                         </div>
@@ -71,9 +83,9 @@ const ContainerColumn = () => {
                             <DragDropDroppable dragDropID='conclude' className='list'>
                                 {
                                     layoutColumn === 'goal' ?
-                                        <Goal display={displayModesProps} detailsModel={true} source={data.conclude.goal} status='conclude' draggable={true} />
+                                        <Goal display={displayModesProps} detailsModel={true} source={dataColumn.conclude.goal} status='conclude' draggable={true} />
                                         :
-                                        <Assignment display={displayModesProps} detailsModel={true} source={data.conclude.assignment} status={'conclude'} draggable={true} />
+                                        <Assignment display={displayModesProps} detailsModel={true} source={dataColumn.conclude.assignment} status={'conclude'} draggable={true} />
                                 }
                             </DragDropDroppable>
                         </div>
@@ -86,9 +98,9 @@ const ContainerColumn = () => {
                             <DragDropDroppable dragDropID='cancel' className='list'>
                                 {
                                     layoutColumn === 'goal' ?
-                                        <Goal display={displayModesProps} detailsModel={true} source={data.cancel.goal} status='cancel' draggable={true} />
+                                        <Goal display={displayModesProps} detailsModel={true} source={dataColumn.cancel.goal} status='cancel' draggable={true} />
                                         :
-                                        <Assignment display={displayModesProps} detailsModel={true} source={data.cancel.assignment} status={'cancel'} draggable={true} />
+                                        <Assignment display={displayModesProps} detailsModel={true} source={dataColumn.cancel.assignment} status={'cancel'} draggable={true} />
                                 }
                             </DragDropDroppable>
                         </div>

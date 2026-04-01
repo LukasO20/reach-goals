@@ -7,6 +7,22 @@ export const typeFilterModel = ['goalSomeID', 'goalAssignmentRelation', 'goalTag
     'assignmentTagRelation', 'notGoalRelation', 'tagSomeID',
     'tagRelationAssignment', 'tagRelationGoal', 'tagNotRelationGoal', 'tagNotRelationAssignment']
 
+export type FETCH_MODELS = 
+    'goalSomeID' |
+    'goalAssignmentRelation' |
+    'goalTagRelation' |
+    'notAssignmentRelation' | 
+    'assignmentSomeID' | 
+    'assignmentGoalRelation' |
+    'assignmentTagRelation' | 
+    'notGoalRelation' | 
+    'tagSomeID' |
+    'tagRelationAssignment' | 
+    'tagRelationGoal' | 
+    'tagNotRelationGoal' | 
+    'tagNotRelationAssignment'
+
+
 export const monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December',

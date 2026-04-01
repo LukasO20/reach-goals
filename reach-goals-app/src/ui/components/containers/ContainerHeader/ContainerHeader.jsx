@@ -47,7 +47,7 @@ const ContainerH = () => {
             </div>
             <div className='nav'>
                 <div className='item-nav'>
-                    <SearchBar mode='service' placeholder='search an activity' />
+                    {/* <SearchBar mode='service' placeholder='search an activity' /> */}
                 </div>
                 <div className='item-nav'>
                     <ButtonAction onClick={linkTagClick} visibility={visibilityMap(['modal-right', 'tag'])}

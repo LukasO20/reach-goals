@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect } from 'react'
+import React, { createContext, useContext, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import * as goalService from '../../services/goalService.js'
@@ -7,19 +7,26 @@ import * as commonService from '../../services/common.js'
 import { useManageModel } from './ManageModelProvider.jsx'
 import { useTitle } from '../../provider/ui/TitleProvider.jsx'
 
-import { filterServiceFnMap, updateDataModelMap } from '../../utils/mapping/mappingUtilsProvider.js'
+import { filterServiceFnMap, updateDataModelMap, filerFetchModelMap } from '../../utils/mapping/mappingUtilsProvider.js'
 import { validFilter } from '../../utils/utilsProvider.js'
 
 const GoalModelContext = createContext()
 
-export const GoalModelProvider = ({ children }) => {
+const GoalModelProviderMap = {
+  children: React.ReactNode,
+  filter: filerFetchModelMap
+}
+
+export const GoalModelProvider = ({ children, filter = GoalModelProviderMap.filter } = GoalModelProviderMap) => {
+  const filterFetchModelPage = filter.page
+  const filterFetchModelModal = filter.modal
+
   const queryClient = useQueryClient()
-  const { model, updateDataModel } = useManageModel()
+  const { updateDataModel } = useManageModel()
   const { update } = useTitle()
 
-
-  const queryKeyPage = ['goals', 'page', model.filter.goal.page]
-  const queryKeyModal = ['goal', 'modal', model.filter.goal.modal]
+  const queryKeyPage = ['goals', 'page', filterFetchModelPage]
+  const queryKeyModal = ['goal', 'modal', filterFetchModelModal]
 
   const createQueryFn = (scopeFilter) => {
     const valid = validFilter(scopeFilter)
@@ -35,8 +42,8 @@ export const GoalModelProvider = ({ children }) => {
     isLoading: isPageLoading,
   } = useQuery({
     queryKey: queryKeyPage,
-    queryFn: createQueryFn(model.filter.goal.page),
-    enabled: validFilter(model.filter.goal.page, 'some'),
+    queryFn: createQueryFn(filterFetchModelPage),
+    enabled: validFilter(filterFetchModelPage, 'some'),
     staleTime: 1000 * 60 * 5 //5 minutes for new data
   })
 
@@ -46,8 +53,8 @@ export const GoalModelProvider = ({ children }) => {
     isLoading: isModalLoading,
   } = useQuery({
     queryKey: queryKeyModal,
-    queryFn: createQueryFn(model.filter.goal.modal),
-    enabled: validFilter(model.filter.goal.modal, 'some'),
+    queryFn: createQueryFn(filterFetchModelModal),
+    enabled: validFilter(filterFetchModelModal, 'some'),
     staleTime: 1000 * 60 * 5 //5 minutes for new data
   })
 

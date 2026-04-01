@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect } from 'react'
+import React, { createContext, useContext, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import * as assignmentService from '../../services/assignmentService.js'
@@ -7,18 +7,26 @@ import * as commonService from '../../services/common.js'
 import { useManageModel } from './ManageModelProvider.jsx'
 import { useTitle } from '../../provider/ui/TitleProvider.jsx'
 
-import { filterServiceFnMap, updateDataModelMap } from '../../utils/mapping/mappingUtilsProvider.js'
+import { filerFetchModelMap, filterServiceFnMap, updateDataModelMap } from '../../utils/mapping/mappingUtilsProvider.js'
 import { validFilter } from '../../utils/utilsProvider.js'
 
-export const AssignmentModelContext = createContext()
+const AssignmentModelContext = createContext()
 
-export const AssignmentModelProvider = ({ children }) => {
+const AssignmentModelProviderMap = {
+  children: React.ReactNode,
+  filter: filerFetchModelMap
+}
+
+export const AssignmentModelProvider = ({ children, filter = AssignmentModelProviderMap.filter } = AssignmentModelProviderMap) => {
+    const filterFetchModelPage = filter.page
+    const filterFetchModelModal = filter.modal
+
     const queryClient = useQueryClient()
-    const { model, updateDataModel } = useManageModel()
+    const { updateDataModel } = useManageModel()
     const { update } = useTitle()
 
-    const queryKeyPage = ['assignments', 'page', model.filter.assignment.page]
-    const queryKeyModal = ['assignment', 'modal', model.filter.assignment.modal]
+    const queryKeyPage = ['assignments', 'page', filterFetchModelPage]
+    const queryKeyModal = ['assignment', 'modal', filterFetchModelModal]
 
     const createQueryFn = (scopeFilter) => {
         const valid = validFilter(scopeFilter)
@@ -34,8 +42,8 @@ export const AssignmentModelProvider = ({ children }) => {
         isLoading: isPageLoading,
     } = useQuery({
         queryKey: queryKeyPage,
-        queryFn: createQueryFn(model.filter.assignment.page),
-        enabled: validFilter(model.filter.assignment.page, 'some'),
+        queryFn: createQueryFn(filterFetchModelPage),
+        enabled: validFilter(filterFetchModelPage, 'some'),
         staleTime: 1000 * 60 * 5 //5 minutes for new data
     })
 
@@ -45,8 +53,8 @@ export const AssignmentModelProvider = ({ children }) => {
         isLoading: isModalLoading,
     } = useQuery({
         queryKey: queryKeyModal,
-        queryFn: createQueryFn(model.filter.assignment.modal),
-        enabled: validFilter(model.filter.assignment.modal, 'some'),
+        queryFn: createQueryFn(filterFetchModelModal),
+        enabled: validFilter(filterFetchModelModal, 'some'),
         staleTime: 1000 * 60 * 5 //5 minutes for new data
     })
 

@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { TitleProvider } from './ui/TitleProvider.jsx'
 import { VisibilityProvider } from './ui/VisibilityProvider.jsx'
 import { CheckboxProvider } from './ui/CheckboxProvider.jsx'
@@ -7,22 +8,30 @@ import { ModelQueryClientProvider } from './model/ModelQueryClientProvider.jsx'
 import { SearchBarProvider } from './ui/SearchBarProvider.jsx'
 import { UtilityProvider } from './model/UtilityProvider.jsx'
 
-const Compose = ({ providers, children }) => {
-    return providers.reduceRight((acc, Provider) => {
-        return <Provider>{acc}</Provider>
-    }, children)
-}
+const queryClient = new QueryClient()
 
 const providers = [
-    ManageModelProvider,
-    TitleProvider,     
-    ModelQueryClientProvider,
-    VisibilityProvider,
-    SearchBarProvider,
-    SwitchLayoutProvider,
-    CheckboxProvider,
-    UtilityProvider
+    [QueryClientProvider, { client: queryClient }],
+    [ManageModelProvider],
+    [TitleProvider],
+    //[ModelQueryClientProvider],
+    [VisibilityProvider],
+    //[SearchBarProvider],
+    [SwitchLayoutProvider],
+    [CheckboxProvider],
+    //[UtilityProvider]
 ];
+
+const Compose = ({ providers, children }) => {
+    return providers.reduceRight((acc, provider) => {
+        if (Array.isArray(provider)) {
+            const [Provider, props] = provider;
+            return <Provider {...props}>{acc}</Provider>;
+        }
+        const Provider = provider;
+        return <Provider>{acc}</Provider>;
+    }, children);
+};
 
 const ProviderApp = ({ children }) => {
     return (

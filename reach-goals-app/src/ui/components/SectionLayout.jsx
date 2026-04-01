@@ -1,17 +1,17 @@
 import { useParams } from 'react-router-dom'
 
-import Home from './pages/Home/Home.jsx'
-import Calendar from './pages/Calendar/Calendar.jsx'
-import Objectives from './pages/Objectives/Objectives.jsx'
+import { HomeWrapper } from './pages/Home/HomeWrapper.jsx'
+import { CalendarWrapper } from './pages/Calendar/CalendarWrapper.jsx'
+import { ObjectivesWrapper } from './pages/Objectives/ObjectivesWrapper.jsx'
 
 const sectionRender = (section) => {
     switch (section) {
         case 'home':
-            return <Home />   
+            return <HomeWrapper />   
         case 'calendar':
-            return <Calendar />
+            return <CalendarWrapper />
         case 'objectives':
-            return <Objectives />
+            return <ObjectivesWrapper />
         default:
             return <Home />
     }

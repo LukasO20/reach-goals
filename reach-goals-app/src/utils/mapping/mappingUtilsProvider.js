@@ -92,6 +92,37 @@ export const checkboxMap = {
     checkboxRegistry: []
 }
 
+export const filerFetchModelMap = {
+    goal: {
+        page: {},
+        modal: {}
+    },
+    assignment: {
+        page: {},
+        modal: {}
+    },
+    tag: {
+        page: {},
+        modal: {}
+    }
+}
+
+/** 
+ * @param {'goal' | 'assignment' | 'tag'} type 
+ * @param {import('../reference').FETCH_MODELS} typeFetch
+ * @param {'page' | 'modal'} source
+ * @param {number | 'all'} value
+ * */
+export const buildFilterModelMap = (type, typeFetch, source, value) => {
+    return {
+        [type]: {
+            [source]: {
+                [typeFetch]: value
+            }
+        },
+    }
+}
+
 export const updateFilterModelMap = ({ filter = {}, model = '', scope = '' }) => {
     return { filter, model, scope }
 }
