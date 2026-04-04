@@ -86,17 +86,17 @@ const ContainerM = () => {
                                 </div>
                             )
                         }
-                        <ButtonAction classBtn={`button-action plan-round max-width goal ${isSwitchLayoutGoal ? 'active' : ''}`} title='goals'
+                        <ButtonAction classBtn={`plan-round max-width goal ${isSwitchLayoutGoal ? 'active' : ''}`} title='goals'
                             switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'goal' } })}
                             onClick={handleButtonActionClick}
                         />
-                        <ButtonAction classBtn={`button-action plan-round max-width assignment ${isSwitchLayoutAssignment ? 'active' : ''}`} title='assignments'
+                        <ButtonAction classBtn={`plan-round max-width assignment ${isSwitchLayoutAssignment ? 'active' : ''}`} title='assignments'
                             switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'assignment' } })}
                             onClick={handleButtonActionClick}
                         />
                         {
                             isPageHome && (
-                                <ButtonAction classBtn={`button-action plan-round max-width pie-chart ${isSwichPieChart ? 'active' : ''}`} icon='chartbar'
+                                <ButtonAction classBtn={`plan-round max-width pie-chart ${isSwichPieChart ? 'active' : ''}`} icon='chartbar'
                                     switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'pie-chart' } })}
                                     onClick={handleButtonActionClick}
 
@@ -105,7 +105,7 @@ const ContainerM = () => {
                         }
                         {
                             (isPageObjectives || isPageCalendar) && (
-                                <ButtonAction classBtn={`button-action plan-round max-width all-activities ${isSwitchLayoutActivities ? 'active' : ''}`} title='all activities'
+                                <ButtonAction classBtn={`plan-round max-width all-activities ${isSwitchLayoutActivities ? 'active' : ''}`} title='all activities'
                                     switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'all' } })}
                                 />
                             )

@@ -7,34 +7,32 @@ import * as commonService from '../../services/common.js'
 import { useManageModel } from './ManageModelProvider.jsx'
 import { useTitle } from '../../provider/ui/TitleProvider.jsx'
 
-import { filerFetchModelMap, filterServiceFnMap, updateDataModelMap } from '../../utils/mapping/mappingUtilsProvider.js'
-import { validFilter } from '../../utils/utilsProvider.js'
+import { filerFetchModelMap, updateDataModelMap } from '../../utils/mapping/mappingUtilsProvider.js'
+import { createQueryFn, validFilter } from '../../utils/utilsProvider.js'
 
 const AssignmentModelContext = createContext()
 
 const AssignmentModelProviderMap = {
-  children: React.ReactNode,
-  filter: filerFetchModelMap
+    children: React.ReactNode,
+    filter: filerFetchModelMap
 }
 
-export const AssignmentModelProvider = ({ children, filter = AssignmentModelProviderMap.filter } = AssignmentModelProviderMap) => {
-    const filterFetchModelPage = filter.page
-    const filterFetchModelModal = filter.modal
-
-    const queryClient = useQueryClient()
-    const { updateDataModel } = useManageModel()
+export const AssignmentModelProvider = ({ children, filter } = AssignmentModelProviderMap) => {
+    const { model: { filter: filterModel }, updateDataModel, setFilterModel } = useManageModel()
     const { update } = useTitle()
 
-    const queryKeyPage = ['assignments', 'page', filterFetchModelPage]
-    const queryKeyModal = ['assignment', 'modal', filterFetchModelModal]
+    const queryClient = useQueryClient()
+    const filterKey = JSON.stringify(filter.assignment)
 
-    const createQueryFn = (scopeFilter) => {
-        const valid = validFilter(scopeFilter)
-        if (!valid) return () => Promise.resolve([])
-        const [key, value] = valid;
-        const fnName = filterServiceFnMap[key]
-        return () => assignmentService[fnName](value)
-    }
+    useEffect(() => {
+        if (filter.assignment) setFilterModel(filter, 'assignment')
+    }, [filterKey, setFilterModel])
+
+    const filterPage = filterModel.assignment.page
+    const filterModal = filterModel.assignment.modal
+
+    const queryKeyPage = ['assignments', 'page', filterPage]
+    const queryKeyModal = ['assignment', 'modal', filterModal]
 
     const {
         data: pageData,
@@ -42,8 +40,8 @@ export const AssignmentModelProvider = ({ children, filter = AssignmentModelProv
         isLoading: isPageLoading,
     } = useQuery({
         queryKey: queryKeyPage,
-        queryFn: createQueryFn(filterFetchModelPage),
-        enabled: validFilter(filterFetchModelPage, 'some'),
+        queryFn: createQueryFn(filterPage, assignmentService),
+        enabled: validFilter(filterPage, 'some'),
         staleTime: 1000 * 60 * 5 //5 minutes for new data
     })
 
@@ -53,8 +51,8 @@ export const AssignmentModelProvider = ({ children, filter = AssignmentModelProv
         isLoading: isModalLoading,
     } = useQuery({
         queryKey: queryKeyModal,
-        queryFn: createQueryFn(filterFetchModelModal),
-        enabled: validFilter(filterFetchModelModal, 'some'),
+        queryFn: createQueryFn(filterModal, assignmentService),
+        enabled: validFilter(filterModal, 'some'),
         staleTime: 1000 * 60 * 5 //5 minutes for new data
     })
 
@@ -123,13 +121,17 @@ export const AssignmentModelProvider = ({ children, filter = AssignmentModelProv
     })
 
     useEffect(() => {
-        const dataUpdateDataModel = updateDataModelMap({ data: pageData, type: 'assignment', scope: 'core' })
-        updateDataModel(dataUpdateDataModel)
+        if (pageData) {
+            const dataUpdateDataModel = updateDataModelMap({ data: pageData, type: 'assignment', scope: 'core' })
+            updateDataModel(dataUpdateDataModel)
+        }
     }, [pageData, updateDataModel])
 
     useEffect(() => {
-        const dataUpdateDataModel = updateDataModelMap({ data: modalData, type: 'assignment', scope: 'support' })
-        updateDataModel(dataUpdateDataModel)
+        if (modalData) {
+            const dataUpdateDataModel = updateDataModelMap({ data: modalData, type: 'assignment', scope: 'support' })
+            updateDataModel(dataUpdateDataModel)
+        }
     }, [modalData, updateDataModel])
 
     return (

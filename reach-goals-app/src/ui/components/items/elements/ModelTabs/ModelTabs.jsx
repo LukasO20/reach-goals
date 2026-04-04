@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 
-import { useManageModel } from '../../../../../provider/model/ManageModelProvider.jsx'
-
-import { filterBuildModelMap, modelTabsMap } from '../../../../../utils/mapping/mappingUtils.js'
-import { updateFilterModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
+import { modelTabsMap } from '../../../../../utils/mapping/mappingUtils.js'
+import { buildFilterModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 import Loading from '../Loading/Loading.jsx'
@@ -15,60 +13,40 @@ export const ModelTabsMap = {
     classModelTabs: '',
     children: React.ReactNode,
     headLeftChildren: React.ReactNode,
+    onFilterTabs: null,
     loading: false
 }
 
 /**
  * @param {Object} ModelTabsMap
- * @param {string} ModelTabsMap.type
+ * @param {'goal'|'assignment'|'tag'} ModelTabsMap.type
  * @param {string} [ModelTabsMap.classModelTabs]
  * @param {React.ReactNode} ModelTabsMap.children
  * @param {React.ReactNode} [ModelTabsMap.headLeftChildren]
  * @param {boolean} ModelTabsMap.loading
+ * @param {function} ModelTabsMap.onFilterTabs
  */
 
-const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, loading } = ModelTabsMap) => {
-    const { updateFilterModel } = useManageModel()
-
+const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, onFilterTabs, loading } = ModelTabsMap) => {
     const [currentFilterData, setCurrentFilterData] = useState({
         assignment: {},
         goal: {},
         tag: {}
     })
 
-    const handleFilterUpdate = (filterObject, type, scope) => {
-        if (!filterObject || !type || !scope) return console.error('To update the filter model is necessary a filterObject, type and scope')
-        return updateFilterModelMap({ filter: filterObject, model: type, scope })
-    }
-
     const filterButtonActive = currentFilterData[type] ?
         Object.entries(currentFilterData[type]).find(([_, value]) => value === 'all')?.[0]
         : null
 
-    const handleFilterClick = (currentfilter) => {
-        if (type === 'goal') {
-            const filterGetGoal = filterBuildModelMap({ ...currentfilter }, 'goal', 'core')
-            updateFilterModel(
-                handleFilterUpdate(filterGetGoal, 'goal', 'page')
-            )
-        }
+    const handleFilterClick = (filter) => {
+        const filerKey = Object.keys(filter)[0]
+        const filterValue = Object.values(filter)[0]
+        const source = type === 'tag' ? 'modal' : 'page'
 
-        if (type === 'assignment') {
-            const filterGetAssignment = filterBuildModelMap({ ...currentfilter }, 'assignment', 'core')
-            updateFilterModel(
-                handleFilterUpdate(filterGetAssignment, 'assignment', 'page')
-            )
-        }
-
-        if (type === 'tag') {
-            const filterGetTag = filterBuildModelMap({ ...currentfilter }, 'tag', 'core')
-            updateFilterModel(
-                handleFilterUpdate(filterGetTag, 'tag', 'modal')
-            )
-        }
+        onFilterTabs(buildFilterModelMap(type, filerKey, source, filterValue))
 
         setCurrentFilterData(() => ({
-            [type]: { ...currentfilter }
+            [type]: { ...filter }
         }))
     }
 
@@ -79,7 +57,7 @@ const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, loading }
                 <div className='options-sections'>
                     {
                         modelTabsMap[type]?.map((tab, index) => {
-                            const currentButton = Object.keys(tab.currentfilter)[0]
+                            const currentButton = Object.keys(tab.filter)[0]
                             const isNullFilter = !filterButtonActive && tab.label.includes('every')
 
                             return (
@@ -88,7 +66,7 @@ const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, loading }
                                     classBtn={`button-action plan-round max-width small model-tabs 
                                         ${currentButton === filterButtonActive ? 'active' : isNullFilter ? 'active' : ''}`}
                                     title={tab.label}
-                                    onClick={(e) => { handleFilterClick(tab.currentfilter) }}
+                                    onClick={(e) => { handleFilterClick(tab.filter) }}
                                 />
                             )
                         })

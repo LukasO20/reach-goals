@@ -10,11 +10,8 @@ const ModalDetails = () => {
 
     const isLoading = !!goalLoading || !!assignmentLoading
 
-    return (
-        <>
-            {isLoading ? <Loading mode='block' /> : <ModalDetailsSection />}
-        </>
-    )
+    return isLoading ? <Loading mode='block' /> : <ModalDetailsSection />
+
 }
 
 export default ModalDetails

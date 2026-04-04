@@ -39,7 +39,7 @@ export const ManageModelProvider = ({ children }) => {
                 ...prevModel,
                 selectedModel: {
                     ...prevModel.selectedModel,
-                    [type]: updatedSelectedModel 
+                    [type]: updatedSelectedModel
                 }
             }
         })
@@ -84,22 +84,26 @@ export const ManageModelProvider = ({ children }) => {
         })
     }, [])
 
-    const updateFilterModel = useCallback(({ filter = {}, model, scope }) => {
-        if (!model) return console.error('To update a filterModel is necessary a model.')
-        if (scope !== 'page' && scope !== 'modal') return console.error('To update a filterModel is necessary a scope value. Send "page" or "modal" scope.')
+    const setFilterModel = useCallback((filter, type) => {
+            if (!filter || !type) return
+            if (type) {
+                setModel((prevModel) => {
+                    const incomingData = filter[type]
+                    const currentData = prevModel.filter?.[type] || {}
 
-        setModel(prevModel => ({
-            ...prevModel,
-            filter: {
-                ...prevModel.filter,
-                [model]: {
-                    ...prevModel.filter[model],
-                    scope,
-                    [scope]: { ...filter }
-                },
+                    return {
+                        ...prevModel,
+                        filter: {
+                            ...prevModel.filter,
+                            [type]: {
+                                ...currentData,
+                                ...incomingData
+                            }
+                        }
+                    }
+                })
             }
-        }))
-    }, [])
+        }, [])
 
     const updateDataModel = useCallback(({ data, type, scope }) => {
         if (typeof type !== 'string' || type === '') return console.error('To update a dataModel is necessary a type')
@@ -144,12 +148,12 @@ export const ManageModelProvider = ({ children }) => {
         addToSelectedModel,
         removeFromSelectedModel,
         updateFormModel,
-        updateFilterModel,
+        setFilterModel,
         updateDataModel,
         resetManageModel
     }), [
         model, addToSelectedModel, removeFromSelectedModel,
-        updateFormModel, updateFilterModel, updateDataModel, resetManageModel
+        updateFormModel, setFilterModel, updateDataModel, resetManageModel
     ])
 
     console.log('MODEL READY TO MANAGE - ', model)

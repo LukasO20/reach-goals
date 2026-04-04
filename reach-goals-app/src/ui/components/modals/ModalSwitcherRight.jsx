@@ -1,7 +1,7 @@
 import { useVisibility } from '../../../provider/ui/VisibilityProvider'
 import { useSwitchLayout } from '../../../provider/ui/SwitchLayoutProvider'
 
-import ModalTag from './ModalTag/ModalTag'
+import { ModalTagWrapper } from './ModalTag/ModalTagWrapper'
 import ModalDetails from './ModalDetails/ModalDetails'
 
 import './ModalSwitcher.scss'
@@ -20,7 +20,7 @@ const ModalSwitcherRight = () => {
     return (
         isVisible && (
             <div className={`container-modal modal-right ${typeModalLayout || ''} ${showModalRight}`}>
-                {isModalTag && (<ModalTag />)}
+                {isModalTag && (<ModalTagWrapper />)}
                 {isModalDetails && (<ModalDetails />)}
             </div>
         )

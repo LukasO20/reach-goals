@@ -7,8 +7,8 @@ import * as commonService from '../../services/common.js'
 import { useManageModel } from './ManageModelProvider.jsx'
 import { useTitle } from '../../provider/ui/TitleProvider.jsx'
 
-import { filterServiceFnMap, updateDataModelMap, filerFetchModelMap } from '../../utils/mapping/mappingUtilsProvider.js'
-import { validFilter } from '../../utils/utilsProvider.js'
+import { updateDataModelMap, filerFetchModelMap } from '../../utils/mapping/mappingUtilsProvider.js'
+import { createQueryFn, validFilter } from '../../utils/utilsProvider.js'
 
 const GoalModelContext = createContext()
 
@@ -17,24 +17,22 @@ const GoalModelProviderMap = {
   filter: filerFetchModelMap
 }
 
-export const GoalModelProvider = ({ children, filter = GoalModelProviderMap.filter } = GoalModelProviderMap) => {
-  const filterFetchModelPage = filter.page
-  const filterFetchModelModal = filter.modal
-
-  const queryClient = useQueryClient()
-  const { updateDataModel } = useManageModel()
+export const GoalModelProvider = ({ children, filter } = GoalModelProviderMap) => {
+  const { model: { filter: filterModel }, updateDataModel, setFilterModel } = useManageModel()
   const { update } = useTitle()
 
-  const queryKeyPage = ['goals', 'page', filterFetchModelPage]
-  const queryKeyModal = ['goal', 'modal', filterFetchModelModal]
+  const queryClient = useQueryClient()
+  const filterKey = JSON.stringify(filter.goal)
 
-  const createQueryFn = (scopeFilter) => {
-    const valid = validFilter(scopeFilter)
-    if (!valid) return () => Promise.resolve([])
-    const [key, value] = valid
-    const fnName = filterServiceFnMap[key]
-    return () => goalService[fnName](value)
-  }
+  useEffect(() => {
+    if (filter.goal) setFilterModel(filter, 'goal')
+  }, [filterKey, setFilterModel])
+
+  const filterPage = filterModel.goal.page
+  const filterModal = filterModel.goal.modal
+
+  const queryKeyPage = ['goals', 'page', filterPage]
+  const queryKeyModal = ['goal', 'modal', filterModal]
 
   const {
     data: pageData,
@@ -42,8 +40,8 @@ export const GoalModelProvider = ({ children, filter = GoalModelProviderMap.filt
     isLoading: isPageLoading,
   } = useQuery({
     queryKey: queryKeyPage,
-    queryFn: createQueryFn(filterFetchModelPage),
-    enabled: validFilter(filterFetchModelPage, 'some'),
+    queryFn: createQueryFn(filterPage, goalService),
+    enabled: validFilter(filterPage, 'some'),
     staleTime: 1000 * 60 * 5 //5 minutes for new data
   })
 
@@ -53,14 +51,15 @@ export const GoalModelProvider = ({ children, filter = GoalModelProviderMap.filt
     isLoading: isModalLoading,
   } = useQuery({
     queryKey: queryKeyModal,
-    queryFn: createQueryFn(filterFetchModelModal),
-    enabled: validFilter(filterFetchModelModal, 'some'),
+    queryFn: createQueryFn(filterModal, goalService),
+    enabled: validFilter(filterModal, 'some'),
     staleTime: 1000 * 60 * 5 //5 minutes for new data
   })
 
   const saveMutation = useMutation({
     mutationFn: (model) => !!model.id ? goalService.updateGoal(model) : goalService.addGoal(model),
     onSuccess: () => {
+      console.log('HERE - ', queryKeyPage)
       queryClient.invalidateQueries({ queryKey: queryKeyPage })
       update({ toast: `Goal save with success` })
     }
@@ -123,13 +122,17 @@ export const GoalModelProvider = ({ children, filter = GoalModelProviderMap.filt
   })
 
   useEffect(() => {
-    const dataUpdateDataModel = updateDataModelMap({ data: pageData, type: 'goal', scope: 'core' })
-    updateDataModel(dataUpdateDataModel)
+    if (pageData) {
+      const dataUpdateDataModel = updateDataModelMap({ data: pageData, type: 'goal', scope: 'core' })
+      updateDataModel(dataUpdateDataModel)
+    }
   }, [pageData, updateDataModel])
 
   useEffect(() => {
-    const dataUpdateDataModel = updateDataModelMap({ data: modalData, type: 'goal', scope: 'support' })
-    updateDataModel(dataUpdateDataModel)
+    if (modalData) {
+      const dataUpdateDataModel = updateDataModelMap({ data: modalData, type: 'goal', scope: 'support' })
+      updateDataModel(dataUpdateDataModel)
+    }
   }, [modalData, updateDataModel])
 
   return (

@@ -9,7 +9,7 @@ import { useTagProvider } from '../../../../provider/model/TagModelProvider.jsx'
 import { useTitle } from '../../../../provider/ui/TitleProvider.jsx'
 
 import { visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
-import { updateFilterModelMap, resetManageModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
+import { resetManageModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
 import Form from '../../items/forms/Form.jsx'
 import Loading from '../../items/elements/Loading/Loading.jsx'
@@ -26,7 +26,7 @@ const ModalForm = () => {
     const { modal: { data: dataGoal, loading: loadingGoal }, save: saveGoal, saveSuccess: saveGoalSuccess, saving: savingGoal, resetSave: resetSaveGoal } = useGoalProvider()
     const { modal: { data: dataTag }, loading: loadingTag, save: saveTag, saveSuccess: saveTagSuccess, saving: savingTag, resetSave: resetSaveTag } = useTagProvider()
     const { visibleElements, toggleVisibility } = useVisibility()
-    const { model, setModel, updateFilterModel, resetManageModel } = useManageModel()
+    const { model, setModel, resetManageModel } = useManageModel()
     const { update } = useTitle()
     const [error, setError] = useState(null)
 
@@ -40,37 +40,6 @@ const ModalForm = () => {
             classItem === 'modal-model-list-tag')
 
     const isSaveSuccess = !!saveGoalSuccess || !!saveAssignmentSuccess || !!saveTagSuccess
-
-    const loadModel = useCallback((id) => {
-        if (!id) return
-
-        const keySomeID = `${typeVisibility}SomeID`
-        const filterGetModel = {
-            type: typeVisibility,
-            source: 'formModel',
-            [keySomeID]: id
-        }
-
-        const isValidParameters = !filterGetModel
-        if (isValidParameters) return
-
-        try {
-            const dataFilter = updateFilterModelMap({ filter: filterGetModel, model: typeVisibility, scope: 'modal' })
-
-            const refetchMap = {
-                goal: () => updateFilterModel(dataFilter),
-                assignment: () => updateFilterModel(dataFilter),
-                tag: () => updateFilterModel(dataFilter),
-            }
-
-            refetchMap[typeVisibility]()
-
-            id === 'all' && resetManageModel()
-        }
-        catch (error) {
-            setError('Ops, something wrong: ', error)
-        }
-    }, [resetManageModel, typeVisibility, updateFilterModel])
 
     const resetMutation = useCallback(() => {
         const resetSaveMap = {
@@ -152,10 +121,6 @@ const ModalForm = () => {
     }
 
     useEffect(() => {
-        if (typeof model.mainModelID === 'number') loadModel(model.mainModelID)
-    }, [model.mainModelID, loadModel])
-
-    useEffect(() => {
         if (isSaveSuccess) {
             const visibility = typeVisibility === 'tag'
                 ? visibilityMap('near-modalForm', { remove: true })
@@ -169,17 +134,13 @@ const ModalForm = () => {
     }, [isSaveSuccess, toggleVisibility, typeVisibility, resetManageModel, resetMutation])
 
     useEffect(() => {
-        const currentScope = model.filter[typeVisibility]?.scope
-        if (!currentScope) return
-
-        const currentFilter = model.filter[typeVisibility][currentScope]
-        if (typeof model.mainModelID === 'number' && currentFilter.source === 'formModel') {
+        if (typeof model.mainModelID === 'number' && !!model.typeModel) {
             const typeSelected =
-                typeVisibility === 'goal' ?
+                model.typeModel === 'goal' ?
                     dataGoal :
-                    typeVisibility === 'assignment' ?
+                    model.typeModel === 'assignment' ?
                         dataAssignment :
-                        typeVisibility === 'tag' ?
+                        model.typeModel === 'tag' ?
                             dataTag : null
 
             const selectedFormModel = Array.isArray(typeSelected) ? typeSelected[0] : typeSelected
@@ -193,9 +154,8 @@ const ModalForm = () => {
     }, [dataGoal,
         dataAssignment,
         dataTag,
-        model.filter,
+        model.typeModel,
         model.mainModelID,
-        typeVisibility,
         setModel])
 
     return (

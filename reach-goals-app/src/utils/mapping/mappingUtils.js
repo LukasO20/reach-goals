@@ -74,51 +74,51 @@ export const titleMap = {
 export const modelTabsMap = {
     goal: [
         {
-            currentfilter: { notAssignmentRelation: 'all' },
+            filter: { notAssignmentRelation: 'all' },
             label: 'without assignments',
         },
         {
-            currentfilter: { goalAssignmentRelation: 'all' },
+            filter: { goalAssignmentRelation: 'all' },
             label: 'with assignments',
         },
         {
-            currentfilter: { goalTagRelation: 'all' },
+            filter: { goalTagRelation: 'all' },
             label: 'with tags',
         },
         {
-            currentfilter: { goalSomeID: 'all' },
+            filter: { goalSomeID: 'all' },
             label: 'every goal',
         },
     ],
     assignment: [
         {
-            currentfilter: { notGoalRelation: 'all' },
+            filter: { notGoalRelation: 'all' },
             label: 'without goals',
         },
         {
-            currentfilter: { assignmentGoalRelation: 'all' },
+            filter: { assignmentGoalRelation: 'all' },
             label: 'with goals',
         },
         {
-            currentfilter: { assignmentTagRelation: 'all' },
+            filter: { assignmentTagRelation: 'all' },
             label: 'with tags',
         },
         {
-            currentfilter: { assignmentSomeID: 'all' },
+            filter: { assignmentSomeID: 'all' },
             label: 'every assignment',
         }
     ],
     tag: [
         {
-            currentfilter: { tagRelationGoal: 'all' },
+            filter: { tagRelationGoal: 'all' },
             label: 'with goals',
         },
         {
-            currentfilter: { tagRelationAssignment: 'all' },
+            filter: { tagRelationAssignment: 'all' },
             label: 'with assignments',
         },
         {
-            currentfilter: { tagSomeID: 'all' },
+            filter: { tagSomeID: 'all' },
             label: 'every tag',
         }
     ]

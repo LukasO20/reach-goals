@@ -17,36 +17,20 @@ import './ModalModelList.scss'
 export const ModalModelListMap = {
     title: '',
     type: '',
-    typeFilterKey: ''
 }
 
 /**
  * @param {Object} ModalModelListMap
  * @param {string} ModalModelListMap.title
  * @param {string} ModalModelListMap.type
- * @param {'tagSomeID'|'tagNotRelationGoal'|'tagNotRelationAssignment'|'notGoalRelation'|'goalSomeID'} ModalModelListMap.typeFilterKey
  */
 
-const ModalModelList = ({ title, type, typeFilterKey } = ModalModelListMap) => {
-    const { model, updateFilterModel } = useManageModel()
-    const { modal: { data: dataGoal, loading: loadingGoal } } = useGoalProvider()
-    const { modal: { data: dataAssignment, loading: loadingAssigment } } = useAssignmentProvider()
-    const { modal: { data: dataTag, loading: loadingTag } } = useTagProvider()
+const ModalModelList = ({ title, type } = ModalModelListMap) => {
+    const { modal: { data: dataGoal = [], loading: loadingGoal } } = useGoalProvider()
+    const { modal: { data: dataAssignment = [], loading: loadingAssigment } } = useAssignmentProvider()
+    const { modal: { data: dataTag = [], loading: loadingTag } } = useTagProvider()
 
     const currentData = type === 'goal' ? dataGoal : type === 'assignment' ? dataAssignment : dataTag
-
-    useEffect(() => {
-        const isModalModelListTag = typeof model.mainModelID === 'number' && (typeFilterKey === 'tagNotRelationGoal' || typeFilterKey === 'tagNotRelationAssignment')
-        const typeFilterKeyValue = isModalModelListTag ? model.mainModelID : 'all'
-
-        const filterGetModel = filterBuildModelMap(
-            { [typeFilterKey]: typeFilterKeyValue, type, source: 'support' },
-            type,
-            'support'
-        )
-        const dataFilter = updateFilterModelMap({ filter: filterGetModel, model: type, scope: 'modal' })
-        updateFilterModel(dataFilter)
-    }, [type, typeFilterKey, updateFilterModel, model.mainModelID])
 
     const displayModesProps = {
         type: ['card-mini'],

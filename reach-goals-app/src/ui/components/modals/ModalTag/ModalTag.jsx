@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useVisibility } from '../../../../provider/ui/VisibilityProvider.jsx'
@@ -7,8 +6,8 @@ import { useSwitchLayout } from '../../../../provider/ui/SwitchLayoutProvider.js
 import { useTagProvider } from '../../../../provider/model/TagModelProvider.jsx'
 import { useCheckbox } from '../../../../provider/ui/CheckboxProvider.jsx'
 
-import { visibilityMap, switchLayoutMap, filterBuildModelMap, buildCheckboxMap } from '../../../../utils/mapping/mappingUtils.js'
-import { updateFilterModelMap, resetManageModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
+import { visibilityMap, switchLayoutMap, buildCheckboxMap } from '../../../../utils/mapping/mappingUtils.js'
+import { resetManageModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
 import ModalForm from '../ModalForm/ModalForm.jsx'
 import ButtonAction from '../../items/elements/ButtonAction/ButtonAction.jsx'
@@ -21,9 +20,18 @@ import { cx } from '../../../../utils/utils.js'
 
 import './ModalTag.scss'
 
-const ModalTag = () => {
+export const ModalTagMap = {
+    onFilterTabs: null
+} 
+
+/**
+ * @param {Object} ModalTagMap
+ * @param {function} ModalTagMap.onFilterTabs
+ */
+
+const ModalTag = ({ onFilterTabs } = ModalTagMap) => {
     const { visibleElements } = useVisibility()
-    const { model, setModel, updateFilterModel, resetManageModel } = useManageModel()
+    const { model, setModel, resetManageModel } = useManageModel()
     const { modal: { loading } } = useTagProvider()
     const { layout } = useSwitchLayout()
     const { valuesCheckbox } = useCheckbox()
@@ -40,15 +48,6 @@ const ModalTag = () => {
         const resetKeys = resetManageModelMap(['formModel'])
         resetManageModel(resetKeys)
     }
-
-    useEffect(() => {
-        const filter = filterBuildModelMap({
-            tagSomeID: 'all', type: 'tag', source: 'core'
-        }, 'tag', 'core')
-        const dataFilter = updateFilterModelMap({ filter, model: 'tag', scope: 'modal' })
-
-        updateFilterModel(dataFilter)
-    }, [updateFilterModel])
 
     const content = <TagRelationCard checkboxState={valuesCheckbox} />
     
@@ -94,7 +93,7 @@ const ModalTag = () => {
             </div>
             <div className='body'>
                 {isModalForm.every(e => visibleElements.includes(e)) && <ModalForm type='tag' />}
-                <ModelTabs type='tag' children={content} headLeftChildren={headLeftContent} loading={isLoadingTag} />
+                <ModelTabs type='tag' children={content} headLeftChildren={headLeftContent} loading={isLoadingTag} onFilterTabs={onFilterTabs} />
                 {hasSelectedModel && (<PopupModelOptions type='tag' />)}
             </div>
         </>

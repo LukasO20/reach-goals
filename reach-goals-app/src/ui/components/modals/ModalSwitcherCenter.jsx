@@ -1,7 +1,7 @@
 import { useVisibility } from '../../../provider/ui/VisibilityProvider.jsx'
 import { useSwitchLayout } from '../../../provider/ui/SwitchLayoutProvider.jsx'
 
-import ModalForm from './ModalForm/ModalForm.jsx'
+import { ModalFormWrapper } from './ModalForm/ModalFormWrapper.jsx'
 import ModalConfig from './ModalConfig/ModalConfig.jsx'
 
 import './ModalSwitcher.scss'
@@ -21,7 +21,7 @@ const ModalSwitcherCenter = () => {
     return (
         isVisible && (
             <div className={`container-modal modal-center ${typeModalLayout} ${typeVisibility} ${showModalCenter}`}>
-                {isModalForm && (<ModalForm />)}
+                {isModalForm && (<ModalFormWrapper />)}
                 {isModalConfig && (<ModalConfig />)}
             </div>
         )

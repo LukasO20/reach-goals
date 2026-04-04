@@ -14,3 +14,16 @@ export const validFilter = (filter, type = 'find') => {
             filterServiceFnMap[key]
     )
 }
+
+/**
+ * @param {object} scopeFilter 
+ * @param {object} service 
+ */
+
+export const createQueryFn = (scopeFilter, service) => {
+    const valid = validFilter(scopeFilter)
+    if (!valid) return () => Promise.resolve([])
+    const [key, value] = valid
+    const fnName = filterServiceFnMap[key]
+    return () => service[fnName](value)
+  }

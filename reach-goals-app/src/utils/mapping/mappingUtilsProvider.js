@@ -1,3 +1,18 @@
+export const filerFetchModelMap = {
+    goal: {
+        page: null,
+        modal: null
+    },
+    assignment: {
+        page: null,
+        modal: null
+    },
+    tag: {
+        page: null,
+        modal: null
+    }
+}
+
 export const manageModelMap = {
     typeModel: '',
     mainModelID: null,
@@ -20,23 +35,7 @@ export const manageModelMap = {
             support: []
         },
     },
-    filter: {
-        goal: {
-            scope: 'page',
-            page: {},
-            modal: {}
-        },
-        assignment: {
-            scope: 'page',
-            page: {},
-            modal: {}
-        },
-        tag: {
-            scope: 'page',
-            page: {},
-            modal: {}
-        }
-    },
+    filter: filerFetchModelMap,
     formModel: {}
 }
 
@@ -90,21 +89,6 @@ export const checkboxMap = {
     checkboxID: null,
     checkboxIDMain: null,
     checkboxRegistry: []
-}
-
-export const filerFetchModelMap = {
-    goal: {
-        page: {},
-        modal: {}
-    },
-    assignment: {
-        page: {},
-        modal: {}
-    },
-    tag: {
-        page: {},
-        modal: {}
-    }
 }
 
 /** 

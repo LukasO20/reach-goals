@@ -15,7 +15,16 @@ import ModelSwitcher from '../../items/models/ModelSwitcher.jsx'
 
 import './Objectives.scss'
 
-const Objectives = () => {
+export const ObjectivesMap = {
+    onFilterTabs: null
+} 
+
+/**
+ * @param {Object} ObjectivesMap
+ * @param {function} ObjectivesMap.onFilterTabs
+ */
+
+const Objectives = ({ onFilterTabs } = ObjectivesMap) => {
     const { update } = useTitle()
     const { layout, updateSwitchLayout } = useSwitchLayout()
     const { page: { data: dataGoal = [], loading: loadingGoal } } = useGoalProvider()
@@ -62,7 +71,7 @@ const Objectives = () => {
         content = <ModelSwitcher type={typeLayout} propsReference={modelProps} />
     }
 
-    return <ModelTabs type={typeLayout} children={content} loading={isLoading} classModelTabs='objectives' />
+    return <ModelTabs type={typeLayout} children={content} loading={isLoading} classModelTabs='objectives' onFilterTabs={onFilterTabs} />
 }
 
 export default Objectives

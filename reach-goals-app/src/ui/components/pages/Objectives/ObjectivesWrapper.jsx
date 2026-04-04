@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { ModelQueryClientProvider } from '../../../../provider/model/ModelQueryClientProvider'
 
 import { buildFilterModelMap } from '../../../../utils/mapping/mappingUtilsProvider'
@@ -5,14 +7,16 @@ import { buildFilterModelMap } from '../../../../utils/mapping/mappingUtilsProvi
 import Objectives from './Objectives'
 
 export const ObjectivesWrapper = () => {
-    const dataFilter = {
+    const [filterTabs, setFilterTabs] = useState(null)
+
+    const dataFilter = filterTabs ?? {
         ...buildFilterModelMap('goal', 'goalSomeID', 'page', 'all'),
         ...buildFilterModelMap('assignment', 'assignmentSomeID', 'page', 'all')
     }
-        
+
     return (
         <ModelQueryClientProvider filter={dataFilter}>
-            <Objectives />
+            <Objectives onFilterTabs={setFilterTabs} />
         </ModelQueryClientProvider>
     )
 }

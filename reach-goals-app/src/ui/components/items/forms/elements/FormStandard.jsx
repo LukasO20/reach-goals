@@ -1,4 +1,3 @@
-import ModalModelList from '../../../modals/ModalModelList/ModalModelList.jsx'
 import ButtonAction from '../../elements/ButtonAction/ButtonAction.jsx'
 import ButtonDropdown from '../../elements/ButtonDropdown/ButtonDropdown.jsx'
 import ModelSwitcher from '../../models/ModelSwitcher.jsx'
@@ -11,6 +10,8 @@ import { useManageModel } from '../../../../../provider/model/ManageModelProvide
 import { useVisibility } from '../../../../../provider/ui/VisibilityProvider.jsx'
 
 import { cx } from '../../../../../utils/utils.js'
+
+import { ModalModelListWrapper } from '../../../modals/ModalModelList/ModalModelListWrapper.jsx'
 
 import { visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
@@ -195,7 +196,7 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState } 
             </div>
             {
                 !!modalModelShowed &&
-                <ModalModelList title={titlesModalModelList[modalModelListType]}
+                <ModalModelListWrapper title={titlesModalModelList[modalModelListType]}
                     type={modalModelListType} typeFilterKey={filtersKeys[modalModelListType]} />
             }
         </div>
