@@ -18,18 +18,18 @@ const providers = [
     [SwitchLayoutProvider],
     [CheckboxProvider],
     [UtilityProvider]
-];
+]
 
 const Compose = ({ providers, children }) => {
     return providers.reduceRight((acc, provider) => {
         if (Array.isArray(provider)) {
-            const [Provider, props] = provider;
-            return <Provider {...props}>{acc}</Provider>;
+            const [Provider, props] = provider
+            return <Provider {...props}>{acc}</Provider>
         }
-        const Provider = provider;
-        return <Provider>{acc}</Provider>;
-    }, children);
-};
+        const Provider = provider
+        return <Provider>{acc}</Provider>
+    }, children)
+}
 
 const ProviderApp = ({ children }) => {
     return (
