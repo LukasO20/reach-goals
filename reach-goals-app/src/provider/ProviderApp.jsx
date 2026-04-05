@@ -4,7 +4,6 @@ import { VisibilityProvider } from './ui/VisibilityProvider.jsx'
 import { CheckboxProvider } from './ui/CheckboxProvider.jsx'
 import { ManageModelProvider } from './model/ManageModelProvider.jsx'
 import { SwitchLayoutProvider } from './ui/SwitchLayoutProvider.jsx'
-import { ModelQueryClientProvider } from './model/ModelQueryClientProvider.jsx'
 import { SearchBarProvider } from './ui/SearchBarProvider.jsx'
 import { UtilityProvider } from './model/UtilityProvider.jsx'
 
@@ -14,12 +13,11 @@ const providers = [
     [QueryClientProvider, { client: queryClient }],
     [ManageModelProvider],
     [TitleProvider],
-    //[ModelQueryClientProvider],
     [VisibilityProvider],
-    //[SearchBarProvider],
+    [SearchBarProvider],
     [SwitchLayoutProvider],
     [CheckboxProvider],
-    //[UtilityProvider]
+    [UtilityProvider]
 ];
 
 const Compose = ({ providers, children }) => {

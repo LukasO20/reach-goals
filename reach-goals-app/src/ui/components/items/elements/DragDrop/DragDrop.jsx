@@ -6,10 +6,13 @@ export const DragDropMap = {
 }
 
 /**
+ * Certifies to remove React.StrictMode component during development for test this component, since the library is not fully compatible with it yet.
  * @param {Object} DragDropMap
  * @param {Function} DragDropMap.onDragEnd
  * @param {any} DragDropMap.children
  */
+
+
 
 const DragDrop = ({ onDragEnd, children } = DragDropMap) => {
   const handleDragEnd = (result) => {
