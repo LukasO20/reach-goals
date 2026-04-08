@@ -1,9 +1,6 @@
-
-
-.button-dropdown {
+.button-dropdown-container {
     position: relative;
     user-select: none;
-    width: 8rem;
     z-index: 1;
     transition: 0.3s ease-out;
 
@@ -34,11 +31,12 @@
 
     .dropdown-menu {
         position: absolute;
-        display: none;
-        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
         top: 2.95rem;
-        width: 100%;
-        ;
+        min-width: 10rem;
         background-color: $color-complementary-p;
         box-shadow: $box-shadow-st;
         padding: 0.5em;
@@ -56,80 +54,46 @@
             left: 0;
         }
 
-        .section-options {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-
-            >span {
-                color: $color-complementary-s;
-                text-align: center;
-                font-weight: 600;
-                cursor: initial;
-            }
-
-            .button-action {
-                width: 8rem;
-                justify-content: space-between;
-            }
-        }
-    }
-
-    &.circle {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 50%;
-        height: 2.4rem;
-        width: 2.4rem;
-        background-color: $color-complementary-p-50;
-        color: $color-complementary-s;
-
-        &.small {
-            height: 1.8rem;
-            width: 1.8rem;
-
-            .icon-st {
-                height: 1rem;
-            }
+        >span {
+            color: $color-complementary-s;
+            text-align: center;
+            font-weight: 600;
+            cursor: initial;
         }
 
-        &.close {
-            height: 1.8rem;
-            width: 1.8rem;
+        .button-action {
+            width: 8rem;
+            justify-content: space-between;
         }
-    }
-
-    &.plan {
-        display: flex;
-        height: 2.4rem;
-        background-color: $color-complementary-p-50;
-        transition: .3s linear;
-        border-radius: 0.5rem;
-    }
-
-    &.plan-round {
-        border-radius: 2rem;
-        padding: 0rem 1rem;
-        justify-content: center;
-        gap: 0.5rem;
-    }
-
-    &.max-width {
-        width: max-content;
     }
 
     &.create {
-        background-color: $color-accent-p-15;
 
-        >span,
-        .icon-st {
-            color: $color-accent-p;
+        .button-action {
+            background-color: $color-accent-p-15;
+
+            >span,
+            .icon-st {
+                color: $color-accent-p;
+            }
+
+            &:hover,
+            &.active {
+                background-color: $color-accent-p;
+
+                >span,
+                .icon-st {
+                    color: $color-white;
+                }
+            }
+
+            &:active {
+                background-color: $color-primary-50;
+                transition: 0.1s ease-in-out;
+            }
         }
 
         .dropdown-menu {
-            width: 11rem;
 
             .button-action {
                 background-color: $color-accent-p-15;
@@ -151,16 +115,6 @@
                     transition: .1s linear;
                 }
             }
-        }
-
-        &:hover,
-        &.active {
-            background-color: $color-accent-p;
-        }
-
-        &:active {
-            background-color: $color-primary-50;
-            transition: 0.1s ease-in-out;
         }
     }
 
@@ -206,7 +160,10 @@
     /* Double Application */
     &:hover,
     &.active {
-        background-color: $color-complementary-s;
+
+        .button-action {
+            background-color: $color-complementary-s;
+        }
 
         >.dropdown-title,
         .icon-st {
@@ -216,7 +173,10 @@
 
     /* Last application */
     &:active {
-        background-color: $color-complementary-s-30;
-        transition: 0.1s ease-in-out;
+
+        .button-action {
+            background-color: $color-complementary-s-30;
+            transition: 0.1s ease-in-out;
+        }
     }
 }

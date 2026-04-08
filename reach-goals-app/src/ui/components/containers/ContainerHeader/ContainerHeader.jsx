@@ -57,7 +57,7 @@ const ContainerH = () => {
                 </div>
                 <div className='item-nav'>
                     <ButtonDropdown visibility={visibilityMap('btn-themes')} icon='themes'
-                        classBtn={buttonDropdownClass} />
+                        classBtn={buttonDropdownClass} classBtnAction='circle' />
                 </div>
             </div>
         </div>

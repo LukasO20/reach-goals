@@ -52,6 +52,8 @@ export const VisibilityProvider = ({ children }) => {
 
     const value = useMemo(() => ({ toggleVisibility, visibleElements }), [toggleVisibility, visibleElements])
 
+    //console.log('VisibilityProvider rendered with visibleElements:', visibleElements)
+
     return (
         <VisibilityContext.Provider value={value}>
             {children}

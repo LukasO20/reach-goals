@@ -15,6 +15,7 @@ import { ModalModelListWrapper } from '../../../modals/ModalModelList/ModalModel
 
 import { visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
+import { updateFormModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
 import '../Form'
 
@@ -51,21 +52,20 @@ export const FormStandardMap = {
 
 const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState } = FormStandardMap) => {
     const { visibleElements, toggleVisibility } = useVisibility()
-    const { model, setModel } = useManageModel()
+    const { model, setModel, updateFormModel } = useManageModel()
 
     const modelCopyRegion = type === 'goal' ? 'assignment' : ''
     const icon = iconMap[type] || 'fa-solid fa-triangle-exclamation'
     const isEmptyForm = typeof model.mainModelID === 'number'
     const display = { type: ['card-mini'], actions: ['remove'] }
 
-    const handleClickForm = () => {
-        const isButtonDropdown = !!visibleElements.includes(`${type}-status`)
-        isButtonDropdown && toggleVisibility(visibilityMap(`${type}-status`, { remove: true }))
-    }
+    const handleClickForm = () => toggleVisibility(visibilityMap('dropdown-status', { remove: true }))
 
     const renderDropdownStatusTitle = (status) => {
-        if (!!status) return <>{iconMap[status] || iconMap['check']}{status}</>
-        return 'choose an option'
+        return {
+            icon: status === 'conclude' ? 'check' : status,
+            status: status ?? 'choose an option'
+        }
     }
 
     const renderModelEnviroment = (goalForm = false) => {
@@ -79,6 +79,31 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState } 
         if (!!isEmptyForm && Object.keys(modelForm).length > 0) return <ModelSwitcher type='tag' propsReference={modelSwitcherBy} />
         else return <ModelCopy type={model.typeModel} region='tag' propsReference={modelCopyBy} />
     }
+
+    const dataUpdateFormStatusModel = (value = null) => {
+        return updateFormModelMap({ keyObject: 'status', value: value, action: 'add' })
+    }
+
+    const dropdownOptionsMap = [
+        {
+            title: 'in progress',
+            icon: 'progress',
+            classBtn: modelForm?.status === 'progress' ? 'active' : '',
+            onClick: () => updateFormModel(dataUpdateFormStatusModel('progress'))
+        },
+        {
+            title: 'conclude',
+            icon: 'check',
+            classBtn: modelForm?.status === 'conclude' ? 'active' : '',
+            onClick: () => updateFormModel(dataUpdateFormStatusModel('conclude'))
+        },
+        {
+            title: 'cancel',
+            icon: 'cancel',
+            classBtn: modelForm?.status === 'cancel' ? 'active' : '',
+            onClick: () => updateFormModel(dataUpdateFormStatusModel('cancel'))
+        },
+    ]
 
     const modalModelShowed = visibleElements.find(classItem => classItem?.includes('modal-model-list')) ?? ''
     const modalModelListType = modalModelShowed.split('-')[3]
@@ -95,8 +120,6 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState } 
     const modelSwitcherBy = { source: modelForm, display }
     const modelCopyBy = { display }
 
-    const isGoalForm = type === 'goal'
-
     const buttonAssignmentClass = cx(
         `op-form-assignment
         plan
@@ -112,6 +135,8 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState } 
         ${type === 'goal' && 'active'}
         `
     )
+
+    const isGoalForm = type === 'goal'
 
     return (
         <div className='container-form-modal center-content' onClick={handleClickForm}>
@@ -170,10 +195,16 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState } 
                         }
                         <div className='field-forms status'>
                             <label>{iconMap['progress']}<span>status</span></label>
-                            <ButtonDropdown visibility={visibilityMap(`${type}-status`, { add: true })}
-                                classBtn={`button-dropdown-form plan left status ${visibleElements.includes(`${type}-status`) ? 'active' : ''}`}
-                                title={renderDropdownStatusTitle(modelForm.status)} opening='modal-form' arrow={true}
-                                dropdownValue={modelForm?.status || undefined} changeDropdownValue={functionFormMap.mapHandleChange} />
+                            <ButtonDropdown 
+                                visibility='dropdown-status'
+                                visibilityOperator={{ add: 'dropdown-status' }}
+                                classBtn='status form'
+                                classBtnAction='plan'
+                                icon={renderDropdownStatusTitle(modelForm.status)?.icon}
+                                title={renderDropdownStatusTitle(modelForm.status)?.status}
+                                options={dropdownOptionsMap}
+                                arrow={true}
+                            />
                         </div>
                     </div>
                     {functionFormMap.mapModelRelationAddMap('tag', renderModelTagEnviroment())}

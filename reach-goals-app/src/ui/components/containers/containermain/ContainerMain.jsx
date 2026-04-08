@@ -20,8 +20,8 @@ import './ContainerMain.scss'
 
 const ContainerM = () => {
     const { resetManageModel } = useManageModel()
-    const { visibleElements, toggleVisibility } = useVisibility()
-    const { layout } = useSwitchLayout()
+    const { toggleVisibility } = useVisibility()
+    const { layout, updateSwitchLayout } = useSwitchLayout()
     const { valuesCheckbox, resetCheckbox } = useCheckbox()
     const navigate = useNavigate()
 
@@ -34,6 +34,30 @@ const ContainerM = () => {
     const handleButtonActionClick = () => {
         resetCheckbox({ keys: ['page'] })
     }
+
+    const formRender = switchLayoutMap({
+        area: 'modal',
+        state: { modalName: 'modal-center', layoutName: 'form' }
+    })
+
+    const dropdownOptionsMap = [
+        {
+            title: 'goal',
+            icon: 'plus',
+            onClick: () => { 
+                toggleVisibility(visibilityMap(['modal-center', 'goal'])); 
+                updateSwitchLayout(formRender)
+            }
+        },
+        {
+            title: 'assignment',
+            icon: 'plus',
+            onClick: () => { 
+                toggleVisibility(visibilityMap(['modal-center', 'assignment'])); 
+                updateSwitchLayout(formRender) 
+            }
+        }
+    ]
 
     const isSwitchLayoutAssignment = layout.page.layoutName === 'assignment'
     const isSwitchLayoutGoal = layout.page.layoutName === 'goal'
@@ -54,16 +78,6 @@ const ContainerM = () => {
                         <div className='line-p'>
                             <div className='title-m'>
                                 <h2>Your control panel</h2>
-                            </div>
-                            <div className='options-m'>
-                                <div className='visibility-m'>
-                                    <ButtonDropdown visibility={visibilityMap('btn-visibility')} classBtn={`visibility plan ${visibleElements.includes('btn-visibility') && 'active'}`}
-                                        title='visibility' arrow={true} />
-                                </div>
-                                <div className='more-m'>
-                                    <ButtonDropdown visibility={visibilityMap('btn-more')} classBtn={`more plan max-width ${visibleElements.includes('btn-more') && 'active'}`}
-                                        icon='ellipsisv' />
-                                </div>
                             </div>
                         </div>
                     )
@@ -112,10 +126,12 @@ const ContainerM = () => {
                         }
                     </div>
                     <div className='action'>
-                        <ButtonDropdown visibility={visibilityMap('btn-action-order')} classBtn={`order plan ${visibleElements.includes('btn-action-order') && 'active'}`}
+                        <ButtonDropdown visibility='dropdown-visibility' classBtn='visibility'
+                            title='visibility' arrow={true} />
+                        <ButtonDropdown visibility='dropdown-action-order' classBtn='order'
                             icon='arrowaltv' title='order' arrow={true} />
-                        <ButtonDropdown visibility={visibilityMap('btn-action-create')} classBtn={`create plan ${visibleElements.includes('btn-action-create') && 'active'}`}
-                            icon='plus' title='create' reference='modal-center' arrow={true} />
+                        <ButtonDropdown visibility='dropdown-action-create' classBtn='create'
+                            icon='plus' title='create' options={dropdownOptionsMap} arrow={true} />
                     </div>
                 </div>
             </div>
