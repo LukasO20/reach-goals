@@ -1,5 +1,4 @@
 import ButtonAction from '../ButtonAction/ButtonAction'
-import ButtonRadio from '../ButtonRadio/ButtonRadio'
 
 /**
  * @typedef {object} DropdownOption
@@ -12,24 +11,22 @@ import ButtonRadio from '../ButtonRadio/ButtonRadio'
 /**
  * @param {object} props
  * @param {DropdownOption[]} props.options
- * @param {'button-action' | 'button-radio'} props.uiMode
+ * @param {'button-action'} props.uiMode
  */
 
-const Dropdown = ({ options = [], uiMode = 'button-action' }) => {
+const Dropdown = ({ options = [] }) => {
     return (
         <div className='dropdown-menu'>
             {
                 options.map((option, index) => {
                     return (
                         <div className='item-option' key={`op-${index}`}>
-                            {uiMode === 'button-action' ?
-                                (<ButtonAction
-                                    classBtn={`plan-round max-width dropdown-option ${option.classBtn}`}
-                                    title={option.title}
-                                    icon={option.icon}
-                                    onClick={option.onClick}
-                                />) :
-                                (<ButtonRadio />)}
+                            <ButtonAction
+                                classBtn={`plan-round max-width dropdown-option ${option.classBtn}`}
+                                title={option.title}
+                                icon={option.icon}
+                                onClick={option.onClick}
+                            />
                         </div>
                     )
                 })

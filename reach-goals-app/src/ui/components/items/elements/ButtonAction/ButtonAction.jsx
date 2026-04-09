@@ -50,7 +50,6 @@ const ButtonAction = ({
     onClick, 
     pendingState, 
     disable, 
-    datavalue, 
     icon, 
     title, 
     classBtn 
@@ -80,7 +79,6 @@ const ButtonAction = ({
         if (typeof onClick === 'function') {
             // execute external function from 'onClick' external attribute, and share properties according neccessity (can be expand)
             const externalPropsShare = {
-                datavalue,
                 event: e
             }
             onClick(externalPropsShare)
@@ -97,7 +95,7 @@ const ButtonAction = ({
     )
 
     return (
-        <span className={buttonActionClass} datavalue={datavalue}
+        <span className={buttonActionClass}
             onClick={handleClick} onKeyDown={(e) => e.key === 'Enter' ? handleClick(e) : ''} role='button' tabIndex='0'>
             {pendingState ? <Loading mode='inline' /> : icon && iconMap[icon]}
             <span className='button-title'>{title}</span>

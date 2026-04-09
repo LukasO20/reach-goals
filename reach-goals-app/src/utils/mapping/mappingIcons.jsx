@@ -25,6 +25,7 @@ export const iconMap = {
     ellipsisv: <Unicons.UilEllipsisV className='icon-st' />,
     arrowaltv: <Unicons.UilArrowsVAlt className='icon-st' />,
     arrowdown: <Unicons.UilAngleDown className='icon-st' />,
+    letter: <Unicons.UilLetterEnglishA className='icon-st' />,
     plus: <Unicons.UilPlus className='icon-st' />,
     close: <Unicons.UilTimes className='icon-st' />,
     check: <Unicons.UilCheck className='icon-st' />,
@@ -33,5 +34,9 @@ export const iconMap = {
     square: <Unicons.UilSquareShape className='icon-st' />,
     progress: <Unicons.UilSpinnerAlt className='icon-st' />,
     icons: <Unicons.UilIcons className='icon-st' />,
+    card: <Unicons.UilLayerGroup className='icon-st' />,
+    cardoff: <Unicons.UilLayerGroupSlash className='icon-st' />,
+    cardmini: <Unicons.UilLayers className='icon-st' />,
+    cardminioff: <Unicons.UilLayersSlash className='icon-st' />,
     undefined: <Unicons.UilExclamationOctagon className='icon-st' />
 }

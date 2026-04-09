@@ -89,19 +89,28 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState } 
             title: 'in progress',
             icon: 'progress',
             classBtn: modelForm?.status === 'progress' ? 'active' : '',
-            onClick: () => updateFormModel(dataUpdateFormStatusModel('progress'))
+            onClick: () => { 
+                updateFormModel(dataUpdateFormStatusModel('progress')); 
+                handleClickForm() 
+            }
         },
         {
             title: 'conclude',
             icon: 'check',
             classBtn: modelForm?.status === 'conclude' ? 'active' : '',
-            onClick: () => updateFormModel(dataUpdateFormStatusModel('conclude'))
+            onClick: () => { 
+                updateFormModel(dataUpdateFormStatusModel('conclude')); 
+                handleClickForm() 
+            }
         },
         {
             title: 'cancel',
             icon: 'cancel',
             classBtn: modelForm?.status === 'cancel' ? 'active' : '',
-            onClick: () => updateFormModel(dataUpdateFormStatusModel('cancel'))
+            onClick: () => { 
+                updateFormModel(dataUpdateFormStatusModel('cancel')); 
+                handleClickForm() 
+            }
         },
     ]
 

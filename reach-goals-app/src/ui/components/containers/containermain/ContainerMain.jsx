@@ -28,7 +28,7 @@ const ContainerM = () => {
     const handleClickContainer = (e) => {
         toggleVisibility(visibilityMap(null), e)
         resetManageModel()
-        navigate(`/${layout.page.pageName}`) // return standard route during handle
+        navigate(`/${layout.page.pageName}`)
     }
 
     const handleButtonActionClick = () => {
@@ -40,23 +40,57 @@ const ContainerM = () => {
         state: { modalName: 'modal-center', layoutName: 'form' }
     })
 
-    const dropdownOptionsMap = [
+    const createDropdownOptionsMap = [
         {
             title: 'goal',
             icon: 'plus',
-            onClick: () => { 
-                toggleVisibility(visibilityMap(['modal-center', 'goal'])); 
+            onClick: () => {
+                toggleVisibility(visibilityMap(['modal-center', 'goal']));
                 updateSwitchLayout(formRender)
             }
         },
         {
             title: 'assignment',
             icon: 'plus',
-            onClick: () => { 
-                toggleVisibility(visibilityMap(['modal-center', 'assignment'])); 
-                updateSwitchLayout(formRender) 
+            onClick: () => {
+                toggleVisibility(visibilityMap(['modal-center', 'assignment']));
+                updateSwitchLayout(formRender)
             }
         }
+    ]
+
+    const orderDropdownOptionsMap = [
+        {
+            title: 'by name A-Z',
+            icon: 'letter'
+        },
+        {
+            title: 'by end date',
+            icon: 'schedule'
+        }
+    ]
+
+    const visibilityDropdownOptionsMap = [
+        {
+            title: 'switch card-mini',
+            icon: 'cardmini'
+        },
+        {
+            title: 'hide tags',
+            icon: 'tag'
+        },
+        {
+            title: 'hide progress status',
+            icon: 'progress'
+        },
+        {
+            title: 'hide conclude status',
+            icon: 'check'
+        },
+        {
+            title: 'hide canceled status',
+            icon: 'cancel'
+        },
     ]
 
     const isSwitchLayoutAssignment = layout.page.layoutName === 'assignment'
@@ -126,12 +160,18 @@ const ContainerM = () => {
                         }
                     </div>
                     <div className='action'>
-                        <ButtonDropdown visibility='dropdown-visibility' classBtn='visibility'
-                            title='visibility' arrow={true} />
-                        <ButtonDropdown visibility='dropdown-action-order' classBtn='order'
-                            icon='arrowaltv' title='order' arrow={true} />
+                        {
+                            !isPageCalendar && (
+                                <>
+                                    <ButtonDropdown visibility='dropdown-visibility' classBtn='visibility'
+                                        title='visibility' options={visibilityDropdownOptionsMap} arrow={true} />
+                                    <ButtonDropdown visibility='dropdown-action-order' classBtn='order'
+                                        icon='arrowaltv' title='order' options={orderDropdownOptionsMap} arrow={true} />
+                                </>
+                            )
+                        }
                         <ButtonDropdown visibility='dropdown-action-create' classBtn='create'
-                            icon='plus' title='create' options={dropdownOptionsMap} arrow={true} />
+                            icon='plus' title='create' options={createDropdownOptionsMap} arrow={true} />
                     </div>
                 </div>
             </div>
