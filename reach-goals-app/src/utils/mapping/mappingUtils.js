@@ -128,3 +128,30 @@ export const displayModesMap = {
     type: ['card', 'card-mini'],
     actions: ['edit', 'delete', 'details', 'remove']
 }
+
+export const persistedUserConfigKeysMap = {
+    orderning: 'model-orderning',
+    visibility: 'ui-visibility'
+}
+
+/**
+ * @typedef {Object} VisibilityConfig
+ * @property {'card' | 'card-mini'} cards
+ * @property {boolean} tagsCard
+ * @property {boolean} progressCard
+ * @property {boolean} concludeCard
+ * @property {boolean} cancelCard
+ */
+
+/**
+ * @type {{ visibility: VisibilityConfig }}
+ */
+export const persistedUserConfigMap = {
+    visibility: {
+        cards: 'card',
+        tagsCard: true,
+        progressCard: true,
+        concludeCard: true,
+        cancelCard: true,
+    }
+}

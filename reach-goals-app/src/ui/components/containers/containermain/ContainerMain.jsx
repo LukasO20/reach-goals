@@ -6,8 +6,9 @@ import { useManageModel } from '../../../../provider/model/ManageModelProvider.j
 import { useVisibility } from '../../../../provider/ui/VisibilityProvider.jsx'
 import { useSwitchLayout } from '../../../../provider/ui/SwitchLayoutProvider.jsx'
 import { useCheckbox } from '../../../../provider/ui/CheckboxProvider.jsx'
+import { usePersistedUserConfig } from '../../../../hooks/usePersistedUserConfig.js'
 
-import { visibilityMap, switchLayoutMap, buildCheckboxMap } from '../../../../utils/mapping/mappingUtils.js'
+import { visibilityMap, switchLayoutMap, buildCheckboxMap, persistedUserConfigKeysMap, persistedUserConfigMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import { monthNames } from '../../../../utils/reference.js'
 
@@ -23,6 +24,14 @@ const ContainerM = () => {
     const { toggleVisibility } = useVisibility()
     const { layout, updateSwitchLayout } = useSwitchLayout()
     const { valuesCheckbox, resetCheckbox } = useCheckbox()
+
+    const [order, setOrder] = usePersistedUserConfig(persistedUserConfigKeysMap.orderning, 'by-name')
+    const [ui_visibility, setVisibility] =
+        usePersistedUserConfig(
+            persistedUserConfigKeysMap.visibility,
+            persistedUserConfigMap.visibility
+        )
+
     const navigate = useNavigate()
 
     const handleClickContainer = (e) => {
@@ -42,7 +51,7 @@ const ContainerM = () => {
 
     const createDropdownOptionsMap = [
         {
-            title: 'goal',
+            title: 'Goal',
             icon: 'plus',
             onClick: () => {
                 toggleVisibility(visibilityMap(['modal-center', 'goal']));
@@ -50,7 +59,7 @@ const ContainerM = () => {
             }
         },
         {
-            title: 'assignment',
+            title: 'Assignment',
             icon: 'plus',
             onClick: () => {
                 toggleVisibility(visibilityMap(['modal-center', 'assignment']));
@@ -61,35 +70,71 @@ const ContainerM = () => {
 
     const orderDropdownOptionsMap = [
         {
-            title: 'by name A-Z',
-            icon: 'letter'
+            id: 'by-name',
+            classBtn: order === 'by-name' ? 'active' : '',
+            title: 'By name A-Z',
+            icon: 'letter',
+            onClick: (order) => setOrder(order)
         },
         {
-            title: 'by end date',
-            icon: 'schedule'
+            id: 'by-end-date',
+            classBtn: order === 'by-end-date' ? 'active' : '',
+            title: 'By end date',
+            icon: 'schedule',
+            onClick: (order) => setOrder(order)
         }
     ]
 
     const visibilityDropdownOptionsMap = [
+        //TODO: THIS OPTION WILL USE A SWITCH BUTTON (CHANGE IT on DROPDOWN)
         {
-            title: 'switch card-mini',
-            icon: 'cardmini'
+            id: 'switch-cards',
+            title: `Switch to ${ui_visibility.cards === 'card' ? 'card-mini' : 'card'}`,
+            icon: 'cardmini',
+            onClick: () => setVisibility({
+                ...ui_visibility,
+                cards: ui_visibility.cards === 'card' ? 'card-mini' : 'card'
+            })
         },
         {
-            title: 'hide tags',
-            icon: 'tag'
+            id: 'hide-tags',
+            classBtn: ui_visibility.tagsCard ? 'active' : '',
+            title: `${ui_visibility.tagsCard ? 'Hide' : 'Show'} tags`,
+            icon: 'tag',
+            onClick: () => setVisibility({
+                ...ui_visibility,
+                tagsCard: !ui_visibility.tagsCard
+            })
         },
         {
-            title: 'hide progress status',
-            icon: 'progress'
+            id: 'progress-status',
+            classBtn: ui_visibility.progressCard ? 'active' : '',
+            title: `${ui_visibility.progressCard ? 'Hide' : 'Show'} progress status`,
+            icon: 'progress',
+            onClick: () => setVisibility({
+                ...ui_visibility,
+                progressCard: !ui_visibility.progressCard
+            })
         },
         {
-            title: 'hide conclude status',
-            icon: 'check'
+            id: 'conclude-status',
+            classBtn: ui_visibility.concludeCard ? 'active' : '',
+            title: `${ui_visibility.concludeCard ? 'Hide' : 'Show'} conclude status`,
+            icon: 'check',
+            onClick: () => setVisibility({
+                ...ui_visibility,
+                concludeCard: !ui_visibility.concludeCard
+            })
         },
         {
-            title: 'hide canceled status',
-            icon: 'cancel'
+            id: 'cancel-status',
+            classBtn: ui_visibility.cancelCard ? 'active' : '',
+            title: `${ui_visibility.cancelCard ? 'Hide' : 'Show'} canceled status`,
+            icon: 'cancel',
+            onClick: () => setVisibility({
+                ...ui_visibility,
+                cancelCard: !ui_visibility.cancelCard
+            })
         },
     ]
 

@@ -25,7 +25,7 @@ const Dropdown = ({ options = [] }) => {
                                 classBtn={`plan-round max-width dropdown-option ${option.classBtn}`}
                                 title={option.title}
                                 icon={option.icon}
-                                onClick={option.onClick}
+                                onClick={() => option.onClick(option.id)}
                             />
                         </div>
                     )
