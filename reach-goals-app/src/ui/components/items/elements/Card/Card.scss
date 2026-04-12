@@ -6,37 +6,41 @@
     border: 3.25px solid transparent;
     border-radius: 0.5rem;
     background-color: $color-white;
-    margin: 0.5rem 0rem;
     cursor: pointer;
 
     .head {
         display: flex;
         align-items: center;
+        justify-content: space-between;
         text-decoration: none;
         color: $color-complementary-s;
-        gap: 0.5rem;
 
         * {
             cursor: pointer;
         }
 
-
-        .button-checkbox {
-            display: none;
-        }
-
-        .line-info {
+        .left-side {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-weight: 600;
 
-            >label {
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-                flex: 1;
+            .button-checkbox {
+                display: none;
+            }
+
+            .line-info {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-weight: 600;
+
+                >label {
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    flex: 1;
+                }
             }
         }
     }

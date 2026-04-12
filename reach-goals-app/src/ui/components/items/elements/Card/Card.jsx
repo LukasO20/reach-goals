@@ -1,36 +1,29 @@
+import { Draggable } from '@adaptabletools/react-beautiful-dnd'
+
 import { checkboxMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 import { switchLayoutMap, visibilityMap, displayModesMap, buildCheckboxMap } from '../../../../../utils/mapping/mappingUtils.js'
-import { cx } from '../../../../../utils/utils.js'
 import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
-import { Draggable } from '@adaptabletools/react-beautiful-dnd'
 
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 import ButtonCheckbox from '../ButtonCheckbox/ButtonCheckbox.jsx'
 import CardMiniTag from '../CardMiniTag/CardMiniTag.jsx'
 
+import { cx } from '../../../../../utils/utils.js'
+
 import moment from 'moment'
 
 import './Card.scss'
 
-export const CardMap = {
-    type: '',
-    model: [],
-    display: {},
-    pendingState: false,
-    checkboxState: checkboxMap,
-    clickFunction: () => { },
-    draggable: false
-}
-
 /**
- * @param {Object} CardMap
- * @param {string} CardMap.type
- * @param {Array} CardMap.model
- * @param {Object} CardMap.display
- * @param {boolean} CardMap.pendingState
- * @param {Object} CardMap.checkboxState
- * @param {Function} CardMap.clickFunction
- * @param {boolean} CardMap.draggable
+ * @param {Object} props
+ * @param {string} props.type
+ * @param {Array} props.model
+ * @param {Object} props.display
+ * @param {boolean} props.pendingState
+ * @param {boolean} props.showTags
+ * @param {Object} props.checkboxState
+ * @param {Function} props.clickFunction
+ * @param {boolean} props.draggable
  */
 
 const Card = ({
@@ -38,14 +31,15 @@ const Card = ({
     model,
     display,
     pendingState,
-    checkboxState,
+    showTags = true,
+    checkboxState = checkboxMap,
     clickFunction,
-    draggable
-} = CardMap) => {
+    draggable = false
+}) => {
     return model
         .sort((a, b) => a.order - b.order)
         .map((item, index) => {
-            const hasTags = item.tags?.length > 0
+            const hasTags = item.tags?.length > 0 && showTags
             const hasEndDate = item.end
             const itemID = item.id || item.tagID
 
@@ -94,12 +88,18 @@ const Card = ({
                     {...dragProvided?.dragHandleProps}
                 >
                     <div className='head'>
-                        <ButtonCheckbox classBtn='checkbox-card' checkboxID={`checkbox-${itemID}`}
-                            checkbox={buildCheckboxMap({ checkboxID: `checkbox-${itemID}`, scope: 'page' })} />
-                        <label className='line-info'>
-                            {iconMap[type]}<label>{item.name}</label>
-                        </label>
-                        {hasTags && (<CardMiniTag tags={item.tags} />)}
+                        <div className='left-side'>
+                            <ButtonCheckbox classBtn='checkbox-card' checkboxID={`checkbox-${itemID}`}
+                                checkbox={buildCheckboxMap({ checkboxID: `checkbox-${itemID}`, scope: 'page' })} />
+                            <label className='line-info'>
+                                {iconMap[type]}<label>{item.name}</label>
+                            </label>
+                        </div>
+                        {hasTags && (
+                            <div className='right-side'>
+                                <CardMiniTag tags={item.tags} />
+                            </div>
+                        )}
                     </div>
                     <div className='body'>
                         {!!hasEndDate && renderEndDate()}

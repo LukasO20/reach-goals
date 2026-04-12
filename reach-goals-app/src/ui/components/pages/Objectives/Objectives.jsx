@@ -26,17 +26,17 @@ export const ObjectivesMap = {
 
 const Objectives = ({ onFilterTabs } = ObjectivesMap) => {
     const { update } = useTitle()
-    const { data: { layout }, updateSwitchLayout } = useSwitchLayout()
+    const { data: { layout, visibility }, updateSwitchLayout } = useSwitchLayout()
     const { page: { data: dataGoal = [], loading: loadingGoal } } = useGoalProvider()
     const { page: { data: dataAssignment = [], loading: loadingAssignment } } = useAssignmentProvider()
     const location = useLocation()
 
     const typeLayout = layout.page.layoutName
     const currentData = typeLayout === 'goal' ? dataGoal : typeLayout === 'assignment' ? dataAssignment : []
-    const modelProps = {
+    const switcherModelPropsReference = {
         display: {
-            type: ['card-mini'],
-            actions: []
+            type: [visibility.cards],
+            actions: ['edit', 'delete']
         },
         detailsModel: true,
         source: currentData,
@@ -56,24 +56,31 @@ const Objectives = ({ onFilterTabs } = ObjectivesMap) => {
         updateSwitchLayout(dataSwitchLayout)
     }, [update, updateSwitchLayout, location.pathname])
 
-    let content = null
-
-    if (isAllModels) {
-        content = (
-            <>
-                <Goal display={modelProps.display} detailsModel={true}
-                    source={dataGoal} checkboxModel={true} showStatus={true} showTags={true} />
-                <Assignment display={modelProps.display} detailsModel={true}
-                    source={dataAssignment} checkboxModel={true} showStatus={true} showTags={true} />
-            </>
-        )
-    } else if (isOnlyTypeModel) {
-        content = <ModelSwitcher type={typeLayout} propsReference={modelProps} />
-    }
-
     return (
         <ModelTabs type={typeLayout} loading={isLoading} classModelTabs='objectives' onFilterTabs={onFilterTabs}>
-            {content}
+            {isAllModels && !isOnlyTypeModel && (
+                <>
+                    <Goal
+                        display={switcherModelPropsReference.display}
+                        detailsModel={true}
+                        source={dataGoal}
+                        checkboxModel={true}
+                        showStatus={true}
+                        showTags={visibility.tagsCard}
+                    />
+                    <Assignment
+                        display={switcherModelPropsReference.display}
+                        detailsModel={true}
+                        source={dataAssignment}
+                        checkboxModel={true}
+                        showStatus={true}
+                        showTags={visibility.tagsCard}
+                    />
+                </>
+            )}
+            {isOnlyTypeModel && !isAllModels && (
+                <ModelSwitcher type={typeLayout} propsReference={switcherModelPropsReference} />
+            )}
         </ModelTabs>
     )
 }

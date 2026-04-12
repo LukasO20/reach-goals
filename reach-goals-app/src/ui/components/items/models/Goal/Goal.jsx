@@ -13,7 +13,6 @@ import CardMini from '../../elements/CardMini/CardMini.jsx'
 import moment from 'moment'
 
 export const GoalMap = {
-    status: '',
     display: displayModesMap,
     source: [],
     selectableModel: false,
@@ -26,7 +25,6 @@ export const GoalMap = {
 
 /**
  * @param {Object} GoalMap
- * @param {string} GoalMap.status
  * @param {Object} GoalMap.display
  * @param {('card'|'card-mini')[]} GoalMap.display.type
  * @param {('edit'|'delete'|'details'|'remove')[]} [GoalMap.display.actions]
@@ -40,7 +38,6 @@ export const GoalMap = {
  */
 
 const Goal = ({
-    status,
     display,
     source,
     selectableModel,
@@ -60,12 +57,9 @@ const Goal = ({
 
     const renderCard = sourceData.filter(item =>
         !(removeSuccess && removingVariables && item.id === removingVariables)
-        && item.status === status
     )
 
-    const renderCardMini = sourceData.filter(item =>
-        !(removeSuccess && removingVariables && item.id === removingVariables)
-    )
+    const renderCardMini = renderCard
 
     const pendingState = {
         removing: removing,

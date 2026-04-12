@@ -79,7 +79,14 @@
                     min-height: 0;
 
                     .list {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0.5rem;
                         min-height: 55dvh;
+
+                        .card-mini {
+                            min-height: 2rem;
+                        }
                     }
                 }
             }

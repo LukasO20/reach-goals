@@ -21,11 +21,10 @@ const ContainerColumn = ({ data = ContainerColumnMap.data } = ContainerColumnMap
     const { update } = useTitle()
     const { saveDragDrop: saveDragDropGoal } = useGoalProvider()
     const { saveDragDrop: saveDragDropAssignment } = useAssignmentProvider()
-        
-    const { 
-        goal: dataGoal = [], 
-        assignment: dataAssignment = [] 
-    } = data
+
+    const { goal: dataGoal = [], assignment: dataAssignment = [] } = data
+
+    const layoutColumn = layout.page.layoutName
 
     const dataColumn = {
         progress: { goal: dataGoal.filter(g => g.status === 'progress'), assignment: dataAssignment.filter(a => a.status === 'progress') },
@@ -33,11 +32,34 @@ const ContainerColumn = ({ data = ContainerColumnMap.data } = ContainerColumnMap
         cancel: { goal: dataGoal.filter(g => g.status === 'cancel'), assignment: dataAssignment.filter(a => a.status === 'cancel') }
     }
 
-    const layoutColumn = layout.page.layoutName
-    const displayModesProps = {
-        type: [visibility.cards],
-        actions: ['edit', 'delete']
+    const columnPropsReference = {
+        display: {
+            type: [visibility.cards],
+            actions: ['edit', 'delete']
+        },
+        detailsModel: true,
+        draggable: true,
+        showTags: visibility.tagsCard,
+        checkboxModel: true
     }
+
+    const columnMap = [
+        {
+            icon: 'progress',
+            type: 'progress',
+            title: 'in progress'
+        },
+        {
+            icon: 'check',
+            type: 'conclude',
+            title: 'conclude'
+        },
+        {
+            icon: 'cancel',
+            type: 'cancel',
+            title: 'canceled'
+        }
+    ]
 
     const updateDragDropItem = ({ source, destination, draggableId }) => {
         if (!destination || !draggableId) return
@@ -60,51 +82,23 @@ const ContainerColumn = ({ data = ContainerColumnMap.data } = ContainerColumnMap
         <div className='column home'>
             <DragDrop onDragEnd={handleOnEndDrag}>
                 <div className='list-container'>
-                    <div className='itens-progress column'>
-                        <div className='head'>
-                            {iconMap['progress']}<label>in progress</label>
+                    {columnMap.map((item) => (
+                        <div className={`itens-${item.type} column`} key={item.type}>
+                            <div className='head'>
+                                {iconMap[item.icon]}<label>{item.title}</label>
+                            </div>
+                            <div className='body scrollable'>
+                                <DragDropDroppable dragDropID={item.type} className='list'>
+                                    {
+                                        layoutColumn === 'goal' ?
+                                            <Goal source={dataColumn[item.type].goal} {...columnPropsReference} />
+                                            :
+                                            <Assignment source={dataColumn[item.type].assignment} {...columnPropsReference} />
+                                    }
+                                </DragDropDroppable>
+                            </div>
                         </div>
-                        <div className='body scrollable'>
-                            <DragDropDroppable dragDropID='progress' className='list'>
-                                {
-                                    layoutColumn === 'goal' ?
-                                        <Goal display={displayModesProps} detailsModel={true} source={dataColumn.progress.goal} status='progress' draggable={true} />
-                                        :
-                                        <Assignment display={displayModesProps} detailsModel={true} source={dataColumn.progress.assignment} status={'progress'} draggable={true} />
-                                }
-                            </DragDropDroppable>
-                        </div>
-                    </div>
-                    <div className='itens-conclude column'>
-                        <div className='head'>
-                            {iconMap['check']}<label>conclude</label>
-                        </div>
-                        <div className='body scrollable'>
-                            <DragDropDroppable dragDropID='conclude' className='list'>
-                                {
-                                    layoutColumn === 'goal' ?
-                                        <Goal display={displayModesProps} detailsModel={true} source={dataColumn.conclude.goal} status='conclude' draggable={true} />
-                                        :
-                                        <Assignment display={displayModesProps} detailsModel={true} source={dataColumn.conclude.assignment} status={'conclude'} draggable={true} />
-                                }
-                            </DragDropDroppable>
-                        </div>
-                    </div>
-                    <div className='itens-cancel column'>
-                        <div className='head'>
-                            {iconMap['cancel']}<label>canceled</label>
-                        </div>
-                        <div className='body scrollable'>
-                            <DragDropDroppable dragDropID='cancel' className='list'>
-                                {
-                                    layoutColumn === 'goal' ?
-                                        <Goal display={displayModesProps} detailsModel={true} source={dataColumn.cancel.goal} status='cancel' draggable={true} />
-                                        :
-                                        <Assignment display={displayModesProps} detailsModel={true} source={dataColumn.cancel.assignment} status={'cancel'} draggable={true} />
-                                }
-                            </DragDropDroppable>
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </DragDrop>
         </div>

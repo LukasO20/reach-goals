@@ -58,12 +58,9 @@ const Assignment = ({
 
     const renderCard = sourceData.filter(item =>
         !(removeSuccess && removingVariables && item.id === removingVariables)
-        && item.status === status
     )
 
-    const renderCardMini = sourceData.filter(item =>
-        !(removeSuccess && removingVariables && item.id === removingVariables)
-    )
+    const renderCardMini = renderCard
 
     const pendingState = {
         removing: removing,
