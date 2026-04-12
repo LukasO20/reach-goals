@@ -38,5 +38,6 @@ export const iconMap = {
     cardoff: <Unicons.UilLayerGroupSlash className='icon-st' />,
     cardmini: <Unicons.UilLayers className='icon-st' />,
     cardminioff: <Unicons.UilLayersSlash className='icon-st' />,
+    eye: <Unicons.UilEye className='icon-st' />,
     undefined: <Unicons.UilExclamationOctagon className='icon-st' />
 }

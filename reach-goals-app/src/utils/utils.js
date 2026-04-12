@@ -59,10 +59,33 @@ const debounce = (func, delay) => {
     }
 }
 
+/**
+ * @param {Array} data 
+ * @param {string} attribute
+ * @returns {Array}
+ */
+const sortedMap = (data = [], attribute) => {
+    return [...data].sort((a, b) => {
+
+        if (!!a[attribute] !== !!b[attribute]) {
+            return a[attribute] ? -1 : 1
+        }
+
+        if (a[attribute] && b[attribute]) {
+            if (typeof a[attribute] === 'string') {
+                return a[attribute].localeCompare(b[attribute])
+            }
+            return a[attribute] - b[attribute]
+        }
+
+        return 0
+    })
+}
+
 const cx = (str = '') => {
     return str.replace(/\b(undefined|null|false)\b/g, '')
         .replace(/\s+/g, ' ')
         .trim()
 }
 
-export { formatDate, hasRequiredProps, debounce, cx }
+export { formatDate, hasRequiredProps, debounce, sortedMap, cx }

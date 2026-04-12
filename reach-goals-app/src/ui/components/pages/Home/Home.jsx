@@ -9,12 +9,12 @@ import ContainerChartPie from './elements/ContainerChartPie.jsx'
 import './Home.scss'
 
 const Home = () => {
-    const { layout } = useSwitchLayout()
+    const { data: { layout } } = useSwitchLayout()
     const { page: { data: dataGoal, loading: loadingGoal } } = useGoalProvider()
     const { page: { data: dataAssignment, loading: loadingAssignment } } = useAssignmentProvider()
 
     const dataPage = {
-        goal: dataGoal,
+        goal:dataGoal,
         assignment: dataAssignment
     }
     const layoutHome = layout.page.layoutName

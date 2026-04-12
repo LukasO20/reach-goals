@@ -17,7 +17,7 @@ export const ContainerColumnMap = {
 }
 
 const ContainerColumn = ({ data = ContainerColumnMap.data } = ContainerColumnMap) => {
-    const { layout } = useSwitchLayout()
+    const { data: { layout, visibility } } = useSwitchLayout()
     const { update } = useTitle()
     const { saveDragDrop: saveDragDropGoal } = useGoalProvider()
     const { saveDragDrop: saveDragDropAssignment } = useAssignmentProvider()
@@ -35,7 +35,7 @@ const ContainerColumn = ({ data = ContainerColumnMap.data } = ContainerColumnMap
 
     const layoutColumn = layout.page.layoutName
     const displayModesProps = {
-        type: ['card'],
+        type: [visibility.cards],
         actions: ['edit', 'delete']
     }
 

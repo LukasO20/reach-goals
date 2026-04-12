@@ -19,7 +19,7 @@ const ContainerH = () => {
     const { title } = useTitle()
     const { visibleElements, toggleVisibility } = useVisibility()
     const { setModel, resetManageModel } = useManageModel()
-    const { layout } = useSwitchLayout()
+    const { data: { layout } } = useSwitchLayout()
     const navigate = useNavigate()
 
     const linkTagClick = (e) => {

@@ -22,7 +22,7 @@ import './ModalTag.scss'
 
 export const ModalTagMap = {
     onFilterTabs: null
-} 
+}
 
 /**
  * @param {Object} ModalTagMap
@@ -33,7 +33,7 @@ const ModalTag = ({ onFilterTabs } = ModalTagMap) => {
     const { visibleElements } = useVisibility()
     const { model, setModel, resetManageModel } = useManageModel()
     const { modal: { loading } } = useTagProvider()
-    const { layout } = useSwitchLayout()
+    const { data: { layout } } = useSwitchLayout()
     const { valuesCheckbox } = useCheckbox()
     const navigate = useNavigate()
 
@@ -50,7 +50,7 @@ const ModalTag = ({ onFilterTabs } = ModalTagMap) => {
     }
 
     const content = <TagRelationCard checkboxState={valuesCheckbox} />
-    
+
     const headLeftContent = hasSelectedModel ? (
         <ButtonCheckbox classBtn='checkbox-main tag' checkboxID='checkbox-tag'
             checkbox={buildCheckboxMap({ checkboxIDMain: 'checkbox-tag', scope: 'modal' })}
@@ -78,13 +78,13 @@ const ModalTag = ({ onFilterTabs } = ModalTagMap) => {
                     <ButtonAction
                         onClick={handleClickButtonActionCreate}
                         visibility={visibilityMap('near-modalForm', { add: true })}
-                        classBtn={buttonCreateClass} 
-                        icon='plus' 
-                        title='create' 
+                        classBtn={buttonCreateClass}
+                        icon='plus'
+                        title='create'
                     />
                     <ButtonAction
                         classBtn='circle max-width config'
-                        icon='config' 
+                        icon='config'
                         onClick={(e) => handleClickButtonAction(e)}
                         visibility={visibilityMap(['modal-center', 'config'])}
                         switchLayout={switchLayoutMap({ area: 'modal', state: { modalName: 'modal-center', layoutName: 'config' } })}
@@ -93,7 +93,9 @@ const ModalTag = ({ onFilterTabs } = ModalTagMap) => {
             </div>
             <div className='body'>
                 {isModalForm.every(e => visibleElements.includes(e)) && <ModalForm type='tag' />}
-                <ModelTabs type='tag' children={content} headLeftChildren={headLeftContent} loading={isLoadingTag} onFilterTabs={onFilterTabs} />
+                <ModelTabs type='tag' headLeftChildren={headLeftContent} loading={isLoadingTag} onFilterTabs={onFilterTabs}>
+                    {content}
+                </ModelTabs>
                 {hasSelectedModel && (<PopupModelOptions type='tag' />)}
             </div>
         </>

@@ -11,9 +11,11 @@ import '../ButtonDropdown/ButtonDropdown.scss'
 
 /**
  * @typedef {object} DropdownOption
+ * @property {string} id
  * @property {string} title
  * @property {string} icon
  * @property {string} classBtn
+ * @property {'button-action' | 'button-toggle'} uiMode
  * @property {function} onClick
  */
 

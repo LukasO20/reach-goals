@@ -15,7 +15,7 @@ import './Navigate.scss'
 
 const Navigate = () => {
     const { visibleElements, toggleVisibility } = useVisibility()
-    const { layout } = useSwitchLayout()
+    const { data: { layout } } = useSwitchLayout()
     const { resetCheckbox } = useCheckbox()
     const navigate = useNavigate()
     const location = useLocation()

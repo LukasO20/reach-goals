@@ -15,7 +15,7 @@ import moment from 'moment'
 import './ModalDetailsSection.scss'
 
 const ModalDetailsSection = () => {
-    const { layout } = useSwitchLayout()
+    const { data: { layout } } = useSwitchLayout()
     const { visibleElements } = useVisibility()
     const { model: { formModel } } = useManageModel()
 

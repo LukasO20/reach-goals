@@ -66,7 +66,7 @@ const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, onFilterT
                                     classBtn={`button-action plan-round max-width small model-tabs 
                                         ${currentButton === filterButtonActive ? 'active' : isNullFilter ? 'active' : ''}`}
                                     title={tab.label}
-                                    onClick={(e) => { handleFilterClick(tab.filter) }}
+                                    onClick={() => { handleFilterClick(tab.filter) }}
                                 />
                             )
                         })

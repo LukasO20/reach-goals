@@ -8,7 +8,7 @@ import './ModalSwitcher.scss'
 
 const ModalSwitcherCenter = () => {
     const { visibleElements } = useVisibility()
-    const { layout } = useSwitchLayout()
+    const { data: { layout } } = useSwitchLayout()
 
     const showModalCenter = visibleElements.includes('modal-center') ? 'show' : ''
     const typeModalLayout = layout.modal.layoutName

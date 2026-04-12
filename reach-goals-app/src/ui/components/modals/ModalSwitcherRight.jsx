@@ -8,7 +8,7 @@ import './ModalSwitcher.scss'
 
 const ModalSwitcherRight = () => {
     const { visibleElements } = useVisibility()
-    const { layout } = useSwitchLayout()
+    const { data: { layout } } = useSwitchLayout()
 
     const showModalRight = visibleElements.includes('modal-right') ? 'show' : ''
     const typeModalLayout = layout.modal.layoutName

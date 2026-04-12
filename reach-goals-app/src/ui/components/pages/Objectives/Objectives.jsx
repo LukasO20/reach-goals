@@ -17,7 +17,7 @@ import './Objectives.scss'
 
 export const ObjectivesMap = {
     onFilterTabs: null
-} 
+}
 
 /**
  * @param {Object} ObjectivesMap
@@ -26,7 +26,7 @@ export const ObjectivesMap = {
 
 const Objectives = ({ onFilterTabs } = ObjectivesMap) => {
     const { update } = useTitle()
-    const { layout, updateSwitchLayout } = useSwitchLayout()
+    const { data: { layout }, updateSwitchLayout } = useSwitchLayout()
     const { page: { data: dataGoal = [], loading: loadingGoal } } = useGoalProvider()
     const { page: { data: dataAssignment = [], loading: loadingAssignment } } = useAssignmentProvider()
     const location = useLocation()
@@ -41,7 +41,7 @@ const Objectives = ({ onFilterTabs } = ObjectivesMap) => {
         detailsModel: true,
         source: currentData,
         checkboxModel: true,
-        showStatus: true, 
+        showStatus: true,
         showTags: true
     }
 
@@ -61,9 +61,9 @@ const Objectives = ({ onFilterTabs } = ObjectivesMap) => {
     if (isAllModels) {
         content = (
             <>
-                <Goal display={modelProps.display} detailsModel={true} 
+                <Goal display={modelProps.display} detailsModel={true}
                     source={dataGoal} checkboxModel={true} showStatus={true} showTags={true} />
-                <Assignment display={modelProps.display} detailsModel={true} 
+                <Assignment display={modelProps.display} detailsModel={true}
                     source={dataAssignment} checkboxModel={true} showStatus={true} showTags={true} />
             </>
         )
@@ -71,7 +71,11 @@ const Objectives = ({ onFilterTabs } = ObjectivesMap) => {
         content = <ModelSwitcher type={typeLayout} propsReference={modelProps} />
     }
 
-    return <ModelTabs type={typeLayout} children={content} loading={isLoading} classModelTabs='objectives' onFilterTabs={onFilterTabs} />
+    return (
+        <ModelTabs type={typeLayout} loading={isLoading} classModelTabs='objectives' onFilterTabs={onFilterTabs}>
+            {content}
+        </ModelTabs>
+    )
 }
 
 export default Objectives

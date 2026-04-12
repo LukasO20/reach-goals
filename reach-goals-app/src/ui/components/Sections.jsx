@@ -13,7 +13,7 @@ const sectionRender = (section) => {
         case 'objectives':
             return <ObjectivesWrapper />
         default:
-            return <Home />
+            return <HomeWrapper />
     }
 }
 

@@ -28,7 +28,7 @@ export const MonthDaysPickerMap = {
 const MonthDaysPicker = ({ data } = MonthDaysPickerMap) => {
     const { setModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
-    const { layout, updateSwitchLayout } = useSwitchLayout()
+    const { data: { layout }, updateSwitchLayout } = useSwitchLayout()
     const year = new Date().getFullYear()
     const month = new Date().getMonth()
 
@@ -80,7 +80,10 @@ const MonthDaysPicker = ({ data } = MonthDaysPickerMap) => {
     }
 
     const typeLayout = layout.page.layoutName
+    const isShowAssignment = typeLayout === 'all' || typeLayout === 'assignment'
+    const isShowGoal = typeLayout === 'all' || typeLayout === 'goal'
 
+    console.log('T - ', typeLayout)
     return (
         <div className={`calendar ${typeLayout}`}>
             <div className='header'>
@@ -121,7 +124,7 @@ const MonthDaysPicker = ({ data } = MonthDaysPickerMap) => {
                             <div key={day.toISOString()} day={todayDate} className={`day ${isToday ? 'today' : isApproximateDay ? 'approximate' : ''}`}>
                                 <span className='title'>{todayDate}</span>
                                 {
-                                    assignmentsOnDay.length > 0 && (
+                                    assignmentsOnDay.length > 0 && isShowAssignment && (
                                         <CardMini
                                             model={assignmentsOnDay}
                                             type='assignment'
@@ -129,7 +132,7 @@ const MonthDaysPicker = ({ data } = MonthDaysPickerMap) => {
                                             clickFunction={clickEvents} />
                                     )}
                                 {
-                                    goalsOnDay.length > 0 && (
+                                    goalsOnDay.length > 0 && isShowGoal && (
                                         <CardMini
                                             model={goalsOnDay}
                                             type='goal'

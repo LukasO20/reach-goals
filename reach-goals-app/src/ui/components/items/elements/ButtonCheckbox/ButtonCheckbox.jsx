@@ -35,7 +35,7 @@ export const ButtonCheckboxMap = {
 
 const ButtonCheckbox = ({ classBtn, checkboxID, title, checkbox } = ButtonCheckboxMap) => {
     const { valuesCheckbox, toggleCheckbox, registerCheckbox, unregisterCheckbox } = useCheckbox()
-    const { layout } = useSwitchLayout()
+    const { data: { layout } } = useSwitchLayout()
 
     useEffect(() => {
         registerCheckbox(checkboxID)

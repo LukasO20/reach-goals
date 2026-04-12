@@ -10,7 +10,7 @@ import Home from './Home'
 
 export const HomeWrapper = () => {
     const { update } = useTitle()
-    const { layout } = useSwitchLayout()
+    const { data: { layout } } = useSwitchLayout()
 
     const layoutHome = layout.page.layoutName
     const isPieChartLayout = layoutHome === 'pie-chart'
