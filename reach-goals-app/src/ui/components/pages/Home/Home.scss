@@ -28,7 +28,7 @@
                 overflow: hidden;
                 gap: 0.5rem;
 
-                &:nth-child(1) {
+                &.progress {
 
                     >.head {
                         background-color: $color-complementary-s-15;
@@ -36,7 +36,7 @@
                     }
                 }
 
-                &:nth-child(2) {
+                &.conclude {
 
                     >.head {
                         background-color: $color-success-70;
@@ -48,7 +48,7 @@
                     }
                 }
 
-                &:nth-child(3) {
+                &.cancel {
 
                     >.head {
                         background-color: $color-cancel-70;

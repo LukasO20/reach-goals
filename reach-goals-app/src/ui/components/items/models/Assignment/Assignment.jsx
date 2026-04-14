@@ -10,18 +10,6 @@ import { updateFormModelMap, addToSelectedModelMap } from '../../../../../utils/
 import Card from '../../elements/Card/Card.jsx'
 import CardMini from '../../elements/CardMini/CardMini.jsx'
 
-export const AssignmentMap = {
-    status: '',
-    display: displayModesMap,
-    source: [],
-    selectableModel: false,
-    detailsModel: false,
-    draggable: false,
-    checkboxModel: false,
-    showTags: false,
-    showStatus: false
-}
-
 /**
  * @param {Object} AssignmentMap
  * @param {string} AssignmentMap.status
@@ -34,20 +22,18 @@ export const AssignmentMap = {
  * @param {boolean} AssignmentMap.draggable
  * @param {boolean} AssignmentMap.checkboxModel
  * @param {boolean} AssignmentMap.showTags
- * @param {boolean} AssignmentMap.showStatus
  */
 
 const Assignment = ({
     status,
-    display,
+    display = displayModesMap,
     source,
     selectableModel,
     detailsModel,
     draggable,
     checkboxModel,
     showTags,
-    showStatus
-} = AssignmentMap) => {
+}) => {
     const { model, setModel, updateFormModel, addToSelectedModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
@@ -144,7 +130,7 @@ const Assignment = ({
             draggable={draggable}
             checkboxModel={checkboxModel}
             showTags={showTags}
-            showStatus={showStatus}
+            status={status}
         />
     ) : null
 }

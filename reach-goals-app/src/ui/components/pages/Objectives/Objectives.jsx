@@ -41,7 +41,7 @@ const Objectives = ({ onFilterTabs } = ObjectivesMap) => {
         detailsModel: true,
         source: currentData,
         checkboxModel: true,
-        showStatus: true,
+        status: visibility.status,
         showTags: true
     }
 
@@ -65,7 +65,7 @@ const Objectives = ({ onFilterTabs } = ObjectivesMap) => {
                         detailsModel={true}
                         source={dataGoal}
                         checkboxModel={true}
-                        showStatus={true}
+                        status={switcherModelPropsReference.status}
                         showTags={visibility.tagsCard}
                     />
                     <Assignment
@@ -73,7 +73,7 @@ const Objectives = ({ onFilterTabs } = ObjectivesMap) => {
                         detailsModel={true}
                         source={dataAssignment}
                         checkboxModel={true}
-                        showStatus={true}
+                        status={switcherModelPropsReference.status}
                         showTags={visibility.tagsCard}
                     />
                 </>

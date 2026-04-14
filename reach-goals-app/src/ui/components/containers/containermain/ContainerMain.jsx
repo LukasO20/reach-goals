@@ -84,33 +84,24 @@ const ContainerM = () => {
         },
         {
             id: 'progress-status',
-            classBtn: visibility.progressCard ? 'active' : '',
-            title: `${visibility.progressCard ? 'Hide' : 'Show'} progress status`,
+            classBtn: visibility.status?.includes('progress') ? 'active' : '',
+            title: `${visibility.status?.includes('progress') ? 'Hide' : 'Show'} progress activity`,
             icon: 'progress',
-            onClick: () => setUserConfigLayout({
-                type: 'visibility',
-                data: { progressCard: !visibility.progressCard }
-            })
+            onClick: () => setUserConfigLayout({ type: 'visibility', data: { status: ['progress'] } })
         },
         {
             id: 'conclude-status',
-            classBtn: visibility.concludeCard ? 'active' : '',
-            title: `${visibility.concludeCard ? 'Hide' : 'Show'} conclude status`,
+            classBtn: visibility.status?.includes('conclude') ? 'active' : '',
+            title: `${visibility.status?.includes('conclude') ? 'Hide' : 'Show'} conclude activity`,
             icon: 'check',
-            onClick: () => setUserConfigLayout({
-                type: 'visibility',
-                data: { concludeCard: !visibility.concludeCard }
-            })
+            onClick: () => setUserConfigLayout({ type: 'visibility', data: { status: ['conclude'] } })
         },
         {
             id: 'cancel-status',
-            classBtn: visibility.cancelCard ? 'active' : '',
-            title: `${visibility.cancelCard ? 'Hide' : 'Show'} canceled status`,
+            classBtn: visibility.status?.includes('cancel') ? 'active' : '',
+            title: `${visibility.status?.includes('cancel') ? 'Hide' : 'Show'} cancel activity`,
             icon: 'cancel',
-            onClick: () => setUserConfigLayout({
-                type: 'visibility',
-                data: { cancelCard: !visibility.cancelCard }
-            })
+            onClick: () => setUserConfigLayout({ type: 'visibility', data: { status: ['cancel'] } })
         },
     ]
 

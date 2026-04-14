@@ -20,7 +20,7 @@ export const GoalMap = {
     draggable: false,
     checkboxModel: false,
     showTags: false,
-    showStatus: false
+    status: []
 }
 
 /**
@@ -34,7 +34,7 @@ export const GoalMap = {
  * @param {boolean} GoalMap.draggable
  * @param {boolean} GoalMap.checkboxModel
  * @param {boolean} GoalMap.showTags
- * @param {boolean} GoalMap.showStatus
+ * @param {boolean} GoalMap.status
  */
 
 const Goal = ({
@@ -45,7 +45,7 @@ const Goal = ({
     draggable,
     checkboxModel,
     showTags,
-    showStatus
+    status
 } = GoalMap) => {
     const { model, setModel, updateFormModel, addToSelectedModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
@@ -128,7 +128,7 @@ const Goal = ({
             display={display}
             draggable={draggable}
             checkboxModel={checkboxModel}
-            showStatus={showStatus}
+            status={status}
             showTags={showTags}
         />
     ) : null

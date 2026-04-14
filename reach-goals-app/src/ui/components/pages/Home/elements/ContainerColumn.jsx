@@ -40,6 +40,7 @@ const ContainerColumn = ({ data = ContainerColumnMap.data } = ContainerColumnMap
         detailsModel: true,
         draggable: true,
         showTags: visibility.tagsCard,
+        status: visibility.status,
         checkboxModel: true
     }
 
@@ -82,23 +83,25 @@ const ContainerColumn = ({ data = ContainerColumnMap.data } = ContainerColumnMap
         <div className='column home'>
             <DragDrop onDragEnd={handleOnEndDrag}>
                 <div className='list-container'>
-                    {columnMap.map((item) => (
-                        <div className={`itens-${item.type} column`} key={item.type}>
-                            <div className='head'>
-                                {iconMap[item.icon]}<label>{item.title}</label>
+                    {columnMap
+                        .filter((item) => visibility.status?.includes(item.type))
+                        .map((item) => (
+                            <div className={`column ${item.type}`} key={item.type}>
+                                <div className='head'>
+                                    {iconMap[item.icon]}<label>{item.title}</label>
+                                </div>
+                                <div className='body scrollable'>
+                                    <DragDropDroppable dragDropID={item.type} className='list'>
+                                        {
+                                            layoutColumn === 'goal' ?
+                                                <Goal source={dataColumn[item.type].goal} {...columnPropsReference} />
+                                                :
+                                                <Assignment source={dataColumn[item.type].assignment} {...columnPropsReference} />
+                                        }
+                                    </DragDropDroppable>
+                                </div>
                             </div>
-                            <div className='body scrollable'>
-                                <DragDropDroppable dragDropID={item.type} className='list'>
-                                    {
-                                        layoutColumn === 'goal' ?
-                                            <Goal source={dataColumn[item.type].goal} {...columnPropsReference} />
-                                            :
-                                            <Assignment source={dataColumn[item.type].assignment} {...columnPropsReference} />
-                                    }
-                                </DragDropDroppable>
-                            </div>
-                        </div>
-                    ))}
+                        ))}
                 </div>
             </DragDrop>
         </div>

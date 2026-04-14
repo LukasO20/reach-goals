@@ -149,9 +149,7 @@ export const persistedUserConfigKeysMap = {
 export const persistedUserConfigMap = {
     visibility: {
         cards: 'card',
+        status: [],
         tagsCard: true,
-        progressCard: true,
-        concludeCard: true,
-        cancelCard: true,
     }
 }

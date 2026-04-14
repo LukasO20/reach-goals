@@ -21,6 +21,7 @@ import './Card.scss'
  * @param {Object} props.display
  * @param {boolean} props.pendingState
  * @param {boolean} props.showTags
+ * @param {boolean} props.status
  * @param {Object} props.checkboxState
  * @param {Function} props.clickFunction
  * @param {boolean} props.draggable
@@ -32,11 +33,13 @@ const Card = ({
     display,
     pendingState,
     showTags = true,
+    status,
     checkboxState = checkboxMap,
     clickFunction,
     draggable = false
 }) => {
     return model
+        .filter((item) => status?.includes(item.status))
         .sort((a, b) => a.order - b.order)
         .map((item, index) => {
             const hasTags = item.tags?.length > 0 && showTags
@@ -48,6 +51,10 @@ const Card = ({
             const selectedDisplayType = display.type[0]
 
             const selectedCheckboxList = checkboxState.page.selected
+
+            const validIconStatus = item.status !== 'progress'
+
+            const iconStatus = item.status === 'conclude' ? 'check' : item.status
 
             const isPending = !!(pendingState?.removing && (item.id || item.tagID) === pendingState?.removingVariables)
 
@@ -92,7 +99,8 @@ const Card = ({
                             <ButtonCheckbox classBtn='checkbox-card' checkboxID={`checkbox-${itemID}`}
                                 checkbox={buildCheckboxMap({ checkboxID: `checkbox-${itemID}`, scope: 'page' })} />
                             <label className='line-info'>
-                                {iconMap[type]}<label>{item.name}</label>
+                                {iconMap[type]}
+                                <label>{item.name}</label>
                             </label>
                         </div>
                         {hasTags && (
@@ -105,7 +113,7 @@ const Card = ({
                         {!!hasEndDate && renderEndDate()}
                         <div className='item'>
                             <label className='line-info description'>{item.description}</label>
-                            <div className='side-actions'>
+                            <div className='side actions'>
                                 <div className='item-actions'>
                                     {isDisplayActionEdit && (
                                         <ButtonAction
@@ -130,6 +138,11 @@ const Card = ({
                                     )}
                                 </div>
                             </div>
+                            {validIconStatus && (
+                                <div className='side info'>
+                                    <span className={`status ${item.status}`}>{iconMap[iconStatus]}</span>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

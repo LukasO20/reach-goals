@@ -12,23 +12,6 @@ import { cx } from '../../../../../utils/utils.js'
 
 import './CardMini.scss'
 
-export const CardMiniMap = {
-    type: '',
-    model: [],
-    display: displayModesMap,
-    pendingState: false,
-    checkboxState: checkboxMap,
-    checkboxModel: false,
-    clickFunction: {
-        card: () => null,
-        edit: () => null,
-        delete: () => null
-    },
-    showTags: false,
-    showStatus: false,
-    draggable: false
-}
-
 /**
  * @param {Object} CardMiniMap
  * @param {string} CardMiniMap.type
@@ -44,7 +27,7 @@ export const CardMiniMap = {
  * @param {Function} CardMiniMap.clickFunction.edit
  * @param {Function} CardMiniMap.clickFunction.delete
  * @param {boolean} CardMiniMap.showTags
- * @param {boolean} CardMiniMap.showStatus
+ * @param {[]} CardMiniMap.status
  * @param {boolean} CardMiniMap.draggable
  */
 
@@ -53,123 +36,125 @@ const CardMini = ({
     model,
     display,
     pendingState,
-    checkboxState,
+    checkboxState = checkboxMap,
     clickFunction,
     checkboxModel,
     showTags,
-    showStatus,
+    status = [],
     draggable
-} = CardMiniMap) => {
-    return model.map((item, index) => {
-        const itemID = item.id || item.tagID
-        const tagCardStyle = type === 'tag' ? { backgroundColor: `${item.color}30`, borderColor: item.color } : null
-        const selectedDisplayType = display.type[0]
-        const selectedCheckboxList = checkboxState?.page?.selected ?? []
+}) => {
+    return model
+        .filter((item) => status?.includes(item.status))
+        .map((item, index) => {
+            const itemID = item.id || item.tagID
+            const tagCardStyle = type === 'tag' ? { backgroundColor: `${item.color}30`, borderColor: item.color } : null
+            const selectedDisplayType = display.type[0]
+            const selectedCheckboxList = checkboxState?.page?.selected ?? []
 
-        const isPending = pendingState?.removing && (item.id || item.tagID) === pendingState?.removingVariables
+            const isPending = pendingState?.removing && (item.id || item.tagID) === pendingState?.removingVariables
 
-        const isDisplayActionEdit = display.actions.includes('edit')
-            && displayModesMap.actions.includes('edit')
+            const isDisplayActionEdit = display.actions.includes('edit')
+                && displayModesMap.actions.includes('edit')
 
-        const isDisplayActionRemove = display.actions.includes('remove')
-            && displayModesMap.actions.includes('remove')
+            const isDisplayActionRemove = display.actions.includes('remove')
+                && displayModesMap.actions.includes('remove')
 
-        const isDisplayActionDelete = display.actions.includes('delete')
-            && displayModesMap.actions.includes('delete')
+            const isDisplayActionDelete = display.actions.includes('delete')
+                && displayModesMap.actions.includes('delete')
 
-        const isSelected = !!selectedCheckboxList.includes(`checkbox-${itemID}`)
+            const isSelected = !!selectedCheckboxList.includes(`checkbox-${itemID}`)
 
-        const hasTags = item.tags?.length > 0 && showTags
+            const hasTags = item.tags?.length > 0 && showTags
 
-        const isShowStatus = showStatus
+            const hasSideActions = isDisplayActionEdit || isDisplayActionRemove || isDisplayActionDelete
 
-        const hasSideActions = isDisplayActionEdit || isDisplayActionRemove || isDisplayActionDelete
+            const iconStatus = item.status === 'conclude' ? 'check' : item.status
 
-        const iconStatus = item.status === 'conclude' ? 'check' : item.status
+            const validIconStatus = item.status !== 'progress'
 
-        const cardMiniClass = cx(
-            `${type}
+            const cardMiniClass = cx(
+                `${type}
             ${selectedDisplayType}
             ${isSelected && 'selected'}
             `
-        )
+            )
 
-        const renderCardMini = (dragProvided) => (
-            <div
-                className={cardMiniClass}
-                id={itemID}
-                key={!draggable ? itemID : null}
-                onClick={(e) => clickFunction.card(item, e)}
-                style={tagCardStyle}
-                ref={dragProvided?.innerRef}
-                {...dragProvided?.draggableProps}
-                {...dragProvided?.dragHandleProps}
-            >
-                <div className='body'>
-                    <div className='left-side'>
-                        {checkboxModel && (
-                            <ButtonCheckbox classBtn='checkbox-card-mini' checkboxID={`checkbox-${itemID}`}
-                                checkbox={buildCheckboxMap({ checkboxID: `checkbox-${itemID}`, scope: 'page' })} />
-                        )}
-                        {isShowStatus && (
-                            <label className={`status ${item.status}`}>
-                                {iconMap[iconStatus]}
-                            </label>
-                        )}
-                        {iconMap[type]}
-                        <span>{item.name}</span>
-                    </div>
-                    {(hasTags || hasSideActions) && (
-                        <div className='right-side'>
-                            {hasTags && (<CardMiniTag tags={item.tags} />)}
-                            {hasSideActions && (
-                                <div className='side-actions'>
-                                    {isDisplayActionEdit && (
-                                        <ButtonAction
-                                            onClick={() => clickFunction.edit(itemID)}
-                                            visibility={visibilityMap(['modal-center', type])}
-                                            switchLayout={switchLayoutMap({
-                                                area: 'modal',
-                                                state: { modalName: 'modal-center', layoutName: 'form' }
-                                            })}
-                                            classBtn={`edit-${type} button-action circle small`}
-                                            icon='edit'
-                                        />
-                                    )}
-                                    {isDisplayActionDelete && (
-                                        <ButtonAction
-                                            pendingState={isPending}
-                                            onClick={() => clickFunction.delete(itemID)}
-                                            visibility={visibilityMap(null)}
-                                            classBtn={`remove-${type} button-action circle small`}
-                                            icon='remove'
-                                        />
-                                    )}
-                                    {isDisplayActionRemove && (
-                                        <ButtonAction
-                                            onClick={() => clickFunction.aux(item, type)}
-                                            classBtn={`remove-${type}-dom button-action text-icon circle`}
-                                            icon='close'
-                                        />
-                                    )}
-                                </div>
+            const renderCardMini = (dragProvided) => (
+                <div
+                    className={cardMiniClass}
+                    id={itemID}
+                    key={!draggable ? itemID : null}
+                    onClick={(e) => clickFunction.card(item, e)}
+                    style={tagCardStyle}
+                    ref={dragProvided?.innerRef}
+                    {...dragProvided?.draggableProps}
+                    {...dragProvided?.dragHandleProps}
+                >
+                    <div className='body'>
+                        <div className='left-side'>
+                            {checkboxModel && (
+                                <ButtonCheckbox classBtn='checkbox-card-mini' checkboxID={`checkbox-${itemID}`}
+                                    checkbox={buildCheckboxMap({ checkboxID: `checkbox-${itemID}`, scope: 'page' })} />
                             )}
+                            {validIconStatus && (
+                                <label className={`status ${item.status}`}>
+                                    {iconMap[iconStatus]}
+                                </label>
+                            )}
+                            {iconMap[type]}
+                            <span className='title'>{item.name}</span>
                         </div>
-                    )}
+                        {(hasTags || hasSideActions) && (
+                            <div className='right-side'>
+                                {hasTags && (<CardMiniTag tags={item.tags} />)}
+                                {hasSideActions && (
+                                    <div className='side-actions'>
+                                        {isDisplayActionEdit && (
+                                            <ButtonAction
+                                                onClick={() => clickFunction.edit(itemID)}
+                                                visibility={visibilityMap(['modal-center', type])}
+                                                switchLayout={switchLayoutMap({
+                                                    area: 'modal',
+                                                    state: { modalName: 'modal-center', layoutName: 'form' }
+                                                })}
+                                                classBtn={`edit-${type} button-action circle small`}
+                                                icon='edit'
+                                            />
+                                        )}
+                                        {isDisplayActionDelete && (
+                                            <ButtonAction
+                                                pendingState={isPending}
+                                                onClick={() => clickFunction.delete(itemID)}
+                                                visibility={visibilityMap(null)}
+                                                classBtn={`remove-${type} button-action circle small`}
+                                                icon='remove'
+                                            />
+                                        )}
+                                        {isDisplayActionRemove && (
+                                            <ButtonAction
+                                                onClick={() => clickFunction.aux(item, type)}
+                                                classBtn={`remove-${type}-dom button-action text-icon circle`}
+                                                icon='close'
+                                            />
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
                 </div>
-            </div>
-        )
+            )
 
 
-        return draggable ? (
-            <Draggable draggableId={String(itemID)} index={index} key={String(itemID)}>
-                {(provided) => renderCardMini(provided)}
-            </Draggable>
-        ) : (
-            renderCardMini()
+            return draggable ? (
+                <Draggable draggableId={String(itemID)} index={index} key={String(itemID)}>
+                    {(provided) => renderCardMini(provided)}
+                </Draggable>
+            ) : (
+                renderCardMini()
+            )
+        }
         )
-    }
-    )
 }
 
 export default CardMini

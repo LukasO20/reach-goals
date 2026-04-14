@@ -30,11 +30,22 @@ export const SwitchLayoutProvider = ({ children }) => {
     }, [])
 
     const setUserConfigLayout = useCallback(({ type, data }) => {
-            if (type === 'visibility' && typeof data === 'object') 
-                setVisibility({ ...uiVisibility, ...data })
+        if (typeof data === 'object') {
+            const isStatusKey = Object.keys(data)[0] === 'status'
 
-            return null
-        }, [setVisibility])
+            if (isStatusKey) {
+                const hasStatus = uiVisibility.status?.some(status => data.status.includes(status))      
+                setVisibility({
+                    ...uiVisibility, status: hasStatus ?
+                        uiVisibility.status.filter(status => !data.status.includes(status)) :
+                        [...uiVisibility.status, ...data.status]
+                })
+            }
+            if (type === 'visibility' && !isStatusKey) setVisibility({ ...uiVisibility, ...data })
+        }
+
+        return null
+    }, [setVisibility])
 
     const output = {
         layout,
