@@ -1,5 +1,3 @@
-
-
 .model-tabs {
     display: flex;
     flex-direction: column;
@@ -34,9 +32,25 @@
     }
 
     &.default {
-        
+
         .head {
             padding: 0;
+        }
+    }
+
+    &.column-3x3 {
+
+        >.body {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    &.column-2x2 {
+
+        >.body {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
         }
     }
 

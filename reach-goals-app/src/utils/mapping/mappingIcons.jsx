@@ -34,10 +34,10 @@ export const iconMap = {
     square: <Unicons.UilSquareShape className='icon-st' />,
     progress: <Unicons.UilSpinnerAlt className='icon-st' />,
     icons: <Unicons.UilIcons className='icon-st' />,
-    card: <Unicons.UilLayerGroup className='icon-st' />,
-    cardoff: <Unicons.UilLayerGroupSlash className='icon-st' />,
-    cardmini: <Unicons.UilLayers className='icon-st' />,
-    cardminioff: <Unicons.UilLayersSlash className='icon-st' />,
+    columnsmore: <Unicons.UilLayerGroup className='icon-st' />,
+    columnsmoreoff: <Unicons.UilLayerGroupSlash className='icon-st' />,
+    columnsless: <Unicons.UilLayers className='icon-st' />,
+    columnslessoff: <Unicons.UilLayersSlash className='icon-st' />,
     eye: <Unicons.UilEye className='icon-st' />,
     undefined: <Unicons.UilExclamationOctagon className='icon-st' />
 }

@@ -34,13 +34,14 @@ export const SwitchLayoutProvider = ({ children }) => {
             const isStatusKey = Object.keys(data)[0] === 'status'
 
             if (isStatusKey) {
-                const hasStatus = uiVisibility.status?.some(status => data.status.includes(status))      
+                const hasStatus = uiVisibility.status?.some(status => data.status.includes(status))
                 setVisibility({
                     ...uiVisibility, status: hasStatus ?
                         uiVisibility.status.filter(status => !data.status.includes(status)) :
                         [...uiVisibility.status, ...data.status]
                 })
             }
+
             if (type === 'visibility' && !isStatusKey) setVisibility({ ...uiVisibility, ...data })
         }
 

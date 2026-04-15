@@ -1,21 +1,16 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+
+import { useSwitchLayout } from '../../../../../provider/ui/SwitchLayoutProvider.jsx'
 
 import { modelTabsMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { buildFilterModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
+
+import { cx } from '../../../../../utils/utils.js'
 
 import ButtonAction from '../ButtonAction/ButtonAction.jsx'
 import Loading from '../Loading/Loading.jsx'
 
 import './ModelTabs.scss'
-
-export const ModelTabsMap = {
-    type: '',
-    classModelTabs: '',
-    children: React.ReactNode,
-    headLeftChildren: React.ReactNode,
-    onFilterTabs: null,
-    loading: false
-}
 
 /**
  * @param {Object} ModelTabsMap
@@ -27,7 +22,8 @@ export const ModelTabsMap = {
  * @param {function} ModelTabsMap.onFilterTabs
  */
 
-const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, onFilterTabs, loading } = ModelTabsMap) => {
+const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, onFilterTabs, loading }) => {
+    const { data: { visibility } } = useSwitchLayout()
     const [currentFilterData, setCurrentFilterData] = useState({
         assignment: {},
         goal: {},
@@ -37,6 +33,15 @@ const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, onFilterT
     const filterButtonActive = currentFilterData[type] ?
         Object.entries(currentFilterData[type]).find(([_, value]) => value === 'all')?.[0]
         : null
+
+    const columnsUserConfig = visibility.columns
+
+    const modelTabsClass = cx(`
+        model-tabs
+        ${columnsUserConfig}
+        ${type}
+        ${classModelTabs}
+        `)
 
     const handleFilterClick = (filter) => {
         const filerKey = Object.keys(filter)[0]
@@ -51,7 +56,7 @@ const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, onFilterT
     }
 
     return (
-        <div className={`model-tabs ${type} ${classModelTabs}`}>
+        <div className={modelTabsClass}>
             <div className='head'>
                 {headLeftChildren}
                 <div className='options-sections'>

@@ -107,6 +107,18 @@
                 border-radius: 2rem;
                 align-self: self-end;
             }
+
+            &.group {
+
+                .groups {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                    background-color: $color-white;
+                    padding: 0.25rem;
+                    border-radius: 1rem;
+                }
+            }
         }
     }
 

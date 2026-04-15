@@ -42,17 +42,17 @@ const statusButton = (classBtn, providervisibleElements = []) => {
     return providervisibleElements.includes(classBtn)
 }
 
-const ButtonAction = ({ 
-    visibility, 
-    switchLayout, 
-    nullForm, 
-    unlinkGoal, 
-    onClick, 
-    pendingState, 
-    disable, 
-    icon, 
-    title, 
-    classBtn 
+const ButtonAction = ({
+    visibility,
+    switchLayout,
+    nullForm,
+    unlinkGoal,
+    onClick,
+    pendingState,
+    disable,
+    icon,
+    title,
+    classBtn
 } = ButtonActionMap) => {
     const { visibleElements, toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
@@ -98,7 +98,7 @@ const ButtonAction = ({
         <span className={buttonActionClass}
             onClick={handleClick} onKeyDown={(e) => e.key === 'Enter' ? handleClick(e) : ''} role='button' tabIndex='0'>
             {pendingState ? <Loading mode='inline' /> : icon && iconMap[icon]}
-            <span className='button-title'>{title}</span>
+            {title && (<span className='button-title'>{title}</span>)}
         </span>
     )
 }
