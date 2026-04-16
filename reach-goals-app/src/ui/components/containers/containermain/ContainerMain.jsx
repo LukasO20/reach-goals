@@ -6,6 +6,7 @@ import { useManageModel } from '../../../../provider/model/ManageModelProvider.j
 import { useVisibility } from '../../../../provider/ui/VisibilityProvider.jsx'
 import { useSwitchLayout } from '../../../../provider/ui/SwitchLayoutProvider.jsx'
 import { useCheckbox } from '../../../../provider/ui/CheckboxProvider.jsx'
+import { useButtonDropdown } from '../../../../hooks/useButtonDropdown.js'
 
 import { visibilityMap, switchLayoutMap, buildCheckboxMap } from '../../../../utils/mapping/mappingUtils.js'
 
@@ -45,94 +46,26 @@ const ContainerM = () => {
     const isPageHome = layout.page.pageName === 'home'
     const isPageObjectives = layout.page.pageName === 'objectives'
 
-    const moreDropdownOptionsMap = [
-        {
-            id: 'switch-cards',
-            classBtn: visibility.cards === 'card' ? 'active' : '',
-            title: `Switch to ${visibility.cards === 'card' ? 'card-mini' : 'card'}`,
-            icon: 'cardmini',
-            uiMode: 'button-toggle',
-            onClick: () => setUserConfigLayout({
-                type: 'visibility',
-                data: { cards: visibility.cards === 'card' ? 'card-mini' : 'card' }
-            })
-        },
-        isPageObjectives && [
-            {
-                id: 'switch-columns-less',
-                classBtn: visibility.columns === 'column-2x2' ? 'active' : '',
-                title: `${visibility.columns === 'column-2x2' ? 'Remove' : 'Apply'} to columns 2x2`,
-                icon: visibility.columns === 'column-2x2' ? 'columnslessoff' : 'columnsless',
-                onClick: () => setUserConfigLayout({ 
-                    type: 'visibility', 
-                    data: { columns: visibility.columns === 'column-2x2' ? null : 'column-2x2' } 
-                })
-            },
-            {
-                id: 'switch-columns-more',
-                classBtn: visibility.columns === 'column-3x3' ? 'active' : '',
-                title: `${visibility.columns === 'column-3x3' ? 'Remove' : 'Apply'} to columns 3x3`,
-                icon: visibility.columns === 'column-3x3' ? 'columnsmoreoff' : 'columnsmore',
-                onClick: () => setUserConfigLayout({ 
-                    type: 'visibility', 
-                    data: { columns: visibility.columns === 'column-3x3' ? null : 'column-3x3' } 
-                })
-            }
-        ]
-    ].filter(Boolean)
-
-    const createDropdownOptionsMap = [
-        {
-            title: 'Goal',
-            icon: 'plus',
-            onClick: () => {
-                toggleVisibility(visibilityMap(['modal-center', 'goal']));
-                updateSwitchLayout(formRender)
-            }
-        },
-        {
-            title: 'Assignment',
-            icon: 'plus',
-            onClick: () => {
-                toggleVisibility(visibilityMap(['modal-center', 'assignment']));
-                updateSwitchLayout(formRender)
-            }
+    const createDropdown = useButtonDropdown({
+        type: 'create-dropdown',
+        actions: {
+            setterUseVisiblity: (target) => toggleVisibility(visibilityMap(['modal-center', target])),
+            setterUseSwitchLayout: () => updateSwitchLayout(formRender)
         }
-    ]
+    })
 
-    const visibilityDropdownOptionsMap = [
-        {
-            id: 'hide-tags',
-            classBtn: visibility.tagsCard ? 'active' : '',
-            title: `${visibility.tagsCard ? 'Hide' : 'Show'} tags`,
-            icon: 'tag',
-            onClick: () => setUserConfigLayout({
-                type: 'visibility',
-                data: { tagsCard: !visibility.tagsCard }
-            })
-        },
-        {
-            id: 'progress-status',
-            classBtn: visibility.status?.includes('progress') ? 'active' : '',
-            title: `${visibility.status?.includes('progress') ? 'Hide' : 'Show'} progress activity`,
-            icon: 'progress',
-            onClick: () => setUserConfigLayout({ type: 'visibility', data: { status: ['progress'] } })
-        },
-        {
-            id: 'conclude-status',
-            classBtn: visibility.status?.includes('conclude') ? 'active' : '',
-            title: `${visibility.status?.includes('conclude') ? 'Hide' : 'Show'} conclude activity`,
-            icon: 'check',
-            onClick: () => setUserConfigLayout({ type: 'visibility', data: { status: ['conclude'] } })
-        },
-        {
-            id: 'cancel-status',
-            classBtn: visibility.status?.includes('cancel') ? 'active' : '',
-            title: `${visibility.status?.includes('cancel') ? 'Hide' : 'Show'} cancel activity`,
-            icon: 'cancel',
-            onClick: () => setUserConfigLayout({ type: 'visibility', data: { status: ['cancel'] } })
-        },
-    ]
+    const moreDropdown = useButtonDropdown({
+        type: 'more-dropdown',
+        value: visibility,
+        isPageObjectives: isPageObjectives,
+        actions: { setterUseSwitchLayout: (target) => setUserConfigLayout(target) }
+    })
+
+    const visibilityDropdown = useButtonDropdown({
+        type: 'visibility-dropdown',
+        value: visibility,
+        actions: { setterUseSwitchLayout: (target) => setUserConfigLayout(target) }
+    })
 
     const isSwitchLayoutAssignment = layout.page.layoutName === 'assignment'
     const isSwitchLayoutGoal = layout.page.layoutName === 'goal'
@@ -192,7 +125,7 @@ const ContainerM = () => {
                             classBtn='create'
                             icon='plus'
                             title='create'
-                            options={createDropdownOptionsMap}
+                            options={createDropdown}
                         />
                         {!isPageCalendar && (
                             <>
@@ -201,13 +134,13 @@ const ContainerM = () => {
                                     classBtn='visibility'
                                     icon='eye'
                                     title='visibility'
-                                    options={visibilityDropdownOptionsMap}
+                                    options={visibilityDropdown}
                                 />
                                 <ButtonDropdown
                                     visibility='dropdown-action-more'
                                     classBtn='more'
                                     icon='ellipsisv'
-                                    options={moreDropdownOptionsMap}
+                                    options={moreDropdown}
                                 />
                             </>
                         )}
