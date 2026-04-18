@@ -53,8 +53,6 @@ export const SwitchLayoutProvider = ({ children }) => {
         visibility: uiVisibility,
     }
 
-    console.log('SWITCH - ', output)
-
     const value = useMemo(() => ({ data: output, updateSwitchLayout, setUserConfigLayout }), [layout, updateSwitchLayout, setUserConfigLayout])
 
     return (

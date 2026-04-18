@@ -1,0 +1,97 @@
+import React from 'react'
+import { useManageModel } from '../../../../../provider/model/ManageModelProvider.jsx'
+import { useVisibility } from '../../../../../provider/ui/VisibilityProvider.jsx'
+import { useSwitchLayout } from '../../../../../provider/ui/SwitchLayoutProvider.jsx'
+
+import Loading from '../Loading/index.jsx'
+import SearchItem from './elements/search-item.jsx'
+import SearchItemTag from './elements/search-item-tag.jsx'
+
+import { switchLayoutMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
+
+const SearchBoxResultsMap = {
+    data: {
+        goals: [],
+        assignments: [],
+        tags: []
+    },
+}
+
+/** @typedef {import('./types.js').SearchBoxResultsProps} Props */
+
+/**
+ * @param {Props} props
+ */
+const SearchBoxResults = ({ 
+    data = SearchBoxResultsMap.data, 
+    loading, 
+    status
+}) => { 
+    
+    const { setModel } = useManageModel()
+    const { toggleVisibility } = useVisibility()
+    const { updateSwitchLayout } = useSwitchLayout()
+    const { goals = [], assignments = [], tags = [] } = data
+
+    const dataResult = [
+        ...goals.map((g) => ({ ...g, type: 'goal' })),
+        ...assignments.map((a) => ({ ...a, type: 'assignment' })),
+        ...tags.map((t) => ({ ...t, type: 'tag' }))
+    ]
+
+    const handleEditModel = (id, type = '') => {
+        try { setModel(prev => ({ ...prev, mainModelID: id, typeModel: type })) }
+        catch (error) { console.error(`Failed to edit this ${type}: ${error}`) }
+    }
+
+    const handleItemClick = (id, type = '', model = {}) => {
+        const dataSwitchLayout = switchLayoutMap({ area: 'modal', state: { modalName: 'modal-right', layoutName: 'details' } })
+        setModel(prev => ({ ...prev, mainModelID: id, formModel: model, typeModel: type }))
+        updateSwitchLayout(dataSwitchLayout)
+        toggleVisibility(visibilityMap(['modal-right', type]))
+    }
+
+    const showMessage = !dataResult.length
+    const message = status === 'idle' ? 'Start some search. Ex: a goal name.' : 'No results found.'
+
+    return (
+        <div className='search-box scrollable' onClick={(e) => e.stopPropagation()}>
+            {
+                loading ? (<Loading mode='inline' title='searching results' />) :
+                    showMessage ?
+                        (<div className='item'>
+                            <div className='item-info'>
+                                <label className='message'>{message}</label>
+                            </div>
+                        </div>) :
+                        (dataResult.map((item) => {
+                            const type = item.type
+                            const useSearchItem = type === 'assignment' || type === 'goal'
+                            const useResourcesTag = type === 'tag'
+
+                            return (
+                                <React.Fragment key={item.id}>
+                                    {
+                                        useSearchItem && (
+                                            <SearchItem type={type} item={item}
+                                                onItemClick={handleItemClick}
+                                                onButtonClick={handleEditModel}
+                                            />
+                                        )
+                                    }
+                                    {
+                                        useResourcesTag && (
+                                            <SearchItemTag type={type} item={item}
+                                                onButtonClick={handleEditModel}
+                                            />
+                                        )
+                                    }
+                                </React.Fragment>
+                            )
+                        }))
+            }
+        </div>
+    )
+}
+
+export default SearchBoxResults

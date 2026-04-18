@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom'
 
-import { HomeWrapper } from './pages/Home/HomeWrapper.jsx'
-import { CalendarWrapper } from './pages/Calendar/CalendarWrapper.jsx'
-import { ObjectivesWrapper } from './pages/Objectives/ObjectivesWrapper.jsx'
+import { HomeWrapper } from './pages/home/home-wrapper.jsx'
+import { CalendarWrapper } from './pages/calendar/calendar-wrapper.jsx'
+import { ObjectivesWrapper } from './pages/objectives/objectives-wrapper.jsx'
 
 const sectionRender = (section) => {
     switch (section) {

@@ -3,12 +3,12 @@ import { BrowserRouter } from 'react-router-dom'
 import ProviderApp from '../provider/ProviderApp.jsx'
 import AppRoutes from './Routes.jsx'
 
-import ContainerN from '../ui/components/navigate/Navigate.jsx'
-import ContainerH from '../ui/components/containers/containerheader/ContainerHeader.jsx'
-import ContainerM from '../ui/components/containers/containermain/ContainerMain.jsx'
-import MessageToast from '../ui/components/items/elements/MessageToast/MessageToast.jsx'
-import ModalSwitcherCenter from '../ui/components/modals/ModalSwitcherCenter.jsx'
-import ModalSwitcherRight from '../ui/components/modals/ModalSwitcherRight.jsx'
+import Navigate from '../ui/components/navigate/index.jsx'
+import ContainerHeader from '../ui/components/containers/container-header'
+import ContainerMain from '../ui/components/containers/container-main'
+import MessageToast from '../ui/components/items/elements/message-toast'
+import ModalSwitcherCenter from '../ui/components/modals/modal-switcher-center.jsx'
+import ModalSwitcherRight from '../ui/components/modals/modal-switcher-right.jsx'
 
 import './App.scss'
 
@@ -16,11 +16,11 @@ const App = () => (
     <BrowserRouter>
         <ProviderApp>
             <div className="container-app">
-                <ContainerN />
-                <ContainerH />
-                <ContainerM>
+                <Navigate />
+                <ContainerHeader />
+                <ContainerMain>
                     <AppRoutes />
-                </ContainerM>
+                </ContainerMain>
                 <MessageToast />
                 <ModalSwitcherCenter />
                 <ModalSwitcherRight />
