@@ -32,7 +32,7 @@ const Card = ({
     draggable = false
 }) => {
     return model
-        .filter((item) => status?.includes(item.status) ?? true)
+        .filter((item) => status?.includes(item.status) || true)
         .sort((a, b) => a.order - b.order)
         .map((item, index) => {
             const hasTags = item.tags?.length > 0 && showTags

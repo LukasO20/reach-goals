@@ -1,8 +1,5 @@
-import { useNavigate } from 'react-router-dom'
-
 import { useManageModel } from '../../../../provider/model/ManageModelProvider.jsx'
 import { useVisibility } from '../../../../provider/ui/VisibilityProvider.jsx'
-import { useSwitchLayout } from '../../../../provider/ui/SwitchLayoutProvider.jsx'
 import { useTitle } from '../../../../provider/ui/TitleProvider.jsx'
 
 import { visibilityMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
@@ -17,19 +14,11 @@ import './style.scss'
 
 const ContainerHeader = () => {
     const { title } = useTitle()
-    const { visibleElements, toggleVisibility } = useVisibility()
-    const { setModel, resetManageModel } = useManageModel()
-    const { data: { layout } } = useSwitchLayout()
-    const navigate = useNavigate()
+    const { visibleElements } = useVisibility()
+    const { setModel } = useManageModel()
 
     const linkTagClick = (e) => {
         if (e) setModel(prev => ({ ...prev, typeModel: 'tag' }))
-    }
-
-    const handleClickHeader = (e) => {
-        toggleVisibility(visibilityMap(null), e)
-        resetManageModel()
-        navigate(`/${layout.page.pageName}`) // return standard route during handle
     }
 
     const buttonDropdownClass = cx(
@@ -41,7 +30,7 @@ const ContainerHeader = () => {
     )
 
     return (
-        <div className='container-header main-content' onClick={(e) => handleClickHeader(e)}>
+        <div className='container-header main-content'>
             <div className='titles-header'>
                 <h1>{title.header}</h1>
             </div>

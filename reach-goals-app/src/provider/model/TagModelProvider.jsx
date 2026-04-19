@@ -57,9 +57,7 @@ export const TagModelProvider = ({ children, filter } = TagModelProviderMap) => 
 
     const saveMutation = useMutation({
         mutationFn: (model) =>
-            !!model.id
-                ? tagService.updateTag(model)
-                : tagService.addTag(model),
+            model.id ? tagService.updateTag(model) : tagService.addTag(model),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeyModal })
             update({ toast: `Tag save with success` })

@@ -43,7 +43,7 @@ const RelationCard = ({ checkboxState = checkboxMap }) => {
                 const { goals = [], assignments = [] } = item
 
                 const goal = {
-                    goals: goals.filter(goalItem => !!goalItem?.goal).map(goalItem => {
+                    goals: goals.filter(goalItem => goalItem.goal).map(goalItem => {
                         return {
                             id: goalItem.id,
                             name: goalItem.goal.name,
@@ -52,7 +52,7 @@ const RelationCard = ({ checkboxState = checkboxMap }) => {
                     })
                 }
                 const assignment = {
-                    assignments: assignments.filter(assignmentItem => !!assignmentItem?.assignment).map(assignmentItem => {
+                    assignments: assignments.filter(assignmentItem => assignmentItem.assignment).map(assignmentItem => {
                         return {
                             id: assignmentItem.id,
                             name: assignmentItem.assignment.name,

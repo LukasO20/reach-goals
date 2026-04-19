@@ -14,7 +14,7 @@ import ButtonLink from '../items/elements/button-link/index.jsx'
 import './style.scss'
 
 const Navigate = () => {
-    const { visibleElements, toggleVisibility } = useVisibility()
+    const { visibleElements } = useVisibility()
     const { data: { layout } } = useSwitchLayout()
     const { resetCheckbox } = useCheckbox()
     const navigate = useNavigate()
@@ -26,8 +26,6 @@ const Navigate = () => {
 
     const handleClickNavigate = (e) => {
         if (!e) return
-
-        toggleVisibility(visibilityMap(), e)
         navigate(`/${layout.page.pageName}`) // return standard route during handle
     }
 

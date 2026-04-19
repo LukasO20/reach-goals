@@ -30,7 +30,7 @@ const CardMini = ({
     draggable
 }) => {
     return model
-        .filter((item) => status?.includes(item.status) ?? true)
+        .filter((item) => status.includes(item.status) || true)
         .map((item, index) => {
             const itemID = item.id || item.tagID
             const tagCardStyle = type === 'tag' ? { backgroundColor: `${item.color}30`, borderColor: item.color } : null
@@ -56,7 +56,7 @@ const CardMini = ({
 
             const iconStatus = item.status === 'conclude' ? 'check' : item.status
 
-            const validIconStatus = item.status !== 'progress'
+            const validIconStatus = item.status && item.status !== 'progress'
 
             const cardMiniClass = cx(
                 `${type}

@@ -1,8 +1,5 @@
-import { useNavigate } from 'react-router-dom'
-
 import Routes from '../../../../app/Routes.jsx'
 
-import { useManageModel } from '../../../../provider/model/ManageModelProvider.jsx'
 import { useVisibility } from '../../../../provider/ui/VisibilityProvider.jsx'
 import { useSwitchLayout } from '../../../../provider/ui/SwitchLayoutProvider.jsx'
 import { useCheckbox } from '../../../../provider/ui/CheckboxProvider.jsx'
@@ -20,19 +17,9 @@ import PopupModelOptions from '../../items/elements/popup-model-options'
 import './style.scss'
 
 const ContainerMain = () => {
-    const { resetManageModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
     const { data: { layout, visibility }, updateSwitchLayout, setUserConfigLayout } = useSwitchLayout()
     const { valuesCheckbox, resetCheckbox } = useCheckbox()
-
-    const navigate = useNavigate()
-
-    const handleClickContainer = (e) => {
-        toggleVisibility(visibilityMap(null), e)
-        resetManageModel()
-        navigate(`/${layout.page.pageName}`)
-    }
-
     const handleButtonActionClick = () => {
         resetCheckbox({ keys: ['page'] })
     }
@@ -75,7 +62,7 @@ const ContainerMain = () => {
     const hasSelectedModel = !!valuesCheckbox.page?.selected.length
 
     return (
-        <div className='container-main' onClick={(e) => handleClickContainer(e)}>
+        <div className='container-main'>
             <div className='head'>
                 {!isPageCalendar && (
                     <div className='line-p'>

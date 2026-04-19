@@ -5,11 +5,12 @@ import ModalDetailsSection from '../../items/modals/modal-details-section'
 import Loading from '../../items/elements/loading/index.jsx'
 
 const ModalDetails = () => {
-    const { loading: goalLoading } = useGoalProvider()
-    const { loading: assignmentLoading } = useAssignmentProvider()
+    const { modal: { loading: loadingGoal } } = useGoalProvider()
+    const { modal: { loading: loadingAssignment } } = useAssignmentProvider()
 
-    const isLoading = !!goalLoading || !!assignmentLoading
+    const isLoading = !!loadingGoal || !!loadingAssignment
 
+    //TODO: USE DATA FROM PROVIDERS TO SEND FOR ModalDetailsSection
     return isLoading ? <Loading mode='block' /> : <ModalDetailsSection />
 
 }

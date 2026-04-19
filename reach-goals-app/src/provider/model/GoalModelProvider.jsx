@@ -57,9 +57,8 @@ export const GoalModelProvider = ({ children, filter } = GoalModelProviderMap) =
   })
 
   const saveMutation = useMutation({
-    mutationFn: (model) => !!model.id ? goalService.updateGoal(model) : goalService.addGoal(model),
+    mutationFn: (model) => model.id ? goalService.updateGoal(model) : goalService.addGoal(model),
     onSuccess: () => {
-      console.log('HERE - ', queryKeyPage)
       queryClient.invalidateQueries({ queryKey: queryKeyPage })
       update({ toast: `Goal save with success` })
     }

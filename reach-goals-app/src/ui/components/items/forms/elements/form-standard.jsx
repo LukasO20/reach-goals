@@ -23,7 +23,7 @@ import { updateFormModelMap } from '../../../../../utils/mapping/mappingUtilsPro
  * @param {Props} props
  */
 const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState }) => {
-    const { visibleElements, toggleVisibility } = useVisibility()
+    const { visibleElements } = useVisibility()
     const { model, setModel, updateFormModel } = useManageModel()
 
     const modelCopyRegion = type === 'goal' ? 'assignment' : ''
@@ -31,7 +31,7 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
     const isEmptyForm = typeof model.mainModelID === 'number'
     const display = { type: ['card-mini'], actions: ['remove'] }
 
-    const handleClickForm = () => toggleVisibility(visibilityMap('dropdown-status', { remove: true }))
+    const handleClickForm = () => null//toggleVisibility(visibilityMap('dropdown-status', { remove: true }))
 
     const renderDropdownStatusTitle = (status) => {
         return {
