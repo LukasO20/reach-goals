@@ -6,7 +6,7 @@ import { cx } from '../../../../../utils/utils.js'
 import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 import { resetManageModelMap, updateFormModelMap, removeFromSelectedModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
-import Loading from '../Loading'
+import Loading from '../loading'
 
 import './style.scss'
 

@@ -3,7 +3,7 @@ import { useManageModel } from '../../../../../provider/model/ManageModelProvide
 import { useVisibility } from '../../../../../provider/ui/VisibilityProvider.jsx'
 import { useSwitchLayout } from '../../../../../provider/ui/SwitchLayoutProvider.jsx'
 
-import Loading from '../Loading' 
+import Loading from '../loading' 
 import SearchItem from './elements/search-item.jsx'
 import SearchItemTag from './elements/search-item-tag.jsx'
 
