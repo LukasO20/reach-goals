@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom'
 import ProviderApp from '../provider/ProviderApp.jsx'
 import AppRoutes from './Routes.jsx'
 
-import Navigate from '../ui/components/navigate/index.jsx'
+import Navigate from '../ui/components/navigate' 
 import ContainerHeader from '../ui/components/containers/container-header'
 import ContainerMain from '../ui/components/containers/container-main'
 import MessageToast from '../ui/components/items/elements/message-toast'

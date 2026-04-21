@@ -2,7 +2,7 @@ import { useAssignmentProvider } from '../../../../provider/model/AssignmentMode
 import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
 
 import ModalDetailsSection from '../../items/modals/modal-details-section'
-import Loading from '../../items/elements/loading/index.jsx'
+import Loading from '../../items/elements/loading' 
 
 const ModalDetails = () => {
     const { modal: { loading: loadingGoal } } = useGoalProvider()

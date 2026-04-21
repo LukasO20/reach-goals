@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import ChartPie from '../../../items/elements/chart-pie/index.jsx'
+import ChartPie from '../../../items/elements/chart-pie' 
 
 const standardPieData = {
     data: {

@@ -7,7 +7,7 @@ import { useManageModel } from '../../../../../provider/model/ManageModelProvide
 import { visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 
-import ButtonAction from '../../elements/button-action/index.jsx'
+import ButtonAction from '../../elements/button-action' 
 import Assignment from '../../models/assignment'
 
 import moment from 'moment'

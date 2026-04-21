@@ -8,8 +8,8 @@ import { visibilityMap, switchLayoutMap } from '../../../utils/mapping/mappingUt
 
 import { cx } from '../../../utils/utils.js'
 
-import ButtonAction from '../items/elements/button-action/index.jsx'
-import ButtonLink from '../items/elements/button-link/index.jsx'
+import ButtonAction from '../items/elements/button-action' 
+import ButtonLink from '../items/elements/button-link' 
 
 import './style.scss'
 

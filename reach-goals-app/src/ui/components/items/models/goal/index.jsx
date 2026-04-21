@@ -7,8 +7,8 @@ import { useCheckbox } from '../../../../../provider/ui/CheckboxProvider.jsx'
 import { switchLayoutMap, visibilityMap, displayModesMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { addToSelectedModelMap, updateFormModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
-import Card from '../../elements/card/index.jsx'
-import CardMini from '../../elements/card-mini/index.jsx'
+import Card from '../../elements/card' 
+import CardMini from '../../elements/card-mini' 
 
 import moment from 'moment'
 
@@ -76,7 +76,7 @@ const Goal = ({
         if (detailsModel) {
             const dataSwitchLayout = switchLayoutMap({ area: 'modal', state: { modalName: 'modal-right', layoutName: 'details' } })
 
-            setModel(prev => ({ ...prev, mainModelID: goal.id, formModel: goal, typeModel: 'goal' }))
+            setModel(prev => ({ ...prev, mainModelID: goal.id, typeModel: 'goal' }))
             updateSwitchLayout(dataSwitchLayout)
             toggleVisibility(visibilityMap(['modal-right', 'goal']))
         }

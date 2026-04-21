@@ -7,7 +7,7 @@ import { useVisibility } from '../../../../../provider/ui/VisibilityProvider.jsx
 import { visibilityMap, displayModesMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { addToSelectedModelMap, updateFormModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
-import CardMini from '../../elements/card-mini/index.jsx'
+import CardMini from '../../elements/card-mini' 
 
 /** @typedef {import('./types.js').TagProps} Props */
 

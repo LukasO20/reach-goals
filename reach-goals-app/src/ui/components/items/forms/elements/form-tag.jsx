@@ -5,9 +5,9 @@ import { useTagProvider } from '../../../../../provider/model/TagModelProvider.j
 import { visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 
-import ButtonAction from '../../elements/button-action/index.jsx'
-import InputText from '../../elements/input-text/index.jsx'
-import Loading from '../../elements/loading/index.jsx'
+import ButtonAction from '../../elements/button-action' 
+import InputText from '../../elements/input-text' 
+import Loading from '../../elements/loading' 
 
 /** @typedef {import('../types.js').FormTagProps} Props */
 

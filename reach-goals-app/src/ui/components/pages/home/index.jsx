@@ -2,7 +2,7 @@ import { useSwitchLayout } from '../../../../provider/ui/SwitchLayoutProvider.js
 import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
 import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
 
-import Loading from '../../items/elements/loading/index.jsx'
+import Loading from '../../items/elements/loading' 
 import ContainerColumn from './elements/container-column.jsx'
 import ContainerChartPie from './elements/container-chartpie.jsx'
 

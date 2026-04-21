@@ -7,7 +7,7 @@ import { iconMap } from '../../../../../utils/mapping/mappingIcons'
 
 import Assignment from '../../../items/models/assignment'
 import Goal from '../../../items/models/goal'
-import { DragDrop, DragDropDroppable } from '../../../items/elements/drag-drop/index.jsx'
+import { DragDrop, DragDropDroppable } from '../../../items/elements/drag-drop' 
 
 /** @typedef {import('../types').ContainerProps} Props */
 

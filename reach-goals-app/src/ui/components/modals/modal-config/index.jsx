@@ -3,7 +3,7 @@ import { useVisibility } from '../../../../provider/ui/VisibilityProvider.jsx'
 import { visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
 import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
 
-import ButtonAction from '../../items/elements/button-action/index.jsx'
+import ButtonAction from '../../items/elements/button-action' 
 import ModalConfigSection from '../../items/modals/modal-config-section'
 
 import './style.scss'

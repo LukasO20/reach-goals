@@ -1,8 +1,8 @@
 import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
 import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
 
-import MonthDaysPicker from '../../items/elements/month-days-picker/index.jsx'
-import Loading from '../../items/elements/loading/index.jsx'
+import MonthDaysPicker from '../../items/elements/month-days-picker' 
+import Loading from '../../items/elements/loading' 
 
 const Calendar = () => {
     const { page: { loading: loadingGoal, data: dataGoal } } = useGoalProvider()

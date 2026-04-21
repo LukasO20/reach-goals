@@ -5,7 +5,7 @@ import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 
 import { cx } from '../../../../../utils/utils.js'
 
-import ButtonAction from '../../elements/button-action/index.jsx'
+import ButtonAction from '../../elements/button-action' 
 
 /** @typedef {import('../types.js').ModelRelationAddProps} Props */
 

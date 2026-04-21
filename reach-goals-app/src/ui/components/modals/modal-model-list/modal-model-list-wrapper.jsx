@@ -4,7 +4,7 @@ import { useManageModel } from '../../../../provider/model/ManageModelProvider.j
 
 import { buildFilterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
-import ModalModelList from './index.jsx'
+import ModalModelList from '.' 
 
 /** @typedef {import('./types.js').ModalModelListWrapperProps} Props */
 

@@ -9,12 +9,12 @@ import { useCheckbox } from '../../../../provider/ui/CheckboxProvider.jsx'
 import { visibilityMap, switchLayoutMap, buildCheckboxMap } from '../../../../utils/mapping/mappingUtils.js'
 import { resetManageModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
-import ModalForm from '../modal-form/index.jsx'
-import ButtonAction from '../../items/elements/button-action/index.jsx'
-import ButtonCheckbox from '../../items/elements/button-checkbox/index.jsx'
-import ModelTabs from '../../items/elements/model-tabs/index.jsx'
+import ModalForm from '../modal-form' 
+import ButtonAction from '../../items/elements/button-action' 
+import ButtonCheckbox from '../../items/elements/button-checkbox' 
+import ModelTabs from '../../items/elements/model-tabs' 
 import RelationCard from '../../items/models/tag/relation-card.jsx'
-import PopupModelOptions from '../../items/elements/popup-model-options/index.jsx'
+import PopupModelOptions from '../../items/elements/popup-model-options' 
 
 import { cx } from '../../../../utils/utils.js'
 

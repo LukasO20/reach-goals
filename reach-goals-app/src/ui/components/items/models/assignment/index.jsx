@@ -7,8 +7,8 @@ import { useCheckbox } from '../../../../../provider/ui/CheckboxProvider.jsx'
 import { displayModesMap, switchLayoutMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { updateFormModelMap, addToSelectedModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 
-import Card from '../../elements/card/index.jsx'
-import CardMini from '../../elements/card-mini/index.jsx'
+import Card from '../../elements/card' 
+import CardMini from '../../elements/card-mini' 
 
 /** @typedef {import('./types.js').AssignmentProps} Props */
 

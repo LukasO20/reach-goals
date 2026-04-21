@@ -11,8 +11,8 @@ import { useTitle } from '../../../../provider/ui/TitleProvider.jsx'
 import { visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
 import { resetManageModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
-import Form from '../../items/forms/index.jsx'
-import Loading from '../../items/elements/loading/index.jsx'
+import Form from '../../items/forms' 
+import Loading from '../../items/elements/loading' 
 import FormModelRelationAdd from '../../items/forms/elements/form-model-relation-add.jsx'
 
 import './style.scss'

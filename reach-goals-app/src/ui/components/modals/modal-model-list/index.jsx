@@ -6,9 +6,9 @@ import { useAssignmentProvider } from '../../../../provider/model/AssignmentMode
 import { filterBuildModelMap, visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
 import { updateFilterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
-import ButtonAction from '../../items/elements/button-action/index.jsx'
-import Loading from '../../items/elements/loading/index.jsx'
-import ModelSwitcher from '../../items/models/model-switcher/index.jsx'
+import ButtonAction from '../../items/elements/button-action' 
+import Loading from '../../items/elements/loading' 
+import ModelSwitcher from '../../items/models/model-switcher' 
 
 import './style.scss'
 
