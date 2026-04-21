@@ -64,7 +64,7 @@
                 .item-info {
                     overflow: hidden;
                     cursor: pointer;
-                    transition: .3s ease-in-out;
+                    transition: .3s linear;
                     padding: 0rem 0.5rem;
                     border-radius: 0.5rem;
                     height: 1.8rem;
@@ -124,7 +124,7 @@
 
             &.tag {
                 max-height: 1.75rem;
-                transition: max-height 0.3s ease-in-out;
+                transition: max-height 0.3s linear;
 
                 >.head {
 
@@ -157,7 +157,7 @@
                             background-color: $color-white-70;
                             padding: 0.25rem 0.5rem;
                             border-radius: 0.5rem;
-                            transition: .3s ease-in-out;
+                            transition: .3s linear;
                             color: $color-complementary-s;
 
                             .icon-st {

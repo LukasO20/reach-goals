@@ -6,7 +6,8 @@
     width: 35em;
     background-color: $color-white;
     box-shadow: $box-shadow-st;
-    transition: 0.3s ease-in-out;
+    transition: $animation-transition-st;
+    animation: $animation-fade-in 0.2s linear forwards;
     opacity: 0;
     z-index: -1;
 
@@ -85,7 +86,6 @@
         opacity: 0;
         z-index: -1;
         box-shadow: $box-shadow-st;
-        transition: 0.3s ease-in-out;
 
         .container-form-modal,
         .container-config {

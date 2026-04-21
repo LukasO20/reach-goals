@@ -1,6 +1,6 @@
-
-$fade-in: fade-in;
-$spin: spin;
+$animation-fade-in: fade-in;
+$animation-spin: spin;
+$animation-transition-st: all 0.2s linear;
 
 @keyframes fade-in {
   from {

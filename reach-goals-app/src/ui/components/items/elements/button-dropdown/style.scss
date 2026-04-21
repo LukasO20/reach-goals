@@ -2,7 +2,7 @@
     position: relative;
     user-select: none;
     z-index: 1;
-    transition: 0.3s ease-out;
+    transition: $animation-transition-st;
 
     .dropdown-title {
         display: flex;
@@ -43,6 +43,7 @@
         border-radius: 0.2em;
         max-height: 20em;
         right: 0;
+        animation: $animation-fade-in 0.1s linear forwards;
 
         &.show {
             display: flex;
@@ -97,7 +98,6 @@
 
                 &:active {
                     background-color: $color-primary-50;
-                    transition: .1s linear;
                 }
             }
 
@@ -139,7 +139,6 @@
 
             &:active {
                 background-color: $color-primary-50;
-                transition: 0.1s ease-in-out;
             }
         }
     }
@@ -166,7 +165,6 @@
 
                 &:active {
                     background-color: $color-primary-50;
-                    transition: .1s linear;
                 }
             }
         }

@@ -3,9 +3,11 @@
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
+    transition: $animation-transition-st;
+    cursor: pointer;
 
     * {
-        transition: 0.3s ease-in-out;
+        transition: $animation-transition-st;
         cursor: pointer;
     }
 
@@ -44,7 +46,7 @@
     }
 
     &.checkbox-main {
-        animation: $fade-in 0.3s ease-out forwards;
+        animation: $animation-fade-in 0.2s linear forwards;
     }
 
     /* DOUBLE APPLY */

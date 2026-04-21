@@ -35,7 +35,7 @@
         border-radius: 0.5em;
         background-color: $color-complementary-p-50;
         color: $color-complementary-s;
-        transition: 0.3s ease-out;
+        transition: $animation-transition-st;
         cursor: pointer;
         border: none;
 
@@ -111,7 +111,7 @@
                         cursor: pointer;
                         color: $color-complementary-s;
                         font-weight: 500;
-                        transition: .3s ease-in-out;
+                        transition: $animation-transition-st;
 
                         &.react-datepicker__day--outside-month {
                             opacity: 0.5;

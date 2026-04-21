@@ -5,7 +5,7 @@
     height: 2.4rem;
     width: 2.4rem;
     background-color: $color-complementary-p-50;
-    transition: .3s linear;
+    transition: $animation-transition-st;
     cursor: pointer;
 
     &.circle {
@@ -37,7 +37,6 @@
     /* Last application */
     &:active {
         background-color: $color-complementary-s-30;
-        transition: 0.1s ease-in-out;
 
         &.home {
             background-color: $color-accent-p-05;

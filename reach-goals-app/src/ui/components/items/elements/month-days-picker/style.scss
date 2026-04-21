@@ -51,7 +51,7 @@ div.calendar {
             .card-mini {
                 width: 85%;
                 overflow: hidden;
-                transition: .3s ease-in-out;
+                transition: .3s linear;
                 cursor: pointer;
 
                 * {
