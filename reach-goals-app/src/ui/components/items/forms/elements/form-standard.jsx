@@ -31,8 +31,6 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
     const isEmptyForm = typeof model.mainModelID === 'number'
     const display = { type: ['card-mini'], actions: ['remove'] }
 
-    const handleClickForm = () => null//toggleVisibility(visibilityMap('dropdown-status', { remove: true }))
-
     const renderDropdownStatusTitle = (status) => {
         return {
             icon: status === 'conclude' ? 'check' : status,
@@ -63,7 +61,6 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
             classBtn: modelForm?.status === 'progress' ? 'active' : '',
             onClick: () => { 
                 updateFormModel(dataUpdateFormStatusModel('progress')); 
-                handleClickForm() 
             }
         },
         {
@@ -72,7 +69,6 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
             classBtn: modelForm?.status === 'conclude' ? 'active' : '',
             onClick: () => { 
                 updateFormModel(dataUpdateFormStatusModel('conclude')); 
-                handleClickForm() 
             }
         },
         {
@@ -81,7 +77,6 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
             classBtn: modelForm?.status === 'cancel' ? 'active' : '',
             onClick: () => { 
                 updateFormModel(dataUpdateFormStatusModel('cancel')); 
-                handleClickForm() 
             }
         },
     ]
@@ -120,7 +115,7 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
     const isGoalForm = type === 'goal'
 
     return (
-        <div className='container-form-modal center-content' onClick={handleClickForm}>
+        <div className='container-form-modal center-content'>
             <div className='head'>
                 <div className='objective-icon'>{icon}</div>
                 <div className='objective-options'>

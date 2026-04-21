@@ -3,6 +3,7 @@ import { useRef } from 'react'
 import { useVisibility } from '../../../provider/ui/VisibilityProvider.jsx'
 import { useSwitchLayout } from '../../../provider/ui/SwitchLayoutProvider.jsx'
 import { useOutsideClick } from '../../../hooks/useOutsideClick.js'
+import { useManageModel } from '../../../provider/model/ManageModelProvider.jsx'
 
 import { visibilityMap } from '../../../utils/mapping/mappingUtils.js'
 
@@ -15,6 +16,7 @@ import './style.scss'
 
 const ModalSwitcherRight = () => {
     const { visibleElements, toggleVisibility } = useVisibility()
+    const { model } = useManageModel()
     const { data: { layout } } = useSwitchLayout()
     const modalRef = useRef(null)
 
@@ -45,7 +47,7 @@ const ModalSwitcherRight = () => {
         isVisible && (
             <div className={modalRightClass} ref={modalRef}>
                 {isModalTag && (<ModalTagWrapper />)}
-                {isModalDetails && (<ModalDetailsWrapper />)}
+                {isModalDetails && (<ModalDetailsWrapper modelID={model.mainModelID} type={model.typeModel} />)}
             </div>
         )
     )
