@@ -1,4 +1,4 @@
-import { prisma } from '../connectdb.js'
+import prisma from '../connectdb.js'
 
 const addAssignment = async (data) => {
     try {

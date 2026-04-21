@@ -1,4 +1,4 @@
-import { prisma } from '../connectdb.js'
+import prisma from '../connectdb.js'
 
 const handler = async (req, res) => {
     const { action, params } = req.query
