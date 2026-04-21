@@ -26,7 +26,7 @@ export const AssignmentModelProvider = ({ children, filter } = AssignmentModelPr
 
     useEffect(() => {
         if (filter.assignment) setFilterModel(filter, 'assignment')
-    }, [filterKey, setFilterModel])
+    }, [filterKey, setFilterModel, filter])
 
     const filterPage = filterModel.assignment.page
     const filterModal = filterModel.assignment.modal
@@ -57,7 +57,7 @@ export const AssignmentModelProvider = ({ children, filter } = AssignmentModelPr
     })
 
     const saveMutation = useMutation({
-        mutationFn: (model) => !!model.id ? assignmentService.updateAssignment(model) : assignmentService.addAssignment(model),
+        mutationFn: (model) => model.id ? assignmentService.updateAssignment(model) : assignmentService.addAssignment(model),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeyPage })
             update({ toast: `Assignment save with success` })

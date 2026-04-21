@@ -26,7 +26,7 @@ export const GoalModelProvider = ({ children, filter } = GoalModelProviderMap) =
 
   useEffect(() => {
     if (filter.goal) setFilterModel(filter, 'goal')
-  }, [filterKey, setFilterModel])
+  }, [filterKey, setFilterModel, filter])
 
   const filterPage = filterModel.goal.page
   const filterModal = filterModel.goal.modal

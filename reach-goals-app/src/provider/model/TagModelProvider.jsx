@@ -25,7 +25,7 @@ export const TagModelProvider = ({ children, filter } = TagModelProviderMap) => 
 
     useEffect(() => {
         if (filter.tag) setFilterModel(filter, 'tag')
-    }, [filterKey, setFilterModel])
+    }, [filterKey, setFilterModel, filter])
 
     const filterPage = filterModel.tag.page
     const filterModal = filterModel.tag.modal
