@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { useSwitchLayout } from '../../../../../provider/ui/SwitchLayoutProvider.jsx'
+import { useSwitchLayout } from '../../../../../provider/ui/switch-layout-provider.jsx'
 
 import { modelTabsMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { buildFilterModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'

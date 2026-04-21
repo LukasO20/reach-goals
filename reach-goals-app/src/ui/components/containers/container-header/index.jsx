@@ -1,6 +1,6 @@
-import { useManageModel } from '../../../../provider/model/ManageModelProvider.jsx'
-import { useVisibility } from '../../../../provider/ui/VisibilityProvider.jsx'
-import { useTitle } from '../../../../provider/ui/TitleProvider.jsx'
+import { useManageModel } from '../../../../provider/model/manage-model-provider.jsx'
+import { useVisibility } from '../../../../provider/ui/visibility-provider.jsx'
+import { useTitle } from '../../../../provider/ui/title-provider.jsx'
 
 import { visibilityMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils.js'
 

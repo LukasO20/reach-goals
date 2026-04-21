@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { ModelQueryClientProvider } from '../../../../provider/model/ModelQueryClientProvider' 
+import { ModelQueryClientProvider } from '../../../../provider/model/model-queryclient-provider' 
 
 import { buildFilterModelMap } from '../../../../utils/mapping/mappingUtilsProvider' 
 

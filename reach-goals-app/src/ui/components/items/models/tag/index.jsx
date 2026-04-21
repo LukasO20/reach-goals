@@ -1,8 +1,8 @@
 import { useCallback } from 'react'
 
-import { useTagProvider } from '../../../../../provider/model/TagModelProvider.jsx'
-import { useManageModel } from '../../../../../provider/model/ManageModelProvider.jsx'
-import { useVisibility } from '../../../../../provider/ui/VisibilityProvider.jsx'
+import { useTagProvider } from '../../../../../provider/model/tag-model-provider.jsx'
+import { useManageModel } from '../../../../../provider/model/manage-model-provider.jsx'
+import { useVisibility } from '../../../../../provider/ui/visibility-provider.jsx'
 
 import { visibilityMap, displayModesMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { addToSelectedModelMap, updateFormModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'

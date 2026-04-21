@@ -1,7 +1,7 @@
-import { useManageModel } from '../../../../provider/model/ManageModelProvider.jsx'
-import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
-import { useTagProvider } from '../../../../provider/model/TagModelProvider.jsx'
-import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
+import { useManageModel } from '../../../../provider/model/manage-model-provider.jsx'
+import { useGoalProvider } from '../../../../provider/model/goal-model-provider.jsx'
+import { useTagProvider } from '../../../../provider/model/tag-model-provider.jsx'
+import { useAssignmentProvider } from '../../../../provider/model/assignment-model-provider.jsx'
 
 import { filterBuildModelMap, visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
 import { updateFilterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'

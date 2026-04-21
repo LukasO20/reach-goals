@@ -1,7 +1,7 @@
-import { useSwitchLayout } from '../../../../../provider/ui/SwitchLayoutProvider'
-import { useGoalProvider } from '../../../../../provider/model/GoalModelProvider'
-import { useAssignmentProvider } from '../../../../../provider/model/AssignmentModelProvider'
-import { useTitle } from '../../../../../provider/ui/TitleProvider'
+import { useSwitchLayout } from '../../../../../provider/ui/switch-layout-provider'
+import { useGoalProvider } from '../../../../../provider/model/goal-model-provider'
+import { useAssignmentProvider } from '../../../../../provider/model/assignment-model-provider'
+import { useTitle } from '../../../../../provider/ui/title-provider'
 
 import { iconMap } from '../../../../../utils/mapping/mappingIcons'
 

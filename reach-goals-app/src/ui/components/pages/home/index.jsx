@@ -1,6 +1,6 @@
-import { useSwitchLayout } from '../../../../provider/ui/SwitchLayoutProvider.jsx'
-import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
-import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
+import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider.jsx'
+import { useGoalProvider } from '../../../../provider/model/goal-model-provider.jsx'
+import { useAssignmentProvider } from '../../../../provider/model/assignment-model-provider.jsx'
 
 import Loading from '../../items/elements/loading' 
 import ContainerColumn from './elements/container-column.jsx'

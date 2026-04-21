@@ -1,4 +1,4 @@
-import { ModelQueryClientProvider } from '../../../../provider/model/ModelQueryClientProvider' 
+import { ModelQueryClientProvider } from '../../../../provider/model/model-queryclient-provider.jsx' 
 
 import { buildFilterModelMap } from '../../../../utils/mapping/mappingUtilsProvider' 
 

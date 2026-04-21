@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-import { useTagProvider } from '../../../../../provider/model/TagModelProvider'
-import { useManageModel } from '../../../../../provider/model/ManageModelProvider'
+import { useTagProvider } from '../../../../../provider/model/tag-model-provider'
+import { useManageModel } from '../../../../../provider/model/manage-model-provider'
 
 import { checkboxMap } from '../../../../../utils/mapping/mappingUtilsProvider'
 import { buildCheckboxMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils'

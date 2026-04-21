@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
-import { useCheckbox } from '../../../../../provider/ui/CheckboxProvider.jsx'
-import { useSwitchLayout } from '../../../../../provider/ui/SwitchLayoutProvider.jsx'
+import { useCheckbox } from '../../../../../provider/ui/checkbox-provider.jsx'
+import { useSwitchLayout } from '../../../../../provider/ui/switch-layout-provider.jsx'
 
 import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 import { checkboxMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'

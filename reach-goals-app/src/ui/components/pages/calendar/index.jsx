@@ -1,5 +1,5 @@
-import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
-import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
+import { useGoalProvider } from '../../../../provider/model/goal-model-provider.jsx'
+import { useAssignmentProvider } from '../../../../provider/model/assignment-model-provider.jsx'
 
 import MonthDaysPicker from '../../items/elements/month-days-picker' 
 import Loading from '../../items/elements/loading' 

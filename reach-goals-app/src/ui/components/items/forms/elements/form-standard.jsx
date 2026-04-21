@@ -6,8 +6,8 @@ import InputDate from '../../elements/input-date'
 import InputTimer from '../../elements/input-timer'
 import InputText from '../../elements/input-text'
 
-import { useManageModel } from '../../../../../provider/model/ManageModelProvider.jsx'
-import { useVisibility } from '../../../../../provider/ui/VisibilityProvider.jsx'
+import { useManageModel } from '../../../../../provider/model/manage-model-provider.jsx'
+import { useVisibility } from '../../../../../provider/ui/visibility-provider.jsx'
 
 import { cx } from '../../../../../utils/utils.js'
 

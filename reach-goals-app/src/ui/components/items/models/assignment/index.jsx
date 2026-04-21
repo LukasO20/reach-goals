@@ -1,8 +1,8 @@
-import { useSwitchLayout } from '../../../../../provider/ui/SwitchLayoutProvider.jsx'
-import { useAssignmentProvider } from '../../../../../provider/model/AssignmentModelProvider.jsx'
-import { useManageModel } from '../../../../../provider/model/ManageModelProvider.jsx'
-import { useVisibility } from '../../../../../provider/ui/VisibilityProvider.jsx'
-import { useCheckbox } from '../../../../../provider/ui/CheckboxProvider.jsx'
+import { useSwitchLayout } from '../../../../../provider/ui/switch-layout-provider.jsx'
+import { useAssignmentProvider } from '../../../../../provider/model/assignment-model-provider.jsx'
+import { useManageModel } from '../../../../../provider/model/manage-model-provider.jsx'
+import { useVisibility } from '../../../../../provider/ui/visibility-provider.jsx'
+import { useCheckbox } from '../../../../../provider/ui/checkbox-provider.jsx'
 
 import { displayModesMap, switchLayoutMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { updateFormModelMap, addToSelectedModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'

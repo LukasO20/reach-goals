@@ -1,5 +1,5 @@
-import { useUtilityProvider } from '../../../../../provider/model/UtilityProvider.jsx'
-import { useCheckbox } from '../../../../../provider/ui/CheckboxProvider.jsx'
+import { useUtilityProvider } from '../../../../../provider/model/utility-provider.jsx'
+import { useCheckbox } from '../../../../../provider/ui/checkbox-provider.jsx'
 
 import ButtonAction from '../button-action'
 

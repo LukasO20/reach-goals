@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-import { useSwitchLayout } from '../../../../../../provider/ui/SwitchLayoutProvider.jsx'
-import { useVisibility } from '../../../../../../provider/ui/VisibilityProvider.jsx'
-import { useManageModel } from '../../../../../../provider/model/ManageModelProvider.jsx'
+import { useSwitchLayout } from '../../../../../../provider/ui/switch-layout-provider.jsx'
+import { useVisibility } from '../../../../../../provider/ui/visibility-provider.jsx'
+import { useManageModel } from '../../../../../../provider/model/manage-model-provider.jsx'
 
 import { visibilityMap, switchLayoutMap } from '../../../../../../utils/mapping/mappingUtils.js'
 import { iconMap } from '../../../../../../utils/mapping/mappingIcons.jsx'

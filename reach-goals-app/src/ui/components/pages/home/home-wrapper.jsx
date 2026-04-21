@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 
-import { ModelQueryClientProvider } from '../../../../provider/model/ModelQueryClientProvider'
-import { useSwitchLayout } from '../../../../provider/ui/SwitchLayoutProvider'
-import { useTitle } from '../../../../provider/ui/TitleProvider'
+import { ModelQueryClientProvider } from '../../../../provider/model/model-queryclient-provider'
+import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider'
+import { useTitle } from '../../../../provider/ui/title-provider'
 
 import { buildFilterModelMap } from '../../../../utils/mapping/mappingUtilsProvider'
 

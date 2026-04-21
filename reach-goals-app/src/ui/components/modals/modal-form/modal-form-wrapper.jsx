@@ -1,6 +1,6 @@
-import { ModelQueryClientProvider } from '../../../../provider/model/ModelQueryClientProvider' 
+import { ModelQueryClientProvider } from '../../../../provider/model/model-queryclient-provider' 
 
-import { useManageModel } from '../../../../provider/model/ManageModelProvider'
+import { useManageModel } from '../../../../provider/model/manage-model-provider'
 
 import { buildFilterModelMap } from '../../../../utils/mapping/mappingUtilsProvider' 
 

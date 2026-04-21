@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import { useManageModel } from '../../../../../provider/model/ManageModelProvider.jsx'
+import { useManageModel } from '../../../../../provider/model/manage-model-provider'
 
 import { removeFromSelectedModelMap } from '../../../../../utils/mapping/mappingUtilsProvider.js'
 

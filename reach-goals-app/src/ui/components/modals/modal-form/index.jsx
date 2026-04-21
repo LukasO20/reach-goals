@@ -1,12 +1,12 @@
 import { useEffect, useState, useCallback } from 'react'
 
-import { useVisibility } from '../../../../provider/ui/VisibilityProvider.jsx'
-import { useManageModel } from '../../../../provider/model/ManageModelProvider.jsx'
+import { useVisibility } from '../../../../provider/ui/visibility-provider.jsx'
+import { useManageModel } from '../../../../provider/model/manage-model-provider.jsx'
 
-import { useGoalProvider } from '../../../../provider/model/GoalModelProvider.jsx'
-import { useAssignmentProvider } from '../../../../provider/model/AssignmentModelProvider.jsx'
-import { useTagProvider } from '../../../../provider/model/TagModelProvider.jsx'
-import { useTitle } from '../../../../provider/ui/TitleProvider.jsx'
+import { useGoalProvider } from '../../../../provider/model/goal-model-provider.jsx'
+import { useAssignmentProvider } from '../../../../provider/model/assignment-model-provider.jsx'
+import { useTagProvider } from '../../../../provider/model/tag-model-provider.jsx'
+import { useTitle } from '../../../../provider/ui/title-provider.jsx'
 
 import { visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
 import { resetManageModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'

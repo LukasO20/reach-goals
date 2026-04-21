@@ -1,7 +1,7 @@
 import React from 'react'
-import { useManageModel } from '../../../../../provider/model/ManageModelProvider.jsx'
-import { useVisibility } from '../../../../../provider/ui/VisibilityProvider.jsx'
-import { useSwitchLayout } from '../../../../../provider/ui/SwitchLayoutProvider.jsx'
+import { useManageModel } from '../../../../../provider/model/manage-model-provider.jsx'
+import { useVisibility } from '../../../../../provider/ui/visibility-provider.jsx'
+import { useSwitchLayout } from '../../../../../provider/ui/switch-layout-provider.jsx'
 
 import Loading from '../loading' 
 import SearchItem from './elements/search-item.jsx'
