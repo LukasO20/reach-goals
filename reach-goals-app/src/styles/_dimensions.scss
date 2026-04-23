@@ -1,8 +1,49 @@
-/* HEIGHT */
-// WILL BE SEARCH COMMON VALUES
+:root {
+  --ratio-video: 0.5625;
+  --ratio-square: 1;
+  --ratio-portrait: 1.25;
+  --ratio-golden: 0.618;
+
+  --w-mini: 4rem;
+  --w-sm: 10rem;
+  --w-md: 20rem;
+  --w-lg: 30rem;
+  --w-xl: 40rem;
+  --w-2xl: 60rem;
+  --w-4k: 120rem;
+  --w-full: 100%;
+
+  --h-mini: 2rem;
+  --h-sm: 4rem;
+  --h-md: 8rem;
+  --h-lg: 12rem;
+  --h-header: 4rem;
+  --h-screen: 100vh;
+}
 
 /* WIDTH */
-// WILL BE SEARCH COMMON VALUES
+$dimensions-w-mini: var(--w-mini);
+$dimensions-w-sm: var(--w-sm);
+$dimensions-w-md: var(--w-md);
+$dimensions-w-lg: var(--w-lg);
+$dimensions-w-xl: var(--w-xl);
+$dimensions-w-2xl: var(--w-2xl);
+$dimensions-w-4k: var(--w-4k);
+$dimensions-w-full: var(--w-full);
+
+/* HEIGHT */
+$dimensions-h-mini: var(--h-mini);
+$dimensions-h-sm: var(--h-sm);
+$dimensions-h-md: var(--h-md);
+$dimensions-h-lg: var(--h-lg);
+$dimensions-h-header: var(--h-header);
+$dimensions-h-screen: var(--h-screen);
+
+$dimensions-h-video-sm: calc(#{$dimensions-w-sm} * var(--ratio-video));
+$dimensions-h-video-md: calc(#{$dimensions-w-md} * var(--ratio-video));
+$dimensions-h-video-lg: calc(#{$dimensions-w-lg} * var(--ratio-video));
+
+$dimensions-w-golden-md: calc(#{$dimensions-w-md} * var(--ratio-golden));
 
 /* BORDER-RADIUS */
 $dimensions-border-radius-st: 2rem;
