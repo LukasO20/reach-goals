@@ -1,15 +1,32 @@
+import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
+import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider'
+import { useTitle } from '../../../../provider/ui/title-provider'
+
 import { ModelQueryClientProvider } from '../../../../provider/model/model-queryclient-provider'
 
 import { buildFilterModelMap } from '../../../../utils/mapping/mappingUtilsProvider'
+import { switchLayoutMap } from '../../../../utils/mapping/mappingUtils'
 
 import Calendar from '.'
 
 export const CalendarWrapper = () => {
+    const { updateSwitchLayout } = useSwitchLayout()
+    const { update } = useTitle()
+    const location = useLocation()
+
     const dataFilter = {
         ...buildFilterModelMap('goal', 'goalSomeID', 'page', 'all'),
         ...buildFilterModelMap('assignment', 'assignmentSomeID', 'page', 'all')
     }
-        
+
+    useEffect(() => {
+        const dataSwitchLayout = switchLayoutMap({ area: 'page', state: { pageName: location.pathname.slice(1), layoutName: 'all' } })
+
+        update({ header: 'Manage daily your activities' })
+        updateSwitchLayout(dataSwitchLayout)
+    }, [update, updateSwitchLayout, location.pathname])
+
     return (
         <ModelQueryClientProvider filter={dataFilter}>
             <Calendar />
