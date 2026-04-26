@@ -1,7 +1,5 @@
-import { useUtilityProvider } from '../../../../../provider/model/utility-provider.jsx'
-import { useCheckbox } from '../../../../../provider/ui/checkbox-provider.jsx'
-
-import ButtonAction from '../button-action'
+import ModelOptions from './components/model-options.jsx'
+import ChartOptions from './components/chart-options.jsx'
 
 import './style.scss'
 
@@ -10,52 +8,13 @@ import './style.scss'
 /**
  * @param {Props} props
  */
-const PopupModelOptions = ({ type }) => {
-    const { saveStatus, savedStatusData, savingStatus, removeModels, removingModels } = useUtilityProvider()
-    const { valuesCheckbox } = useCheckbox()
+const PopupModelOptions = ({ type, typeModelOptions }) => {
 
-    const checkboxScope = valuesCheckbox.scope
-
-    const formatCheckboxID = (ids = []) => {
-        return ids.map((id) => {
-            const formatID = Number(id.replace(/\D/g, ""))
-            return formatID
-        })
-    }
-
-    const onClickStatusModel = (status = '') => {
-        if (!status) return null
-
-        const selectedModel = formatCheckboxID(valuesCheckbox[checkboxScope]?.selected)
-        saveStatus({ data: selectedModel, status })
-    }
-
-    const onClickRemoveModels = () => {
-        const selectedModel = formatCheckboxID(valuesCheckbox[checkboxScope]?.selected)
-        if (!selectedModel.length) return null
-
-        removeModels({ data: selectedModel })
-    }
-
-    const isSavingStatusProgress = savedStatusData?.status === 'progress' && !!savingStatus
-    const isSavingStatusConclude = savedStatusData?.status === 'conclude' && !!savingStatus
-    const isSavingStatusCancel = savedStatusData?.status === 'cancel' && !!savingStatus
-    const isDisable = isSavingStatusProgress || isSavingStatusConclude || isSavingStatusCancel
+    const isValidType = !!type
 
     return (
         <div className='container-popup model-options'>
-            {type !== 'tag' && (
-                <>
-                    <ButtonAction classBtn='button-action progress plan-round' icon='progress' disable={isDisable && !isSavingStatusProgress}
-                        title='in progress' onClick={() => onClickStatusModel('progress')} pendingState={isSavingStatusProgress} />
-                    <ButtonAction classBtn='button-action conclude plan-round' icon='check' disable={isDisable && !isSavingStatusConclude}
-                        title='conclude' onClick={() => onClickStatusModel('conclude')} pendingState={isSavingStatusConclude} />
-                    <ButtonAction classBtn='button-action cancel plan-round' icon='cancel' disable={isDisable && !isSavingStatusCancel}
-                        title='cancel' onClick={() => onClickStatusModel('cancel')} pendingState={isSavingStatusCancel} />
-                </>
-            )}
-            <ButtonAction classBtn='button-action delete plan-round' icon='remove' title='delete'
-                disable={isDisable && !removingModels} pendingState={!!removingModels} onClick={onClickRemoveModels} />
+            {isValidType && type === 'pop-model' ? (<ModelOptions type={typeModelOptions} />) : (<ChartOptions />)}
         </div>
     )
 }

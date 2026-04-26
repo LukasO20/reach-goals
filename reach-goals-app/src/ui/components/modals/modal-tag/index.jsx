@@ -92,7 +92,7 @@ const ModalTag = ({ onFilterTabs }) => {
                 <ModelTabs type='tag' headLeftChildren={headLeftContent} loading={isLoadingTag} onFilterTabs={onFilterTabs}>
                     {content}
                 </ModelTabs>
-                {hasSelectedModel && (<PopupModelOptions type='tag' />)}
+                {hasSelectedModel && (<PopupModelOptions type='pop-model' typeModelOptions='tag' />)}
             </div>
         </>
     )

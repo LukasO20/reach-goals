@@ -1,5 +1,3 @@
-
-
 .column {
 
     &.home {
@@ -43,7 +41,7 @@
                         color: $color-white;
 
                         * {
-                            color: $color-white;   
+                            color: $color-white;
                         }
                     }
                 }
@@ -55,8 +53,9 @@
                         color: $color-white;
 
                         * {
-                            color: $color-white;   
-                        }                    }
+                            color: $color-white;
+                        }
+                    }
                 }
 
                 >.head {
@@ -94,22 +93,45 @@
     }
 }
 
-.chart-pie {
+.chart {
+    position: relative;
 
     &.home {
         position: relative;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
         height: 100%;
 
         .head {
-            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
         }
 
         .body {
+            display: flex;
             flex: 10;
             width: 100%;
+
+            >div {
+                flex: 1;
+                animation: $animation-fade-in 0.1s linear forwards;
+            }
+
+            /* DPUBLE APPLY */
+
+            .chart-bar,
+            .chart-pie {
+                width: 100%;
+            }
+        }
+
+        .container-popup {
+            position: absolute;
+            bottom: 0%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
     }
 }

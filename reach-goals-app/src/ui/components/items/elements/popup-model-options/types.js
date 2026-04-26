@@ -1,6 +1,16 @@
 /**
+ * @typedef {'tag' | 'goal' | 'assignment'} ModelType
+ */
+
+/**
+ * @typedef {Object} ModelOptionsProps
+ * @property {ModelType} [type]
+ */
+
+/**
  * @typedef {Object} PopupModelOptionsProps
- * @property {'tag' | 'goal' | 'assignment'} [type]
+ * @property {'pop-chart' | 'pop-model'} type
+ * @property {ModelType} typeModelOptions
  */
 
 export {}

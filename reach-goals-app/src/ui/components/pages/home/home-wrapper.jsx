@@ -13,7 +13,7 @@ export const HomeWrapper = () => {
     const { data: { layout } } = useSwitchLayout()
 
     const layoutHome = layout.page.layoutName
-    const isPieChartLayout = layoutHome === 'pie-chart'
+    const isPieChartLayout = layoutHome === 'chart'
 
     useEffect(() => {
         update({ header: `Welcome. Let's produce?` })

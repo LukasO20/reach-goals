@@ -3,8 +3,8 @@ import { useGoalProvider } from '../../../../provider/model/goal-model-provider.
 import { useAssignmentProvider } from '../../../../provider/model/assignment-model-provider.jsx'
 
 import Loading from '../../items/elements/loading' 
-import ContainerColumn from './elements/container-column.jsx'
-import ContainerChartPie from './elements/container-chartpie.jsx'
+import HomeColumn from './components/home-column.jsx'
+import HomeChart from './components/home-chart.jsx'
 
 import './style.scss'
 
@@ -14,11 +14,11 @@ const Home = () => {
     const { page: { data: dataAssignment, loading: loadingAssignment } } = useAssignmentProvider()
 
     const dataPage = {
-        goal:dataGoal,
+        goal: dataGoal,
         assignment: dataAssignment
     }
     const layoutHome = layout.page.layoutName
-    const validLayouts = ['pie-chart', 'goal', 'assignment']
+    const validLayouts = ['chart', 'goal', 'assignment']
 
     const isLoading = !!loadingGoal || !!loadingAssignment
 
@@ -27,8 +27,8 @@ const Home = () => {
             {isLoading && <Loading mode='block' />}
             {!isLoading && (
                 validLayouts.includes(layoutHome) && (
-                    layoutHome === 'pie-chart' ? 
-                        (<ContainerChartPie data={dataPage} />) : (<ContainerColumn data={dataPage} />)
+                    layoutHome === 'chart' ? 
+                        (<HomeChart data={dataPage} />) : (<HomeColumn data={dataPage} />)
                 )
             )}
         </>

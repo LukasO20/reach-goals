@@ -9,12 +9,12 @@ import Assignment from '../../../items/models/assignment'
 import Goal from '../../../items/models/goal'
 import { DragDrop, DragDropDroppable } from '../../../items/elements/drag-drop' 
 
-/** @typedef {import('../types').ContainerProps} Props */
+/** @typedef {import('../types').HomeProps} Props */
 
 /**
  * @param {Props} props
  */
-const ContainerColumn = ({ data }) => {
+const HomeColumn = ({ data }) => {
     const { data: { layout, visibility } } = useSwitchLayout()
     const { update } = useTitle()
     const { saveDragDrop: saveDragDropGoal } = useGoalProvider()
@@ -106,4 +106,4 @@ const ContainerColumn = ({ data }) => {
     )
 }
 
-export default ContainerColumn
+export default HomeColumn

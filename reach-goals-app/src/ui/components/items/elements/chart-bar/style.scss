@@ -1,0 +1,110 @@
+.chart-bar {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-gap-sm;
+
+    .bar {
+        position: relative;
+        display: flex;
+        align-items: stretch;
+        height: $dimensions-h-sm;
+        border-radius: $dimensions-border-radius-sm;
+        padding: $spacing-padding-mini;
+        transition: $animation-transition-st;
+
+        .bar-progress {
+            border-radius: $dimensions-border-radius-sm;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0rem $spacing-padding-md;
+            transition: $animation-transition-st;
+
+            * {
+                color: $color-white;
+                font-weight: 500;
+            }
+
+            .bar-title {
+                display: flex;
+                flex-direction: column;
+                gap: $spacing-gap-sm;
+
+                >div {
+                    display: flex;
+                    align-items: center;
+                    gap: $spacing-gap-mini;
+
+                    .label-percent {
+                        font-size: $font-size-sm;
+                    }
+                }
+            }
+        }
+
+        .bar-actions {
+            position: absolute;
+            right: 1rem;
+            height: max-content;
+            align-self: center;
+        }
+
+        &.goal {
+            background-color: $color-primary-15;
+
+            .bar-progress {
+                background-color: $color-primary;
+            }
+
+            .bar-actions {
+
+                .button-action {
+                    background-color: $color-complementary-s;
+
+                    * {
+                        color: $color-white;
+                    }
+
+                    &:hover {
+                        background-color: $color-complementary-s-70;
+                    }
+
+                    &:active {
+                        background-color: $color-complementary-s-50;
+                    }
+                }
+            }
+        }
+
+        &.assignment {
+            background-color: $color-accent-p-15;
+
+            .bar-progress {
+                background-color: $color-accent-p;
+            }
+
+            .bar-actions {
+
+                .button-action {
+                    background-color: $color-primary;
+
+                    * {
+                        color: $color-white;
+                    }
+
+                    &:hover {
+                        background-color: $color-primary-70;
+                    }
+
+                    &:active {
+                        background-color: $color-primary-50;
+                    }
+                }
+            }
+        }
+
+        &:hover {
+            padding: $spacing-padding-sm;
+        }
+    }
+}

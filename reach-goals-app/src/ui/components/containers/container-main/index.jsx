@@ -20,6 +20,7 @@ const ContainerMain = () => {
     const { toggleVisibility } = useVisibility()
     const { data: { layout, visibility }, updateSwitchLayout, setUserConfigLayout } = useSwitchLayout()
     const { valuesCheckbox, resetCheckbox } = useCheckbox()
+
     const handleButtonActionClick = () => {
         resetCheckbox({ keys: ['page'] })
     }
@@ -56,7 +57,7 @@ const ContainerMain = () => {
 
     const isSwitchLayoutAssignment = layout.page.layoutName === 'assignment'
     const isSwitchLayoutGoal = layout.page.layoutName === 'goal'
-    const isSwichPieChart = layout.page.layoutName === 'pie-chart'
+    const isSwichChart = layout.page.layoutName === 'chart'
     const isSwitchLayoutActivities = layout.page.layoutName === 'all'
 
     const hasSelectedModel = !!valuesCheckbox.page?.selected.length
@@ -94,10 +95,9 @@ const ContainerMain = () => {
                             onClick={handleButtonActionClick}
                         />
                         {isPageHome && (
-                            <ButtonAction classBtn={`plan-round max-width pie-chart ${isSwichPieChart ? 'active' : ''}`} icon='chartbar'
-                                switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'pie-chart' } })}
+                            <ButtonAction classBtn={`plan-round max-width chart ${isSwichChart ? 'active' : ''}`} icon='chartbar'
+                                switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'chart' } })}
                                 onClick={handleButtonActionClick}
-
                             />
                         )}
                         {(isPageObjectives || isPageCalendar) && (
@@ -114,7 +114,7 @@ const ContainerMain = () => {
                             title='create'
                             options={createDropdown}
                         />
-                        {!isPageCalendar && (
+                        {!isPageCalendar && !isSwichChart && (
                             <>
                                 <ButtonDropdown
                                     visibility='dropdown-visibility'
@@ -134,7 +134,7 @@ const ContainerMain = () => {
                     </div>
                 </div>
             </div>
-            {hasSelectedModel && (<PopupModelOptions />)}
+            {hasSelectedModel && (<PopupModelOptions type='pop-model' />)}
             <div className='body'>
                 <Routes />
             </div>
