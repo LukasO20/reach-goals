@@ -5,6 +5,23 @@ import { usePersistedUserConfig } from '../../hooks/usePersistedUserConfig'
 import { switchLayoutMap } from '../../utils/mapping/mappingUtilsProvider'
 import { persistedUserConfigKeysMap, persistedUserConfigMap } from '../../utils/mapping/mappingUtils'
 
+/**
+* @typedef {Object} SetUserConfigLayoutProps
+* @property {'visibility'} type
+* @property {import('../../utils/types').VisibilityConfigProps} data
+*/
+
+/**
+* @typedef {Object} OutputProps
+* @property {import('../../utils/types').VisibilityConfigProps} visibility
+*/
+
+/**
+ * @typedef {Object} SwitchLayoutContextValue
+ * @property {function(SetUserConfigLayoutProps): void} setUserConfigLayout
+ */
+
+/** @type {import('react').Context<SwitchLayoutContextValue>} */
 const SwitchLayoutContext = createContext()
 
 export const SwitchLayoutProvider = ({ children }) => {
@@ -29,31 +46,35 @@ export const SwitchLayoutProvider = ({ children }) => {
         update({ area, state })
     }, [])
 
-    const setUserConfigLayout = useCallback(({ type, data }) => {
-        if (typeof data === 'object') {
-            const isStatusKey = Object.keys(data)[0] === 'status'
+    const setUserConfigLayout = useCallback(
+        /** @param {SetUserConfigLayoutProps} props */
+        ({ type, data }) => {
+            if (typeof data === 'object') {
+                const isStatusKey = Object.keys(data)[0] === 'status'
 
-            if (isStatusKey) {
-                const hasStatus = uiVisibility.status?.some(status => data.status.includes(status))
-                setVisibility({
-                    ...uiVisibility, status: hasStatus ?
-                        uiVisibility.status.filter(status => !data.status.includes(status)) :
-                        [...uiVisibility.status, ...data.status]
-                })
+                if (isStatusKey) {
+                    const hasStatus = uiVisibility.status?.some(status => data.status.includes(status))
+                    setVisibility({
+                        ...uiVisibility, status: hasStatus ?
+                            uiVisibility.status.filter(status => !data.status.includes(status)) :
+                            [...uiVisibility.status, ...data.status]
+                    })
+                }
+
+                if (type === 'visibility' && !isStatusKey) setVisibility({ ...uiVisibility, ...data })
             }
 
-            if (type === 'visibility' && !isStatusKey) setVisibility({ ...uiVisibility, ...data })
+            return null
+        }, [setVisibility, uiVisibility])
+
+    const output = useMemo(() => {
+        return {
+            layout,
+            visibility: uiVisibility,
         }
+    }, [layout, uiVisibility])
 
-        return null
-    }, [setVisibility])
-
-    const output = {
-        layout,
-        visibility: uiVisibility,
-    }
-
-    const value = useMemo(() => ({ data: output, updateSwitchLayout, setUserConfigLayout }), [layout, updateSwitchLayout, setUserConfigLayout])
+    const value = useMemo(() => ({ data: output, updateSwitchLayout, setUserConfigLayout }), [updateSwitchLayout, setUserConfigLayout, output])
 
     return (
         <SwitchLayoutContext.Provider value={value}>

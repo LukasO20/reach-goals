@@ -1,6 +1,11 @@
 import { typeModel, typeReduceModel, typeFilterModel } from '../reference.js'
 import { checkboxMap } from './mappingUtilsProvider.js'
 
+/**
+ * @typedef {Object} GlobalTypes
+ * @property {import('../types.js').VisibilityConfigProps} visibility
+ */
+
 export const visibilityMap = (classes, operator = {}) => {
     const data = Array.isArray(classes) ? classes : [classes]
     const attributes = {
@@ -134,21 +139,11 @@ export const persistedUserConfigKeysMap = {
     visibility: 'ui-visibility'
 }
 
-/**
- * @typedef {Object} VisibilityConfig
- * @property {'card' | 'card-mini'} cards
- * @property {boolean} tagsCard
- * @property {boolean} progressCard
- * @property {boolean} concludeCard
- * @property {boolean} cancelCard
- */
-
-/**
- * @type {{ visibility: VisibilityConfig }}
- */
+/** @type {GlobalTypes} */
 export const persistedUserConfigMap = {
     visibility: {
         cards: 'card',
+        charts: 'chart-pie',
         status: ['progress', 'conclude', 'cancel'],
         columns: null,
         tagsCard: true,
