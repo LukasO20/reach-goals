@@ -88,4 +88,14 @@ const cx = (str = '') => {
         .trim()
 }
 
-export { formatDate, hasRequiredProps, debounce, sortedMap, cx }
+/**
+ * @param {number} value 
+ * @param {number} quantity
+ * @returns {string}
+ */
+const calculatePercent = (value, quantity) => {
+    if (quantity === 0) return 0
+    return ((value / quantity) * 100).toFixed(2)
+}
+
+export { formatDate, hasRequiredProps, debounce, sortedMap, cx, calculatePercent }

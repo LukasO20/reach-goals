@@ -42,6 +42,7 @@ $dimensions-h-screen: var(--h-screen);
 $dimensions-h-video-sm: calc(#{$dimensions-w-sm} * var(--ratio-video));
 $dimensions-h-video-md: calc(#{$dimensions-w-md} * var(--ratio-video));
 $dimensions-h-video-lg: calc(#{$dimensions-w-lg} * var(--ratio-video));
+$dimensions-h-video-xl: calc(#{$dimensions-w-xl} * var(--ratio-video));
 
 $dimensions-w-golden-md: calc(#{$dimensions-w-md} * var(--ratio-golden));
 
