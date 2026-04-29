@@ -7,8 +7,9 @@
 
 /**
  * @typedef {Object} ChartBarProps
- * @property {number} quantityActivity
  * @property {[ActivityData]} data
+ * @property {number} quantity
+ * @property {boolean} showLegend
  */
 
-export {}
+export { }

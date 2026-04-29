@@ -107,4 +107,11 @@
             padding: $spacing-padding-sm;
         }
     }
+
+    .label-activity {
+        display: inline-flex;
+        padding: $spacing-padding-md;
+        color: $color-complementary-s;
+        font-weight: 700;
+    }
 }

@@ -1,6 +1,7 @@
 import ButtonAction from '../button-action/index.jsx'
 
 import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
+import { calculatePercent } from '../../../../../utils/utils.js'
 
 import './style.scss'
 
@@ -9,19 +10,19 @@ import './style.scss'
 /**
  * @param {Props} props
  */
-const ChartBar = ({ data, quantityActivity }) => {
+const ChartBar = ({ data, quantity, showLegend }) => {
 
-    const calculatePercent = (value) => {
-        if (quantityActivity === 0) return 0
-        return ((value / quantityActivity) * 100).toFixed(2)
-    }
+    const activityLabel = quantity === 1 ? `${quantity} activity` : `${quantity} activities`
 
     return (
         <div className='chart-bar'>
+            {showLegend && (
+                <label className='label-activity'>{activityLabel}</label>
+            )}
             {
                 data.map((item) => {
-                    const percentLabel = calculatePercent(item.quantity)
-                    const activityLabel = item.quantity === 1 ? 'activity' : 'activities'
+                    const percentLabel = calculatePercent(item.quantity, quantity)
+                    const activityLabel = item.quantity === 1 ? `${item.quantity} activity` : `${item.quantity} activities`
 
                     const hasActivity = !!item.quantity
 
@@ -35,7 +36,7 @@ const ChartBar = ({ data, quantityActivity }) => {
                                     </div>
                                     {hasActivity && (
                                         <div>
-                                            <label className='label-percent'>{percentLabel}% - {item.quantity} {activityLabel}</label>
+                                            <label className='label-percent'>{percentLabel}% - {activityLabel}</label>
                                         </div>
                                     )}
                                 </div>

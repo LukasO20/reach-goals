@@ -103,16 +103,11 @@
         align-items: stretch;
         height: 100%;
 
-        .head {
-            display: flex;
-            justify-content: space-between;
-            align-items: stretch;
-        }
-
         .body {
             display: flex;
             flex: 10;
             width: 100%;
+            gap: $spacing-gap-st;
 
             >div {
                 flex: 1;
@@ -132,6 +127,17 @@
             bottom: 0%;
             left: 50%;
             transform: translate(-50%, -50%);
+        }
+
+        &.interface-chart-bar {
+
+            .body {
+                flex-direction: column;
+
+                .chart-cards {
+                    flex: 2;
+                }
+            }
         }
     }
 }

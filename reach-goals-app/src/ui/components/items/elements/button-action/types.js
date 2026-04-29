@@ -11,6 +11,7 @@
  * @property {string} [icon]
  * @property {string} [title]
  * @property {string} classBtn
+ * @property {React.RefObject<HTMLSpanElement>} innerRef
  */
 
 export {}

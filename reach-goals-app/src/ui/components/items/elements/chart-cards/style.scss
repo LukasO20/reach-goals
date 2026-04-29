@@ -1,0 +1,161 @@
+.chart-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: $spacing-gap-sm;
+
+    .card-chart {
+        display: grid;
+        border-radius: $dimensions-border-radius-sm;
+        padding: $spacing-padding-st;
+        transition: $animation-transition-st;
+
+        .head {
+            display: flex;
+            flex-direction: column;
+
+            div:first-child {
+                display: flex;
+                justify-content: space-between;
+
+                >div {
+                    display: flex;
+                    align-items: center;
+                    gap: $spacing-gap-mini;
+                    font-weight: 800;
+                }
+            }
+
+            .label-activity {
+                font-weight: 500;
+            }
+
+            .label-percent {
+                font-weight: 800;
+                font-size: $font-size-lg;
+            }
+        }
+
+        .body {
+            align-items: center;
+            justify-content: center;
+        }
+
+        &.progress {
+            background-color: $color-complementary-s-15;
+
+            .head {
+
+                >div {
+
+                    * {
+                        color: $color-complementary-s;
+                    }
+                }
+            }
+
+            .body {
+
+                .button-action {
+                    background-color: $color-complementary-s-15;
+
+                    &:hover {
+                        background-color: $color-complementary-s;
+
+                        * {
+                            color: $color-white;
+                        }
+                    }
+
+                    &:active {
+                        background-color: $color-complementary-s-30;
+                    }
+                }
+            }
+        }
+
+        &.conclude {
+            background-color: $color-success-15;
+
+            .head {
+
+                >div {
+
+                    * {
+                        color: $color-success;
+                    }
+                }
+            }
+
+            .body {
+
+                .button-action {
+                    background-color: $color-success-70;
+
+                    * {
+                        color: $color-white;
+                    }
+
+                    &:hover {
+                        background-color: $color-success;
+                    }
+
+                    &:active {
+                        background-color: $color-success-50;
+                    }
+                }
+            }
+        }
+
+        &.cancel {
+            background-color: $color-cancel-70;
+
+            .head {
+
+                >div {
+
+                    * {
+                        color: $color-white;
+                    }
+                }
+            }
+
+            .body {
+
+                .button-action {
+                    background-color: $color-complementary-p-15;
+
+                    * {
+                        color: $color-white;
+                    }
+
+                    &:hover {
+                        background-color: $color-white-70;
+
+                        * {
+                            color: $color-complementary-s;
+                        }
+                    }
+
+                    &:active {
+                        background-color: $color-white-50;
+                    }
+                }
+            }
+        }
+
+        &.tag {
+            border: solid 3.25px $color-complementary-s-15;
+
+            .head {
+
+                >div {
+
+                    * {
+                        color: $color-complementary-s;
+                    }
+                }
+            }
+        }
+    }
+}

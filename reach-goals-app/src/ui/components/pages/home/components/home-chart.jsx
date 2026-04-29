@@ -70,16 +70,13 @@ const HomeChart = ({ data }) => {
     const dataBar = exportDataBar(dataChart)
 
     return (
-        <div className='chart home'>
-            <div className='head'>
-                <h2>{totalActivities} Activities</h2>
-            </div>
+        <div className={`chart home interface-${visibility.charts}`}>
             <div className='body'>
                 {visibility.charts === 'chart-pie' && (
                     <ChartPie data={dataPie} />
                 )}
                 {visibility.charts === 'chart-bar' && (
-                    <ChartBar data={dataBar} quantityActivity={totalActivities} />
+                    <ChartBar data={dataBar} quantity={totalActivities} showLegend={true} />
                 )}
                 <ChartCards data={data} type='home' />
             </div>

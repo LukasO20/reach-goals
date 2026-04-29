@@ -1,0 +1,40 @@
+.container-chart-cards-modal {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-gap-sm;
+    width: $dimensions-w-md;
+    max-height: $dimensions-h-video-xl;
+    background-color: $color-white;
+    box-shadow: $box-shadow-st;
+    padding: $spacing-padding-md;
+    border-radius: $dimensions-border-radius-sm;
+    overflow: hidden;
+
+    .head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: solid 1px $color-complementary-p;
+        padding-bottom: $spacing-padding-sm;
+
+        .title {
+            display: flex;
+            align-items: center;
+            gap: $spacing-gap-sm;
+            
+            * {
+                color: $color-complementary-s;
+            }
+
+            >span {
+                font-size: $font-size-m;
+                font-weight: 800;
+            }
+        }
+    }
+
+    .body {
+        flex-direction: column;
+        overflow-y: auto;
+    }
+}

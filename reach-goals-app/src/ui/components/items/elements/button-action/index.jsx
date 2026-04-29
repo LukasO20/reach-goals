@@ -25,7 +25,9 @@ const ButtonAction = ({
     disable,
     icon,
     title,
-    classBtn
+    classBtn,
+    innerRef,
+    ...rest
 }) => {
     const { visibleElements, toggleVisibility } = useVisibility()
     const { updateSwitchLayout } = useSwitchLayout()
@@ -73,8 +75,13 @@ const ButtonAction = ({
     )
 
     return (
-        <span className={buttonActionClass}
-            onClick={handleClick} onKeyDown={(e) => e.key === 'Enter' ? handleClick(e) : ''} role='button' tabIndex='0'>
+        <span ref={innerRef} 
+            className={buttonActionClass}
+            onClick={handleClick} onKeyDown={(e) => e.key === 'Enter' ? handleClick(e) : ''} 
+            role='button' 
+            tabIndex='0'
+            {...rest}
+        >
             {pendingState ? <Loading mode='inline' /> : icon && iconMap[icon]}
             {title && (<span className='button-title'>{title}</span>)}
         </span>

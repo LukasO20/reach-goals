@@ -28,8 +28,9 @@ const ChartPie = ({ data = [] }) => {
                     {
                         anchor: 'left',
                         direction: 'column',
-                        translateY: 56,
-                        itemWidth: 200,
+                        translateY: -165,
+                        translateX: -75,
+                        itemWidth: 100,
                         itemHeight: 22,
                         symbolShape: 'circle',
                     }
