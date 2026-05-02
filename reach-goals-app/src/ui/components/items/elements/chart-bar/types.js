@@ -1,8 +1,15 @@
 /**
+ * @typedef {Object} ChartBarDataStructure
+ * @property {Array} goal
+ * @property {Array} assignment
+ */
+
+/**
  * @typedef {Object} ActivityData
  * @property {string} id
  * @property {string} label
  * @property {number} quantity
+ * @property {ChartBarDataStructure} activities
  */
 
 /**

@@ -3,6 +3,7 @@
     flex-direction: column;
     gap: $spacing-gap-sm;
     width: $dimensions-w-md;
+    height: auto;
     max-height: $dimensions-h-video-xl;
     background-color: $color-white;
     box-shadow: $box-shadow-st;
@@ -34,7 +35,9 @@
     }
 
     .body {
+        display: flex;
         flex-direction: column;
         overflow-y: auto;
+        gap: $spacing-gap-sm;
     }
 }

@@ -25,7 +25,7 @@
  * @property {boolean} [renderBody]
  * @property {boolean} [isModalModelList]
  * @property {React.Dispatch<React.SetStateAction<ModalChartCardsProps>>} [onModalChartCards]
- * @property {function():void} [anchorCalculatePosition]
+ * @property {function(React.RefObject<HTMLElement>):void} [anchorCalculatePosition]
  */
 
 export { }

@@ -39,7 +39,10 @@ const HomeChart = ({ data }) => {
             .map((model) => ({
                 id: model.id,
                 label: model.label,
-                quantity: model.length
+                quantity: model.length,
+                activities: {
+                    [model.id]: model.data
+                }
             }))
     }
 
@@ -53,12 +56,14 @@ const HomeChart = ({ data }) => {
                     goal: {
                         id: 'goal',
                         label: 'Goal',
-                        length: goal.length
+                        length: goal.length,
+                        data: goal
                     },
                     assignment: {
                         id: 'assignment',
                         label: 'Assignment',
-                        length: assignment.length
+                        length: assignment.length,
+                        data: assignment
                     }
                 }
             }
@@ -70,7 +75,7 @@ const HomeChart = ({ data }) => {
     const dataBar = exportDataBar(dataChart)
 
     return (
-        <div className={`chart home interface-${visibility.charts}`}>
+        <div className='chart home'>
             <div className='body'>
                 {visibility.charts === 'chart-pie' && (
                     <ChartPie data={dataPie} />

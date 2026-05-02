@@ -5,31 +5,44 @@ import { useState, useCallback } from 'react'
  * @property {number} x
  * @property {number} y
  * @property {number} width
- * @property {string} placement
+ * @property {'top' | 'bottom'} placementY
+ * @property {'left' | 'right' | 'center'} placementX
+ */
+
+/**
+ * @callback CalculatePositionFn
+ * @param {HTMLElement} anchorElement
+ * @param {HTMLElement} containerElement
+ * @returns {void}
  */
 
 export const useAnchorPosition = () => {
-    const [coords, setCoords] = useState(/** @type {AnchorCoords | null} */ (null))
+    const [coords, setCoords] = useState(/** @type {AnchorCoords | null} */(null))
 
-    const calculatePosition = useCallback((anchorElement) => {
-        if (!anchorElement) return
+    /** @type {CalculatePositionFn} */
+    const calculatePosition = useCallback((anchorElement, containerElement) => {
+        if (!anchorElement || !containerElement) return
 
         const rect = anchorElement.getBoundingClientRect()
-        
-        const windowHeight = window.innerHeight
-        const scrollY = window.scrollY
-        const scrollX = window.scrollX
+        const containerRect = containerElement.getBoundingClientRect()
+        const windowWidth = window.innerWidth
 
-        const hasSpaceBelow = (windowHeight - rect.bottom) > 250
-        const placement = hasSpaceBelow ? 'bottom' : 'top'
+        const hasSpaceBelow = (window.innerHeight - rect.bottom) > 300
+        const placementY = hasSpaceBelow ? 'bottom' : 'top'
+
+        let placementX = 'left' 
+        if (rect.left > windowWidth * 0.7) {
+            placementX = 'right'
+        } else if (rect.left > windowWidth * 0.3) {
+            placementX = 'center'
+        }
 
         setCoords({
-            x: rect.left + scrollX,
-            y: placement === 'bottom' 
-                ? rect.bottom + scrollY + 8 
-                : rect.top + scrollY - 8,
+            x: rect.left - containerRect.left,
+            y: rect.top - containerRect.top,
             width: rect.width,
-            placement
+            placementY,
+            placementX
         })
     }, [])
 

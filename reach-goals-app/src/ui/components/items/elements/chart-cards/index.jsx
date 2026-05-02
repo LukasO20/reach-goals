@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useTransformModel } from '../../../../../hooks/useTransformModel.js'
 import { useAnchorPosition } from '../../../../../hooks/useAnchorPosition.js'
+
+import { getTransform } from '../../../../../utils/utils.js'
 
 import Cards from './components/cards.jsx'
 import ModalChartCards from '../../../modals/modal-chart-cards/index.jsx'
@@ -38,9 +40,15 @@ const ChartCards = ({ data }) => {
     const chartCancelQuantity = chartCancel.goal?.length + chartCancel.assignment?.length
     const chartTagsQuantity = chartTags.goal?.length + chartTags.assignment?.length
 
-    console.log('CORDS - ', coords)
+    const containerRef = useRef(null)
+
+    /** * @param {React.RefObject<HTMLElement>} elementRef */
+    const handleCalculatePosition = (elementRef) => {
+        calculatePosition(elementRef.current, containerRef.current)
+    }
+
     return (
-        <div className='chart-cards'>
+        <div className='chart-cards' ref={containerRef}>
             <Cards
                 type='progress'
                 title='Progress'
@@ -48,7 +56,7 @@ const ChartCards = ({ data }) => {
                 totalQuantity={totalQuantity}
                 renderBody={true}
                 onModalChartCards={() => hancleOnModalChartCards({ icon: 'progress', title: 'Progress', data: chartProgress })}
-                anchorCalculatePosition={calculatePosition}
+                anchorCalculatePosition={handleCalculatePosition}
             />
             <Cards
                 type='conclude'
@@ -57,7 +65,7 @@ const ChartCards = ({ data }) => {
                 totalQuantity={totalQuantity}
                 renderBody={true}
                 onModalChartCards={() => hancleOnModalChartCards({ icon: 'check', title: 'Conclude', data: chartConclude })}
-                anchorCalculatePosition={calculatePosition}
+                anchorCalculatePosition={handleCalculatePosition}
             />
             <Cards
                 type='cancel'
@@ -66,7 +74,7 @@ const ChartCards = ({ data }) => {
                 totalQuantity={totalQuantity}
                 renderBody={true}
                 onModalChartCards={() => hancleOnModalChartCards({ icon: 'cancel', title: 'Canceled', data: chartCancel })}
-                anchorCalculatePosition={calculatePosition}
+                anchorCalculatePosition={handleCalculatePosition}
             />
             <Cards
                 type='tag'
@@ -75,7 +83,7 @@ const ChartCards = ({ data }) => {
                 totalQuantity={totalQuantity}
                 renderBody={true}
                 onModalChartCards={() => hancleOnModalChartCards({ icon: 'tag', title: 'With tags', data: chartTags })}
-                anchorCalculatePosition={calculatePosition}
+                anchorCalculatePosition={handleCalculatePosition}
             />
             {showModalChartCards && (
                 <ModalChartCards
@@ -83,9 +91,11 @@ const ChartCards = ({ data }) => {
                         position: 'absolute',
                         left: `${coords.x}px`,
                         top: `${coords.y}px`,
-                        transform: coords.placement === 'top' ? 'translateY(-160%)' : 'none',
+                        minWidth: `${coords.width}px`,
+                        transform: getTransform(coords.placementX, coords.placementY),
                     }}
-                    data-placement={coords.placement}
+                    data-placement-y={coords.placementY}
+                    data-placement-x={coords.placementX}
                     icon={modalChartCards.icon}
                     title={modalChartCards.title}
                     data={modalChartCards.data}

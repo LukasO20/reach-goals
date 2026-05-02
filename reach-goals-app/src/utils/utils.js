@@ -98,4 +98,20 @@ const calculatePercent = (value, quantity) => {
     return ((value / quantity) * 100).toFixed(2)
 }
 
-export { formatDate, hasRequiredProps, debounce, sortedMap, cx, calculatePercent }
+/** 
+ * @param {string} pX 
+ * @param {string} pY 
+ */
+const getTransform = (pX, pY) => {
+    const translateArray = []
+
+    if (pY === 'top') translateArray.push('translateY(calc(-100% - 8px))')
+    else translateArray.push('translateY(calc(10% + 8px))')
+
+    if (pX === 'right') translateArray.push('translateX(calc(-100% + 32px))')
+    else if (pX === 'center') translateArray.push('translateX(-50%)')
+
+    return translateArray.join(' ')
+}
+
+export { formatDate, hasRequiredProps, debounce, sortedMap, cx, calculatePercent, getTransform }

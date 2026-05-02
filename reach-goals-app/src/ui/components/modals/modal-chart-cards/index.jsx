@@ -3,6 +3,8 @@ import { useOutsideClick } from '../../../../hooks/useOutsideClick.js'
 
 import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
 
+import { cx } from '../../../../utils/utils.js'
+
 import ButtonAction from '../../items/elements/button-action/index.jsx'
 import ModelSwitcher from '../../items/models/model-switcher/index.jsx'
 
@@ -25,8 +27,15 @@ const ModalChartCards = ({ data, icon, title, onShowModalChartCards, ...rest }) 
         type: ['card-mini'],
         actions: []
     }
-    
+
     useOutsideClick(modalRef, () => onShowModalChartCards(false))
+
+    const hasMoreChartCards = dataRender.flatMap((item) => item.data).length > 8
+
+    const chartCardsModalBodyClass = cx(`
+        body
+        ${hasMoreChartCards && 'scrollable'}
+    `)
 
     return (
         <div className='container-chart-cards-modal' ref={modalRef} {...rest}>
@@ -39,7 +48,7 @@ const ModalChartCards = ({ data, icon, title, onShowModalChartCards, ...rest }) 
                 </span>
                 <ButtonAction classBtn='circle close' icon='close' onClick={() => onShowModalChartCards(false)} />
             </div>
-            <div className='body scrollable'>
+            <div className={chartCardsModalBodyClass}>
                 {dataRender.map((model) => {
                     const propsReference = {
                         display: displayModesProps,

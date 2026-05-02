@@ -58,12 +58,11 @@ const CardMini = ({
 
             const validIconStatus = item.status && item.status !== 'progress'
 
-            const cardMiniClass = cx(
-                `${type}
-            ${selectedDisplayType}
-            ${isSelected && 'selected'}
-            `
-            )
+            const cardMiniClass = cx(`
+                ${type}
+                ${selectedDisplayType}
+                ${isSelected && 'selected'}
+            `)
 
             const renderCardMini = (dragProvided) => (
                 <div

@@ -1,117 +1,161 @@
 .chart-bar {
+    position: relative;
     display: flex;
     flex-direction: column;
+    align-items: stretch;
     gap: $spacing-gap-sm;
 
-    .bar {
-        position: relative;
+    >.head {
+
+        .label-activity {
+            font-weight: 600;
+            color: $color-complementary-s;
+        }
+    }
+
+    >.body {
         display: flex;
-        align-items: stretch;
-        height: $dimensions-h-sm;
-        border-radius: $dimensions-border-radius-sm;
-        padding: $spacing-padding-mini;
-        transition: $animation-transition-st;
+        flex: 1;
+        gap: $spacing-gap-md;
 
-        .bar-progress {
-            border-radius: $dimensions-border-radius-sm;
+        .bar {
+            position: relative;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0rem $spacing-padding-md;
+            flex-direction: column;
+            justify-content: end;
+            border-radius: $dimensions-border-radius-sm;
+            padding: $spacing-padding-mini;
             transition: $animation-transition-st;
+            flex: 2;
 
-            * {
-                color: $color-white;
-                font-weight: 500;
-            }
-
-            .bar-title {
+            .bar-progress {
+                border-radius: $dimensions-border-radius-sm;
                 display: flex;
-                flex-direction: column;
-                gap: $spacing-gap-sm;
+                align-items: center;
+                justify-content: center;
+                padding: 0rem $spacing-padding-md;
+                transition: $animation-transition-st;
 
-                >div {
+                * {
+                    color: $color-white;
+                    font-weight: 500;
+                }
+
+                .bar-title {
                     display: flex;
                     align-items: center;
+                    align-self: self-end;
                     gap: $spacing-gap-mini;
+                    padding: $spacing-padding-st;
 
                     .label-percent {
                         font-size: $font-size-sm;
                     }
                 }
-            }
-        }
 
-        .bar-actions {
-            position: absolute;
-            right: 1rem;
-            height: max-content;
-            align-self: center;
-        }
-
-        &.goal {
-            background-color: $color-primary-15;
-
-            .bar-progress {
-                background-color: $color-primary;
-            }
-
-            .bar-actions {
-
-                .button-action {
-                    background-color: $color-complementary-s;
-
-                    * {
-                        color: $color-white;
-                    }
-
-                    &:hover {
-                        background-color: $color-complementary-s-70;
-                    }
-
-                    &:active {
-                        background-color: $color-complementary-s-50;
-                    }
+                .label-percent {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    color: $color-complementary-s;
+                    font-size: $font-size-lg;
+                    font-weight: 800;
                 }
             }
-        }
-
-        &.assignment {
-            background-color: $color-accent-p-15;
-
-            .bar-progress {
-                background-color: $color-accent-p;
-            }
 
             .bar-actions {
+                position: absolute;
+                right: 1rem;
+                height: max-content;
+                top: 10%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                justify-self: flex-start;
+            }
 
-                .button-action {
+            &.goal {
+                background-color: $color-primary-50;
+
+                .bar-progress {
                     background-color: $color-primary;
 
-                    * {
+                    .label-percent {
                         color: $color-white;
                     }
+                }
 
-                    &:hover {
-                        background-color: $color-primary-70;
+                .bar-actions {
+
+                    .button-action {
+                        background-color: $color-white;
+
+                        * {
+                            color: $color-complementary-s;
+                        }
+
+                        &:hover {
+                            background-color: $color-complementary-p-70;
+                        }
+
+                        &:active {
+                            background-color: $color-complementary-p-50;
+                        }
                     }
+                }
 
-                    &:active {
-                        background-color: $color-primary-50;
+                &.empty {
+
+                    * {
+                        color: $color-complementary-s;
+                    }
+                }
+            }
+
+            &.assignment {
+                background-color: $color-accent-p-15;
+
+                .bar-progress {
+                    background-color: $color-accent-p;
+
+                    .label-percent {
+                        color: $color-primary;
+                    }
+                }
+
+                .bar-actions {
+
+                    .button-action {
+                        background-color: $color-primary;
+
+                        * {
+                            color: $color-white;
+                        }
+
+                        &:hover {
+                            background-color: $color-primary-70;
+                        }
+
+                        &:active {
+                            background-color: $color-primary-50;
+                        }
+                    }
+                }
+
+                &.empty {
+
+                    * {
+                        color: $color-primary;
                     }
                 }
             }
         }
 
-        &:hover {
-            padding: $spacing-padding-sm;
+        .label-activity {
+            display: inline-flex;
+            padding: $spacing-padding-md;
+            color: $color-complementary-s;
+            font-weight: 700;
         }
-    }
-
-    .label-activity {
-        display: inline-flex;
-        padding: $spacing-padding-md;
-        color: $color-complementary-s;
-        font-weight: 700;
     }
 }

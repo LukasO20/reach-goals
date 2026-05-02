@@ -22,7 +22,7 @@ const Cards = ({
     const buttonRef = useRef(null)
 
     const handleButtonActionClick = () => {
-        anchorCalculatePosition?.(buttonRef.current)
+        anchorCalculatePosition?.(buttonRef)
         onModalChartCards?.()
     }
 
