@@ -18,7 +18,7 @@ const Home = () => {
         assignment: dataAssignment
     }
     const layoutHome = layout.page.layoutName
-    const validLayouts = ['chart', 'goal', 'assignment']
+    const validLayouts = ['chart', 'column']
 
     const isLoading = !!loadingGoal || !!loadingAssignment
 

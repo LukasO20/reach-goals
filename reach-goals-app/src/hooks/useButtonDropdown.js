@@ -121,5 +121,5 @@ export const useButtonDropdown = ({ type, value, actions, isPageObjectives }) =>
         }
 
         return null
-    }, [type, handleActions])
+    }, [type, handleActions, isPageObjectives, value])
 }

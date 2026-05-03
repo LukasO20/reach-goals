@@ -10,7 +10,7 @@ import Home from '.'
 
 export const HomeWrapper = () => {
     const { update } = useTitle()
-    const { data: { layout } } = useSwitchLayout()
+    const { data: { layout, visibility } } = useSwitchLayout()
 
     const layoutHome = layout.page.layoutName
     const isPieChartLayout = layoutHome === 'chart'
@@ -19,17 +19,17 @@ export const HomeWrapper = () => {
         update({ header: `Welcome. Let's produce?` })
     }, [update])
 
-    const dataOneType = buildFilterModelMap(layoutHome, 
-        layoutHome === 'goal' ? 'goalSomeID' : 'assignmentSomeID', 
+    const dataHomeColumns = buildFilterModelMap(visibility.layoutHome, 
+        visibility.layoutHome === 'goal' ? 'goalSomeID' : 'assignmentSomeID', 
         'page', 
         'all')
 
-    const dataMultipleType = {
+    const dataHomeChart = {
         ...buildFilterModelMap('goal', 'goalSomeID', 'page', 'all'),
         ...buildFilterModelMap('assignment', 'assignmentSomeID', 'page', 'all')
     }
         
-    const dataFilter = isPieChartLayout ? dataMultipleType : dataOneType
+    const dataFilter = isPieChartLayout ? dataHomeChart : dataHomeColumns
 
     return (
         <ModelQueryClientProvider filter={dataFilter}>

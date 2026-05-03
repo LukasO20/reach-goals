@@ -68,7 +68,7 @@ const Navigate = () => {
             <div className='nav'>
                 <div className='item-nav'>
                     <ButtonLink link={'/home'} classBtn={buttonLinkHomeClass} img='/logo.png' alt='Home button'
-                        switchLayout={switchLayoutMap({ area: 'page', state: { pageName: 'home', layoutName: 'goal' } })}
+                        switchLayout={switchLayoutMap({ area: 'page', state: { pageName: 'home', layoutName: 'column' } })}
                         onClick={() => handleButtonLinkClick('home')}
                     />
                 </div>

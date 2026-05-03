@@ -70,7 +70,7 @@ export const initialStateMap = {
 export const switchLayoutMap = {
     page: {
         pageName: 'home',
-        layoutName: 'goal'
+        layoutName: 'column'
     },
     modal: {
         modalName: null,

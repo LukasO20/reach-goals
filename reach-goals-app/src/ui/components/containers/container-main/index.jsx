@@ -55,10 +55,8 @@ const ContainerMain = () => {
         actions: { setterUseSwitchLayout: (target) => setUserConfigLayout(target) }
     })
 
-    const isSwitchLayoutAssignment = layout.page.layoutName === 'assignment'
-    const isSwitchLayoutGoal = layout.page.layoutName === 'goal'
+    const isSwitchColumn = layout.page.layoutName === 'column'
     const isSwichChart = layout.page.layoutName === 'chart'
-    const isSwitchLayoutActivities = layout.page.layoutName === 'all'
 
     const hasSelectedModel = !!valuesCheckbox.page?.selected.length
 
@@ -74,35 +72,28 @@ const ContainerMain = () => {
                 )}
                 <div className='line-s'>
                     <div className='filter'>
-                        {!isPageCalendar && hasSelectedModel && (
-                            <ButtonCheckbox classBtn='checkbox-main' checkboxID={`checkbox-${layout.page.pageName}`}
-                                checkbox={buildCheckboxMap({ checkboxIDMain: `checkbox-${layout.page.pageName}`, scope: 'page' })}
-                                title='Select all'
-                            />
-                        )}
                         {isPageCalendar && (
                             <div className='month-picker'>
                                 <span className='month-name'>{monthNames[new Date().getMonth()]}</span>
                                 <span className='year-number'>{new Date().getFullYear()}</span>
                             </div>
                         )}
-                        <ButtonAction classBtn={`plan-round max-width goal ${isSwitchLayoutGoal ? 'active' : ''}`} title='goals'
-                            switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'goal' } })}
-                            onClick={handleButtonActionClick}
-                        />
-                        <ButtonAction classBtn={`plan-round max-width assignment ${isSwitchLayoutAssignment ? 'active' : ''}`} title='assignments'
-                            switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'assignment' } })}
-                            onClick={handleButtonActionClick}
-                        />
                         {isPageHome && (
-                            <ButtonAction classBtn={`plan-round max-width chart ${isSwichChart ? 'active' : ''}`} icon='chartbar'
-                                switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'chart' } })}
-                                onClick={handleButtonActionClick}
-                            />
+                            <>
+                                <ButtonAction classBtn={`plan-round max-width goal ${isSwitchColumn ? 'active' : ''}`} icon='column'
+                                    switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'column' } })}
+                                    onClick={handleButtonActionClick}
+                                />
+                                <ButtonAction classBtn={`plan-round max-width chart ${isSwichChart ? 'active' : ''}`} icon='chartbar'
+                                    switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'chart' } })}
+                                    onClick={handleButtonActionClick}
+                                />
+                            </>
                         )}
-                        {(isPageObjectives || isPageCalendar) && (
-                            <ButtonAction classBtn={`plan-round max-width all-activities ${isSwitchLayoutActivities ? 'active' : ''}`} title='all activities'
-                                switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'all' } })}
+                        {!isPageCalendar && hasSelectedModel && (
+                            <ButtonCheckbox classBtn='checkbox-main' checkboxID={`checkbox-${layout.page.pageName}`}
+                                checkbox={buildCheckboxMap({ checkboxIDMain: `checkbox-${layout.page.pageName}`, scope: 'page' })}
+                                title='Select all'
                             />
                         )}
                     </div>

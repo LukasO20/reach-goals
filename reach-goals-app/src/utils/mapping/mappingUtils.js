@@ -145,6 +145,9 @@ export const persistedUserConfigMap = {
         cards: 'card',
         charts: 'chart-pie',
         status: ['progress', 'conclude', 'cancel'],
+        layoutHome: 'goal',
+        layoutCalendar: 'all-activities',
+        layoutObjectives: 'all-activities',
         columns: null,
         tagsCard: true,
     }

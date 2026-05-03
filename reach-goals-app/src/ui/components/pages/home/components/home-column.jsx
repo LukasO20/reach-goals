@@ -7,6 +7,7 @@ import { iconMap } from '../../../../../utils/mapping/mappingIcons'
 
 import Assignment from '../../../items/models/assignment'
 import Goal from '../../../items/models/goal'
+import PopupModelOptions from '../../../items/elements/popup-model-options/index.jsx'
 import { DragDrop, DragDropDroppable } from '../../../items/elements/drag-drop' 
 
 /** @typedef {import('../types').HomeProps} Props */
@@ -15,14 +16,12 @@ import { DragDrop, DragDropDroppable } from '../../../items/elements/drag-drop'
  * @param {Props} props
  */
 const HomeColumn = ({ data }) => {
-    const { data: { layout, visibility } } = useSwitchLayout()
+    const { data: { visibility } } = useSwitchLayout()
     const { update } = useTitle()
     const { saveDragDrop: saveDragDropGoal } = useGoalProvider()
     const { saveDragDrop: saveDragDropAssignment } = useAssignmentProvider()
 
     const { goal: dataGoal = [], assignment: dataAssignment = [] } = data
-
-    const layoutColumn = layout.page.layoutName
 
     const dataColumn = {
         progress: { goal: dataGoal.filter(g => g.status === 'progress'), assignment: dataAssignment.filter(a => a.status === 'progress') },
@@ -66,8 +65,8 @@ const HomeColumn = ({ data }) => {
         const dragDropData = { source, destination, draggableId }
 
         try {
-            layoutColumn === 'goal' && saveDragDropGoal(dragDropData)
-            layoutColumn === 'assignment' && saveDragDropAssignment(dragDropData)
+            visibility.layoutHome === 'goal' && saveDragDropGoal(dragDropData)
+            visibility.layoutHome === 'assignment' && saveDragDropAssignment(dragDropData)
 
         } catch (exception) {
             update({ toast: 'Ops something went wrong during save. Reload page and try again later.' })
@@ -91,7 +90,7 @@ const HomeColumn = ({ data }) => {
                                 <div className='body scrollable'>
                                     <DragDropDroppable dragDropID={item.type} className='list'>
                                         {
-                                            layoutColumn === 'goal' ?
+                                            visibility.layoutHome === 'goal' ?
                                                 <Goal source={dataColumn[item.type].goal} {...columnPropsReference} />
                                                 :
                                                 <Assignment source={dataColumn[item.type].assignment} {...columnPropsReference} />
@@ -102,6 +101,7 @@ const HomeColumn = ({ data }) => {
                         ))}
                 </div>
             </DragDrop>
+            <PopupModelOptions type='pop-switch-model' typeSwitchModelOptions='home' />
         </div>
     )
 }

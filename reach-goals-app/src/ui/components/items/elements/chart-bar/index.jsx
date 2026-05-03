@@ -1,9 +1,17 @@
+import { useRef, useState } from 'react'
+import { useAnchorPosition } from '../../../../../hooks/useAnchorPosition.js'
+
 import ButtonAction from '../button-action/index.jsx'
+import ModalChartCards from '../../../modals/modal-chart-cards/index.jsx'
 
 import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
-import { calculatePercent } from '../../../../../utils/utils.js'
+import { calculatePercent, getTransform } from '../../../../../utils/utils.js'
+
+import { cx } from '../../../../../utils/utils.js'
 
 import './style.scss'
+
+/** @typedef {import('../chart-cards/types.js').ModalChartCardsProps} ModalChartCardsProps */
 
 /** @typedef {import('./types.js').ChartBarProps} Props */
 
@@ -11,43 +19,93 @@ import './style.scss'
  * @param {Props} props
  */
 const ChartBar = ({ data, quantity, showLegend }) => {
+    /** @type {[ModalChartCardsProps, React.Dispatch<React.SetStateAction<ModalChartCardsProps>>]} */
+    const [modalChartCards, setModalChartCards] = useState()
+    const [showModalChartCards, setShowModalChartCards] = useState(false)
+    const { coords, calculatePosition } = useAnchorPosition()
 
-    const activityLabel = quantity === 1 ? `${quantity} activity` : `${quantity} activities`
+    const activityLabel = quantity === 1 ? 'activity' : 'activities'
+
+    const containerRef = useRef(null)
+
+    const handleCalculatePosition = (elementTarget) => {
+        calculatePosition(elementTarget, containerRef.current)
+    }
+
+    /** @param {ModalChartCardsProps} */
+    const hancleOnModalChartCards = ({ icon, title, data }) => {
+        setModalChartCards({ icon, title, data })
+        setShowModalChartCards(true)
+    }
 
     return (
-        <div className='chart-bar'>
-            {showLegend && (
-                <label className='label-activity'>{activityLabel}</label>
-            )}
-            {
-                data.map((item) => {
-                    const percentLabel = calculatePercent(item.quantity, quantity)
-                    const activityLabel = item.quantity === 1 ? `${item.quantity} activity` : `${item.quantity} activities`
+        <div className='chart-bar' ref={containerRef}>
+            <div className='head'>
+                {showLegend && (
+                    <label className='label-activity'>
+                        {quantity} {activityLabel}
+                    </label>
+                )}
+            </div>
+            <div className='body'>
+                {
+                    data.map((item) => {
+                        const hasActivity = item.quantity
+                        const percentLabel = calculatePercent(item.quantity, quantity)
+                        const labelMessage = hasActivity ? `${item.label} - ${item.quantity} ${activityLabel}` : `No ${item.label}s found`
+                        const iconModalChartCards = item.id
 
-                    const hasActivity = !!item.quantity
+                        const barClass = cx(`
+                            bar
+                            ${item.id}
+                            ${!hasActivity && 'empty'}
+                         `)
 
-                    return (
-                        <div className={`bar ${item.id}`} key={item.id}>
-                            <div className={`bar-progress`} style={{ width: `${percentLabel}%` }}>
-                                <div className='bar-title'>
-                                    <div>
+                        return (
+                            <div className={barClass} key={item.id}>
+                                <div className={`bar-progress`} style={{ height: `${percentLabel}%` }}>
+                                    <div className='bar-title'>
                                         {iconMap[item.id]}
-                                        <label>{item.label}</label>
+                                        <label className='label-message'>{labelMessage}</label>
                                     </div>
                                     {hasActivity && (
-                                        <div>
-                                            <label className='label-percent'>{percentLabel}% - {activityLabel}</label>
-                                        </div>
+                                        <label className='label-percent'>{percentLabel}%</label>
+                                    )}
+                                </div>
+                                <div className='bar-actions'>
+                                    {hasActivity && (
+                                        <ButtonAction
+                                            classBtn='details-activity circle'
+                                            icon='plus'
+                                            onClick={(e) => {
+                                                hancleOnModalChartCards({ icon: iconModalChartCards, title: item.label, data: item.activities })
+                                                handleCalculatePosition(e.event.target)
+                                            }}
+                                        />
                                     )}
                                 </div>
                             </div>
-                            <div className='bar-actions'>
-                                <ButtonAction classBtn='details-activity circle' icon='arrowright' />
-                            </div>
-                        </div>
-                    )
-                })
-            }
+                        )
+                    })
+                }
+            </div>
+            {showModalChartCards && (
+                <ModalChartCards
+                    style={{
+                        position: 'absolute',
+                        left: `${coords.x}px`,
+                        top: `${coords.y}px`,
+                        minWidth: `${coords.width}px`,
+                        transform: getTransform(coords.placementX, coords.placementY),
+                    }}
+                    data-placement-y={coords.placementY}
+                    data-placement-x={coords.placementX}
+                    icon={modalChartCards.icon}
+                    title={modalChartCards.title}
+                    data={modalChartCards.data}
+                    onShowModalChartCards={setShowModalChartCards}
+                />
+            )}
         </div>
     )
 }

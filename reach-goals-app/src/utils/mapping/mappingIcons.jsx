@@ -11,6 +11,7 @@ export const iconMap = {
     calendar: <Unicons.UilCalendar className='icon-st' />,
     schedule: <Unicons.UilCalendarAlt className='icon-st' />,
     comment: <Unicons.UilCommentAltNotes className='icon-st' />,
+    column: <Unicons.UilColumns className='icon-st' />,
     clock: <Unicons.UilClock className='icon-st' />,
     objectives: <Unicons.UilCreateDashboard className='icon-st' />,
     edit: <Unicons.UilPen className='icon-st' />,
