@@ -30,7 +30,7 @@ export const ObjectivesWrapper = () => {
 
     return (
         <ModelQueryClientProvider filter={dataFilter}>
-            <Objectives onFilterTabs={setFilterTabs} />
+            <Objectives filterTabs={filterTabs} onFilterTabs={setFilterTabs} />
         </ModelQueryClientProvider>
     )
 }

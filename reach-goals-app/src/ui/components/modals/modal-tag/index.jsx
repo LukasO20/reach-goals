@@ -9,12 +9,12 @@ import { useCheckbox } from '../../../../provider/ui/checkbox-provider.jsx'
 import { visibilityMap, switchLayoutMap, buildCheckboxMap } from '../../../../utils/mapping/mappingUtils.js'
 import { resetManageModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
-import ModalForm from '../modal-form' 
-import ButtonAction from '../../items/elements/button-action' 
-import ButtonCheckbox from '../../items/elements/button-checkbox' 
-import ModelTabs from '../../items/elements/model-tabs' 
+import ModalForm from '../modal-form'
+import ButtonAction from '../../items/elements/button-action'
+import ButtonCheckbox from '../../items/elements/button-checkbox'
+import ModelTabs from '../../items/elements/model-tabs'
 import RelationCard from '../../items/models/tag/relation-card.jsx'
-import PopupModelOptions from '../../items/elements/popup-model-options' 
+import PopupModelOptions from '../../items/elements/popup-model-options'
 
 import { cx } from '../../../../utils/utils.js'
 
@@ -25,7 +25,7 @@ import './modal-tag.scss'
 /**
  * @param {Props} props
  */
-const ModalTag = ({ onFilterTabs }) => {
+const ModalTag = ({ filterTabs, onFilterTabs }) => {
     const { visibleElements } = useVisibility()
     const { model, setModel, resetManageModel } = useManageModel()
     const { modal: { loading } } = useTagProvider()
@@ -69,12 +69,16 @@ const ModalTag = ({ onFilterTabs }) => {
         <>
             <div className='head'>
                 <h2>Tags</h2>
-                <ButtonAction visibility={visibilityMap(null)} onClick={handleClickButtonAction} classBtn='button-action circle close' icon='close' />
+                <ButtonAction
+                    classBtn='circle close' icon='close'
+                    visibility={visibilityMap(null)}
+                    onClick={handleClickButtonAction}
+                />
                 <div className='options'>
                     <ButtonAction
+                        classBtn={buttonCreateClass}
                         onClick={handleClickButtonActionCreate}
                         visibility={visibilityMap('near-modalForm', { add: true })}
-                        classBtn={buttonCreateClass}
                         icon='plus'
                         title='create'
                     />
@@ -89,10 +93,12 @@ const ModalTag = ({ onFilterTabs }) => {
             </div>
             <div className='body'>
                 {isModalForm.every(e => visibleElements.includes(e)) && <ModalForm type='tag' />}
-                <ModelTabs type='tag' headLeftChildren={headLeftContent} loading={isLoadingTag} onFilterTabs={onFilterTabs}>
+                <ModelTabs type='tag' headLeftChildren={headLeftContent} loading={isLoadingTag} filterTabs={filterTabs} onFilterTabs={onFilterTabs}>
                     {content}
                 </ModelTabs>
-                {hasSelectedModel && (<PopupModelOptions type='pop-model' typeModelOptions='tag' />)}
+                {hasSelectedModel && (
+                    <PopupModelOptions type='pop-model' typeModelOptions='tag' onFilterTabs={onFilterTabs} />
+                )}
             </div>
         </>
     )

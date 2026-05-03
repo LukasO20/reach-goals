@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { useSwitchLayout } from '../../../../../provider/ui/switch-layout-provider.jsx'
 
 import { modelTabsMap } from '../../../../../utils/mapping/mappingUtils.js'
@@ -17,16 +15,11 @@ import './style.scss'
 /**
  * @param {Props} props
  */
-const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, onFilterTabs, loading }) => {
+const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, filterTabs, onFilterTabs, loading }) => {
     const { data: { visibility } } = useSwitchLayout()
-    const [currentFilterData, setCurrentFilterData] = useState({
-        assignment: {},
-        goal: {},
-        tag: {}
-    })
 
-    const filterButtonActive = currentFilterData[type] ?
-        Object.entries(currentFilterData[type]).find(([, value]) => value === 'all')?.[0]
+    const filterButtonActive = filterTabs ?
+        Object.entries(filterTabs[type]).find(([, data]) => data.page === 'all' || data.modal === 'all')?.[0]
         : null
 
     const columnsUserConfig = type !== 'tag' ? visibility.columns : null
@@ -44,11 +37,14 @@ const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, onFilterT
         const source = type === 'tag' ? 'modal' : 'page'
 
         onFilterTabs(buildFilterModelMap(type, filerKey, source, filterValue))
-
-        setCurrentFilterData(() => ({
-            [type]: { ...filter }
-        }))
     }
+
+    const buttonActionClass = cx(`
+        plan-round 
+        max-width 
+        small 
+        model-tabs
+        `)
 
     return (
         <div className={modelTabsClass}>
@@ -59,12 +55,12 @@ const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, onFilterT
                         modelTabsMap[type]?.map((tab, index) => {
                             const currentButton = Object.keys(tab.filter)[0]
                             const isNullFilter = !filterButtonActive && tab.label.includes('every')
+                            const activeButton = currentButton === filterButtonActive ? 'active' : isNullFilter ? 'active' : ''
 
                             return (
                                 <ButtonAction
                                     key={index}
-                                    classBtn={`button-action plan-round max-width small model-tabs 
-                                        ${currentButton === filterButtonActive ? 'active' : isNullFilter ? 'active' : ''}`}
+                                    classBtn={`${buttonActionClass} ${activeButton}`}
                                     title={tab.label}
                                     onClick={() => { handleFilterClick(tab.filter) }}
                                 />

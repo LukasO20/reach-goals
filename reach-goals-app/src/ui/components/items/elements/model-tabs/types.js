@@ -4,8 +4,9 @@
  * @property {string} [classModelTabs]
  * @property {import('react').ReactNode} children
  * @property {import('react').ReactNode} [headLeftChildren]
- * @property {boolean} [loading]
  * @property {function(string):void} onFilterTabs
+ * @property {Object | null} filterTabs
+ * @property {boolean} [loading]
  */
 
 export {}
