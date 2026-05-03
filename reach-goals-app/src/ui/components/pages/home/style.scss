@@ -1,7 +1,7 @@
 .column {
+    position: relative;
 
     &.home {
-        position: relative;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -90,6 +90,13 @@
                 }
             }
         }
+
+        .container-popup {
+            position: absolute;
+            bottom: 0%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
     }
 }
 
@@ -97,13 +104,12 @@
     position: relative;
 
     &.home {
-        position: relative;
         display: flex;
         flex-direction: column;
         align-items: stretch;
         height: 100%;
 
-        .body {
+        >.body {
             display: flex;
             flex: 10;
             width: 100%;
@@ -127,17 +133,6 @@
             bottom: 0%;
             left: 50%;
             transform: translate(-50%, -50%);
-        }
-
-        &.interface-chart-bar {
-
-            .body {
-                flex-direction: column;
-
-                .chart-cards {
-                    flex: 2;
-                }
-            }
         }
     }
 }

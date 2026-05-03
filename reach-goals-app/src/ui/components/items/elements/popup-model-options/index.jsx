@@ -1,5 +1,6 @@
 import ModelOptions from './components/model-options.jsx'
 import ChartOptions from './components/chart-options.jsx'
+import SwitchModelOptions from './components/switch-model-options.jsx'
 
 import './style.scss'
 
@@ -8,13 +9,17 @@ import './style.scss'
 /**
  * @param {Props} props
  */
-const PopupModelOptions = ({ type, typeModelOptions }) => {
+const PopupModelOptions = ({ type, typeModelOptions, typeSwitchModelOptions, onFilterTabs }) => {
 
     const isValidType = !!type
 
     return (
-        <div className='container-popup model-options'>
-            {isValidType && type === 'pop-model' ? (<ModelOptions type={typeModelOptions} />) : (<ChartOptions />)}
+        <div className={`container-popup ${type}`}>
+            {isValidType && (
+                type === 'pop-model' ? (<ModelOptions type={typeModelOptions} />) :
+                    type === 'pop-switch-model' ? (<SwitchModelOptions type={typeSwitchModelOptions} onFilterTabs={onFilterTabs} />) :
+                        (<ChartOptions />)
+            )}
         </div>
     )
 }
