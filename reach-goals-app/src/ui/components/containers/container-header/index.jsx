@@ -31,9 +31,7 @@ const ContainerHeader = () => {
 
     return (
         <div className='container-header main-content'>
-            <div className='titles-header'>
-                <h1>{title.header}</h1>
-            </div>
+            <h1>{title.header}</h1>
             <div className='nav'>
                 <div className='item-nav'>
                     <SearchBar mode='service' placeholder='search an activity' />

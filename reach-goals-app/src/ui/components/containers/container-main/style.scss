@@ -3,81 +3,36 @@
     display: flex;
     flex-direction: column;
     margin: 0em 1.5em 1em 1.5em;
+    gap: $spacing-gap-sm;
 
     >.head {
         display: flex;
         flex-direction: column;
 
-        .line-p {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 0.1em solid $color-complementary-p;
-
-            .button-m {
-                margin: 0em 1em;
-                font-size: $font-size-m;
-
-                &:hover {
-                    cursor: pointer;
-                }
-            }
-
-            .options-m {
-                display: flex;
-                align-items: center;
-                gap: 1rem;
-
-                .visibility-m {
-
-                    .visibility.button-m {
-                        font-weight: 600;
-                    }
-                }
-            }
-        }
-
-        .line-s {
+        .sub-head {
             display: flex;
             justify-content: space-between;
             align-items: center;
             height: 3.5em;
+            border-bottom: solid 2px $color-complementary-p;
 
-            .button-filter-m,
-            .button-show-m,
-            .button-action-m {
-
-                &:not(.search, .order, .create) {
-                    padding: 0em;
-                }
-
-                font-size: $font-size-m;
-            }
-
-            .action {
+            >div {
                 display: flex;
                 align-items: center;
-                gap: 1em;
-            }
+                gap: $spacing-gap-md;
 
-            .filter {
-                display: flex;
-                align-items: center;
-                gap: 0.75em;
+                &:first-child {
 
-                .search {
-                    display: flex;
-                    align-items: center;
-                }
+                    .month-picker {
+                        display: flex;
+                        align-items: center;
+                        gap: $spacing-gap-mini;
 
-                .month-picker {
-                    display: flex;
-                    align-items: center;
-                    gap: 0.25rem;
-
-                    >span {
-                        color: $color-complementary-s;
-                        font-weight: 600;
-                        font-size: 1.25rem;
+                        >span {
+                            color: $color-complementary-s;
+                            font-weight: 600;
+                            font-size: $font-size-m;
+                        }
                     }
                 }
             }

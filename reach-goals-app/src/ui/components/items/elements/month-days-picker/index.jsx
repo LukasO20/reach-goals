@@ -76,7 +76,7 @@ const MonthDaysPicker = ({ data }) => {
 
     return (
         <div className={`calendar ${typeLayout}`}>
-            <div className='header'>
+            <div className='head'>
                 {
                     weekNames.map(week => {
                         return (<div key={week} className='day-name'>{week}</div>)

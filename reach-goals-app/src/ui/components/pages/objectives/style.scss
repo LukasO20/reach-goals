@@ -1,22 +1,33 @@
-.model-tabs.objectives {
+.model-tabs {
 
-    .card-mini {
-        cursor: pointer;
-        min-height: 2rem;
+    &.objectives {
 
-        .card-mini-tag {
+        &.all-activities {
 
-            >label {
-                width: 5rem;
-            }
-
-            .count {
-                width: 2.5rem;
+            .head {
+                border-bottom: none;
+                padding: 0px;
             }
         }
 
-        * {
+        .card-mini {
             cursor: pointer;
+            min-height: 2rem;
+
+            .card-mini-tag {
+
+                >label {
+                    width: 5rem;
+                }
+
+                .count {
+                    width: 2.5rem;
+                }
+            }
+
+            * {
+                cursor: pointer;
+            }
         }
     }
 }

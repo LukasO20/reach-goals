@@ -63,15 +63,8 @@ const ContainerMain = () => {
     return (
         <div className='container-main'>
             <div className='head'>
-                {!isPageCalendar && (
-                    <div className='line-p'>
-                        <div className='title-m'>
-                            <h2>Your control panel</h2>
-                        </div>
-                    </div>
-                )}
-                <div className='line-s'>
-                    <div className='filter'>
+                <div className='sub-head'>
+                    <div>
                         {isPageCalendar && (
                             <div className='month-picker'>
                                 <span className='month-name'>{monthNames[new Date().getMonth()]}</span>
@@ -97,7 +90,7 @@ const ContainerMain = () => {
                             />
                         )}
                     </div>
-                    <div className='action'>
+                    <div>
                         <ButtonDropdown
                             visibility='dropdown-action-create'
                             classBtn='create'
