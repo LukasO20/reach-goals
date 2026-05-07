@@ -4,7 +4,7 @@
     height: 2.4rem;
     box-sizing: border-box;
     padding: 0rem 0.66rem;
-    border-radius: 0.5rem;
+    border-radius: $dimensions-border-radius-sm;
     border: 3px solid transparent;
     background-color: $color-complementary-p;
     outline-color: $color-accent-p;

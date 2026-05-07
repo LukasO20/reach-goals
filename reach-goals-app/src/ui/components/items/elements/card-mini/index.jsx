@@ -6,7 +6,7 @@ import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 
 import ButtonAction from '../button-action'
 import ButtonCheckbox from '../button-checkbox'
-import CardMiniTag from '../card-mini-tag'
+import TagsPopover from '../tags-popover/index.jsx'
 
 import { cx } from '../../../../../utils/utils.js'
 
@@ -76,7 +76,7 @@ const CardMini = ({
                     {...dragProvided?.dragHandleProps}
                 >
                     <div className='body'>
-                        <div className='left-side'>
+                        <div className='side-left'>
                             {checkboxModel && (
                                 <ButtonCheckbox classBtn='checkbox-card-mini' checkboxID={`checkbox-${itemID}`}
                                     checkbox={buildCheckboxMap({ checkboxID: `checkbox-${itemID}`, scope: 'page' })} />
@@ -90,10 +90,9 @@ const CardMini = ({
                             <span className='title'>{item.name}</span>
                         </div>
                         {(hasTags || hasSideActions) && (
-                            <div className='right-side'>
-                                {hasTags && (<CardMiniTag tags={item.tags} />)}
+                            <div className='side-right'>
                                 {hasSideActions && (
-                                    <div className='side-actions'>
+                                    <>
                                         {isDisplayActionEdit && (
                                             <ButtonAction
                                                 onClick={() => clickFunction.edit(itemID)}
@@ -122,8 +121,9 @@ const CardMini = ({
                                                 icon='close'
                                             />
                                         )}
-                                    </div>
+                                    </>
                                 )}
+                                {hasTags && (<TagsPopover tags={item.tags} visibility={`tag-popover-${item.id}`} />)}
                             </div>
                         )}
                     </div>

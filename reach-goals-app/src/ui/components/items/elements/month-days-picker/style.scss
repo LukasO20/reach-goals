@@ -6,8 +6,8 @@ div.calendar {
     flex-grow: 1;
     background-color: $color-complementary-p-30;
     border: solid 1px $color-complementary-s-15;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
+    border-radius: $dimensions-border-radius-sm;
+    padding: $spacing-padding-sm;
 
     .head {
         display: flex;
@@ -26,7 +26,7 @@ div.calendar {
         grid-template-columns: repeat(7, 1fr);
         grid-template-rows: repeat(6, 1fr);
         height: 100%;
-        gap: 0.5rem;
+        gap: $spacing-gap-sm;
 
         .day {
             display: flex;
@@ -39,7 +39,7 @@ div.calendar {
             color: $color-complementary-s;
             background-color: $color-complementary-p-50;
             padding: 0.15rem;
-            border-radius: 0.5rem;
+            border-radius: $dimensions-border-radius-sm;
 
             .title {
                 display: inline-flex;
@@ -67,7 +67,7 @@ div.calendar {
                         overflow: hidden;
                         text-overflow: ellipsis;
                         white-space: nowrap;
-                        font-size: 0.85rem;
+                        font-size: $font-size-mini;
                         flex: 5;
                     }
 

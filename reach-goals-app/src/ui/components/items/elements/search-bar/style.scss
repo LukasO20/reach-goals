@@ -39,9 +39,9 @@
         overflow-y: auto;
         background-color: $color-white;
         box-shadow: $box-shadow-st;
-        padding: 0.5rem;
-        border-radius: 0.5rem;
-        gap: 0.5rem;
+        padding: $spacing-padding-sm;
+        border-radius: $dimensions-border-radius-sm;
+        gap: $spacing-gap-sm;
         top: 2.95rem;
         left: 0;
         right: 0;
@@ -51,22 +51,22 @@
             flex-direction: column;
             overflow: hidden;
             flex-shrink: 0;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.5rem;
-            gap: 0.25rem;
+            padding: $spacing-padding-mini $spacing-padding-sm;
+            border-radius: $dimensions-border-radius-sm;
+            gap: $spacing-gap-mini;
 
             >.head {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                gap: 0.5rem;
+                gap: $spacing-gap-sm;
 
                 .item-info {
                     overflow: hidden;
                     cursor: pointer;
                     transition: .3s linear;
                     padding: 0rem 0.5rem;
-                    border-radius: 0.5rem;
+                    border-radius: $dimensions-border-radius-sm;
                     height: 1.8rem;
                     flex: 10;
 
@@ -113,7 +113,7 @@
                 .item-action {
                     display: flex;
                     align-items: center;
-                    gap: 0.5rem;
+                    gap: $spacing-gap-sm;
                 }
             }
 
@@ -145,18 +145,18 @@
                     .item-content {
                         display: flex;
                         flex-wrap: wrap;
-                        gap: 0.25rem;
+                        gap: $spacing-gap-mini;
 
                         .item-tag {
                             display: flex;
                             align-items: center;
                             cursor: pointer;
-                            gap: 0.25rem;
+                            gap: $spacing-gap-mini;
                             font-size: 0.875rem;
                             font-weight: 500;
                             background-color: $color-white-70;
-                            padding: 0.25rem 0.5rem;
-                            border-radius: 0.5rem;
+                            padding: $spacing-padding-mini $spacing-padding-sm;
+                            border-radius: $dimensions-border-radius-sm;
                             transition: .3s linear;
                             color: $color-complementary-s;
 

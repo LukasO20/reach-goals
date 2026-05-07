@@ -30,7 +30,7 @@ const ModalChartCards = ({ data, icon, title, onShowModalChartCards, ...rest }) 
 
     useOutsideClick(modalRef, () => onShowModalChartCards(false))
 
-    const hasMoreChartCards = dataRender.flatMap((item) => item.data).length > 8
+    const hasMoreChartCards = dataRender.flatMap((item) => item.data).length >= 7
 
     const chartCardsModalBodyClass = cx(`
         body

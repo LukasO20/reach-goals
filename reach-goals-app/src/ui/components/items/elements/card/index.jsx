@@ -6,7 +6,7 @@ import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 
 import ButtonAction from '../button-action'
 import ButtonCheckbox from '../button-checkbox'
-import CardMiniTag from '../card-mini-tag'
+import TagsPopover from '../tags-popover/index.jsx'
 
 import { cx } from '../../../../../utils/utils.js'
 
@@ -69,7 +69,7 @@ const Card = ({
 
             const renderEndDate = () => {
                 return (
-                    <label className='line-info date'>
+                    <label className='info date'>
                         {iconMap['schedule']}
                         <span>Ends on {moment(item.end).format('DD MMMM')}</span>
                     </label>
@@ -88,54 +88,50 @@ const Card = ({
                     {...dragProvided?.dragHandleProps}
                 >
                     <div className='head'>
-                        <div className='left-side'>
+                        <div className='side-left'>
                             <ButtonCheckbox classBtn='checkbox-card' checkboxID={`checkbox-${itemID}`}
                                 checkbox={buildCheckboxMap({ checkboxID: `checkbox-${itemID}`, scope: 'page' })} />
-                            <label className='line-info'>
+                            <label>
                                 {iconMap[type]}
                                 <label>{item.name}</label>
                             </label>
                         </div>
                         {hasTags && (
-                            <div className='right-side'>
-                                <CardMiniTag tags={item.tags} />
+                            <div className='side-right'>
+                                <TagsPopover tags={item.tags} visibility={`tag-popover-${item.id}`} />
                             </div>
                         )}
                     </div>
                     <div className='body'>
                         {!!hasEndDate && renderEndDate()}
-                        <div className='item'>
-                            <label className='line-info description'>{item.description}</label>
-                            <div className='side actions'>
-                                <div className='item-actions'>
-                                    {isDisplayActionEdit && (
-                                        <ButtonAction
-                                            onClick={() => clickFunction.edit(itemID)}
-                                            visibility={visibilityMap(['modal-center', type])}
-                                            switchLayout={switchLayoutMap({
-                                                area: 'modal',
-                                                state: { modalName: 'modal-center', layoutName: 'form' }
-                                            })}
-                                            classBtn={`edit-${type} button-action circle small`}
-                                            icon='edit'
-                                        />
-                                    )}
-                                    {isDisplayActionDelete && (
-                                        <ButtonAction
-                                            pendingState={isPending}
-                                            onClick={() => clickFunction.delete(itemID)}
-                                            visibility={visibilityMap(null)}
-                                            classBtn={`remove-${type} button-action circle small`}
-                                            icon='remove'
-                                        />
-                                    )}
-                                </div>
-                            </div>
-                            {validIconStatus && (
-                                <div className='side info'>
+                        <div className='details'>
+                            <div className='description'>{item.description}</div>
+                            <div className='side-right'>
+                                {isDisplayActionEdit && (
+                                    <ButtonAction
+                                        onClick={() => clickFunction.edit(itemID)}
+                                        visibility={visibilityMap(['modal-center', type])}
+                                        switchLayout={switchLayoutMap({
+                                            area: 'modal',
+                                            state: { modalName: 'modal-center', layoutName: 'form' }
+                                        })}
+                                        classBtn={`edit-${type} button-action circle small`}
+                                        icon='edit'
+                                    />
+                                )}
+                                {isDisplayActionDelete && (
+                                    <ButtonAction
+                                        pendingState={isPending}
+                                        onClick={() => clickFunction.delete(itemID)}
+                                        visibility={visibilityMap(null)}
+                                        classBtn={`remove-${type} button-action circle small`}
+                                        icon='remove'
+                                    />
+                                )}
+                                {validIconStatus && (
                                     <span className={`status ${item.status}`}>{iconMap[iconStatus]}</span>
-                                </div>
-                            )}
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>

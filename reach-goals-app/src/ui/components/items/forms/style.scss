@@ -26,7 +26,7 @@
             >.fields {
                 display: grid;
                 grid-template-columns: repeat(4, 1fr);
-                gap: 0.5rem;
+                gap: $spacing-gap-sm;
                 padding: 0rem 0.5rem;
 
                 .field-forms {
@@ -39,7 +39,7 @@
                         display: inline-flex;
                         align-self: self-start;
                         font-weight: 600;
-                        gap: 0.5rem;
+                        gap: $spacing-gap-sm;
                         color: $color-complementary-s;
                     }
 
@@ -87,7 +87,7 @@
 
                     &.selected {
                         background-color: $color-complementary-s;
-                        border-radius: 0.5rem;
+                        border-radius: $dimensions-border-radius-sm;
 
                         .head {
 
@@ -103,7 +103,7 @@
                                     .line {
                                         padding: 0.05rem;
                                         background-color: $color-white;
-                                        border-radius: 0.5rem;
+                                        border-radius: $dimensions-border-radius-sm;
                                     }
                                 }
 
@@ -146,12 +146,12 @@
                             align-items: center;
                             justify-content: space-between;
                             border-bottom: solid 1px $color-complementary-p;
-                            padding: 0.5rem;
+                            padding: $spacing-padding-sm;
 
                             >label {
                                 display: inline-flex;
                                 font-weight: 600;
-                                gap: 0.5rem;
+                                gap: $spacing-gap-sm;
                                 color: $color-complementary-s;
                             }
                         }
@@ -162,8 +162,8 @@
                         textarea {
                             background-color: $color-complementary-p;
                             border: 3px solid transparent;
-                            border-radius: 0.5rem;
-                            padding: 0.5rem;
+                            border-radius: $dimensions-border-radius-sm;
+                            padding: $spacing-padding-sm;
                             margin: 1rem 0.75rem;
                             font-weight: 600;
                             outline-color: $color-accent-p;
@@ -184,12 +184,12 @@
                         display: flex;
                         flex-direction: row;
                         flex-wrap: wrap;
-                        gap: 0.5rem;
+                        gap: $spacing-gap-sm;
 
                         .card-mini {
                             display: flex;
-                            font-size: 0.85rem;
-                            gap: 0.25rem;
+                            font-size: $font-size-mini;
+                            gap: $spacing-gap-mini;
                             width: max-content;
                             margin: 0.5rem 0rem 0rem 0rem;
 
@@ -220,12 +220,12 @@
                             .field-form-info {
                                 display: flex;
                                 align-items: center;
-                                gap: 0.5rem;
+                                gap: $spacing-gap-sm;
                                 background-color: $color-complementary-p;
                                 height: 2.4rem;
                                 box-sizing: border-box;
                                 padding: 0rem 0.66rem;
-                                border-radius: 0.5rem;
+                                border-radius: $dimensions-border-radius-sm;
                                 border: 3px solid transparent;
 
                                 input {
@@ -237,8 +237,8 @@
                                 }
 
                                 >span {
-                                    padding: 0.25rem 1rem;
-                                    border-radius: 0.5rem;
+                                    padding: $spacing-padding-mini $spacing-padding-st;
+                                    border-radius: $dimensions-border-radius-sm;
                                     font-weight: 500;
                                     font-size: 0.9rem;
                                     background-color: $color-white-70;

@@ -3,21 +3,23 @@
     align-items: center;
     justify-content: space-between;
     background-color: $color-complementary-p;
-    border-radius: 0.5rem;
-    padding: 0.25rem 0.5rem;
+    border-radius: $dimensions-border-radius-sm;
+    padding: $spacing-padding-sm $spacing-padding-st;
     border: solid 1px $color-complementary-s-30;
     font-weight: 600;
     color: $color-complementary-s;
+    transition: $animation-transition-st;
 
     .body {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        flex: 1;
 
-        .left-side {
+        .side-left {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: $spacing-gap-sm;
             overflow: hidden;
 
             .title {
@@ -63,43 +65,67 @@
             }
         }
 
-        .right-side {
+        .side-right {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: $spacing-gap-sm;
 
-            .side-actions {
-                display: none;
-                gap: 0.5rem;
+            .tags-popover {
 
                 .button-action {
-                    background-color: $color-complementary-s;
-
-                    * {
-                        color: $color-white;
-                    }
+                    background-color: $color-complementary-s-15;
 
                     &:hover {
-                        background-color: $color-complementary-s-30;
+                        background-color: $color-complementary-s-50;
 
                         * {
-                            color: $color-complementary-s;
+                            color: $color-white;
                         }
                     }
 
                     &:active {
-                        background-color: $color-complementary-s-15;
+                        background-color: $color-complementary-s-30;
                     }
+                }
+            }
+
+            .button-action {
+                opacity: 0;
+                background-color: $color-complementary-s;
+
+                * {
+                    color: $color-white;
+                }
+
+                &.tag-popover {
+                    opacity: 1;
+
+                    * {
+                        color: $color-complementary-s;
+                    }
+                }
+
+                &:hover {
+                    background-color: $color-complementary-s-30;
+
+                    * {
+                        color: $color-complementary-s;
+                    }
+                }
+
+                &:active {
+                    background-color: $color-complementary-s-15;
                 }
             }
         }
     }
 
     &.selected {
+        background-color: $color-complementary-s-15;
 
         .body {
 
-            .left-side {
+            .side-left {
 
                 .button-checkbox {
                     display: flex;
@@ -113,7 +139,7 @@
 
         .body {
 
-            .left-side {
+            .side-left {
 
                 .button-checkbox {
                     display: flex;
@@ -121,10 +147,10 @@
             }
         }
 
-        .right-side {
+        .side-right {
 
-            .side-actions {
-                display: flex;
+            .button-action {
+                opacity: 1;
             }
         }
     }

@@ -1,9 +1,9 @@
 .container-popup {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem;
-    border-radius: 2rem;
+    gap: $spacing-gap-sm;
+    padding: $spacing-padding-sm;
+    border-radius: $dimensions-border-radius-st;
     background-color: $color-white;
     box-shadow: $box-shadow-md;
     width: max-content;

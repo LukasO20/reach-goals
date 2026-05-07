@@ -1,20 +1,20 @@
 .model-tabs {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: $spacing-gap-sm;
     flex-grow: 1;
     min-height: 0;
 
     >.head {
         display: flex;
         justify-content: space-between;
-        padding: 0.5rem;
-        gap: 0.5rem;
+        padding: $spacing-padding-sm;
+        gap: $spacing-gap-sm;
         border-bottom: 0.1em solid $color-complementary-s-15;
 
         .options-sections {
             display: flex;
-            gap: 0.5rem;
+            gap: $spacing-gap-sm;
         }
     }
 
@@ -23,9 +23,9 @@
         display: flex;
         flex-direction: column;
         background-color: $color-complementary-s-05;
-        gap: 0.5rem;
-        padding: 0.5rem;
-        border-radius: 0.5rem;
+        gap: $spacing-gap-sm;
+        padding: $spacing-padding-sm;
+        border-radius: $dimensions-border-radius-sm;
         overflow-y: auto;
         flex-grow: 1;
         min-height: 0;
@@ -55,6 +55,14 @@
     }
 
     /* DOUBLE APPLY */
+    &.column-3x3,
+    &.column-2x2 {
+
+        >.body {
+            grid-auto-rows: max-content;
+        }
+    }
+
     &.assignment,
     &.goal {
 

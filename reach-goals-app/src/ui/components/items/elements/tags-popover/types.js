@@ -1,7 +1,7 @@
 /**
  * @typedef {Object} CardMiniTagProps
  * @property {Array} tags
- * @property {number|null} quantity
+ * @property {string} visibility
  */
 
 export {}

@@ -20,7 +20,7 @@
         height: 1.75rem;
         border: solid 0.15rem $color-complementary-s;
         background-color: $color-complementary-s-70;
-        border-radius: 2rem;
+        border-radius: $dimensions-border-radius-st;
         position: relative;
         box-sizing: border-box;
         transition: background-color 0.2s linear;

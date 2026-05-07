@@ -7,9 +7,9 @@
     transform: translate(-50%, -200%);
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
+    gap: $spacing-gap-sm;
+    border-radius: $dimensions-border-radius-sm;
+    padding: $spacing-padding-sm;
     background-color: $color-complementary-p;
     box-shadow: 0.01em 0.01em 0.45em 0.01em $color-complementary-s-30;
     color: $color-complementary-s;

@@ -1,12 +1,14 @@
 .card {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    padding: 1rem;
+    justify-content: space-between;
+    gap: $spacing-gap-md;
+    padding: $spacing-padding-st;
     border: 3.25px solid transparent;
-    border-radius: 0.5rem;
+    border-radius: $dimensions-border-radius-sm;
     background-color: $color-white;
     cursor: pointer;
+    transition: $animation-transition-st;
 
     .head {
         display: flex;
@@ -19,19 +21,19 @@
             cursor: pointer;
         }
 
-        .left-side {
+        .side-left {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: $spacing-gap-sm;
 
             .button-checkbox {
                 display: none;
             }
 
-            .line-info {
+            >label {
                 display: flex;
                 align-items: center;
-                gap: 0.5rem;
+                gap: $spacing-gap-sm;
                 font-weight: 600;
 
                 >label {
@@ -48,18 +50,19 @@
     .body {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        justify-content: end;
+        gap: $spacing-gap-sm;
         color: $color-complementary-s-70;
         max-height: 8rem;
         overflow: hidden;
 
-        .line-info {
+        .info {
 
             &.date {
                 flex: 2;
                 display: flex;
                 color: $color-complementary-s-70;
-                font-size: 0.85rem;
+                font-size: $font-size-mini;
                 font-weight: 600;
 
                 .icon-st {
@@ -68,73 +71,59 @@
             }
         }
 
-        .item {
+        .details {
             display: flex;
-            gap: 0.5rem;
+            gap: $spacing-gap-sm;
 
-            .line-info {
+            .description {
                 font-weight: 500;
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
+                gap: $spacing-gap-sm;
                 text-overflow: ellipsis;
                 overflow: hidden;
                 flex: 1;
-
-                &.description {
-                    display: -webkit-box;
-                    -webkit-box-orient: vertical;
-                    -webkit-line-clamp: 5;
-                    font-weight: 500;
-                }
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 5;
+                font-weight: 500;
             }
 
-            .side {
-                align-self: flex-end;
+            .side-right {
+                align-self: end;
+                display: flex;
+                align-items: end;
+                justify-content: start;
+                gap: $spacing-gap-sm;
 
-                &.actions {
-                    display: flex;
-                    align-items: end;
-                    justify-content: start;
-                    gap: 0.5rem;
+                .button-action {
                     opacity: 0;
-
-                    .item-actions {
-                        display: flex;
-                        align-items: end;
-                        gap: 0.5rem;
-                    }
                 }
 
-                &.info {
+                .status {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: $dimensions-border-radius-full;
+                    height: 1.8rem;
+                    width: 1.8rem;
 
-                    .status {
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        border-radius: 50%;
-                        height: 1.8rem;
-                        width: 1.8rem;
+                    .icon-st {
+                        width: 1rem;
+                        height: 1rem;
+                    }
+
+                    &.conclude {
+                        background-color: $color-success-15;
 
                         .icon-st {
-                            height: 1.1rem;
-                            width: 1.1rem;
+                            color: $color-success;
                         }
+                    }
 
-                        &.conclude {
-                            background-color: $color-success-15;
+                    &.cancel {
+                        background-color: $color-cancel-15;
 
-                            .icon-st {
-                                color: $color-success;
-                            }
-                        }
-
-                        &.cancel {
-                            background-color: $color-cancel-15;
-
-                            .icon-st {
-                                color: $color-cancel;
-                            }
+                        .icon-st {
+                            color: $color-cancel;
                         }
                     }
                 }
@@ -147,10 +136,13 @@
 
         .body {
 
-            .side {
+            .details {
 
-                &.actions {
-                    opacity: 1;
+                .side-right {
+
+                    .button-action {
+                        opacity: 1;
+                    }
                 }
             }
         }
@@ -162,8 +154,14 @@
 
         .body {
 
-            .side-actions {
-                opacity: 1;
+            .details {
+
+                .side-right {
+
+                    .button-action {
+                        opacity: 1;
+                    }
+                }
             }
         }
     }

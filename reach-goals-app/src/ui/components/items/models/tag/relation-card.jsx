@@ -94,11 +94,11 @@ const RelationCard = ({ checkboxState = checkboxMap }) => {
                             </label>
                             <div className='side-actions'>
                                 {(hasGoal || hasAssignment) &&
-                                    <ButtonAction classBtn='expand button-action circle small' icon='arrowdown'
+                                    <ButtonAction classBtn='expand circle small' icon='arrowdown'
                                         onClick={() => handleSetOpenCard(item)} />}
-                                <ButtonAction classBtn='edit button-action circle small' icon='edit'
+                                <ButtonAction classBtn='edit circle small' icon='edit'
                                     onClick={() => editTag(item.id)} visibility={visibilityMap('near-modalForm', { add: true })} />
-                                <ButtonAction classBtn='delete button-action circle small' icon='remove'
+                                <ButtonAction classBtn='delete circle small' icon='remove'
                                     pendingState={isRemoving}
                                     onClick={() => deleteTag(item.id)} />
                             </div>

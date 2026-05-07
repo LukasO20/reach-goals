@@ -105,19 +105,19 @@
     }
 
     &.plan {
-        border-radius: 0.5rem;
+        border-radius: $dimensions-border-radius-sm;
         width: 10rem;
         padding: 0rem 1rem;
         justify-content: start;
-        gap: 0.5rem;
+        gap: $spacing-gap-sm;
         font-weight: 600;
     }
 
     &.plan-round {
-        border-radius: 2rem;
+        border-radius: $dimensions-border-radius-st;
         padding: 0rem 1rem;
         justify-content: center;
-        gap: 0.5rem;
+        gap: $spacing-gap-sm;
         font-weight: 600;
     }
 

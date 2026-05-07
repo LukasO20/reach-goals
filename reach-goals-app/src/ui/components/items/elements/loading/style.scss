@@ -27,7 +27,7 @@
 .spinner-inline {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: $spacing-gap-sm;
 
   .spinner {
     width: 1rem;
