@@ -1,6 +1,6 @@
 .container-form-modal {
 
-    .body {
+    >.body {
         display: flex;
         flex-direction: column;
         gap: 1rem;
@@ -158,13 +158,15 @@
                     }
 
                     .body {
+                        display: flex;
+                        flex-direction: column;
 
                         textarea {
                             background-color: $color-complementary-p;
                             border: 3px solid transparent;
                             border-radius: $dimensions-border-radius-sm;
                             padding: $spacing-padding-sm;
-                            margin: 1rem 0.75rem;
+                            margin: $spacing-margin-st $spacing-margin-md;
                             font-weight: 600;
                             outline-color: $color-accent-p;
                             resize: vertical;

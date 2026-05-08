@@ -17,10 +17,9 @@ import './style.scss'
  */
 const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, filterTabs, onFilterTabs, loading }) => {
     const { data: { visibility } } = useSwitchLayout()
+    const { page, modal } = filterTabs ? filterTabs[type] : {}
 
-    const filterButtonActive = filterTabs ?
-        Object.entries(filterTabs[type]).find(([, data]) => data.page === 'all' || data.modal === 'all')?.[0]
-        : null
+    const filterButtonActive = filterTabs ? Object.keys(modal ?? page)[0] : null
 
     const columnsUserConfig = type !== 'tag' ? visibility.columns : null
 

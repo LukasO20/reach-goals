@@ -1,6 +1,7 @@
-import { ModelQueryClientProvider } from '../../../../provider/model/model-queryclient-provider.jsx' 
-
+import { useMemo } from 'react'
 import { useManageModel } from '../../../../provider/model/manage-model-provider.jsx'
+
+import { ModelQueryClientProvider } from '../../../../provider/model/model-queryclient-provider.jsx' 
 
 import { buildFilterModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
@@ -13,7 +14,11 @@ import ModalModelList from '.'
  */
 export const ModalModelListWrapper = ({ title, type, typeFilterKey }) => {
     const { model } = useManageModel()
-    const dataFilter = buildFilterModelMap(type, typeFilterKey, 'modal', model.mainModelID ?? 'all')
+
+    const dataFilter = useMemo(() => {
+        const valueFetch = type === 'goal' ? 'all' : model.mainModelID ?? 'all'
+        return buildFilterModelMap(type, typeFilterKey, 'modal', valueFetch )
+    }, [model.mainModelID, type, typeFilterKey])
         
     return (
         <ModelQueryClientProvider filter={dataFilter}>

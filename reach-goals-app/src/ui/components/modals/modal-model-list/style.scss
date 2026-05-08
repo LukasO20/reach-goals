@@ -1,10 +1,15 @@
-
-
 .container-list-modal {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: $spacing-gap-st;
     padding: $spacing-padding-sm;
+    border-radius: $dimensions-border-radius-sm;
+    width: $dimensions-w-lg;
+    transform: translate(-50%, -50%);
+    background-color: $color-white;
+    box-shadow: $box-shadow-st;
+    overflow: hidden;
+    height: 26rem;
 
     >.head {
         display: flex;
@@ -20,11 +25,15 @@
 
     >.body {
         position: relative;
+        display: flex;
+        flex-direction: column;
         overflow-y: auto;
         min-height: 21.85rem;
+        gap: $spacing-gap-sm;
 
         .card-mini {
             cursor: pointer;
+            transition: $animation-transition-st;
 
             * {
                 cursor: pointer;

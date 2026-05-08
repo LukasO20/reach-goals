@@ -14,7 +14,7 @@ export const ModalTagWrapper = () => {
 
     return (
         <ModelQueryClientProvider filter={dataFilter}>
-            <ModalTag onFilterTabs={setFilterTabs} />
+            <ModalTag filterTabs={filterTabs} onFilterTabs={setFilterTabs} />
         </ModelQueryClientProvider>
     )
 }
