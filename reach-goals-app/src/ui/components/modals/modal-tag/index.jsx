@@ -9,7 +9,7 @@ import { useCheckbox } from '../../../../provider/ui/checkbox-provider.jsx'
 import { visibilityMap, switchLayoutMap, buildCheckboxMap } from '../../../../utils/mapping/mappingUtils.js'
 import { resetManageModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
-import ModalForm from '../modal-form'
+import { ModalFormWrapper } from '../modal-form/modal-form-wrapper.jsx'
 import ButtonAction from '../../items/elements/button-action'
 import ButtonCheckbox from '../../items/elements/button-checkbox'
 import ModelTabs from '../../items/elements/model-tabs'
@@ -47,16 +47,19 @@ const ModalTag = ({ filterTabs, onFilterTabs }) => {
 
     const content = <RelationCard checkboxState={valuesCheckbox} />
 
-    const headLeftContent = hasSelectedModel ? (
-        <ButtonCheckbox classBtn='checkbox-main tag' checkboxID='checkbox-tag'
-            checkbox={buildCheckboxMap({ checkboxIDMain: 'checkbox-tag', scope: 'modal' })}
-            title='Select all'
-        />
-    ) : null
+    const headLeftContent =
+        hasSelectedModel ? (
+            <ButtonCheckbox 
+                classBtn='checkbox-main tag' 
+                checkboxID='checkbox-tag'
+                checkbox={buildCheckboxMap({ checkboxIDMain: 'checkbox-tag', scope: 'modal' })}
+                title='Select all'
+            />
+        ) : null
 
     const isModalForm = ['tag', 'near-modalForm']
     const isLoadingTag = !!loading && !model.mainModelID
-
+ 
     const buttonCreateClass = cx(
         `create
         plan
@@ -92,7 +95,9 @@ const ModalTag = ({ filterTabs, onFilterTabs }) => {
                 </div>
             </div>
             <div className='body'>
-                {isModalForm.every(e => visibleElements.includes(e)) && <ModalForm type='tag' />}
+                {isModalForm.every(e => visibleElements.includes(e)) && (
+                    <ModalFormWrapper />
+                )}
                 <ModelTabs type='tag' headLeftChildren={headLeftContent} loading={isLoadingTag} filterTabs={filterTabs} onFilterTabs={onFilterTabs}>
                     {content}
                 </ModelTabs>

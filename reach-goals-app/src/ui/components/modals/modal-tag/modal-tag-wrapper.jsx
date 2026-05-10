@@ -9,7 +9,7 @@ import ModalTag from '.'
 export const ModalTagWrapper = () => {
     const [filterTabs, setFilterTabs] = useState(null)
     const dataFilter = useMemo(() => {
-        return filterTabs ?? buildFilterModelMap('tag', 'tagSomeID', 'modal', 'all')
+        return filterTabs ?? buildFilterModelMap('tag', 'tagSomeID', 'page', 'all')
     }, [filterTabs])
 
     return (

@@ -19,7 +19,7 @@ const standarOpenCard = [{ id: null, open: false }]
 const RelationCard = ({ checkboxState = checkboxMap }) => {
     const [openCard, setOpenCard] = useState(standarOpenCard)
     const { setModel } = useManageModel()
-    const { modal: { data = [] }, remove, removing, removeSuccess, removingVariables } = useTagProvider()
+    const { page: { data = [] }, remove, removing, removeSuccess, removingVariables } = useTagProvider()
 
     const handleSetOpenCard = (item) => {
         setOpenCard(prev => {

@@ -67,8 +67,9 @@ $color-black-70: rgba($color-black, 0.70);
 $color-delete-70: rgba($color-delete, 0.70);
 
 /* SHADOW */
-$box-shadow-st: 0.01em 0.01em 0.45em 0.01em $color-complementary-s-30;
-$box-shadow-md: 0.05em 0.05em 1.5em 0.05em $color-complementary-s-30;
+$box-shadow-st: 0.01rem 0.01rem 0.45rem 0.01rem $color-complementary-s-30;
+$box-shadow-sm: 0.005rem 0.005rem 0.225rem 0.005rem $color-complementary-s-30;
+$box-shadow-md: 0.05rem 0.05rem 1.5rem 0.05rem $color-complementary-s-30;
 
 /* SCROLLBAR */
 $scrollbar-color: $color-complementary-s;
