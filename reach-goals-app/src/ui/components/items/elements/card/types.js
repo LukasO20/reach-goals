@@ -7,7 +7,7 @@
  * @property {('edit'|'delete'|'details'|'remove')[]} [display.actions]
  * @property {boolean} [pendingState]
  * @property {boolean} [showTags]
- * @property {boolean} [status]
+ * @property {Array} [status]
  * @property {Object} [checkboxState]
  * @property {Object} [clickFunction]
  * @property {function():void} clickFunction.card

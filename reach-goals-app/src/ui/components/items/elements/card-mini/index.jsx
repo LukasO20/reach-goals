@@ -30,7 +30,7 @@ const CardMini = ({
     draggable
 }) => {
     return model
-        .filter((item) => status.includes(item.status) || true)
+        .filter((item) => status.includes(item.status))
         .map((item, index) => {
             const itemID = item.id || item.tagID
             const tagCardStyle = type === 'tag' ? { backgroundColor: `${item.color}30`, borderColor: item.color } : null

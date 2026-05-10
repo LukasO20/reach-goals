@@ -21,49 +21,52 @@ const Objectives = ({ filterTabs, onFilterTabs }) => {
     const { page: { data: dataAssignment = [], loading: loadingAssignment } } = useAssignmentProvider()
 
     const typeLayout = visibility.layoutObjectives
-    const currentData = typeLayout === 'goal' ? dataGoal : typeLayout === 'assignment' ? dataAssignment : []
-    const switcherModelPropsReference = {
+    const data = typeLayout === 'goal' ? dataGoal
+        : typeLayout === 'assignment' ? dataAssignment
+            : [...dataGoal, ...dataAssignment]
+
+    const objectivePropsReference = {
         display: {
             type: [visibility.cards],
             actions: ['edit', 'delete']
         },
+        source: data,
         detailsModel: true,
-        source: currentData,
         checkboxModel: true,
         status: visibility.status,
-        showTags: true
+        showTags: visibility.tagsCard
     }
 
     const isAllModels = typeLayout === 'all-activities'
     const isOnlyTypeModel = typeLayout === 'goal' || typeLayout === 'assignment'
     const isLoading = !!loadingGoal || !!loadingAssignment
 
-    return (
-        <>
-            <ModelTabs type={typeLayout} loading={isLoading} classModelTabs='objectives' filterTabs={filterTabs} onFilterTabs={onFilterTabs}>
+    const renderContent = () => {
+        return (
+            <>
                 {isAllModels && !isOnlyTypeModel && (
                     <>
-                        <Goal
-                            display={switcherModelPropsReference.display}
-                            detailsModel={true}
-                            source={dataGoal}
-                            checkboxModel={true}
-                            status={switcherModelPropsReference.status}
-                            showTags={visibility.tagsCard}
-                        />
-                        <Assignment
-                            display={switcherModelPropsReference.display}
-                            detailsModel={true}
-                            source={dataAssignment}
-                            checkboxModel={true}
-                            status={switcherModelPropsReference.status}
-                            showTags={visibility.tagsCard}
-                        />
+                        <Goal {...objectivePropsReference} />
+                        <Assignment {...objectivePropsReference} />
                     </>
                 )}
                 {isOnlyTypeModel && !isAllModels && (
-                    <ModelSwitcher type={typeLayout} propsReference={switcherModelPropsReference} />
+                    <ModelSwitcher type={typeLayout} propsReference={objectivePropsReference} />
                 )}
+            </>
+        )
+    }
+
+    return (
+        <>
+            <ModelTabs
+                type={typeLayout}
+                loading={isLoading}
+                classModelTabs='objectives'
+                filterTabs={filterTabs}
+                onFilterTabs={onFilterTabs}
+            >
+                {renderContent()}
             </ModelTabs>
             <PopupModelOptions type='pop-switch-model' typeSwitchModelOptions='objectives' onFilterTabs={onFilterTabs} />
         </>
