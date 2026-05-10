@@ -19,7 +19,7 @@ import './style.scss'
 const MonthDaysPicker = ({ data }) => {
     const { setModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
-    const { data: { layout }, updateSwitchLayout } = useSwitchLayout()
+    const { data: { visibility }, updateSwitchLayout } = useSwitchLayout()
     const year = new Date().getFullYear()
     const month = new Date().getMonth()
 
@@ -70,9 +70,9 @@ const MonthDaysPicker = ({ data }) => {
         card: activityClick,
     }
 
-    const typeLayout = layout.page.layoutName
-    const isShowAssignment = typeLayout === 'all' || typeLayout === 'assignment'
-    const isShowGoal = typeLayout === 'all' || typeLayout === 'goal'
+    const typeLayout = visibility.layoutCalendar
+    const isShowAssignment = typeLayout === 'assignment' || typeLayout === 'all-activities'
+    const isShowGoal = typeLayout === 'goal' || typeLayout === 'all-activities'
 
     return (
         <div className={`calendar ${typeLayout}`}>
@@ -105,9 +105,13 @@ const MonthDaysPicker = ({ data }) => {
                         const assignmentsOnDay = modelsOnDay.filter(m => m.type === 'assignment')
                         const goalsOnDay = modelsOnDay.filter(m => m.type === 'goal')
 
-                        const displayModesProps = {
-                            type: ['card-mini'],
-                            actions: []
+                        const calendarPropsReference = {
+                            display: {
+                                type: ['card-mini'],
+                                actions: []
+                            },
+                            status: visibility.status,
+                            clickFunction: clickEvents
                         }
 
                         return (
@@ -118,16 +122,16 @@ const MonthDaysPicker = ({ data }) => {
                                         <CardMini
                                             model={assignmentsOnDay}
                                             type='assignment'
-                                            display={displayModesProps}
-                                            clickFunction={clickEvents} />
+                                            {...calendarPropsReference}
+                                        />
                                     )}
                                 {
                                     goalsOnDay.length > 0 && isShowGoal && (
                                         <CardMini
                                             model={goalsOnDay}
                                             type='goal'
-                                            display={displayModesProps}
-                                            clickFunction={clickEvents} />
+                                            {...calendarPropsReference}
+                                        />
                                     )}
                             </div>
                         )

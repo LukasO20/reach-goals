@@ -1,10 +1,11 @@
 import { useEffect, useState, useMemo, useRef } from 'react'
+import { useVisibility } from '../../../../../provider/ui/visibility-provider.jsx'
+import { useSearchBarProvider } from '../../../../../provider/ui/searchbar-provider.jsx'
+import { useOutsideClick } from '../../../../../hooks/useOutsideClick.js'
 
 import { visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 import { debounce } from '../../../../../utils/utils.js'
-import { useVisibility } from '../../../../../provider/ui/visibility-provider.jsx'
-import { useSearchBarProvider } from '../../../../../provider/ui/searchbar-provider.jsx'
 
 import SearchBoxResults from './searchbox-results.jsx'
 import ButtonAction from '../button-action'
@@ -33,6 +34,11 @@ const SearchBar = ({ mode = 'service', placeholder = 'search' }) => {
     const debounceSearch = useMemo(() => debounce(search, 1000), [search])
 
     const lastParamRef = useRef('')
+    const searchBoxRef = useRef(null)
+
+    useOutsideClick(searchBoxRef, () => {
+        if (isShowSearchBoxResults) toggleVisibility(visibilityMap('search-bar'))
+    })
 
     useEffect(() => {
         const isValidParam = param.trim() && param.length > 1 && param !== lastParamRef.current && isShowSearchBoxResults
@@ -43,7 +49,7 @@ const SearchBar = ({ mode = 'service', placeholder = 'search' }) => {
     }, [param, debounceSearch, isShowSearchBoxResults, mode])
 
     return (
-        <div className='search-container'>
+        <div className='search-container' ref={searchBoxRef}>
             <label className='search-bar' onClick={handleSearchBarClick}>
                 {iconMap['search']}
                 <input type='text' role='search' 

@@ -26,11 +26,11 @@ const CardMini = ({
     clickFunction,
     checkboxModel,
     showTags,
-    status = [],
+    status,
     draggable
 }) => {
     return model
-        .filter((item) => status.includes(item.status))
+        .filter((item) =>  !status || status.includes(item.status))
         .map((item, index) => {
             const itemID = item.id || item.tagID
             const tagCardStyle = type === 'tag' ? { backgroundColor: `${item.color}30`, borderColor: item.color } : null

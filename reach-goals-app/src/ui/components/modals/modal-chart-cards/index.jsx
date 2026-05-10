@@ -52,7 +52,7 @@ const ModalChartCards = ({ data, icon, title, onShowModalChartCards, ...rest }) 
                 {dataRender.map((model) => {
                     const propsReference = {
                         display: displayModesProps,
-                        source: model.data
+                        source: model.data,
                     }
 
                     return <ModelSwitcher key={model.type} type={model.type} propsReference={propsReference} />

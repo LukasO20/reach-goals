@@ -34,9 +34,7 @@ const ButtonDropdown = ({
     const buttonActionClass = cx(`${isShowDropdown && 'active'}`)
 
     useOutsideClick(buttonDropdownRef, () => {
-        if (isShowDropdown) {
-            toggleVisibility(visibilityMap(visibility, { remove: true }));
-        }
+        if (isShowDropdown) toggleVisibility(visibilityMap(visibility, { remove: true }))
     })
 
     return (

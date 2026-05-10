@@ -52,6 +52,7 @@ const ContainerMain = () => {
     const visibilityDropdown = useButtonDropdown({
         type: 'visibility-dropdown',
         value: visibility,
+        isPageCalendar: isPageCalendar,
         actions: { setterUseSwitchLayout: (target) => setUserConfigLayout(target) }
     })
 
@@ -98,8 +99,8 @@ const ContainerMain = () => {
                             title='create'
                             options={createDropdown}
                         />
-                        {!isPageCalendar && !isSwichChart && (
-                            <>
+                        {
+                            (isPageCalendar || isPageHome || isPageObjectives) && !isSwichChart && (
                                 <ButtonDropdown
                                     visibility='dropdown-visibility'
                                     classBtn='visibility'
@@ -107,13 +108,15 @@ const ContainerMain = () => {
                                     title='visibility'
                                     options={visibilityDropdown}
                                 />
-                                <ButtonDropdown
-                                    visibility='dropdown-action-more'
-                                    classBtn='more'
-                                    icon='ellipsisv'
-                                    options={moreDropdown}
-                                />
-                            </>
+                            )
+                        }
+                        {!isPageCalendar && !isSwichChart && (
+                            <ButtonDropdown
+                                visibility='dropdown-action-more'
+                                classBtn='more'
+                                icon='ellipsisv'
+                                options={moreDropdown}
+                            />
                         )}
                     </div>
                 </div>

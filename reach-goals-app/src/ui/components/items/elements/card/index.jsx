@@ -26,13 +26,13 @@ const Card = ({
     display,
     pendingState,
     showTags = true,
-    status = [],
+    status,
     checkboxState = checkboxMap,
     clickFunction,
     draggable = false
 }) => {
     return model
-        .filter((item) => status.includes(item.status))
+        .filter((item) => !status || status.includes(item.status))
         .sort((a, b) => a.order - b.order)
         .map((item, index) => {
             const hasTags = item.tags?.length > 0 && showTags

@@ -19,13 +19,14 @@ import { useMemo, useCallback } from 'react'
  * @property {'create-dropdown' | 'visibility-dropdown' | 'more-dropdown'} type
  * @property {DropdownActions} actions
  * @property {boolean} [isPageObjectives]
+ * @property {boolean} [isPageCalendar]
  */
 
 /**
  * @param {UseButtonDropdownProps} props
  * @returns {DropdownOption[] | null}
  */
-export const useButtonDropdown = ({ type, value, actions, isPageObjectives }) => {
+export const useButtonDropdown = ({ type, value, actions, isPageObjectives, isPageCalendar }) => {
     const { setterUseSwitchLayout, setterUseVisiblity } = actions
 
     const handleActions = useCallback((target) => {
@@ -89,6 +90,7 @@ export const useButtonDropdown = ({ type, value, actions, isPageObjectives }) =>
 
         if (type === 'visibility-dropdown') {
             return [
+                !isPageCalendar &&
                 {
                     id: 'hide-tags',
                     classBtn: value.tagsCard ? 'active' : '',
@@ -117,9 +119,9 @@ export const useButtonDropdown = ({ type, value, actions, isPageObjectives }) =>
                     icon: 'cancel',
                     onClick: () => handleActions({ type: 'visibility', data: { status: ['cancel'] } })
                 },
-            ]
+            ].filter(Boolean)
         }
 
         return null
-    }, [type, handleActions, isPageObjectives, value])
+    }, [type, handleActions, isPageObjectives, isPageCalendar, value])
 }
