@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 
-import Sections from '../ui/components/sections'
+import Sections from '../ui/sections'
 
 const AppRoutes = () => {
     return (
