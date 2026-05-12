@@ -33,7 +33,7 @@ const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, filterTab
     const handleFilterClick = (filter) => {
         const filerKey = Object.keys(filter)[0]
         const filterValue = Object.values(filter)[0]
-        const source = type === 'tag' ? 'modal' : 'page'
+        const source = 'page'
 
         onFilterTabs(buildFilterModelMap(type, filerKey, source, filterValue))
     }

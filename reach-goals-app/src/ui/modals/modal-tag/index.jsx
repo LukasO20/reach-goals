@@ -18,7 +18,7 @@ import PopupModelOptions from '../../items/elements/popup-model-options'
 
 import { cx } from '../../../utils/utils.js'
 
-import './modal-tag.scss'
+import './style.scss'
 
 /** @typedef {import('./types.js').ModalTagProps} Props */
 
