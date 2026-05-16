@@ -1,10 +1,10 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { TitleProvider } from './ui/title-provider.jsx'
-import { VisibilityProvider } from './ui/visibility-provider.jsx'
-import { CheckboxProvider } from './ui/checkbox-provider.jsx'
-import { ManageModelProvider } from './model/manage-model-provider.jsx'
-import { SwitchLayoutProvider } from './ui/switch-layout-provider.jsx'
-import { SearchBarProvider } from './ui/searchbar-provider.jsx'
+import { TitleProvider } from './ui/title-provider'
+import { VisibilityProvider } from './ui/visibility-provider'
+import { CheckboxProvider } from './ui/checkbox-provider'
+import { ManageModelProvider } from './model/manage-model-provider'
+import { SwitchLayoutProvider } from './ui/switch-layout-provider'
+import { SearchBarProvider } from './ui/searchbar-provider'
 import { UtilityProvider } from './model/utility-provider.jsx'
 
 const queryClient = new QueryClient()

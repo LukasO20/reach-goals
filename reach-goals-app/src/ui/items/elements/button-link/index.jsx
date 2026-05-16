@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 
-import { useVisibility } from '../../../../provider/ui/visibility-provider.jsx'
-import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider.jsx'
+import { useVisibility } from '../../../../provider/ui/visibility-provider'
+import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider'
 
 import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
 
@@ -24,13 +24,13 @@ const ButtonLink = ({
 }) => {
     const navigate = useNavigate()
     const { toggleVisibility } = useVisibility()
-    const { updateSwitchLayout } = useSwitchLayout()
+    const { setSwitchLayout } = useSwitchLayout()
 
     const handleClick = (e) => {
         e.stopPropagation()
 
         if (target) toggleVisibility(target, e)
-        if (switchLayout) updateSwitchLayout(switchLayout)
+        if (switchLayout) setSwitchLayout(switchLayout)
         if (onClick && typeof onClick === 'function') onClick({ e }) // execute external function from 'onClick' external attribute    
 
         navigate(`${link || '/'}`)

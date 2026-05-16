@@ -1,6 +1,6 @@
-import { useManageModel } from '../../../../provider/model/manage-model-provider.jsx'
-import { useVisibility } from '../../../../provider/ui/visibility-provider.jsx'
-import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider.jsx'
+import { useManageModel } from '../../../../provider/model/manage-model-provider'
+import { useVisibility } from '../../../../provider/ui/visibility-provider'
+import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider'
 
 import { weekNames } from '../../../../utils/reference.js'
 import { switchLayoutMap, visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
@@ -19,7 +19,7 @@ import './style.scss'
 const MonthDaysPicker = ({ data }) => {
     const { setModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
-    const { data: { visibility }, updateSwitchLayout } = useSwitchLayout()
+    const { data: { visibility }, setSwitchLayout } = useSwitchLayout()
     const year = new Date().getFullYear()
     const month = new Date().getMonth()
 
@@ -55,7 +55,7 @@ const MonthDaysPicker = ({ data }) => {
         const dataSwitchLayout = switchLayoutMap({ area: 'modal', state: { modalName: 'modal-right', layoutName: 'details' } })
 
         setModel(prev => ({ ...prev, mainModelID: model.id, formModel: model, typeModel: model.type }))
-        updateSwitchLayout(dataSwitchLayout)
+        setSwitchLayout(dataSwitchLayout)
         toggleVisibility(visibilityMap(['modal-right', model.type]))
     }
 

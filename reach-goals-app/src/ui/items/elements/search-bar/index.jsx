@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo, useRef } from 'react'
-import { useVisibility } from '../../../../provider/ui/visibility-provider.jsx'
-import { useSearchBarProvider } from '../../../../provider/ui/searchbar-provider.jsx'
+import { useVisibility } from '../../../../provider/ui/visibility-provider'
+import { useSearchBarProvider } from '../../../../provider/ui/searchbar-provider'
 import { useOutsideClick } from '../../../../hooks/useOutsideClick.js'
 
 import { visibilityMap } from '../../../../utils/mapping/mappingUtils.js'

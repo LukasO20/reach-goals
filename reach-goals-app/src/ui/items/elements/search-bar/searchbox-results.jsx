@@ -1,7 +1,7 @@
 import React from 'react'
-import { useManageModel } from '../../../../provider/model/manage-model-provider.jsx'
-import { useVisibility } from '../../../../provider/ui/visibility-provider.jsx'
-import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider.jsx'
+import { useManageModel } from '../../../../provider/model/manage-model-provider'
+import { useVisibility } from '../../../../provider/ui/visibility-provider'
+import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider'
 
 import Loading from '../loading' 
 import SearchItem from './components/search-item'
@@ -30,7 +30,7 @@ const SearchBoxResults = ({
     
     const { setModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
-    const { updateSwitchLayout } = useSwitchLayout()
+    const { setSwitchLayout } = useSwitchLayout()
     const { goals = [], assignments = [], tags = [] } = data
 
     const dataResult = [
@@ -47,7 +47,7 @@ const SearchBoxResults = ({
     const handleItemClick = (id, type = '', model = {}) => {
         const dataSwitchLayout = switchLayoutMap({ area: 'modal', state: { modalName: 'modal-right', layoutName: 'details' } })
         setModel(prev => ({ ...prev, mainModelID: id, formModel: model, typeModel: type }))
-        updateSwitchLayout(dataSwitchLayout)
+        setSwitchLayout(dataSwitchLayout)
         toggleVisibility(visibilityMap(['modal-right', type]))
     }
 

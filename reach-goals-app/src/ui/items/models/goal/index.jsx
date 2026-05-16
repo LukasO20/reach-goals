@@ -1,8 +1,8 @@
-import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider.jsx'
+import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider'
 import { useGoalProvider } from '../../../../provider/model/goal-model-provider.jsx'
-import { useManageModel } from '../../../../provider/model/manage-model-provider.jsx'
-import { useVisibility } from '../../../../provider/ui/visibility-provider.jsx'
-import { useCheckbox } from '../../../../provider/ui/checkbox-provider.jsx'
+import { useManageModel } from '../../../../provider/model/manage-model-provider'
+import { useVisibility } from '../../../../provider/ui/visibility-provider'
+import { useCheckbox } from '../../../../provider/ui/checkbox-provider'
 
 import { switchLayoutMap, visibilityMap, displayModesMap } from '../../../../utils/mapping/mappingUtils.js'
 import { addToSelectedModelMap, updateFormModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
@@ -29,7 +29,7 @@ const Goal = ({
 }) => {
     const { model, setModel, updateFormModel, addToSelectedModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
-    const { updateSwitchLayout } = useSwitchLayout()
+    const { setSwitchLayout } = useSwitchLayout()
     const { remove, removeSuccess, removing, removingVariables } = useGoalProvider()
     const { valuesCheckbox } = useCheckbox()
 
@@ -77,7 +77,7 @@ const Goal = ({
             const dataSwitchLayout = switchLayoutMap({ area: 'modal', state: { modalName: 'modal-right', layoutName: 'details' } })
 
             setModel(prev => ({ ...prev, mainModelID: goal.id, typeModel: 'goal' }))
-            updateSwitchLayout(dataSwitchLayout)
+            setSwitchLayout(dataSwitchLayout)
             toggleVisibility(visibilityMap(['modal-right', 'goal']))
         }
     }

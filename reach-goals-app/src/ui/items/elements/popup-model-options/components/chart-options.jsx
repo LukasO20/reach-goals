@@ -1,4 +1,4 @@
-import { useSwitchLayout } from '../../../../../provider/ui/switch-layout-provider.jsx'
+import { useSwitchLayout } from '../../../../../provider/ui/switch-layout-provider'
 
 import { cx } from '../../../../../utils/utils.js'
 

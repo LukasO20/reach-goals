@@ -11,7 +11,7 @@ import { switchLayoutMap } from '../../../utils/mapping/mappingUtils'
 import Calendar from '.'
 
 export const CalendarWrapper = () => {
-    const { updateSwitchLayout } = useSwitchLayout()
+    const { setSwitchLayout } = useSwitchLayout()
     const { update } = useTitle()
     const location = useLocation()
 
@@ -24,8 +24,8 @@ export const CalendarWrapper = () => {
         const dataSwitchLayout = switchLayoutMap({ area: 'page', state: { pageName: location.pathname.slice(1), layoutName: 'all' } })
 
         update({ header: 'Manage daily your activities' })
-        updateSwitchLayout(dataSwitchLayout)
-    }, [update, updateSwitchLayout, location.pathname])
+        setSwitchLayout(dataSwitchLayout)
+    }, [update, setSwitchLayout, location.pathname])
 
     return (
         <ModelQueryClientProvider filter={dataFilter}>

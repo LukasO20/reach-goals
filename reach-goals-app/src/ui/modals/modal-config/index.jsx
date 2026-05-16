@@ -1,4 +1,4 @@
-import { useVisibility } from '../../../provider/ui/visibility-provider.jsx'
+import { useVisibility } from '../../../provider/ui/visibility-provider'
 
 import { visibilityMap } from '../../../utils/mapping/mappingUtils.js'
 import { iconMap } from '../../../utils/mapping/mappingIcons.jsx'

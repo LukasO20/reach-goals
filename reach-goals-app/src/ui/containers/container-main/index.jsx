@@ -1,8 +1,8 @@
 import Routes from '../../../app/Routes'
 
-import { useVisibility } from '../../../provider/ui/visibility-provider.jsx'
-import { useSwitchLayout } from '../../../provider/ui/switch-layout-provider.jsx'
-import { useCheckbox } from '../../../provider/ui/checkbox-provider.jsx'
+import { useVisibility } from '../../../provider/ui/visibility-provider'
+import { useSwitchLayout } from '../../../provider/ui/switch-layout-provider'
+import { useCheckbox } from '../../../provider/ui/checkbox-provider'
 import { useButtonDropdown } from '../../../hooks/useButtonDropdown.js'
 
 import { visibilityMap, switchLayoutMap, buildCheckboxMap } from '../../../utils/mapping/mappingUtils.js'
@@ -18,7 +18,7 @@ import './style.scss'
 
 const ContainerMain = () => {
     const { toggleVisibility } = useVisibility()
-    const { data: { layout, visibility }, updateSwitchLayout, setUserConfigLayout } = useSwitchLayout()
+    const { data: { layout, visibility }, setSwitchLayout, setUserConfigLayout } = useSwitchLayout()
     const { valuesCheckbox, resetCheckbox } = useCheckbox()
 
     const handleButtonActionClick = () => {
@@ -38,7 +38,7 @@ const ContainerMain = () => {
         type: 'create-dropdown',
         actions: {
             setterUseVisiblity: (target) => toggleVisibility(visibilityMap(['modal-center', target])),
-            setterUseSwitchLayout: () => updateSwitchLayout(formRender)
+            setterUseSwitchLayout: () => setSwitchLayout(formRender)
         }
     })
 

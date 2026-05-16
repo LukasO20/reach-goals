@@ -1,12 +1,19 @@
 import { useState, useCallback, useMemo, useContext, createContext } from 'react'
 
-import { manageModelMap } from '../../utils/mapping/mappingUtilsProvider'
+import { manageModelMap } from '../../../utils/mapping/mappingUtilsProvider'
 
+/** @import * as React from 'react' */
+
+/** @typedef {import('./types.js').ManageModelContextValue} ManageModelContextValue */
+
+/** @type {React.Context<ManageModelContextValue>} */
 const ManageModelContext = createContext()
 
 export const ManageModelProvider = ({ children }) => {
+    /** @type {import('./types.js').SetModelStateProps} */
     const [model, setModel] = useState(manageModelMap)
 
+    /** @type {import('./types.js').AddToSelectedModelProps} */
     const addToSelectedModel = useCallback(({ id, name, type, color, custom }) => {
         if (!id || !name) return console.error('The model object must have an id and a name property')
         if (typeof type !== 'string') return console.error('The type is necessary and should be a string value. Did you send something like "tag" or "assignment"?')
@@ -32,6 +39,7 @@ export const ManageModelProvider = ({ children }) => {
         })
     }, [])
 
+    /** @type {import('./types.js').RemoveFromSelectedModelProps} */
     const removeFromSelectedModel = useCallback(({ id, type }) => {
         setModel(prevModel => {
             const updatedSelectedModel = prevModel.selectedModel[type].filter(item => (item.id ?? item.tagID) !== id)
@@ -45,6 +53,7 @@ export const ManageModelProvider = ({ children }) => {
         })
     }, [])
 
+    /** @type {import('./types.js').UpdateFormModelProps} */
     const updateFormModel = useCallback(({ keyObject, value, type = 'single', action = 'add' }) => {
         if (!keyObject) return console.error('To update a formModel is necessary a key')
 
@@ -84,27 +93,29 @@ export const ManageModelProvider = ({ children }) => {
         })
     }, [])
 
+    /** @type {import('./types.js').SetFilterModelProps} */
     const setFilterModel = useCallback((filter, type) => {
-            if (!filter || !type) return
-            if (type) {
-                setModel((prevModel) => {
-                    const incomingData = filter[type]
-                    const currentData = prevModel.filter?.[type] || {}
+        if (!filter || !type) return
+        if (type) {
+            setModel((prevModel) => {
+                const incomingData = filter[type]
+                const currentData = prevModel.filter?.[type] || {}
 
-                    return {
-                        ...prevModel,
-                        filter: {
-                            ...prevModel.filter,
-                            [type]: {
-                                ...currentData,
-                                ...incomingData
-                            }
+                return {
+                    ...prevModel,
+                    filter: {
+                        ...prevModel.filter,
+                        [type]: {
+                            ...currentData,
+                            ...incomingData
                         }
                     }
-                })
-            }
-        }, [])
+                }
+            })
+        }
+    }, [])
 
+    /** @type {import('./types.js').UpdateDataModelProps} */
     const updateDataModel = useCallback(({ data, type, scope }) => {
         if (typeof type !== 'string' || type === '') return console.error('To update a dataModel is necessary a type')
         if (typeof scope !== 'string' || scope === '') return console.error('To update a dataModel is necessary a typesource')
@@ -123,6 +134,7 @@ export const ManageModelProvider = ({ children }) => {
         }))
     }, [])
 
+    /** @type {import('./types.js').ResetManageModelProps} */
     const resetManageModel = useCallback(({ keys } = {}) => {
         if (Array.isArray(keys)) {
             setModel(prevModel => {
@@ -156,7 +168,7 @@ export const ManageModelProvider = ({ children }) => {
         updateFormModel, setFilterModel, updateDataModel, resetManageModel
     ])
 
-    console.log('MODEL READY TO MANAGE - ', model)
+    console.log('ManageModelProvider - model:', model)
 
     return (
         <ManageModelContext.Provider value={value}>

@@ -1,8 +1,8 @@
 import { useRef } from 'react'
 
-import { useVisibility } from '../../provider/ui/visibility-provider.jsx'
-import { useManageModel } from '../../provider/model/manage-model-provider.jsx'
-import { useSwitchLayout } from '../../provider/ui/switch-layout-provider.jsx'
+import { useVisibility } from '../../provider/ui/visibility-provider'
+import { useManageModel } from '../../provider/model/manage-model-provider'
+import { useSwitchLayout } from '../../provider/ui/switch-layout-provider'
 import { useOutsideClick } from '../../hooks/useOutsideClick.js'
 
 import { visibilityMap } from '../../utils/mapping/mappingUtils.js'

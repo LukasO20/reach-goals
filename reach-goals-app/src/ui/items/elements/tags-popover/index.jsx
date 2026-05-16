@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { useVisibility } from '../../../../provider/ui/visibility-provider.jsx'
+import { useVisibility } from '../../../../provider/ui/visibility-provider'
 import { useOutsideClick } from '../../../../hooks/useOutsideClick.js'
 
 import ButtonAction from '../button-action/index.jsx'

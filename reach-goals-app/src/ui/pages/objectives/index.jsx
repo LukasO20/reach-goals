@@ -1,6 +1,6 @@
 import { useGoalProvider } from '../../../provider/model/goal-model-provider.jsx'
 import { useAssignmentProvider } from '../../../provider/model/assignment-model-provider.jsx'
-import { useSwitchLayout } from '../../../provider/ui/switch-layout-provider.jsx'
+import { useSwitchLayout } from '../../../provider/ui/switch-layout-provider'
 
 import ModelTabs from '../../items/elements/model-tabs'
 import Goal from '../../items/models/goal'

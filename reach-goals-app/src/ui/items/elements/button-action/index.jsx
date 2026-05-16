@@ -1,6 +1,6 @@
-import { useVisibility } from '../../../../provider/ui/visibility-provider.jsx'
-import { useManageModel } from '../../../../provider/model/manage-model-provider.jsx'
-import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider.jsx'
+import { useVisibility } from '../../../../provider/ui/visibility-provider'
+import { useManageModel } from '../../../../provider/model/manage-model-provider'
+import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider'
 
 import { cx } from '../../../../utils/utils.js'
 import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
@@ -30,7 +30,7 @@ const ButtonAction = ({
     ...rest
 }) => {
     const { visibleElements, toggleVisibility } = useVisibility()
-    const { updateSwitchLayout } = useSwitchLayout()
+    const { setSwitchLayout } = useSwitchLayout()
     const { model, resetManageModel, updateFormModel, removeFromSelectedModel } = useManageModel()
 
     const statusButton = (classBtn, providervisibleElements = []) => {
@@ -49,7 +49,7 @@ const ButtonAction = ({
         const dataRemoveFromSelectedModel = removeFromSelectedModelMap({ id: model.formModel.goalID, type: 'goal' })
 
         if (visibility) toggleVisibility(visibility, e)
-        if (switchLayout) updateSwitchLayout(switchLayout)
+        if (switchLayout) setSwitchLayout(switchLayout)
         if (nullForm) resetManageModel(dataResetManageModel)
         if (unlinkGoal) {
             updateFormModel(dataUpdateFormModel)

@@ -4,8 +4,8 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import * as goalService from '../../services/goalService.js'
 import * as commonService from '../../services/common.js'
 
-import { useManageModel } from './manage-model-provider.jsx'
-import { useTitle } from '../ui/title-provider.jsx'
+import { useManageModel } from './manage-model-provider'
+import { useTitle } from '../ui/title-provider'
 
 import { updateDataModelMap, filerFetchModelMap } from '../../utils/mapping/mappingUtilsProvider.js'
 import { createQueryFn, validFilter } from '../../utils/utilsProvider.js'

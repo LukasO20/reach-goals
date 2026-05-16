@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
-import { useCheckbox } from '../../../../provider/ui/checkbox-provider.jsx'
-import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider.jsx'
+import { useCheckbox } from '../../../../provider/ui/checkbox-provider'
+import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider'
 
 import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
 import { checkboxMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
@@ -30,7 +30,7 @@ const ButtonCheckbox = ({ classBtn, checkboxID, title, checkbox = checkboxMap })
     useEffect(() => {
         registerCheckbox(checkboxID)
         return () => unregisterCheckbox(checkboxID)
-    }, [checkboxID])
+    }, [checkboxID, registerCheckbox, unregisterCheckbox])
 
     const checkboxMain = `checkbox-${layout.page.pageName}`
     const checkboxScope = valuesCheckbox.scope

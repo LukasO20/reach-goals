@@ -1,4 +1,4 @@
-import { useManageModel } from '../../../../provider/model/manage-model-provider.jsx'
+import { useManageModel } from '../../../../provider/model/manage-model-provider'
 
 import { visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
 import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'

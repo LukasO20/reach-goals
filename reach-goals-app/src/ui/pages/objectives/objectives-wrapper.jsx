@@ -12,7 +12,7 @@ import Objectives from '.'
 
 export const ObjectivesWrapper = () => {
     const [filterTabs, setFilterTabs] = useState(null)
-    const { updateSwitchLayout } = useSwitchLayout()
+    const { setSwitchLayout } = useSwitchLayout()
     const { update } = useTitle()
     const location = useLocation()
 
@@ -25,8 +25,8 @@ export const ObjectivesWrapper = () => {
         const dataSwitchLayout = switchLayoutMap({ area: 'page', state: { pageName: location.pathname.slice(1), layoutName: 'all' } })
 
         update({ header: 'Manage your activities' })
-        updateSwitchLayout(dataSwitchLayout)
-    }, [update, updateSwitchLayout, location.pathname])
+        setSwitchLayout(dataSwitchLayout)
+    }, [update, setSwitchLayout, location.pathname])
 
     return (
         <ModelQueryClientProvider filter={dataFilter}>

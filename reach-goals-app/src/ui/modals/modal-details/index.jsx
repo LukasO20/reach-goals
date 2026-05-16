@@ -1,9 +1,9 @@
 import { useAssignmentProvider } from '../../../provider/model/assignment-model-provider.jsx'
 import { useGoalProvider } from '../../../provider/model/goal-model-provider.jsx'
-import { useManageModel } from '../../../provider/model/manage-model-provider.jsx'
+import { useManageModel } from '../../../provider/model/manage-model-provider'
 import { useNavigate } from 'react-router-dom'
-import { useVisibility } from '../../../provider/ui/visibility-provider.jsx'
-import { useSwitchLayout } from '../../../provider/ui/switch-layout-provider.jsx'
+import { useVisibility } from '../../../provider/ui/visibility-provider'
+import { useSwitchLayout } from '../../../provider/ui/switch-layout-provider'
 
 import { iconMap } from '../../../utils/mapping/mappingIcons.jsx'
 import { visibilityMap } from '../../../utils/mapping/mappingUtils.js'

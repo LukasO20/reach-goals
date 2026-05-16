@@ -1,4 +1,4 @@
-import { useManageModel } from '../../../provider/model/manage-model-provider.jsx'
+import { useManageModel } from '../../../provider/model/manage-model-provider'
 import { useGoalProvider } from '../../../provider/model/goal-model-provider.jsx'
 import { useTagProvider } from '../../../provider/model/tag-model-provider.jsx'
 import { useAssignmentProvider } from '../../../provider/model/assignment-model-provider.jsx'

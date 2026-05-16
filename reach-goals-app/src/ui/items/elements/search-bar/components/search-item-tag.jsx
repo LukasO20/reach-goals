@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-import { useSwitchLayout } from '../../../../../provider/ui/switch-layout-provider.jsx'
-import { useVisibility } from '../../../../../provider/ui/visibility-provider.jsx'
-import { useManageModel } from '../../../../../provider/model/manage-model-provider.jsx'
+import { useSwitchLayout } from '../../../../../provider/ui/switch-layout-provider'
+import { useVisibility } from '../../../../../provider/ui/visibility-provider'
+import { useManageModel } from '../../../../../provider/model/manage-model-provider'
 
 import { visibilityMap, switchLayoutMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
@@ -18,7 +18,7 @@ import ButtonAction from '../../button-action'
  */
 const SearchItemTag = ({ item, type, onButtonClick }) => {
     const { toggleVisibility } = useVisibility()
-    const { updateSwitchLayout } = useSwitchLayout()
+    const { setSwitchLayout } = useSwitchLayout()
     const { setModel } = useManageModel()
     const [open, setOpen] = useState(false)
 
@@ -37,7 +37,7 @@ const SearchItemTag = ({ item, type, onButtonClick }) => {
             onClick={() => {
                 setModel(prev => ({ ...prev, typeModel: 'tag' }))
                 toggleVisibility(visibilityMap(['modal-right', 'tag']));
-                updateSwitchLayout(switchLayoutMap({
+                setSwitchLayout(switchLayoutMap({
                     area: 'modal', state: { modalName: 'modal-right', layoutName: 'tag' }
                 }))
             }}
@@ -65,7 +65,7 @@ const SearchItemTag = ({ item, type, onButtonClick }) => {
                                         e.stopPropagation();
                                         onButtonClick(assignmentID, 'assignment');
                                         toggleVisibility(visibilityMap(['modal-center', 'assignment']));
-                                        updateSwitchLayout(switchLayoutMap({
+                                        setSwitchLayout(switchLayoutMap({
                                             area: 'modal',
                                             state: { modalName: 'modal-center', layoutName: 'form' }
                                         }))
@@ -84,7 +84,7 @@ const SearchItemTag = ({ item, type, onButtonClick }) => {
                                         e.stopPropagation();
                                         onButtonClick(goalID, 'goal');
                                         toggleVisibility(visibilityMap(['modal-center', 'goal']));
-                                        updateSwitchLayout(switchLayoutMap({
+                                        setSwitchLayout(switchLayoutMap({
                                             area: 'modal',
                                             state: { modalName: 'modal-center', layoutName: 'form' }
                                         }))

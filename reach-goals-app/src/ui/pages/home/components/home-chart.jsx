@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider.jsx'
+import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider'
 
 import ChartPie from '../../../items/elements/chart-pie/index.jsx'
 import ChartBar from '../../../items/elements/chart-bar/index.jsx'
