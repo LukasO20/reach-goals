@@ -5,7 +5,7 @@ import { CheckboxProvider } from './ui/checkbox-provider'
 import { ManageModelProvider } from './model/manage-model-provider'
 import { SwitchLayoutProvider } from './ui/switch-layout-provider'
 import { SearchBarProvider } from './ui/searchbar-provider'
-import { UtilityProvider } from './model/utility-provider.jsx'
+import { UtilityProvider } from './model/utility-provider'
 
 const queryClient = new QueryClient()
 

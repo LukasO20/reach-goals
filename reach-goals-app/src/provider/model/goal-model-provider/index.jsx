@@ -1,14 +1,14 @@
 import React, { createContext, useContext, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
-import * as goalService from '../../services/goalService.js'
-import * as commonService from '../../services/common.js'
+import * as goalService from '../../../services/goalService.js'
+import * as commonService from '../../../services/common.js'
 
-import { useManageModel } from './manage-model-provider'
-import { useTitle } from '../ui/title-provider'
+import { useManageModel } from '../manage-model-provider'
+import { useTitle } from '../../ui/title-provider'
 
-import { updateDataModelMap, filerFetchModelMap } from '../../utils/mapping/mappingUtilsProvider.js'
-import { createQueryFn, validFilter } from '../../utils/utilsProvider.js'
+import { updateDataModelMap, filerFetchModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
+import { createQueryFn, validFilter } from '../../../utils/utilsProvider.js'
 
 /** @import * as React from 'react' */
 
