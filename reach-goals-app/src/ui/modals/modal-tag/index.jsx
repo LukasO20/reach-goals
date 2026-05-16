@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useVisibility } from '../../../provider/ui/visibility-provider'
 import { useManageModel } from '../../../provider/model/manage-model-provider'
 import { useSwitchLayout } from '../../../provider/ui/switch-layout-provider'
-import { useTagProvider } from '../../../provider/model/tag-model-provider.jsx'
+import { useTagProvider } from '../../../provider/model/tag-model-provider'
 import { useCheckbox } from '../../../provider/ui/checkbox-provider'
 
 import { visibilityMap, switchLayoutMap, buildCheckboxMap } from '../../../utils/mapping/mappingUtils.js'

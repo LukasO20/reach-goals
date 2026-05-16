@@ -1,5 +1,5 @@
 import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider'
-import { useGoalProvider } from '../../../../provider/model/goal-model-provider.jsx'
+import { useGoalProvider } from '../../../../provider/model/goal-model-provider'
 import { useManageModel } from '../../../../provider/model/manage-model-provider'
 import { useVisibility } from '../../../../provider/ui/visibility-provider'
 import { useCheckbox } from '../../../../provider/ui/checkbox-provider'

@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { useTagProvider } from '../../../../provider/model/tag-model-provider.jsx'
+import { useTagProvider } from '../../../../provider/model/tag-model-provider'
 import { useManageModel } from '../../../../provider/model/manage-model-provider'
 import { useVisibility } from '../../../../provider/ui/visibility-provider'
 

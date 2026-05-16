@@ -1,7 +1,7 @@
-import { useUtilityProvider } from "../../../../../provider/model/utility-provider.jsx"
-import { useCheckbox } from "../../../../../provider/ui/checkbox-provider"
+import { useUtilityProvider } from '../../../../../provider/model/utility-provider'
+import { useCheckbox } from '../../../../../provider/ui/checkbox-provider'
 
-import ButtonAction from "../../button-action/index.jsx"
+import ButtonAction from '../../button-action/index.jsx'
 
 
 /** @typedef {import('../types.js').ModelOptionsProps} Props */
@@ -17,7 +17,7 @@ const ModelOptions = ({ type }) => {
 
     const formatCheckboxID = (ids = []) => {
         return ids.map((id) => {
-            const formatID = Number(id.replace(/\D/g, ""))
+            const formatID = Number(id.replace(/\D/g, ''))
             return formatID
         })
     }

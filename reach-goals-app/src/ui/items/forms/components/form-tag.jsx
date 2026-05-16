@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { useTagProvider } from '../../../../provider/model/tag-model-provider.jsx'
+import { useTagProvider } from '../../../../provider/model/tag-model-provider'
 
 import { visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
 import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'

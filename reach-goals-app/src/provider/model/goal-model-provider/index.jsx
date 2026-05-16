@@ -10,6 +10,11 @@ import { useTitle } from '../ui/title-provider'
 import { updateDataModelMap, filerFetchModelMap } from '../../utils/mapping/mappingUtilsProvider.js'
 import { createQueryFn, validFilter } from '../../utils/utilsProvider.js'
 
+/** @import * as React from 'react' */
+
+/** @typedef {import('./types.js').GoalModelContextValue} GoalModelContextValue */
+
+/** @type {React.Context<GoalModelContextValue>} */
 const GoalModelContext = createContext()
 
 const GoalModelProviderMap = {

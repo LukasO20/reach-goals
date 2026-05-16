@@ -1,13 +1,18 @@
 import { createContext, useContext } from 'react'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 
-import { useTitle } from '../ui/title-provider'
-import { useManageModel } from './manage-model-provider'
-import { useCheckbox } from '../ui/checkbox-provider'
-import { useVisibility } from '../ui/visibility-provider'
+import { useTitle } from '../../ui/title-provider'
+import { useManageModel } from '../manage-model-provider'
+import { useCheckbox } from '../../ui/checkbox-provider'
+import { useVisibility } from '../../ui/visibility-provider'
 
-import * as commonService from '../../services/common'
+import * as commonService from '../../../services/common'
 
+/** @import * as React from 'react' */
+
+/** @typedef {import('./types.js').UtilityContextValue} UtilityContextValue */
+
+/** @type {React.Context<UtilityContextValue>} */
 const UtilityContext = createContext()
 
 export const UtilityProvider = ({ children }) => {

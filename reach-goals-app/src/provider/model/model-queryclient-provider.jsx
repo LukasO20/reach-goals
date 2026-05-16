@@ -1,7 +1,7 @@
 import React from 'react'
-import { GoalModelProvider } from './goal-model-provider.jsx'
-import { AssignmentModelProvider } from './assignment-model-provider.jsx'
-import { TagModelProvider } from './tag-model-provider.jsx'
+import { GoalModelProvider } from './goal-model-provider'
+import { AssignmentModelProvider } from './assignment-model-provider'
+import { TagModelProvider } from './tag-model-provider'
 import { filerFetchModelMap } from '../../utils/mapping/mappingUtilsProvider.js'
 
 

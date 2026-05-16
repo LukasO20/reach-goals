@@ -1,15 +1,20 @@
 import React, { createContext, useContext, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
-import * as assignmentService from '../../services/assignmentService.js'
-import * as commonService from '../../services/common.js'
+import * as assignmentService from '../../../services/assignmentService.js'
+import * as commonService from '../../../services/common.js'
 
-import { useManageModel } from './manage-model-provider'
-import { useTitle } from '../ui/title-provider'
+import { useManageModel } from '../manage-model-provider/index.jsx'
+import { useTitle } from '../../ui/title-provider/index.jsx'
 
-import { filerFetchModelMap, updateDataModelMap } from '../../utils/mapping/mappingUtilsProvider.js'
-import { createQueryFn, validFilter } from '../../utils/utilsProvider.js'
+import { filerFetchModelMap, updateDataModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
+import { createQueryFn, validFilter } from '../../../utils/utilsProvider.js'
 
+/** @import * as React from 'react' */
+
+/** @typedef {import('./types.js').AssignmentModelContextValue} AssignmentModelContextValue */
+
+/** @type {React.Context<AssignmentModelContextValue>} */
 const AssignmentModelContext = createContext()
 
 const AssignmentModelProviderMap = {

@@ -1,5 +1,5 @@
-import { useAssignmentProvider } from '../../../provider/model/assignment-model-provider.jsx'
-import { useGoalProvider } from '../../../provider/model/goal-model-provider.jsx'
+import { useAssignmentProvider } from '../../../provider/model/assignment-model-provider'
+import { useGoalProvider } from '../../../provider/model/goal-model-provider'
 import { useManageModel } from '../../../provider/model/manage-model-provider'
 import { useNavigate } from 'react-router-dom'
 import { useVisibility } from '../../../provider/ui/visibility-provider'

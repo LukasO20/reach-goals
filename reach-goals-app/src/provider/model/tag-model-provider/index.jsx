@@ -9,6 +9,11 @@ import { useTitle } from '../ui/title-provider'
 import { updateDataModelMap, filerFetchModelMap } from '../../utils/mapping/mappingUtilsProvider.js'
 import { createQueryFn, validFilter } from '../../utils/utilsProvider.js'
 
+/** @import * as React from 'react' */
+
+/** @typedef {import('./types.js').TagModelContextValue} TagModelContextValue */
+
+/** @type {React.Context<TagModelContextValue>} */
 export const TagModelContext = createContext()
 
 const TagModelProviderMap = {
