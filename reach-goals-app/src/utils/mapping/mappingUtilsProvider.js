@@ -36,7 +36,7 @@ export const manageModelMap = {
         },
     },
     filter: filerFetchModelMap,
-    formModel: {}
+    activeModel: {}
 }
 
 export const filterServiceFnMap = {
@@ -119,7 +119,7 @@ export const resetManageModelMap = (keys = []) => {
     return { keys }
 }
 
-export const updateFormModelMap = ({ keyObject = '', value, type = '', action = '' }) => {
+export const updateActiveModelMap = ({ keyObject = '', value, type = '', action = '' }) => {
     return { keyObject, value, type, action }
 }
 

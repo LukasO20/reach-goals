@@ -53,9 +53,9 @@ export const ManageModelProvider = ({ children }) => {
         })
     }, [])
 
-    /** @type {import('./types.js').UpdateFormModelProps} */
-    const updateFormModel = useCallback(({ keyObject, value, type = 'single', action = 'add' }) => {
-        if (!keyObject) return console.error('To update a formModel is necessary a key')
+    /** @type {import('./types.js').UpdateActiveModelProps} */
+    const updateActiveModel = useCallback(({ keyObject, value, type = 'single', action = 'add' }) => {
+        if (!keyObject) return console.error('To update a activeModel is necessary a key')
 
         const submitToAdd = (prevValue) => {
             return type === 'array'
@@ -78,15 +78,15 @@ export const ManageModelProvider = ({ children }) => {
         }
 
         setModel(prevModel => {
-            const prevValue = prevModel.formModel[keyObject]
+            const prevValue = prevModel.activeModel[keyObject]
             const notExists = Array.isArray(prevValue) ? !prevValue.some(item => (item.id ?? item.tagID) === (value.id ?? value.tagID)) : true
             const newValue = action === 'add' && notExists ? submitToAdd(prevValue) :
                 action === 'remove' ? submitToRemove(prevValue) : prevValue
 
             return {
                 ...prevModel,
-                formModel: {
-                    ...prevModel.formModel,
+                activeModel: {
+                    ...prevModel.activeModel,
                     [keyObject]: newValue
                 }
             }
@@ -149,7 +149,7 @@ export const ManageModelProvider = ({ children }) => {
                 ...manageModelMap,
                 dataModel: prevModel.dataModel,
                 filter: prevModel.filter,
-                formModel: prevModel.formModel
+                activeModel: prevModel.activeModel
             }))
         }
     }, [])
@@ -159,13 +159,13 @@ export const ManageModelProvider = ({ children }) => {
         setModel,
         addToSelectedModel,
         removeFromSelectedModel,
-        updateFormModel,
+        updateActiveModel,
         setFilterModel,
         updateDataModel,
         resetManageModel
     }), [
         model, addToSelectedModel, removeFromSelectedModel,
-        updateFormModel, setFilterModel, updateDataModel, resetManageModel
+        updateActiveModel, setFilterModel, updateDataModel, resetManageModel
     ])
 
     console.log('ManageModelProvider - model:', model)

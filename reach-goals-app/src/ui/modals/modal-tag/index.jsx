@@ -41,7 +41,7 @@ const ModalTag = ({ filterTabs, onFilterTabs }) => {
     }
 
     const handleClickButtonActionCreate = () => {
-        const resetKeys = resetManageModelMap(['formModel'])
+        const resetKeys = resetManageModelMap(['activeModel'])
         resetManageModel(resetKeys)
     }
 

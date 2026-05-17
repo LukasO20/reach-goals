@@ -5,7 +5,7 @@ import { useVisibility } from '../../../../provider/ui/visibility-provider'
 import { useCheckbox } from '../../../../provider/ui/checkbox-provider'
 
 import { displayModesMap, switchLayoutMap, visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
-import { updateFormModelMap, addToSelectedModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
+import { updateActiveModelMap, addToSelectedModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
 import Card from '../../elements/card' 
 import CardMini from '../../elements/card-mini' 
@@ -25,7 +25,7 @@ const Assignment = ({
     checkboxModel,
     showTags,
 }) => {
-    const { model, setModel, updateFormModel, addToSelectedModel } = useManageModel()
+    const { model, setModel, updateActiveModel, addToSelectedModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
     const { setSwitchLayout } = useSwitchLayout()
     const { remove, removeSuccess, removing, removingVariables } = useAssignmentProvider()
@@ -56,7 +56,7 @@ const Assignment = ({
 
         if (selectableModel) {
             const selected = model.dataModel.assignment.support.data.find(m => m.id === assignment.id)
-            const dataUpdateFormModel = updateFormModelMap({
+            const dataUpdateActiveModel = updateActiveModelMap({
                 keyObject: 'assignments',
                 value: { id: assignment.id, name: assignment.name },
                 action: 'add',
@@ -69,13 +69,13 @@ const Assignment = ({
             })
 
             addToSelectedModel(dataAddToSelectedModel)
-            return updateFormModel(dataUpdateFormModel)
+            return updateActiveModel(dataUpdateActiveModel)
         }
 
         if (detailsModel) {
             const dataSwitchLayout = switchLayoutMap({ area: 'modal', state: { modalName: 'modal-right', layoutName: 'details' } })
 
-            setModel(prev => ({ ...prev, mainModelID: assignment.id, formModel: assignment, typeModel: 'assignment' }))
+            setModel(prev => ({ ...prev, mainModelID: assignment.id, activeModel: assignment, typeModel: 'assignment' }))
             setSwitchLayout(dataSwitchLayout)
             toggleVisibility(visibilityMap(['modal-right', 'assignment']))
         }
@@ -83,13 +83,13 @@ const Assignment = ({
 
     const removeElDOMClick = ({ id }) => {
         if (id) {
-            const dataUpdateFormModelMap = updateFormModelMap({
+            const dataUpdateActiveModelMap = updateActiveModelMap({
                 keyObject: 'assignments',
                 value: { id },
                 type: 'array',
                 action: 'remove'
             })
-            updateFormModel(dataUpdateFormModelMap)
+            updateActiveModel(dataUpdateActiveModelMap)
         }
     }
 

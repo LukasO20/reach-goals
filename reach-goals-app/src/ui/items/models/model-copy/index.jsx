@@ -8,7 +8,7 @@ import CardMini from '../../elements/card-mini'
 
 const ModelCopy = ({ propsReference, region }) => {
     const [modelCopy, setCopyModel] = useState([])
-    const { model, removeFromSelectedModel, updateFormModel } = useManageModel()
+    const { model, removeFromSelectedModel, updateActiveModel } = useManageModel()
 
     useEffect(() => {
         setCopyModel(model.selectedModel[region] || [])
@@ -22,11 +22,11 @@ const ModelCopy = ({ propsReference, region }) => {
 
         switch (type) {
             case 'goal':
-                return updateFormModel({ keyObject: 'goalID', value: null, action: 'remove' })
+                return updateActiveModel({ keyObject: 'goalID', value: null, action: 'remove' })
             case 'assignment':
-                return updateFormModel({ keyObject: 'assignments', value: { id: id }, type: 'array', action: 'remove' })
+                return updateActiveModel({ keyObject: 'assignments', value: { id: id }, type: 'array', action: 'remove' })
             case 'tag':
-                return updateFormModel({ keyObject: 'tags', value: { tagID: tagID }, type: 'array', action: 'remove' })
+                return updateActiveModel({ keyObject: 'tags', value: { tagID: tagID }, type: 'array', action: 'remove' })
             default:
                 return null
         }

@@ -15,7 +15,7 @@ import { ModalModelListWrapper } from '../../../modals/modal-model-list/modal-mo
 
 import { visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
 import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
-import { updateFormModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
+import { updateActiveModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
 /** @typedef {import('../types.js').FormStandardProps} Props */
 
@@ -24,7 +24,7 @@ import { updateFormModelMap } from '../../../../utils/mapping/mappingUtilsProvid
  */
 const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState }) => {
     const { visibleElements } = useVisibility()
-    const { model, setModel, updateFormModel } = useManageModel()
+    const { model, setModel, updateActiveModel } = useManageModel()
 
     const modelCopyRegion = type === 'goal' ? 'assignment' : ''
     const icon = iconMap[type] || 'fa-solid fa-triangle-exclamation'
@@ -51,7 +51,7 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
     }
 
     const dataUpdateFormStatusModel = (value = null) => {
-        return updateFormModelMap({ keyObject: 'status', value: value, action: 'add' })
+        return updateActiveModelMap({ keyObject: 'status', value: value, action: 'add' })
     }
 
     const dropdownOptionsMap = [
@@ -60,7 +60,7 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
             icon: 'progress',
             classBtn: modelForm?.status === 'progress' ? 'active' : '',
             onClick: () => { 
-                updateFormModel(dataUpdateFormStatusModel('progress')); 
+                updateActiveModel(dataUpdateFormStatusModel('progress')); 
             }
         },
         {
@@ -68,7 +68,7 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
             icon: 'check',
             classBtn: modelForm?.status === 'conclude' ? 'active' : '',
             onClick: () => { 
-                updateFormModel(dataUpdateFormStatusModel('conclude')); 
+                updateActiveModel(dataUpdateFormStatusModel('conclude')); 
             }
         },
         {
@@ -76,7 +76,7 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
             icon: 'cancel',
             classBtn: modelForm?.status === 'cancel' ? 'active' : '',
             onClick: () => { 
-                updateFormModel(dataUpdateFormStatusModel('cancel')); 
+                updateActiveModel(dataUpdateFormStatusModel('cancel')); 
             }
         },
     ]

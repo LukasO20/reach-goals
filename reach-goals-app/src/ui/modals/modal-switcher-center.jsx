@@ -42,7 +42,7 @@ const ModalSwitcherCenter = () => {
         const shouldCloseModalCenter = visibleElements.some((elements) => allowedModalLayouts.includes(elements))
 
         if (shouldCloseModalCenter && isModalForm) {
-            if (isModalForm) resetManageModel(resetManageModelMap(['formModel', 'mainModelID', 'selectedModel']))
+            if (isModalForm) resetManageModel(resetManageModelMap(['activeModel', 'mainModelID', 'selectedModel']))
             toggleVisibility(visibilityMap(null))
         }
     })

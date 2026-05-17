@@ -4,7 +4,7 @@ import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider'
 
 import { cx } from '../../../../utils/utils.js'
 import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
-import { resetManageModelMap, updateFormModelMap, removeFromSelectedModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
+import { resetManageModelMap, updateActiveModelMap, removeFromSelectedModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
 import Loading from '../loading'
 
@@ -31,7 +31,7 @@ const ButtonAction = ({
 }) => {
     const { visibleElements, toggleVisibility } = useVisibility()
     const { setSwitchLayout } = useSwitchLayout()
-    const { model, resetManageModel, updateFormModel, removeFromSelectedModel } = useManageModel()
+    const { model, resetManageModel, updateActiveModel, removeFromSelectedModel } = useManageModel()
 
     const statusButton = (classBtn, providervisibleElements = []) => {
         if (!providervisibleElements) { return false }
@@ -44,15 +44,15 @@ const ButtonAction = ({
     const handleClick = (e) => {
         e.stopPropagation()
 
-        const dataResetManageModel = resetManageModelMap(['formModel', 'mainModelID', 'selectedModel'])
-        const dataUpdateFormModel = updateFormModelMap({ keyObject: 'goalID', value: null, action: 'remove' })
-        const dataRemoveFromSelectedModel = removeFromSelectedModelMap({ id: model.formModel.goalID, type: 'goal' })
+        const dataResetManageModel = resetManageModelMap(['activeModel', 'mainModelID', 'selectedModel'])
+        const dataUpdateActiveModel = updateActiveModelMap({ keyObject: 'goalID', value: null, action: 'remove' })
+        const dataRemoveFromSelectedModel = removeFromSelectedModelMap({ id: model.activeModel.goalID, type: 'goal' })
 
         if (visibility) toggleVisibility(visibility, e)
         if (switchLayout) setSwitchLayout(switchLayout)
         if (nullForm) resetManageModel(dataResetManageModel)
         if (unlinkGoal) {
-            updateFormModel(dataUpdateFormModel)
+            updateActiveModel(dataUpdateActiveModel)
             removeFromSelectedModel(dataRemoveFromSelectedModel)
         }
 

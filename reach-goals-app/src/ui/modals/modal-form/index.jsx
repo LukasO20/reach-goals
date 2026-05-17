@@ -54,13 +54,13 @@ const ModalForm = () => {
         const { name, value } = e.target || e
 
         //Tag attributes
-        const tagsRelation = e.tags ?? model.formModel.tags ?? []
+        const tagsRelation = e.tags ?? model.activeModel.tags ?? []
 
         if (typeVisibility === 'goal') {
-            const assignmentsRelation = e.assignments ?? model.formModel.assignments ?? []
+            const assignmentsRelation = e.assignments ?? model.activeModel.assignments ?? []
 
             const update = {
-                ...model.formModel,
+                ...model.activeModel,
                 [name]: value,
                 assignments: [...assignmentsRelation],
                 tags: [...tagsRelation]
@@ -68,12 +68,12 @@ const ModalForm = () => {
 
             setModel(prevModel => ({
                 ...prevModel,
-                formModel: update
+                activeModel: update
             }))
         } else if (typeVisibility === 'assignment') {
 
             const update = {
-                ...model.formModel,
+                ...model.activeModel,
                 [name]: value,
                 goal: e.target === undefined ? Object.values(e)[0] : null,
                 tags: [...tagsRelation]
@@ -81,18 +81,18 @@ const ModalForm = () => {
 
             setModel(prevModel => ({
                 ...prevModel,
-                formModel: update
+                activeModel: update
             }))
         } else {
 
             const update = {
-                ...model.formModel,
+                ...model.activeModel,
                 [name]: value
             }
 
             setModel(prevModel => ({
                 ...prevModel,
-                formModel: update
+                activeModel: update
             }))
         }
     }
@@ -101,9 +101,9 @@ const ModalForm = () => {
         setError(null)
 
         try {
-            typeVisibility === 'goal' && await saveGoal(structuredClone(model.formModel))
-            typeVisibility === 'assignment' && await saveAssignment(structuredClone(model.formModel))
-            typeVisibility === 'tag' && await saveTag(structuredClone(model.formModel))
+            typeVisibility === 'goal' && await saveGoal(structuredClone(model.activeModel))
+            typeVisibility === 'assignment' && await saveAssignment(structuredClone(model.activeModel))
+            typeVisibility === 'tag' && await saveTag(structuredClone(model.activeModel))
 
         } catch (exception) {
             setError(exception.message)
@@ -127,7 +127,7 @@ const ModalForm = () => {
                 : visibilityMap(['modal-center', typeVisibility], { remove: true })
 
             toggleVisibility(visibility)
-            const resetKeys = resetManageModelMap(['formModel', 'mainModelID', 'typeModel'])
+            const resetKeys = resetManageModelMap(['activeModel', 'mainModelID', 'typeModel'])
             resetManageModel(resetKeys)
             resetMutation()
         }
@@ -147,7 +147,7 @@ const ModalForm = () => {
             if (selectedFormModel && Object.keys(selectedFormModel).length) {
                 setModel(prevModel => ({
                     ...prevModel,
-                    formModel: selectedFormModel
+                    activeModel: selectedFormModel
                 }))
             }
         }
@@ -165,7 +165,7 @@ const ModalForm = () => {
             <Form
                 typeForm={typeVisibility}
                 functionFormMap={functionFormMap}
-                model={model.formModel}
+                model={model.activeModel}
                 pendingState={isSaving}
             />
         )

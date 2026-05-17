@@ -5,7 +5,7 @@ import { useVisibility } from '../../../../provider/ui/visibility-provider'
 import { useCheckbox } from '../../../../provider/ui/checkbox-provider'
 
 import { switchLayoutMap, visibilityMap, displayModesMap } from '../../../../utils/mapping/mappingUtils.js'
-import { addToSelectedModelMap, updateFormModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
+import { addToSelectedModelMap, updateActiveModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
 import Card from '../../elements/card' 
 import CardMini from '../../elements/card-mini' 
@@ -27,7 +27,7 @@ const Goal = ({
     showTags,
     status
 }) => {
-    const { model, setModel, updateFormModel, addToSelectedModel } = useManageModel()
+    const { model, setModel, updateActiveModel, addToSelectedModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
     const { setSwitchLayout } = useSwitchLayout()
     const { remove, removeSuccess, removing, removingVariables } = useGoalProvider()
@@ -58,7 +58,7 @@ const Goal = ({
 
         if (selectableModel) {
             const selected = sourceData.find(m => m.id === goal.id)
-            const dataUpdateFormModelMap = updateFormModelMap({ keyObject: 'goalID', value: goal.id, action: 'add' })
+            const dataUpdateActiveModelMap = updateActiveModelMap({ keyObject: 'goalID', value: goal.id, action: 'add' })
             const dataAddToSelectedModel = addToSelectedModelMap({
                 id: selected.id,
                 name: selected.name,
@@ -70,7 +70,7 @@ const Goal = ({
 
             addToSelectedModel(dataAddToSelectedModel)
             toggleVisibility(visibilityMap('modal-list-goal', { remove: true }))
-            return updateFormModel(dataUpdateFormModelMap)
+            return updateActiveModel(dataUpdateActiveModelMap)
         }
 
         if (detailsModel) {

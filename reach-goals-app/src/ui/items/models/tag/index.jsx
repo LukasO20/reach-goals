@@ -5,7 +5,7 @@ import { useManageModel } from '../../../../provider/model/manage-model-provider
 import { useVisibility } from '../../../../provider/ui/visibility-provider'
 
 import { visibilityMap, displayModesMap } from '../../../../utils/mapping/mappingUtils.js'
-import { addToSelectedModelMap, updateFormModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
+import { addToSelectedModelMap, updateActiveModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
 import CardMini from '../../elements/card-mini' 
 
@@ -16,7 +16,7 @@ import CardMini from '../../elements/card-mini'
  */
 const Tag = ({ display = displayModesMap, source, selectableModel }) => {
     const { toggleVisibility } = useVisibility()
-    const { model, setModel, updateFormModel, addToSelectedModel } = useManageModel()
+    const { model, setModel, updateActiveModel, addToSelectedModel } = useManageModel()
     const { remove, removeSuccess, removingVariables } = useTagProvider()
 
     const target = visibilityMap(['panel-right', 'tag'])
@@ -39,7 +39,7 @@ const Tag = ({ display = displayModesMap, source, selectableModel }) => {
 
         if (selectableModel) {
             const selected = model.dataModel.tag.support.data.find(m => m.id === tag.id)
-            const dataUpdateFormModelMap = updateFormModelMap({
+            const dataUpdateActiveModelMap = updateActiveModelMap({
                 keyObject: 'tags',
                 value: { tagID: tag.id, tag: { id: tag.id, name: tag.name, color: tag.color } },
                 type: 'array',
@@ -53,7 +53,7 @@ const Tag = ({ display = displayModesMap, source, selectableModel }) => {
             })
 
             addToSelectedModel(dataAddToSelectedModel)
-            return updateFormModel(dataUpdateFormModelMap)
+            return updateActiveModel(dataUpdateActiveModelMap)
         }
 
         setModel({ ...model, mainModelID: tag.id })
@@ -62,13 +62,13 @@ const Tag = ({ display = displayModesMap, source, selectableModel }) => {
 
     const removeElDOMClick = ({ id }) => {
         if (id) {
-            const dataUpdateFormModelMap = updateFormModelMap({
+            const dataUpdateActiveModelMap = updateActiveModelMap({
                 keyObject: 'tags',
                 value: { tagID: id },
                 type: 'array',
                 action: 'remove'
             })
-            updateFormModel(dataUpdateFormModelMap)
+            updateActiveModel(dataUpdateActiveModelMap)
         }
     }
 
