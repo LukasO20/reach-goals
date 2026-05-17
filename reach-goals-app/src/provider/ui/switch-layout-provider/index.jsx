@@ -21,21 +21,21 @@ export const SwitchLayoutProvider = ({ children }) => {
 
        /** @type {import('./types.js').UpdateProps} */ 
     const update = (switcher) => {
-        if (switcher.area && switcher.state) {
+        if (switcher.area && switcher.layout) {
             setLayout((prev) => ({
                 ...prev,
                 [switcher.area]: {
                     ...prev[switcher.area],
-                    ...switcher.state
+                    ...switcher.layout
                 }
             }))
         }
     }
 
     /** @type {import('./types.js').SetSwitchLayoutProps} */
-    const setSwitchLayout = useCallback(({ area, state }, e) => {
+    const setSwitchLayout = useCallback(({ area, layout }, e) => {
         e?.stopPropagation()
-        update({ area, state })
+        update({ area, layout })
     }, [])
 
     /** @type {import('./types.js').SetUserConfigLayoutProps} */
@@ -68,7 +68,7 @@ export const SwitchLayoutProvider = ({ children }) => {
 
     const value = useMemo(() => ({ data: output, setSwitchLayout, setUserConfigLayout }), [setSwitchLayout, setUserConfigLayout, output])
 
-    //console.log('SwitchLayoutProvider - output:', output)
+    console.log('SwitchLayoutProvider - output:', output)
 
     return (
         <SwitchLayoutContext.Provider value={value}>

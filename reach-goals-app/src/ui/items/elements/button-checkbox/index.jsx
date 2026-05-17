@@ -4,43 +4,44 @@ import { useCheckbox } from '../../../../provider/ui/checkbox-provider'
 import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider'
 
 import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
-import { checkboxMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
 import { cx } from '../../../../utils/utils.js'
 
 import './style.scss'
-
-const stateCheckbox = (checkboxID, selected = []) => {
-    return selected.includes(checkboxID)
-}
-
-const stateCheckboxMain = (selected = [], total = []) => {
-    return selected.length > 0 && selected.length < total.length
-}
 
 /** @typedef {import('./types.js').ButtonCheckboxProps} Props */
 
 /**
  * @param {Props} props
  */
-const ButtonCheckbox = ({ classBtn, checkboxID, title, checkbox = checkboxMap }) => {
+const ButtonCheckbox = ({ classBtn, checkboxID, title, checkbox }) => {
     const { valuesCheckbox, toggleCheckbox, registerCheckbox, unregisterCheckbox } = useCheckbox()
-    const { data: { layout } } = useSwitchLayout()
+    const { data: { layout = {} } } = useSwitchLayout()
+
+    const { page, modal} = layout
+
+    const checkboxScope = valuesCheckbox.scope
+
+    const typeCheckboxMain = checkboxScope === 'modal' ? modal?.layoutName : page?.layoutName
+
+    const stateCheckbox = (checkboxID, selected = [], scope) => selected.includes(checkboxID) && scope === valuesCheckbox.scope
+
+    const stateCheckboxMain = (selected = [], total = []) => selected.length > 0 && selected.length < total.length
 
     useEffect(() => {
-        registerCheckbox(checkboxID)
-        return () => unregisterCheckbox(checkboxID)
-    }, [checkboxID, registerCheckbox, unregisterCheckbox])
+        registerCheckbox(checkboxID, `${checkbox.scope}`)
+        return () => unregisterCheckbox(checkboxID, `${checkbox.scope}`)
+    }, [checkbox.scope, checkboxID, registerCheckbox, unregisterCheckbox])
 
-    const checkboxMain = `checkbox-${layout.page.pageName}`
-    const checkboxScope = valuesCheckbox.scope
+    const checkboxMain = `checkbox-${typeCheckboxMain}`
     const isChecked = stateCheckbox(
         checkboxID,
         valuesCheckbox[checkboxScope]?.selected,
+        checkbox?.scope
     )
     const isParcialChecked = stateCheckboxMain(
         valuesCheckbox[checkboxScope]?.selected,
-        Array.from(valuesCheckbox.checkboxRegistry),
+        Array.from(valuesCheckbox.checkboxRegistry[checkbox.scope]),
     )
     const isCheckboxMainID = checkboxMain === checkboxID
 
@@ -53,7 +54,10 @@ const ButtonCheckbox = ({ classBtn, checkboxID, title, checkbox = checkboxMap })
 
     return (
         <span className={buttonCheckboxClass}
-            onClick={(e) => { toggleCheckbox(checkbox); e.stopPropagation() }}
+            onClick={(e) => { 
+                toggleCheckbox(checkbox); 
+                e.stopPropagation() 
+            }}
             onKeyDown={(e) => e.key === 'Enter' ? toggleCheckbox(checkbox) : ''}
             role='button' tabIndex='0'
         >

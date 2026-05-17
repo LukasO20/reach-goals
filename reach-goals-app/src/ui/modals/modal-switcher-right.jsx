@@ -5,7 +5,7 @@ import { useSwitchLayout } from '../../provider/ui/switch-layout-provider'
 import { useOutsideClick } from '../../hooks/useOutsideClick.js'
 import { useManageModel } from '../../provider/model/manage-model-provider'
 
-import { visibilityMap } from '../../utils/mapping/mappingUtils.js'
+import { visibilityMap, switchLayoutMap } from '../../utils/mapping/mappingUtils.js'
 
 import { ModalTagWrapper } from './modal-tag/modal-tag-wrapper.jsx'
 import { ModalDetailsWrapper } from './modal-details/modal-details-wrapper.jsx'
@@ -17,7 +17,7 @@ import './style.scss'
 const ModalSwitcherRight = () => {
     const { visibleElements, toggleVisibility } = useVisibility()
     const { model } = useManageModel()
-    const { data: { layout } } = useSwitchLayout()
+    const { data: { layout }, setSwitchLayout } = useSwitchLayout()
     const modalRef = useRef(null)
 
     const showModalRight = visibleElements.includes('modal-right') ? 'show' : ''
@@ -39,7 +39,15 @@ const ModalSwitcherRight = () => {
         const shouldCloseModalCenter = visibleElements.some((elements) => allowedModalLayouts.includes(elements))
 
         if (shouldCloseModalCenter) {
+            const buildSwitchLayoutMap = switchLayoutMap({
+                area: 'modal',
+                layout: {
+                    modalName: null,
+                    layoutName: null
+                }
+            })
             toggleVisibility(visibilityMap(null))
+            setSwitchLayout(buildSwitchLayoutMap)
         }
     })
 

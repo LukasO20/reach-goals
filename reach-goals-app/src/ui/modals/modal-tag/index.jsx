@@ -50,7 +50,7 @@ const ModalTag = ({ filterTabs, onFilterTabs }) => {
     const headLeftContent =
         hasSelectedModel ? (
             <ButtonCheckbox 
-                classBtn='checkbox-main tag' 
+                classBtn='checkbox-main' 
                 checkboxID='checkbox-tag'
                 checkbox={buildCheckboxMap({ checkboxIDMain: 'checkbox-tag', scope: 'modal' })}
                 title='Select all'

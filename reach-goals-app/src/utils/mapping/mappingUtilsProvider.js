@@ -88,7 +88,10 @@ export const checkboxMap = {
     scope: '',
     checkboxID: null,
     checkboxIDMain: null,
-    checkboxRegistry: []
+    checkboxRegistry: {
+        page: [],
+        modal: []
+    }
 }
 
 /** 

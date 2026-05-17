@@ -15,10 +15,10 @@ export const visibilityMap = (classes, operator = {}) => {
     return attributes
 }
 
-export const switchLayoutMap = ({ area, state }) => {
+export const switchLayoutMap = ({ area, layout }) => {
     return {
         area,
-        state
+        layout
     }
 }
 

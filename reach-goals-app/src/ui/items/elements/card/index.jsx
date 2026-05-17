@@ -30,8 +30,8 @@ const Card = ({
     checkboxState = checkboxMap,
     clickFunction,
     draggable = false
-}) => {
-    return model
+}) => (
+    model
         .filter((item) => !status || status.includes(item.status))
         .sort((a, b) => a.order - b.order)
         .map((item, index) => {
@@ -89,8 +89,11 @@ const Card = ({
                 >
                     <div className='head'>
                         <div className='side-left'>
-                            <ButtonCheckbox classBtn='checkbox-card' checkboxID={`checkbox-${itemID}`}
-                                checkbox={buildCheckboxMap({ checkboxID: `checkbox-${itemID}`, scope: 'page' })} />
+                            <ButtonCheckbox 
+                                classBtn='checkbox-card' 
+                                checkboxID={`checkbox-${itemID}`}
+                                checkbox={buildCheckboxMap({ checkboxID: `checkbox-${itemID}`, scope: 'page' })} 
+                            />
                             <label>
                                 {iconMap[type]}
                                 <label>{item.name}</label>
@@ -145,6 +148,6 @@ const Card = ({
                 renderCard()
             )
         })
-}
+)
 
 export default Card

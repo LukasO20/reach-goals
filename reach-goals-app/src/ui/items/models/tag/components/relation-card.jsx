@@ -87,8 +87,11 @@ const RelationCard = ({ checkboxState = checkboxMap }) => {
                         style={{ backgroundColor: `${colorTag}50`, borderColor: colorTag }}>
                         <div className='head' onClick={() => handleSetOpenCard(item)}>
                             <label>
-                                <ButtonCheckbox classBtn='checkbox-tag-card small' checkboxID={`checkbox-${item.id}`}
-                                    checkbox={buildCheckboxMap({ checkboxID: `checkbox-${item.id}`, scope: 'modal' })} />
+                                <ButtonCheckbox 
+                                    classBtn='checkbox-tag-card small' 
+                                    checkboxID={`checkbox-${item.id}`}
+                                    checkbox={buildCheckboxMap({ checkboxID: `checkbox-${item.id}`, scope: 'modal' })} 
+                                />
                                 {iconMap['tag']}
                                 {item.name}
                             </label>

@@ -14,6 +14,12 @@
  */
 
 /**
+ * @typedef {Object} LayoutProps
+ * @property {LayoutPageProps} page
+ * @property {LayoutModalProps} modal
+ */
+
+/**
  * @typedef {Object} SetLayoutProps
  * @property {LayoutProps} layout
  * @property {React.Dispatch<React.SetStateAction<Object>>} setLayout
@@ -30,7 +36,7 @@
 /**
  * @typedef {Object} SwitcherProps
  * @property {string} area
- * @property {string} state
+ * @property {string} layout
  */
 
 /**
@@ -42,7 +48,7 @@
 /**
  * @typedef {Object} SetSwitchLayoutParams
  * @property {'page' | 'modal'} area
- * @property {Object} state
+ * @property {LayoutProps} layout
  */
 
 /**
@@ -61,12 +67,6 @@
  * @typedef {Object} LayoutModalProps
  * @property {string} modalName
  * @property {string} layoutName
- */
-
-/**
- * @typedef {Object} LayoutProps
- * @property {LayoutPageProps} page
- * @property {LayoutModalProps} modal
  */
 
 /**

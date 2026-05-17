@@ -37,8 +37,9 @@ const ContainerHeader = () => {
                     <SearchBar mode='service' placeholder='search an activity' />
                 </div>
                 <div className='item-nav'>
-                    <ButtonAction onClick={linkTagClick} visibility={visibilityMap(['modal-right', 'tag'])}
-                        switchLayout={switchLayoutMap({ area: 'modal', state: { modalName: 'modal-right', layoutName: 'tag' } })}
+                    <ButtonAction 
+                        onClick={linkTagClick} visibility={visibilityMap(['modal-right', 'tag'])}
+                        switchLayout={switchLayoutMap({ area: 'modal', layout: { modalName: 'modal-right', layoutName: 'tag' } })}
                         classBtn='circle tag' icon='tag'
                     />
                 </div>

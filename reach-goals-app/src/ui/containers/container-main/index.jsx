@@ -85,8 +85,10 @@ const ContainerMain = () => {
                             </>
                         )}
                         {!isPageCalendar && hasSelectedModel && (
-                            <ButtonCheckbox classBtn='checkbox-main' checkboxID={`checkbox-${layout.page.pageName}`}
-                                checkbox={buildCheckboxMap({ checkboxIDMain: `checkbox-${layout.page.pageName}`, scope: 'page' })}
+                            <ButtonCheckbox 
+                                classBtn='checkbox-main' 
+                                checkboxID={`checkbox-${layout.page.layoutName}`}
+                                checkbox={buildCheckboxMap({ checkboxIDMain: `checkbox-${layout.page.layoutName}`, scope: 'page' })}
                                 title='Select all'
                             />
                         )}

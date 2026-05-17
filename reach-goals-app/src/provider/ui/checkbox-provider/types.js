@@ -5,6 +5,12 @@
  */
 
 /**
+ * @typedef {Object} CheckboxRegistryProps
+ * @property {Array<CheckboxIDProps>} page
+ * @property {Array<CheckboxIDProps>} modal
+ */
+
+/**
  * @typedef {Object} CheckboxScopeProps
  * @property {Array<CheckboxIDProps>} selected
  */
@@ -16,7 +22,7 @@
  * @property {string} scope
  * @property {CheckboxIDProps} checkboxID
  * @property {CheckboxIDProps} checkboxIDMain
- * @property {Array<CheckboxIDProps>} checkboxRegistry
+ * @property {CheckboxRegistryProps} checkboxRegistry
  */
 
 /**
@@ -58,12 +64,14 @@
 /**
  * @callback RegisterCheckboxProps
  * @param {CheckboxIDProps} checkboxID
+ * @param {'page' | 'modal'} scope
  * @returns {CheckboxProps}
  */
 
 /**
  * @callback UnregisterCheckboxProps
  * @param {CheckboxIDProps} checkboxID
+ * @param {'page' | 'modal'} scope
  * @returns {CheckboxProps}
  */
 
