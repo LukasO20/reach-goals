@@ -45,7 +45,7 @@ const SearchBoxResults = ({
     }
 
     const handleItemClick = (id, type = '', model = {}) => {
-        const dataSwitchLayout = switchLayoutMap({ area: 'modal', state: { modalName: 'modal-right', layoutName: 'details' } })
+        const dataSwitchLayout = switchLayoutMap({ area: 'modal', layout: { modalName: 'modal-right', layoutName: 'details' } })
         setModel(prev => ({ ...prev, mainModelID: id, activeModel: model, typeModel: type }))
         setSwitchLayout(dataSwitchLayout)
         toggleVisibility(visibilityMap(['modal-right', type]))

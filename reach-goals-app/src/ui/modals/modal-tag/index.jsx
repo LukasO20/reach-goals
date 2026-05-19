@@ -90,7 +90,7 @@ const ModalTag = ({ filterTabs, onFilterTabs }) => {
                         icon='config'
                         onClick={(e) => handleClickButtonAction(e)}
                         visibility={visibilityMap(['modal-center', 'config'])}
-                        switchLayout={switchLayoutMap({ area: 'modal', state: { modalName: 'modal-center', layoutName: 'config' } })}
+                        switchLayout={switchLayoutMap({ area: 'modal', layout: { modalName: 'modal-center', layoutName: 'config' } })}
                     />
                 </div>
             </div>

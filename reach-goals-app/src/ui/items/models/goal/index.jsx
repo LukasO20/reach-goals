@@ -74,7 +74,7 @@ const Goal = ({
         }
 
         if (detailsModel) {
-            const dataSwitchLayout = switchLayoutMap({ area: 'modal', state: { modalName: 'modal-right', layoutName: 'details' } })
+            const dataSwitchLayout = switchLayoutMap({ area: 'modal', layout: { modalName: 'modal-right', layoutName: 'details' } })
 
             setModel(prev => ({ ...prev, mainModelID: goal.id, typeModel: 'goal' }))
             setSwitchLayout(dataSwitchLayout)

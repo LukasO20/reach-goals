@@ -116,9 +116,9 @@ const Card = ({
                                         visibility={visibilityMap(['modal-center', type])}
                                         switchLayout={switchLayoutMap({
                                             area: 'modal',
-                                            state: { modalName: 'modal-center', layoutName: 'form' }
+                                            layout: { modalName: 'modal-center', layoutName: 'form' }
                                         })}
-                                        classBtn={`edit-${type} button-action circle small`}
+                                        classBtn={`edit-${type} circle small`}
                                         icon='edit'
                                     />
                                 )}
@@ -127,7 +127,7 @@ const Card = ({
                                         pendingState={isPending}
                                         onClick={() => clickFunction.delete(itemID)}
                                         visibility={visibilityMap(null)}
-                                        classBtn={`remove-${type} button-action circle small`}
+                                        classBtn={`remove-${type} circle small`}
                                         icon='remove'
                                     />
                                 )}

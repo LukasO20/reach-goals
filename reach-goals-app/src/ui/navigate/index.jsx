@@ -86,7 +86,7 @@ const Navigate = () => {
                 </div>
                 <div className='item-nav'>
                     <ButtonAction visibility={visibilityMap(['modal-center', 'config'])} classBtn={buttonLinkConfigClass} icon='config'
-                        switchLayout={switchLayoutMap({ area: 'modal', state: { modalName: 'modal-center', layoutName: 'config' } })}
+                        switchLayout={switchLayoutMap({ area: 'modal', layout: { modalName: 'modal-center', layoutName: 'config' } })}
                     />
                 </div>
             </div>

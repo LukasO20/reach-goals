@@ -52,7 +52,7 @@ const MonthDaysPicker = ({ data }) => {
 
     const activityClick = (model, e) => {
         e.stopPropagation()
-        const dataSwitchLayout = switchLayoutMap({ area: 'modal', state: { modalName: 'modal-right', layoutName: 'details' } })
+        const dataSwitchLayout = switchLayoutMap({ area: 'modal', layout: { modalName: 'modal-right', layoutName: 'details' } })
 
         setModel(prev => ({ ...prev, mainModelID: model.id, activeModel: model, typeModel: model.type }))
         setSwitchLayout(dataSwitchLayout)
