@@ -21,7 +21,7 @@ export const CalendarWrapper = () => {
     }
 
     useEffect(() => {
-        const dataSwitchLayout = switchLayoutMap({ area: 'page', state: { pageName: location.pathname.slice(1), layoutName: 'all' } })
+        const dataSwitchLayout = switchLayoutMap({ area: 'page', layout: { pageName: location.pathname.slice(1), layoutName: 'all' } })
 
         update({ header: 'Manage daily your activities' })
         setSwitchLayout(dataSwitchLayout)

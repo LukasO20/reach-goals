@@ -38,7 +38,7 @@ const SearchItemTag = ({ item, type, onButtonClick }) => {
                 setModel(prev => ({ ...prev, typeModel: 'tag' }))
                 toggleVisibility(visibilityMap(['modal-right', 'tag']));
                 setSwitchLayout(switchLayoutMap({
-                    area: 'modal', state: { modalName: 'modal-right', layoutName: 'tag' }
+                    area: 'modal', layout: { modalName: 'modal-right', layoutName: 'tag' }
                 }))
             }}
         >
@@ -67,7 +67,7 @@ const SearchItemTag = ({ item, type, onButtonClick }) => {
                                         toggleVisibility(visibilityMap(['modal-center', 'assignment']));
                                         setSwitchLayout(switchLayoutMap({
                                             area: 'modal',
-                                            state: { modalName: 'modal-center', layoutName: 'form' }
+                                            layout: { modalName: 'modal-center', layoutName: 'form' }
                                         }))
                                     }}
                                 >
@@ -86,7 +86,7 @@ const SearchItemTag = ({ item, type, onButtonClick }) => {
                                         toggleVisibility(visibilityMap(['modal-center', 'goal']));
                                         setSwitchLayout(switchLayoutMap({
                                             area: 'modal',
-                                            state: { modalName: 'modal-center', layoutName: 'form' }
+                                            layout: { modalName: 'modal-center', layoutName: 'form' }
                                         }))
                                     }}
                                 >

@@ -99,7 +99,7 @@ const CardMini = ({
                                                 visibility={visibilityMap(['modal-center', type])}
                                                 switchLayout={switchLayoutMap({
                                                     area: 'modal',
-                                                    state: { modalName: 'modal-center', layoutName: 'form' }
+                                                    layout: { modalName: 'modal-center', layoutName: 'form' }
                                                 })}
                                                 classBtn={`edit-${type} button-action circle small`}
                                                 icon='edit'

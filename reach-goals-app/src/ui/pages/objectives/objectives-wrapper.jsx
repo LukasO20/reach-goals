@@ -22,7 +22,7 @@ export const ObjectivesWrapper = () => {
     }
 
     useEffect(() => {
-        const dataSwitchLayout = switchLayoutMap({ area: 'page', state: { pageName: location.pathname.slice(1), layoutName: 'all' } })
+        const dataSwitchLayout = switchLayoutMap({ area: 'page', layout: { pageName: location.pathname.slice(1), layoutName: 'all' } })
 
         update({ header: 'Manage your activities' })
         setSwitchLayout(dataSwitchLayout)

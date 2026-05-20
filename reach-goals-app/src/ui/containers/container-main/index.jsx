@@ -27,7 +27,7 @@ const ContainerMain = () => {
 
     const formRender = switchLayoutMap({
         area: 'modal',
-        state: { modalName: 'modal-center', layoutName: 'form' }
+        layout: { modalName: 'modal-center', layoutName: 'form' }
     })
 
     const isPageCalendar = layout.page.pageName === 'calendar'
@@ -75,11 +75,11 @@ const ContainerMain = () => {
                         {isPageHome && (
                             <>
                                 <ButtonAction classBtn={`plan-round max-width goal ${isSwitchColumn ? 'active' : ''}`} icon='column'
-                                    switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'column' } })}
+                                    switchLayout={switchLayoutMap({ area: 'page', layout: { pageName: layout.page.pageName, layoutName: 'column' } })}
                                     onClick={handleButtonActionClick}
                                 />
                                 <ButtonAction classBtn={`plan-round max-width chart ${isSwichChart ? 'active' : ''}`} icon='chartbar'
-                                    switchLayout={switchLayoutMap({ area: 'page', state: { pageName: layout.page.pageName, layoutName: 'chart' } })}
+                                    switchLayout={switchLayoutMap({ area: 'page', layout: { pageName: layout.page.pageName, layoutName: 'chart' } })}
                                     onClick={handleButtonActionClick}
                                 />
                             </>

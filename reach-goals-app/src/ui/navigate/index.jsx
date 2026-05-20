@@ -68,19 +68,19 @@ const Navigate = () => {
             <div className='nav'>
                 <div className='item-nav'>
                     <ButtonLink link={'/home'} classBtn={buttonLinkHomeClass} img='/logo.png' alt='Home button'
-                        switchLayout={switchLayoutMap({ area: 'page', state: { pageName: 'home', layoutName: 'column' } })}
+                        switchLayout={switchLayoutMap({ area: 'page', layout: { pageName: 'home', layoutName: 'column' } })}
                         onClick={() => handleButtonLinkClick('home')}
                     />
                 </div>
                 <div className='item-nav'>
                     <ButtonLink link='/calendar' classBtn={buttonLinkCalendarClass} icon='calendar'
-                        switchLayout={switchLayoutMap({ area: 'page', state: { pageName: 'calendar', layoutName: 'all' } })}
+                        switchLayout={switchLayoutMap({ area: 'page', layout: { pageName: 'calendar', layoutName: 'all' } })}
                         onClick={() => handleButtonLinkClick('calendar')}
                     />
                 </div>
                 <div className='item-nav'>
                     <ButtonLink link='/objectives' classBtn={buttonLinkObjectivesClass} icon='objectives'
-                        switchLayout={switchLayoutMap({ area: 'page', state: { pageName: 'objectives', layoutName: 'all' } })}
+                        switchLayout={switchLayoutMap({ area: 'page', layout: { pageName: 'objectives', layoutName: 'all' } })}
                         onClick={() => handleButtonLinkClick('objectives')}
                     />
                 </div>
