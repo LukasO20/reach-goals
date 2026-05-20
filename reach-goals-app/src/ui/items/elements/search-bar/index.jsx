@@ -59,7 +59,7 @@ const SearchBar = ({ mode = 'service', placeholder = 'search' }) => {
                     <ButtonAction
                         onClick={handleCleanSearchBar}
                         visibility={visibilityMap('search-bar', { remove: true })}
-                        classBtn='clean-search button-action circle medium'
+                        classBtn='clean-search circle medium'
                         icon='cancel'
                     />
                 )}

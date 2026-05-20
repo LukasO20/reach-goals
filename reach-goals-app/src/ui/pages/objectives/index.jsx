@@ -21,20 +21,33 @@ const Objectives = ({ filterTabs, onFilterTabs }) => {
     const { page: { data: dataAssignment = [], loading: loadingAssignment } } = useAssignmentProvider()
 
     const typeLayout = visibility.layoutObjectives
-    const data = typeLayout === 'goal' ? dataGoal
-        : typeLayout === 'assignment' ? dataAssignment
-            : [...dataGoal, ...dataAssignment]
 
-    const objectivePropsReference = {
+    const propsReference = {
         display: {
             type: [visibility.cards],
             actions: ['edit', 'delete']
         },
-        source: data,
         detailsModel: true,
         checkboxModel: true,
         status: visibility.status,
         showTags: visibility.tagsCard
+    }
+
+    const dataSingle = typeLayout === 'goal' ? dataGoal : dataAssignment
+
+    const switchActivityPropsReference = {
+        ...propsReference,
+        source: dataSingle
+    }
+
+    const goalPropsReference = {
+        ...propsReference,
+        source: dataGoal
+    }
+
+    const assignmentPropsReference = {
+        ...propsReference,
+        source: dataAssignment
     }
 
     const isAllModels = typeLayout === 'all-activities'
@@ -46,12 +59,12 @@ const Objectives = ({ filterTabs, onFilterTabs }) => {
             <>
                 {isAllModels && !isOnlyTypeModel && (
                     <>
-                        <Goal {...objectivePropsReference} />
-                        <Assignment {...objectivePropsReference} />
+                        <Goal {...goalPropsReference} />
+                        <Assignment {...assignmentPropsReference} />
                     </>
                 )}
                 {isOnlyTypeModel && !isAllModels && (
-                    <ModelSwitcher type={typeLayout} propsReference={objectivePropsReference} />
+                    <ModelSwitcher type={typeLayout} propsReference={switchActivityPropsReference} />
                 )}
             </>
         )

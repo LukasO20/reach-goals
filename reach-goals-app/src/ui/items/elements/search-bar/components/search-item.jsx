@@ -22,7 +22,7 @@ const SearchItem = ({ item, type, onItemClick, onButtonClick }) => {
                         visibility={visibilityMap(['modal-center', type])}
                         switchLayout={switchLayoutMap({
                             area: 'modal',
-                            state: { modalName: 'modal-center', layoutName: 'form' }
+                            layout: { modalName: 'modal-center', layoutName: 'form' }
                         })}
                     />
                 </div>
