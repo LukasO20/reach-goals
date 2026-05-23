@@ -187,7 +187,7 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
                     {functionFormMap.mapModelRelationAddMap(type, renderModelEnviroment(isGoalForm))}
                     <div className='item-forms details'>
                         <div className='head'>
-                            <div className='item-head-1'>
+                            <div className='item'>
                                 <label>{iconMap['comment']} <span>comment</span></label>
                             </div>
                         </div>

@@ -5,7 +5,10 @@ import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
 
 import { cx } from '../../../../utils/utils.js'
 
+import moment from 'moment'
+
 import ButtonAction from '../../elements/button-action' 
+import Line from '../../elements/line'
 
 /** @typedef {import('../types.js').ModelRelationAddProps} Props */
 
@@ -41,34 +44,34 @@ const FormModelRelationAdd = ({ type, children }) => {
     }
 
     if (type === 'assignment') {
-        const goals = model.selectedModel.goal
-        const goaLinked = goals.length || null
-        const goalData = goals[0]
+        const goals = model.selectedModel.goal 
+        const goalData = goals[0] || model.activeModel?.goal
+        const validGoal = !!goalData
 
         const modelRelationAddClass = cx(
             `item-forms
             goal
-            ${!!goals.length && 'selected'}
+            ${validGoal && 'selected'}
             `
         )
 
         return (
             <div className={modelRelationAddClass}>
                 <div className='head'>
-                    <div className='item-head-1'>
+                    <div className='item'>
                         <label>
                             {iconMap['goal']}{tittleRelation}
-                            {goaLinked &&
+                            {validGoal &&
                                 (<>
-                                    <span className='line' />
+                                    <Line direction='vertical' />
                                     <span className='name-goal'>{goalData.name}</span>
                                 </>)}
                         </label>
-                        {renderButtonAction(goals.length ? 'assignment' : null)}
+                        {renderButtonAction(validGoal ? 'assignment' : null)}
                     </div>
-                    {!!goalData && goalData.end && goalData.end !== 'Invalid date' && (
-                        <div className='item-head-2'>
-                            <span>schedule to end on {goalData.end}</span>
+                    {!!validGoal && goalData.end && goalData.end !== 'Invalid date' && (
+                        <div className='item'>
+                            <span>schedule to end on {moment(goalData.end).format('MMMM DD')}</span>
                         </div>
                     )}
                 </div>
@@ -80,11 +83,11 @@ const FormModelRelationAdd = ({ type, children }) => {
         return (
             <div className='item-forms assignment'>
                 <div className='head'>
-                    <div className='item-head-1'>
+                    <div className='item'>
                         <label>{iconMap['assignment']}{tittleRelation}</label>
                         {renderButtonAction()}
                     </div>
-                    <div className='item-head-2'></div>
+                    <div className='item'></div>
                 </div>
                 <div className='body'>
                     {children}
@@ -97,11 +100,11 @@ const FormModelRelationAdd = ({ type, children }) => {
         return (
             <div className='item-forms tag'>
                 <div className='head'>
-                    <div className='item-head-1'>
+                    <div className='item'>
                         <label>{iconMap['tag']}tags</label>
                         {renderButtonAction()}
                     </div>
-                    <div className='item-head-2'></div>
+                    <div className='item'></div>
                 </div>
                 <div className='body'>
                     {children}

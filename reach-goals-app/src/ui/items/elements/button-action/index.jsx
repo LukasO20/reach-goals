@@ -45,14 +45,17 @@ const ButtonAction = ({
         e.stopPropagation()
 
         const dataResetManageModel = resetManageModelMap(['activeModel', 'mainModelID', 'selectedModel'])
-        const dataUpdateActiveModel = updateActiveModelMap({ keyObject: 'goalID', value: null, action: 'remove' })
-        const dataRemoveFromSelectedModel = removeFromSelectedModelMap({ id: model.activeModel.goalID, type: 'goal' })
 
         if (visibility) toggleVisibility(visibility, e)
         if (switchLayout) setSwitchLayout(switchLayout)
         if (nullForm) resetManageModel(dataResetManageModel)
         if (unlinkGoal) {
-            updateActiveModel(dataUpdateActiveModel)
+            const dataEmptyGoal = updateActiveModelMap({ keyObject: 'goal', value: null, action: 'remove' })
+            const dataEmptyGoalID = updateActiveModelMap({ keyObject: 'goalID', value: null, action: 'remove' })
+            const dataRemoveFromSelectedModel = removeFromSelectedModelMap({ id: model.activeModel.goalID, type: 'goal' })
+
+            updateActiveModel(dataEmptyGoal)
+            updateActiveModel(dataEmptyGoalID)
             removeFromSelectedModel(dataRemoveFromSelectedModel)
         }
 
@@ -75,10 +78,10 @@ const ButtonAction = ({
     )
 
     return (
-        <span ref={innerRef} 
+        <span ref={innerRef}
             className={buttonActionClass}
-            onClick={handleClick} onKeyDown={(e) => e.key === 'Enter' ? handleClick(e) : ''} 
-            role='button' 
+            onClick={handleClick} onKeyDown={(e) => e.key === 'Enter' ? handleClick(e) : ''}
+            role='button'
             tabIndex='0'
             {...rest}
         >

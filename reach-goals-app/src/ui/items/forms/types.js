@@ -9,7 +9,7 @@
 /**
  * @typedef {Object} ModelRelationAddProps
  * @property {import('react').ReactNode} children
- * @property {'goal'|'assignment'|'tag'} type
+ * @property {'goal' | 'assignment'} type
  */
 
 /**

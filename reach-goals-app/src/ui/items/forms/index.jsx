@@ -8,7 +8,7 @@ import './style.scss'
 /**
  * @param {Props} props
  */
-const Form = ({ typeForm, functionFormMap: formMapFunc, model: modelForm, pendingState: formPendingState }) => {
+const Form = ({ typeForm, functionFormMap, model, pendingState }) => {
     const isFormTag = typeForm === 'tag'
     const isFormStandard = typeForm === 'goal' || typeForm === 'assignment'
 
@@ -17,17 +17,17 @@ const Form = ({ typeForm, functionFormMap: formMapFunc, model: modelForm, pendin
             {isFormTag && (
                 <FormTag
                     type={typeForm}
-                    functionFormMap={formMapFunc}
-                    model={modelForm}
-                    pendingState={formPendingState}
+                    functionFormMap={functionFormMap}
+                    model={model}
+                    pendingState={pendingState}
                 />
             )}
             {isFormStandard && (
                 <FormStandard
                     type={typeForm}
-                    functionFormMap={formMapFunc}
-                    model={modelForm}
-                    pendingState={formPendingState}
+                    functionFormMap={functionFormMap}
+                    model={model}
+                    pendingState={pendingState}
                 />
             )}
         </>
