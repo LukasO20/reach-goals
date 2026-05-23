@@ -1,39 +1,305 @@
-
-
 .container-modal {
 
-    &.modal-right {
+    &.modal-right.details {
 
-        &.details {
+        >.head {
 
-            .body {
+            >div {
+                display: flex;
+                flex-direction: column;
+                gap: $spacing-gap-sm;
 
-                .description {
-                    background-color: $color-white;
-                    border-radius: $dimensions-border-radius-sm;
-                    padding: $spacing-padding-sm;
-                    margin: $spacing-margin-st;
+                .title {
+                    display: flex;
+                    align-items: center;
+                    gap: $spacing-gap-sm;
+                    font-size: $font-size-m;
                     font-weight: 600;
-                    height: 5rem;
+                    color: $color-complementary-s;
                 }
 
-                .modaldetails {
-                    background-color: $color-white;
-                    border-radius: $dimensions-border-radius-sm;
-                    padding: $spacing-padding-sm;
-                    margin: $spacing-margin-st;
+                .sub-title {
+                    font-weight: 600;
+                    color: $color-complementary-s;
+                    font-size: $font-size-sm;
+                }
+            }
+        }
 
-                    &.assignment-list {
+        >.sub-head {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: $spacing-padding-st;
 
-                        .header-assignment-list {
+            .label-status {
+                display: inline-flex;
+                align-items: center;
+                gap: $spacing-gap-sm;
+                font-weight: 600;
+            }
 
-                            h4 {
+            &.progress {
+                background-color: $color-complementary-s-15;
+
+                * {
+                    color: $color-complementary-s;
+                }
+            }
+
+            &.conclude {
+                background-color: $color-success-70;
+
+                * {
+                    color: $color-white;
+                }
+            }
+
+            &.cancel {
+                background-color: $color-cancel-70;
+
+                * {
+                    color: $color-white;
+                }
+            }
+        }
+
+        >.body {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-gap-st;
+            background-color: $color-complementary-s-05;
+
+            .description {
+                display: flex;
+                background-color: $color-white;
+                border-radius: $dimensions-border-radius-sm;
+                padding: $spacing-padding-st;
+                font-weight: 600;
+                font-size: $font-size-sm;
+                max-height: 20rem;
+                color: $color-black;
+                overflow: hidden;
+
+                .body {
+                    overflow-y: auto;
+                }
+            }
+
+            .details-goal {
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+                gap: $spacing-gap-st;
+
+                .goal-bars {
+
+                    .bar {
+                        display: flex;
+                        flex-direction: column;
+                        gap: $spacing-gap-sm;
+                        padding: $spacing-padding-sm;
+                        overflow: hidden;
+
+                        .head {
+                            display: flex;
+                            align-items: center;
+                            gap: $spacing-gap-sm;
+
+                            >label {
                                 display: flex;
                                 align-items: center;
                                 gap: $spacing-gap-sm;
+                                font-weight: 600;
+                            }
+
+                            * {
                                 color: $color-complementary-s;
                             }
                         }
+
+                        .body {
+                            position: relative;
+                            display: flex;
+                            height: $dimensions-h-sm;
+                            border-radius: $dimensions-border-radius-sm;
+                            overflow: hidden;
+
+                            * {
+                                transition: $animation-transition-st;
+                            }
+
+                            .label-percent {
+                                position: absolute;
+                                right: 0;
+                                top: 0.35rem;
+                                display: flex;
+                                align-items: center;
+                                color: $color-white;
+                                font-weight: 600;
+                                text-shadow: 0rem 0rem 0.085rem $color-complementary-s;
+                                margin: $spacing-margin-st;
+                            }
+                        }
+
+                        &.progress {
+
+                            .body {
+                                background-color: $color-complementary-s-30;
+
+                                .bar-progress {
+                                    background-color: $color-complementary-s;
+                                }
+                            }
+                        }
+
+                        &.conclude {
+
+                            .body {
+                                background-color: $color-success-50;
+
+                                .bar-progress {
+                                    background-color: $color-success-70;
+                                }
+                            }
+                        }
+
+                        &.cancel {
+
+                            .body {
+                                background-color: $color-cancel-50;
+
+                                .bar-progress {
+                                    background-color: $color-cancel-70;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .goal-tags {
+                    min-height: 0;
+                }
+            }
+
+            .details-assignment {
+                display: flex;
+                flex-direction: column;
+                gap: $spacing-gap-st;
+
+                .split-content {
+                    display: flex;
+                    align-items: center;
+                    gap: $spacing-gap-sm;
+
+                    .goal-card {
+                        display: flex;
+                        background-color: $color-complementary-s;
+                        border-radius: $dimensions-border-radius-sm;
+                        padding: $spacing-padding-sm;
+                        flex: 1;
+
+                        .head {
+                            display: flex;
+                            flex-direction: column;
+                            gap: $spacing-gap-mini;
+
+                            .item {
+
+                                * {
+                                    color: $color-white;
+                                }
+
+                                &:first-child {
+                                    display: flex;
+                                    align-items: center;
+                                    gap: $spacing-gap-sm;
+                                    font-weight: 600;
+                                }
+
+                                &:last-child {
+                                    font-size: $font-size-sm;
+                                    font-weight: 500;
+                                }
+                            }
+                        }
+                    }
+
+                    .duration {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: $spacing-gap-sm;
+                        background-color: $color-primary-70;
+                        padding: $spacing-padding-sm;
+                        border-radius: $dimensions-border-radius-sm;
+                        width: fit-content;
+                        height: $dimensions-h-mini;
+                        flex: 1;
+
+                        * {
+                            color: $color-white;
+                        }
+
+                        label {
+                            display: flex;
+                            align-items: center;
+                            gap: $spacing-gap-sm;
+                            font-weight: 600;
+                        }
+                    }
+
+                    /* DOUBLE APPLY */
+                    .goal-card,
+                    .duration {
+                        height: 2.75rem;
+                    }
+                }
+            }
+
+            /* DOUBLE APPLY */
+            .goal-tags,
+            .assignment-tags {
+                display: flex;
+                flex-direction: column;
+                gap: $spacing-gap-sm;
+                padding: $spacing-padding-sm;
+                overflow: hidden;
+                background-color: $color-white;
+                border-radius: $dimensions-border-radius-sm;
+
+                .head {
+                    display: flex;
+                    align-items: center;
+                    gap: $spacing-gap-sm;
+
+                    >label {
+                        display: flex;
+                        align-items: center;
+                        gap: $spacing-gap-sm;
+                        font-weight: 600;
+                    }
+
+                    * {
+                        color: $color-complementary-s;
+                    }
+                }
+
+                .body {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: $spacing-gap-sm;
+                    overflow-y: auto;
+
+                    .tag-card {
+                        display: flex;
+                        align-items: center;
+                        gap: $spacing-gap-mini;
+                        font-size: $font-size-mini;
+                        font-weight: 500;
+                        padding: $spacing-padding-sm;
+                        border-radius: $dimensions-border-radius-mini;
+                        width: fit-content;
                     }
                 }
             }

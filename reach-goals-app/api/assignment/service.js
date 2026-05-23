@@ -45,12 +45,14 @@ const getAssignment = async (assignmentID) => {
             return await prisma.assignment.findUnique({
                 where: { id: Number(assignmentID) },
                 include: { 
+                    goal: { select: { id: true, name: true, start: true, end: true } },
                     tags: { include: { tag: { select: { id: true, name: true, color: true } } } } 
                 }
             })
         } else if (assignmentID === 'all') {
             return await prisma.assignment.findMany({
-                include: { 
+                include: {
+                    goal: { select: { id: true, name: true, start: true, end: true } }, 
                     tags: { include: { tag: { select: { id: true, name: true, color: true } } } }  
                 }
             })
@@ -151,6 +153,7 @@ const updateTagOnAssignment = async (assignmentID, tags) => {
             skipDuplicates: true
         })
     } catch (error) {
+        console.error(error)
         return false
     }
 }

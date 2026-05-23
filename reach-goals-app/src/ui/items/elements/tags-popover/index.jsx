@@ -4,7 +4,6 @@ import { useOutsideClick } from '../../../../hooks/useOutsideClick.js'
 
 import ButtonAction from '../button-action/index.jsx'
 
-import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
 import { visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import './style.scss'
@@ -34,7 +33,6 @@ const TagsPopover = ({ tags = [], visibility }) => {
                             const styleProps = { backgroundColor: `${data.tag.color}30`, borderColor: data.tag.color }
                             return (
                                 <label key={data.tag.name} style={styleProps}>
-                                    {iconMap['tag']}
                                     {data.tag.name}
                                 </label>
                             )

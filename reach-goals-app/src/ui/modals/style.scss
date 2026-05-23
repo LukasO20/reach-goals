@@ -17,9 +17,8 @@
         align-items: center;
         justify-content: space-between;
         background-color: $color-complementary-s-30;
-        padding: 0.5em;
-        height: 8dvh;
-        box-sizing: border-box;
+        padding: $spacing-padding-sm;
+        height: 6dvh;
 
         h2,
         h4 {
@@ -33,7 +32,6 @@
         }
 
         .options {
-            margin: 0em 2em;
             display: flex;
             align-items: center;
             gap: 1em;
