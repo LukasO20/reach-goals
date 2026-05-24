@@ -20,6 +20,7 @@
 /**
  * @typedef {Object} PopupModelOptionsProps
  * @property {'pop-chart' | 'pop-model' | 'pop-switch-model'} type
+ * @property {'minimize'} [mode]
  * @property {ModelType} typeModelOptions
  * @property {SwitchModelType} typeSwitchModelOptions
  * @property {function(string):void} onFilterTabs

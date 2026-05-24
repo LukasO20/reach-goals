@@ -8,6 +8,7 @@
     box-shadow: $box-shadow-sm;
     width: max-content;
     animation: $animation-fade-in 0.2s linear forwards;
+    transition: $animation-transition-st;
 
     .button-action {
         width: 7.5rem;
@@ -50,6 +51,32 @@
 
             &:active {
                 background-color: $color-delete-50;
+            }
+        }
+
+        &.popup-minimize {
+            background-color: $color-complementary-s;
+
+            * {
+                color: $color-white;
+            }
+
+            &:hover {
+                background-color: $color-complementary-s-70;
+            }
+            
+            &:active {
+                background-color: $color-complementary-s-50;
+            }
+        }
+    }
+
+    &.minimize {
+
+        .button-action {
+
+            &.popup-minimize {
+                transform: rotate(180deg);
             }
         }
     }

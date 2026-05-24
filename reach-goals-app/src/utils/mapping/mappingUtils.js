@@ -148,6 +148,7 @@ export const persistedUserConfigMap = {
         layoutHome: 'goal',
         layoutCalendar: 'all-activities',
         layoutObjectives: 'all-activities',
+        layoutPopupModel: null,
         columns: null,
         tagsCard: true,
     }

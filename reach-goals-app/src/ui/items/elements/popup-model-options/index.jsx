@@ -1,6 +1,11 @@
+import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider/index.jsx'
+
 import ModelOptions from './components/model-options.jsx'
 import ChartOptions from './components/chart-options.jsx'
 import SwitchModelOptions from './components/switch-model-options.jsx'
+import ButtonAction from '../button-action'
+
+import { cx } from '../../../../utils/utils.js'
 
 import './style.scss'
 
@@ -9,17 +14,39 @@ import './style.scss'
 /**
  * @param {Props} props
  */
-const PopupModelOptions = ({ type, typeModelOptions, typeSwitchModelOptions, onFilterTabs }) => {
+const PopupModelOptions = ({ type, mode, typeModelOptions, typeSwitchModelOptions, onFilterTabs }) => {
+    const { setUserConfigLayout } = useSwitchLayout()
 
-    const isValidType = !!type
+    /** @param {import('../../../../provider/ui/switch-layout-provider/types.js').SetUserConfigLayoutParams} target */
+    const handleButtonActionClick = (target) => setUserConfigLayout(target)
+
+    const containetPopupClass = cx(
+        `container-popup
+        ${type}
+        ${mode}
+        `
+    )
+    const buttonAction =
+        <ButtonAction
+            classBtn='popup-minimize circle small'
+            icon='arrowdown'
+            onClick={() => handleButtonActionClick({
+                type: 'visibility',
+                data: { layoutPopupModel: mode === 'minimize' ? null : 'minimize' }
+            })}
+        />
+    const isValidType = !!type && !mode
+    const shouldRenderButtonAction = type !== 'pop-model'
 
     return (
-        <div className={`container-popup ${type}`}>
-            {isValidType && (
-                type === 'pop-model' ? (<ModelOptions type={typeModelOptions} />) :
+        <div className={containetPopupClass}>
+            {mode === 'minimize' && buttonAction}
+            {isValidType && (<>
+                {type === 'pop-model' ? (<ModelOptions type={typeModelOptions} />) :
                     type === 'pop-switch-model' ? (<SwitchModelOptions type={typeSwitchModelOptions} onFilterTabs={onFilterTabs} />) :
-                        (<ChartOptions />)
-            )}
+                        (<ChartOptions />)}
+                {shouldRenderButtonAction && buttonAction}
+            </>)}
         </div>
     )
 }

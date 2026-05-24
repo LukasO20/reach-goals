@@ -85,7 +85,7 @@ const HomeChart = ({ data }) => {
                 )}
                 <ChartCards data={data} type='home' />
             </div>
-            <PopupModelOptions type='pop-chart' />
+            <PopupModelOptions type='pop-chart' mode={visibility.layoutPopupModel} />
         </div>
     )
 }

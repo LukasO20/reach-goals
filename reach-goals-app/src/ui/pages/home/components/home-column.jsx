@@ -101,7 +101,7 @@ const HomeColumn = ({ data }) => {
                         ))}
                 </div>
             </DragDrop>
-            <PopupModelOptions type='pop-switch-model' typeSwitchModelOptions='home' />
+            <PopupModelOptions type='pop-switch-model' typeSwitchModelOptions='home' mode={visibility.layoutPopupModel} />
         </div>
     )
 }

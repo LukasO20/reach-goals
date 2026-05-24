@@ -18,6 +18,7 @@
  * @property {LayoutType} layoutHome
  * @property {LayoutType} layoutCalendar
  * @property {LayoutType} layoutObjectives
+ * @property {'minimize' | null | undefined} layoutPopupModel
  * @property {StatusType[]} status
  * @property {ColumnsType} columns
  * @property {boolean} tagsCard

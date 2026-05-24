@@ -81,7 +81,7 @@ const Objectives = ({ filterTabs, onFilterTabs }) => {
             >
                 {renderContent()}
             </ModelTabs>
-            <PopupModelOptions type='pop-switch-model' typeSwitchModelOptions='objectives' onFilterTabs={onFilterTabs} />
+            <PopupModelOptions type='pop-switch-model' typeSwitchModelOptions='objectives' onFilterTabs={onFilterTabs} mode={visibility.layoutPopupModel} />
         </>
     )
 }
