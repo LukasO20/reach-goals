@@ -27,8 +27,8 @@ import './style.scss'
  */
 const ModalTag = ({ filterTabs, onFilterTabs }) => {
     const { visibleElements } = useVisibility()
-    const { model, setModel, resetManageModel } = useManageModel()
-    const { modal: { loading } } = useTagProvider()
+    const { setModel, resetManageModel } = useManageModel()
+    const { page: { loading } } = useTagProvider()
     const { data: { layout } } = useSwitchLayout()
     const { valuesCheckbox } = useCheckbox()
     const navigate = useNavigate()
@@ -58,7 +58,7 @@ const ModalTag = ({ filterTabs, onFilterTabs }) => {
         ) : null
 
     const isModalForm = ['tag', 'near-modalForm']
-    const isLoadingTag = !!loading && !model.mainModelID
+    const isLoading = !!loading
  
     const buttonCreateClass = cx(
         `create
@@ -98,7 +98,7 @@ const ModalTag = ({ filterTabs, onFilterTabs }) => {
                 {isModalForm.every(e => visibleElements.includes(e)) && (
                     <ModalFormWrapper />
                 )}
-                <ModelTabs type='tag' headLeftChildren={headLeftContent} loading={isLoadingTag} filterTabs={filterTabs} onFilterTabs={onFilterTabs}>
+                <ModelTabs type='tag' headLeftChildren={headLeftContent} loading={isLoading} filterTabs={filterTabs} onFilterTabs={onFilterTabs}>
                     {content}
                 </ModelTabs>
                 {hasSelectedModel && (

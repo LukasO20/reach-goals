@@ -69,8 +69,8 @@ const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, filterTab
                 </div>
             </div>
             <div className='body scrollable'>
-                {loading && <Loading mode='block' />}
-                {children}
+                {loading && (<Loading mode='block' />)}
+                {!loading && children}
             </div>
         </div>
     )
