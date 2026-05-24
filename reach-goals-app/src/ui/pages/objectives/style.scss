@@ -41,3 +41,42 @@
         transform: translate(-50%, -50%);
     }
 }
+
+.objectives-status {
+    display: flex;
+    align-items: stretch;
+    gap: $spacing-gap-sm;
+    height: 2rem;
+    padding: 0rem $spacing-padding-sm;
+
+    .label-status {
+        display: flex;
+        align-items: center;
+        gap: $spacing-gap-mini;
+        font-weight: 500;
+
+        &.progress {
+            color: $color-complementary-s;
+
+            * {
+                color: $color-complementary-s;
+            }
+        }
+
+        &.conclude {
+            color: $color-success;
+
+            * {
+                color: $color-success;
+            }
+        }
+
+        &.cancel {
+            color: $color-cancel;
+
+            * {
+                color: $color-cancel;
+            }
+        }
+    }
+}

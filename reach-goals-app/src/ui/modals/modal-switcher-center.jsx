@@ -10,6 +10,7 @@ import { resetManageModelMap } from '../../utils/mapping/mappingUtilsProvider.js
 
 import { ModalFormWrapper } from './modal-form/modal-form-wrapper.jsx'
 import ModalConfig from './modal-config/index.jsx'
+import Overlay from '../items/elements/overlay'
 
 import { cx } from '../../utils/utils.js'
 
@@ -49,10 +50,13 @@ const ModalSwitcherCenter = () => {
 
     return (
         isVisible && (
-            <div className={modalCenterClass} ref={modalRef}>
-                {isModalForm && (<ModalFormWrapper />)}
-                {isModalConfig && (<ModalConfig />)}
-            </div>
+            <>
+                <Overlay />
+                <div className={modalCenterClass} ref={modalRef}>
+                    {isModalForm && (<ModalFormWrapper />)}
+                    {isModalConfig && (<ModalConfig />)}
+                </div>
+            </>
         )
     )
 }

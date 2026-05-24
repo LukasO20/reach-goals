@@ -1,33 +1,52 @@
-
-
 .search-container {
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 20rem;
+    width: 2.5rem;
     z-index: 2;
+    overflow: hidden;
+    transition: $animation-transition-st;
 
     .search-bar {
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         color: $color-complementary-s;
         background-color: $color-complementary-p-50;
         padding: 0rem 0.35rem;
         border-radius: 1rem;
         height: 2.4rem;
+        overflow: hidden;
+        cursor: pointer;
+        transition: $animation-transition-st;
 
         .search-content {
             border: none;
             background-color: transparent;
             font-weight: 600;
-            margin: 0em 0.35em;
+            margin: 0;
+            padding: 0;
+            width: 0;
             font-size: var(--font-size-st);
             caret-color: $color-complementary-s;
-            flex: 1;
+            transition: $animation-transition-st;
+            opacity: 0;
 
             &:focus {
                 outline: none;
             }
+        }
+
+        &:hover {
+            background-color: $color-complementary-s;
+
+            >.icon-st {
+                color: $color-white;
+            }
+        }
+
+        &:active {
+            background-color: $color-complementary-s-70;
         }
     }
 
@@ -45,6 +64,7 @@
         top: 2.95rem;
         left: 0;
         right: 0;
+        animation: $animation-fade-in;
 
         .item {
             display: flex;
@@ -117,9 +137,14 @@
                 }
             }
 
-            .message {
-                font-weight: 500;
-                color: $color-complementary-s;
+            >.item-info {
+                white-space: nowrap;
+                text-overflow: ellipsis;
+
+                .message {
+                    font-weight: 500;
+                    color: $color-complementary-s;
+                }
             }
 
             &.tag {
@@ -205,6 +230,33 @@
             &.goal,
             &.assignment {
                 background-color: $color-complementary-p-30;
+            }
+        }
+    }
+
+    &.active {
+        overflow: visible;
+        width: 20rem;
+
+        .search-bar {
+            gap: $spacing-gap-mini;
+            cursor: default;
+
+            .search-content {
+                flex: 1;
+                opacity: 1;
+
+                &:focus {
+                    outline: none;
+                }
+            }
+
+            &:hover {
+                background-color: $color-complementary-p-50;
+
+                >.icon-st {
+                    color: inherit;
+                }
             }
         }
     }

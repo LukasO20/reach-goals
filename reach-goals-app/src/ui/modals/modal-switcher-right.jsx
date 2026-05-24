@@ -9,6 +9,7 @@ import { visibilityMap, switchLayoutMap } from '../../utils/mapping/mappingUtils
 
 import { ModalTagWrapper } from './modal-tag/modal-tag-wrapper.jsx'
 import { ModalDetailsWrapper } from './modal-details/modal-details-wrapper.jsx'
+import Overlay from '../items/elements/overlay'
 
 import { cx } from '../../utils/utils.js'
 
@@ -53,10 +54,13 @@ const ModalSwitcherRight = () => {
 
     return (
         isVisible && (
-            <div className={modalRightClass} ref={modalRef}>
-                {isModalTag && (<ModalTagWrapper />)}
-                {isModalDetails && (<ModalDetailsWrapper modelID={model.mainModelID} type={model.typeModel} />)}
-            </div>
+            <>
+                <Overlay />
+                <div className={modalRightClass} ref={modalRef}>
+                    {isModalTag && (<ModalTagWrapper />)}
+                    {isModalDetails && (<ModalDetailsWrapper modelID={model.mainModelID} type={model.typeModel} />)}
+                </div>
+            </>
         )
     )
 }

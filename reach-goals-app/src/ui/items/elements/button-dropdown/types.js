@@ -1,4 +1,10 @@
 /**
+ * @typedef {Object} DropdownVisibilityCountProps
+ * @property {boolean} tagsCard
+ * @property {Array<string>} status
+ */
+
+/**
  * @typedef {object} DropdownOptionProps
  * @property {string} id
  * @property {string} title
@@ -19,6 +25,7 @@
  * @property {string} [title]
  * @property {'button-action' | 'button-toggle'} uiMode
  * @property {boolean} arrow
+ * @property {boolean} [renderTopChildren]
  */
 
 export {}

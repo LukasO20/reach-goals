@@ -34,8 +34,7 @@ const ModalDetailsContent = ({
 
     const hasEndDate = !!end
     const hasDescription = !!description
-    const hasAssignments = !!assignments.length
-    const shouldRenderGoalContent = type === 'goal' && hasAssignments
+    const shouldRenderGoalContent = type === 'goal'
     const shouldRenderAssignmentContent = type === 'assignment'
 
     const handleClickButtonAction = () => navigate(`/${layout.page.pageName}`) // return standard route during handle

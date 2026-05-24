@@ -1,0 +1,8 @@
+.overlay {
+    position: absolute;
+    background-color: $color-complementary-s-30;
+    height: 100dvh;
+    width: 100dvw;
+    animation: $animation-fade-in;
+    transition: $animation-transition-st;
+}

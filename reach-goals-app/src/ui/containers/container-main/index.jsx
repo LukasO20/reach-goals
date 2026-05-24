@@ -13,6 +13,7 @@ import ButtonAction from '../../items/elements/button-action'
 import ButtonDropdown from '../../items/elements/button-dropdown'
 import ButtonCheckbox from '../../items/elements/button-checkbox'
 import PopupModelOptions from '../../items/elements/popup-model-options'
+import ObjectivesStatus from '../../pages/objectives/components/objectives-status.jsx'
 
 import './style.scss'
 
@@ -92,6 +93,9 @@ const ContainerMain = () => {
                                 title='Select all'
                             />
                         )}
+                        {isPageObjectives && (
+                            <ObjectivesStatus />
+                        )}
                     </div>
                     <div>
                         <ButtonDropdown
@@ -109,6 +113,7 @@ const ContainerMain = () => {
                                     icon='eye'
                                     title='visibility'
                                     options={visibilityDropdown}
+                                    renderTopChildren={true}  
                                 />
                             )
                         }

@@ -5,7 +5,7 @@ import { useOutsideClick } from '../../../../hooks/useOutsideClick.js'
 
 import { visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
 import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
-import { debounce } from '../../../../utils/utils.js'
+import { cx, debounce } from '../../../../utils/utils.js'
 
 import SearchBoxResults from './searchbox-results.jsx'
 import ButtonAction from '../button-action'
@@ -35,6 +35,11 @@ const SearchBar = ({ mode = 'service', placeholder = 'search' }) => {
 
     const lastParamRef = useRef('')
     const searchBoxRef = useRef(null)
+    const searchbarClass = cx(
+        `search-container
+        ${isShowSearchBoxResults && 'active'}
+        `
+    )
 
     useOutsideClick(searchBoxRef, () => {
         if (isShowSearchBoxResults) toggleVisibility(visibilityMap('search-bar'))
@@ -49,13 +54,13 @@ const SearchBar = ({ mode = 'service', placeholder = 'search' }) => {
     }, [param, debounceSearch, isShowSearchBoxResults, mode])
 
     return (
-        <div className='search-container' ref={searchBoxRef}>
+        <div className={searchbarClass} ref={searchBoxRef}>
             <label className='search-bar' onClick={handleSearchBarClick}>
                 {iconMap['search']}
                 <input type='text' role='search' 
                     placeholder={placeholder || 'search'} id='search-content-m' 
                     className='search-content' value={param} onChange={(e) => setParam(e.target.value)} />
-                {!!param && (
+                {!!param && isShowSearchBoxResults && (
                     <ButtonAction
                         onClick={handleCleanSearchBar}
                         visibility={visibilityMap('search-bar', { remove: true })}
