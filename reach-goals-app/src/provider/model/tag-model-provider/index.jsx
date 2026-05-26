@@ -64,7 +64,7 @@ export const TagModelProvider = ({ children, filter } = TagModelProviderMap) => 
         mutationFn: (model) =>
             model.id ? tagService.updateTag(model) : tagService.addTag(model),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: queryKeyModal })
+            queryClient.invalidateQueries({ queryKey: queryKeyPage })
             update({ toast: `Tag save with success` })
         },
     })
@@ -72,7 +72,7 @@ export const TagModelProvider = ({ children, filter } = TagModelProviderMap) => 
     const removeMutation = useMutation({
         mutationFn: (id) => tagService.deleteTag(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: queryKeyModal })
+            queryClient.invalidateQueries({ queryKey: queryKeyPage })
             update({ toast: `Tag was deleted` })
         },
     })
