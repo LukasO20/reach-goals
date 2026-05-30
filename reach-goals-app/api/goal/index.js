@@ -18,17 +18,12 @@ const handler = async (req, res) => {
             status: status ?? 'progress',
             start: startDate,
             end: endDate,
-            assignments: {
-                connect: assignments.map(assignment =>
-                ({
-                    id: Number(assignment.id)
-                }))
-            },
-            tags: {
-                create: tags.map(tag => ({
-                    tag: { connect: { id: Number(tag.tagID) } }
-                }))
-            }
+            assignments: assignments?.length
+                ? { connect: assignments.map(assignment => ({ id: Number(assignment.id) })) }
+                : undefined,
+            tags: tags?.length
+                ? { create: tags.map(tag => ({ tag: { connect: { id: Number(tag.tagID) } } })) }
+                : undefined
         }
 
         const formattedData = formatObject(rawObject)
@@ -48,18 +43,18 @@ const handler = async (req, res) => {
         let goal = undefined
 
         try {
-            
+
             if (action === 'goal-get') {
                 goal = await getGoal()
 
-                if (goal) return res.status(200).json(Array.isArray(goal) ? goal : [goal])  
+                if (goal) return res.status(200).json(Array.isArray(goal) ? goal : [goal])
             }
 
             if (action === 'goal-on-assignment') {
                 const { assignmentID } = req.query
                 goal = await getGoalOnAssignment(assignmentID)
 
-                if (goal) return res.status(200).json(goal)    
+                if (goal) return res.status(200).json(goal)
             }
 
             if (action === 'goal-on-tag') {

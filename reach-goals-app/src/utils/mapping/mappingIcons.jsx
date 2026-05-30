@@ -27,6 +27,7 @@ export const iconMap = {
     arrowaltv: <Unicons.UilArrowsVAlt className='icon-st' />,
     arrowdown: <Unicons.UilAngleDown className='icon-st' />,
     arrowright: <Unicons.UilAngleRight className='icon-st' />,
+    arrowleft: <Unicons.UilAngleLeft  className='icon-st' />,
     letter: <Unicons.UilLetterEnglishA className='icon-st' />,
     plus: <Unicons.UilPlus className='icon-st' />,
     close: <Unicons.UilTimes className='icon-st' />,

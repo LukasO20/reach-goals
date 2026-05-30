@@ -56,7 +56,7 @@
  * @property {SelectedModelProps} selectedModel
  * @property {DataModelProps} dataModel
  * @property {Object} filter
- * @property {Object} formModel
+ * @property {Object} activeModel
  */
 
 export {}

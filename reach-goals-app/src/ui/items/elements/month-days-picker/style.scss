@@ -27,11 +27,11 @@ div.calendar {
         gap: $spacing-gap-sm;
 
         .day {
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: $spacing-gap-mini;
-            overflow-x: hidden;
             text-align: center;
             font-weight: 600;
             color: $color-complementary-s;
@@ -39,11 +39,69 @@ div.calendar {
             padding: 0.15rem;
             border-radius: $dimensions-border-radius-sm;
 
-            >.title {
-                display: inline-flex;
-                margin: $spacing-margin-mini;
+            .title {
+                position: relative;
+                display: flex;
+                align-items: center;
                 justify-content: center;
-                width: 2rem;
+                width: 100%;
+
+                >label {
+                    display: inline-flex;
+                    justify-content: center;
+                    margin: $spacing-margin-mini;
+                    width: 2rem;
+                }
+
+                .title-box {
+
+                    .month-form {
+                        display: flex;
+                        flex-direction: column;
+                        gap: $spacing-gap-sm;
+                        padding: $spacing-padding-sm;
+                        border-radius: $dimensions-border-radius-sm;
+                        background-color: $color-white;
+                        box-shadow: $box-shadow-sm;
+                        z-index: 1;
+
+                        >.head {
+                            display: flex;
+                            justify-content: space-between;
+                            gap: $spacing-gap-sm;
+
+                            .button-action {
+                                width: 6rem;
+                                justify-content: center;
+                            }
+                        }
+
+                        >.body {
+                            display: flex;
+                            flex-direction: column;
+                            gap: $spacing-gap-sm;
+                            padding: $spacing-padding-sm;
+
+                            .input-date {
+                                width: 100%;
+                            }
+                        }
+
+                        >.button-action {
+
+                            &.save {
+                                align-self: flex-end;
+                            }
+                        }
+                    }
+
+                    >.button-action {
+                        position: absolute;
+                        right: 0.25rem;
+                        opacity: 0;
+                        transition: $animation-transition-st;
+                    }
+                }
             }
 
             .card-mini {
@@ -89,15 +147,40 @@ div.calendar {
             &.today {
 
                 >.title {
-                    background-color: $color-complementary-s;
-                    color: $color-white;
-                    padding: 0.15rem $spacing-padding-sm;
-                    border-radius: 1rem;
+
+                    >label {
+                        background-color: $color-complementary-s;
+                        color: $color-white;
+                        padding: 0.15rem $spacing-padding-sm;
+                        border-radius: 1rem;
+                    }
                 }
             }
 
             &.approximate {
                 opacity: 0.6;
+            }
+
+            &:hover {
+
+                .title {
+
+                    .title-box {
+
+                        >.button-action {
+                            background-color: $color-complementary-s-15;
+                            opacity: 1;
+
+                            &:hover {
+                                background-color: $color-complementary-s;
+                            }
+
+                            &:active {
+                                background-color: $color-complementary-s-30;
+                            }
+                        }
+                    }
+                }
             }
         }
     }

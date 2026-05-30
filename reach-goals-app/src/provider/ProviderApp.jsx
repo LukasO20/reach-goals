@@ -6,6 +6,7 @@ import { ManageModelProvider } from './model/manage-model-provider'
 import { SwitchLayoutProvider } from './ui/switch-layout-provider'
 import { SearchBarProvider } from './ui/searchbar-provider'
 import { UtilityProvider } from './model/utility-provider'
+import { SwitchMonthsProvider } from './ui/switch-months-provider'
 
 const queryClient = new QueryClient()
 
@@ -17,7 +18,8 @@ const providers = [
     [SearchBarProvider],
     [SwitchLayoutProvider],
     [CheckboxProvider],
-    [UtilityProvider]
+    [UtilityProvider],
+    [SwitchMonthsProvider]
 ]
 
 const Compose = ({ providers, children }) => {

@@ -20,11 +20,9 @@ const handler = async (req, res) => {
             start: startDate,
             end: endDate,
             goalID: goalID ? Number(goalID) : null,
-            tags: {
-                create: tags.map(tag => ({
-                    tag: { connect: { id: Number(tag.tagID) } }
-                }))
-            }
+            tags: tags?.length
+                ? { create: tags.map(tag => ({ tag: { connect: { id: Number(tag.tagID) } } })) }
+                : undefined
         }
 
         const formattedData = formatObject(rawObject)

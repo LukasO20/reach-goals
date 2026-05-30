@@ -7,8 +7,6 @@ import { useButtonDropdown } from '../../../hooks/useButtonDropdown.js'
 
 import { visibilityMap, switchLayoutMap, buildCheckboxMap } from '../../../utils/mapping/mappingUtils.js'
 
-import { monthNames } from '../../../utils/reference.js'
-
 import ButtonAction from '../../items/elements/button-action'
 import ButtonDropdown from '../../items/elements/button-dropdown'
 import ButtonCheckbox from '../../items/elements/button-checkbox'
@@ -16,10 +14,12 @@ import PopupModelOptions from '../../items/elements/popup-model-options'
 import ObjectivesStatus from '../../pages/objectives/components/objectives-status.jsx'
 
 import './style.scss'
+import { useSwitchMonths } from '../../../provider/ui/switch-months-provider/index.jsx'
 
 const ContainerMain = () => {
     const { toggleVisibility } = useVisibility()
     const { data: { layout, visibility }, setSwitchLayout, setUserConfigLayout } = useSwitchLayout()
+    const { monthLabel, nextMonth, previousMonth } = useSwitchMonths()
     const { valuesCheckbox, resetCheckbox } = useCheckbox()
 
     const handleButtonActionClick = () => {
@@ -69,8 +69,9 @@ const ContainerMain = () => {
                     <div>
                         {isPageCalendar && (
                             <div className='month-picker'>
-                                <span className='month-name'>{monthNames[new Date().getMonth()]}</span>
-                                <span className='year-number'>{new Date().getFullYear()}</span>
+                                <ButtonAction classBtn='month-previous small circle' icon='arrowleft' onClick={previousMonth} />
+                                <label>{monthLabel}</label>
+                                <ButtonAction classBtn='month-next small circle' icon='arrowright' onClick={nextMonth} />
                             </div>
                         )}
                         {isPageHome && (

@@ -26,9 +26,12 @@
                     .month-picker {
                         display: flex;
                         align-items: center;
-                        gap: $spacing-gap-mini;
+                        gap: $spacing-gap-sm;
 
-                        >span {
+                        >label {
+                            display: inline-flex;
+                            justify-content: center;
+                            width: $dimensions-w-sm;
                             color: $color-complementary-s;
                             font-weight: 600;
                             font-size: $font-size-m;

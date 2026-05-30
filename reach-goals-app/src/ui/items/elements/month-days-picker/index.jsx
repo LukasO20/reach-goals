@@ -1,11 +1,13 @@
 import { useManageModel } from '../../../../provider/model/manage-model-provider'
 import { useVisibility } from '../../../../provider/ui/visibility-provider'
 import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider'
+import { useSwitchMonths } from '../../../../provider/ui/switch-months-provider'
 
 import { weekNames } from '../../../../utils/reference.js'
 import { switchLayoutMap, visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import CardMini from '../card-mini'
+import MonthsDaysTitle from './components/month-days-title.jsx'
 
 import moment from 'moment'
 
@@ -20,35 +22,7 @@ const MonthDaysPicker = ({ data }) => {
     const { setModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
     const { data: { visibility }, setSwitchLayout } = useSwitchLayout()
-    const year = new Date().getFullYear()
-    const month = new Date().getMonth()
-
-    const getDaysInMonth = (year, month) => {
-        const date = new Date(year, month, 1)
-        const days = []
-
-        //Current month days
-        while (date.getMonth() === month) {
-            days.push(new Date(date))
-            date.setDate(date.getDate() + 1)
-        }
-
-        const firstDayOfMonth = days[0].getDay()
-        let prevDate = new Date(days[0])
-        for (let i = 1; i <= firstDayOfMonth; i++) {
-            prevDate.setDate(prevDate.getDate() - 1)
-            days.unshift(new Date(prevDate))
-        }
-
-        const lastDayOfMonth = days[days.length - 1].getDay()
-        let nextDate = new Date(days[days.length - 1])
-        for (let i = 1; i < 7 - lastDayOfMonth; i++) {
-            nextDate.setDate(nextDate.getDate() + 1)
-            days.push(new Date(nextDate))
-        }
-
-        return days
-    }
+    const { days, activeDate } = useSwitchMonths()
 
     const activityClick = (model, e) => {
         e.stopPropagation()
@@ -59,7 +33,6 @@ const MonthDaysPicker = ({ data }) => {
         toggleVisibility(visibilityMap(['modal-right', model.type]))
     }
 
-    const days = getDaysInMonth(year, month)
     const models = data || { goal: [], assignment: [] }
     const modelsCalendar = Object.entries(models || {}).flatMap(([key, value]) =>
         Array.isArray(value) ?
@@ -93,8 +66,8 @@ const MonthDaysPicker = ({ data }) => {
                 {
                     //Render actual days
                     days.map(day => {
-                        const isToday = new Date().toDateString() === day.toDateString()
-                        const isApproximateDay = new Date().getMonth() !== day.getMonth()
+                        const isToday = (activeDate.toDateString() && new Date().toDateString()) === day.toDateString()
+                        const isApproximateDay = activeDate.getMonth() !== day.getMonth()
                         const todayDate = day.getDate()
                         const modelsOnDay = modelsCalendar.filter(model => {
                             const formatModelDate = moment(model.start).format('DD/MM/YYYY')
@@ -116,7 +89,7 @@ const MonthDaysPicker = ({ data }) => {
 
                         return (
                             <div key={day.toISOString()} className={`day ${isToday ? 'today' : isApproximateDay ? 'approximate' : ''}`}>
-                                <span className='title'>{todayDate}</span>
+                                <MonthsDaysTitle title={todayDate} startDate={day.toISOString()} />
                                 {
                                     assignmentsOnDay.length > 0 && isShowAssignment && (
                                         <CardMini
