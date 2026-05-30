@@ -87,9 +87,15 @@ const MonthDaysPicker = ({ data }) => {
                             clickFunction: clickEvents
                         }
 
+                        const monthsDaysTitlePropsReference = {
+                            title: todayDate,
+                            startDate: day.toISOString(),
+                            data: { goal: goalsOnDay, assignment: assignmentsOnDay }
+                        }
+
                         return (
                             <div key={day.toISOString()} className={`day ${isToday ? 'today' : isApproximateDay ? 'approximate' : ''}`}>
-                                <MonthsDaysTitle title={todayDate} startDate={day.toISOString()} />
+                                <MonthsDaysTitle {...monthsDaysTitlePropsReference} />
                                 {
                                     assignmentsOnDay.length > 0 && isShowAssignment && (
                                         <CardMini

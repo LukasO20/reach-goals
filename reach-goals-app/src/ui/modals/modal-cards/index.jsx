@@ -1,6 +1,3 @@
-import { useRef } from 'react'
-import { useOutsideClick } from '../../../hooks/useOutsideClick.js'
-
 import { iconMap } from '../../../utils/mapping/mappingIcons.jsx'
 
 import { cx } from '../../../utils/utils.js'
@@ -15,20 +12,16 @@ import './style.scss'
 /**
  * @param {Props} props
  */
-const ModalChartCards = ({ data, icon, title, onShowModalChartCards, ...rest }) => {
+const ModalCards = ({ data, icon, title, onShowModalCards, ...rest }) => {
     const dataRender = Object.entries(data).map(([key, itens]) => ({
         type: key,
         data: itens.map((item) => item)
     }))
 
-    const modalRef = useRef(null)
-
     const displayModesProps = {
         type: ['card-mini'],
         actions: []
     }
-
-    useOutsideClick(modalRef, () => onShowModalChartCards(false))
 
     const hasMoreChartCards = dataRender.flatMap((item) => item.data).length >= 7
 
@@ -38,7 +31,7 @@ const ModalChartCards = ({ data, icon, title, onShowModalChartCards, ...rest }) 
     `)
 
     return (
-        <div className='container-chart-cards-modal' ref={modalRef} {...rest}>
+        <div className='container-chart-cards-modal' {...rest}>
             <div className='head'>
                 <span className='title'>
                     {iconMap[icon]}
@@ -46,7 +39,7 @@ const ModalChartCards = ({ data, icon, title, onShowModalChartCards, ...rest }) 
                         {title}
                     </span>
                 </span>
-                <ButtonAction classBtn='circle close' icon='close' onClick={() => onShowModalChartCards(false)} />
+                <ButtonAction classBtn='circle close' icon='close' onClick={() => onShowModalCards(false)} />
             </div>
             <div className={chartCardsModalBodyClass}>
                 {dataRender.map((model) => {
@@ -62,4 +55,4 @@ const ModalChartCards = ({ data, icon, title, onShowModalChartCards, ...rest }) 
     )
 }
 
-export default ModalChartCards
+export default ModalCards

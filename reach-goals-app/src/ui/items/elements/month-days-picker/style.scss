@@ -49,8 +49,21 @@ div.calendar {
                 >label {
                     display: inline-flex;
                     justify-content: center;
-                    margin: $spacing-margin-mini;
+                    padding: 0.15rem $spacing-padding-sm;
+                    border-radius: 1rem;
                     width: 2rem;
+                    cursor: pointer;
+                    transition: $animation-transition-st;
+
+                    &:hover {
+                        background-color: $color-complementary-s-70;
+                        color: $color-white;
+                    }
+
+                    &:active {
+                        background-color: $color-complementary-s-50;
+                        color: $color-white;
+                    }
                 }
 
                 .title-box {
@@ -104,7 +117,7 @@ div.calendar {
                 }
             }
 
-            .card-mini {
+            >.card-mini {
                 width: 85%;
                 overflow: hidden;
                 transition: .3s linear;
@@ -153,6 +166,16 @@ div.calendar {
                         color: $color-white;
                         padding: 0.15rem $spacing-padding-sm;
                         border-radius: 1rem;
+
+                        &:hover {
+                            background-color: $color-complementary-s-70;
+                            color: $color-white;
+                        }
+
+                        &:active {
+                            background-color: $color-complementary-s-50;
+                            color: $color-white;
+                        }
                     }
                 }
             }

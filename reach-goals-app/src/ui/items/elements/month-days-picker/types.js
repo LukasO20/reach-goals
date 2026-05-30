@@ -6,6 +6,7 @@
  * @typedef {React.Dispatch<React.SetStateAction<ModelProps>>} SetModelProps
  */
 
+
 /**
  * @callback SaveGoalProps
  * @param {Object} params
@@ -19,16 +20,32 @@
  */
 
 /**
+ * @typedef {Object} CardsStructure
+ * @property {Array<Object>} goal
+ * @property {Array<Object>} assignment
+ */
+
+/**
+ * @typedef {Object} ModalCardsProps
+ * @property {string} icon
+ * @property {string} title
+ * @property {CardsStructure} data
+ */
+
+/**
  * @typedef {Object} MonthDaysPickerProps
  * @property {Object} data
  * @property {Array} [data.goal]
  * @property {Array} [data.assignment]
  */
 
+
+
 /**
  * @typedef {Object} MonthsDaysTitleProps
  * @property {string} title
  * @property {Date} startDate
+ * @property {CardsStructure} data
  */
 
 /**

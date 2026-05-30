@@ -1,19 +1,19 @@
 /**
- * @typedef {Object} ChartCardsStructure
+ * @typedef {Object} CardsStructure
  * @property {Array} goal
  * @property {Array} assignment
  */
 
 /**
  * @typedef {Object} ChartCardsProps
- * @property {ChartCardsStructure} data
+ * @property {CardsStructure} data
  */
 
 /**
- * @typedef {Object} ModalChartCardsProps
+ * @typedef {Object} ModalCardsProps
  * @property {'progress' | 'check' | 'cancel' | 'tag'} icon
  * @property {string} title
- * @property {ChartCardsStructure} data
+ * @property {CardsStructure} data
  */
 
 /**
@@ -24,7 +24,7 @@
  * @property {number} totalQuantity
  * @property {boolean} [renderBody]
  * @property {boolean} [isModalModelList]
- * @property {React.Dispatch<React.SetStateAction<ModalChartCardsProps>>} [onModalChartCards]
+ * @property {React.Dispatch<React.SetStateAction<ModalCardsProps>>} [onModalChartCards]
  * @property {function(React.RefObject<HTMLElement>):void} [anchorCalculatePosition]
  */
 

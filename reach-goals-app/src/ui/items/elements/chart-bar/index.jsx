@@ -1,8 +1,9 @@
 import { useRef, useState } from 'react'
 import { useAnchorPosition } from '../../../../hooks/useAnchorPosition.js'
+import { useOutsideClick } from '../../../../hooks/useOutsideClick.js'
 
 import ButtonAction from '../button-action/index.jsx'
-import ModalChartCards from '../../../modals/modal-chart-cards/index.jsx'
+import ModalCards from '../../../modals/modal-cards'
 
 import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
 import { calculatePercent, getTransform } from '../../../../utils/utils.js'
@@ -21,12 +22,13 @@ import './style.scss'
 const ChartBar = ({ data, quantity, showLegend }) => {
     /** @type {[ModalChartCardsProps, React.Dispatch<React.SetStateAction<ModalChartCardsProps>>]} */
     const [modalChartCards, setModalChartCards] = useState()
-    const [showModalChartCards, setShowModalChartCards] = useState(false)
+    const [showModalCards, setShowModalCards] = useState(false)
     const { coords, calculatePosition } = useAnchorPosition()
 
     const activityLabel = quantity === 1 ? 'activity' : 'activities'
 
     const containerRef = useRef(null)
+    const modalCardsRef = useRef(null)
 
     const handleCalculatePosition = (elementTarget) => {
         calculatePosition(elementTarget, containerRef.current)
@@ -35,8 +37,12 @@ const ChartBar = ({ data, quantity, showLegend }) => {
     /** @param {ModalChartCardsProps} */
     const hancleOnModalChartCards = ({ icon, title, data }) => {
         setModalChartCards({ icon, title, data })
-        setShowModalChartCards(true)
+        setShowModalCards(true)
     }
+
+    useOutsideClick(modalCardsRef, () => {
+        setShowModalCards(false)
+    })
 
     return (
         <div className='chart-bar' ref={containerRef}>
@@ -89,8 +95,8 @@ const ChartBar = ({ data, quantity, showLegend }) => {
                     })
                 }
             </div>
-            {showModalChartCards && (
-                <ModalChartCards
+            {showModalCards && (
+                <ModalCards
                     style={{
                         position: 'absolute',
                         left: `${coords.x}px`,
@@ -100,10 +106,11 @@ const ChartBar = ({ data, quantity, showLegend }) => {
                     }}
                     data-placement-y={coords.placementY}
                     data-placement-x={coords.placementX}
+                    ref={modalCardsRef}
                     icon={modalChartCards.icon}
                     title={modalChartCards.title}
                     data={modalChartCards.data}
-                    onShowModalChartCards={setShowModalChartCards}
+                    onShowModalCards={setShowModalCards}
                 />
             )}
         </div>

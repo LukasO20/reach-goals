@@ -10,6 +10,7 @@
     padding: $spacing-padding-md;
     border-radius: $dimensions-border-radius-sm;
     overflow: hidden;
+    z-index: 1;
 
     >.head {
         display: flex;

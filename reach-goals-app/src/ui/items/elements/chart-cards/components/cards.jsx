@@ -3,7 +3,7 @@ import { useRef } from 'react'
 import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 import { calculatePercent } from '../../../../../utils/utils.js'
 
-import ButtonAction from '../../button-action/index.jsx'
+import ButtonAction from '../../button-action'
 
 /** @typedef {import('../types.js').CardProps} Props */
 

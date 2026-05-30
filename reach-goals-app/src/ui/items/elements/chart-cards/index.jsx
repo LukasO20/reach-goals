@@ -1,15 +1,16 @@
 import { useRef, useState } from 'react'
 import { useTransformModel } from '../../../../hooks/useTransformModel.js'
 import { useAnchorPosition } from '../../../../hooks/useAnchorPosition.js'
+import { useOutsideClick } from '../../../../hooks/useOutsideClick.js'
 
 import { getTransform } from '../../../../utils/utils.js'
 
 import Cards from './components/cards.jsx'
-import ModalChartCards from '../../../modals/modal-chart-cards/index.jsx'
+import ModalCards from '../../../modals/modal-cards'
 
 import './style.scss'
 
-/** @typedef {import('./types.js').ModalChartCardsProps} ModalChartCardsProps */
+/** @typedef {import('./types.js').ModalCardsProps} ModalCardsProps */
 
 /** @typedef {import('./types.js').ChartCardsProps} ChartCardsProps */
 
@@ -17,15 +18,15 @@ import './style.scss'
  * @param {ChartCardsProps} props
  */
 const ChartCards = ({ data }) => {
-    /** @type {[ModalChartCardsProps, React.Dispatch<React.SetStateAction<ModalChartCardsProps>>]} */
-    const [modalChartCards, setModalChartCards] = useState()
-    const [showModalChartCards, setShowModalChartCards] = useState(false)
+    /** @type {[ModalCardsProps, React.Dispatch<React.SetStateAction<ModalCardsProps>>]} */
+    const [modalCards, setModalCards] = useState()
+    const [showModalCards, setShowModalCards] = useState(false)
     const { coords, calculatePosition } = useAnchorPosition()
 
-    /** @param {ModalChartCardsProps} */
-    const hancleOnModalChartCards = ({ icon, title, data }) => {
-        setModalChartCards({ icon, title, data })
-        setShowModalChartCards(true)
+    /** @param {ModalCardsProps} */
+    const handleOnModalCards = ({ icon, title, data }) => {
+        setModalCards({ icon, title, data })
+        setShowModalCards(true)
     }
 
     const chartProgress = useTransformModel({ source: data, byStatus: 'progress' })
@@ -41,11 +42,16 @@ const ChartCards = ({ data }) => {
     const chartTagsQuantity = chartTags.goal?.length + chartTags.assignment?.length
 
     const containerRef = useRef(null)
+    const modalCardsRef = useRef(null)
 
     /** * @param {React.RefObject<HTMLElement>} elementRef */
     const handleCalculatePosition = (elementRef) => {
         calculatePosition(elementRef.current, containerRef.current)
     }
+
+    useOutsideClick(modalCardsRef, () => {
+        setShowModalCards(false)
+    })
 
     return (
         <div className='chart-cards' ref={containerRef}>
@@ -55,7 +61,7 @@ const ChartCards = ({ data }) => {
                 quantity={chartProgressQuantity}
                 totalQuantity={totalQuantity}
                 renderBody={true}
-                onModalChartCards={() => hancleOnModalChartCards({ icon: 'progress', title: 'Progress', data: chartProgress })}
+                onModalChartCards={() => handleOnModalCards({ icon: 'progress', title: 'Progress', data: chartProgress })}
                 anchorCalculatePosition={handleCalculatePosition}
             />
             <Cards
@@ -64,7 +70,7 @@ const ChartCards = ({ data }) => {
                 quantity={chartConcludeQuantity}
                 totalQuantity={totalQuantity}
                 renderBody={true}
-                onModalChartCards={() => hancleOnModalChartCards({ icon: 'check', title: 'Conclude', data: chartConclude })}
+                onModalChartCards={() => handleOnModalCards({ icon: 'check', title: 'Conclude', data: chartConclude })}
                 anchorCalculatePosition={handleCalculatePosition}
             />
             <Cards
@@ -73,7 +79,7 @@ const ChartCards = ({ data }) => {
                 quantity={chartCancelQuantity}
                 totalQuantity={totalQuantity}
                 renderBody={true}
-                onModalChartCards={() => hancleOnModalChartCards({ icon: 'cancel', title: 'Canceled', data: chartCancel })}
+                onModalChartCards={() => handleOnModalCards({ icon: 'cancel', title: 'Canceled', data: chartCancel })}
                 anchorCalculatePosition={handleCalculatePosition}
             />
             <Cards
@@ -82,11 +88,11 @@ const ChartCards = ({ data }) => {
                 quantity={chartTagsQuantity}
                 totalQuantity={totalQuantity}
                 renderBody={true}
-                onModalChartCards={() => hancleOnModalChartCards({ icon: 'tag', title: 'With tags', data: chartTags })}
+                onModalChartCards={() => handleOnModalCards({ icon: 'tag', title: 'With tags', data: chartTags })}
                 anchorCalculatePosition={handleCalculatePosition}
             />
-            {showModalChartCards && (
-                <ModalChartCards
+            {showModalCards && (
+                <ModalCards
                     style={{
                         position: 'absolute',
                         left: `${coords.x}px`,
@@ -96,10 +102,11 @@ const ChartCards = ({ data }) => {
                     }}
                     data-placement-y={coords.placementY}
                     data-placement-x={coords.placementX}
-                    icon={modalChartCards.icon}
-                    title={modalChartCards.title}
-                    data={modalChartCards.data}
-                    onShowModalChartCards={setShowModalChartCards}
+                    ref={modalCardsRef}
+                    icon={modalCards.icon}
+                    title={modalCards.title}
+                    data={modalCards.data}
+                    onShowModalCards={setShowModalCards}
                 />
             )}
         </div>
