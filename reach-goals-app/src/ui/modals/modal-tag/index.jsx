@@ -6,7 +6,7 @@ import { useSwitchLayout } from '../../../provider/ui/switch-layout-provider'
 import { useTagProvider } from '../../../provider/model/tag-model-provider'
 import { useCheckbox } from '../../../provider/ui/checkbox-provider'
 
-import { visibilityMap, switchLayoutMap, buildCheckboxMap } from '../../../utils/mapping/mappingUtils.js'
+import { visibilityMap, buildCheckboxMap } from '../../../utils/mapping/mappingUtils.js'
 import { resetManageModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
 
 import { ModalFormWrapper } from '../modal-form/modal-form-wrapper'
@@ -84,13 +84,6 @@ const ModalTag = ({ filterTabs, onFilterTabs }) => {
                         visibility={visibilityMap('near-modalForm', { add: true })}
                         icon='plus'
                         title='create'
-                    />
-                    <ButtonAction
-                        classBtn='circle max-width config'
-                        icon='config'
-                        onClick={(e) => handleClickButtonAction(e)}
-                        visibility={visibilityMap(['modal-center', 'config'])}
-                        switchLayout={switchLayoutMap({ area: 'modal', layout: { modalName: 'modal-center', layoutName: 'config' } })}
                     />
                 </div>
             </div>

@@ -9,7 +9,6 @@ import { visibilityMap } from '../../utils/mapping/mappingUtils.js'
 import { resetManageModelMap } from '../../utils/mapping/mappingUtilsProvider.js'
 
 import { ModalFormWrapper } from './modal-form/modal-form-wrapper.jsx'
-import ModalConfig from './modal-config/index.jsx'
 import Overlay from '../items/elements/overlay'
 
 import { cx } from '../../utils/utils.js'
@@ -36,7 +35,6 @@ const ModalSwitcherCenter = () => {
 
     const isVisible = !!typeModalLayout && !!typeVisibility && showModalCenter === 'show'
     const isModalForm = typeModalLayout === 'form'
-    const isModalConfig = typeModalLayout === 'config'
 
     useOutsideClick(modalRef, () => {
         const allowedModalLayouts = ['modal-center', 'goal', 'assigment']
@@ -54,7 +52,6 @@ const ModalSwitcherCenter = () => {
                 <Overlay />
                 <div className={modalCenterClass} ref={modalRef}>
                     {isModalForm && (<ModalFormWrapper />)}
-                    {isModalConfig && (<ModalConfig />)}
                 </div>
             </>
         )

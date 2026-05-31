@@ -1,20 +1,17 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 
 import { useCheckbox } from '../../provider/ui/checkbox-provider'
-import { useVisibility } from '../../provider/ui/visibility-provider'
 import { useSwitchLayout } from '../../provider/ui/switch-layout-provider'
 
-import { visibilityMap, switchLayoutMap } from '../../utils/mapping/mappingUtils.js'
+import { switchLayoutMap } from '../../utils/mapping/mappingUtils.js'
 
 import { cx } from '../../utils/utils.js'
 
-import ButtonAction from '../items/elements/button-action' 
 import ButtonLink from '../items/elements/button-link' 
 
 import './style.scss'
 
 const Navigate = () => {
-    const { visibleElements } = useVisibility()
     const { data: { layout } } = useSwitchLayout()
     const { resetCheckbox } = useCheckbox()
     const navigate = useNavigate()
@@ -56,13 +53,6 @@ const Navigate = () => {
         `
     )
 
-    const buttonLinkConfigClass = cx(
-        `circle
-        config
-        ${visibleElements.includes('config') && 'active'}
-        `
-    )
-
     return (
         <div className='container-navigate aside-content' onClick={(e) => handleClickNavigate(e)}>
             <div className='nav'>
@@ -82,11 +72,6 @@ const Navigate = () => {
                     <ButtonLink link='/objectives' classBtn={buttonLinkObjectivesClass} icon='objectives'
                         switchLayout={switchLayoutMap({ area: 'page', layout: { pageName: 'objectives', layoutName: 'all' } })}
                         onClick={() => handleButtonLinkClick('objectives')}
-                    />
-                </div>
-                <div className='item-nav'>
-                    <ButtonAction visibility={visibilityMap(['modal-center', 'config'])} classBtn={buttonLinkConfigClass} icon='config'
-                        switchLayout={switchLayoutMap({ area: 'modal', layout: { modalName: 'modal-center', layoutName: 'config' } })}
                     />
                 </div>
             </div>
