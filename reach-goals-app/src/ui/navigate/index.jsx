@@ -7,7 +7,8 @@ import { switchLayoutMap } from '../../utils/mapping/mappingUtils.js'
 
 import { cx } from '../../utils/utils.js'
 
-import ButtonLink from '../items/elements/button-link' 
+import ButtonLink from '../items/elements/button-link'
+import Tooltip from '../items/elements/tooltip'
 
 import './style.scss'
 
@@ -53,26 +54,34 @@ const Navigate = () => {
         `
     )
 
+    const tooltipPositions = { left: '100%', bottom: '0', transform: 'translateX(8.5%)' }
+
     return (
         <div className='container-navigate aside-content' onClick={(e) => handleClickNavigate(e)}>
             <div className='nav'>
                 <div className='item-nav'>
-                    <ButtonLink link={'/home'} classBtn={buttonLinkHomeClass} img='/logo.png' alt='Home button'
-                        switchLayout={switchLayoutMap({ area: 'page', layout: { pageName: 'home', layoutName: 'column' } })}
-                        onClick={() => handleButtonLinkClick('home')}
-                    />
+                    <Tooltip title='Home' positions={tooltipPositions}>
+                        <ButtonLink link={'/home'} classBtn={buttonLinkHomeClass} img='/logo.png' alt='Home button'
+                            switchLayout={switchLayoutMap({ area: 'page', layout: { pageName: 'home', layoutName: 'column' } })}
+                            onClick={() => handleButtonLinkClick('home')}
+                        />
+                    </Tooltip>
                 </div>
                 <div className='item-nav'>
-                    <ButtonLink link='/calendar' classBtn={buttonLinkCalendarClass} icon='calendar'
-                        switchLayout={switchLayoutMap({ area: 'page', layout: { pageName: 'calendar', layoutName: 'all' } })}
-                        onClick={() => handleButtonLinkClick('calendar')}
-                    />
+                    <Tooltip title='Calendar' positions={tooltipPositions}>
+                        <ButtonLink link='/calendar' classBtn={buttonLinkCalendarClass} icon='calendar'
+                            switchLayout={switchLayoutMap({ area: 'page', layout: { pageName: 'calendar', layoutName: 'all' } })}
+                            onClick={() => handleButtonLinkClick('calendar')}
+                        />
+                    </Tooltip>
                 </div>
                 <div className='item-nav'>
-                    <ButtonLink link='/objectives' classBtn={buttonLinkObjectivesClass} icon='objectives'
-                        switchLayout={switchLayoutMap({ area: 'page', layout: { pageName: 'objectives', layoutName: 'all' } })}
-                        onClick={() => handleButtonLinkClick('objectives')}
-                    />
+                    <Tooltip title='Objectives' positions={tooltipPositions}>
+                        <ButtonLink link='/objectives' classBtn={buttonLinkObjectivesClass} icon='objectives'
+                            switchLayout={switchLayoutMap({ area: 'page', layout: { pageName: 'objectives', layoutName: 'all' } })}
+                            onClick={() => handleButtonLinkClick('objectives')}
+                        />
+                    </Tooltip>
                 </div>
             </div>
         </div>

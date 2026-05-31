@@ -1,0 +1,18 @@
+.tooltip {
+    position: relative;
+    display: inline-flex;
+
+    .tooltip-content {
+        position: absolute;
+        animation: $animation-fade-in;
+        white-space: nowrap;
+        padding: $spacing-padding-mini $spacing-padding-md;
+        border-radius: $dimensions-border-radius-sm;
+        font-size: $font-size-mini;
+        pointer-events: none;
+        background-color: $color-black-70;
+        color: $color-white;
+        font-weight: 500;
+        z-index: 2;
+    }
+}
