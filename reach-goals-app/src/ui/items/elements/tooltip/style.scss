@@ -4,13 +4,13 @@
 
     .tooltip-content {
         position: absolute;
-        animation: $animation-fade-in;
         white-space: nowrap;
         padding: $spacing-padding-mini $spacing-padding-md;
         border-radius: $dimensions-border-radius-sm;
         font-size: $font-size-mini;
         pointer-events: none;
         background-color: $color-black-70;
+        animation: $animation-fade-in 0.1s linear forwards;
         color: $color-white;
         font-weight: 500;
         z-index: 2;

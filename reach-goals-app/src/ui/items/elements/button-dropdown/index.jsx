@@ -12,6 +12,7 @@ import ButtonAction from '../button-action'
 import DropdownVisibilityCount from './components/dropdown-visibility-count.jsx'
 
 import './style.scss'
+import Tooltip from '../tooltip/index.jsx'
 
 /** @typedef {import('./types.js').ButtonDropdownProps} Props */
 
@@ -26,6 +27,7 @@ const ButtonDropdown = ({
     classBtn,
     classBtnAction,
     title,
+    tooltip,
     uiMode,
     renderTopChildren
 }) => {
@@ -46,12 +48,14 @@ const ButtonDropdown = ({
             {renderTopChildren && (
                 <DropdownVisibilityCount tagsCard={switchLayoutVisibility.tagsCard} status={switchLayoutVisibility.status} />
             )}
-            <ButtonAction
-                classBtn={`${buttonActionClass} ${classBtnAction ?? 'plan max-width'}`}
-                visibility={visibilityMap(visibility, visibilityOperator)}
-                title={title}
-                icon={icon}
-            />
+            <Tooltip title={tooltip}>
+                <ButtonAction
+                    classBtn={`${buttonActionClass} ${classBtnAction ?? 'plan max-width'}`}
+                    visibility={visibilityMap(visibility, visibilityOperator)}
+                    title={title}
+                    icon={icon}
+                />
+            </Tooltip>
             {isShowDropdown && (<Dropdown options={options} uiMode={uiMode} />)}
         </div>
     )

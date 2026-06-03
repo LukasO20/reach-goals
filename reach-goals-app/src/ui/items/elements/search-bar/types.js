@@ -1,6 +1,7 @@
 /**
  * @typedef {Object} SearchProps
  * @property {'service' | 'ui'} [mode]
+ * @property {string} [tooltip]
  * @property {string} [placeholder]
  */
 

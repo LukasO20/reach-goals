@@ -6,9 +6,10 @@ import { visibilityMap, switchLayoutMap } from '../../../utils/mapping/mappingUt
 
 import { cx } from '../../../utils/utils.js'
 
-import ButtonAction from '../../items/elements/button-action/index.jsx'
-import ButtonDropdown from '../../items/elements/button-dropdown/index.jsx'
-import SearchBar from '../../items/elements/search-bar/index.jsx'
+import ButtonAction from '../../items/elements/button-action'
+import ButtonDropdown from '../../items/elements/button-dropdown'
+import SearchBar from '../../items/elements/search-bar'
+import Tooltip from '../../items/elements/tooltip'
 
 import './style.scss'
 
@@ -34,18 +35,22 @@ const ContainerHeader = () => {
             <h1>{title.header}</h1>
             <div className='nav'>
                 <div className='item-nav'>
-                    <SearchBar mode='service' placeholder='search an activity' />
+                    <SearchBar mode='service' placeholder='search an activity' tooltip='Search activities' />
                 </div>
                 <div className='item-nav'>
-                    <ButtonAction 
-                        onClick={linkTagClick} visibility={visibilityMap(['modal-right', 'tag'])}
-                        switchLayout={switchLayoutMap({ area: 'modal', layout: { modalName: 'modal-right', layoutName: 'tag' } })}
-                        classBtn='circle tag' icon='tag'
-                    />
+                    <Tooltip title='Tags panel'>
+                        <ButtonAction
+                            onClick={linkTagClick} visibility={visibilityMap(['modal-right', 'tag'])}
+                            switchLayout={switchLayoutMap({ area: 'modal', layout: { modalName: 'modal-right', layoutName: 'tag' } })}
+                            classBtn='circle tag' icon='tag'
+                        />
+                    </Tooltip>
                 </div>
                 <div className='item-nav'>
-                    <ButtonDropdown visibility={visibilityMap('btn-themes')} icon='themes'
-                        classBtn={buttonDropdownClass} classBtnAction='circle' />
+                    <Tooltip title='Themes'>
+                        <ButtonDropdown visibility={visibilityMap('btn-themes')} icon='themes'
+                            classBtn={buttonDropdownClass} classBtnAction='circle' />
+                    </Tooltip>
                 </div>
             </div>
         </div>

@@ -10,6 +10,7 @@ import { visibilityMap } from '../../../../../utils/mapping/mappingUtils.js'
 import { getTransform } from '../../../../../utils/utils.js'
 
 import ButtonAction from '../../button-action'
+import Tooltip from '../../tooltip'
 import MonthDaysForm from './month-days-form.jsx'
 import ModalCards from '../../../../modals/modal-cards'
 
@@ -83,7 +84,7 @@ const MonthsDaysTitle = ({ title, startDate, data }) => {
 
     return (
         <div className='title' ref={containerRef}>
-            <label onClick={() => handleLabelClick({ icon: 'objectives', title: 'Activities', data }) } ref={labelRef}>
+            <label onClick={() => handleLabelClick({ icon: 'objectives', title: 'Activities', data })} ref={labelRef}>
                 {title}
             </label>
             <div className='title-box'>
@@ -125,19 +126,21 @@ const MonthsDaysTitle = ({ title, startDate, data }) => {
                         onShowModalCards={handleClickButtonModalCards}
                     />
                 )}
-                <ButtonAction
-                    classBtn='add-activity small circle'
-                    icon='plus'
-                    innerRef={buttonRef}
-                    onClick={() => {
-                        setModel((prev) => ({
-                            ...prev,
-                            typeModel: 'goal',
-                            activeModel: { name: null, start: startDate }
-                        }));
-                        handleButtonActionClick()
-                    }}
-                />
+                <Tooltip title='Add Activity'>
+                    <ButtonAction
+                        classBtn='add-activity small circle'
+                        icon='plus'
+                        innerRef={buttonRef}
+                        onClick={() => {
+                            setModel((prev) => ({
+                                ...prev,
+                                typeModel: 'goal',
+                                activeModel: { name: null, start: startDate }
+                            }));
+                            handleButtonActionClick()
+                        }}
+                    />
+                </Tooltip>
             </div>
         </div>
     )

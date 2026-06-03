@@ -6,7 +6,8 @@ import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
 
 import ButtonAction from '../button-action'
 import ButtonCheckbox from '../button-checkbox'
-import TagsPopover from '../tags-popover/index.jsx'
+import TagsPopover from '../tags-popover'
+import Tooltip from '../tooltip'
 
 import { cx } from '../../../../utils/utils.js'
 
@@ -67,6 +68,8 @@ const Card = ({
                 `
             )
 
+            const tooltipPositions = { left: '50%', top: 'calc(100% + .5rem)', transform: 'translateX(-75%)' }
+
             const renderEndDate = () => {
                 return (
                     <label className='info date'>
@@ -89,10 +92,10 @@ const Card = ({
                 >
                     <div className='head'>
                         <div className='side-left'>
-                            <ButtonCheckbox 
-                                classBtn='checkbox-card' 
+                            <ButtonCheckbox
+                                classBtn='checkbox-card'
                                 checkboxID={`checkbox-${itemID}`}
-                                checkbox={buildCheckboxMap({ checkboxID: `checkbox-${itemID}`, scope: 'page' })} 
+                                checkbox={buildCheckboxMap({ checkboxID: `checkbox-${itemID}`, scope: 'page' })}
                             />
                             <label>
                                 {iconMap[type]}
@@ -111,25 +114,29 @@ const Card = ({
                             <div className='description'>{item.description}</div>
                             <div className='side-right'>
                                 {isDisplayActionEdit && (
-                                    <ButtonAction
-                                        onClick={() => clickFunction.edit(itemID)}
-                                        visibility={visibilityMap(['modal-center', type])}
-                                        switchLayout={switchLayoutMap({
-                                            area: 'modal',
-                                            layout: { modalName: 'modal-center', layoutName: 'form' }
-                                        })}
-                                        classBtn={`edit-${type} circle small`}
-                                        icon='edit'
-                                    />
+                                    <Tooltip title={`Edit ${type}`} positions={tooltipPositions}>
+                                        <ButtonAction
+                                            onClick={() => clickFunction.edit(itemID)}
+                                            visibility={visibilityMap(['modal-center', type])}
+                                            switchLayout={switchLayoutMap({
+                                                area: 'modal',
+                                                layout: { modalName: 'modal-center', layoutName: 'form' }
+                                            })}
+                                            classBtn={`edit-${type} circle small`}
+                                            icon='edit'
+                                        />
+                                    </Tooltip>
                                 )}
                                 {isDisplayActionDelete && (
-                                    <ButtonAction
-                                        pendingState={isPending}
-                                        onClick={() => clickFunction.delete(itemID)}
-                                        visibility={visibilityMap(null)}
-                                        classBtn={`remove-${type} circle small`}
-                                        icon='remove'
-                                    />
+                                    <Tooltip title={`Delete ${type}`} positions={tooltipPositions}>
+                                        <ButtonAction
+                                            pendingState={isPending}
+                                            onClick={() => clickFunction.delete(itemID)}
+                                            visibility={visibilityMap(null)}
+                                            classBtn={`remove-${type} circle small`}
+                                            icon='remove'
+                                        />
+                                    </Tooltip>
                                 )}
                                 {validIconStatus && (
                                     <span className={`status ${item.status}`}>{iconMap[iconStatus]}</span>

@@ -108,11 +108,12 @@ div.calendar {
                         }
                     }
 
-                    >.button-action {
+                    .tooltip {
                         position: absolute;
                         right: 0.25rem;
                         opacity: 0;
                         transition: $animation-transition-st;
+
                     }
                 }
             }
@@ -190,16 +191,19 @@ div.calendar {
 
                     .title-box {
 
-                        >.button-action {
-                            background-color: $color-complementary-s-15;
+                        .tooltip {
                             opacity: 1;
 
-                            &:hover {
-                                background-color: $color-complementary-s;
-                            }
+                            .button-action {
+                                background-color: $color-complementary-s-15;
 
-                            &:active {
-                                background-color: $color-complementary-s-30;
+                                &:hover {
+                                    background-color: $color-complementary-s;
+                                }
+
+                                &:active {
+                                    background-color: $color-complementary-s-30;
+                                }
                             }
                         }
                     }

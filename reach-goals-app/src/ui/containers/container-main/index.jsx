@@ -4,6 +4,7 @@ import { useVisibility } from '../../../provider/ui/visibility-provider'
 import { useSwitchLayout } from '../../../provider/ui/switch-layout-provider'
 import { useCheckbox } from '../../../provider/ui/checkbox-provider'
 import { useButtonDropdown } from '../../../hooks/useButtonDropdown.js'
+import { useSwitchMonths } from '../../../provider/ui/switch-months-provider'
 
 import { visibilityMap, switchLayoutMap, buildCheckboxMap } from '../../../utils/mapping/mappingUtils.js'
 
@@ -12,9 +13,9 @@ import ButtonDropdown from '../../items/elements/button-dropdown'
 import ButtonCheckbox from '../../items/elements/button-checkbox'
 import PopupModelOptions from '../../items/elements/popup-model-options'
 import ObjectivesStatus from '../../pages/objectives/components/objectives-status.jsx'
+import Tooltip from '../../items/elements/tooltip'
 
 import './style.scss'
-import { useSwitchMonths } from '../../../provider/ui/switch-months-provider/index.jsx'
 
 const ContainerMain = () => {
     const { toggleVisibility } = useVisibility()
@@ -69,26 +70,34 @@ const ContainerMain = () => {
                     <div>
                         {isPageCalendar && (
                             <div className='month-picker'>
-                                <ButtonAction classBtn='month-previous small circle' icon='arrowleft' onClick={previousMonth} />
+                                <Tooltip title='Previous Month'>
+                                    <ButtonAction classBtn='month-previous small circle' icon='arrowleft' onClick={previousMonth} />
+                                </Tooltip>
                                 <label>{monthLabel}</label>
-                                <ButtonAction classBtn='month-next small circle' icon='arrowright' onClick={nextMonth} />
+                                <Tooltip title='Next Month'>
+                                    <ButtonAction classBtn='month-next small circle' icon='arrowright' onClick={nextMonth} />
+                                </Tooltip>
                             </div>
                         )}
                         {isPageHome && (
                             <>
-                                <ButtonAction classBtn={`plan-round max-width goal ${isSwitchColumn ? 'active' : ''}`} icon='column'
-                                    switchLayout={switchLayoutMap({ area: 'page', layout: { pageName: layout.page.pageName, layoutName: 'column' } })}
-                                    onClick={handleButtonActionClick}
-                                />
-                                <ButtonAction classBtn={`plan-round max-width chart ${isSwichChart ? 'active' : ''}`} icon='chartbar'
-                                    switchLayout={switchLayoutMap({ area: 'page', layout: { pageName: layout.page.pageName, layoutName: 'chart' } })}
-                                    onClick={handleButtonActionClick}
-                                />
+                                <Tooltip title='Column Layout'>
+                                    <ButtonAction classBtn={`plan-round max-width goal ${isSwitchColumn ? 'active' : ''}`} icon='column'
+                                        switchLayout={switchLayoutMap({ area: 'page', layout: { pageName: layout.page.pageName, layoutName: 'column' } })}
+                                        onClick={handleButtonActionClick}
+                                    />
+                                </Tooltip>
+                                <Tooltip title='Chart Layout'>
+                                    <ButtonAction classBtn={`plan-round max-width chart ${isSwichChart ? 'active' : ''}`} icon='chartbar'
+                                        switchLayout={switchLayoutMap({ area: 'page', layout: { pageName: layout.page.pageName, layoutName: 'chart' } })}
+                                        onClick={handleButtonActionClick}
+                                    />
+                                </Tooltip>
                             </>
                         )}
                         {!isPageCalendar && hasSelectedModel && (
-                            <ButtonCheckbox 
-                                classBtn='checkbox-main' 
+                            <ButtonCheckbox
+                                classBtn='checkbox-main'
                                 checkboxID={`checkbox-${layout.page.layoutName}`}
                                 checkbox={buildCheckboxMap({ checkboxIDMain: `checkbox-${layout.page.layoutName}`, scope: 'page' })}
                                 title='Select all'
@@ -114,7 +123,7 @@ const ContainerMain = () => {
                                     icon='eye'
                                     title='visibility'
                                     options={visibilityDropdown}
-                                    renderTopChildren={true}  
+                                    renderTopChildren={true}
                                 />
                             )
                         }
@@ -124,6 +133,7 @@ const ContainerMain = () => {
                                 classBtn='more'
                                 icon='ellipsisv'
                                 options={moreDropdown}
+                                tooltip='More options'
                             />
                         )}
                     </div>

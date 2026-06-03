@@ -9,6 +9,7 @@ import { cx, debounce } from '../../../../utils/utils.js'
 
 import SearchBoxResults from './searchbox-results.jsx'
 import ButtonAction from '../button-action'
+import Tooltip from '../tooltip'
 
 import './style.scss'
 
@@ -17,7 +18,7 @@ import './style.scss'
 /**
  * @param {Props} props
  */
-const SearchBar = ({ mode = 'service', placeholder = 'search' }) => {
+const SearchBar = ({ mode = 'service', placeholder = 'search', tooltip = 'Search' }) => {
     const [param, setParam] = useState('')
     const { visibleElements, toggleVisibility } = useVisibility()
     const { data, search, reset, isSearching, status } = useSearchBarProvider()
@@ -56,17 +57,21 @@ const SearchBar = ({ mode = 'service', placeholder = 'search' }) => {
     return (
         <div className={searchbarClass} ref={searchBoxRef}>
             <label className='search-bar' onClick={handleSearchBarClick}>
-                {iconMap['search']}
-                <input type='text' role='search' 
-                    placeholder={placeholder || 'search'} id='search-content-m' 
+                <Tooltip title={tooltip}>
+                    {iconMap['search']}
+                </Tooltip>
+                <input type='text' role='search'
+                    placeholder={placeholder || 'search'} id='search-content-m'
                     className='search-content' value={param} onChange={(e) => setParam(e.target.value)} />
                 {!!param && isShowSearchBoxResults && (
-                    <ButtonAction
-                        onClick={handleCleanSearchBar}
-                        visibility={visibilityMap('search-bar', { remove: true })}
-                        classBtn='clean-search circle medium'
-                        icon='cancel'
-                    />
+                    <Tooltip title='Clear search'>
+                        <ButtonAction
+                            onClick={handleCleanSearchBar}
+                            visibility={visibilityMap('search-bar', { remove: true })}
+                            classBtn='clean-search circle medium'
+                            icon='cancel'
+                        />
+                    </Tooltip>
                 )}
             </label>
             {isShowSearchBoxResults && (<SearchBoxResults data={data} loading={isSearching} status={status} />)}

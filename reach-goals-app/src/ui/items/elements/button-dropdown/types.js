@@ -23,6 +23,7 @@
  * @property {string} classBtn
  * @property {string} [classBtnAction]
  * @property {string} [title]
+ * @property {string} [tooltip]
  * @property {'button-action' | 'button-toggle'} uiMode
  * @property {boolean} arrow
  * @property {boolean} [renderTopChildren]

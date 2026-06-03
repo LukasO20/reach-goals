@@ -4,6 +4,7 @@ import ModelOptions from './components/model-options.jsx'
 import ChartOptions from './components/chart-options.jsx'
 import SwitchModelOptions from './components/switch-model-options.jsx'
 import ButtonAction from '../button-action'
+import Tooltip from '../tooltip'
 
 import { cx } from '../../../../utils/utils.js'
 
@@ -20,21 +21,26 @@ const PopupModelOptions = ({ type, mode, typeModelOptions, typeSwitchModelOption
     /** @param {import('../../../../provider/ui/switch-layout-provider/types.js').SetUserConfigLayoutParams} target */
     const handleButtonActionClick = (target) => setUserConfigLayout(target)
 
+    const tooltipPositions = { left: '50%', top: 'calc(-100% - 0.5rem)', transform: 'translateX(-50%)' }
+
     const containetPopupClass = cx(
         `container-popup
         ${type}
         ${mode}
         `
     )
-    const buttonAction =
-        <ButtonAction
-            classBtn='popup-minimize circle small'
-            icon='arrowdown'
-            onClick={() => handleButtonActionClick({
-                type: 'visibility',
-                data: { layoutPopupModel: mode === 'minimize' ? null : 'minimize' }
-            })}
-        />
+    const buttonAction = (
+        <Tooltip title={mode === 'minimize' ? 'Expand' : 'Minimize'} positions={tooltipPositions}>
+            <ButtonAction
+                classBtn='popup-minimize circle small'
+                icon='arrowdown'
+                onClick={() => handleButtonActionClick({
+                    type: 'visibility',
+                    data: { layoutPopupModel: mode === 'minimize' ? null : 'minimize' }
+                })}
+            />
+        </Tooltip>
+    )
     const isValidType = !!type && !mode
     const shouldRenderButtonAction = type !== 'pop-model'
 

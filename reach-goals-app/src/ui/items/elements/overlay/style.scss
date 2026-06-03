@@ -3,6 +3,6 @@
     background-color: $color-complementary-s-30;
     height: 100dvh;
     width: 100dvw;
-    animation: $animation-fade-in;
+    animation: $animation-fade-in 0.2s linear forwards;
     transition: $animation-transition-st;
 }

@@ -6,7 +6,8 @@ import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
 
 import ButtonAction from '../button-action'
 import ButtonCheckbox from '../button-checkbox'
-import TagsPopover from '../tags-popover/index.jsx'
+import TagsPopover from '../tags-popover'
+import Tooltip from '../tooltip'
 
 import { cx } from '../../../../utils/utils.js'
 
@@ -64,6 +65,8 @@ const CardMini = ({
                 ${isSelected && 'selected'}
             `)
 
+            const tooltipPositions = { left: '50%', top: 'calc(100% + .5rem)', transform: 'translateX(-75%)' }
+
             const renderCardMini = (dragProvided) => (
                 <div
                     className={cardMiniClass}
@@ -94,25 +97,29 @@ const CardMini = ({
                                 {hasSideActions && (
                                     <>
                                         {isDisplayActionEdit && (
-                                            <ButtonAction
-                                                onClick={() => clickFunction.edit(itemID)}
-                                                visibility={visibilityMap(['modal-center', type])}
-                                                switchLayout={switchLayoutMap({
-                                                    area: 'modal',
-                                                    layout: { modalName: 'modal-center', layoutName: 'form' }
-                                                })}
-                                                classBtn={`edit-${type} button-action circle small`}
-                                                icon='edit'
-                                            />
+                                            <Tooltip title={`Edit ${type}`} positions={tooltipPositions}>
+                                                <ButtonAction
+                                                    onClick={() => clickFunction.edit(itemID)}
+                                                    visibility={visibilityMap(['modal-center', type])}
+                                                    switchLayout={switchLayoutMap({
+                                                        area: 'modal',
+                                                        layout: { modalName: 'modal-center', layoutName: 'form' }
+                                                    })}
+                                                    classBtn={`edit-${type} button-action circle small`}
+                                                    icon='edit'
+                                                />
+                                            </Tooltip>
                                         )}
                                         {isDisplayActionDelete && (
-                                            <ButtonAction
-                                                pendingState={isPending}
-                                                onClick={() => clickFunction.delete(itemID)}
-                                                visibility={visibilityMap(null)}
-                                                classBtn={`remove-${type} button-action circle small`}
-                                                icon='remove'
-                                            />
+                                            <Tooltip title={`Delete ${type}`} positions={tooltipPositions}>
+                                                <ButtonAction
+                                                    pendingState={isPending}
+                                                    onClick={() => clickFunction.delete(itemID)}
+                                                    visibility={visibilityMap(null)}
+                                                    classBtn={`remove-${type} button-action circle small`}
+                                                    icon='remove'
+                                                />
+                                            </Tooltip>
                                         )}
                                         {isDisplayActionRemove && (
                                             <ButtonAction
