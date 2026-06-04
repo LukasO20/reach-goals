@@ -5,7 +5,6 @@ import { useTitle } from '../../../provider/ui/title-provider'
 
 import { ModelQueryClientProvider } from '../../../provider/model/model-queryclient-provider'
 
-import { buildFilterModelMap } from '../../../utils/mapping/mappingUtilsProvider'
 import { switchLayoutMap } from '../../../utils/mapping/mappingUtils'
 
 import Calendar from '.'
@@ -15,11 +14,6 @@ export const CalendarWrapper = () => {
     const { update } = useTitle()
     const location = useLocation()
 
-    const dataFilter = {
-        ...buildFilterModelMap('goal', 'goalSomeID', 'page', 'all'),
-        ...buildFilterModelMap('assignment', 'assignmentSomeID', 'page', 'all')
-    }
-
     useEffect(() => {
         const dataSwitchLayout = switchLayoutMap({ area: 'page', layout: { pageName: location.pathname.slice(1), layoutName: 'all' } })
 
@@ -28,7 +22,7 @@ export const CalendarWrapper = () => {
     }, [update, setSwitchLayout, location.pathname])
 
     return (
-        <ModelQueryClientProvider filter={dataFilter}>
+        <ModelQueryClientProvider>
             <Calendar />
         </ModelQueryClientProvider>
     )

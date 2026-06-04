@@ -17,9 +17,11 @@ import './style.scss'
  */
 const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, filterTabs, onFilterTabs, loading }) => {
     const { data: { visibility } } = useSwitchLayout()
-    const { page, modal } = filterTabs ? filterTabs[type] : {}
+    const { page, modal } = filterTabs?.[type] ?? {}
 
-    const filterButtonActive = filterTabs ? Object.keys(modal ?? page)[0] : null
+    const isValidFilterTabsValue = !!page || !!modal
+
+    const filterButtonActive = isValidFilterTabsValue ? Object.keys(modal ?? page)[0] : null
 
     const columnsUserConfig = type !== 'tag' ? visibility.columns : null
 

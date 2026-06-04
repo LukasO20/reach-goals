@@ -1,20 +1,21 @@
-import { useMemo, useState } from 'react'
+import { useManageModel } from '../../../provider/model/manage-model-provider'
 
 import { ModelQueryClientProvider } from '../../../provider/model/model-queryclient-provider'
-
-import { buildFilterModelMap } from '../../../utils/mapping/mappingUtilsProvider'
 
 import ModalTag from '.'
 
 export const ModalTagWrapper = () => {
-    const [filterTabs, setFilterTabs] = useState(null)
-    const dataFilter = useMemo(() => {
-        return filterTabs ?? buildFilterModelMap('tag', 'tagSomeID', 'page', 'all')
-    }, [filterTabs])
+    const { model: { filter: filterModel }, setFilterModel, resetManageModel } = useManageModel()
+
+    /** @param {Object} filter */
+    const handleFilterTabs = (filter) => {
+        if (!filter) return resetManageModel({ keys: ['filter'] })
+        setFilterModel(filter, 'tag')
+    }
 
     return (
-        <ModelQueryClientProvider filter={dataFilter}>
-            <ModalTag filterTabs={filterTabs} onFilterTabs={setFilterTabs} />
+        <ModelQueryClientProvider>
+            <ModalTag filterTabs={filterModel} onFilterTabs={handleFilterTabs} />
         </ModelQueryClientProvider>
     )
 }

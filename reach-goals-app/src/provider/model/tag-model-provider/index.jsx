@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect } from 'react'
+import { createContext, useContext, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import * as tagService from '../../../services/tagService.js'
@@ -6,7 +6,7 @@ import * as tagService from '../../../services/tagService.js'
 import { useManageModel } from '../manage-model-provider'
 import { useTitle } from '../../ui/title-provider'
 
-import { updateDataModelMap, filerFetchModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
+import { updateDataModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
 import { createQueryFn, validFilter } from '../../../utils/utilsProvider.js'
 
 /** @import * as React from 'react' */
@@ -16,21 +16,11 @@ import { createQueryFn, validFilter } from '../../../utils/utilsProvider.js'
 /** @type {React.Context<TagModelContextValue>} */
 export const TagModelContext = createContext()
 
-const TagModelProviderMap = {
-    children: React.ReactNode,
-    filter: filerFetchModelMap
-}
-
-export const TagModelProvider = ({ children, filter } = TagModelProviderMap) => {
-    const { model: { filter: filterModel }, updateDataModel, setFilterModel } = useManageModel()
+export const TagModelProvider = ({ children }) => {
+    const { model: { filter: filterModel }, updateDataModel } = useManageModel()
     const { update } = useTitle()
 
     const queryClient = useQueryClient()
-    const filterKey = JSON.stringify(filter.tag)
-
-    useEffect(() => {
-        if (filter.tag) setFilterModel(filter, 'tag')
-    }, [filterKey, setFilterModel, filter])
 
     const filterPage = filterModel.tag.page
     const filterModal = filterModel.tag.modal

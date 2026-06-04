@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect } from 'react'
+import { createContext, useContext, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import * as goalService from '../../../services/goalService.js'
@@ -7,7 +7,7 @@ import * as commonService from '../../../services/common.js'
 import { useManageModel } from '../manage-model-provider'
 import { useTitle } from '../../ui/title-provider'
 
-import { updateDataModelMap, filerFetchModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
+import { updateDataModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
 import { createQueryFn, validFilter } from '../../../utils/utilsProvider.js'
 
 /** @import * as React from 'react' */
@@ -17,21 +17,11 @@ import { createQueryFn, validFilter } from '../../../utils/utilsProvider.js'
 /** @type {React.Context<GoalModelContextValue>} */
 const GoalModelContext = createContext()
 
-const GoalModelProviderMap = {
-  children: React.ReactNode,
-  filter: filerFetchModelMap
-}
-
-export const GoalModelProvider = ({ children, filter } = GoalModelProviderMap) => {
-  const { model: { filter: filterModel }, updateDataModel, setFilterModel } = useManageModel()
+export const GoalModelProvider = ({ children }) => {
+  const { model: { filter: filterModel }, updateDataModel } = useManageModel()
   const { update } = useTitle()
 
   const queryClient = useQueryClient()
-  const filterKey = JSON.stringify(filter.goal)
-
-  useEffect(() => {
-    if (filter.goal) setFilterModel(filter, 'goal')
-  }, [filterKey, setFilterModel, filter])
 
   const filterPage = filterModel.goal.page
   const filterModal = filterModel.goal.modal

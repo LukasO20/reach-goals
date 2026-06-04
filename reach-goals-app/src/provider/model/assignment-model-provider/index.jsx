@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect } from 'react'
+import { createContext, useContext, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import * as assignmentService from '../../../services/assignmentService.js'
@@ -7,7 +7,7 @@ import * as commonService from '../../../services/common.js'
 import { useManageModel } from '../manage-model-provider/index.jsx'
 import { useTitle } from '../../ui/title-provider/index.jsx'
 
-import { filerFetchModelMap, updateDataModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
+import { updateDataModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
 import { createQueryFn, validFilter } from '../../../utils/utilsProvider.js'
 
 /** @import * as React from 'react' */
@@ -17,21 +17,11 @@ import { createQueryFn, validFilter } from '../../../utils/utilsProvider.js'
 /** @type {React.Context<AssignmentModelContextValue>} */
 const AssignmentModelContext = createContext()
 
-const AssignmentModelProviderMap = {
-    children: React.ReactNode,
-    filter: filerFetchModelMap
-}
-
-export const AssignmentModelProvider = ({ children, filter } = AssignmentModelProviderMap) => {
-    const { model: { filter: filterModel }, updateDataModel, setFilterModel } = useManageModel()
+export const AssignmentModelProvider = ({ children }) => {
+    const { model: { filter: filterModel }, updateDataModel } = useManageModel()
     const { update } = useTitle()
 
     const queryClient = useQueryClient()
-    const filterKey = JSON.stringify(filter.assignment)
-
-    useEffect(() => {
-        if (filter.assignment) setFilterModel(filter, 'assignment')
-    }, [filterKey, setFilterModel, filter])
 
     const filterPage = filterModel.assignment.page
     const filterModal = filterModel.assignment.modal

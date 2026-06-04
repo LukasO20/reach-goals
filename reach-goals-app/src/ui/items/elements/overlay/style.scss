@@ -5,4 +5,5 @@
     width: 100dvw;
     animation: $animation-fade-in 0.2s linear forwards;
     transition: $animation-transition-st;
+    z-index: 2;
 }

@@ -1,14 +1,14 @@
 export const filerFetchModelMap = {
     goal: {
-        page: null,
+        page: { goalSomeID: 'all' },
         modal: null
     },
     assignment: {
-        page: null,
+        page: { assignmentSomeID: 'all' },
         modal: null
     },
     tag: {
-        page: null,
+        page: { tagSomeID: 'all' },
         modal: null
     }
 }
