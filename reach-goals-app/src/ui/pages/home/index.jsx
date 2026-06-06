@@ -18,19 +18,15 @@ const Home = () => {
         assignment: dataAssignment
     }
     const layoutHome = layout.page.layoutName
-    const validLayouts = ['chart', 'column']
+
+    const renderHomePage = layoutHome === 'chart' ?  <HomeChart data={dataPage} /> : <HomeColumn data={dataPage} />
 
     const isLoading = !!loadingGoal || !!loadingAssignment
 
     return (
         <>
             {isLoading && <Loading mode='block' />}
-            {!isLoading && (
-                validLayouts.includes(layoutHome) && (
-                    layoutHome === 'chart' ? 
-                        (<HomeChart data={dataPage} />) : (<HomeColumn data={dataPage} />)
-                )
-            )}
+            {!isLoading && renderHomePage}
         </>
     )
 

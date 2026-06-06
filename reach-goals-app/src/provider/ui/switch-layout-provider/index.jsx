@@ -1,5 +1,5 @@
+import { useLocation } from 'react-router-dom'
 import { useState, useContext, createContext, useCallback, useMemo } from 'react'
-
 import { usePersistedUserConfig } from '../../../hooks/usePersistedUserConfig'
 
 import { switchLayoutMap } from '../../../utils/mapping/mappingUtilsProvider'
@@ -13,6 +13,8 @@ import { persistedUserConfigKeysMap, persistedUserConfigMap } from '../../../uti
 const SwitchLayoutContext = createContext()
 
 export const SwitchLayoutProvider = ({ children }) => {
+    const { pathname } = useLocation()
+
     /** @type {import('./types.js').SetLayoutStateProps} */
     const [layout, setLayout] = useState(switchLayoutMap)
 
@@ -60,11 +62,19 @@ export const SwitchLayoutProvider = ({ children }) => {
 
     /** @type {import('./types.js').OutputProps} */
     const output = useMemo(() => {
+        const currentPathName = pathname.split('/')[1] || 'home'
+
         return {
-            layout,
+            layout: {
+                ...layout,
+                page: {
+                    ...layout.page,
+                    pageName: currentPathName,
+                }
+            },
             visibility: uiVisibility,
         }
-    }, [layout, uiVisibility])
+    }, [layout, uiVisibility, pathname])
 
     const value = useMemo(() => ({ data: output, setSwitchLayout, setUserConfigLayout }), [setSwitchLayout, setUserConfigLayout, output])
 
