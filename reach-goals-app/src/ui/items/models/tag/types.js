@@ -14,4 +14,10 @@
  * @property {boolean} [selectableModel]
  */
 
+/**
+ * @typedef {Object} RelationCardProps
+ * @property {Array<Object>} data
+ * @property {Object} checkboxState
+ */
+
 export {}

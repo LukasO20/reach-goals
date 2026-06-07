@@ -1,0 +1,33 @@
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: $dimensions-h-video-xl;
+    margin: auto;
+    gap: $spacing-gap-sm;
+    
+    .title {
+        font-size: $font-size-lg;
+        font-weight: 600;
+        color: $color-black
+    }
+
+    .description {
+        font-weight: 500;
+        color: $color-black
+    }
+
+    img {
+        height: 100%;
+    }
+
+    .empty-content {
+
+        &.create {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-gap-sm;
+        }
+    }
+}

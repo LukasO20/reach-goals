@@ -149,7 +149,7 @@
         opacity: 0.6;
     }
 
-    /* Double application */
+    /* DOUBLE APPLY */
     &:hover,
     &.active {
         background-color: $color-complementary-s;
@@ -174,11 +174,20 @@
         &.small {
             height: 1.8rem;
             width: 5.75rem;
-            justify-content: center;
+        }
+
+        &.medium {
+            width: 12rem;
         }
 
         &.max-width {
             width: max-content;
+        }
+
+        /* DOUBLE APPLY */
+        &.medium,
+        &.small {
+            justify-content: center;
         }
     }
 

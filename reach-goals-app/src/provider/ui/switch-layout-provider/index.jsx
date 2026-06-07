@@ -78,7 +78,7 @@ export const SwitchLayoutProvider = ({ children }) => {
 
     const value = useMemo(() => ({ data: output, setSwitchLayout, setUserConfigLayout }), [setSwitchLayout, setUserConfigLayout, output])
 
-    console.log('SwitchLayoutProvider - output:', output)
+    //console.log('SwitchLayoutProvider - output:', output)
 
     return (
         <SwitchLayoutContext.Provider value={value}>

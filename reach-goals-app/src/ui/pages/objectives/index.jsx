@@ -2,11 +2,17 @@ import { useGoalProvider } from '../../../provider/model/goal-model-provider'
 import { useAssignmentProvider } from '../../../provider/model/assignment-model-provider'
 import { useSwitchLayout } from '../../../provider/ui/switch-layout-provider'
 
+import { cx } from '../../../utils/utils.js'
+
 import ModelTabs from '../../items/elements/model-tabs'
 import Goal from '../../items/models/goal'
 import Assignment from '../../items/models/assignment'
 import ModelSwitcher from '../../items/models/model-switcher'
 import PopupModelOptions from '../../items/elements/popup-model-options/index.jsx'
+import EmptyState from '../../items/elements/empty-state'
+import EmptyStateCreate from '../../items/elements/empty-state/components/empty-state-create.jsx'
+
+import emptyObjectivesImg from '../../../assets/empty-activity-objectives.svg'
 
 import './style.scss'
 
@@ -53,33 +59,46 @@ const Objectives = ({ filterTabs, onFilterTabs }) => {
     const isAllModels = typeLayout === 'all-activities'
     const isOnlyTypeModel = typeLayout === 'goal' || typeLayout === 'assignment'
     const isLoading = !!loadingGoal || !!loadingAssignment
+    const isEmptyData = !dataGoal?.length && !dataAssignment?.length && !isLoading
 
-    const renderContent = () => {
-        return (
-            <>
-                {isAllModels && !isOnlyTypeModel && (
-                    <>
-                        <Goal {...goalPropsReference} />
-                        <Assignment {...assignmentPropsReference} />
-                    </>
-                )}
-                {isOnlyTypeModel && !isAllModels && (
-                    <ModelSwitcher type={typeLayout} propsReference={switchActivityPropsReference} />
-                )}
-            </>
-        )
-    }
+    const modelTabsClass = cx(
+        `objectives
+        ${isEmptyData && 'empty'}`
+    )
+
+    const renderContent = (
+        <>
+            {isAllModels && !isOnlyTypeModel && !isEmptyData && (
+                <>
+                    <Goal {...goalPropsReference} />
+                    <Assignment {...assignmentPropsReference} />
+                </>
+            )}
+            {isOnlyTypeModel && !isAllModels && !isEmptyData && (
+                <ModelSwitcher type={typeLayout} propsReference={switchActivityPropsReference} />
+            )}
+            {!isLoading && isEmptyData && (
+                <EmptyState
+                    title="There's nothing an activity yet"
+                    description='You can create a goal or assignment to manage your activities'
+                    imgSrc={emptyObjectivesImg}
+                >
+                    <EmptyStateCreate />
+                </EmptyState>)
+            }
+        </>
+    )
 
     return (
         <>
             <ModelTabs
                 type={typeLayout}
                 loading={isLoading}
-                classModelTabs='objectives'
+                classModelTabs={modelTabsClass}
                 filterTabs={filterTabs}
                 onFilterTabs={onFilterTabs}
             >
-                {renderContent()}
+                {renderContent}
             </ModelTabs>
             <PopupModelOptions type='pop-switch-model' typeSwitchModelOptions='objectives' onFilterTabs={onFilterTabs} mode={visibility.layoutPopupModel} />
         </>

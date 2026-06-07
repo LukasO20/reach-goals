@@ -40,6 +40,9 @@ const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, filterTab
         onFilterTabs(buildFilterModelMap(type, filerKey, source, filterValue))
     }
 
+    //TODO: FIND A GOOD WAY TO CHECK DATA TO AVOID STYLE CLASS VALIDATIONS
+    const shouldRenderHeader = !classModelTabs?.includes('empty')
+
     const buttonActionClass = cx(`
         plan-round 
         max-width 
@@ -49,27 +52,29 @@ const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, filterTab
 
     return (
         <div className={modelTabsClass}>
-            <div className='head'>
-                {headLeftChildren}
-                <div className='options-sections'>
-                    {
-                        modelTabsMap[type]?.map((tab, index) => {
-                            const currentButton = Object.keys(tab.filter)[0]
-                            const isNullFilter = !filterButtonActive && tab.label.includes('every')
-                            const activeButton = currentButton === filterButtonActive ? 'active' : isNullFilter ? 'active' : ''
+            {shouldRenderHeader && (
+                <div className='head'>
+                    {headLeftChildren}
+                    <div className='options-sections'>
+                        {
+                            modelTabsMap[type]?.map((tab, index) => {
+                                const currentButton = Object.keys(tab.filter)[0]
+                                const isNullFilter = !filterButtonActive && tab.label.includes('every')
+                                const activeButton = currentButton === filterButtonActive ? 'active' : isNullFilter ? 'active' : ''
 
-                            return (
-                                <ButtonAction
-                                    key={index}
-                                    classBtn={`${buttonActionClass} ${activeButton}`}
-                                    title={tab.label}
-                                    onClick={() => { handleFilterClick(tab.filter) }}
-                                />
-                            )
-                        })
-                    }
+                                return (
+                                    <ButtonAction
+                                        key={index}
+                                        classBtn={`${buttonActionClass} ${activeButton}`}
+                                        title={tab.label}
+                                        onClick={() => { handleFilterClick(tab.filter) }}
+                                    />
+                                )
+                            })
+                        }
+                    </div>
                 </div>
-            </div>
+            )}
             <div className='body scrollable'>
                 {loading && (<Loading mode='block' />)}
                 {!loading && children}

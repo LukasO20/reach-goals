@@ -15,6 +15,9 @@ import ButtonCheckbox from '../../items/elements/button-checkbox'
 import ModelTabs from '../../items/elements/model-tabs'
 import RelationCard from '../../items/models/tag/components/relation-card'
 import PopupModelOptions from '../../items/elements/popup-model-options'
+import EmptyState from '../../items/elements/empty-state'
+
+import emptyTagImg from '../../../assets/empty-tag.svg'
 
 import { cx } from '../../../utils/utils.js'
 
@@ -28,7 +31,7 @@ import './style.scss'
 const ModalTag = ({ filterTabs, onFilterTabs }) => {
     const { visibleElements } = useVisibility()
     const { setModel, resetManageModel } = useManageModel()
-    const { page: { loading } } = useTagProvider()
+    const { page: { data, loading } } = useTagProvider()
     const { data: { layout } } = useSwitchLayout()
     const { valuesCheckbox } = useCheckbox()
     const navigate = useNavigate()
@@ -45,12 +48,10 @@ const ModalTag = ({ filterTabs, onFilterTabs }) => {
         resetManageModel(resetKeys)
     }
 
-    const content = <RelationCard checkboxState={valuesCheckbox} />
-
     const headLeftContent =
         hasSelectedModel ? (
-            <ButtonCheckbox 
-                classBtn='checkbox-main' 
+            <ButtonCheckbox
+                classBtn='checkbox-main'
                 checkboxID='checkbox-tag'
                 checkbox={buildCheckboxMap({ checkboxIDMain: 'checkbox-tag', scope: 'modal' })}
                 title='Select all'
@@ -59,13 +60,29 @@ const ModalTag = ({ filterTabs, onFilterTabs }) => {
 
     const isModalForm = ['tag', 'near-modalForm']
     const isLoading = !!loading
- 
+    const isEmptyData = !data?.length && !isLoading
+
+    const content = (<>
+        {!isLoading && isEmptyData && (
+            <EmptyState
+                title="There's nothing a tag yet"
+                description='You can create a tag to classify your activities'
+                imgSrc={emptyTagImg}
+            />
+        )}
+        {!isLoading && !isEmptyData && (<RelationCard checkboxState={valuesCheckbox} data={data} />)}
+    </>)
+
     const buttonCreateClass = cx(
         `create
         plan
         max-width
         ${isModalForm.every(e => visibleElements.includes(e)) && 'active'}
         `
+    )
+
+    const modelTabsClass = cx(
+        `${isEmptyData && 'empty'}`
     )
 
     return (
@@ -91,12 +108,19 @@ const ModalTag = ({ filterTabs, onFilterTabs }) => {
                 {isModalForm.every(e => visibleElements.includes(e)) && (
                     <ModalFormWrapper />
                 )}
-                <ModelTabs type='tag' headLeftChildren={headLeftContent} loading={isLoading} filterTabs={filterTabs} onFilterTabs={onFilterTabs}>
-                    {content}
-                </ModelTabs>
                 {hasSelectedModel && (
                     <PopupModelOptions type='pop-model' typeModelOptions='tag' onFilterTabs={onFilterTabs} />
                 )}
+                <ModelTabs 
+                    type='tag' 
+                    headLeftChildren={headLeftContent} 
+                    loading={isLoading} 
+                    filterTabs={filterTabs} 
+                    onFilterTabs={onFilterTabs}
+                    classModelTabs={modelTabsClass}
+                >
+                    {content}
+                </ModelTabs>
             </div>
         </>
     )

@@ -54,6 +54,14 @@
         }
     }
 
+    &.empty {
+
+        >.body {
+            display: flex;
+            background-color: transparent;
+        }
+    }
+
     /* DOUBLE APPLY */
     &.column-3x3,
     &.column-2x2 {

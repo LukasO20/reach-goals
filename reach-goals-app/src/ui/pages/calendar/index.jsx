@@ -5,6 +5,10 @@ import { useSwitchLayout } from '../../../provider/ui/switch-layout-provider/ind
 import MonthDaysPicker from '../../items/elements/month-days-picker'
 import Loading from '../../items/elements/loading'
 import PopupModelOptions from '../../items/elements/popup-model-options/index.jsx'
+import EmptyState from '../../items/elements/empty-state'
+import EmptyStateCreate from '../../items/elements/empty-state/components/empty-state-create.jsx'
+
+import emptyCalendarImg from '../../../assets/empty-activity-calendar.svg'
 
 const Calendar = () => {
     const { page: { loading: loadingGoal, data: dataGoal } } = useGoalProvider()
@@ -18,11 +22,21 @@ const Calendar = () => {
 
     const isLoading = !!loadingGoal || !!loadingAssignment
     const isValidData = Array.isArray(dataPage.goal) || Array.isArray(dataPage.assignment)
+    const isEmptyData = !dataGoal?.length && !dataAssignment?.length && !isLoading
 
     return (
         <>
-            {isLoading && <Loading mode='block' />}
-            {isValidData && <MonthDaysPicker data={dataPage} />}
+            {isLoading && !isEmptyData && <Loading mode='block' />}
+            {!isLoading && !isEmptyData && isValidData && <MonthDaysPicker data={dataPage} />}
+            {!isLoading && isEmptyData && (
+                <EmptyState
+                title="There's nothing an activity yet"
+                description='You can create a goal or assignment to set a date and start your schedule'
+                imgSrc={emptyCalendarImg}
+            >
+                <EmptyStateCreate />
+            </EmptyState>)
+            }
             <PopupModelOptions type='pop-switch-model' typeSwitchModelOptions='calendar' mode={visibility.layoutPopupModel} />
         </>
     )

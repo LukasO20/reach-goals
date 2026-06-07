@@ -16,10 +16,15 @@ import '../style.scss'
 
 const standarOpenCard = [{ id: null, open: false }]
 
-const RelationCard = ({ checkboxState = checkboxMap }) => {
+/** @typedef {import('../types.js').RelationCardProps} Props */
+
+/**
+ * @param {Props} props
+ */
+const RelationCard = ({ checkboxState = checkboxMap, data = [] }) => {
     const [openCard, setOpenCard] = useState(standarOpenCard)
     const { setModel } = useManageModel()
-    const { page: { data = [] }, remove, removing, removeSuccess, removingVariables } = useTagProvider()
+    const { remove, removing, removeSuccess, removingVariables } = useTagProvider()
 
     const handleSetOpenCard = (item) => {
         setOpenCard(prev => {
