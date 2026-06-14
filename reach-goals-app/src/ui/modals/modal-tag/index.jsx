@@ -90,7 +90,8 @@ const ModalTag = ({ filterTabs, onFilterTabs }) => {
             <div className='head'>
                 <h2>Tags</h2>
                 <ButtonAction
-                    classBtn='circle close' icon='close'
+                    classBtn='circle close' 
+                    icon='icon-close'
                     visibility={visibilityMap(null)}
                     onClick={handleClickButtonAction}
                 />
@@ -99,7 +100,7 @@ const ModalTag = ({ filterTabs, onFilterTabs }) => {
                         classBtn={buttonCreateClass}
                         onClick={handleClickButtonActionCreate}
                         visibility={visibilityMap('near-modalForm', { add: true })}
-                        icon='plus'
+                        icon='icon-plus'
                         title='create'
                     />
                 </div>

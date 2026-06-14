@@ -1,9 +1,8 @@
 import { useManageModel } from '../../../../provider/model/manage-model-provider'
 import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider/index.jsx'
 
-import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
-
 import Line from '../../../items/elements/line'
+import Icons from '../../../items/elements/icons'
 
 const ObjectivesStatus = () => {
     const { data: { visibility } } = useSwitchLayout()
@@ -30,17 +29,17 @@ const ObjectivesStatus = () => {
     return (
         <div className='objectives-status'>
             <label className='label-status conclude'>
-                {iconMap['check']}
+                <Icons icon='icon-conclude' />
                 {labelConludeCount}
             </label>
             <Line direction='vertical' />
             <label className='label-status progress'>
-                {iconMap['progress']}
+                <Icons icon='icon-progress' />
                 {labelProgressCount}
             </label>
             <Line direction='vertical' />
             <label className='label-status cancel'>
-                {iconMap['cancel']}
+                <Icons icon='icon-cancel' />
                 {labelCancelCount}
             </label>
         </div>

@@ -129,7 +129,7 @@ const MonthsDaysTitle = ({ title, startDate, data }) => {
                 <Tooltip title='Add Activity'>
                     <ButtonAction
                         classBtn='add-activity small circle'
-                        icon='plus'
+                        icon='icon-plus'
                         innerRef={buttonRef}
                         onClick={() => {
                             setModel((prev) => ({

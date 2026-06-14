@@ -8,7 +8,7 @@
  * @property {boolean} [pendingState]
  * @property {boolean} [disable]
  * @property {function():void} [onClick]
- * @property {string} [icon]
+ * @property {import('../icons/types.js').Icon} [icon]
  * @property {string} [title]
  * @property {string} classBtn
  * @property {React.RefObject<HTMLSpanElement>} innerRef

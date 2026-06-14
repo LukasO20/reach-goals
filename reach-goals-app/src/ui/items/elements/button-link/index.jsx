@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useVisibility } from '../../../../provider/ui/visibility-provider'
 import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider'
 
-import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
+import Icons from '../icons'
 
 import './style.scss'
 
@@ -38,7 +38,7 @@ const ButtonLink = ({
 
     return (
         <span className={`button-link ${classBtn}`} onClick={handleClick}>
-            {img ? <img src={img} alt={imgAlt} /> : iconMap[icon]}
+            {img ? <img src={img} alt={imgAlt} /> : <Icons icon={icon} />}
         </span>
     )
 }

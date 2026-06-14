@@ -1,7 +1,5 @@
-
-import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
-
 import ModalDetailsTagRelation from './modal-details-tag-relation.jsx'
+import Icons from '../../../items/elements/icons'
 
 import moment from 'moment'
 
@@ -28,7 +26,7 @@ const ModalDetailsAssignment = ({ goal, tags, duration }) => {
                     <div className='goal-card'>
                         <div className='head'>
                             <div className='item'>
-                                {iconMap['goal']}
+                                <Icons icon='icon-goal' />
                                 <span className='name-goal'>{goal.name}</span>
                             </div>
                             {!!goal && goal.end && goal.end !== 'Invalid date' && (
@@ -41,7 +39,7 @@ const ModalDetailsAssignment = ({ goal, tags, duration }) => {
                 )}
                 {hasDuration && (
                     <div className='duration'>
-                        {iconMap['clock']}
+                        <Icons icon='icon-clock' />
                         <label>{labelDuration}</label>
                     </div>
                 )}

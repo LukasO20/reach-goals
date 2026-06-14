@@ -1,9 +1,9 @@
 import { useRef } from 'react'
 
-import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 import { calculatePercent } from '../../../../../utils/utils.js'
 
 import ButtonAction from '../../button-action'
+import Icons from '../../icons'
 
 /** @typedef {import('../types.js').CardProps} Props */
 
@@ -30,7 +30,6 @@ const Cards = ({
     const activityLabel = quantity === 1 ?
         `${quantity} activity - ${totalQuantity} activities`
         : `${quantity} activities - ${totalQuantity} activities`
-    const iconRender = type === 'conclude' ? 'check' : type
     const hasActivity = quantity
 
     return (
@@ -38,7 +37,7 @@ const Cards = ({
             <div className='head'>
                 <div>
                     <div>
-                        {iconMap[iconRender]}
+                        <Icons icon={`icon-${type}`} />
                         {title}
                     </div>
                     <label className='label-percent'>
@@ -56,7 +55,7 @@ const Cards = ({
                     <ButtonAction
                         innerRef={buttonRef}
                         classBtn='cards-details plan-round max-width' 
-                        icon='plus' 
+                        icon='icon-plus' 
                         title='see details'
                         onClick={handleButtonActionClick} 
                     />

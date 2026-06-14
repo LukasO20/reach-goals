@@ -1,8 +1,8 @@
 import { visibilityMap, switchLayoutMap } from '../../../../../utils/mapping/mappingUtils.js'
-import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 
 import ButtonAction from '../../button-action'
 import Tooltip from '../../tooltip'
+import Icons from '../../icons'
 
 /** @typedef {import('../types.js').SearchItemProps} Props */
 
@@ -17,12 +17,12 @@ const SearchItem = ({ item, type, onItemClick, onButtonClick }) => {
         <div className={`item ${type}`}>
             <div className='head'>
                 <div className='item-info' onClick={() => onItemClick(item.id, type, item)}>
-                    {iconMap[type]}
+                    <Icons icon={`icon-${type}`} />
                     <label>{item.name}</label>
                 </div>
                 <div className='item-action'>
                     <Tooltip title={`Edit ${type}`} positions={tooltipPositions}>
-                        <ButtonAction icon='edit' classBtn='button-action circle small'
+                        <ButtonAction icon='icon-edit' classBtn='circle small'
                             onClick={() => onButtonClick(item.id, type)}
                             visibility={visibilityMap(['modal-center', type])}
                             switchLayout={switchLayoutMap({

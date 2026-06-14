@@ -4,12 +4,12 @@ import { useSearchBarProvider } from '../../../../provider/ui/searchbar-provider
 import { useOutsideClick } from '../../../../hooks/useOutsideClick.js'
 
 import { visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
-import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
 import { cx, debounce } from '../../../../utils/utils.js'
 
 import SearchBoxResults from './searchbox-results.jsx'
 import ButtonAction from '../button-action'
 import Tooltip from '../tooltip'
+import Icons from '../icons'
 
 import './style.scss'
 
@@ -58,7 +58,7 @@ const SearchBar = ({ mode = 'service', placeholder = 'search', tooltip = 'Search
         <div className={searchbarClass} ref={searchBoxRef}>
             <label className='search-bar' onClick={handleSearchBarClick}>
                 <Tooltip title={tooltip}>
-                    {iconMap['search']}
+                    <Icons icon='icon-search' />
                 </Tooltip>
                 <input type='text' role='search'
                     placeholder={placeholder || 'search'} id='search-content-m'
@@ -69,7 +69,7 @@ const SearchBar = ({ mode = 'service', placeholder = 'search', tooltip = 'Search
                             onClick={handleCleanSearchBar}
                             visibility={visibilityMap('search-bar', { remove: true })}
                             classBtn='clean-search circle medium'
-                            icon='cancel'
+                            icon='icon-cancel'
                         />
                     </Tooltip>
                 )}

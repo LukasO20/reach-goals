@@ -3,9 +3,9 @@ import { useEffect } from 'react'
 import { useCheckbox } from '../../../../provider/ui/checkbox-provider'
 import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider'
 
-import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
-
 import { cx } from '../../../../utils/utils.js'
+
+import Icons from '../icons'
 
 import './style.scss'
 
@@ -64,7 +64,7 @@ const ButtonCheckbox = ({ classBtn, checkboxID, title, checkbox }) => {
             <label className='checkbox-container'>
                 {
                     isCheckboxMainID && isParcialChecked ?
-                        iconMap['square'] : isChecked ? iconMap['check'] : null
+                        <Icons icon='icon-square' /> : isChecked ? <Icons icon='icon-conclude' /> : null
                 }
             </label>
             {!!title && (

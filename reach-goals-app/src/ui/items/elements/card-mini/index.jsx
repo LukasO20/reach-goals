@@ -2,12 +2,12 @@ import { Draggable } from '@adaptabletools/react-beautiful-dnd'
 
 import { displayModesMap, visibilityMap, switchLayoutMap, buildCheckboxMap } from '../../../../utils/mapping/mappingUtils.js'
 import { checkboxMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
-import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
 
 import ButtonAction from '../button-action'
 import ButtonCheckbox from '../button-checkbox'
 import TagsPopover from '../tags-popover'
 import Tooltip from '../tooltip'
+import Icons from '../icons'
 
 import { cx } from '../../../../utils/utils.js'
 
@@ -86,10 +86,10 @@ const CardMini = ({
                             )}
                             {validIconStatus && (
                                 <label className={`status ${item.status}`}>
-                                    {iconMap[iconStatus]}
+                                    <Icons icon={`icon-${item.status}`} size='medium' />
                                 </label>
                             )}
-                            {iconMap[type]}
+                            <Icons icon={`icon-${type}`} />
                             <span className='title'>{item.name}</span>
                         </div>
                         {(hasTags || hasSideActions) && (
@@ -106,7 +106,7 @@ const CardMini = ({
                                                         layout: { modalName: 'modal-center', layoutName: 'form' }
                                                     })}
                                                     classBtn={`edit-${type} button-action circle small`}
-                                                    icon='edit'
+                                                    icon='icon-edit'
                                                 />
                                             </Tooltip>
                                         )}
@@ -117,7 +117,7 @@ const CardMini = ({
                                                     onClick={() => clickFunction.delete(itemID)}
                                                     visibility={visibilityMap(null)}
                                                     classBtn={`remove-${type} button-action circle small`}
-                                                    icon='remove'
+                                                    icon='icon-trash'
                                                 />
                                             </Tooltip>
                                         )}

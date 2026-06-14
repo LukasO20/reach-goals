@@ -5,6 +5,7 @@ import ModelCopy from '../../models/model-copy'
 import InputDate from '../../elements/input-date'
 import InputTimer from '../../elements/input-timer'
 import InputText from '../../elements/input-text'
+import Icons from '../../elements/icons'
 
 import { useManageModel } from '../../../../provider/model/manage-model-provider'
 import { useVisibility } from '../../../../provider/ui/visibility-provider'
@@ -14,7 +15,6 @@ import { cx } from '../../../../utils/utils.js'
 import { ModalModelListWrapper } from '../../../modals/modal-model-list/modal-model-list-wrapper.jsx'
 
 import { visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
-import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
 import { updateActiveModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
 /** @typedef {import('../types.js').FormStandardProps} Props */
@@ -27,7 +27,7 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
     const { model, setModel, updateActiveModel } = useManageModel()
 
     const modelCopyRegion = type === 'goal' ? 'assignment' : ''
-    const icon = iconMap[type] || 'fa-solid fa-triangle-exclamation'
+    const icon = <Icons icon={`icon-${type || 'exclamation'}`} />                 
     const isEmptyForm = typeof model.mainModelID === 'number'
     const display = { type: ['card-mini'], actions: ['remove'] }
 
@@ -57,7 +57,7 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
     const dropdownOptionsMap = [
         {
             title: 'in progress',
-            icon: 'progress',
+            icon: 'icon-progress',
             classBtn: modelForm?.status === 'progress' ? 'active' : '',
             onClick: () => { 
                 updateActiveModel(dataUpdateFormStatusModel('progress')); 
@@ -65,7 +65,7 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
         },
         {
             title: 'conclude',
-            icon: 'check',
+            icon: 'icon-conclude',
             classBtn: modelForm?.status === 'conclude' ? 'active' : '',
             onClick: () => { 
                 updateActiveModel(dataUpdateFormStatusModel('conclude')); 
@@ -73,7 +73,7 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
         },
         {
             title: 'cancel',
-            icon: 'cancel',
+            icon: 'icon-cancel',
             classBtn: modelForm?.status === 'cancel' ? 'active' : '',
             onClick: () => { 
                 updateActiveModel(dataUpdateFormStatusModel('cancel')); 
@@ -140,43 +140,58 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
                     </div>
                 </div>
                 <div className='objective-buttons-options'>
-                    <ButtonAction visibility={visibilityMap(null)} nullForm={true} classBtn='button-action circle close' icon='close' />
+                    <ButtonAction visibility={visibilityMap(null)} nullForm={true} classBtn='circle close' icon='icon-close' />
                 </div>
             </div>
             <div className='body'>
                 <form className='scrollable'>
                     <div className='fields'>
                         <div className='field-forms name'>
-                            <label>{iconMap['editbox']}<span>name</span></label>
+                            <label>
+                                <Icons icon='icon-rename' />                 
+                                <span>name</span>
+                            </label>
                             <InputText
                                 id={`${type}-name`} className='input-form input-text name' placeholder={`${type} name`}
                                 name='name' value={modelForm?.name || ''} onChange={functionFormMap.mapHandleChange} />
                         </div>
                         <div className='field-forms start-date'>
-                            <label>{iconMap['schedule']}<span>start date</span></label>
+                            <label>
+                                <Icons icon='icon-calendar-schedule' />                 
+                                <span>start date</span>
+                            </label>
                             <InputDate id={`${type}-start-date`} className='input-form input-date start' name='start' selected={modelForm?.start} onChange={functionFormMap.mapHandleChange} />
                         </div>
                         <div className='field-forms end-date'>
-                            <label>{iconMap['schedule']}<span>end date</span></label>
+                            <label>
+                                <Icons icon='icon-calendar-schedule' />                 
+                                <span>end date</span>
+                            </label>
                             <InputDate id={`${type}-end-date`} className='input-form input-date end' name='end' selected={modelForm?.end} onChange={functionFormMap.mapHandleChange} />
                         </div>
                         {
                             type === 'assignment' && (
                                 <div className='field-forms duration'>
-                                    <label>{iconMap['clock']}<span>duration</span></label>
+                                    <label>
+                                        <Icons icon='icon-clock' />                 
+                                        <span>duration</span>
+                                    </label>
                                     <InputTimer id={`${type}-duration`} className='input-form input-timer timer' name='duration'
                                         onChange={functionFormMap.mapHandleChange} value={modelForm.duration ?? null} />
                                 </div>
                             )
                         }
                         <div className='field-forms status'>
-                            <label>{iconMap['progress']}<span>status</span></label>
+                            <label>
+                                <Icons icon='icon-progress' />                 
+                                <span>status</span>
+                            </label>
                             <ButtonDropdown 
                                 visibility='dropdown-status'
                                 visibilityOperator={{ add: 'dropdown-status' }}
                                 classBtn='status form'
                                 classBtnAction='plan'
-                                icon={renderDropdownStatusTitle(modelForm.status)?.icon}
+                                icon={`icon-${renderDropdownStatusTitle(modelForm.status)?.icon}`}
                                 title={renderDropdownStatusTitle(modelForm.status)?.status}
                                 options={dropdownOptionsMap}
                                 arrow={true}
@@ -188,7 +203,10 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
                     <div className='item-forms details'>
                         <div className='head'>
                             <div className='item'>
-                                <label>{iconMap['comment']} <span>comment</span></label>
+                                <label>
+                                    <Icons icon='icon-comment' />
+                                    <span>comment</span>
+                                </label>
                             </div>
                         </div>
                         <div className='body'>
@@ -199,7 +217,7 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
                 </form>
             </div>
             <div className='bottom'>
-                <ButtonAction pendingState={pendingState} onClick={functionFormMap.mapHandleSubmit} classBtn='button-action plan max-width save' icon='save' title={typeof model.mainModelID === 'number' ? 'Save' : 'Create'} />
+                <ButtonAction pendingState={pendingState} onClick={functionFormMap.mapHandleSubmit} classBtn='plan max-width save' icon='icon-save' title={typeof model.mainModelID === 'number' ? 'Save' : 'Create'} />
             </div>
             {
                 !!modalModelShowed &&

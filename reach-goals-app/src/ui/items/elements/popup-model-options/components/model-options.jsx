@@ -45,15 +45,15 @@ const ModelOptions = ({ type }) => {
         <>
             {type !== 'tag' && (
                 <>
-                    <ButtonAction classBtn='progress plan-round' icon='progress' disable={isDisable && !isSavingStatusProgress}
+                    <ButtonAction classBtn='progress plan-round' icon='icon-progress' disable={isDisable && !isSavingStatusProgress}
                         title='in progress' onClick={() => onClickStatusModel('progress')} pendingState={isSavingStatusProgress} />
-                    <ButtonAction classBtn='conclude plan-round' icon='check' disable={isDisable && !isSavingStatusConclude}
+                    <ButtonAction classBtn='conclude plan-round' icon='icon-conclude' disable={isDisable && !isSavingStatusConclude}
                         title='conclude' onClick={() => onClickStatusModel('conclude')} pendingState={isSavingStatusConclude} />
-                    <ButtonAction classBtn='cancel plan-round' icon='cancel' disable={isDisable && !isSavingStatusCancel}
+                    <ButtonAction classBtn='cancel plan-round' icon='icon-cancel' disable={isDisable && !isSavingStatusCancel}
                         title='cancel' onClick={() => onClickStatusModel('cancel')} pendingState={isSavingStatusCancel} />
                 </>
             )}
-            <ButtonAction classBtn='button-action delete plan-round' icon='remove' title='delete'
+            <ButtonAction classBtn='button-action delete plan-round' icon='icon-trash' title='delete'
                 disable={isDisable && !removingModels} pendingState={!!removingModels} onClick={onClickRemoveModels} />
         </>
     )

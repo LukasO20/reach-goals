@@ -4,8 +4,8 @@ import { useOutsideClick } from '../../../../hooks/useOutsideClick.js'
 
 import ButtonAction from '../button-action/index.jsx'
 import ModalCards from '../../../modals/modal-cards'
+import Icons from '../icons'
 
-import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
 import { calculatePercent, getTransform } from '../../../../utils/utils.js'
 
 import { cx } from '../../../../utils/utils.js'
@@ -71,7 +71,7 @@ const ChartBar = ({ data, quantity, showLegend }) => {
                             <div className={barClass} key={item.id}>
                                 <div className={`bar-progress`} style={{ height: `${percentLabel}%` }}>
                                     <div className='bar-title'>
-                                        {iconMap[item.id]}
+                                        <Icons icon={`icon-${item.id}`} />
                                         <label className='label-message'>{labelMessage}</label>
                                     </div>
                                     {hasActivity && (
@@ -82,7 +82,7 @@ const ChartBar = ({ data, quantity, showLegend }) => {
                                     {hasActivity && (
                                         <ButtonAction
                                             classBtn='details-activity circle'
-                                            icon='plus'
+                                            icon='icon-plus'
                                             onClick={(e) => {
                                                 hancleOnModalChartCards({ icon: iconModalChartCards, title: item.label, data: item.activities })
                                                 handleCalculatePosition(e.event.target)

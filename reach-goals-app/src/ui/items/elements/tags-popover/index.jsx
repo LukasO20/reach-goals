@@ -42,7 +42,7 @@ const TagsPopover = ({ tags = [], visibility }) => {
             )}
             <div className='icon'>
                 <span className='counter'>{quantity}</span>
-                <ButtonAction classBtn='tag-popover circle small' icon='tag' visibility={visibilityMap(visibility)} />
+                <ButtonAction classBtn='tag-popover circle small' icon='icon-tag' visibility={visibilityMap(visibility)} />
             </div>
         </div>
     )

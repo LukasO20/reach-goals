@@ -69,7 +69,7 @@ const Navigate = () => {
                 </div>
                 <div className='item-nav'>
                     <Tooltip title='Calendar' positions={tooltipPositions}>
-                        <ButtonLink link='/calendar' classBtn={buttonLinkCalendarClass} icon='calendar'
+                        <ButtonLink link='/calendar' classBtn={buttonLinkCalendarClass} icon='icon-calendar'
                             switchLayout={switchLayoutMap({ area: 'page', layout: { pageName: 'calendar', layoutName: 'all' } })}
                             onClick={() => handleButtonLinkClick('calendar')}
                         />
@@ -77,7 +77,7 @@ const Navigate = () => {
                 </div>
                 <div className='item-nav'>
                     <Tooltip title='Objectives' positions={tooltipPositions}>
-                        <ButtonLink link='/objectives' classBtn={buttonLinkObjectivesClass} icon='objectives'
+                        <ButtonLink link='/objectives' classBtn={buttonLinkObjectivesClass} icon='icon-activity'
                             switchLayout={switchLayoutMap({ area: 'page', layout: { pageName: 'objectives', layoutName: 'all' } })}
                             onClick={() => handleButtonLinkClick('objectives')}
                         />

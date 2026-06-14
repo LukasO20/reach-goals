@@ -19,7 +19,7 @@
  * @property {DropdownOptionProps[]} options
  * @property {string} visibility
  * @property {Object} [visibilityOperator]
- * @property {string} [icon]
+ * @property {import('../icons/types.js').Icon} [icon]
  * @property {string} classBtn
  * @property {string} [classBtnAction]
  * @property {string} [title]

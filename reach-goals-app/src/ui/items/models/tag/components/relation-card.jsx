@@ -5,12 +5,12 @@ import { useManageModel } from '../../../../../provider/model/manage-model-provi
 
 import { checkboxMap } from '../../../../../utils/mapping/mappingUtilsProvider'
 import { buildCheckboxMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils'
-import { iconMap } from '../../../../../utils/mapping/mappingIcons'
 
 import ButtonAction from '../../../elements/button-action'
 import ButtonCheckbox from '../../../elements/button-checkbox'
 import Goal from '../../goal'
 import Assignment from '../../assignment'
+import Icons from '../../../elements/icons'
 
 import '../style.scss'
 
@@ -97,16 +97,16 @@ const RelationCard = ({ checkboxState = checkboxMap, data = [] }) => {
                                     checkboxID={`checkbox-${item.id}`}
                                     checkbox={buildCheckboxMap({ checkboxID: `checkbox-${item.id}`, scope: 'modal' })} 
                                 />
-                                {iconMap['tag']}
+                                <Icons icon='icon-tag' />
                                 {item.name}
                             </label>
                             <div className='side-actions'>
                                 {(hasGoal || hasAssignment) &&
-                                    <ButtonAction classBtn='expand circle small' icon='arrowdown'
+                                    <ButtonAction classBtn='expand circle small' icon='icon-arrow-down'
                                         onClick={() => handleSetOpenCard(item)} />}
-                                <ButtonAction classBtn='edit circle small' icon='edit'
+                                <ButtonAction classBtn='edit circle small' icon='icon-edit'
                                     onClick={() => editTag(item.id)} visibility={visibilityMap('near-modalForm', { add: true })} />
-                                <ButtonAction classBtn='delete circle small' icon='remove'
+                                <ButtonAction classBtn='delete circle small' icon='icon-trash'
                                     pendingState={isRemoving}
                                     onClick={() => deleteTag(item.id)} />
                             </div>
@@ -116,7 +116,7 @@ const RelationCard = ({ checkboxState = checkboxMap, data = [] }) => {
                                 hasGoal &&
                                 <div className='content goal'>
                                     <label className='message'>
-                                        {iconMap['goal']}
+                                        <Icons icon='icon-goal' />
                                         {quantityGoalMessage}
                                     </label>
                                     <Goal source={goal} display={displayModesProps} />
@@ -126,7 +126,7 @@ const RelationCard = ({ checkboxState = checkboxMap, data = [] }) => {
                                 hasAssignment &&
                                 <div className='content assignment'>
                                     <label className='message'>
-                                        {iconMap['assignment']}
+                                        <Icons icon='icon-assignment' />
                                         {quantityAssigmentMessage}
                                     </label>
                                     <Assignment source={assignment} display={displayModesProps} />

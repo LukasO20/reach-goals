@@ -1,9 +1,8 @@
-import { iconMap } from '../../../utils/mapping/mappingIcons.jsx'
-
 import { cx } from '../../../utils/utils.js'
 
-import ButtonAction from '../../items/elements/button-action/index.jsx'
-import ModelSwitcher from '../../items/models/model-switcher/index.jsx'
+import ButtonAction from '../../items/elements/button-action'
+import Icons from '../../items/elements/icons'
+import ModelSwitcher from '../../items/models/model-switcher'
 
 import './style.scss'
 
@@ -34,7 +33,7 @@ const ModalCards = ({ data, icon, title, onShowModalCards, ...rest }) => {
         <div className='container-chart-cards-modal' {...rest}>
             <div className='head'>
                 <span className='title'>
-                    {iconMap[icon]}
+                    <Icons icon={`icon-${icon}`} />
                     <span>
                         {title}
                     </span>
@@ -47,7 +46,6 @@ const ModalCards = ({ data, icon, title, onShowModalCards, ...rest }) => {
                         display: displayModesProps,
                         source: model.data,
                     }
-
                     return <ModelSwitcher key={model.type} type={model.type} propsReference={propsReference} />
                 })}
             </div>

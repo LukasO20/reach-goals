@@ -2,8 +2,8 @@ import { Draggable } from '@adaptabletools/react-beautiful-dnd'
 
 import { checkboxMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 import { switchLayoutMap, visibilityMap, displayModesMap, buildCheckboxMap } from '../../../../utils/mapping/mappingUtils.js'
-import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
 
+import Icons from '../icons'
 import ButtonAction from '../button-action'
 import ButtonCheckbox from '../button-checkbox'
 import TagsPopover from '../tags-popover'
@@ -48,8 +48,6 @@ const Card = ({
 
             const validIconStatus = item.status !== 'progress'
 
-            const iconStatus = item.status === 'conclude' ? 'check' : item.status
-
             const isPending = !!(pendingState?.removing && (item.id || item.tagID) === pendingState?.removingVariables)
 
             const isSelected = !!selectedCheckboxList.includes(`checkbox-${itemID}`)
@@ -73,7 +71,7 @@ const Card = ({
             const renderEndDate = () => {
                 return (
                     <label className='info date'>
-                        {iconMap['schedule']}
+                        <Icons icon='icon-calendar-schedule' size='medium' />
                         <span>Ends on {moment(item.end).format('DD MMMM')}</span>
                     </label>
                 )
@@ -98,7 +96,7 @@ const Card = ({
                                 checkbox={buildCheckboxMap({ checkboxID: `checkbox-${itemID}`, scope: 'page' })}
                             />
                             <label>
-                                {iconMap[type]}
+                                <Icons icon={`icon-${type}`} />
                                 <label>{item.name}</label>
                             </label>
                         </div>
@@ -123,7 +121,7 @@ const Card = ({
                                                 layout: { modalName: 'modal-center', layoutName: 'form' }
                                             })}
                                             classBtn={`edit-${type} circle small`}
-                                            icon='edit'
+                                            icon='icon-edit'
                                         />
                                     </Tooltip>
                                 )}
@@ -134,12 +132,14 @@ const Card = ({
                                             onClick={() => clickFunction.delete(itemID)}
                                             visibility={visibilityMap(null)}
                                             classBtn={`remove-${type} circle small`}
-                                            icon='remove'
+                                            icon='icon-trash'
                                         />
                                     </Tooltip>
                                 )}
                                 {validIconStatus && (
-                                    <span className={`status ${item.status}`}>{iconMap[iconStatus]}</span>
+                                    <span className={`status ${item.status}`}>
+                                        <Icons icon={`icon-${item.status}`} size='medium' />
+                                    </span>
                                 )}
                             </div>
                         </div>

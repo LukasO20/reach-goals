@@ -1,4 +1,4 @@
-import { iconMap } from "../../../../utils/mapping/mappingIcons"
+import Icons from '../../../items/elements/icons'
 
 /** @typedef {import('../types.js').ModalDetailsTagRelationProps} Props */
 
@@ -13,7 +13,7 @@ const ModalDetailsTagRelation = ({ type, tags = [] }) => {
     return (
         <div className={`${type}-tags`}>
             <div className='head'>
-                {iconMap['tag']}
+                <Icons icon='icon-tag' />
                 <label>{labelTagHead}</label>
             </div>
             {hasTags && (

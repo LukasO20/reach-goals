@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider'
 
-import { iconMap } from '../../../../utils/mapping/mappingIcons'
 import { visibilityMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils'
 
 import { cx } from '../../../../utils/utils.js'
@@ -10,6 +9,7 @@ import ButtonAction from '../../../items/elements/button-action'
 import ModalDetailsGoal from './modal-details-goal.jsx'
 import ModalDetailsAssignment from './modal-details-assignment.jsx'
 import Line from '../../../../ui/items/elements/line'
+import Icons from '../../../items/elements/icons'
 
 import moment from 'moment'
 
@@ -53,7 +53,7 @@ const ModalDetailsContent = ({
             <div className='head'>
                 <div>
                     <span className='title'>
-                        {iconMap[type]}
+                        <Icons icon={`icon-${type}`} />
                         {name}
                     </span>
                     {hasEndDate && (
@@ -69,18 +69,18 @@ const ModalDetailsContent = ({
                         layout: { modalName: 'modal-center', layoutName: 'form' }
                     })}
                     classBtn='circle edit'
-                    icon='edit'
+                    icon='icon-edit'
                 />
                 <ButtonAction
                     visibility={visibilityMap(null)}
                     onClick={handleClickButtonAction}
                     classBtn='circle close'
-                    icon='close'
+                    icon='icon-close'
                 />
             </div>
             <div className={subHeadClass}>
                 <label className='label-status'>
-                    {iconMap[iconStatus]}
+                    <Icons icon={`icon-${iconStatus}`} />
                     {status}
                 </label>
             </div>

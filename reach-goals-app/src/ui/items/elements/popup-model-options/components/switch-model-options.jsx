@@ -37,13 +37,13 @@ const SwitchModelOptions = ({ type, onFilterTabs }) => {
         <>
             <ButtonAction
                 classBtn={buttonSwitchColumnGoalClass}
-                icon='goal'
+                icon='icon-goal'
                 title='goal'
                 onClick={() => handleButtonActionClick({ layout: 'goal' })}
             />
             <ButtonAction
                 classBtn={buttonSwitchColumnAssignmentClass}
-                icon='assignment'
+                icon='icon-assignment'
                 title='assignment'
                 onClick={() => handleButtonActionClick({ layout: 'assignment' })}
             />

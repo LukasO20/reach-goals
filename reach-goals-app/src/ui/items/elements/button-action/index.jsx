@@ -3,10 +3,10 @@ import { useManageModel } from '../../../../provider/model/manage-model-provider
 import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider'
 
 import { cx } from '../../../../utils/utils.js'
-import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
 import { resetManageModelMap, updateActiveModelMap, removeFromSelectedModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
 import Loading from '../loading'
+import Icons from '../icons'
 
 import './style.scss'
 
@@ -85,7 +85,7 @@ const ButtonAction = ({
             tabIndex='0'
             {...rest}
         >
-            {pendingState ? <Loading mode='inline' /> : icon && iconMap[icon]}
+            {pendingState ? <Loading mode='inline' /> : <Icons icon={icon} />}
             {title && (<span className='button-title'>{title}</span>)}
         </span>
     )

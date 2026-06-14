@@ -7,7 +7,7 @@
  * @property {string} classBtn
  * @property {string} [img]
  * @property {string} [imgAlt]
- * @property {string} [icon]
+ * @property {import('../icons/types.js').Icon} [icon]
  */
 
 export {}

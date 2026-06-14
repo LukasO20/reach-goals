@@ -5,11 +5,11 @@ import { useVisibility } from '../../../../../provider/ui/visibility-provider'
 import { useManageModel } from '../../../../../provider/model/manage-model-provider'
 
 import { visibilityMap, switchLayoutMap } from '../../../../../utils/mapping/mappingUtils.js'
-import { iconMap } from '../../../../../utils/mapping/mappingIcons.jsx'
 
 import { cx } from '../../../../../utils/utils.js'
 
 import ButtonAction from '../../button-action'
+import Icons from '../../icons'
 
 /** @typedef {import('../types.js').SearchItemTagProps} Props */
 
@@ -44,7 +44,7 @@ const SearchItemTag = ({ item, type, onButtonClick }) => {
         >
             <div className='head'>
                 <div className='item-info'>
-                    {iconMap[type]}
+                    <Icons icon={`icon-${type}`} />
                     <label>{item.name}</label>
                 </div>
                 {
@@ -71,7 +71,8 @@ const SearchItemTag = ({ item, type, onButtonClick }) => {
                                         }))
                                     }}
                                 >
-                                    {iconMap['assignment']}{assignment.name}
+                                    <Icons icon='icon-assignment' />
+                                    {assignment.name}
                                 </label>
                             )
                         )
@@ -90,7 +91,8 @@ const SearchItemTag = ({ item, type, onButtonClick }) => {
                                         }))
                                     }}
                                 >
-                                    {iconMap['goal']}{goal.name}
+                                    <Icons icon='icon-goal' />
+                                    {goal.name}
                                 </label>
                             )
                         )

@@ -33,7 +33,7 @@ const PopupModelOptions = ({ type, mode, typeModelOptions, typeSwitchModelOption
         <Tooltip title={mode === 'minimize' ? 'Expand' : 'Minimize'} positions={tooltipPositions}>
             <ButtonAction
                 classBtn='popup-minimize circle small'
-                icon='arrowdown'
+                icon='icon-arrow-down'
                 onClick={() => handleButtonActionClick({
                     type: 'visibility',
                     data: { layoutPopupModel: mode === 'minimize' ? null : 'minimize' }

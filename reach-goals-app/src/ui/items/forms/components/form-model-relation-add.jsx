@@ -1,7 +1,6 @@
 import { useManageModel } from '../../../../provider/model/manage-model-provider'
 
 import { visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
-import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
 
 import { cx } from '../../../../utils/utils.js'
 
@@ -9,6 +8,7 @@ import moment from 'moment'
 
 import ButtonAction from '../../elements/button-action' 
 import Line from '../../elements/line'
+import Icons from '../../elements/icons'
 
 /** @typedef {import('../types.js').ModelRelationAddProps} Props */
 
@@ -27,7 +27,7 @@ const FormModelRelationAdd = ({ type, children }) => {
                     <ButtonAction
                         unlinkGoal
                         classBtn='unlink-goal button-action plan-round add max-width small'
-                        icon='cancel'
+                        icon='icon-cancel'
                         title='Unlink'
                     />
                 )
@@ -36,7 +36,7 @@ const FormModelRelationAdd = ({ type, children }) => {
                     <ButtonAction
                         visibility={visibilityMap(`modal-model-list-${visibilityRelation[currentType ?? type]}`, { add: true })}
                         classBtn={`modal-model-list-${currentType} button-action plan-round add max-width small`}
-                        icon='plus'
+                        icon='icon-plus'
                         title='Add'
                     />
                 )
@@ -60,7 +60,8 @@ const FormModelRelationAdd = ({ type, children }) => {
                 <div className='head'>
                     <div className='item'>
                         <label>
-                            {iconMap['goal']}{tittleRelation}
+                            <Icons icon='icon-goal' />
+                            {tittleRelation}
                             {validGoal &&
                                 (<>
                                     <Line direction='vertical' />
@@ -84,7 +85,10 @@ const FormModelRelationAdd = ({ type, children }) => {
             <div className='item-forms assignment'>
                 <div className='head'>
                     <div className='item'>
-                        <label>{iconMap['assignment']}{tittleRelation}</label>
+                        <label>
+                            <Icons icon='icon-assignment' />
+                            {tittleRelation}
+                        </label>
                         {renderButtonAction()}
                     </div>
                     <div className='item'></div>
@@ -101,7 +105,10 @@ const FormModelRelationAdd = ({ type, children }) => {
             <div className='item-forms tag'>
                 <div className='head'>
                     <div className='item'>
-                        <label>{iconMap['tag']}tags</label>
+                        <label>
+                            <Icons icon='icon-tag' />
+                            tags
+                        </label>
                         {renderButtonAction()}
                     </div>
                     <div className='item'></div>

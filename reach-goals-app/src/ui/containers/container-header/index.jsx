@@ -42,13 +42,13 @@ const ContainerHeader = () => {
                         <ButtonAction
                             onClick={linkTagClick} visibility={visibilityMap(['modal-right', 'tag'])}
                             switchLayout={switchLayoutMap({ area: 'modal', layout: { modalName: 'modal-right', layoutName: 'tag' } })}
-                            classBtn='circle tag' icon='tag'
+                            classBtn='circle tag' icon='icon-tag'
                         />
                     </Tooltip>
                 </div>
                 <div className='item-nav'>
                     <Tooltip title='Themes'>
-                        <ButtonDropdown visibility={visibilityMap('btn-themes')} icon='themes'
+                        <ButtonDropdown visibility={visibilityMap('btn-themes')} icon='icon-themes'
                             classBtn={buttonDropdownClass} classBtnAction='circle' />
                     </Tooltip>
                 </div>

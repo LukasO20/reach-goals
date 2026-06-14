@@ -39,12 +39,12 @@ export const useButtonDropdown = ({ type, value, actions, isPageObjectives, isPa
             return [
                 {
                     title: 'Goal',
-                    icon: 'plus',
+                    icon: 'icon-plus',
                     onClick: () => handleActions('goal')
                 },
                 {
                     title: 'Assignment',
-                    icon: 'plus',
+                    icon: 'icon-plus',
                     onClick: () => handleActions('assignment')
                 }
             ]
@@ -68,7 +68,7 @@ export const useButtonDropdown = ({ type, value, actions, isPageObjectives, isPa
                         id: 'switch-columns-less',
                         classBtn: value.columns === 'column-2x2' ? 'active' : '',
                         title: `${value.columns === 'column-2x2' ? 'Remove' : 'Apply'} to columns 2x2`,
-                        icon: value.columns === 'column-2x2' ? 'columnslessoff' : 'columnsless',
+                        icon: value.columns === 'column-2x2' ? 'icon-columns-off' : 'icon-column-2x2',
                         onClick: () => handleActions({ 
                             type: 'visibility', 
                             data: { columns: value.columns === 'column-2x2' ? null : 'column-2x2' } 
@@ -78,7 +78,7 @@ export const useButtonDropdown = ({ type, value, actions, isPageObjectives, isPa
                         id: 'switch-columns-more',
                         classBtn: value.columns === 'column-3x3' ? 'active' : '',
                         title: `${value.columns === 'column-3x3' ? 'Remove' : 'Apply'} to columns 3x3`,
-                        icon: value.columns === 'column-3x3' ? 'columnsmoreoff' : 'columnsmore',
+                        icon: value.columns === 'column-3x3' ? 'icon-columns-off' : 'icon-column-3x3',
                         onClick: () => handleActions({ 
                             type: 'visibility', 
                             data: { columns: value.columns === 'column-3x3' ? null : 'column-3x3' } 
@@ -95,28 +95,28 @@ export const useButtonDropdown = ({ type, value, actions, isPageObjectives, isPa
                     id: 'hide-tags',
                     classBtn: value.tagsCard ? 'active' : '',
                     title: `${value.tagsCard ? 'Hide' : 'Show'} tags`,
-                    icon: 'tag',
+                    icon: 'icon-tag',
                     onClick: () => handleActions({ type: 'visibility', data: { tagsCard: !value.tagsCard } })
                 },
                 {
                     id: 'progress-status',
                     classBtn: value.status?.includes('progress') ? 'active' : '',
                     title: `${value.status?.includes('progress') ? 'Hide' : 'Show'} progress activity`,
-                    icon: 'progress',
+                    icon: 'icon-progress',
                     onClick: () => handleActions({ type: 'visibility', data: { status: ['progress'] } })
                 },
                 {
                     id: 'conclude-status',
                     classBtn: value.status?.includes('conclude') ? 'active' : '',
                     title: `${value.status?.includes('conclude') ? 'Hide' : 'Show'} conclude activity`,
-                    icon: 'check',
+                    icon: 'icon-conclude',
                     onClick: () => handleActions({ type: 'visibility', data: { status: ['conclude'] } })
                 },
                 {
                     id: 'cancel-status',
                     classBtn: value.status?.includes('cancel') ? 'active' : '',
                     title: `${value.status?.includes('cancel') ? 'Hide' : 'Show'} cancel activity`,
-                    icon: 'cancel',
+                    icon: 'icon-cancel',
                     onClick: () => handleActions({ type: 'visibility', data: { status: ['cancel'] } })
                 },
             ].filter(Boolean)

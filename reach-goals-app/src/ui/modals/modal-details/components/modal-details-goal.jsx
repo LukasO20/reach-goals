@@ -1,5 +1,6 @@
-import { iconMap } from '../../../../utils/mapping/mappingIcons.jsx'
 import { calculatePercent } from '../../../../utils/utils.js'
+
+import Icons from '../../../items/elements/icons'
 import ModalDetailsTagRelation from './modal-details-tag-relation.jsx'
 
 /** @typedef {import('../types.js').ModalDetailsGoalProps} Props */
@@ -25,7 +26,7 @@ const ModalDetailsGoal = ({ assignments, tags }) => {
                     return (
                         <div key={key} className={`bar ${key}`}>
                             <div className='head'>
-                                {iconMap['assignment']}
+                                <Icons icon='icon-assignment' />
                                 <label>{labelHead}</label>
                             </div>
                             <div className='body'>

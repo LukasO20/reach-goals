@@ -71,24 +71,24 @@ const ContainerMain = () => {
                         {isPageCalendar && (
                             <div className='month-picker'>
                                 <Tooltip title='Previous Month'>
-                                    <ButtonAction classBtn='month-previous small circle' icon='arrowleft' onClick={previousMonth} />
+                                    <ButtonAction classBtn='month-previous small circle' icon='icon-arrow-left' onClick={previousMonth} />
                                 </Tooltip>
                                 <label>{monthLabel}</label>
                                 <Tooltip title='Next Month'>
-                                    <ButtonAction classBtn='month-next small circle' icon='arrowright' onClick={nextMonth} />
+                                    <ButtonAction classBtn='month-next small circle' icon='icon-arrow-right' onClick={nextMonth} />
                                 </Tooltip>
                             </div>
                         )}
                         {isPageHome && (
                             <>
                                 <Tooltip title='Column Layout'>
-                                    <ButtonAction classBtn={`plan-round max-width goal ${isSwitchColumn ? 'active' : ''}`} icon='column'
+                                    <ButtonAction classBtn={`plan-round max-width goal ${isSwitchColumn ? 'active' : ''}`} icon='icon-columns'
                                         switchLayout={switchLayoutMap({ area: 'page', layout: { pageName: layout.page.pageName, layoutName: 'column' } })}
                                         onClick={handleButtonActionClick}
                                     />
                                 </Tooltip>
                                 <Tooltip title='Chart Layout'>
-                                    <ButtonAction classBtn={`plan-round max-width chart ${isSwichChart ? 'active' : ''}`} icon='chartbar'
+                                    <ButtonAction classBtn={`plan-round max-width chart ${isSwichChart ? 'active' : ''}`} icon='icon-pie-chart'
                                         switchLayout={switchLayoutMap({ area: 'page', layout: { pageName: layout.page.pageName, layoutName: 'chart' } })}
                                         onClick={handleButtonActionClick}
                                     />
@@ -111,7 +111,7 @@ const ContainerMain = () => {
                         <ButtonDropdown
                             visibility='dropdown-action-create'
                             classBtn='create'
-                            icon='plus'
+                            icon='icon-plus'
                             title='create'
                             options={createDropdown}
                         />
@@ -120,7 +120,7 @@ const ContainerMain = () => {
                                 <ButtonDropdown
                                     visibility='dropdown-visibility'
                                     classBtn='visibility'
-                                    icon='eye'
+                                    icon='icon-eye'
                                     title='visibility'
                                     options={visibilityDropdown}
                                     renderTopChildren={true}
@@ -131,7 +131,7 @@ const ContainerMain = () => {
                             <ButtonDropdown
                                 visibility='dropdown-action-more'
                                 classBtn='more'
-                                icon='ellipsisv'
+                                icon='icon-dots'
                                 options={moreDropdown}
                                 tooltip='More options'
                             />
