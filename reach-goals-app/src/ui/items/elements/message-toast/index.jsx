@@ -34,7 +34,7 @@ const MessageToast = () => {
         toastReady ?
             <div className='message-toast' data-slot='message-toast'>
                 <span className='title'>{title.toast}</span>
-                <ButtonAction classBtn='button-action circle close' icon='close' onClick={hideToast} />
+                <ButtonAction classBtn='circle close' icon='icon-close' onClick={hideToast} />
             </div>
             : null
     )

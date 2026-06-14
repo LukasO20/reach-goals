@@ -38,7 +38,7 @@ const ModalModelList = ({ title, type }) => {
             <div className='head'>
                 <h2>{title}</h2>
                 <ButtonAction visibility={visibilityMap(`modal-model-list-${type}`, { remove: true })}
-                    classBtn='button-action circle close' icon='close' />
+                    classBtn='circle close' icon='icon-close' />
             </div>
             <div className='body scrollable'>
                 {isLoading ? <Loading mode='block' /> : <ModelSwitcher type={type} selectableModel={true} propsReference={propsReference} />}

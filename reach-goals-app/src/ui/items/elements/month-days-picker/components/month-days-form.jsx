@@ -107,7 +107,7 @@ const MonthDaysForm = ({ model, startDate, setModel, saveGoal, saveAssignment, p
                 pendingState={pendingState} 
                 onClick={handleSubmit} 
                 classBtn='plan max-width save' 
-                icon='save' 
+                icon='icon-save' 
                 title='Create' 
             />
         </div>

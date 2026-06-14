@@ -38,7 +38,7 @@ const ModalCards = ({ data, icon, title, onShowModalCards, ...rest }) => {
                         {title}
                     </span>
                 </span>
-                <ButtonAction classBtn='circle close' icon='close' onClick={() => onShowModalCards(false)} />
+                <ButtonAction classBtn='circle close' icon='icon-close' onClick={() => onShowModalCards(false)} />
             </div>
             <div className={chartCardsModalBodyClass}>
                 {dataRender.map((model) => {

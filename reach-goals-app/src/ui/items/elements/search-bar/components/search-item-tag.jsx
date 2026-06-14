@@ -50,7 +50,7 @@ const SearchItemTag = ({ item, type, onButtonClick }) => {
                 {
                     (hasAssignmentRelation || hasGoalRelation) && (
                         <div className='item-action'>
-                            <ButtonAction icon='arrowdown' classBtn='button-action circle small expand' onClick={() => setOpen((prev) => !prev)} key={item.id} />
+                            <ButtonAction icon='icon-arrow-down' classBtn='circle small expand' onClick={() => setOpen((prev) => !prev)} key={item.id} />
                         </div>
                     )
                 }

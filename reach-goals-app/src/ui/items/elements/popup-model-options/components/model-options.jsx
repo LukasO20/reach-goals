@@ -53,7 +53,7 @@ const ModelOptions = ({ type }) => {
                         title='cancel' onClick={() => onClickStatusModel('cancel')} pendingState={isSavingStatusCancel} />
                 </>
             )}
-            <ButtonAction classBtn='button-action delete plan-round' icon='icon-trash' title='delete'
+            <ButtonAction classBtn='delete plan-round' icon='icon-trash' title='delete'
                 disable={isDisable && !removingModels} pendingState={!!removingModels} onClick={onClickRemoveModels} />
         </>
     )
