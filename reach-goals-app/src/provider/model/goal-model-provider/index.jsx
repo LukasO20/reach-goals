@@ -18,7 +18,7 @@ import { createQueryFn, validFilter } from '../../../utils/utilsProvider.js'
 const GoalModelContext = createContext()
 
 export const GoalModelProvider = ({ children }) => {
-  const { model: { filter: filterModel }, updateDataModel } = useManageModel()
+  const { model: { filter: filterModel }, updateDataModel, resetManageModel } = useManageModel()
   const { update } = useTitle()
 
   const queryClient = useQueryClient()
@@ -26,7 +26,7 @@ export const GoalModelProvider = ({ children }) => {
   const filterPage = filterModel.goal.page
   const filterModal = filterModel.goal.modal
 
-  const queryKeyPage = ['goals', 'page', filterPage]
+  const queryKeyPage = ['goal', 'page', filterPage]
   const queryKeyModal = ['goal', 'modal', filterModal]
 
   const {
@@ -53,9 +53,13 @@ export const GoalModelProvider = ({ children }) => {
 
   const saveMutation = useMutation({
     mutationFn: (model) => model.id ? goalService.updateGoal(model) : goalService.addGoal(model),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeyPage })
-      update({ toast: `Goal save with success` })
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['goal'] })
+      update({ toast: 'Goal save with success' })
+      resetManageModel({ keys: ['activeModel', 'mainModelID'] })
+
+      const shouldInvalidateTagQueries = data.tags?.length > 0
+      if (shouldInvalidateTagQueries) queryClient.invalidateQueries({ queryKey: ['tag', 'page'] })
     }
   })
 
@@ -111,6 +115,7 @@ export const GoalModelProvider = ({ children }) => {
     mutationFn: (id) => goalService.deleteGoal(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeyPage })
+      queryClient.invalidateQueries({ queryKey: ['tag', 'page'] })
       update({ toast: `Goal was deleted` })
     },
   })

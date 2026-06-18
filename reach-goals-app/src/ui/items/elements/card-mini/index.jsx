@@ -55,8 +55,6 @@ const CardMini = ({
 
             const hasSideActions = isDisplayActionEdit || isDisplayActionRemove || isDisplayActionDelete
 
-            const iconStatus = item.status === 'conclude' ? 'check' : item.status
-
             const validIconStatus = item.status && item.status !== 'progress'
 
             const cardMiniClass = cx(`
@@ -125,7 +123,7 @@ const CardMini = ({
                                             <ButtonAction
                                                 onClick={() => clickFunction.aux(item, type)}
                                                 classBtn={`remove-${type}-dom button-action text-icon circle`}
-                                                icon='close'
+                                                icon='icon-close'
                                             />
                                         )}
                                     </>

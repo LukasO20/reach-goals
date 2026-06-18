@@ -17,7 +17,7 @@ import { createQueryFn, validFilter } from '../../../utils/utilsProvider.js'
 export const TagModelContext = createContext()
 
 export const TagModelProvider = ({ children }) => {
-    const { model: { filter: filterModel }, updateDataModel } = useManageModel()
+    const { model: { filter: filterModel }, updateDataModel, resetManageModel } = useManageModel()
     const { update } = useTitle()
 
     const queryClient = useQueryClient()
@@ -25,8 +25,8 @@ export const TagModelProvider = ({ children }) => {
     const filterPage = filterModel.tag.page
     const filterModal = filterModel.tag.modal
 
-    const queryKeyPage = ['tags', 'page', filterPage]
-    const queryKeyModal = ['tags', 'modal', filterModal]
+    const queryKeyPage = ['tag', 'page', filterPage]
+    const queryKeyModal = ['tag', 'modal', filterModal]
 
     const {
         data: pageData,
@@ -54,8 +54,11 @@ export const TagModelProvider = ({ children }) => {
         mutationFn: (model) =>
             model.id ? tagService.updateTag(model) : tagService.addTag(model),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: queryKeyPage })
-            update({ toast: `Tag save with success` })
+            queryClient.invalidateQueries({ queryKey: ['tag'] })
+            queryClient.invalidateQueries({ queryKey: ['goal'] })
+            queryClient.invalidateQueries({ queryKey: ['assignment'] })
+            update({ toast: 'Tag save with success' })
+            resetManageModel({ keys: ['activeModel', 'mainModelID'] })
         },
     })
 
@@ -63,6 +66,8 @@ export const TagModelProvider = ({ children }) => {
         mutationFn: (id) => tagService.deleteTag(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeyPage })
+            queryClient.invalidateQueries({ queryKey: ['goal'] })
+            queryClient.invalidateQueries({ queryKey: ['assignment'] })
             update({ toast: `Tag was deleted` })
         },
     })

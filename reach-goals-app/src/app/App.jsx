@@ -13,8 +13,8 @@ import ModalSwitcherRight from '../ui/modals/modal-switcher-right.jsx'
 import './App.scss'
 
 const App = () => (
-    <div className='container-app'>
-        <BrowserRouter>
+    <BrowserRouter>
+        <div className='container-app'>
             <ProviderApp>
                 <Navigate />
                 <ContainerHeader />
@@ -25,8 +25,8 @@ const App = () => (
                 <ModalSwitcherCenter />
                 <ModalSwitcherRight />
             </ProviderApp>
-        </BrowserRouter>
-    </div>
+        </div>
+    </BrowserRouter>
 )
 
 export default App

@@ -18,7 +18,7 @@ import { createQueryFn, validFilter } from '../../../utils/utilsProvider.js'
 const AssignmentModelContext = createContext()
 
 export const AssignmentModelProvider = ({ children }) => {
-    const { model: { filter: filterModel }, updateDataModel } = useManageModel()
+    const { model: { filter: filterModel }, updateDataModel, resetManageModel } = useManageModel()
     const { update } = useTitle()
 
     const queryClient = useQueryClient()
@@ -26,7 +26,7 @@ export const AssignmentModelProvider = ({ children }) => {
     const filterPage = filterModel.assignment.page
     const filterModal = filterModel.assignment.modal
 
-    const queryKeyPage = ['assignments', 'page', filterPage]
+    const queryKeyPage = ['assignment', 'page', filterPage]
     const queryKeyModal = ['assignment', 'modal', filterModal]
 
     const {
@@ -53,9 +53,13 @@ export const AssignmentModelProvider = ({ children }) => {
 
     const saveMutation = useMutation({
         mutationFn: (model) => model.id ? assignmentService.updateAssignment(model) : assignmentService.addAssignment(model),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: queryKeyPage })
-            update({ toast: `Assignment save with success` })
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: ['assignment'] })
+            update({ toast: 'Assignment save with success' })
+            resetManageModel({ keys: ['activeModel', 'mainModelID'] })
+
+            const shouldInvalidateTagQueries = data.tags?.length > 0
+            if (shouldInvalidateTagQueries) queryClient.invalidateQueries({ queryKey: ['tag', 'page'] })
         },
     })
 
@@ -111,6 +115,7 @@ export const AssignmentModelProvider = ({ children }) => {
         mutationFn: (id) => assignmentService.deleteAssignment(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeyPage })
+            queryClient.invalidateQueries({ queryKey: ['tag', 'page'] })
             update({ toast: `Assignment was deleted` })
         },
     })

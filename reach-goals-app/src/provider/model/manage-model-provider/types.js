@@ -84,7 +84,7 @@
  *  'selectedModel' |
  *  'dataModel' |
  *  'filter' |
- *  'formModel'
+ *  'activeModel'
  * >} [keys]
  */
 

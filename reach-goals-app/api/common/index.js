@@ -55,7 +55,7 @@ const handler = async (req, res) => {
 
 const searchResults = async (params = '') => {
 
-    if (!!params) {
+    if (params) {
         const fieldsCommon = { name: { contains: params, mode: 'insensitive' } }
 
         const goals = await prisma.goal.findMany({
@@ -124,23 +124,53 @@ const updateModelDragDrop = async (data = [], typeModel = '') => {
 const removeModels = async (data = []) => {
 
     try {
-        const removedGoal = await prisma.goal.deleteMany({
-            where: { id: { in: data } }
-        })
+        const [
+            removedTagOnGoal,
+            removedTagOnAssignment,
+            removedTags,
+            removedGoals,
+            removedAssignments
+        ] = await prisma.$transaction([
+            prisma.tagOnGoal.deleteMany({
+                where: {
+                    goalID: { in: data }
+                }
+            }),
+            prisma.tagOnAssignment.deleteMany({
+                where: {
+                    assignmentID: { in: data }
+                }
+            }),
+            prisma.tag.deleteMany({
+                where: {
+                    id: { in: data }
+                }
+            }),
+            prisma.goal.deleteMany({
+                where: {
+                    id: { in: data }
+                }
+            }),
+            prisma.assignment.deleteMany({
+                where: {
+                    id: { in: data }
+                }
+            })
+        ])
 
-        const removedAssignment = await prisma.assignment.deleteMany({
-            where: { id: { in: data } }
-        })
+        const totalDeleted = [
+            removedTagOnGoal,
+            removedTagOnAssignment,
+            removedTags,
+            removedGoals,
+            removedAssignments
+        ].reduce((sum, item) => sum + item.count, 0)
 
-        const removedTag = await prisma.tag.deleteMany({
-            where: { id: { in: data } }
-        })
-
-        const isTrue = !!removedGoal || !!removedAssignment || !!removedTag
-        return isTrue
-    }
-    catch (err) {
-        return console.error('Error removing models:', err)
+        return totalDeleted > 0
+        
+    } catch (error) {
+        console.error('Error removing models:', error)
+        throw error
     }
 }
 

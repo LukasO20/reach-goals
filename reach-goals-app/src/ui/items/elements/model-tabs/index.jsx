@@ -17,11 +17,11 @@ import './style.scss'
  */
 const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, filterTabs, onFilterTabs, loading }) => {
     const { data: { visibility } } = useSwitchLayout()
-    const { page, modal } = filterTabs?.[type] ?? {}
+    const { page } = filterTabs?.[type] ?? {}
 
-    const isValidFilterTabsValue = !!page || !!modal
+    const isValidFilterTabsValue = !!page
 
-    const filterButtonActive = isValidFilterTabsValue ? Object.keys(modal ?? page)[0] : null
+    const filterButtonActive = isValidFilterTabsValue ? Object.keys(page)[0] : null
 
     const columnsUserConfig = type !== 'tag' ? visibility.columns : null
 
@@ -30,7 +30,7 @@ const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, filterTab
         ${columnsUserConfig}
         ${type}
         ${classModelTabs}
-        `)
+    `)
 
     const handleFilterClick = (filter) => {
         const filerKey = Object.keys(filter)[0]
@@ -43,13 +43,6 @@ const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, filterTab
     //TODO: FIND A GOOD WAY TO CHECK DATA TO AVOID STYLE CLASS VALIDATIONS
     const shouldRenderHeader = !classModelTabs?.includes('empty')
 
-    const buttonActionClass = cx(`
-        plan-round 
-        max-width 
-        small 
-        model-tabs
-        `)
-
     return (
         <div className={modelTabsClass}>
             {shouldRenderHeader && (
@@ -60,12 +53,20 @@ const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, filterTab
                             modelTabsMap[type]?.map((tab, index) => {
                                 const currentButton = Object.keys(tab.filter)[0]
                                 const isNullFilter = !filterButtonActive && tab.label.includes('every')
-                                const activeButton = currentButton === filterButtonActive ? 'active' : isNullFilter ? 'active' : ''
+                                const activeButton =  isNullFilter ? 'active' : currentButton === filterButtonActive ? 'active' : null
+
+                                const buttonActionClass = cx(`
+                                    plan-round 
+                                    max-width 
+                                    small 
+                                    model-tabs
+                                    ${activeButton}
+                                `)
 
                                 return (
                                     <ButtonAction
                                         key={index}
-                                        classBtn={`${buttonActionClass} ${activeButton}`}
+                                        classBtn={buttonActionClass}
                                         title={tab.label}
                                         onClick={() => { handleFilterClick(tab.filter) }}
                                     />

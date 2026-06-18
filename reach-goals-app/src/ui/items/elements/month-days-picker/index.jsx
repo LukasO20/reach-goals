@@ -6,6 +6,8 @@ import { useSwitchMonths } from '../../../../provider/ui/switch-months-provider'
 import { weekNames } from '../../../../utils/reference.js'
 import { switchLayoutMap, visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
 
+import { cx } from '../../../../utils/utils.js'
+
 import CardMini from '../card-mini'
 import MonthsDaysTitle from './components/month-days-title.jsx'
 
@@ -93,8 +95,16 @@ const MonthDaysPicker = ({ data }) => {
                             data: { goal: goalsOnDay, assignment: assignmentsOnDay }
                         }
 
+                        const dayClass = cx(
+                            `day
+                            ${isToday ? 'today' : isApproximateDay ? 'approximate' : ''}`
+                        )
+
                         return (
-                            <div key={day.toISOString()} className={`day ${isToday ? 'today' : isApproximateDay ? 'approximate' : ''}`}>
+                            <div 
+                                key={day.toISOString()} 
+                                className={dayClass}
+                            >
                                 <MonthsDaysTitle {...monthsDaysTitlePropsReference} />
                                 {
                                     assignmentsOnDay.length > 0 && isShowAssignment && (

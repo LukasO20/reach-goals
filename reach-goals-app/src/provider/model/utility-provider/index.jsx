@@ -32,7 +32,7 @@ export const UtilityProvider = ({ children }) => {
             queryClient.invalidateQueries({ queryKey: queryKeyGoalPage })
             queryClient.invalidateQueries({ queryKey: queryKeyAssignmentPage })
             resetCheckbox({ keys: ['page'] })
-            update({ toast: `Status save with success` })
+            update({ toast: 'Status save with success' })
         }
     })
 
