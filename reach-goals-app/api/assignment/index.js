@@ -26,7 +26,6 @@ const handler = async (req, res) => {
         }
 
         const formattedData = formatObject(rawObject)
-        console.log('ASSIGN TO ADD - ', formattedData)
         const assignment = await addAssignment(formattedData)
 
         try {

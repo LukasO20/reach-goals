@@ -26,7 +26,6 @@ const handler = async (req, res) => {
 
         const formattedData = formatObject(rawObject)
         const tag = await updateTag(tagID, formattedData)
-        console.log('Tag TO UPDATE - ', formattedData)
 
         if (tag) {
             return res.status(200).json(tag)

@@ -34,8 +34,6 @@ const handler = async (req, res) => {
         }
 
         const formattedData = formatObject(rawObject)
-        console.log('Assignment RECEVEID - ', rawObject)
-        console.log('Assignment TO UPDATE - ', formattedData)
 
         await handleUpdateTagOnAssignment(assignmentID, tags)
         const assignment = await updateAssignment(assignmentID, formattedData)

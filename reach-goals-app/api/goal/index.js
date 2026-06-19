@@ -27,7 +27,6 @@ const handler = async (req, res) => {
         }
 
         const formattedData = formatObject(rawObject)
-        console.log('Goal TO ADD - ', formattedData)
         const goal = await addGoal(formattedData)
 
         try {

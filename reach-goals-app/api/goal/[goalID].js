@@ -35,8 +35,6 @@ const handler = async (req, res) => {
         }
 
         const formattedData = formatObject(rawObject)
-        console.log('Goal RECEVEID - ', rawObject)
-        console.log('Goal TO UPDATE - ', formattedData)
 
         await handleUpdateTagOnGoal(goalID, tags)
         const goal = await updateGoal(goalID, formattedData)

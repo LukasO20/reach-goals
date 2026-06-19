@@ -13,7 +13,6 @@ const handler = async (req, res) => {
         const rawObject = { name, color }
 
         const formattedData = formatObject(rawObject)
-        console.log('Tag TO ADD - ', formattedData)
         const tag = await addTag(formattedData)
 
         try {
