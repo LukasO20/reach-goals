@@ -30,6 +30,10 @@ import IconColor from './icon-color'
 import IconColumn2x2 from './icon-column-2x2.jsx'
 import IconColumn3x3 from './icon-column-3x3.jsx'
 import IconColumnsOff from './icon-columns-off.jsx'
+import IconCancelOff from './icon-cancel-off.jsx'
+import IconProgressOff from './icon-progress-off.jsx'
+import IconConcludeOff from './icon-conclude-off.jsx'
+import IconTagOff from './icon-tag-off.jsx'
 
 export const iconMap = {
     'icon-goal': IconGoal,
@@ -63,5 +67,9 @@ export const iconMap = {
     'icon-color': IconColor,
     'icon-column-2x2': IconColumn2x2,
     'icon-column-3x3': IconColumn3x3,
-    'icon-columns-off': IconColumnsOff
+    'icon-columns-off': IconColumnsOff,
+    'icon-cancel-off': IconCancelOff,
+    'icon-progress-off': IconProgressOff,
+    'icon-conclude-off': IconConcludeOff,
+    'icon-tag-off': IconTagOff
 }

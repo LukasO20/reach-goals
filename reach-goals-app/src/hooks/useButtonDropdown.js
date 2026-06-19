@@ -95,28 +95,28 @@ export const useButtonDropdown = ({ type, value, actions, isPageObjectives, isPa
                     id: 'hide-tags',
                     classBtn: value.tagsCard ? 'active' : '',
                     title: `${value.tagsCard ? 'Hide' : 'Show'} tags`,
-                    icon: 'icon-tag',
+                    icon: value.tagsCard ? 'icon-tag' : 'icon-tag-off',
                     onClick: () => handleActions({ type: 'visibility', data: { tagsCard: !value.tagsCard } })
                 },
                 {
                     id: 'progress-status',
                     classBtn: value.status?.includes('progress') ? 'active' : '',
                     title: `${value.status?.includes('progress') ? 'Hide' : 'Show'} progress activity`,
-                    icon: 'icon-progress',
+                    icon: value.status?.includes('progress') ? 'icon-progress' : 'icon-progress-off',
                     onClick: () => handleActions({ type: 'visibility', data: { status: ['progress'] } })
                 },
                 {
                     id: 'conclude-status',
                     classBtn: value.status?.includes('conclude') ? 'active' : '',
                     title: `${value.status?.includes('conclude') ? 'Hide' : 'Show'} conclude activity`,
-                    icon: 'icon-conclude',
+                    icon: value.status?.includes('conclude') ? 'icon-conclude' : 'icon-conclude-off',
                     onClick: () => handleActions({ type: 'visibility', data: { status: ['conclude'] } })
                 },
                 {
                     id: 'cancel-status',
                     classBtn: value.status?.includes('cancel') ? 'active' : '',
                     title: `${value.status?.includes('cancel') ? 'Hide' : 'Show'} cancel activity`,
-                    icon: 'icon-cancel',
+                    icon: value.status?.includes('cancel') ? 'icon-cancel' : 'icon-cancel-off',
                     onClick: () => handleActions({ type: 'visibility', data: { status: ['cancel'] } })
                 },
             ].filter(Boolean)
