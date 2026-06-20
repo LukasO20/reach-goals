@@ -10,6 +10,8 @@ import EmptyStateCreate from '../../items/elements/empty-state/components/empty-
 
 import emptyCalendarImg from '../../../assets/empty-activity-calendar.svg'
 
+import './style.scss'
+
 const Calendar = () => {
     const { page: { loading: loadingGoal, data: dataGoal } } = useGoalProvider()
     const { page: { loading: loadingAssignment, data: dataAssignment } } = useAssignmentProvider()

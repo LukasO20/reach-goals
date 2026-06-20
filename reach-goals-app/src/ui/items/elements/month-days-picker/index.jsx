@@ -50,7 +50,7 @@ const MonthDaysPicker = ({ data }) => {
     const isShowGoal = typeLayout === 'goal' || typeLayout === 'all-activities'
 
     return (
-        <div className={`calendar ${typeLayout}`}>
+        <div className={`calendar-container ${typeLayout}`}>
             <div className='head'>
                 {
                     weekNames.map(week => {

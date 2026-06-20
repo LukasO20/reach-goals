@@ -46,13 +46,13 @@ const ChartBar = ({ data, quantity, showLegend }) => {
 
     return (
         <div className='chart-bar' ref={containerRef}>
-            <div className='head'>
-                {showLegend && (
+            {showLegend && (
+                <div className='head'>
                     <label className='label-activity'>
                         {quantity} {activityLabel}
                     </label>
-                )}
-            </div>
+                </div>
+            )}
             <div className='body'>
                 {
                     data.map((item) => {

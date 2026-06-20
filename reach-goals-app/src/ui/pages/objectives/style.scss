@@ -70,3 +70,28 @@
         }
     }
 }
+
+/* MEDIA QUERY */
+@media screen and (min-width: 1920px) {
+
+    .model-tabs {
+
+        &.objectives {
+            height: $dimensions-layout-h-md;
+            width: $dimensions-layout-w-md;
+            align-self: center;
+        }
+    }
+}
+
+@media screen and (min-width: 2560px) {
+
+    .model-tabs {
+
+        &.objectives {
+            height: $dimensions-layout-h-lg;
+            width: $dimensions-layout-w-lg;
+            align-self: center;
+        }
+    }
+}

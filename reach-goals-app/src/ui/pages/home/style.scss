@@ -113,12 +113,39 @@
                 animation: $animation-fade-in 0.2s linear forwards;
             }
 
-            /* DPUBLE APPLY */
+            /* DOUBLE APPLY */
 
             .chart-bar,
             .chart-pie {
                 width: 100%;
             }
+        }
+    }
+}
+
+/* MEDIA QUERY */
+@media screen and (min-width: 1920px) {
+
+    .chart,
+    .column {
+
+        &.home {
+            height: $dimensions-layout-h-md;
+            width: $dimensions-layout-w-md;
+            align-self: center;
+        }
+    }
+}
+
+@media screen and (min-width: 2560px) {
+
+    .chart,
+    .column {
+
+        &.home {
+            height: $dimensions-layout-h-lg;
+            width: $dimensions-layout-w-lg;
+            align-self: center;
         }
     }
 }

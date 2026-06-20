@@ -6,6 +6,9 @@
     gap: $spacing-gap-sm;
 
     >.head {
+        padding: $spacing-padding-sm;
+        border-radius: $dimensions-border-radius-sm;
+        background-color: $color-complementary-p;
 
         .label-activity {
             font-weight: 600;
