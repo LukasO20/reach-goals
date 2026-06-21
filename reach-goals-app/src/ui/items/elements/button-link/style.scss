@@ -8,8 +8,40 @@
     transition: $animation-transition-st;
     cursor: pointer;
 
+    * {
+        color: $color-complementary-s;
+    }
+
+    .icon-st {
+        width: 1.25rem;
+    }
+
+    .button-title {
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        animation: $animation-fade-in 0.25s linear forwards;
+    }
+
     &.circle {
-        border-radius: 50%;
+        border-radius: $spacing-padding-xlg;
+    }
+
+    &.plan-round {
+        border-radius: $dimensions-border-radius-st;
+        padding: $spacing-padding-mini $spacing-padding-st;
+        justify-content: start;
+        gap: $spacing-gap-sm;
+        font-weight: 600;
+    }
+
+    &.logo {
+        padding: $spacing-padding-mini;
+    }
+
+    &.home {
+        background-color: $color-accent-p-15;
     }
 
     /* DOUBLE APPLY */
@@ -17,20 +49,23 @@
     &.active {
         background-color: $color-complementary-s;
 
-        .icon-st {
+        * {
             color: $color-white;
         }
 
-        &.home {
-            background-color: $color-complementary-p-70;
+        &.logo {
+
+            * {
+                color: $color-complementary-s;
+            }
         }
-    }
 
-    &.home {
-        padding: 0.15rem;
+        &.home {
+            background-color: $color-accent-p;
 
-        &.active {
-            background-color: $color-accent-p-15;
+            * {
+                color: $color-white;
+            }
         }
     }
 
@@ -39,7 +74,7 @@
         background-color: $color-complementary-s-30;
 
         &.home {
-            background-color: $color-accent-p-05;
+            background-color: $color-accent-p-50;
         }
     }
 }

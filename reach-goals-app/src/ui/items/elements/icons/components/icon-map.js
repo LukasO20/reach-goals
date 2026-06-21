@@ -34,6 +34,7 @@ import IconCancelOff from './icon-cancel-off.jsx'
 import IconProgressOff from './icon-progress-off.jsx'
 import IconConcludeOff from './icon-conclude-off.jsx'
 import IconTagOff from './icon-tag-off.jsx'
+import IconHome from './icon-home.jsx'
 
 export const iconMap = {
     'icon-goal': IconGoal,
@@ -71,5 +72,6 @@ export const iconMap = {
     'icon-cancel-off': IconCancelOff,
     'icon-progress-off': IconProgressOff,
     'icon-conclude-off': IconConcludeOff,
-    'icon-tag-off': IconTagOff
+    'icon-tag-off': IconTagOff,
+    'icon-home': IconHome
 }

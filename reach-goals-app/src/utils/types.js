@@ -22,6 +22,7 @@
  * @property {StatusType[]} status
  * @property {ColumnsType} columns
  * @property {boolean} tagsCard
+ * @property {'compact' | 'expand'} navigateBar
  */
 
 /* MODEL-PROPS */

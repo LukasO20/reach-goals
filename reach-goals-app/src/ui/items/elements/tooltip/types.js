@@ -12,8 +12,8 @@
 /**
  * @typedef {Object} TooltipProps
  * @property {string} title
- * @property {PositionsParams} positions
- * @property {number} delay
+ * @property {PositionsParams} [positions]
+ * @property {number} [delay]
  */
 
 export {}

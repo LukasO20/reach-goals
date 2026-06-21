@@ -8,6 +8,7 @@
  * @property {string} [img]
  * @property {string} [imgAlt]
  * @property {import('../icons/types.js').Icon} [icon]
+ * @property {string} [title]
  */
 
 export {}

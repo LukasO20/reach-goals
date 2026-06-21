@@ -1,24 +1,23 @@
-
-
 .container-navigate {
+    display: flex;
+    flex-direction: column;
     background-color: $color-complementary-p-50;
     height: 100dvh;
 
     .nav {
+        position: relative;
         display: flex;
         flex-direction: column;
-        height: 100%;
-        gap: $spacing-gap-mini;
+        gap: $spacing-gap-st;
+        padding: 0rem $spacing-padding-mini;
+        flex-grow: 1;
+        width: 5rem;
+        transition: $animation-transition-st;
 
         .item-nav {
             display: flex;
             justify-content: center;
             align-items: center;
-
-            &:not(:first-child) {
-                border-radius: 0.5em;
-                padding: 0.35em;
-            }
 
             &:first-child {
                 height: 3.1rem;
@@ -29,17 +28,54 @@
                 }
             }
 
-            .button-nav {
-                display: flex;
-                justify-content: center;
-                width: max-content;
+            .button-link {
 
-                &.home {
+                &.logo {
+                    background: transparent;
+                }
+            }
+        }
 
-                    img {
-                        width: 2.05vw;
-                        margin: 1em 0em;
+        .button-navigate-bar {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(100%, -50%);
+            background-color: $color-complementary-s-70;
+            z-index: 1;
+
+            .icon-st {
+                color: $color-white;
+            }
+
+            &:hover {
+                background-color: $color-complementary-s;
+            }
+
+            &:active {
+                background-color: $color-complementary-s-50;
+            }
+        }
+
+        &.expanded {
+            width: $dimensions-w-xmd;
+
+            .item-nav {
+
+                .button-link {
+                    width: $dimensions-w-golden-md;
+
+                    &.logo {
+                        padding: 0rem $spacing-padding-st;
                     }
+                }
+            }
+
+            .button-navigate-bar {
+                left: 82.5%;
+
+                .icon-st {
+                    transform: scaleX(-1);
                 }
             }
         }

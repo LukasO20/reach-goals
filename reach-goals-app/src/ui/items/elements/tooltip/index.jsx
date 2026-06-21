@@ -21,12 +21,8 @@ const Tooltip = ({
         top: 'calc(100% + .5rem)',
         transform: 'translateX(-50%)',
     }
-
-    if (!title?.trim()) return <>{children}</>
     
-    const handleShow = () => {
-        timeoutRef.current = setTimeout(() => { setVisible(true) }, delay)
-    }
+    const handleShow = () => timeoutRef.current = setTimeout(() => { setVisible(true) }, delay)
 
     const handleHide = () => {
         clearTimeout(timeoutRef.current)
@@ -34,6 +30,7 @@ const Tooltip = ({
     }
 
     const hasPosition = Object.keys(positions).length > 0
+    const hasTitle = !!title?.trim()
     const positionsValue = hasPosition ? positions : defaultPosition
 
     return (
@@ -45,7 +42,7 @@ const Tooltip = ({
             onBlur={handleHide}
         >
             {children}
-            {visible && (
+            {visible && hasTitle && (
                 <div
                     className='tooltip-content'
                     style={{ ...positionsValue }}

@@ -78,7 +78,7 @@
     }
 
     &.circle {
-        border-radius: 50%;
+        border-radius: $spacing-padding-xlg;
 
         &.medium {
             height: 2rem;

@@ -136,7 +136,7 @@ export const displayModesMap = {
 
 export const persistedUserConfigKeysMap = {
     orderning: 'model-orderning',
-    visibility: 'ui-visibility'
+    visibility: 'ui-visibility',
 }
 
 /** @type {GlobalTypes} */
@@ -151,5 +151,6 @@ export const persistedUserConfigMap = {
         layoutPopupModel: null,
         columns: null,
         tagsCard: true,
-    }
+        navigateBar: 'compact'
+    },
 }

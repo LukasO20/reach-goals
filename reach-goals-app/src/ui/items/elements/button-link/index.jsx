@@ -20,7 +20,8 @@ const ButtonLink = ({
     classBtn,
     img,
     imgAlt,
-    icon
+    icon,
+    title
 }) => {
     const navigate = useNavigate()
     const { toggleVisibility } = useVisibility()
@@ -36,9 +37,16 @@ const ButtonLink = ({
         navigate(`${link || '/'}`)
     }
 
+    const hasTitle = !!title
+
     return (
         <span className={`button-link ${classBtn}`} onClick={handleClick}>
             {img ? <img src={img} alt={imgAlt} /> : <Icons icon={icon} />}
+            {hasTitle && (
+                <span className='button-title'>
+                    {title}
+                </span>
+            )}
         </span>
     )
 }
