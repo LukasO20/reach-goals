@@ -4,6 +4,7 @@ import { checkboxMap } from './mappingUtilsProvider.js'
 /**
  * @typedef {Object} GlobalTypes
  * @property {import('../types.js').VisibilityConfigProps} visibility
+ * @property {import('../types.js').ThemeType} theme
  */
 
 export const visibilityMap = (classes, operator = {}) => {
@@ -137,6 +138,7 @@ export const displayModesMap = {
 export const persistedUserConfigKeysMap = {
     orderning: 'model-orderning',
     visibility: 'ui-visibility',
+    theme: 'ui-theme'
 }
 
 /** @type {GlobalTypes} */
@@ -153,4 +155,5 @@ export const persistedUserConfigMap = {
         tagsCard: true,
         navigateBar: 'compact'
     },
+    theme: 'light'
 }

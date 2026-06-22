@@ -111,6 +111,7 @@ const ContainerMain = () => {
                         <ButtonDropdown
                             visibility='dropdown-action-create'
                             classBtn='create'
+                            classBtnAction='create plan max-width'
                             icon='icon-plus'
                             title='create'
                             options={createDropdown}

@@ -29,8 +29,7 @@
   "scripts": {
     "start": "vite",
     "build": "prisma generate && vite build",
-    "serve": "vite preview",
-    "test": "vitest"
+    "serve": "vite preview"
   },
   "eslintConfig": {
     "extends": [

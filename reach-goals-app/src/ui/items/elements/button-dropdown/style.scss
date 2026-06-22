@@ -138,27 +138,6 @@
         }
     }
 
-    &.create {
-
-        >.button-action {
-            background-color: $color-accent-p-15;
-
-            &:hover,
-            &.active {
-                background-color: $color-accent-p;
-
-                >span,
-                .icon-st {
-                    color: $color-white;
-                }
-            }
-
-            &:active {
-                background-color: $color-primary-50;
-            }
-        }
-    }
-
     &.status {
 
         .dropdown-menu {

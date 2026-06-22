@@ -19,7 +19,7 @@ const providers = [
     [SwitchLayoutProvider],
     [CheckboxProvider],
     [UtilityProvider],
-    [SwitchMonthsProvider]
+    [SwitchMonthsProvider],
 ]
 
 const Compose = ({ providers, children }) => {

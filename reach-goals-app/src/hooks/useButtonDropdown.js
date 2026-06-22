@@ -11,12 +11,13 @@ import { useMemo, useCallback } from 'react'
  * @typedef {Object} DropdownActions
  * @property {function(string):void} setterUseVisiblity 
  * @property {function():void} setterUseSwitchLayout
+ * @property {function():void} setterUseTheme
  */
 
 /**
  * @typedef {Object} UseButtonDropdownProps
  * @property {Object | null} value
- * @property {'create-dropdown' | 'visibility-dropdown' | 'more-dropdown'} type
+ * @property {'create-dropdown' | 'visibility-dropdown' | 'more-dropdown' | 'theme-dropdown'} type
  * @property {DropdownActions} actions
  * @property {boolean} [isPageObjectives]
  * @property {boolean} [isPageCalendar]
@@ -27,12 +28,13 @@ import { useMemo, useCallback } from 'react'
  * @returns {DropdownOption[] | null}
  */
 export const useButtonDropdown = ({ type, value, actions, isPageObjectives, isPageCalendar }) => {
-    const { setterUseSwitchLayout, setterUseVisiblity } = actions
+    const { setterUseSwitchLayout, setterUseVisiblity, setterUseTheme } = actions
 
     const handleActions = useCallback((target) => {
         if (typeof setterUseSwitchLayout === 'function') setterUseSwitchLayout(target)
         if (typeof setterUseVisiblity === 'function') setterUseVisiblity(target)
-    }, [setterUseSwitchLayout, setterUseVisiblity])
+        if (typeof setterUseTheme === 'function') setterUseTheme(target)
+    }, [setterUseSwitchLayout, setterUseVisiblity, setterUseTheme])
 
     return useMemo(() => {
         if (type === 'create-dropdown') {
@@ -120,6 +122,25 @@ export const useButtonDropdown = ({ type, value, actions, isPageObjectives, isPa
                     onClick: () => handleActions({ type: 'visibility', data: { status: ['cancel'] } })
                 },
             ].filter(Boolean)
+        }
+
+        if (type === 'theme-dropdown') {
+            return [
+                {
+                    id: 'light-theme',
+                    classBtn: value === 'light' ? 'active' : '',
+                    title: 'Light Theme',
+                    icon: 'icon-color-pallet',
+                    onClick: () => handleActions('light')
+                },
+                {
+                    id: 'dark-theme',
+                    classBtn: value === 'dark' ? 'active' : '',
+                    title: 'Dark Theme',
+                    icon: 'icon-color-pallet',
+                    onClick: () => handleActions('dark')
+                }
+            ]
         }
 
         return null

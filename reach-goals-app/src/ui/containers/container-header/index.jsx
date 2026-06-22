@@ -1,10 +1,9 @@
 import { useManageModel } from '../../../provider/model/manage-model-provider'
-import { useVisibility } from '../../../provider/ui/visibility-provider'
 import { useTitle } from '../../../provider/ui/title-provider'
+import { useTheme } from '../../../provider/ui/theme-provider'
+import { useButtonDropdown } from '../../../hooks/useButtonDropdown.js'
 
 import { visibilityMap, switchLayoutMap } from '../../../utils/mapping/mappingUtils.js'
-
-import { cx } from '../../../utils/utils.js'
 
 import ButtonAction from '../../items/elements/button-action'
 import ButtonDropdown from '../../items/elements/button-dropdown'
@@ -15,20 +14,18 @@ import './style.scss'
 
 const ContainerHeader = () => {
     const { title } = useTitle()
-    const { visibleElements } = useVisibility()
     const { setModel } = useManageModel()
+    const { theme, setTheme } = useTheme()
 
     const linkTagClick = (e) => {
         if (e) setModel(prev => ({ ...prev, typeModel: 'tag' }))
     }
 
-    const buttonDropdownClass = cx(
-        `
-        circle
-        themes
-        ${visibleElements.includes('btn-themes') && 'active'}
-        `
-    )
+    const themeDropdown = useButtonDropdown({
+        type: 'theme-dropdown',
+        value: theme,
+        actions: { setterUseSwitchLayout: (target) => setTheme(target) }
+    })
 
     return (
         <div className='container-header main-content'>
@@ -47,10 +44,14 @@ const ContainerHeader = () => {
                     </Tooltip>
                 </div>
                 <div className='item-nav'>
-                    <Tooltip title='Themes'>
-                        <ButtonDropdown visibility={visibilityMap('btn-themes')} icon='icon-themes'
-                            classBtn={buttonDropdownClass} classBtnAction='circle' />
-                    </Tooltip>
+                    <ButtonDropdown
+                        visibility='dropdown-theme'
+                        classBtnAction='circle'
+                        classBtn='theme'
+                        icon='icon-themes'
+                        options={themeDropdown}
+                        tooltip='Themes'
+                    />
                 </div>
             </div>
         </div>

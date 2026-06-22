@@ -11,6 +11,10 @@
  * @typedef {'goal' | 'assignment' | 'all-activities'} LayoutType
  */
 
+/** 
+ * @typedef {'light' | 'dark'} ThemeType
+ */
+
 /**
  * @typedef {Object} VisibilityConfigProps
  * @property {'card' | 'card-mini'} cards

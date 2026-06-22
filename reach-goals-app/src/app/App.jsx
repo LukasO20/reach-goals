@@ -1,5 +1,7 @@
 import { BrowserRouter } from 'react-router-dom'
 
+import { useTheme } from '../provider/ui/theme-provider'
+
 import ProviderApp from '../provider/ProviderApp.jsx'
 import AppRoutes from './Routes.jsx'
 
@@ -12,21 +14,25 @@ import ModalSwitcherRight from '../ui/modals/modal-switcher-right.jsx'
 
 import './App.scss'
 
-const App = () => (
-    <BrowserRouter>
-        <div className='container-app'>
-            <ProviderApp>
-                <Navigate />
-                <ContainerHeader />
-                <ContainerMain>
-                    <AppRoutes />
-                </ContainerMain>
-                <MessageToast />
-                <ModalSwitcherCenter />
-                <ModalSwitcherRight />
-            </ProviderApp>
-        </div>
-    </BrowserRouter>
-)
+const App = () => {
+    const { theme } = useTheme()
+
+    return (
+        <BrowserRouter>
+            <div className='container-app' data-theme={theme}>
+                <ProviderApp>
+                    <Navigate />
+                    <ContainerHeader />
+                    <ContainerMain>
+                        <AppRoutes />
+                    </ContainerMain>
+                    <MessageToast />
+                    <ModalSwitcherCenter />
+                    <ModalSwitcherRight />
+                </ProviderApp>
+            </div>
+        </BrowserRouter>
+    )
+}
 
 export default App
