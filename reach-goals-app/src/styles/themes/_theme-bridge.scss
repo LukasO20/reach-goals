@@ -1,0 +1,75 @@
+/* COLORS */
+$color-primary: var(--color-primary);
+$color-secondary: var(--color-secondary);
+$color-complementary-p: var(--color-complementary-p);
+$color-complementary-s: var(--color-complementary-s);
+$color-accent: var(--color-accent);
+$color-success: var(--color-success);
+$color-cancel: var(--color-cancel);
+$color-contrast: var(--color-contrast);
+$color-delete: var(--color-delete);
+
+/* COLORS OPACITY */
+
+// 5%
+$color-primary-05: var(--color-primary-05);
+$color-secondary-05: var(--color-secondary-05);
+$color-complementary-p-05: var(--color-complementary-p-05);
+$color-complementary-s-05: var(--color-complementary-s-05);
+$color-accent-05: var(--color-accent-05);
+$color-success-05: var(--color-success-05);
+$color-cancel-05: var(--color-cancel-05);
+$color-contrast-05: var(--color-contrast-05);
+$color-delete-05: var(--color-delete-05);
+
+// 15%
+$color-primary-15: var(--color-primary-15);
+$color-secondary-15: var(--color-secondary-15);
+$color-complementary-p-15: var(--color-complementary-p-15);
+$color-complementary-s-15: var(--color-complementary-s-15);
+$color-accent-15: var(--color-accent-15);
+$color-success-15: var(--color-success-15);
+$color-cancel-15: var(--color-cancel-15);
+$color-contrast-15: var(--color-contrast-15);
+$color-delete-15: var(--color-delete-15);
+
+// 30%
+$color-primary-30: var(--color-primary-30);
+$color-secondary-30: var(--color-secondary-30);
+$color-complementary-p-30: var(--color-complementary-p-30);
+$color-complementary-s-30: var(--color-complementary-s-30);
+$color-accent-30: var(--color-accent-30);
+$color-success-30: var(--color-success-30);
+$color-cancel-30: var(--color-cancel-30);
+$color-contrast-30: var(--color-contrast-30);
+$color-delete-30: var(--color-delete-30);
+
+// 50%
+$color-primary-50: var(--color-primary-50);
+$color-secondary-50: var(--color-secondary-50);
+$color-complementary-p-50: var(--color-complementary-p-50);
+$color-complementary-s-50: var(--color-complementary-s-50);
+$color-accent-50: var(--color-accent-50);
+$color-success-50: var(--color-success-50);
+$color-cancel-50: var(--color-cancel-50);
+$color-contrast-50: var(--color-contrast-50);
+$color-delete-50: var(--color-delete-50);
+
+// 70%
+$color-primary-70: var(--color-primary-70);
+$color-secondary-70: var(--color-secondary-70);
+$color-complementary-p-70: var(--color-complementary-p-70);
+$color-complementary-s-70: var(--color-complementary-s-70);
+$color-accent-70: var(--color-accent-70);
+$color-success-70: var(--color-success-70);
+$color-cancel-70: var(--color-cancel-70);
+$color-contrast-70: var(--color-contrast-70);
+$color-delete-70: var(--color-delete-70);
+
+/* SHADOW */
+$box-shadow-st: 0.01rem 0.01rem 0.45rem 0.01rem $color-contrast-15;
+$box-shadow-sm: 0.005rem 0.005rem 0.225rem 0.005rem $color-contrast-15;
+$box-shadow-md: 0.05rem 0.05rem 1.5rem 0.05rem $color-contrast-15;
+
+/* SCROLLBAR */
+$scrollbar-color: $color-complementary-s;

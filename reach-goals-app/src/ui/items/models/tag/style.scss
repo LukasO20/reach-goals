@@ -22,6 +22,7 @@
                 display: flex;
                 gap: 0.35rem;
                 font-weight: 600;
+                color: $color-contrast;
 
                 .button-checkbox {
                     display: none;
@@ -56,7 +57,7 @@
                 display: flex;
                 flex-direction: column;
                 gap: 0.35rem;
-                background-color: $color-white;
+                background-color: $color-secondary;
                 padding: 0.5rem 0.35rem 0.35rem 0.35rem;
                 border-radius: $dimensions-border-radius-sm;
 
@@ -86,12 +87,12 @@
                 }
 
                 .side-actions {
-                    background-color: $color-white-15;
+                    background-color: $color-secondary-15;
                     width: 1.8rem;
                 }
 
                 &:active {
-                    background-color: $color-white-15;
+                    background-color: $color-secondary-15;
                 }
             }
 
@@ -116,15 +117,10 @@
                     .button-action {
 
                         &.expand {
-                            background-color: $color-complementary-s;
 
                             .icon-st {
-                                color: $color-white;
+                                color: $color-secondary;
                                 transform: rotate(180deg);
-                            }
-
-                            &:active {
-                                background-color: $color-complementary-s-30;
                             }
                         }
                     }
@@ -185,7 +181,7 @@
                 }
 
                 .side-actions {
-                    background-color: $color-white-15;
+                    background-color: $color-secondary-15;
                     justify-content: center;
                     width: 4.125rem;
 

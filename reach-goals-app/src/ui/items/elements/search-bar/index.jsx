@@ -10,6 +10,7 @@ import SearchBoxResults from './searchbox-results.jsx'
 import ButtonAction from '../button-action'
 import Tooltip from '../tooltip'
 import Icons from '../icons'
+import InputText from '../input-text'
 
 import './style.scss'
 
@@ -60,9 +61,15 @@ const SearchBar = ({ mode = 'service', placeholder = 'search', tooltip = 'Search
                 <Tooltip title={tooltip}>
                     <Icons icon='icon-search' />
                 </Tooltip>
-                <input type='text' role='search'
-                    placeholder={placeholder || 'search'} id='search-content-m'
-                    className='search-content' value={param} onChange={(e) => setParam(e.target.value)} />
+                <InputText
+                    className='search-content'
+                    id='search-input'
+                    name='search'
+                    role='search'
+                    placeholder={placeholder || 'search'}
+                    value={param}
+                    onChange={(e) => setParam(e.target.value)}
+                />
                 {!!param && isShowSearchBoxResults && (
                     <Tooltip title='Clear search'>
                         <ButtonAction

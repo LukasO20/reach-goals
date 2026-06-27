@@ -5,6 +5,10 @@
     margin: 0rem 1.5rem 0rem 1.5rem;
     z-index: 2;
 
+    >h1 {
+        color: $color-complementary-s
+    }
+
     .nav {
         display: flex;
 

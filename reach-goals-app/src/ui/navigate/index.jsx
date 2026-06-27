@@ -2,6 +2,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 
 import { useCheckbox } from '../../provider/ui/checkbox-provider'
 import { useSwitchLayout } from '../../provider/ui/switch-layout-provider'
+import { useTheme } from '../../provider/ui/theme-provider'
 
 import { switchLayoutMap } from '../../utils/mapping/mappingUtils.js'
 
@@ -11,11 +12,15 @@ import ButtonLink from '../items/elements/button-link'
 import ButtonAction from '../items/elements/button-action'
 import Tooltip from '../items/elements/tooltip'
 
+import LogoLight from '../../assets/logo-light.svg'
+import LogoDark from '../../assets/logo-dark.svg'
+
 import './style.scss'
 
 const Navigate = () => {
     const { data: { layout, visibility }, setUserConfigLayout } = useSwitchLayout()
     const { resetCheckbox } = useCheckbox()
+    const { theme } = useTheme()
     const navigate = useNavigate()
     const location = useLocation()
 
@@ -93,6 +98,8 @@ const Navigate = () => {
 
     const tooltipPositions = { left: '100%', bottom: '0', transform: 'translateX(8.5%)' }
 
+    const logoImgTheme = theme === 'light' ? LogoLight : LogoDark
+
     return (
         <div className='container-navigate aside-content' onClick={(e) => handleClickNavigate(e)}>
             <div className={navClass}>
@@ -100,7 +107,7 @@ const Navigate = () => {
                     <ButtonLink
                         link={'/home'}
                         classBtn={`${buttonLinkLogoClass} ${buttonLinkClass}`}
-                        img='/logo.png'
+                        img={logoImgTheme}
                         title={navigateBarData.titleBtn.logo}
                         switchLayout={switchLayoutMap({ area: 'page', layout: { pageName: 'home', layoutName: 'column' } })}
                         onClick={() => handleButtonLinkClick('home')}

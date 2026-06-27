@@ -8,7 +8,7 @@
         h2 {
             position: sticky;
             top: 0rem;
-            background-color: $color-white;
+            background-color: $color-secondary;
             font-size: 1.05rem;
             z-index: 2;
             margin: 0rem;
@@ -86,7 +86,7 @@
                 &.goal {
 
                     &.selected {
-                        background-color: $color-complementary-s;
+                        background-color: $color-complementary-s-70;
                         border-radius: $dimensions-border-radius-sm;
 
                         .head {
@@ -97,36 +97,41 @@
                                     border-bottom: none;
 
                                     * {
-                                        color: $color-white;
+                                        color: $color-secondary;
                                     }
 
                                     >label {
 
                                         .line {
-                                            padding: 0.05rem;
-                                            background-color: $color-white;
+                                            padding: $spacing-padding-x-mini;
+                                            background-color: $color-secondary;
                                             border-radius: $dimensions-border-radius-sm;
                                         }
                                     }
 
                                     .unlink-goal {
-                                        background-color: $color-accent-p-30;
+                                        background-color: $color-cancel;
 
                                         &:hover {
-                                            background-color: $color-accent-p;
+                                            background-color: $color-cancel-70;
                                         }
 
                                         &:active {
-                                            background-color: $color-primary-50;
+                                            background-color: $color-cancel-30;
                                         }
                                     }
                                 }
 
                                 &:last-child {
-                                    padding: 0rem 1rem 0.5rem 1rem;
+                                    padding-bottom: 0.5rem;
+
+                                    .schedule {
+                                        padding: 0rem 1rem;
+                                        font-weight: 500;
+                                    }
 
                                     * {
-                                        color: $color-white;
+                                        color: $color-secondary;
                                     }
                                 }
                             }
@@ -174,12 +179,18 @@
                             padding: $spacing-padding-sm;
                             margin: $spacing-margin-st $spacing-margin-md;
                             font-weight: 600;
-                            outline-color: $color-accent-p;
+                            outline-color: $color-accent;
                             resize: vertical;
                             min-height: 10rem;
+                            color: $color-complementary-s;
 
                             &:hover {
-                                border-color: $color-accent-p-30;
+                                border-color: $color-accent-30;
+                            }
+
+                            &::placeholder {
+                                font-weight: 600;
+                                color: $color-complementary-s-70;
                             }
                         }
                     }
@@ -249,7 +260,7 @@
                                     border-radius: $dimensions-border-radius-sm;
                                     font-weight: 500;
                                     font-size: 0.9rem;
-                                    background-color: $color-white-70;
+                                    background-color: $color-secondary-70;
                                 }
                             }
                         }

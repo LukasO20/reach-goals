@@ -89,7 +89,7 @@ const RelationCard = ({ checkboxState = checkboxMap, data = [] }) => {
                 return (
                     <div className={`tag card-relation ${isOpen} ${hasSomeRelation} ${isRemoving} ${isSelected}`}
                         key={item.id}
-                        style={{ backgroundColor: `${colorTag}50`, borderColor: colorTag }}>
+                        style={{ backgroundColor: `${colorTag}70`, borderColor: colorTag }}>
                         <div className='head' onClick={() => handleSetOpenCard(item)}>
                             <label>
                                 <ButtonCheckbox 

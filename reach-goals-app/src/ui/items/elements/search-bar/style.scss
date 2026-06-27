@@ -29,6 +29,7 @@
             caret-color: $color-complementary-s;
             transition: $animation-transition-st;
             opacity: 0;
+            color: $color-complementary-s;
 
             &:focus {
                 outline: none;
@@ -41,7 +42,7 @@
             .tooltip {
 
                 .icon-st {
-                    color: $color-white;
+                    color: $color-secondary;
                 }
             }
         }
@@ -57,7 +58,7 @@
         flex-direction: column;
         max-height: 70dvh;
         overflow-y: auto;
-        background-color: $color-white;
+        background-color: $color-secondary;
         box-shadow: $box-shadow-st;
         padding: $spacing-padding-sm;
         border-radius: $dimensions-border-radius-sm;
@@ -157,11 +158,11 @@
                     .item-info {
 
                         &:hover {
-                            background-color: $color-white-30
+                            background-color: $color-secondary-30
                         }
 
                         &:active {
-                            background-color: $color-white-50
+                            background-color: $color-secondary-50
                         }
                     }
                 }
@@ -180,7 +181,7 @@
                             gap: $spacing-gap-mini;
                             font-size: 0.875rem;
                             font-weight: 500;
-                            background-color: $color-white-70;
+                            background-color: $color-secondary-70;
                             padding: $spacing-padding-mini $spacing-padding-sm;
                             border-radius: $dimensions-border-radius-sm;
                             transition: .3s linear;
@@ -191,11 +192,11 @@
                             }
 
                             &:hover {
-                                background-color: $color-white-30
+                                background-color: $color-secondary-30
                             }
 
                             &:active {
-                                background-color: $color-white-50
+                                background-color: $color-secondary-50
                             }
                         }
                     }
@@ -214,7 +215,7 @@
                                     background-color: $color-complementary-s;
 
                                     .icon-st {
-                                        color: $color-white;
+                                        color: $color-secondary;
                                         transform: rotate(180deg);
                                     }
 

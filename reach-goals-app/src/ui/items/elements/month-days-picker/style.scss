@@ -16,6 +16,7 @@
         .day-name {
             flex: 1;
             text-align: center;
+            color: $color-complementary-s
         }
     }
 
@@ -57,12 +58,12 @@
 
                     &:hover {
                         background-color: $color-complementary-s-70;
-                        color: $color-white;
+                        color: $color-secondary;
                     }
 
                     &:active {
                         background-color: $color-complementary-s-50;
-                        color: $color-white;
+                        color: $color-secondary;
                     }
                 }
 
@@ -74,7 +75,7 @@
                         gap: $spacing-gap-sm;
                         padding: $spacing-padding-sm;
                         border-radius: $dimensions-border-radius-sm;
-                        background-color: $color-white;
+                        background-color: $color-secondary;
                         box-shadow: $box-shadow-sm;
                         z-index: 1;
 
@@ -164,18 +165,18 @@
 
                     >label {
                         background-color: $color-complementary-s;
-                        color: $color-white;
+                        color: $color-secondary;
                         padding: 0.15rem $spacing-padding-sm;
                         border-radius: 1rem;
 
                         &:hover {
                             background-color: $color-complementary-s-70;
-                            color: $color-white;
+                            color: $color-secondary;
                         }
 
                         &:active {
                             background-color: $color-complementary-s-50;
-                            color: $color-white;
+                            color: $color-secondary;
                         }
                     }
                 }

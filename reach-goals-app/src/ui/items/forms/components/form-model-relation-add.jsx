@@ -6,7 +6,7 @@ import { cx } from '../../../../utils/utils.js'
 
 import moment from 'moment'
 
-import ButtonAction from '../../elements/button-action' 
+import ButtonAction from '../../elements/button-action'
 import Line from '../../elements/line'
 import Icons from '../../elements/icons'
 
@@ -19,6 +19,8 @@ const FormModelRelationAdd = ({ type, children }) => {
     const { model } = useManageModel()
     const tittleRelation = type === 'goal' ? 'assignments' : 'goals'
     const visibilityRelation = { goal: 'assignment', assignment: 'goal', tag: 'tag' }
+
+    const hasChildren = children
 
     const renderButtonAction = (currentType) => {
         switch (currentType) {
@@ -44,7 +46,7 @@ const FormModelRelationAdd = ({ type, children }) => {
     }
 
     if (type === 'assignment') {
-        const goals = model.selectedModel.goal 
+        const goals = model.selectedModel.goal
         const goalData = goals[0] || model.activeModel?.goal
         const validGoal = !!goalData
 
@@ -72,7 +74,7 @@ const FormModelRelationAdd = ({ type, children }) => {
                     </div>
                     {!!validGoal && goalData.end && goalData.end !== 'Invalid date' && (
                         <div className='item'>
-                            <span>schedule to end on {moment(goalData.end).format('MMMM DD')}</span>
+                            <span className='schedule'>schedule to end on {moment(goalData.end).format('MMMM DD')}</span>
                         </div>
                     )}
                 </div>
@@ -91,11 +93,12 @@ const FormModelRelationAdd = ({ type, children }) => {
                         </label>
                         {renderButtonAction()}
                     </div>
-                    <div className='item'></div>
                 </div>
-                <div className='body'>
-                    {children}
-                </div>
+                {hasChildren && (
+                    <div className='body'>
+                        {children}
+                    </div>
+                )}
             </div>
         )
     }
@@ -113,9 +116,11 @@ const FormModelRelationAdd = ({ type, children }) => {
                     </div>
                     <div className='item'></div>
                 </div>
-                <div className='body'>
-                    {children}
-                </div>
+                {hasChildren && (
+                    <div className='body'>
+                        {children}
+                    </div>
+                )}
             </div>
         )
     }

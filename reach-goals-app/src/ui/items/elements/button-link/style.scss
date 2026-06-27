@@ -41,7 +41,7 @@
     }
 
     &.home {
-        background-color: $color-accent-p-15;
+        background-color: $color-accent-15;
     }
 
     /* DOUBLE APPLY */
@@ -50,7 +50,7 @@
         background-color: $color-complementary-s;
 
         * {
-            color: $color-white;
+            color: $color-secondary;
         }
 
         &.logo {
@@ -61,10 +61,10 @@
         }
 
         &.home {
-            background-color: $color-accent-p;
+            background-color: $color-accent;
 
             * {
-                color: $color-white;
+                color: $color-secondary;
             }
         }
     }
@@ -74,7 +74,7 @@
         background-color: $color-complementary-s-30;
 
         &.home {
-            background-color: $color-accent-p-50;
+            background-color: $color-accent-50;
         }
     }
 }

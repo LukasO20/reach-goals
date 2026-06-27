@@ -7,11 +7,16 @@ import './style.scss'
 /**
  * @param {Props} props
  */
-const ButtonToggle = ({ active, onToggle, title, classBtn = '' }) => {
-    const buttonToggleClass = cx(`${active && 'active'}`)
+const ButtonToggle = ({ active, onToggle, title, classBtn }) => {
+    const buttonToggleClass = cx(
+        `button-toggle
+        ${active && 'active'}
+        ${classBtn}
+        `
+    )
 
     return (
-        <div className={`button-toggle ${buttonToggleClass} ${classBtn}`} onClick={onToggle}>
+        <div className={buttonToggleClass} onClick={onToggle}>
             {title && (<label>{title}</label>)}
             <div className='button-toggle-bg'>
                 <span className='toggle' />

@@ -1,0 +1,73 @@
+.container-app[data-theme='dark'] {
+    --color-primary: #25447a;
+    --color-primary-rgb: 37, 68, 122;
+    --color-primary-05: rgba(var(--color-primary-rgb), 0.05);
+    --color-primary-15: rgba(var(--color-primary-rgb), 0.15);
+    --color-primary-30: rgba(var(--color-primary-rgb), 0.30);
+    --color-primary-50: rgba(var(--color-primary-rgb), 0.50);
+    --color-primary-70: rgba(var(--color-primary-rgb), 0.70);
+
+    --color-secondary: #131313;
+    --color-secondary-rgb: 255, 255, 255;
+    --color-secondary-05: rgba(var(--color-secondary-rgb), 0.05);
+    --color-secondary-15: rgba(var(--color-secondary-rgb), 0.15);
+    --color-secondary-30: rgba(var(--color-secondary-rgb), 0.30);
+    --color-secondary-50: rgba(var(--color-secondary-rgb), 0.50);
+    --color-secondary-70: rgba(var(--color-secondary-rgb), 0.70);
+
+    --color-complementary-p: #403b36;
+    --color-complementary-p-rgb: 64, 59, 54;
+    --color-complementary-p-05: rgba(var(--color-complementary-p-rgb), 0.05);
+    --color-complementary-p-15: rgba(var(--color-complementary-p-rgb), 0.15);
+    --color-complementary-p-30: rgba(var(--color-complementary-p-rgb), 0.30);
+    --color-complementary-p-50: rgba(var(--color-complementary-p-rgb), 0.50);
+    --color-complementary-p-70: rgba(var(--color-complementary-p-rgb), 0.70);
+
+    --color-complementary-s: #DECFBD;
+    --color-complementary-s-rgb: 222, 207, 189;
+    --color-complementary-s-05: rgba(var(--color-complementary-s-rgb), 0.05);
+    --color-complementary-s-15: rgba(var(--color-complementary-s-rgb), 0.15);
+    --color-complementary-s-30: rgba(var(--color-complementary-s-rgb), 0.30);
+    --color-complementary-s-50: rgba(var(--color-complementary-s-rgb), 0.50);
+    --color-complementary-s-70: rgba(var(--color-complementary-s-rgb), 0.70);
+
+    --color-accent: #49BEF5;
+    --color-accent-rgb: 73, 190, 245;
+    --color-accent-05: rgba(var(--color-accent-rgb), 0.05);
+    --color-accent-15: rgba(var(--color-accent-rgb), 0.15);
+    --color-accent-30: rgba(var(--color-accent-rgb), 0.30);
+    --color-accent-50: rgba(var(--color-accent-rgb), 0.50);
+    --color-accent-70: rgba(var(--color-accent-rgb), 0.70);
+
+    --color-success: #00D057;
+    --color-success-rgb: 0, 208, 87;
+    --color-success-05: rgba(var(--color-success-rgb), 0.05);
+    --color-success-15: rgba(var(--color-success-rgb), 0.15);
+    --color-success-30: rgba(var(--color-success-rgb), 0.30);
+    --color-success-50: rgba(var(--color-success-rgb), 0.50);
+    --color-success-70: rgba(var(--color-success-rgb), 0.70);
+
+    --color-cancel: #cccccc;
+    --color-cancel-rgb: 204, 204, 204;
+    --color-cancel-05: rgba(var(--color-cancel-rgb), 0.05);
+    --color-cancel-15: rgba(var(--color-cancel-rgb), 0.15);
+    --color-cancel-30: rgba(var(--color-cancel-rgb), 0.30);
+    --color-cancel-50: rgba(var(--color-cancel-rgb), 0.50);
+    --color-cancel-70: rgba(var(--color-cancel-rgb), 0.70);
+
+    --color-contrast: #FFFF;
+    --color-contrast-rgb: 255, 255, 255;
+    --color-contrast-05: rgba(var(--color-contrast-rgb), 0.05);
+    --color-contrast-15: rgba(var(--color-contrast-rgb), 0.15);
+    --color-contrast-30: rgba(var(--color-contrast-rgb), 0.30);
+    --color-contrast-50: rgba(var(--color-contrast-rgb), 0.50);
+    --color-contrast-70: rgba(var(--color-contrast-rgb), 0.70);
+
+    --color-delete: #B31818;
+    --color-delete-rgb: 179, 24, 24;
+    --color-delete-05: rgba(var(--color-delete-rgb), 0.05);
+    --color-delete-15: rgba(var(--color-delete-rgb), 0.15);
+    --color-delete-30: rgba(var(--color-delete-rgb), 0.30);
+    --color-delete-50: rgba(var(--color-delete-rgb), 0.50);
+    --color-delete-70: rgba(var(--color-delete-rgb), 0.70);
+}

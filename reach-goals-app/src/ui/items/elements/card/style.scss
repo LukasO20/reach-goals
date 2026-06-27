@@ -6,7 +6,7 @@
     padding: $spacing-padding-st;
     border: 3.25px solid transparent;
     border-radius: $dimensions-border-radius-sm;
-    background-color: $color-white;
+    background-color: $color-secondary;
     cursor: pointer;
     transition: $animation-transition-st;
 
@@ -121,7 +121,7 @@
     }
 
     &:hover {
-        border-color: $color-accent-p-30;
+        border-color: $color-accent-30;
 
         .body {
 

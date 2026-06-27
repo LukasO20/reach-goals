@@ -10,6 +10,8 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
+    background-color: $color-secondary;
+    transition: $animation-transition-st;
 
     display: grid;
     grid-template-columns: auto 1fr;

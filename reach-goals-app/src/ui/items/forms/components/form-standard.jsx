@@ -33,7 +33,7 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
 
     const renderDropdownStatusTitle = (status) => {
         return {
-            icon: status === 'conclude' ? 'check' : status,
+            icon: status,
             status: status ?? 'choose an option'
         }
     }

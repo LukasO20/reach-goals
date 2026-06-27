@@ -8,7 +8,7 @@
     >.head {
         padding: $spacing-padding-sm;
         border-radius: $dimensions-border-radius-sm;
-        background-color: $color-complementary-p;
+        background-color: $color-complementary-p-70;
 
         .label-activity {
             font-weight: 600;
@@ -40,7 +40,7 @@
                 transition: $animation-transition-st;
 
                 * {
-                    color: $color-white;
+                    color: $color-secondary;
                     font-weight: 500;
                 }
 
@@ -53,6 +53,10 @@
 
                     .label-percent {
                         font-size: $font-size-sm;
+                    }
+
+                    .label-message {
+                        font-weight: 500;
                     }
                 }
 
@@ -75,23 +79,25 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
                 justify-self: flex-start;
+
+                
             }
 
             &.goal {
-                background-color: $color-primary-50;
+                background-color: $color-complementary-p-70;
 
                 .bar-progress {
-                    background-color: $color-primary;
+                    background-color: $color-complementary-s;
 
-                    .label-percent {
-                        color: $color-white;
+                   * {
+                        color: $color-contrast;
                     }
                 }
 
                 .bar-actions {
 
                     .button-action {
-                        background-color: $color-white;
+                        background-color: $color-secondary;
 
                         * {
                             color: $color-complementary-s;
@@ -116,13 +122,13 @@
             }
 
             &.assignment {
-                background-color: $color-accent-p-15;
+                background-color: $color-accent-15;
 
                 .bar-progress {
-                    background-color: $color-accent-p;
+                    background-color: $color-accent;
 
-                    .label-percent {
-                        color: $color-primary;
+                    * {
+                        color: $color-contrast;
                     }
                 }
 
@@ -132,7 +138,7 @@
                         background-color: $color-primary;
 
                         * {
-                            color: $color-white;
+                            color: $color-secondary;
                         }
 
                         &:hover {

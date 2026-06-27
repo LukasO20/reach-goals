@@ -51,7 +51,7 @@
                 background-color: $color-success-70;
 
                 * {
-                    color: $color-white;
+                    color: $color-secondary;
                 }
             }
 
@@ -59,7 +59,7 @@
                 background-color: $color-cancel-70;
 
                 * {
-                    color: $color-white;
+                    color: $color-secondary;
                 }
             }
         }
@@ -72,13 +72,13 @@
 
             .description {
                 display: flex;
-                background-color: $color-white;
+                background-color: $color-secondary;
                 border-radius: $dimensions-border-radius-sm;
                 padding: $spacing-padding-st;
                 font-weight: 600;
                 font-size: $font-size-sm;
                 max-height: 20rem;
-                color: $color-black;
+                color: $color-contrast;
                 overflow: hidden;
 
                 .body {
@@ -135,7 +135,7 @@
                                 top: 0.35rem;
                                 display: flex;
                                 align-items: center;
-                                color: $color-white;
+                                color: $color-secondary;
                                 font-weight: 600;
                                 text-shadow: 0rem 0rem 0.085rem $color-complementary-s;
                                 margin: $spacing-margin-st;
@@ -207,7 +207,7 @@
                             .item {
 
                                 * {
-                                    color: $color-white;
+                                    color: $color-secondary;
                                 }
 
                                 &:first-child {
@@ -238,7 +238,7 @@
                         flex: 1;
 
                         * {
-                            color: $color-white;
+                            color: $color-secondary;
                         }
 
                         label {
@@ -265,7 +265,7 @@
                 gap: $spacing-gap-sm;
                 padding: $spacing-padding-sm;
                 overflow: hidden;
-                background-color: $color-white;
+                background-color: $color-secondary;
                 border-radius: $dimensions-border-radius-sm;
 
                 .head {

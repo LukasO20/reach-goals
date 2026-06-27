@@ -37,7 +37,12 @@ const ButtonDropdown = ({
 
     const isShowDropdown = visibleElements.includes(visibility)
 
-    const buttonActionClass = cx(`${isShowDropdown && 'active'}`)
+    const buttonActionClass = cx(
+        `
+        ${isShowDropdown && 'active'}
+        ${classBtnAction ?? 'plan max-width'}
+        `
+    )
 
     useOutsideClick(buttonDropdownRef, () => {
         if (isShowDropdown) toggleVisibility(visibilityMap(visibility, { remove: true }))
@@ -50,7 +55,7 @@ const ButtonDropdown = ({
             )}
             <Tooltip title={tooltip}>
                 <ButtonAction
-                    classBtn={`${buttonActionClass} ${classBtnAction ?? 'plan max-width'}`}
+                    classBtn={buttonActionClass}
                     visibility={visibilityMap(visibility, visibilityOperator)}
                     title={title}
                     icon={icon}

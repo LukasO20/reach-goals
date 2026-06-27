@@ -6,7 +6,7 @@
     border-radius: $dimensions-border-radius-sm;
     width: $dimensions-w-lg;
     transform: translate(-50%, -50%);
-    background-color: $color-white;
+    background-color: $color-secondary;
     box-shadow: $box-shadow-st;
     overflow: hidden;
     height: 26rem;
@@ -20,6 +20,7 @@
 
         h2 {
             font-size: 1.05rem;
+            color: $color-complementary-s;
         }
     }
 

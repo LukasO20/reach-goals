@@ -12,7 +12,7 @@
         padding: $spacing-padding-sm;
         border-radius: $dimensions-border-radius-sm;
         box-shadow: $box-shadow-st;
-        background-color: $color-white;
+        background-color: $color-secondary;
         width: max-content;
         max-width: $dimensions-w-md;
         max-height: $dimensions-h-md;
@@ -43,8 +43,8 @@
             width: 1.15rem;
             height: 1.15rem;
             border-radius: $dimensions-border-radius-full;
-            background-color: $color-accent-p;
-            color: $color-white;
+            background-color: $color-accent;
+            color: $color-secondary;
             font-weight: 500;
             font-size: $font-size-mini;
         }
