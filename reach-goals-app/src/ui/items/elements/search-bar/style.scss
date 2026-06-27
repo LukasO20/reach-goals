@@ -181,7 +181,7 @@
                             gap: $spacing-gap-mini;
                             font-size: 0.875rem;
                             font-weight: 500;
-                            background-color: $color-secondary-70;
+                            background-color: $color-white-30;
                             padding: $spacing-padding-mini $spacing-padding-sm;
                             border-radius: $dimensions-border-radius-sm;
                             transition: .3s linear;
@@ -212,10 +212,8 @@
                             .button-action {
 
                                 &.expand {
-                                    background-color: $color-complementary-s;
 
                                     .icon-st {
-                                        color: $color-secondary;
                                         transform: rotate(180deg);
                                     }
 

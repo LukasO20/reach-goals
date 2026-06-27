@@ -9,6 +9,9 @@ $color-cancel: var(--color-cancel);
 $color-contrast: var(--color-contrast);
 $color-delete: var(--color-delete);
 
+/* COLORS STANDARD */
+$color-white: #FFFF;
+
 /* COLORS OPACITY */
 
 // 5%
@@ -21,6 +24,7 @@ $color-success-05: var(--color-success-05);
 $color-cancel-05: var(--color-cancel-05);
 $color-contrast-05: var(--color-contrast-05);
 $color-delete-05: var(--color-delete-05);
+$color-white-05: rgba($color-white, 0.05);
 
 // 15%
 $color-primary-15: var(--color-primary-15);
@@ -32,6 +36,7 @@ $color-success-15: var(--color-success-15);
 $color-cancel-15: var(--color-cancel-15);
 $color-contrast-15: var(--color-contrast-15);
 $color-delete-15: var(--color-delete-15);
+$color-white-15: rgba($color-white, 0.15);
 
 // 30%
 $color-primary-30: var(--color-primary-30);
@@ -43,6 +48,7 @@ $color-success-30: var(--color-success-30);
 $color-cancel-30: var(--color-cancel-30);
 $color-contrast-30: var(--color-contrast-30);
 $color-delete-30: var(--color-delete-30);
+$color-white-30: rgba($color-white, 0.30);
 
 // 50%
 $color-primary-50: var(--color-primary-50);
@@ -54,6 +60,7 @@ $color-success-50: var(--color-success-50);
 $color-cancel-50: var(--color-cancel-50);
 $color-contrast-50: var(--color-contrast-50);
 $color-delete-50: var(--color-delete-50);
+$color-white-50: rgba($color-white, 0.50);
 
 // 70%
 $color-primary-70: var(--color-primary-70);
@@ -65,6 +72,7 @@ $color-success-70: var(--color-success-70);
 $color-cancel-70: var(--color-cancel-70);
 $color-contrast-70: var(--color-contrast-70);
 $color-delete-70: var(--color-delete-70);
+$color-white-70: rgba($color-white, 0.70);
 
 /* SHADOW */
 $box-shadow-st: 0.01rem 0.01rem 0.45rem 0.01rem $color-contrast-15;

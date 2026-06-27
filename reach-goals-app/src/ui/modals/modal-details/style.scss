@@ -51,7 +51,7 @@
                 background-color: $color-success-70;
 
                 * {
-                    color: $color-secondary;
+                    color: $color-complementary-s;
                 }
             }
 
@@ -59,7 +59,7 @@
                 background-color: $color-cancel-70;
 
                 * {
-                    color: $color-secondary;
+                    color: $color-complementary-s;
                 }
             }
         }
@@ -78,7 +78,7 @@
                 font-weight: 600;
                 font-size: $font-size-sm;
                 max-height: 20rem;
-                color: $color-contrast;
+                color: $color-complementary-s;
                 overflow: hidden;
 
                 .body {
@@ -230,7 +230,7 @@
                         align-items: center;
                         justify-content: center;
                         gap: $spacing-gap-sm;
-                        background-color: $color-primary-70;
+                        background-color: $color-primary;
                         padding: $spacing-padding-sm;
                         border-radius: $dimensions-border-radius-sm;
                         width: fit-content;
@@ -238,7 +238,7 @@
                         flex: 1;
 
                         * {
-                            color: $color-secondary;
+                            color: $color-white;
                         }
 
                         label {
@@ -300,6 +300,7 @@
                         padding: $spacing-padding-sm;
                         border-radius: $dimensions-border-radius-mini;
                         width: fit-content;
+                        color: $color-complementary-s;
                     }
                 }
             }
