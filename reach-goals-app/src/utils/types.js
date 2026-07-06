@@ -29,9 +29,27 @@
  * @property {'compact' | 'expand'} navigateBar
  */
 
+/* SUPPORT PROPS */
+/**
+ * @typedef {Object} ClickFunctionProps
+ * @property {function():void} card
+ * @property {function():void} edit
+ * @property {function():void} delete
+ */
+
+/**
+ * @typedef {Object} DisplayProps
+ * @property {Array<'card' | 'card-mini'>} type
+ * @property {Array<'edit' | 'delete' | 'details' | 'remove'>} actions
+ */
+
 /* MODEL-PROPS */
 /**
  * @typedef {'goal' | 'assignment' | 'tag'} ModelTypeProps
+ */
+
+/**
+ * @typedef {'assignment-goal'} ModelRelationTypeProps
  */
 
 /**

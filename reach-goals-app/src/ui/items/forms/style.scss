@@ -139,6 +139,13 @@
                     }
                 }
 
+                &.tag {
+
+                    >.body {
+                        padding: 0rem $spacing-padding-sm;
+                    }
+                }
+
                 /* DOUBLE APPLY */
                 &.assignment,
                 &.tag,

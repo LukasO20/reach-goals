@@ -1,6 +1,6 @@
 /**
  * @typedef {Object} CardProps
- * @property {string} type
+ * @property {import('../../../../utils/types.js').ModelTypeProps} type
  * @property {Array} model
  * @property {Object} display
  * @property {('card')[]} display.type

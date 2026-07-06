@@ -4,10 +4,11 @@ import { useAssignmentProvider } from '../../../../provider/model/assignment-mod
 import { useTitle } from '../../../../provider/ui/title-provider'
 
 import Assignment from '../../../items/models/assignment'
+import AssignmentGoalRelation from '../../../items/models/assignment/assignment-goal.relation'
 import Goal from '../../../items/models/goal'
 import PopupModelOptions from '../../../items/elements/popup-model-options'
 import Icons from '../../../items/elements/icons'
-import { DragDrop, DragDropDroppable } from '../../../items/elements/drag-drop' 
+import { DragDrop, DragDropDroppable } from '../../../items/elements/drag-drop'
 
 /** @typedef {import('../types').HomeProps} Props */
 
@@ -81,24 +82,33 @@ const HomeColumn = ({ data }) => {
                 <div className='list-container'>
                     {columnMap
                         .filter((item) => visibility.status?.includes(item.type))
-                        .map((item) => (
-                            <div className={`column ${item.type}`} key={item.type}>
-                                <div className='head'>
-                                    <Icons icon={item.icon} />
-                                    <label>{item.title}</label>
+                        .map((item) => {
+                            const dataGoal = dataColumn[item.type].goal
+                            const dataAssignment = dataColumn[item.type].assignment.filter((item) => !item.goalID)
+                            const dataAssignmentGoalRelation = dataColumn[item.type].assignment.filter((item) => !!item.goalID)
+
+                            return (
+                                <div className={`column ${item.type}`} key={item.type}>
+                                    <div className='head'>
+                                        <Icons icon={item.icon} />
+                                        <label>{item.title}</label>
+                                    </div>
+                                    <div className='body scrollable'>
+                                        <DragDropDroppable dragDropID={item.type} className='list'>
+                                            {
+                                                visibility.layoutHome === 'goal' ?
+                                                    <Goal source={dataGoal} {...columnPropsReference} />
+                                                    :
+                                                    <>
+                                                        <Assignment source={dataAssignment} {...columnPropsReference} />
+                                                        <AssignmentGoalRelation source={dataAssignmentGoalRelation} {...columnPropsReference} />
+                                                    </>
+                                            }
+                                        </DragDropDroppable>
+                                    </div>
                                 </div>
-                                <div className='body scrollable'>
-                                    <DragDropDroppable dragDropID={item.type} className='list'>
-                                        {
-                                            visibility.layoutHome === 'goal' ?
-                                                <Goal source={dataColumn[item.type].goal} {...columnPropsReference} />
-                                                :
-                                                <Assignment source={dataColumn[item.type].assignment} {...columnPropsReference} />
-                                        }
-                                    </DragDropDroppable>
-                                </div>
-                            </div>
-                        ))}
+                            )
+                        })}
                 </div>
             </DragDrop>
             <PopupModelOptions type='pop-switch-model' typeSwitchModelOptions='home' mode={visibility.layoutPopupModel} />
