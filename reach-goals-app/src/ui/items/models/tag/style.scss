@@ -22,11 +22,19 @@
                 display: flex;
                 gap: 0.35rem;
                 font-weight: 600;
-                color: $color-contrast;
+
+                * {
+                    color: $color-white;
+                }
 
                 .button-checkbox {
                     display: none;
+
+                    .checkbox-container {
+                        border-color: $color-white;
+                    }
                 }
+
             }
 
             .side-actions {
@@ -57,9 +65,9 @@
                 display: flex;
                 flex-direction: column;
                 gap: 0.35rem;
-                background-color: $color-secondary;
                 padding: 0.5rem 0.35rem 0.35rem 0.35rem;
                 border-radius: $dimensions-border-radius-sm;
+                background-color: $color-contrast-o-15;
 
                 .message {
                     display: inline-flex;
@@ -68,10 +76,9 @@
                     font-weight: 600;
                     font-size: 0.9rem;
                     height: 2rem;
-                    color: $color-complementary-s;
 
-                    .icon-st {
-                        height: 1.25rem;
+                    * {
+                        color: $color-white;
                     }
                 }
             }
@@ -88,12 +95,12 @@
                 }
 
                 .side-actions {
-                    background-color: $color-secondary-15;
+                    background-color: $color-white-o-15;
                     width: 1.8rem;
                 }
 
                 &:active {
-                    background-color: $color-secondary-15;
+                    background-color: $color-white-o-15;
                 }
             }
 
@@ -120,7 +127,6 @@
                         &.expand {
 
                             .icon-st {
-                                color: $color-secondary;
                                 transform: rotate(180deg);
                             }
                         }
@@ -182,7 +188,6 @@
                 }
 
                 .side-actions {
-                    background-color: $color-secondary-15;
                     justify-content: center;
                     width: 4.125rem;
 
@@ -195,6 +200,22 @@
                     }
                 }
             }
+        }
+    }
+
+    &.card-mini {
+
+        * {
+            color: $color-white;
+        }
+    }
+
+    /* DOUBLE APPLY */
+    &.card-relation,
+    &.card-mini {
+
+        .title {
+            text-shadow: $text-shadow-st;
         }
     }
 }

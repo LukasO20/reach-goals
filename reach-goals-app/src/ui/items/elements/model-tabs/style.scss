@@ -10,7 +10,7 @@
         justify-content: space-between;
         padding: $spacing-padding-sm;
         gap: $spacing-gap-sm;
-        border-bottom: 0.1em solid $color-complementary-s-15;
+        border-bottom: 0.1em solid $color-pair-secondary-lightest;
 
         .options-sections {
             display: flex;
@@ -22,7 +22,7 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        background-color: $color-complementary-s-05;
+        background-color: $color-pair-primary;
         gap: $spacing-gap-sm;
         padding: $spacing-padding-sm;
         border-radius: $dimensions-border-radius-sm;

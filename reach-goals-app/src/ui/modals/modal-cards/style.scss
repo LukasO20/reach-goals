@@ -6,7 +6,7 @@
     height: auto;
     max-height: $dimensions-h-video-xl;
     background-color: $color-secondary;
-    box-shadow: $box-shadow-st;
+    box-shadow: $shadow-st;
     padding: $spacing-padding-md;
     border-radius: $dimensions-border-radius-sm;
     overflow: hidden;
@@ -16,7 +16,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-bottom: solid 1px $color-complementary-p;
+        border-bottom: solid 1px $color-pair-primary;
         padding-bottom: $spacing-padding-sm;
 
         .title {
@@ -25,7 +25,7 @@
             gap: $spacing-gap-sm;
             
             * {
-                color: $color-complementary-s;
+                color: $color-pair-secondary;
             }
 
             >span {
@@ -40,5 +40,8 @@
         flex-direction: column;
         overflow-y: auto;
         gap: $spacing-gap-sm;
+        background-color: $color-pair-primary;
+        padding: $spacing-padding-sm;
+        border-radius: $dimensions-border-radius-sm;
     }
 }

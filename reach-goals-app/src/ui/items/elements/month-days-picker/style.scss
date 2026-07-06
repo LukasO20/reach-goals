@@ -2,8 +2,7 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    background-color: $color-complementary-p-30;
-    border: solid 1px $color-complementary-s-15;
+    background-color: $color-pair-primary;
     border-radius: $dimensions-border-radius-sm;
     padding: $spacing-padding-sm;
 
@@ -16,7 +15,7 @@
         .day-name {
             flex: 1;
             text-align: center;
-            color: $color-complementary-s
+            color: $color-pair-secondary;
         }
     }
 
@@ -35,9 +34,9 @@
             gap: $spacing-gap-mini;
             text-align: center;
             font-weight: 600;
-            color: $color-complementary-s;
-            background-color: $color-complementary-p-50;
-            padding: 0.15rem;
+            color: $color-pair-secondary;
+            background-color: $color-secondary;
+            padding: $spacing-padding-sm;
             border-radius: $dimensions-border-radius-sm;
 
             .title {
@@ -50,20 +49,21 @@
                 >label {
                     display: inline-flex;
                     justify-content: center;
-                    padding: 0.15rem $spacing-padding-sm;
+                    padding: $spacing-padding-x-mini $spacing-padding-sm;
                     border-radius: 1rem;
                     width: 2rem;
                     cursor: pointer;
                     transition: $animation-transition-st;
+                    color: $color-pair-secondary;
 
                     &:hover {
-                        background-color: $color-complementary-s-70;
-                        color: $color-secondary;
+                        color: $color-white;
+                        background-color: $color-pair-secondary-dark;
                     }
 
                     &:active {
-                        background-color: $color-complementary-s-50;
-                        color: $color-secondary;
+                        color: $color-white;
+                        background-color: $color-pair-secondary-darkest;
                     }
                 }
 
@@ -76,7 +76,7 @@
                         padding: $spacing-padding-sm;
                         border-radius: $dimensions-border-radius-sm;
                         background-color: $color-secondary;
-                        box-shadow: $box-shadow-sm;
+                        box-shadow: $shadow-sm;
                         z-index: 1;
 
                         >.head {
@@ -122,13 +122,12 @@
             >.card-mini {
                 width: 85%;
                 overflow: hidden;
-                transition: .3s linear;
-                cursor: pointer;
                 padding: 0rem $spacing-padding-mini;
+                background-color: $color-pair-primary;
 
                 * {
-                    cursor: pointer;
                     font-size: $font-size-mini;
+                    cursor: pointer;
                 }
 
                 .body {
@@ -153,10 +152,6 @@
                         width: 0.85rem;
                     }
                 }
-
-                &:hover {
-                    background-color: $color-complementary-p-15;
-                }
             }
 
             &.today {
@@ -164,18 +159,18 @@
                 >.title {
 
                     >label {
-                        background-color: $color-complementary-s;
+                        background-color: $color-pair-secondary;
                         color: $color-secondary;
                         padding: 0.15rem $spacing-padding-sm;
                         border-radius: 1rem;
 
                         &:hover {
-                            background-color: $color-complementary-s-70;
+                            background-color: $color-pair-secondary-darkest;
                             color: $color-secondary;
                         }
 
                         &:active {
-                            background-color: $color-complementary-s-50;
+                            background-color: $color-pair-secondary-dark;
                             color: $color-secondary;
                         }
                     }
@@ -183,7 +178,7 @@
             }
 
             &.approximate {
-                opacity: 0.6;
+                background-color: $color-contrast-o-05;
             }
 
             &:hover {
@@ -196,14 +191,14 @@
                             opacity: 1;
 
                             .button-action {
-                                background-color: $color-complementary-s-15;
+                                background-color: $color-pair-secondary-lightest;
 
                                 &:hover {
-                                    background-color: $color-complementary-s;
+                                    background-color: $color-pair-secondary;
                                 }
 
                                 &:active {
-                                    background-color: $color-complementary-s-30;
+                                    background-color: $color-pair-secondary-light;
                                 }
                             }
                         }

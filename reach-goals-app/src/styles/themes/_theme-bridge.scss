@@ -1,83 +1,80 @@
 /* COLORS */
-$color-primary: var(--color-primary);
-$color-secondary: var(--color-secondary);
-$color-complementary-p: var(--color-complementary-p);
-$color-complementary-s: var(--color-complementary-s);
-$color-accent: var(--color-accent);
-$color-success: var(--color-success);
-$color-cancel: var(--color-cancel);
-$color-contrast: var(--color-contrast);
-$color-delete: var(--color-delete);
-
-/* COLORS STANDARD */
 $color-white: #FFFF;
+$color-primary: var(--color-primary);
+$color-primary-lightest: var(--color-primary-lightest);
+$color-primary-light: var(--color-primary-light);
+$color-primary-dark: var(--color-primary-dark);
+$color-primary-darkest: var(--color-primary-darkest);
+
+$color-secondary: var(--color-secondary);
+$color-secondary-lightest: var(--color-secondary-lightest);
+$color-secondary-light: var(--color-secondary-light);
+$color-secondary-dark: var(--color-secondary-dark);
+$color-secondary-darkest: var(--color-secondary-darkest);
+
+$color-pair-primary: var(--color-pair-primary);
+$color-pair-primary-lightest: var(--color-pair-primary-lightest);
+$color-pair-primary-light: var(--color-pair-primary-light);
+$color-pair-primary-dark: var(--color-pair-primary-dark);
+$color-pair-primary-darkest: var(--color-pair-primary-darkest);
+
+$color-pair-secondary: var(--color-pair-secondary);
+$color-pair-secondary-lightest: var(--color-pair-secondary-lightest);
+$color-pair-secondary-light: var(--color-pair-secondary-light);
+$color-pair-secondary-dark: var(--color-pair-secondary-dark);
+$color-pair-secondary-darkest: var(--color-pair-secondary-darkest);
+
+$color-accent: var(--color-accent);
+$color-accent-lightest: var(--color-accent-lightest);
+$color-accent-light: var(--color-accent-light);
+$color-accent-dark: var(--color-accent-dark);
+$color-accent-darkest: var(--color-accent-darkest);
+
+$color-success: var(--color-success);
+$color-success-lightest: var(--color-success-lightest);
+$color-success-light: var(--color-success-light);
+$color-success-dark: var(--color-success-dark);
+$color-success-darkest: var(--color-success-darkest);
+
+$color-neutral: var(--color-neutral);
+$color-neutral-lightest: var(--color-neutral-lightest);
+$color-neutral-light: var(--color-neutral-light);
+$color-neutral-dark: var(--color-neutral-dark);
+$color-neutral-darkest: var(--color-neutral-darkest);
+
+$color-error: var(--color-error);
+$color-error-lightest: var(--color-error-lightest);
+$color-error-light: var(--color-error-light);
+$color-error-dark: var(--color-error-dark);
+$color-error-darkest: var(--color-error-darkest);
+
+$color-contrast: var(--color-contrast);
+$color-contrast-lightest: var(--color-contrast-lightest);
+$color-contrast-light: var(--color-contrast-light);
+$color-contrast-dark: var(--color-contrast-dark);
+$color-contrast-darkest: var(--color-contrast-darkest);
 
 /* COLORS OPACITY */
+$color-white-o-70: rgba($color-white, 0.70);
+$color-white-o-50: rgba($color-white, 0.50);
+$color-white-o-30: rgba($color-white, 0.30);
+$color-white-o-15: rgba($color-white, 0.15);
+$color-white-o-05: rgba($color-white, 0.05);
 
-// 5%
-$color-primary-05: var(--color-primary-05);
-$color-secondary-05: var(--color-secondary-05);
-$color-complementary-p-05: var(--color-complementary-p-05);
-$color-complementary-s-05: var(--color-complementary-s-05);
-$color-accent-05: var(--color-accent-05);
-$color-success-05: var(--color-success-05);
-$color-cancel-05: var(--color-cancel-05);
-$color-contrast-05: var(--color-contrast-05);
-$color-delete-05: var(--color-delete-05);
-$color-white-05: rgba($color-white, 0.05);
-
-// 15%
-$color-primary-15: var(--color-primary-15);
-$color-secondary-15: var(--color-secondary-15);
-$color-complementary-p-15: var(--color-complementary-p-15);
-$color-complementary-s-15: var(--color-complementary-s-15);
-$color-accent-15: var(--color-accent-15);
-$color-success-15: var(--color-success-15);
-$color-cancel-15: var(--color-cancel-15);
-$color-contrast-15: var(--color-contrast-15);
-$color-delete-15: var(--color-delete-15);
-$color-white-15: rgba($color-white, 0.15);
-
-// 30%
-$color-primary-30: var(--color-primary-30);
-$color-secondary-30: var(--color-secondary-30);
-$color-complementary-p-30: var(--color-complementary-p-30);
-$color-complementary-s-30: var(--color-complementary-s-30);
-$color-accent-30: var(--color-accent-30);
-$color-success-30: var(--color-success-30);
-$color-cancel-30: var(--color-cancel-30);
-$color-contrast-30: var(--color-contrast-30);
-$color-delete-30: var(--color-delete-30);
-$color-white-30: rgba($color-white, 0.30);
-
-// 50%
-$color-primary-50: var(--color-primary-50);
-$color-secondary-50: var(--color-secondary-50);
-$color-complementary-p-50: var(--color-complementary-p-50);
-$color-complementary-s-50: var(--color-complementary-s-50);
-$color-accent-50: var(--color-accent-50);
-$color-success-50: var(--color-success-50);
-$color-cancel-50: var(--color-cancel-50);
-$color-contrast-50: var(--color-contrast-50);
-$color-delete-50: var(--color-delete-50);
-$color-white-50: rgba($color-white, 0.50);
-
-// 70%
-$color-primary-70: var(--color-primary-70);
-$color-secondary-70: var(--color-secondary-70);
-$color-complementary-p-70: var(--color-complementary-p-70);
-$color-complementary-s-70: var(--color-complementary-s-70);
-$color-accent-70: var(--color-accent-70);
-$color-success-70: var(--color-success-70);
-$color-cancel-70: var(--color-cancel-70);
-$color-contrast-70: var(--color-contrast-70);
-$color-delete-70: var(--color-delete-70);
-$color-white-70: rgba($color-white, 0.70);
+$color-contrast-o-70: var(--color-contrast-o-70);
+$color-contrast-o-50: var(--color-contrast-o-50);
+$color-contrast-o-30: var(--color-contrast-o-30);
+$color-contrast-o-15: var(--color-contrast-o-15);
+$color-contrast-o-05: var(--color-contrast-o-05);
 
 /* SHADOW */
-$box-shadow-st: 0.01rem 0.01rem 0.45rem 0.01rem $color-contrast-15;
-$box-shadow-sm: 0.005rem 0.005rem 0.225rem 0.005rem $color-contrast-15;
-$box-shadow-md: 0.05rem 0.05rem 1.5rem 0.05rem $color-contrast-15;
+$shadow-st: 0.01rem 0.01rem 0.45rem 0.01rem $color-contrast-o-30;
+$shadow-sm: 0.005rem 0.005rem 0.225rem 0.005rem $color-contrast-o-30;
+$shadow-md: 0.05rem 0.05rem 1.5rem 0.05rem $color-contrast-o-30;
+
+$text-shadow-st: 0rem 0.05rem 0.05rem $color-contrast-o-30;
+$text-shadow-sm: 0rem 0.0225rem 0.0225rem $color-contrast-o-30;
+$text-shadow-md: 0rem 0.0525rem 0.0525rem $color-contrast-o-30;
 
 /* SCROLLBAR */
-$scrollbar-color: $color-complementary-s;
+$scrollbar-color: $color-pair-secondary;

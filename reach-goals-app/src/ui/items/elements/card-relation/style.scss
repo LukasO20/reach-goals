@@ -4,7 +4,7 @@
     gap: $spacing-gap-sm;
     padding: $spacing-padding-mini;
     padding-top: $spacing-gap-sm;
-    background-color: $color-complementary-s;
+    background-color: $color-pair-secondary;
     border-radius: $dimensions-border-radius-sm;
 
     >.head {
@@ -17,13 +17,14 @@
             overflow: hidden;
 
             * {
-                color: $color-complementary-p;
+                color: $color-pair-primary;
             }
 
             span {
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
+                line-clamp: 2;
                 overflow: hidden;
                 flex: 1;
                 font-weight: 600;

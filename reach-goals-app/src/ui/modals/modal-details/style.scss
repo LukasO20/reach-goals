@@ -9,19 +9,11 @@
                 flex-direction: column;
                 gap: $spacing-gap-sm;
 
-                .title {
-                    display: flex;
-                    align-items: center;
-                    gap: $spacing-gap-sm;
-                    font-size: $font-size-m;
-                    font-weight: 600;
-                    color: $color-complementary-s;
-                }
+                h2 {
 
-                .sub-title {
-                    font-weight: 600;
-                    color: $color-complementary-s;
-                    font-size: $font-size-sm;
+                    * {
+                        color: $color-pair-secondary-lightest;
+                    }
                 }
             }
         }
@@ -40,26 +32,26 @@
             }
 
             &.progress {
-                background-color: $color-complementary-s-15;
+                background-color: $color-pair-secondary-dark;
 
                 * {
-                    color: $color-complementary-s;
+                    color: $color-white;
                 }
             }
 
             &.conclude {
-                background-color: $color-success-70;
+                background-color: $color-success;
 
                 * {
-                    color: $color-complementary-s;
+                    color: $color-white;
                 }
             }
 
             &.cancel {
-                background-color: $color-cancel-70;
+                background-color: $color-neutral;
 
                 * {
-                    color: $color-complementary-s;
+                    color: $color-white;
                 }
             }
         }
@@ -68,17 +60,16 @@
             display: flex;
             flex-direction: column;
             gap: $spacing-gap-st;
-            background-color: $color-complementary-s-05;
 
             .description {
                 display: flex;
-                background-color: $color-secondary;
+                background-color: $color-pair-primary;
                 border-radius: $dimensions-border-radius-sm;
                 padding: $spacing-padding-st;
                 font-weight: 600;
                 font-size: $font-size-sm;
                 max-height: 20rem;
-                color: $color-complementary-s;
+                color: $color-pair-secondary;
                 overflow: hidden;
 
                 .body {
@@ -114,7 +105,7 @@
                             }
 
                             * {
-                                color: $color-complementary-s;
+                                color: $color-pair-secondary;
                             }
                         }
 
@@ -135,9 +126,9 @@
                                 top: 0.35rem;
                                 display: flex;
                                 align-items: center;
-                                color: $color-secondary;
+                                color: $color-white;
                                 font-weight: 600;
-                                text-shadow: 0rem 0rem 0.085rem $color-complementary-s;
+                                text-shadow: 0rem 0rem 0.085rem $color-pair-secondary;
                                 margin: $spacing-margin-st;
                             }
                         }
@@ -145,10 +136,10 @@
                         &.progress {
 
                             .body {
-                                background-color: $color-complementary-s-30;
+                                background-color: $color-pair-secondary;
 
                                 .bar-progress {
-                                    background-color: $color-complementary-s;
+                                    background-color: $color-pair-secondary-light;
                                 }
                             }
                         }
@@ -156,10 +147,10 @@
                         &.conclude {
 
                             .body {
-                                background-color: $color-success-50;
+                                background-color: $color-success-darkest;
 
                                 .bar-progress {
-                                    background-color: $color-success-70;
+                                    background-color: $color-success-dark;
                                 }
                             }
                         }
@@ -167,10 +158,10 @@
                         &.cancel {
 
                             .body {
-                                background-color: $color-cancel-50;
+                                background-color: $color-neutral-darkest;
 
                                 .bar-progress {
-                                    background-color: $color-cancel-70;
+                                    background-color: $color-neutral-dark;
                                 }
                             }
                         }
@@ -194,7 +185,7 @@
 
                     .goal-card {
                         display: flex;
-                        background-color: $color-complementary-s;
+                        background-color: $color-pair-secondary;
                         border-radius: $dimensions-border-radius-sm;
                         padding: $spacing-padding-sm;
                         flex: 1;
@@ -281,7 +272,7 @@
                     }
 
                     * {
-                        color: $color-complementary-s;
+                        color: $color-pair-secondary;
                     }
                 }
 
@@ -296,11 +287,11 @@
                         align-items: center;
                         gap: $spacing-gap-mini;
                         font-size: $font-size-mini;
-                        font-weight: 500;
+                        font-weight: 600;
                         padding: $spacing-padding-sm;
                         border-radius: $dimensions-border-radius-mini;
                         width: fit-content;
-                        color: $color-complementary-s;
+                        color: $color-white;
                     }
                 }
             }

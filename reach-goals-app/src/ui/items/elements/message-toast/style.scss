@@ -10,14 +10,14 @@
     gap: $spacing-gap-sm;
     border-radius: $dimensions-border-radius-sm;
     padding: $spacing-padding-sm;
-    background-color: $color-complementary-p;
-    box-shadow: 0.01em 0.01em 0.45em 0.01em $color-complementary-s-30;
-    color: $color-complementary-s;
+    background-color: $color-pair-primary;
+    box-shadow: 0.01em 0.01em 0.45em 0.01em $color-pair-secondary-light;
+    color: $color-pair-secondary;
     font-weight: 600;
     z-index: 1000;
     
     .title {
-        border-right: solid 2px $color-complementary-s-70;
+        border-right: solid 2px $color-pair-secondary-darkest;
         padding-right: 0.75rem;
     }
 }

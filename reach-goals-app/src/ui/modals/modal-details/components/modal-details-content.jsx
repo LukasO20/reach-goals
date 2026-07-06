@@ -39,7 +39,6 @@ const ModalDetailsContent = ({
 
     const handleClickButtonAction = () => navigate(`/${layout.page.pageName}`) // return standard route during handle
 
-    const iconStatus = status === 'conclude' ? 'check' : status
     const subHeadClass = cx(
         `sub-head
         ${status}
@@ -52,10 +51,12 @@ const ModalDetailsContent = ({
         <>
             <div className='head'>
                 <div>
-                    <span className='title'>
-                        <Icons icon={`icon-${type}`} />
-                        {name}
-                    </span>
+                    <div className='title'>
+                        <Icons icon={`icon-${type}`} size='big' />
+                        <h2>
+                            {name}
+                        </h2>
+                    </div>
                     {hasEndDate && (
                         <span className='sub-title'>
                             {`Schedule to end on ${moment(end).format('MMMM DD')}`}
@@ -80,7 +81,7 @@ const ModalDetailsContent = ({
             </div>
             <div className={subHeadClass}>
                 <label className='label-status'>
-                    <Icons icon={`icon-${iconStatus}`} />
+                    <Icons icon={`icon-${status}`} />
                     {status}
                 </label>
             </div>

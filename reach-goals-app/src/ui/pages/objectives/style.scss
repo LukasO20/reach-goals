@@ -46,10 +46,10 @@
         font-weight: 500;
 
         &.progress {
-            color: $color-complementary-s;
+            color: $color-pair-secondary;
 
             * {
-                color: $color-complementary-s;
+                color: $color-pair-secondary;
             }
         }
 
@@ -62,10 +62,10 @@
         }
 
         &.cancel {
-            color: $color-cancel;
+            color: $color-neutral;
 
             * {
-                color: $color-cancel;
+                color: $color-neutral;
             }
         }
     }

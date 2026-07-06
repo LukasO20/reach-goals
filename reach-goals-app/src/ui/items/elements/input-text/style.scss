@@ -6,18 +6,18 @@
     padding: 0rem 0.66rem;
     border-radius: $dimensions-border-radius-sm;
     border: 3px solid transparent;
-    background-color: $color-complementary-p;
+    background-color: $color-pair-primary;
     outline-color: $color-accent;
-    font-weight: 500;
-    caret-color: $color-complementary-s;
-    color: $color-complementary-s;
+    font-weight: 600;
+    caret-color: $color-pair-secondary;
+    color: $color-pair-secondary;
 
     &:hover {
-        border-color: $color-accent-30;
+        border-color: $color-accent-light;
     }
 
     &::placeholder {
         font-weight: 600;
-        color: $color-complementary-s-70;
+        color: $color-pair-primary-light;
     }
 }

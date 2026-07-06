@@ -5,7 +5,7 @@
     height: 100dvh;
     width: 35em;
     background-color: $color-secondary;
-    box-shadow: $box-shadow-st;
+    box-shadow: $shadow-st;
     transition: $animation-transition-st;
     animation: $animation-fade-in 0.2s linear forwards;
     opacity: 0;
@@ -16,14 +16,38 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background-color: $color-complementary-s-05;
+        background-color: $color-pair-secondary-darkest;
         padding: $spacing-padding-sm;
         height: 6dvh;
 
         h2,
         h4 {
-            margin: 0.83em 0.5em;
-            color: $color-complementary-s;
+            display: -webkit-box;
+            margin: 0rem $spacing-margin-sm;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+        }
+
+        .title {
+            display: flex;
+            align-items: center;
+            gap: $spacing-gap-mini;
+
+            .icon-st {
+                flex-shrink: 0;
+            }
+
+            * {
+                color: $color-pair-secondary-lightest;
+            }
+        }
+
+        .sub-title {
+            color: $color-pair-secondary-lightest;
+            font-weight: 500;
         }
 
         .close {
@@ -31,11 +55,8 @@
             left: -3em;
         }
 
-        .options {
-            display: flex;
-            align-items: center;
-            gap: 1em;
-            color: $color-complementary-s;
+        .button-action {
+            flex-shrink: 0;
         }
     }
 
@@ -64,7 +85,7 @@
         width: 52.5rem;
         opacity: 0;
         z-index: -1;
-        box-shadow: $box-shadow-st;
+        box-shadow: $shadow-st;
 
         .container-form-modal,
         .container-config {
@@ -82,7 +103,7 @@
                 display: flex;
                 align-items: center;
                 flex: 1;
-                border-bottom: solid 1px $color-complementary-p;
+                border-bottom: solid 1px $color-pair-primary;
                 padding: 0rem 1rem;
                 gap: $spacing-gap-sm;
 

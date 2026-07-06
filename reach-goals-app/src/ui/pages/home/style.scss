@@ -19,7 +19,7 @@
             .column {
                 display: flex;
                 flex-direction: column;
-                background-color: $color-complementary-p-50;
+                background-color: $color-pair-primary;
                 flex: 1;
                 border-radius: 0.35em;
                 border: 3px solid transparent;
@@ -29,19 +29,21 @@
                 &.progress {
 
                     >.head {
-                        background-color: $color-complementary-s-15;
-                        color: $color-complementary-s;
+                        background-color: $color-pair-secondary-dark;
+
+                        * {
+                            color: $color-white;
+                        }
                     }
                 }
 
                 &.conclude {
 
                     >.head {
-                        background-color: $color-success-70;
-                        color: $color-secondary;
+                        background-color: $color-success;
 
                         * {
-                            color: $color-secondary;
+                            color: $color-white;
                         }
                     }
                 }
@@ -49,11 +51,10 @@
                 &.cancel {
 
                     >.head {
-                        background-color: $color-cancel-70;
-                        color: $color-secondary;
+                        background-color: $color-neutral;
 
                         * {
-                            color: $color-secondary;
+                            color: $color-white;
                         }
                     }
                 }
@@ -69,6 +70,8 @@
                     label {
                         font-weight: 600;
                     }
+
+
                 }
 
                 >.body {

@@ -8,11 +8,11 @@
     >.head {
         padding: $spacing-padding-sm;
         border-radius: $dimensions-border-radius-sm;
-        background-color: $color-complementary-p-70;
+        background-color: $color-pair-primary-darkest;
 
         .label-activity {
             font-weight: 600;
-            color: $color-complementary-s;
+            color: $color-white;
         }
     }
 
@@ -65,7 +65,7 @@
                     top: 50%;
                     left: 50%;
                     transform: translate(-50%, -50%);
-                    color: $color-complementary-s;
+                    color: $color-pair-secondary;
                     font-size: $font-size-lg;
                     font-weight: 800;
                 }
@@ -84,31 +84,31 @@
             }
 
             &.goal {
-                background-color: $color-complementary-p-70;
+                background-color: $color-pair-primary-darkest;
 
                 .bar-progress {
-                    background-color: $color-complementary-s;
+                    background-color: $color-pair-secondary;
 
                    * {
-                        color: $color-contrast;
+                        color: $color-white;
                     }
                 }
 
                 .bar-actions {
 
                     .button-action {
-                        background-color: $color-secondary;
+                        background-color: $color-white;
 
                         * {
-                            color: $color-complementary-s;
+                            color: $color-pair-secondary-darkest;
                         }
 
                         &:hover {
-                            background-color: $color-complementary-p-70;
+                            background-color: $color-white-o-70;
                         }
 
                         &:active {
-                            background-color: $color-complementary-p-50;
+                            background-color: $color-white-o-50;
                         }
                     }
                 }
@@ -116,37 +116,37 @@
                 &.empty {
 
                     * {
-                        color: $color-complementary-s;
+                        color: $color-pair-secondary;
                     }
                 }
             }
 
             &.assignment {
-                background-color: $color-accent-15;
+                background-color: $color-accent-lightest;
 
                 .bar-progress {
                     background-color: $color-accent;
 
-                    * {
-                        color: $color-contrast;
+                   * {
+                        color: $color-white;
                     }
                 }
 
                 .bar-actions {
 
                     .button-action {
-                        background-color: $color-primary;
+                        background-color: $color-white;
 
                         * {
-                            color: $color-secondary;
+                            color: $color-primary;
                         }
 
                         &:hover {
-                            background-color: $color-primary-70;
+                            background-color: $color-white-o-70;
                         }
 
                         &:active {
-                            background-color: $color-primary-50;
+                            background-color: $color-white-o-50;
                         }
                     }
                 }
@@ -163,7 +163,7 @@
         .label-activity {
             display: inline-flex;
             padding: $spacing-padding-md;
-            color: $color-complementary-s;
+            color: $color-pair-secondary;
             font-weight: 700;
         }
     }

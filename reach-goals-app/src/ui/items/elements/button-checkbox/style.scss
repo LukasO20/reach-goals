@@ -15,7 +15,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        border: 0.125em solid $color-complementary-s;
+        border: 0.125em solid $color-pair-secondary-dark;
         width: 0.975rem;
         height: 0.975rem;
         border-radius: 0.25em;
@@ -27,13 +27,14 @@
             font-size: 1em;
             width: 1em;
             margin: 0em;
+            color: $color-pair-secondary;
         }
     }
 
     .title {
         font-weight: 600;
         font-size: $font-size-sm;
-        color: $color-complementary-s-70;
+        color: $color-pair-secondary;
         user-select: none;
     }
 
@@ -54,22 +55,26 @@
     &.checked {
 
         .checkbox-container {
-            background-color: $color-complementary-s-05;
+            background-color: $color-pair-secondary;
         }
 
         .title {
-            color: $color-complementary-s;
+            color: $color-pair-secondary;
+        }
+
+        .icon-st {
+            color: $color-white;
         }
     }
 
     &:active {
 
         .checkbox-container {
-            background-color: $color-complementary-s-50;
+            background-color: $color-pair-secondary-dark;
         }
 
         .title {
-            color: $color-complementary-s-50;
+            color: $color-pair-secondary-dark;
         }
     }
 }

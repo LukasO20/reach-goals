@@ -1,7 +1,7 @@
 .container-navigate {
     display: flex;
     flex-direction: column;
-    background-color: $color-complementary-p-50;
+    background-color: $color-pair-primary;
     height: 100dvh;
 
     .nav {
@@ -41,20 +41,7 @@
             top: 50%;
             left: 50%;
             transform: translate(100%, -50%);
-            background-color: $color-complementary-s-70;
             z-index: 1;
-
-            * {
-                color: $color-secondary;
-            }
-
-            &:hover {
-                background-color: $color-complementary-s;
-            }
-
-            &:active {
-                background-color: $color-complementary-s-50;
-            }
         }
 
         &.expanded {

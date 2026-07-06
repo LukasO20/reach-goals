@@ -1,6 +1,6 @@
 .icon-st {
     height: 1.25rem;
-    color: $color-complementary-s;
+    color: $color-pair-secondary;
 
     &.medium {
         height: 1rem;
@@ -8,5 +8,9 @@
 
     &.small {
         height: 0.875rem;
+    }
+
+    &.big {
+        height: 1.5rem;
     }
 }

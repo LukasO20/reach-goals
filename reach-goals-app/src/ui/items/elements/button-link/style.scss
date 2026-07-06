@@ -4,16 +4,12 @@
     align-items: center;
     height: 2.4rem;
     width: 2.4rem;
-    background-color: $color-complementary-p-50;
+    background-color: $color-pair-secondary-light;
     transition: $animation-transition-st;
     cursor: pointer;
 
     * {
-        color: $color-complementary-s;
-    }
-
-    .icon-st {
-        width: 1.25rem;
+        color: $color-white;
     }
 
     .button-title {
@@ -22,6 +18,10 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         animation: $animation-fade-in 0.25s linear forwards;
+
+        .icon-st {
+            width: 1.25rem;
+        }
     }
 
     &.circle {
@@ -38,43 +38,32 @@
 
     &.logo {
         padding: $spacing-padding-mini;
+
+        * {
+            color: $color-contrast;
+        }
     }
 
     &.home {
-        background-color: $color-accent-15;
+        background-color: $color-accent;
     }
 
     /* DOUBLE APPLY */
     &:hover,
     &.active {
-        background-color: $color-complementary-s;
-
-        * {
-            color: $color-secondary;
-        }
-
-        &.logo {
-
-            * {
-                color: $color-complementary-s;
-            }
-        }
+        background-color: $color-pair-secondary;
 
         &.home {
-            background-color: $color-accent;
-
-            * {
-                color: $color-secondary;
-            }
+            background-color: $color-accent-lightest;
         }
     }
 
     /* Last application */
     &:active {
-        background-color: $color-complementary-s-30;
+        background-color: $color-pair-secondary-dark;
 
         &.home {
-            background-color: $color-accent-50;
+            background-color: $color-accent-light;
         }
     }
 }

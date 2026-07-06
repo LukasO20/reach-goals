@@ -14,10 +14,11 @@
         min-width: 2rem;
         padding: $spacing-padding-mini;
         border-radius: $dimensions-border-radius-sm;
-        background-color: $color-complementary-p;
+        background-color: $color-pair-secondary-lightest;
         font-weight: 600;
         font-size: $font-size-mini;
-        color: $color-complementary-s
+        color: $color-contrast;
+        z-index: 1;
     }
 
     .dropdown-title {
@@ -28,7 +29,7 @@
         gap: 0.35rem;
         font-weight: 600;
         padding: 0rem 0.5rem;
-        color: $color-complementary-s;
+        color: $color-pair-secondary;
         cursor: pointer;
 
         label {
@@ -53,8 +54,8 @@
         gap: $spacing-gap-sm;
         top: 2.95rem;
         min-width: 10rem;
-        background-color: $color-complementary-p;
-        box-shadow: $box-shadow-st;
+        background-color: $color-pair-primary;
+        box-shadow: $shadow-st;
         padding: 0.5em;
         border-radius: 0.2em;
         max-height: 20em;
@@ -72,7 +73,7 @@
         }
 
         >span {
-            color: $color-complementary-s;
+            color: $color-pair-secondary;
             text-align: center;
             font-weight: 600;
             cursor: initial;
@@ -83,24 +84,7 @@
             .button-action {
                 width: stretch;
                 justify-content: space-between;
-                background-color: $color-complementary-s-50;
                 white-space: nowrap;
-
-                * {
-                    color: $color-secondary;
-                }
-
-                &.active {
-                    background-color: $color-complementary-s;
-                }
-
-                &:hover {
-                    background-color: $color-complementary-s;
-                }
-
-                &:active {
-                    background-color: $color-complementary-s-70;
-                }
             }
 
             &.switch-cards {
@@ -124,28 +108,24 @@
         }
     }
 
-    &.status {
+    &.create {
 
         .dropdown-menu {
 
             .button-action {
-                background-color: $color-accent-15;
-
-                * {
-                    color: $color-complementary-s;
-                }
+                background-color: $color-accent;
 
                 &:hover,
                 &.active {
-                    background-color: $color-accent;
-
-                    * {
-                        color: $color-secondary;
-                    }
+                    background-color: $color-accent-lightest;
                 }
 
                 &:active {
-                    background-color: $color-primary-50;
+                    background-color: $color-accent-dark;
+                }
+
+                * {
+                    color: $color-white;
                 }
             }
         }

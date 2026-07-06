@@ -34,7 +34,7 @@ const CardMini = ({
         .filter((item) => !status || status.includes(item.status))
         .map((item, index) => {
             const itemID = item.id || item.tagID
-            const tagCardStyle = type === 'tag' ? { backgroundColor: `${item.color}30`, borderColor: item.color } : null
+            const tagCardStyle = type === 'tag' ? { backgroundColor: `${item.color}` } : null
             const selectedDisplayType = display.type[0]
             const selectedCheckboxList = checkboxState?.page?.selected ?? []
 

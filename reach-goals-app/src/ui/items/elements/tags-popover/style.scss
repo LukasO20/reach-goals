@@ -11,7 +11,7 @@
         gap: $spacing-gap-sm;
         padding: $spacing-padding-sm;
         border-radius: $dimensions-border-radius-sm;
-        box-shadow: $box-shadow-st;
+        box-shadow: $shadow-st;
         background-color: $color-secondary;
         width: max-content;
         max-width: $dimensions-w-md;
@@ -27,7 +27,7 @@
             font-weight: 500;
             padding: $spacing-padding-mini;
             border-radius: $dimensions-border-radius-mini;
-            color: $color-complementary-s;
+            color: $color-white;
         }
     }
 

@@ -19,7 +19,7 @@ const ModalDetailsTagRelation = ({ type, tags = [] }) => {
             {hasTags && (
                 <div className='body scrollable'>
                     {tags.map(({ tag }) => {
-                        const styleProps = { backgroundColor: `${tag.color}30`, borderColor: tag.color }
+                        const styleProps = { backgroundColor: `${tag.color}` }
 
                         return (
                             <label className='tag-card' key={tag.id} style={styleProps}>

@@ -69,9 +69,9 @@ const RelationCard = ({ checkboxState = checkboxMap, data = [] }) => {
                 const selectedCheckboxList = checkboxState.modal.selected
                 const colorTag = item.color
 
-                const quantityGoalMessage = goal.goals.length > 1 ? 
+                const quantityGoalMessage = goal.goals.length > 1 ?
                     `${goal.goals.length} Goals` : `${goal.goals.length} Goal`
-                const quantityAssigmentMessage = assignment.assignments.length > 1 ? 
+                const quantityAssigmentMessage = assignment.assignments.length > 1 ?
                     `${assignment.assignments.length} Assignments` : `${assignment.assignments.length} Assignment`
 
                 const displayModesProps = {
@@ -89,16 +89,16 @@ const RelationCard = ({ checkboxState = checkboxMap, data = [] }) => {
                 return (
                     <div className={`tag card-relation ${isOpen} ${hasSomeRelation} ${isRemoving} ${isSelected}`}
                         key={item.id}
-                        style={{ backgroundColor: `${colorTag}70`, borderColor: colorTag }}>
+                        style={{ backgroundColor: `${colorTag}` }}>
                         <div className='head' onClick={() => handleSetOpenCard(item)}>
                             <label>
-                                <ButtonCheckbox 
-                                    classBtn='checkbox-tag-card small' 
+                                <ButtonCheckbox
+                                    classBtn='checkbox-tag-card small'
                                     checkboxID={`checkbox-${item.id}`}
-                                    checkbox={buildCheckboxMap({ checkboxID: `checkbox-${item.id}`, scope: 'modal' })} 
+                                    checkbox={buildCheckboxMap({ checkboxID: `checkbox-${item.id}`, scope: 'modal' })}
                                 />
                                 <Icons icon='icon-tag' />
-                                {item.name}
+                                <label className='title'>{item.name}</label>
                             </label>
                             <div className='side-actions'>
                                 {(hasGoal || hasAssignment) &&
@@ -117,7 +117,9 @@ const RelationCard = ({ checkboxState = checkboxMap, data = [] }) => {
                                 <div className='content goal'>
                                     <label className='message'>
                                         <Icons icon='icon-goal' />
-                                        {quantityGoalMessage}
+                                        <label>
+                                            {quantityGoalMessage}
+                                        </label>
                                     </label>
                                     <Goal source={goal} display={displayModesProps} />
                                 </div>
@@ -127,7 +129,9 @@ const RelationCard = ({ checkboxState = checkboxMap, data = [] }) => {
                                 <div className='content assignment'>
                                     <label className='message'>
                                         <Icons icon='icon-assignment' />
-                                        {quantityAssigmentMessage}
+                                        <label>
+                                            {quantityAssigmentMessage}
+                                        </label>
                                     </label>
                                     <Assignment source={assignment} display={displayModesProps} />
                                 </div>

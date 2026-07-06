@@ -15,7 +15,7 @@
             justify-content: space-between;
             align-items: center;
             height: 3.5em;
-            border-bottom: solid 2px $color-complementary-p;
+            border-bottom: solid 2px $color-pair-primary;
 
             >div {
                 display: flex;
@@ -33,7 +33,7 @@
                             display: inline-flex;
                             justify-content: center;
                             width: $dimensions-w-sm;
-                            color: $color-complementary-s;
+                            color: $color-pair-secondary;
                             font-weight: 600;
                             font-size: $font-size-m;
                         }

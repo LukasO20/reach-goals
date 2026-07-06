@@ -12,14 +12,14 @@
         color: #333;
         cursor: pointer;
         font-weight: 600;
-        color: $color-complementary-s;
+        color: $color-pair-secondary;
     }
 
     .button-toggle-bg {
         width: 3rem;
         height: 1.75rem;
-        border: solid 0.15rem $color-complementary-s;
-        background-color: $color-complementary-s-70;
+        border: solid 0.15rem $color-pair-secondary;
+        background-color: $color-pair-secondary-darkest;
         border-radius: $dimensions-border-radius-st;
         position: relative;
         box-sizing: border-box;
@@ -40,8 +40,8 @@
     &.active {
 
         .button-toggle-bg {
-            border-color: $color-complementary-s;
-            background-color: $color-complementary-s;
+            border-color: $color-pair-secondary;
+            background-color: $color-pair-secondary;
         }
 
         .toggle {
@@ -55,16 +55,16 @@
     &:hover {
 
         .button-toggle-bg {
-            border-color: $color-complementary-s;
-            background-color: $color-complementary-s;
+            border-color: $color-pair-secondary;
+            background-color: $color-pair-secondary;
         }
     }
 
     &:active {
 
         .button-toggle-bg {
-            border-color: $color-complementary-s-70;
-            background-color: $color-complementary-s-70;
+            border-color: $color-pair-secondary-darkest;
+            background-color: $color-pair-secondary-darkest;
         }
     }
 }

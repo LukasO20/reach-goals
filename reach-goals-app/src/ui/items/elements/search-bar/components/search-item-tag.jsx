@@ -33,7 +33,9 @@ const SearchItemTag = ({ item, type, onButtonClick }) => {
     )
 
     return (
-        <div className={searchItemTagClass} style={{ backgroundColor: `${item.color}30` }}
+        <div 
+            className={searchItemTagClass} 
+            style={{ backgroundColor: `${item.color}` }}
             onClick={() => {
                 setModel(prev => ({ ...prev, typeModel: 'tag' }))
                 toggleVisibility(visibilityMap(['modal-right', 'tag']));
@@ -50,7 +52,11 @@ const SearchItemTag = ({ item, type, onButtonClick }) => {
                 {
                     (hasAssignmentRelation || hasGoalRelation) && (
                         <div className='item-action'>
-                            <ButtonAction icon='icon-arrow-down' classBtn='circle small expand' onClick={() => setOpen((prev) => !prev)} key={item.id} />
+                            <ButtonAction 
+                                icon='icon-arrow-down' 
+                                classBtn='circle small expand' 
+                                onClick={() => setOpen((prev) => !prev)} key={item.id} 
+                            />
                         </div>
                     )
                 }
@@ -71,8 +77,10 @@ const SearchItemTag = ({ item, type, onButtonClick }) => {
                                         }))
                                     }}
                                 >
-                                    <Icons icon='icon-assignment' />
-                                    {assignment.name}
+                                    <Icons icon='icon-assignment' size='small' />
+                                    <label>
+                                        {assignment.name}
+                                    </label>
                                 </label>
                             )
                         )
@@ -91,8 +99,10 @@ const SearchItemTag = ({ item, type, onButtonClick }) => {
                                         }))
                                     }}
                                 >
-                                    <Icons icon='icon-goal' />
-                                    {goal.name}
+                                    <Icons icon='icon-goal' size='small' />
+                                    <label>
+                                        {goal.name}
+                                    </label>
                                 </label>
                             )
                         )

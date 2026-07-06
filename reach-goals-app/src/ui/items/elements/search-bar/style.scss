@@ -10,13 +10,26 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        color: $color-complementary-s;
-        background-color: $color-complementary-p-50;
-        padding: 0rem 0.35rem;
-        border-radius: 1rem;
+        background-color: $color-pair-secondary-light;
+        padding: 0rem $spacing-padding-mini;
+        border-radius: $dimensions-border-radius-md;
         height: 2.4rem;
         cursor: pointer;
         transition: $animation-transition-st;
+
+        .tooltip {
+
+            .icon-st {
+                color: $color-white;
+            }
+
+            .button-action {
+
+                &:hover {
+                    background-color: $color-white-o-30;
+                }
+            }
+        }
 
         .search-content {
             border: none;
@@ -26,29 +39,25 @@
             padding: 0;
             width: 0;
             font-size: var(--font-size-st);
-            caret-color: $color-complementary-s;
             transition: $animation-transition-st;
             opacity: 0;
-            color: $color-complementary-s;
+            color: $color-white;
 
             &:focus {
                 outline: none;
             }
-        }
 
-        &:hover {
-            background-color: $color-complementary-s;
-
-            .tooltip {
-
-                .icon-st {
-                    color: $color-secondary;
-                }
+            &::placeholder {
+                color: $color-white-o-70;
             }
         }
 
+        &:hover {
+            background-color: $color-pair-secondary;
+        }
+
         &:active {
-            background-color: $color-complementary-s-70;
+            background-color: $color-pair-secondary-light;
         }
     }
 
@@ -59,7 +68,7 @@
         max-height: 70dvh;
         overflow-y: auto;
         background-color: $color-secondary;
-        box-shadow: $box-shadow-st;
+        box-shadow: $shadow-st;
         padding: $spacing-padding-sm;
         border-radius: $dimensions-border-radius-sm;
         gap: $spacing-gap-sm;
@@ -84,23 +93,18 @@
 
                 .item-info {
                     overflow: hidden;
-                    cursor: pointer;
-                    transition: .3s linear;
+                    transition: 0.3s linear;
                     padding: 0rem 0.5rem;
                     border-radius: $dimensions-border-radius-sm;
                     height: 1.8rem;
                     flex: 10;
-
-                    .icon-st {
-                        flex-shrink: 0;
-                    }
+                    cursor: pointer;
 
                     >label {
                         overflow: hidden;
                         text-overflow: ellipsis;
                         white-space: nowrap;
                         font-weight: 600;
-                        color: $color-complementary-s;
 
                         &.message {
                             display: inline-flex;
@@ -112,16 +116,17 @@
                         }
                     }
 
-                    * {
-                        cursor: pointer;
-                    }
-
                     &:hover {
-                        background-color: $color-complementary-p;
+                        background-color: $color-white-o-15;
                     }
 
                     &:active {
-                        background-color: $color-complementary-p-70;
+                        background-color: $color-white-o-30;
+                    }
+
+                    * {
+                        cursor: pointer;
+                        color: $color-white;
                     }
                 }
 
@@ -144,7 +149,7 @@
 
                 .message {
                     font-weight: 500;
-                    color: $color-complementary-s;
+                    color: $color-pair-secondary;
                 }
             }
 
@@ -152,20 +157,6 @@
                 overflow: hidden;
                 max-height: 1.75rem;
                 transition: max-height 0.3s linear;
-
-                >.head {
-
-                    .item-info {
-
-                        &:hover {
-                            background-color: $color-secondary-30
-                        }
-
-                        &:active {
-                            background-color: $color-secondary-50
-                        }
-                    }
-                }
 
                 >.body {
 
@@ -177,26 +168,27 @@
                         .item-tag {
                             display: flex;
                             align-items: center;
-                            cursor: pointer;
                             gap: $spacing-gap-mini;
                             font-size: 0.875rem;
                             font-weight: 500;
-                            background-color: $color-white-30;
+                            background-color: $color-white-o-30;
                             padding: $spacing-padding-mini $spacing-padding-sm;
                             border-radius: $dimensions-border-radius-sm;
-                            transition: .3s linear;
-                            color: $color-complementary-s;
-
-                            .icon-st {
-                                height: 1rem;
-                            }
+                            transition: 0.3s linear;
+                            cursor: pointer;
 
                             &:hover {
-                                background-color: $color-secondary-30
+                                background-color: $color-white-o-15;
                             }
 
                             &:active {
-                                background-color: $color-secondary-50
+                                background-color: $color-white-o-30;
+                            }
+
+                            * {
+                                cursor: pointer;
+                                color: $color-white;
+                                text-shadow: $text-shadow-st;
                             }
                         }
                     }
@@ -218,7 +210,7 @@
                                     }
 
                                     &:active {
-                                        background-color: $color-complementary-s-30;
+                                        background-color: $color-pair-secondary-light;
                                     }
                                 }
                             }
@@ -229,7 +221,7 @@
 
             &.goal,
             &.assignment {
-                background-color: $color-complementary-p-30;
+                background-color: $color-pair-primary-light;
             }
         }
     }
@@ -248,17 +240,6 @@
 
                 &:focus {
                     outline: none;
-                }
-            }
-
-            &:hover {
-                background-color: $color-complementary-p-50;
-
-                .tooltip {
-
-                    .icon-st {
-                        color: inherit;
-                    }
                 }
             }
         }

@@ -40,7 +40,7 @@
                         align-self: self-start;
                         font-weight: 600;
                         gap: $spacing-gap-sm;
-                        color: $color-complementary-s;
+                        color: $color-pair-secondary;
                     }
 
                     .button-dropdown-container {
@@ -86,7 +86,7 @@
                 &.goal {
 
                     &.selected {
-                        background-color: $color-complementary-s-70;
+                        background-color: $color-pair-secondary-darkest;
                         border-radius: $dimensions-border-radius-sm;
 
                         .head {
@@ -110,14 +110,14 @@
                                     }
 
                                     .unlink-goal {
-                                        background-color: $color-cancel;
+                                        background-color: $color-neutral;
 
                                         &:hover {
-                                            background-color: $color-cancel-70;
+                                            background-color: $color-neutral-darkest;
                                         }
 
                                         &:active {
-                                            background-color: $color-cancel-30;
+                                            background-color: $color-neutral-light;
                                         }
                                     }
                                 }
@@ -139,10 +139,13 @@
                     }
                 }
 
-                &.tag {
+                &.assignment {
 
-                    >.body {
-                        padding: 0rem $spacing-padding-sm;
+                    .body {
+
+                        .card-mini {
+                            border-color: $color-pair-secondary;
+                        }
                     }
                 }
 
@@ -162,14 +165,14 @@
                                 display: flex;
                                 align-items: center;
                                 justify-content: space-between;
-                                border-bottom: solid 1px $color-complementary-p;
+                                border-bottom: solid 1px $color-pair-primary;
                                 padding: $spacing-padding-sm;
 
                                 >label {
                                     display: inline-flex;
                                     font-weight: 600;
                                     gap: $spacing-gap-sm;
-                                    color: $color-complementary-s;
+                                    color: $color-pair-secondary;
                                 }
                             }
                         }
@@ -180,7 +183,7 @@
                         flex-direction: column;
 
                         textarea {
-                            background-color: $color-complementary-p;
+                            background-color: $color-pair-primary;
                             border: 3px solid transparent;
                             border-radius: $dimensions-border-radius-sm;
                             padding: $spacing-padding-sm;
@@ -189,15 +192,15 @@
                             outline-color: $color-accent;
                             resize: vertical;
                             min-height: 10rem;
-                            color: $color-complementary-s;
+                            color: $color-pair-secondary;
 
                             &:hover {
-                                border-color: $color-accent-30;
+                                border-color: $color-accent-light;
                             }
 
                             &::placeholder {
                                 font-weight: 600;
-                                color: $color-complementary-s-70;
+                                color: $color-pair-primary-light;
                             }
                         }
                     }
@@ -211,6 +214,7 @@
                         flex-direction: row;
                         flex-wrap: wrap;
                         gap: $spacing-gap-sm;
+                        padding: 0rem $spacing-padding-sm;
 
                         .card-mini {
                             display: flex;
@@ -247,7 +251,7 @@
                                 display: flex;
                                 align-items: center;
                                 gap: $spacing-gap-sm;
-                                background-color: $color-complementary-p;
+                                background-color: $color-pair-primary;
                                 height: 2.4rem;
                                 box-sizing: border-box;
                                 padding: 0rem 0.66rem;
@@ -267,7 +271,7 @@
                                     border-radius: $dimensions-border-radius-sm;
                                     font-weight: 500;
                                     font-size: 0.9rem;
-                                    background-color: $color-secondary-70;
+                                    background-color: $color-secondary-darkest;
                                 }
                             }
                         }

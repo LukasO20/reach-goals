@@ -44,14 +44,14 @@
         }
 
         &.progress {
-            background-color: $color-complementary-s-15;
+            background-color: $color-pair-secondary-lightest;
 
             .head {
 
                 >div {
 
                     * {
-                        color: $color-complementary-s;
+                        color: $color-pair-secondary-darkest;
                     }
                 }
             }
@@ -59,32 +59,28 @@
             .body {
 
                 .button-action {
-                    background-color: $color-complementary-s-15;
+                    background-color: $color-pair-secondary-darkest;
 
                     &:hover {
-                        background-color: $color-complementary-s;
-
-                        * {
-                            color: $color-secondary;
-                        }
+                        background-color: $color-pair-secondary-dark;
                     }
 
                     &:active {
-                        background-color: $color-complementary-s-30;
+                        background-color: $color-pair-secondary-light;
                     }
                 }
             }
         }
 
         &.conclude {
-            background-color: $color-success-15;
+            background-color: $color-success-lightest;
 
             .head {
 
                 >div {
 
                     * {
-                        color: $color-success;
+                        color: $color-success-darkest;
                     }
                 }
             }
@@ -92,32 +88,28 @@
             .body {
 
                 .button-action {
-                    background-color: $color-success-70;
-
-                    * {
-                        color: $color-secondary;
-                    }
+                    background-color: $color-success-darkest;
 
                     &:hover {
-                        background-color: $color-success;
+                        background-color: $color-success-dark;
                     }
 
                     &:active {
-                        background-color: $color-success-50;
+                        background-color: $color-success-light;
                     }
                 }
             }
         }
 
         &.cancel {
-            background-color: $color-cancel-70;
+            background-color: $color-neutral-lightest;
 
             .head {
 
                 >div {
 
                     * {
-                        color: $color-secondary;
+                        color: $color-secondary-darkest;
                     }
                 }
             }
@@ -125,32 +117,43 @@
             .body {
 
                 .button-action {
-                    background-color: $color-cancel-70;
-
-                    * {
-                        color: $color-secondary;
-                    }
+                    background-color: $color-neutral-darkest;
 
                     &:hover {
-                        background-color: $color-cancel;
+                        background-color: $color-neutral-dark;
                     }
 
                     &:active {
-                        background-color: $color-secondary-30;
+                        background-color: $color-secondary-light;
                     }
                 }
             }
         }
 
         &.tag {
-            border: solid 3.25px $color-complementary-s-15;
+            border: solid 3.25px $color-pair-secondary;
 
             .head {
 
                 >div {
 
                     * {
-                        color: $color-complementary-s;
+                        color: $color-pair-secondary;
+                    }
+                }
+            }
+
+            .body {
+
+                .button-action {
+                    background-color: $color-pair-secondary-darkest;
+
+                    &:hover {
+                        background-color: $color-pair-secondary-dark;
+                    }
+
+                    &:active {
+                        background-color: $color-pair-secondary-light;
                     }
                 }
             }
