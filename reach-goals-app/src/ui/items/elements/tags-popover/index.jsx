@@ -30,7 +30,7 @@ const TagsPopover = ({ tags = [], visibility }) => {
                 <div className='popover scrollable'>
                     {tags.map(data => {
                         if (data) {
-                            const styleProps = { backgroundColor: `${data.tag.color}70`, borderColor: data.tag.color }
+                            const styleProps = { backgroundColor: `${data.tag.color}` }
                             return (
                                 <label key={data.tag.name} style={styleProps}>
                                     {data.tag.name}

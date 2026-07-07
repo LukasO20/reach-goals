@@ -83,12 +83,12 @@ const CardMini = ({
                                     checkbox={buildCheckboxMap({ checkboxID: `checkbox-${itemID}`, scope: 'page' })} />
                             )}
                             {validIconStatus && (
-                                <label className={`status ${item.status}`}>
+                                <span className={`status ${item.status}`}>
                                     <Icons icon={`icon-${item.status}`} size='medium' />
-                                </label>
+                                </span>
                             )}
                             <Icons icon={`icon-${type}`} />
-                            <span className='title'>{item.name}</span>
+                            <label>{item.name}</label>
                         </div>
                         {(hasTags || hasSideActions) && (
                             <div className='side-right'>

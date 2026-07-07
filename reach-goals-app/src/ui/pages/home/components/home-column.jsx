@@ -4,7 +4,6 @@ import { useAssignmentProvider } from '../../../../provider/model/assignment-mod
 import { useTitle } from '../../../../provider/ui/title-provider'
 
 import Assignment from '../../../items/models/assignment'
-import AssignmentGoalRelation from '../../../items/models/assignment/assignment-goal.relation'
 import Goal from '../../../items/models/goal'
 import PopupModelOptions from '../../../items/elements/popup-model-options'
 import Icons from '../../../items/elements/icons'
@@ -84,8 +83,7 @@ const HomeColumn = ({ data }) => {
                         .filter((item) => visibility.status?.includes(item.type))
                         .map((item) => {
                             const dataGoal = dataColumn[item.type].goal
-                            const dataAssignment = dataColumn[item.type].assignment.filter((item) => !item.goalID)
-                            const dataAssignmentGoalRelation = dataColumn[item.type].assignment.filter((item) => !!item.goalID)
+                            const dataAssignment = dataColumn[item.type].assignment
 
                             return (
                                 <div className={`column ${item.type}`} key={item.type}>
@@ -99,10 +97,7 @@ const HomeColumn = ({ data }) => {
                                                 visibility.layoutHome === 'goal' ?
                                                     <Goal source={dataGoal} {...columnPropsReference} />
                                                     :
-                                                    <>
-                                                        <Assignment source={dataAssignment} {...columnPropsReference} />
-                                                        <AssignmentGoalRelation source={dataAssignmentGoalRelation} {...columnPropsReference} />
-                                                    </>
+                                                    <Assignment source={dataAssignment} {...columnPropsReference} />
                                             }
                                         </DragDropDroppable>
                                     </div>

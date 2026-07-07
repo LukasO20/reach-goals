@@ -133,23 +133,23 @@
                 .body {
                     overflow: hidden;
 
-                    .status {
-                        height: initial;
-                        width: initial;
-                    }
+                    .side-left {
+                        gap: $spacing-gap-mini;
 
-                    .title {
-                        display: inline-block;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                        font-size: $font-size-mini;
-                        flex: 5;
-                    }
+                        >label {
+                            -webkit-line-clamp: 1;
+                            line-clamp: 1;
+                        }
 
-                    .icon-st {
-                        height: 0.85rem;
-                        width: 0.85rem;
+                        .status {
+                            height: initial;
+                            width: initial;
+                        }
+
+                        .icon-st {
+                            height: 0.85rem;
+                            width: 0.85rem;
+                        }
                     }
                 }
             }

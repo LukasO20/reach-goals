@@ -22,7 +22,7 @@
             gap: $spacing-gap-sm;
             overflow: hidden;
 
-            .title {
+            >label {
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
@@ -67,7 +67,7 @@
             }
 
             .tags-popover {
-                
+
                 .button-action {
                     opacity: 1;
                 }
@@ -103,7 +103,7 @@
         }
 
         .side-right {
-   
+
             .button-action {
                 opacity: 1;
             }

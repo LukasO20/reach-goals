@@ -6,6 +6,8 @@ import { useManageModel } from '../../../../../provider/model/manage-model-provi
 import { checkboxMap } from '../../../../../utils/mapping/mappingUtilsProvider'
 import { buildCheckboxMap, visibilityMap } from '../../../../../utils/mapping/mappingUtils'
 
+import { cx } from '../../../../../utils/utils.js'
+
 import ButtonAction from '../../../elements/button-action'
 import ButtonCheckbox from '../../../elements/button-checkbox'
 import Goal from '../../goal'
@@ -81,16 +83,29 @@ const RelationCard = ({ checkboxState = checkboxMap, data = [] }) => {
 
                 const hasGoal = !!goal.goals.length
                 const hasAssignment = !!assignment.assignments.length
-                const hasSomeRelation = hasGoal || hasAssignment ? 'relationed' : ''
+                const hasSomeRelation = hasGoal || hasAssignment
                 const isOpen = openCard.some(card => card.id === item.id && card.open === true) ? 'open' : ''
                 const isRemoving = !!removing && removingVariables === item.id ? 'pending' : ''
                 const isSelected = selectedCheckboxList.includes(`checkbox-${item.id}`) ? 'selected' : ''
 
+                const tagCardRelationClass = cx(
+                    `tag 
+                    card-relation
+                    ${isOpen} 
+                    ${hasSomeRelation && 'relationed'} 
+                    ${isRemoving} 
+                    ${isSelected}
+                    `
+                )
+
                 return (
-                    <div className={`tag card-relation ${isOpen} ${hasSomeRelation} ${isRemoving} ${isSelected}`}
+                    <div className={tagCardRelationClass}
                         key={item.id}
                         style={{ backgroundColor: `${colorTag}` }}>
-                        <div className='head' onClick={() => handleSetOpenCard(item)}>
+                        <div
+                            className='head'
+                            onClick={() => hasSomeRelation ? handleSetOpenCard(item) : {}}
+                        >
                             <label>
                                 <ButtonCheckbox
                                     classBtn='checkbox-tag-card small'
@@ -101,14 +116,24 @@ const RelationCard = ({ checkboxState = checkboxMap, data = [] }) => {
                                 <label className='title'>{item.name}</label>
                             </label>
                             <div className='side-actions'>
-                                {(hasGoal || hasAssignment) &&
-                                    <ButtonAction classBtn='expand circle small' icon='icon-arrow-down'
-                                        onClick={() => handleSetOpenCard(item)} />}
-                                <ButtonAction classBtn='edit circle small' icon='icon-edit'
-                                    onClick={() => editTag(item.id)} visibility={visibilityMap('near-modalForm', { add: true })} />
-                                <ButtonAction classBtn='delete circle small' icon='icon-trash'
+                                {hasSomeRelation &&
+                                    <ButtonAction
+                                        classBtn='expand circle small'
+                                        icon='icon-arrow-down'
+                                        onClick={() => handleSetOpenCard(item)}
+                                    />}
+                                <ButtonAction
+                                    classBtn='edit circle small'
+                                    icon='icon-edit'
+                                    onClick={() => editTag(item.id)}
+                                    visibility={visibilityMap('near-modalForm', { add: true })}
+                                />
+                                <ButtonAction
+                                    classBtn='delete circle small'
+                                    icon='icon-trash'
                                     pendingState={isRemoving}
-                                    onClick={() => deleteTag(item.id)} />
+                                    onClick={() => deleteTag(item.id)}
+                                />
                             </div>
                         </div>
                         <div className='body'>
