@@ -2,9 +2,7 @@
  * @typedef {Object} CardProps
  * @property {import('../../../../utils/types.js').ModelTypeProps} type
  * @property {Array} model
- * @property {Object} display
- * @property {('card')[]} display.type
- * @property {('edit'|'delete'|'details'|'remove')[]} [display.actions]
+ * @property {import('../../../../utils/types.js').DisplayProps} display
  * @property {boolean} [pendingState]
  * @property {boolean} [showTags]
  * @property {Array} [status]

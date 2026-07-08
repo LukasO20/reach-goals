@@ -2,9 +2,7 @@
  * @typedef {Object} CardMiniProps
  * @property {string} type
  * @property {Array} model
- * @property {Object} display
- * @property {('card-mini')[]} display.type
- * @property {('edit'|'delete'|'details'|'remove')[]} [display.actions]
+ * @property {import('../../../../utils/types.js').DisplayProps} display
  * @property {boolean} [pendingState]
  * @property {Object} [checkboxState]
  * @property {boolean} [checkboxModel]
