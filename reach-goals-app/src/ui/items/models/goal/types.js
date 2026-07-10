@@ -1,8 +1,6 @@
 /**
  * @typedef {Object} GoalProps
- * @property {Object} display
- * @property {('card'|'card-mini')[]} display.type
- * @property {('edit'|'delete'|'details'|'remove')[]} [display.actions]
+ * @property {import('../../../../utils/types.js').DisplayProps} display
  * @property {Array} source
  * @property {boolean} [selectableModel]
  * @property {boolean} [detailsModel]

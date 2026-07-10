@@ -1,0 +1,25 @@
+.card-relation {
+    padding: $spacing-gap-mini;
+    border-radius: $spacing-gap-sm;
+    background-color: $color-pair-secondary-light;
+
+    >.head {
+        padding: $spacing-padding-mini;
+        display: flex;
+        align-items: center;
+        gap: $spacing-gap-mini;
+        
+        * {
+            color: $color-white;
+        }
+
+        >label {
+            font-weight: 600;
+        }
+    }
+
+    >.body {
+        background-color: $color-pair-primary;
+        border-radius: $spacing-gap-sm;
+    }
+}

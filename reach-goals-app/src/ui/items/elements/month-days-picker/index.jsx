@@ -1,15 +1,13 @@
-import { useManageModel } from '../../../../provider/model/manage-model-provider'
-import { useVisibility } from '../../../../provider/ui/visibility-provider'
 import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider'
 import { useSwitchMonths } from '../../../../provider/ui/switch-months-provider'
 
 import { weekNames } from '../../../../utils/reference.js'
-import { switchLayoutMap, visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
 
 import { cx } from '../../../../utils/utils.js'
 
-import CardMini from '../card-mini'
 import MonthsDaysTitle from './components/month-days-title.jsx'
+import Assignment from '../../models/assignment'
+import Goal from '../../models/goal'
 
 import moment from 'moment'
 
@@ -21,29 +19,14 @@ import './style.scss'
  * @param {Props} props
  */
 const MonthDaysPicker = ({ data }) => {
-    const { setModel } = useManageModel()
-    const { toggleVisibility } = useVisibility()
-    const { data: { visibility }, setSwitchLayout } = useSwitchLayout()
+    const { data: { visibility } } = useSwitchLayout()
     const { days, activeDate } = useSwitchMonths()
-
-    const activityClick = (model, e) => {
-        e.stopPropagation()
-        const dataSwitchLayout = switchLayoutMap({ area: 'modal', layout: { modalName: 'modal-right', layoutName: 'details' } })
-
-        setModel(prev => ({ ...prev, mainModelID: model.id, activeModel: model, typeModel: model.type }))
-        setSwitchLayout(dataSwitchLayout)
-        toggleVisibility(visibilityMap(['modal-right', model.type]))
-    }
 
     const models = data || { goal: [], assignment: [] }
     const modelsCalendar = Object.entries(models || {}).flatMap(([key, value]) =>
         Array.isArray(value) ?
             value.map(model => ({ ...model, type: key })) : []
     )
-
-    const clickEvents = {
-        card: activityClick,
-    }
 
     const typeLayout = visibility.layoutCalendar
     const isShowAssignment = typeLayout === 'assignment' || typeLayout === 'all-activities'
@@ -85,8 +68,8 @@ const MonthDaysPicker = ({ data }) => {
                                 type: ['card-mini'],
                                 actions: []
                             },
+                            detailsModel: true,
                             status: visibility.status,
-                            clickFunction: clickEvents
                         }
 
                         const monthsDaysTitlePropsReference = {
@@ -101,27 +84,17 @@ const MonthDaysPicker = ({ data }) => {
                         )
 
                         return (
-                            <div 
-                                key={day.toISOString()} 
+                            <div
+                                key={day.toISOString()}
                                 className={dayClass}
                             >
                                 <MonthsDaysTitle {...monthsDaysTitlePropsReference} />
                                 {
-                                    assignmentsOnDay.length > 0 && isShowAssignment && (
-                                        <CardMini
-                                            model={assignmentsOnDay}
-                                            type='assignment'
-                                            {...calendarPropsReference}
-                                        />
-                                    )}
+                                    isShowAssignment && <Assignment source={assignmentsOnDay} {...calendarPropsReference} />
+                                }
                                 {
-                                    goalsOnDay.length > 0 && isShowGoal && (
-                                        <CardMini
-                                            model={goalsOnDay}
-                                            type='goal'
-                                            {...calendarPropsReference}
-                                        />
-                                    )}
+                                    isShowGoal && <Goal source={goalsOnDay} {...calendarPropsReference} />
+                                }
                             </div>
                         )
                     })

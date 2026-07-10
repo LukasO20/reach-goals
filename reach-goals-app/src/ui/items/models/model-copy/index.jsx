@@ -37,7 +37,15 @@ const ModelCopy = ({ propsReference, region }) => {
         aux: removeElDOMClick
     }
 
-    return <CardMini type={region} model={modelCopy} clickFunction={clickEvents} {...propsReference} />
+    return modelCopy.map((item, index) => (
+        <CardMini
+            type={region}
+            key={index}
+            item={item}
+            clickFunction={clickEvents}
+            {...propsReference}
+        />
+    ))
 }
 
 export default ModelCopy

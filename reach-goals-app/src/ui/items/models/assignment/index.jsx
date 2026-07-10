@@ -7,8 +7,7 @@ import { useCheckbox } from '../../../../provider/ui/checkbox-provider'
 import { displayModesMap, switchLayoutMap, visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
 import { updateActiveModelMap, addToSelectedModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
-import Card from '../../elements/card' 
-import CardMini from '../../elements/card-mini' 
+import CardRelation from './components/card-relation.jsx'
 
 /** @typedef {import('./types.js').AssignmentProps} Props */
 
@@ -33,11 +32,9 @@ const Assignment = ({
 
     const sourceData = source?.assignments ?? source
 
-    const renderCard = sourceData.filter(item =>
+    const sourceDataFiltered = sourceData.filter(item =>
         !(removeSuccess && removingVariables && item.id === removingVariables)
     )
-
-    const renderCardMini = renderCard
 
     const pendingState = {
         removing: removing,
@@ -100,30 +97,27 @@ const Assignment = ({
         aux: removeElDOMClick
     }
 
-    const isCard = display.type.includes('card')
-    const isCardMini = display.type.includes('card-mini')
-
-    const componentsMap = {
-        card: Card,
-        cardMini: CardMini,
-    }
-
-    const ComponentToRender = isCard ? componentsMap.card : isCardMini ? componentsMap.cardMini : null
-
-    return ComponentToRender ? (
-        <ComponentToRender
-            type='assignment'
-            pendingState={pendingState}
-            checkboxState={valuesCheckbox}
-            model={isCard ? renderCard : renderCardMini}
-            clickFunction={clickEvents}
-            display={display}
-            draggable={draggable}
-            checkboxModel={checkboxModel}
-            showTags={showTags}
-            status={status}
-        />
-    ) : null
+    return (
+        sourceDataFiltered
+            .filter((item) => !status || status.includes(item.status))
+            .sort((a, b) => a.order - b.order)
+            .map((item, index) => (
+                <CardRelation
+                    type='assignment'
+                    item={item}
+                    itemID={item.id}
+                    index={index}
+                    pendingState={pendingState}
+                    checkboxState={valuesCheckbox}
+                    clickFunction={clickEvents}
+                    display={display}
+                    draggable={draggable}
+                    checkboxModel={checkboxModel}
+                    showTags={showTags}
+                    key={index}
+                />
+            )
+        ))
 }
 
 export default Assignment

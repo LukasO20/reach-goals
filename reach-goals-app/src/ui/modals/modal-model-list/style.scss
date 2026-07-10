@@ -29,10 +29,10 @@
         display: flex;
         flex-direction: column;
         overflow-y: auto;
-        min-height: $dimensions-h-video-lg;
         gap: $spacing-gap-sm;
         background-color: $color-pair-primary;
         padding: $spacing-padding-sm;
         border-radius: $dimensions-border-radius-sm;
+        flex: 1;
     }
 }

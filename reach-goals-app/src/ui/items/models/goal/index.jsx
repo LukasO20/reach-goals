@@ -7,10 +7,10 @@ import { useCheckbox } from '../../../../provider/ui/checkbox-provider'
 import { switchLayoutMap, visibilityMap, displayModesMap } from '../../../../utils/mapping/mappingUtils.js'
 import { addToSelectedModelMap, updateActiveModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
-import Card from '../../elements/card' 
-import CardMini from '../../elements/card-mini' 
-
 import moment from 'moment'
+
+import CardSwitchRender from '../../elements/card-switch-render'
+import CardDraggable from '../../elements/card-draggable'
 
 /** @typedef {import('./types.js').GoalProps} Props */
 
@@ -35,18 +35,16 @@ const Goal = ({
 
     const sourceData = source?.goals ?? source
 
-    const renderCard = sourceData.filter(item =>
+    const sourceDataFiltered = sourceData.filter(item =>
         !(removeSuccess && removingVariables && item.id === removingVariables)
     )
-
-    const renderCardMini = renderCard
 
     const pendingState = {
         removing: removing,
         removingVariables: removingVariables
     }
 
-    const deleteGoal = async (id) => { remove(id) }
+    const deleteGoal = async (id) => remove(id)
 
     const editGoal = (id) => {
         try { setModel(prev => ({ ...prev, mainModelID: id, typeModel: 'goal' })) }
@@ -88,30 +86,31 @@ const Goal = ({
         delete: deleteGoal
     }
 
-    const isCard = display.type.includes('card')
-    const isCardMini = display.type.includes('card-mini')
+    return (
+        sourceDataFiltered
+            .filter((item) => !status || status.includes(item.status))
+            .sort((a, b) => a.order - b.order)
+            .map((item, index) => {
+                const props = {
+                    type: 'goal',
+                    pendingState: pendingState,
+                    checkboxState: valuesCheckbox,
+                    item: item,
+                    clickFunction: clickEvents,
+                    display: display,
+                    checkboxModel: checkboxModel,
+                    showTags: showTags
+                }
 
-    const componentsMap = {
-        card: Card,
-        cardMini: CardMini,
-    }
-
-    const ComponentToRender = isCard ? componentsMap.card : isCardMini ? componentsMap.cardMini : null
-
-    return ComponentToRender ? (
-        <ComponentToRender
-            type='goal'
-            pendingState={pendingState}
-            checkboxState={valuesCheckbox}
-            model={isCard ? renderCard : renderCardMini}
-            clickFunction={clickEvents}
-            display={display}
-            draggable={draggable}
-            checkboxModel={checkboxModel}
-            status={status}
-            showTags={showTags}
-        />
-    ) : null
+                return (
+                    draggable 
+                    ?
+                    <CardDraggable cardProps={props} itemID={item.id} index={index} />
+                    : 
+                    <CardSwitchRender {...props} key={index} />
+                )
+            })
+    )
 }
 
 export default Goal

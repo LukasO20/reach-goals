@@ -7,7 +7,7 @@ import { useVisibility } from '../../../../provider/ui/visibility-provider'
 import { visibilityMap, displayModesMap } from '../../../../utils/mapping/mappingUtils.js'
 import { addToSelectedModelMap, updateActiveModelMap } from '../../../../utils/mapping/mappingUtilsProvider.js'
 
-import CardMini from '../../elements/card-mini' 
+import CardMini from '../../elements/card-mini'
 
 /** @typedef {import('./types.js').TagProps} Props */
 
@@ -23,7 +23,7 @@ const Tag = ({ display = displayModesMap, source, selectableModel }) => {
 
     const sourceData = source.tags ? source.tags.map(item => (item.tag)) : source
 
-    const renderCardMini = sourceData.filter(item =>
+    const sourceDataFiltered = sourceData.filter(item =>
         !(removeSuccess && removingVariables && item.id === removingVariables)
     )
 
@@ -79,7 +79,15 @@ const Tag = ({ display = displayModesMap, source, selectableModel }) => {
         aux: removeElDOMClick
     }
 
-    return <CardMini type='tag' model={renderCardMini} clickFunction={clickEvents} display={display} />
+    return sourceDataFiltered.map((item, index) => (
+        <CardMini
+            type='tag'
+            item={item}
+            clickFunction={clickEvents}
+            display={display}
+            key={index}
+        />
+    ))
 }
 
 export default Tag
