@@ -1,4 +1,6 @@
 .card-relation {
+    display: flex;
+    flex-direction: column;
     padding: $spacing-gap-mini;
     border-radius: $spacing-gap-sm;
     background-color: $color-pair-secondary-light;
@@ -19,7 +21,13 @@
     }
 
     >.body {
+        display: flex;
         background-color: $color-pair-primary;
         border-radius: $spacing-gap-sm;
+        flex: 1;
+
+        >.card {
+            flex: 1;
+        }
     }
 }

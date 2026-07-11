@@ -97,14 +97,14 @@
                                     border-bottom: none;
 
                                     * {
-                                        color: $color-secondary;
+                                        color: $color-white;
                                     }
 
                                     >label {
 
                                         .line {
                                             padding: $spacing-padding-x-mini;
-                                            background-color: $color-secondary;
+                                            background-color: $color-white;
                                             border-radius: $dimensions-border-radius-sm;
                                         }
                                     }
@@ -131,7 +131,7 @@
                                     }
 
                                     * {
-                                        color: $color-secondary;
+                                        color: $color-white;
                                     }
                                 }
                             }
