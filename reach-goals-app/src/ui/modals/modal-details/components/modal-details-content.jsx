@@ -5,11 +5,11 @@ import { visibilityMap, switchLayoutMap } from '../../../../utils/mapping/mappin
 
 import { cx } from '../../../../utils/utils.js'
 
-import ButtonAction from '../../../items/elements/button-action'
+import ButtonAction from '../../../elements/button-action'
 import ModalDetailsGoal from './modal-details-goal.jsx'
 import ModalDetailsAssignment from './modal-details-assignment.jsx'
-import Line from '../../../../ui/items/elements/line'
-import Icons from '../../../items/elements/icons'
+import Line from '../../../../ui/elements/line'
+import Icons from '../../../elements/icons'
 
 import moment from 'moment'
 

@@ -1,8 +1,8 @@
 import { useManageModel } from '../../../../provider/model/manage-model-provider'
 import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider/index.jsx'
 
-import Line from '../../../items/elements/line'
-import Icons from '../../../items/elements/icons'
+import Line from '../../../elements/line'
+import Icons from '../../../elements/icons'
 
 const ObjectivesStatus = () => {
     const { data: { visibility } } = useSwitchLayout()

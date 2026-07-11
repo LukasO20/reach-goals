@@ -5,10 +5,10 @@ import { useButtonDropdown } from '../../../hooks/useButtonDropdown.js'
 
 import { visibilityMap, switchLayoutMap } from '../../../utils/mapping/mappingUtils.js'
 
-import ButtonAction from '../../items/elements/button-action'
-import ButtonDropdown from '../../items/elements/button-dropdown'
-import SearchBar from '../../items/elements/search-bar'
-import Tooltip from '../../items/elements/tooltip'
+import ButtonAction from '../../elements/button-action'
+import ButtonDropdown from '../../elements/button-dropdown'
+import SearchBar from '../../elements/search-bar'
+import Tooltip from '../../elements/tooltip'
 
 import './style.scss'
 

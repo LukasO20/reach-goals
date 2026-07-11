@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider'
 
-import ChartPie from '../../../items/elements/chart-pie/index.jsx'
-import ChartBar from '../../../items/elements/chart-bar/index.jsx'
-import ChartCards from '../../../items/elements/chart-cards/index.jsx'
-import PopupModelOptions from '../../../items/elements/popup-model-options/index.jsx'
+import ChartPie from '../../../elements/chart-pie/index.jsx'
+import ChartBar from '../../../elements/chart-bar/index.jsx'
+import ChartCards from '../../../elements/chart-cards/index.jsx'
+import PopupModelOptions from '../../../elements/popup-model-options/index.jsx'
 
 /** @typedef {import('../types.js').HomeProps} Props */
 

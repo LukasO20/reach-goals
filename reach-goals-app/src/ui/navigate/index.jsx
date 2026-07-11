@@ -8,9 +8,9 @@ import { switchLayoutMap } from '../../utils/mapping/mappingUtils.js'
 
 import { cx } from '../../utils/utils.js'
 
-import ButtonLink from '../items/elements/button-link'
-import ButtonAction from '../items/elements/button-action'
-import Tooltip from '../items/elements/tooltip'
+import ButtonLink from '../elements/button-link'
+import ButtonAction from '../elements/button-action'
+import Tooltip from '../elements/tooltip'
 
 import LogoLight from '../../assets/logo-light.svg'
 import LogoDark from '../../assets/logo-dark.svg'

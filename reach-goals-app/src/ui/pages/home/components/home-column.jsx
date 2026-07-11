@@ -3,11 +3,11 @@ import { useGoalProvider } from '../../../../provider/model/goal-model-provider'
 import { useAssignmentProvider } from '../../../../provider/model/assignment-model-provider'
 import { useTitle } from '../../../../provider/ui/title-provider'
 
-import Assignment from '../../../items/models/assignment'
-import Goal from '../../../items/models/goal'
-import PopupModelOptions from '../../../items/elements/popup-model-options'
-import Icons from '../../../items/elements/icons'
-import { DragDrop, DragDropDroppable } from '../../../items/elements/drag-drop'
+import Assignment from '../../../models/assignment'
+import Goal from '../../../models/goal'
+import PopupModelOptions from '../../../elements/popup-model-options'
+import Icons from '../../../elements/icons'
+import { DragDrop, DragDropDroppable } from '../../../elements/drag-drop'
 
 /** @typedef {import('../types').HomeProps} Props */
 

@@ -8,12 +8,12 @@ import { useSwitchMonths } from '../../../provider/ui/switch-months-provider'
 
 import { visibilityMap, switchLayoutMap, buildCheckboxMap } from '../../../utils/mapping/mappingUtils.js'
 
-import ButtonAction from '../../items/elements/button-action'
-import ButtonDropdown from '../../items/elements/button-dropdown'
-import ButtonCheckbox from '../../items/elements/button-checkbox'
-import PopupModelOptions from '../../items/elements/popup-model-options'
+import ButtonAction from '../../elements/button-action'
+import ButtonDropdown from '../../elements/button-dropdown'
+import ButtonCheckbox from '../../elements/button-checkbox'
+import PopupModelOptions from '../../elements/popup-model-options'
 import ObjectivesStatus from '../../pages/objectives/components/objectives-status.jsx'
-import Tooltip from '../../items/elements/tooltip'
+import Tooltip from '../../elements/tooltip'
 
 import './style.scss'
 

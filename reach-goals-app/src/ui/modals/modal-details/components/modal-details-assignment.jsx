@@ -1,5 +1,5 @@
 import ModalDetailsTagRelation from './modal-details-tag-relation.jsx'
-import Icons from '../../../items/elements/icons'
+import Icons from '../../../elements/icons'
 
 import moment from 'moment'
 

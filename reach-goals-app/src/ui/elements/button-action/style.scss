@@ -1,0 +1,141 @@
+.button-action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2.5rem;
+    width: 2.5rem;
+    background-color: $color-pair-secondary-light;
+    transition: $animation-transition-st;
+    cursor: pointer;
+    user-select: none;
+
+    * {
+        transition: $animation-transition-st;
+        color: $color-white;
+    }
+
+    &.circle {
+        border-radius: $spacing-padding-xlg;
+
+        &.medium {
+            height: 2rem;
+            width: 2rem;
+
+            .icon-st {
+                height: 1.2rem;
+            }
+        }
+
+        &.small {
+            height: 1.8rem;
+            width: 1.8rem;
+
+            .icon-st {
+                height: 1rem;
+            }
+        }
+
+        &.close {
+            height: 1.8rem;
+            width: 1.8rem;
+        }
+    }
+
+    &.plan {
+        border-radius: $dimensions-border-radius-sm;
+        width: 10rem;
+        padding: 0rem 1rem;
+        justify-content: start;
+        gap: $spacing-gap-sm;
+        font-weight: 600;
+    }
+
+    &.plan-round {
+        border-radius: $dimensions-border-radius-st;
+        padding: 0rem 1rem;
+        justify-content: center;
+        gap: $spacing-gap-sm;
+        font-weight: 600;
+    }
+
+    &.text {
+        height: 1rem;
+        width: auto;
+    }
+
+    &.text-icon {
+        height: 1rem;
+        width: 1rem;
+    }
+
+    &.chart {
+        gap: 0rem;
+    }
+
+    &.pending {
+        pointer-events: none;
+        opacity: 0.8;
+    }
+
+    &.disable {
+        pointer-events: none;
+        opacity: 0.6;
+    }
+
+    /* DOUBLE APPLY */
+    &.create,
+    &.add,
+    &.save {
+        background-color: $color-accent;
+
+        &:hover,
+        &.active {
+            background-color: $color-accent-lightest;
+        }
+
+        &:active {
+            background-color: $color-accent-light;
+        }
+    }
+
+    &:hover,
+    &.active {
+        background-color: $color-pair-secondary;
+
+        &.home {
+            background-color: $color-pair-primary-darkest;
+
+            img {
+                width: 2.15rem;
+            }
+        }
+    }
+
+    &.plan-round,
+    &.plan,
+    &.add {
+
+        &.small {
+            height: 1.8rem;
+            width: 5.75rem;
+        }
+
+        &.medium {
+            width: 12rem;
+        }
+
+        &.max-width {
+            width: max-content;
+        }
+
+        &.medium,
+        &.small {
+            justify-content: center;
+        }
+    }
+
+    /* LAST APPLICATION */
+    &:active {
+        background-color: $color-pair-secondary-dark;
+    }
+}

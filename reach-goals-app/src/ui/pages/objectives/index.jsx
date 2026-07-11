@@ -4,13 +4,13 @@ import { useSwitchLayout } from '../../../provider/ui/switch-layout-provider'
 
 import { cx } from '../../../utils/utils.js'
 
-import ModelTabs from '../../items/elements/model-tabs'
-import Goal from '../../items/models/goal'
-import Assignment from '../../items/models/assignment'
-import ModelSwitcher from '../../items/models/model-switcher'
-import PopupModelOptions from '../../items/elements/popup-model-options/index.jsx'
-import EmptyState from '../../items/elements/empty-state'
-import EmptyStateCreate from '../../items/elements/empty-state/components/empty-state-create.jsx'
+import ModelTabs from '../../elements/model-tabs'
+import Goal from '../../models/goal'
+import Assignment from '../../models/assignment'
+import ModelSwitcher from '../../models/model-switcher'
+import PopupModelOptions from '../../elements/popup-model-options/index.jsx'
+import EmptyState from '../../elements/empty-state'
+import EmptyStateCreate from '../../elements/empty-state/components/empty-state-create.jsx'
 
 import emptyObjectivesImg from '../../../assets/empty-activity-objectives.svg'
 

@@ -4,9 +4,9 @@ import { useAssignmentProvider } from '../../../provider/model/assignment-model-
 
 import { visibilityMap } from '../../../utils/mapping/mappingUtils.js'
 
-import ButtonAction from '../../items/elements/button-action' 
-import Loading from '../../items/elements/loading' 
-import ModelSwitcher from '../../items/models/model-switcher' 
+import ButtonAction from '../../elements/button-action' 
+import Loading from '../../elements/loading' 
+import ModelSwitcher from '../../models/model-switcher' 
 
 import './style.scss'
 

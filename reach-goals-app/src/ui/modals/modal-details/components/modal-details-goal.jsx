@@ -1,6 +1,6 @@
 import { calculatePercent } from '../../../../utils/utils.js'
 
-import Icons from '../../../items/elements/icons'
+import Icons from '../../../elements/icons'
 import ModalDetailsTagRelation from './modal-details-tag-relation.jsx'
 
 /** @typedef {import('../types.js').ModalDetailsGoalProps} Props */

@@ -1,4 +1,4 @@
-import Icons from '../../../items/elements/icons'
+import Icons from '../../../elements/icons'
 
 /** @typedef {import('../types.js').ModalDetailsTagRelationProps} Props */
 

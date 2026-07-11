@@ -10,12 +10,12 @@ import { visibilityMap, buildCheckboxMap } from '../../../utils/mapping/mappingU
 import { resetManageModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
 
 import { ModalFormWrapper } from '../modal-form/modal-form-wrapper'
-import ButtonAction from '../../items/elements/button-action'
-import ButtonCheckbox from '../../items/elements/button-checkbox'
-import ModelTabs from '../../items/elements/model-tabs'
-import RelationCard from '../../items/models/tag/components/relation-card'
-import PopupModelOptions from '../../items/elements/popup-model-options'
-import EmptyState from '../../items/elements/empty-state'
+import ButtonAction from '../../elements/button-action'
+import ButtonCheckbox from '../../elements/button-checkbox'
+import ModelTabs from '../../elements/model-tabs'
+import RelationCard from '../../models/tag/components/relation-card'
+import PopupModelOptions from '../../elements/popup-model-options'
+import EmptyState from '../../elements/empty-state'
 
 import emptyTagImg from '../../../assets/empty-tag.svg'
 

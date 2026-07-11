@@ -8,7 +8,7 @@ import AppRoutes from './Routes.jsx'
 import Navigate from '../ui/navigate'
 import ContainerHeader from '../ui/containers/container-header'
 import ContainerMain from '../ui/containers/container-main'
-import MessageToast from '../ui/items/elements/message-toast'
+import MessageToast from '../ui/elements/message-toast'
 import ModalSwitcherCenter from '../ui/modals/modal-switcher-center.jsx'
 import ModalSwitcherRight from '../ui/modals/modal-switcher-right.jsx'
 

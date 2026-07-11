@@ -9,7 +9,7 @@ import { visibilityMap, switchLayoutMap } from '../../utils/mapping/mappingUtils
 
 import { ModalTagWrapper } from './modal-tag/modal-tag-wrapper.jsx'
 import { ModalDetailsWrapper } from './modal-details/modal-details-wrapper.jsx'
-import Overlay from '../items/elements/overlay'
+import Overlay from '../elements/overlay'
 
 import { cx } from '../../utils/utils.js'
 

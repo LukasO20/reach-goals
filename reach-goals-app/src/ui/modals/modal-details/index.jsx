@@ -2,7 +2,7 @@ import { useAssignmentProvider } from '../../../provider/model/assignment-model-
 import { useGoalProvider } from '../../../provider/model/goal-model-provider'
 import { useManageModel } from '../../../provider/model/manage-model-provider'
 
-import Loading from '../../items/elements/loading'
+import Loading from '../../elements/loading'
 import ModalDetailsContent from './components/modal-details-content.jsx'
 
 import './style.scss'

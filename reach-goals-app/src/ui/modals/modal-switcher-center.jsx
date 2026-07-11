@@ -9,7 +9,7 @@ import { visibilityMap } from '../../utils/mapping/mappingUtils.js'
 import { resetManageModelMap } from '../../utils/mapping/mappingUtilsProvider.js'
 
 import { ModalFormWrapper } from './modal-form/modal-form-wrapper.jsx'
-import Overlay from '../items/elements/overlay'
+import Overlay from '../elements/overlay'
 
 import { cx } from '../../utils/utils.js'
 

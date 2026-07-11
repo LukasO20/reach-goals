@@ -2,9 +2,9 @@ import { useSwitchLayout } from '../../../provider/ui/switch-layout-provider'
 import { useGoalProvider } from '../../../provider/model/goal-model-provider'
 import { useAssignmentProvider } from '../../../provider/model/assignment-model-provider'
 
-import Loading from '../../items/elements/loading'
-import EmptyState from '../../items/elements/empty-state'
-import EmptyStateCreate from '../../items/elements/empty-state/components/empty-state-create.jsx'
+import Loading from '../../elements/loading'
+import EmptyState from '../../elements/empty-state'
+import EmptyStateCreate from '../../elements/empty-state/components/empty-state-create.jsx'
 import HomeColumn from './components/home-column.jsx'
 import HomeChart from './components/home-chart.jsx'
 

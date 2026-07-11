@@ -2,11 +2,11 @@ import { useGoalProvider } from '../../../provider/model/goal-model-provider'
 import { useAssignmentProvider } from '../../../provider/model/assignment-model-provider'
 import { useSwitchLayout } from '../../../provider/ui/switch-layout-provider/index.jsx'
 
-import MonthDaysPicker from '../../items/elements/month-days-picker'
-import Loading from '../../items/elements/loading'
-import PopupModelOptions from '../../items/elements/popup-model-options/index.jsx'
-import EmptyState from '../../items/elements/empty-state'
-import EmptyStateCreate from '../../items/elements/empty-state/components/empty-state-create.jsx'
+import MonthDaysPicker from '../../elements/month-days-picker'
+import Loading from '../../elements/loading'
+import PopupModelOptions from '../../elements/popup-model-options/index.jsx'
+import EmptyState from '../../elements/empty-state'
+import EmptyStateCreate from '../../elements/empty-state/components/empty-state-create.jsx'
 
 import emptyCalendarImg from '../../../assets/empty-activity-calendar.svg'
 

@@ -1,8 +1,8 @@
 import { cx } from '../../../utils/utils.js'
 
-import ButtonAction from '../../items/elements/button-action'
-import Icons from '../../items/elements/icons'
-import ModelSwitcher from '../../items/models/model-switcher'
+import ButtonAction from '../../elements/button-action'
+import Icons from '../../elements/icons'
+import ModelSwitcher from '../../models/model-switcher'
 
 import './style.scss'
 
