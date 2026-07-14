@@ -57,7 +57,7 @@
         }
 
         >.body {
-            display: flex;
+            display: none;
             flex-direction: column;
             gap: 0.35rem;
             padding: $spacing-margin-mini;
@@ -106,6 +106,10 @@
                 }
             }
 
+            >.body {
+                display: flex;
+            }
+
             &:hover {
 
                 >.head {
@@ -140,29 +144,6 @@
         &.pending {
             pointer-events: none;
             opacity: 0.7;
-
-            >.head {
-
-                .side-actions {
-
-                    .button-action {
-
-                        &.delete {
-                            opacity: 1;
-                        }
-                    }
-                }
-            }
-
-            &.relationed {
-
-                >.head {
-
-                    .side-actions {
-                        width: 4rem;
-                    }
-                }
-            }
         }
 
         &.selected {

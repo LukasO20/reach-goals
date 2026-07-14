@@ -18,6 +18,8 @@ const handler = async (req, res) => {
         const { goalID } = req.query
         const { name, description, status, start, end, assignments, tags } = req.body
 
+        if (!name) { return res.status(400).json({ error: 'Name is required.' }) }
+
         const startDate = start ? start : new Date().toISOString()
         const endDate = end ? end : null
 
@@ -39,12 +41,13 @@ const handler = async (req, res) => {
         await handleUpdateTagOnGoal(goalID, tags)
         const goal = await updateGoal(goalID, formattedData)
 
-        if (goal) {
-            return res.status(200).json(goal)
-        } else {
-            return res.status(500).json({ error: 'Failed updating goals' })
+        try {
+            if (goal) return res.status(201).json(goal)
         }
-
+        catch (err) {
+            console.error('Error update goal:', err)
+            return res.status(500).json({ error: err.message || 'Failed updating goals' })
+        }
     }
 
     if (req.method === 'DELETE') {

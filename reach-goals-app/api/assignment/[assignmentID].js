@@ -19,6 +19,8 @@ const handler = async (req, res) => {
         const { assignmentID } = req.query
         const { name, description, status, duration, start, end, goalID, tags } = req.body
 
+        if (!name) { return res.status(400).json({ error: 'Name is required.' }) }
+
         const startDate = start ? start : new Date().toISOString()
         const endDate = end ? end : null
         const durationFormat = duration ? parseInt(duration) : null
@@ -38,12 +40,13 @@ const handler = async (req, res) => {
         await handleUpdateTagOnAssignment(assignmentID, tags)
         const assignment = await updateAssignment(assignmentID, formattedData)
 
-        if (assignment) {
-            return res.status(200).json(assignment)
-        } else {
-            return res.status(500).json({ error: 'Failed updating assignments' })
+        try {
+            if (assignment) return res.status(201).json(assignment)
         }
-
+        catch (err) {
+            console.error('Error update assignment:', err)
+            return res.status(500).json({ error: err.message || 'Failed updating assignment' })
+        }
     }
 
     if (req.method === 'DELETE') {

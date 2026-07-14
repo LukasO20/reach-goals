@@ -1,27 +1,44 @@
-.input-text-container {
+.input-color-container {
     display: flex;
     flex-direction: column;
     gap: $spacing-gap-sm;
 
-    .input-text {
-        height: 2.4rem;
-        box-sizing: border-box;
-        padding: 0rem 0.66rem;
+    >.input {
+        display: flex;
+        align-items: center;
+        gap: $spacing-gap-sm;
         border-radius: $dimensions-border-radius-sm;
         border: 3px solid transparent;
+        height: 2.1rem;
+        padding: 0rem 0.66rem;
         background-color: $color-pair-primary;
-        outline-color: $color-accent;
-        font-weight: 600;
-        caret-color: $color-pair-secondary;
-        color: $color-pair-secondary;
 
-        &:hover {
+        .input-color {
+            background-color: transparent;
+            border-radius: 100%;
+            width: 1.75rem;
+            border: 3px solid;
+            cursor: pointer;
+        }
+
+        >span {
+            color: $color-pair-secondary;
+            font-weight: 600;
+            font-size: $font-size-sm;
+        }
+
+        &:hover,
+        &:focus-within {
             border-color: $color-accent-light;
+        }
+
+        &:focus-within {
+            outline: auto;
+            outline-color: $color-white;
         }
 
         &::placeholder {
             font-weight: 600;
-            color: $color-pair-primary-light;
         }
 
         &.error {
@@ -35,7 +52,7 @@
         }
     }
 
-    .input-text-error {
+    .input-color-error {
         font-size: $font-size-mini;
         font-weight: 600;
         color: $color-error;

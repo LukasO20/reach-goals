@@ -1,3 +1,7 @@
+import { useState } from 'react'
+import { useManageModel } from '../../../provider/model/manage-model-provider'
+import { useVisibility } from '../../../provider/ui/visibility-provider'
+
 import ButtonAction from '../../elements/button-action'
 import ButtonDropdown from '../../elements/button-dropdown'
 import ModelSwitcher from '../../models/model-switcher'
@@ -6,52 +10,64 @@ import InputDate from '../../elements/input-date'
 import InputTimer from '../../elements/input-timer'
 import InputText from '../../elements/input-text'
 import Icons from '../../elements/icons'
-
-import { useManageModel } from '../../../provider/model/manage-model-provider/index.jsx'
-import { useVisibility } from '../../../provider/ui/visibility-provider/index.jsx'
-
-import { cx } from '../../../utils/utils.js'
-
 import { ModalModelListWrapper } from '../../modals/modal-model-list/modal-model-list-wrapper.jsx'
 
 import { visibilityMap } from '../../../utils/mapping/mappingUtils.js'
 import { updateActiveModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
+
+import { cx } from '../../../utils/utils.js'
+
+import { renderDropdownStatusTitle, renderModelTagEnviroment as renderModelTagEnviroment2, findEmptyFields } from '../helper.js'
 
 /** @typedef {import('../types.js').FormStandardProps} Props */
 
 /**
  * @param {Props} props
  */
-const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState }) => {
+const FormStandard = ({
+    type,
+    functionFormMap,
+    modelForm,
+    model,
+    mainModelID,
+    pendingState
+}) => {
     const { visibleElements } = useVisibility()
-    const { model, setModel, updateActiveModel } = useManageModel()
+    const { setModel, updateActiveModel } = useManageModel()
+
+    /** @type {import('../types.js').SetEmptyFieldsProps} */
+    const [emptyFields, setEmptyFields] = useState({ fields: [], isEmptyFields: false })
 
     const modelCopyRegion = type === 'goal' ? 'assignment' : ''
-    const icon = <Icons icon={`icon-${type || 'exclamation'}`} />                 
+    const icon = <Icons icon={`icon-${type || 'exclamation'}`} />
     const isEmptyForm = typeof model.mainModelID === 'number'
-    const display = { type: ['card-mini'], actions: ['remove'] }
-
-    const renderDropdownStatusTitle = (status) => {
-        return {
-            icon: status,
-            status: status ?? 'choose an option'
-        }
+    const display = {
+        type: ['card-mini'],
+        actions: ['remove']
     }
 
     const renderModelEnviroment = (goalForm = false) => {
         const goalEnviroment = !!isEmptyForm && goalForm
 
-        if (goalEnviroment && Object.keys(modelForm).length > 0) return <ModelSwitcher type='assignment' propsReference={modelSwitcherBy} />
-        else return <ModelCopy type={model.typeModel} region={modelCopyRegion} propsReference={modelCopyBy} />
+        if (goalEnviroment && Object.keys(modelForm).length > 0) return <ModelSwitcher type='assignment' propsReference={modelSwitcherProps} />
+        else return <ModelCopy type={model.typeModel} region={modelCopyRegion} propsReference={modelCopyProps} />
     }
 
     const renderModelTagEnviroment = () => {
-        if (!!isEmptyForm && Object.keys(modelForm).length > 0) return <ModelSwitcher type='tag' propsReference={modelSwitcherBy} />
-        else return <ModelCopy type={model.typeModel} region='tag' propsReference={modelCopyBy} />
+        if (!!isEmptyForm && Object.keys(modelForm).length > 0) return <ModelSwitcher type='tag' propsReference={modelSwitcherProps} />
+        else return <ModelCopy type={model.typeModel} region='tag' propsReference={modelCopyProps} />
     }
 
     const dataUpdateFormStatusModel = (value = null) => {
         return updateActiveModelMap({ keyObject: 'status', value: value, action: 'add' })
+    }
+
+    const handleFormSubmit = () => {
+        const fields = findEmptyFields({ modelForm })
+        setEmptyFields(fields)
+
+        if (fields.isEmptyFields) return
+        functionFormMap.mapHandleSubmit()
     }
 
     const dropdownOptionsMap = [
@@ -59,24 +75,24 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
             title: 'in progress',
             icon: 'icon-progress',
             classBtn: modelForm?.status === 'progress' ? 'active' : '',
-            onClick: () => { 
-                updateActiveModel(dataUpdateFormStatusModel('progress')); 
+            onClick: () => {
+                updateActiveModel(dataUpdateFormStatusModel('progress'));
             }
         },
         {
             title: 'conclude',
             icon: 'icon-conclude',
             classBtn: modelForm?.status === 'conclude' ? 'active' : '',
-            onClick: () => { 
-                updateActiveModel(dataUpdateFormStatusModel('conclude')); 
+            onClick: () => {
+                updateActiveModel(dataUpdateFormStatusModel('conclude'));
             }
         },
         {
             title: 'cancel',
             icon: 'icon-cancel',
             classBtn: modelForm?.status === 'cancel' ? 'active' : '',
-            onClick: () => { 
-                updateActiveModel(dataUpdateFormStatusModel('cancel')); 
+            onClick: () => {
+                updateActiveModel(dataUpdateFormStatusModel('cancel'));
             }
         },
     ]
@@ -93,8 +109,16 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
         assignment: 'notGoalRelation',
         tag: !isEmptyForm ? 'tagSomeID' : type === 'goal' ? 'tagNotRelationGoal' : 'tagNotRelationAssignment'
     }
-    const modelSwitcherBy = { source: modelForm, display }
-    const modelCopyBy = { display }
+    const modelSwitcherProps = { source: modelForm, display }
+    const modelCopyProps = { display }
+
+    const dropdownStatus = renderDropdownStatusTitle({ status: modelForm.status })
+
+    //TODO: IMPROVE A WAY TO RENDER COMPONENTS HERE
+    // const tagEnviroment = renderModelTagEnviroment2({ type, mainModelID, modelForm, modelSwitcherProps, modelCopyProps })
+    // console.log('ENV - ', tagEnviroment.props)
+    // const tagEnviromentRender = tagEnviroment.render === 'switcher' ?
+    //     <ModelSwitcher type='tag' propsReference={tagEnviroment.props} /> : <ModelCopy type={model.typeModel} region='tag' propsReference={tagEnviroment.props} />
 
     const buttonAssignmentClass = cx(
         `op-form-assignment
@@ -127,12 +151,12 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
                             nullForm={true}
                             onClick={() => setModel(prev => ({ ...prev, typeModel: 'assignment' }))}
                         />
-                        <ButtonAction 
-                            visibility={visibilityMap(['modal-center', 'goal'], { maintain: true })} 
+                        <ButtonAction
+                            visibility={visibilityMap(['modal-center', 'goal'], { maintain: true })}
                             classBtn={buttonGoalClass}
-                            title='goals' 
-                            nullForm={true} 
-                            onClick={() => setModel(prev => ({ ...prev, typeModel: 'goal' }))} 
+                            title='goals'
+                            nullForm={true}
+                            onClick={() => setModel(prev => ({ ...prev, typeModel: 'goal' }))}
                         />
                     </div>
                     <div className='objective-color'>
@@ -148,58 +172,66 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
                     <div className='fields'>
                         <div className='field-forms name'>
                             <label>
-                                <Icons icon='icon-rename' />                 
+                                <Icons icon='icon-rename' />
                                 <span>name</span>
                             </label>
                             <InputText
-                                id={`${type}-name`} className='input-form input-text name' placeholder={`${type} name`}
-                                name='name' value={modelForm?.name || ''} onChange={functionFormMap.mapHandleChange} />
+                                id={`${type}-name`}
+                                className='input-form name'
+                                placeholder={`${type} name`}
+                                name='name'
+                                value={modelForm?.name || ''}
+                                onChange={functionFormMap.mapHandleChange}
+                                errorMessage={emptyFields.fields.includes('name') && 'Name is required'}
+                            />
                         </div>
                         <div className='field-forms start-date'>
                             <label>
-                                <Icons icon='icon-calendar-schedule' />                 
+                                <Icons icon='icon-calendar-schedule' />
                                 <span>start date</span>
                             </label>
-                            <InputDate id={`${type}-start-date`} className='input-form input-date start' name='start' selected={modelForm?.start} onChange={functionFormMap.mapHandleChange} />
+                            <InputDate id={`${type}-start-date`} className='input-form start' name='start' selected={modelForm?.start} onChange={functionFormMap.mapHandleChange} />
                         </div>
                         <div className='field-forms end-date'>
                             <label>
-                                <Icons icon='icon-calendar-schedule' />                 
+                                <Icons icon='icon-calendar-schedule' />
                                 <span>end date</span>
                             </label>
-                            <InputDate id={`${type}-end-date`} className='input-form input-date end' name='end' selected={modelForm?.end} onChange={functionFormMap.mapHandleChange} />
+                            <InputDate id={`${type}-end-date`} className='input-form end' name='end' selected={modelForm?.end} onChange={functionFormMap.mapHandleChange} />
                         </div>
                         {
                             type === 'assignment' && (
                                 <div className='field-forms duration'>
                                     <label>
-                                        <Icons icon='icon-clock' />                 
+                                        <Icons icon='icon-clock' />
                                         <span>duration</span>
                                     </label>
-                                    <InputTimer id={`${type}-duration`} className='input-form input-timer timer' name='duration'
+                                    <InputTimer id={`${type}-duration`} className='input-form timer' name='duration'
                                         onChange={functionFormMap.mapHandleChange} value={modelForm.duration ?? null} />
                                 </div>
                             )
                         }
                         <div className='field-forms status'>
                             <label>
-                                <Icons icon='icon-progress' />                 
+                                <Icons icon='icon-progress' />
                                 <span>status</span>
                             </label>
-                            <ButtonDropdown 
+                            <ButtonDropdown
                                 visibility='dropdown-status'
                                 visibilityOperator={{ add: 'dropdown-status' }}
                                 classBtn='status form'
                                 classBtnAction='plan'
-                                icon={`icon-${renderDropdownStatusTitle(modelForm.status)?.icon}`}
-                                title={renderDropdownStatusTitle(modelForm.status)?.status}
+                                icon={`icon-${dropdownStatus.icon}`}
+                                title={dropdownStatus.status}
                                 options={dropdownOptionsMap}
                                 arrow={true}
                             />
                         </div>
                     </div>
                     {functionFormMap.mapModelRelationAddMap('tag', renderModelTagEnviroment())}
-                    {functionFormMap.mapModelRelationAddMap(type, renderModelEnviroment(isGoalForm))}
+                    {functionFormMap
+                        .mapModelRelationAddMap(type, renderModelEnviroment(isGoalForm))
+                    }
                     <div className='item-forms details'>
                         <div className='head'>
                             <div className='item'>
@@ -217,7 +249,13 @@ const FormStandard = ({ type, functionFormMap, model: modelForm, pendingState })
                 </form>
             </div>
             <div className='bottom'>
-                <ButtonAction pendingState={pendingState} onClick={functionFormMap.mapHandleSubmit} classBtn='plan max-width save' icon='icon-save' title={typeof model.mainModelID === 'number' ? 'Save' : 'Create'} />
+                <ButtonAction
+                    pendingState={pendingState}
+                    onClick={handleFormSubmit}
+                    classBtn='plan max-width save'
+                    icon='icon-save'
+                    title={typeof mainModelID === 'number' ? 'Save' : 'Create'}
+                />
             </div>
             {
                 !!modalModelShowed &&

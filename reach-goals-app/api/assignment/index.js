@@ -6,6 +6,7 @@ const handler = async (req, res) => {
 
     if (req.method === 'POST') {
         const { name, description, status, duration, start, end, goalID, tags } = req.body
+        
         if (!name) { return res.status(400).json({ error: 'Name is required.' }) }
 
         const startDate = start ? start : new Date().toISOString()
@@ -33,7 +34,7 @@ const handler = async (req, res) => {
         }
         catch (err) {
             console.error('Error adding assignment:', err)
-            return res.status(500).json({ error: err.message || 'Failed to create assignment' });
+            return res.status(500).json({ error: err.message || 'Failed to create assignment' })
         }
     }
 

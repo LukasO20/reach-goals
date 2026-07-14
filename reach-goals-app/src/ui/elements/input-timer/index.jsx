@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { cx } from '../../../utils/utils.js'
 
 import './style.scss'
 
@@ -43,11 +44,17 @@ const InputTimer = ({ id, className, placeholder, name, value, onChange } = Inpu
     })
   }
 
+  const inputTimerClass = cx(
+    `input-timer
+    ${className}
+    `
+  )
+
   return (
     <input
       id={id}
       name={name}
-      className={className}
+      className={inputTimerClass}
       value={valueTimer ?? toTime(value)}
       type='text'
       placeholder={placeholder || 'Set HH:mm'}

@@ -96,6 +96,14 @@
         &:active {
             background-color: $color-accent-light;
         }
+
+        .spinner-inline {
+
+            .spinner {
+                border: 6px solid $color-accent-dark;
+                border-top-color: $color-white;
+            }
+        }
     }
 
     &:hover,

@@ -11,14 +11,18 @@ import { useTitle } from '../../../provider/ui/title-provider'
 import { visibilityMap } from '../../../utils/mapping/mappingUtils.js'
 import { resetManageModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
 
-import Form from '../../forms' 
-import Loading from '../../elements/loading' 
+import Form from '../../forms'
+import Loading from '../../elements/loading'
 import FormModelRelationAdd from '../../forms/components/form-model-relation-add'
 
 import './style.scss'
 
 const modelRelationAddMap = (type, children) => {
-    return <FormModelRelationAdd type={type}>{children}</FormModelRelationAdd>
+    return (
+        <FormModelRelationAdd type={type}>
+            {children}
+        </FormModelRelationAdd>
+    )
 }
 
 const ModalForm = () => {
@@ -165,7 +169,9 @@ const ModalForm = () => {
             <Form
                 typeForm={typeVisibility}
                 functionFormMap={functionFormMap}
-                model={model.activeModel}
+                model={model}
+                modelForm={model.activeModel}
+                mainModelID={model.mainModelID}
                 pendingState={isSaving}
             />
         )

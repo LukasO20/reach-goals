@@ -16,7 +16,6 @@ model Goal {
   create      DateTime     @default(now())
   start       DateTime     @default(now())
   end         DateTime?
-  remember    DateTime?
   status      String?
   assignments Assignment[]
   tags        TagOnGoal[]
@@ -30,7 +29,6 @@ model Assignment {
   order       Int?
   create      DateTime          @default(now())
   end         DateTime?
-  remember    DateTime?
   start       DateTime          @default(now())
   status      String?
   goalID      Int?
@@ -40,8 +38,8 @@ model Assignment {
 
 model Tag {
   id          Int               @id @default(autoincrement())
-  name        String?
-  color       String?
+  name        String
+  color       String
   assignments TagOnAssignment[]
   goals       TagOnGoal[]
 }

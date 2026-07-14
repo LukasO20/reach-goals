@@ -1,7 +1,7 @@
 import prisma from '../connectdb.js'
 
 const addAssignment = async (data) => {
-    try {
+    try {                
         return await prisma.assignment.create({
             data: data,
             include: { goal: true, tags: { include: { tag: true } } }

@@ -1,10 +1,10 @@
 /**
- * @typedef {Object} InputTextProps
- * @property {string|number|null} id
+ * @typedef {Object} InputColorProps
+ * @property {string | number} id
  * @property {string} className
  * @property {string} [placeholder]
  * @property {string} name
- * @property {string|number|null} value
+ * @property {string} value
  * @property {function(import('react').ChangeEvent<HTMLInputElement>):void} [onChange]
  * @property {string} [errorMessage]
  */

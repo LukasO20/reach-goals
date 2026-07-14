@@ -1,12 +1,13 @@
 import { useState } from 'react'
-
 import { useTagProvider } from '../../../provider/model/tag-model-provider/index.jsx'
 
 import { visibilityMap } from '../../../utils/mapping/mappingUtils.js'
+import { findEmptyFields } from '../helper.js'
 
-import ButtonAction from '../../elements/button-action' 
-import InputText from '../../elements/input-text' 
-import Loading from '../../elements/loading' 
+import ButtonAction from '../../elements/button-action'
+import InputText from '../../elements/input-text'
+import InputColor from '../../elements/input-color'
+import Loading from '../../elements/loading'
 import Icons from '../../elements/icons'
 
 /** @typedef {import('../types.js').FormTagProps} Props */
@@ -14,9 +15,19 @@ import Icons from '../../elements/icons'
 /**
  * @param {Props} props
  */
-const FormTag = ({ type, functionFormMap, model: modelForm, pendingState }) => {
+const FormTag = ({ type, functionFormMap, model, modelForm, pendingState }) => {
     const { modal: { loading } } = useTagProvider()
-    const [color, setColor] = useState('')
+
+    /** @type {import('../types.js').SetEmptyFieldsProps} */
+    const [emptyFields, setEmptyFields] = useState({ fields: [], isEmptyFields: false })
+
+    const handleFormSubmit = () => {
+        const fields = findEmptyFields({ modelForm })
+        setEmptyFields(fields)
+
+        if (fields.isEmptyFields) return
+        functionFormMap.mapHandleSubmit()
+    }
 
     return (
         <div className='container-form-modal near tag'>
@@ -43,8 +54,13 @@ const FormTag = ({ type, functionFormMap, model: modelForm, pendingState }) => {
                                         <span>name</span>
                                     </label>
                                     <InputText
-                                        id={`${type}-name`} className='input-form input-text name' placeholder={`${type} name`}
-                                        name='name' value={modelForm?.name || ''} onChange={functionFormMap.mapHandleChange} />
+                                        id={`${type}-name`}
+                                        className='input-form input-text name'
+                                        placeholder={`${type} name`}
+                                        name='name' value={modelForm?.name || ''}
+                                        onChange={functionFormMap.mapHandleChange}
+                                        errorMessage={emptyFields.fields.includes('name') && 'Name is required'}
+                                    />
                                 </div>
                                 <div className='field-forms color'>
                                     <label>
@@ -52,19 +68,27 @@ const FormTag = ({ type, functionFormMap, model: modelForm, pendingState }) => {
                                         <span>color</span>
                                     </label>
                                     <div className='field-form-info'>
-                                        <input id={`${type}-color`} name='color' type='color' value={modelForm?.color || '#000000'}
-                                            style={{ borderColor: `${modelForm?.color || '#000000'}` }}
-                                            onChange={(e) => { setColor(e.target.value); functionFormMap.mapHandleChange(e) }} />
-                                        <span>{color || modelForm?.color}</span>
+                                        <InputColor
+                                            id={`${type}-color`}
+                                            className='color'
+                                            placeholder={`${type} color`}
+                                            name='color'
+                                            value={modelForm?.color || '#000000'}
+                                            onChange={functionFormMap.mapHandleChange}
+                                        />
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div className='bottom'>
-                        <ButtonAction classBtn='plan max-width save' icon='icon-save' title='Save'
+                        <ButtonAction
+                            classBtn='plan max-width save'
+                            icon='icon-save'
+                            title={typeof model.mainModelID === 'number' ? 'Save' : 'Create'}
                             pendingState={pendingState}
-                            onClick={functionFormMap.mapHandleSubmit} />
+                            onClick={handleFormSubmit}
+                        />
                     </div>
                 </>)}
         </div>

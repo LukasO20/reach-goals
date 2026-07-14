@@ -242,40 +242,6 @@
                 >.fields {
                     grid-template-columns: none;
                     grid-template-rows: repeat(2, 1fr);
-
-                    .field-forms {
-
-                        &.color {
-
-                            .field-form-info {
-                                display: flex;
-                                align-items: center;
-                                gap: $spacing-gap-sm;
-                                background-color: $color-pair-primary;
-                                height: 2.4rem;
-                                box-sizing: border-box;
-                                padding: 0rem 0.66rem;
-                                border-radius: $dimensions-border-radius-sm;
-                                border: 3px solid transparent;
-
-                                input {
-                                    border-radius: 100%;
-                                    width: 1.75rem;
-                                    border: 3px solid;
-                                    font-weight: 500;
-                                    cursor: pointer;
-                                }
-
-                                >span {
-                                    padding: $spacing-padding-mini $spacing-padding-st;
-                                    border-radius: $dimensions-border-radius-sm;
-                                    font-weight: 500;
-                                    font-size: 0.9rem;
-                                    background-color: $color-secondary-darkest;
-                                }
-                            }
-                        }
-                    }
                 }
             }
         }

@@ -105,7 +105,7 @@ const Goal = ({
                 return (
                     draggable 
                     ?
-                    <CardDraggable cardProps={props} itemID={item.id} index={index} />
+                    <CardDraggable cardProps={props} itemID={item.id} index={index} key={index} />
                     : 
                     <CardSwitchRender {...props} key={index} />
                 )

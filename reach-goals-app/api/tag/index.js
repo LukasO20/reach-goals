@@ -7,8 +7,7 @@ const handler = async (req, res) => {
     if (req.method === 'POST') {
         const { name, color } = req.body
 
-        if (!name) { return res.status(400).json({ error: 'Name is required.' }) }
-        if (!color) { return res.status(400).json({ error: 'Name is required.' }) }
+        if (!name || !color) { return res.status(400).json({ error: 'Name/Color is required.' }) }
 
         const rawObject = { name, color }
 

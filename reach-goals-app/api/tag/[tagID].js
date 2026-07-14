@@ -19,20 +19,20 @@ const handler = async (req, res) => {
         const { tagID } = req.query
         const { name, color } = req.body
 
-        if (!name) { return res.status(400).json({ error: 'Name is required.' }) }
-        if (!color) { return res.status(400).json({ error: 'Name is required.' }) }
+        if (!name || !color) { return res.status(400).json({ error: 'Name/Color is required.' }) }
 
         const rawObject = { name, color }
 
         const formattedData = formatObject(rawObject)
         const tag = await updateTag(tagID, formattedData)
 
-        if (tag) {
-            return res.status(200).json(tag)
-        } else {
-            return res.status(500).json({ error: 'Failed updating tags' })
+        try {
+            if (tag) return res.status(201).json(tag)
         }
-
+        catch (err) {
+            console.error('Error update tag:', err)
+            return res.status(500).json({ error: err.message || 'Failed updating tags' })
+        }
     }
 
     if (req.method === 'DELETE') {

@@ -1,6 +1,8 @@
 import FormStandard from './components/form-standard.jsx'
 import FormTag from './components/form-tag.jsx'
 
+import { dataFormStandard, dataFormTag } from './helper.js'
+
 import './style.scss'
 
 /** @typedef {import('./types.js').FormProps} Props */
@@ -8,9 +10,10 @@ import './style.scss'
 /**
  * @param {Props} props
  */
-const Form = ({ typeForm, functionFormMap, model, pendingState }) => {
+const Form = ({ typeForm, functionFormMap, model, modelForm, mainModelID, pendingState }) => {
     const isFormTag = typeForm === 'tag'
     const isFormStandard = typeForm === 'goal' || typeForm === 'assignment'
+    const hasSomeFields = !!Object.keys(modelForm).length
 
     return (
         <>
@@ -18,6 +21,7 @@ const Form = ({ typeForm, functionFormMap, model, pendingState }) => {
                 <FormTag
                     type={typeForm}
                     functionFormMap={functionFormMap}
+                    modelForm={hasSomeFields ? modelForm : dataFormTag}
                     model={model}
                     pendingState={pendingState}
                 />
@@ -26,8 +30,10 @@ const Form = ({ typeForm, functionFormMap, model, pendingState }) => {
                 <FormStandard
                     type={typeForm}
                     functionFormMap={functionFormMap}
+                    modelForm={hasSomeFields ? modelForm : dataFormStandard}
                     model={model}
                     pendingState={pendingState}
+                    mainModelID={mainModelID}
                 />
             )}
         </>

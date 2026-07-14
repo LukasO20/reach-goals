@@ -1,4 +1,5 @@
 import { DatePicker } from 'react-datepicker'
+import { cx } from '../../../utils/utils.js'
 
 import './style.scss'
 
@@ -15,10 +16,16 @@ const InputDate = ({ selected, id, className, name, onChange }) => {
         }
     }
 
+    const inputDateClass = cx(
+        `input-date
+        ${className}
+        `
+    )
+
     return (
         <DatePicker
             id={id}
-            className={className}
+            className={inputDateClass}
             selected={selected ? new Date(selected) : null}
             name={name}
             onChange={handleChange}
