@@ -4,8 +4,10 @@ import { useTagProvider } from '../../../provider/model/tag-model-provider'
 import { useManageModel } from '../../../provider/model/manage-model-provider'
 import { useVisibility } from '../../../provider/ui/visibility-provider'
 
-import { visibilityMap, displayModesMap } from '../../../utils/mapping/mappingUtils.js'
+import { visibilityMap } from '../../../utils/mapping/mappingUtils.js'
 import { addToSelectedModelMap, updateActiveModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
+
+import { safeDisplay, safeSource } from './defaults.js'
 
 import CardMini from '../../elements/card-mini'
 
@@ -14,7 +16,7 @@ import CardMini from '../../elements/card-mini'
 /**
  * @param {Props} props
  */
-const Tag = ({ display = displayModesMap, source, selectableModel }) => {
+const Tag = ({ display = safeDisplay, source = safeSource, selectableModel }) => {
     const { toggleVisibility } = useVisibility()
     const { model, setModel, updateActiveModel, addToSelectedModel } = useManageModel()
     const { remove, removeSuccess, removingVariables } = useTagProvider()

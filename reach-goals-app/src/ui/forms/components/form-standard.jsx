@@ -17,7 +17,8 @@ import { updateActiveModelMap } from '../../../utils/mapping/mappingUtilsProvide
 
 import { cx } from '../../../utils/utils.js'
 
-import { renderDropdownStatusTitle, renderModelTagEnviroment as renderModelTagEnviroment2, findEmptyFields } from '../helper.js'
+import { renderDropdownStatusTitle, renderModelTagEnviroment as renderModelTagEnviroment2, findEmptyFields } from '../helpers.js'
+import { safeFunctionFormMap, safeModel, safeModelFormStandard } from '../defaults.js'
 
 /** @typedef {import('../types.js').FormStandardProps} Props */
 
@@ -26,12 +27,12 @@ import { renderDropdownStatusTitle, renderModelTagEnviroment as renderModelTagEn
  */
 const FormStandard = ({
     type,
-    functionFormMap,
-    modelForm,
-    model,
+    functionFormMap = safeFunctionFormMap,
+    modelForm = safeModelFormStandard,
+    model = safeModel,
     mainModelID,
     pendingState
-}) => {
+}) => {    
     const { visibleElements } = useVisibility()
     const { setModel, updateActiveModel } = useManageModel()
 
@@ -74,7 +75,7 @@ const FormStandard = ({
         {
             title: 'in progress',
             icon: 'icon-progress',
-            classBtn: modelForm?.status === 'progress' ? 'active' : '',
+            classBtn: modelForm.status === 'progress' ? 'active' : '',
             onClick: () => {
                 updateActiveModel(dataUpdateFormStatusModel('progress'));
             }
@@ -82,7 +83,7 @@ const FormStandard = ({
         {
             title: 'conclude',
             icon: 'icon-conclude',
-            classBtn: modelForm?.status === 'conclude' ? 'active' : '',
+            classBtn: modelForm.status === 'conclude' ? 'active' : '',
             onClick: () => {
                 updateActiveModel(dataUpdateFormStatusModel('conclude'));
             }
@@ -90,7 +91,7 @@ const FormStandard = ({
         {
             title: 'cancel',
             icon: 'icon-cancel',
-            classBtn: modelForm?.status === 'cancel' ? 'active' : '',
+            classBtn: modelForm.status === 'cancel' ? 'active' : '',
             onClick: () => {
                 updateActiveModel(dataUpdateFormStatusModel('cancel'));
             }
@@ -164,7 +165,12 @@ const FormStandard = ({
                     </div>
                 </div>
                 <div className='objective-buttons-options'>
-                    <ButtonAction visibility={visibilityMap(null)} nullForm={true} classBtn='circle close' icon='icon-close' />
+                    <ButtonAction
+                        visibility={visibilityMap(null)}
+                        nullForm={true}
+                        classBtn='circle close'
+                        icon='icon-close'
+                    />
                 </div>
             </div>
             <div className='body'>
@@ -180,7 +186,7 @@ const FormStandard = ({
                                 className='input-form name'
                                 placeholder={`${type} name`}
                                 name='name'
-                                value={modelForm?.name || ''}
+                                value={modelForm.name || ''}
                                 onChange={functionFormMap.mapHandleChange}
                                 errorMessage={emptyFields.fields.includes('name') && 'Name is required'}
                             />
@@ -190,14 +196,26 @@ const FormStandard = ({
                                 <Icons icon='icon-calendar-schedule' />
                                 <span>start date</span>
                             </label>
-                            <InputDate id={`${type}-start-date`} className='input-form start' name='start' selected={modelForm?.start} onChange={functionFormMap.mapHandleChange} />
+                            <InputDate
+                                id={`${type}-start-date`}
+                                className='input-form start'
+                                name='start'
+                                selected={modelForm.start}
+                                onChange={functionFormMap.mapHandleChange}
+                            />
                         </div>
                         <div className='field-forms end-date'>
                             <label>
                                 <Icons icon='icon-calendar-schedule' />
                                 <span>end date</span>
                             </label>
-                            <InputDate id={`${type}-end-date`} className='input-form end' name='end' selected={modelForm?.end} onChange={functionFormMap.mapHandleChange} />
+                            <InputDate
+                                id={`${type}-end-date`}
+                                className='input-form end'
+                                name='end'
+                                selected={modelForm.end}
+                                onChange={functionFormMap.mapHandleChange}
+                            />
                         </div>
                         {
                             type === 'assignment' && (
@@ -206,8 +224,13 @@ const FormStandard = ({
                                         <Icons icon='icon-clock' />
                                         <span>duration</span>
                                     </label>
-                                    <InputTimer id={`${type}-duration`} className='input-form timer' name='duration'
-                                        onChange={functionFormMap.mapHandleChange} value={modelForm.duration ?? null} />
+                                    <InputTimer
+                                        id={`${type}-duration`}
+                                        className='input-form timer'
+                                        name='duration'
+                                        onChange={functionFormMap.mapHandleChange}
+                                        value={modelForm.duration ?? null}
+                                    />
                                 </div>
                             )
                         }
@@ -242,8 +265,14 @@ const FormStandard = ({
                             </div>
                         </div>
                         <div className='body'>
-                            <textarea id={`${type}-details`} className='input-form scrollable' placeholder='details here...'
-                                name='description' value={modelForm?.description || ''} onChange={functionFormMap.mapHandleChange}></textarea>
+                            <textarea
+                                id={`${type}-details`}
+                                className='input-form scrollable'
+                                placeholder='details here...'
+                                name='description'
+                                value={modelForm.description || ''}
+                                onChange={functionFormMap.mapHandleChange}
+                            />
                         </div>
                     </div>
                 </form>
@@ -259,8 +288,11 @@ const FormStandard = ({
             </div>
             {
                 !!modalModelShowed &&
-                <ModalModelListWrapper title={titlesModalModelList[modalModelListType]}
-                    type={modalModelListType} typeFilterKey={filtersKeys[modalModelListType]} />
+                <ModalModelListWrapper
+                    title={titlesModalModelList[modalModelListType]}
+                    type={modalModelListType}
+                    typeFilterKey={filtersKeys[modalModelListType]}
+                />
             }
         </div>
     )

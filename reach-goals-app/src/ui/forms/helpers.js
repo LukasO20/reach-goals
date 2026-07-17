@@ -68,12 +68,3 @@ export const findEmptyFields = ({ modelForm }) => {
         isEmptyFields: someEmptyFields
     }
 }
-
-export const dataFormStandard = {
-    name: ''
-}
-
-export const dataFormTag = {
-    name: '',
-    color: ''
-}

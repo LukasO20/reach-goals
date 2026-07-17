@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
-
 import { useManageModel } from '../../../provider/model/manage-model-provider'
 
 import { removeFromSelectedModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
+import { safePropsReference } from '../model-switcher/defaults.js'
 
 import CardMini from '../../elements/card-mini'
 
-const ModelCopy = ({ propsReference, region }) => {
+const ModelCopy = ({ propsReference = safePropsReference, region }) => {
     const [modelCopy, setCopyModel] = useState([])
     const { model, removeFromSelectedModel, updateActiveModel } = useManageModel()
 

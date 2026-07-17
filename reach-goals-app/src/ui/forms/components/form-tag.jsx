@@ -2,7 +2,9 @@ import { useState } from 'react'
 import { useTagProvider } from '../../../provider/model/tag-model-provider/index.jsx'
 
 import { visibilityMap } from '../../../utils/mapping/mappingUtils.js'
-import { findEmptyFields } from '../helper.js'
+import { findEmptyFields } from '../helpers.js'
+
+import { safeModelFormTag, safeFunctionFormMap, safeModel } from '../defaults.js'
 
 import ButtonAction from '../../elements/button-action'
 import InputText from '../../elements/input-text'
@@ -15,7 +17,13 @@ import Icons from '../../elements/icons'
 /**
  * @param {Props} props
  */
-const FormTag = ({ type, functionFormMap, model, modelForm, pendingState }) => {
+const FormTag = ({
+    type,
+    functionFormMap = safeFunctionFormMap,
+    model = safeModel,
+    modelForm = safeModelFormTag,
+    pendingState
+}) => {
     const { modal: { loading } } = useTagProvider()
 
     /** @type {import('../types.js').SetEmptyFieldsProps} */

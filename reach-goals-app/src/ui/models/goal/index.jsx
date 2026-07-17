@@ -4,8 +4,9 @@ import { useManageModel } from '../../../provider/model/manage-model-provider'
 import { useVisibility } from '../../../provider/ui/visibility-provider'
 import { useCheckbox } from '../../../provider/ui/checkbox-provider'
 
-import { switchLayoutMap, visibilityMap, displayModesMap } from '../../../utils/mapping/mappingUtils.js'
+import { switchLayoutMap, visibilityMap } from '../../../utils/mapping/mappingUtils.js'
 import { addToSelectedModelMap, updateActiveModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
+import { safeDisplay, safeSource } from './defaults.js'
 
 import moment from 'moment'
 
@@ -18,8 +19,8 @@ import CardDraggable from '../../elements/card-draggable'
  * @param {Props} props
  */
 const Goal = ({
-    display = displayModesMap,
-    source,
+    display = safeDisplay,
+    source = safeSource,
     selectableModel,
     detailsModel,
     draggable,
@@ -33,7 +34,7 @@ const Goal = ({
     const { remove, removeSuccess, removing, removingVariables } = useGoalProvider()
     const { valuesCheckbox } = useCheckbox()
 
-    const sourceData = source?.goals ?? source
+    const sourceData = source.goals ?? source
 
     const sourceDataFiltered = sourceData.filter(item =>
         !(removeSuccess && removingVariables && item.id === removingVariables)

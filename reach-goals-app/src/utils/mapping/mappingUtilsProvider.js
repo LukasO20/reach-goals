@@ -14,8 +14,8 @@ export const filerFetchModelMap = {
 }
 
 export const manageModelMap = {
-    typeModel: '',
-    mainModelID: null,
+    typeModel: undefined,
+    mainModelID: undefined,
     selectedModel: {
         tag: [],
         assignment: [],
@@ -36,7 +36,7 @@ export const manageModelMap = {
         },
     },
     filter: filerFetchModelMap,
-    activeModel: {}
+    activeModel: undefined
 }
 
 export const filterServiceFnMap = {

@@ -2,13 +2,13 @@ import Assignment from '../assignment'
 import Goal from '../goal'
 import Tag from '../tag'
 
-export const ModelSwitchMap = {
-    type: '',
-    propsReference: null,
-    selectableModel: false,
-}
+import { safePropsReference, safeSelectableModel } from './defaults.js'
 
-const ModelSwitcher = ({ type, propsReference, selectableModel } = ModelSwitchMap) => {
+const ModelSwitcher = ({ 
+    type, 
+    propsReference = safePropsReference, 
+    selectableModel = safeSelectableModel 
+}) => {
     if (type === 'assignment')
         return <Assignment {...propsReference} selectableModel={selectableModel} />
     if (type === 'goal')

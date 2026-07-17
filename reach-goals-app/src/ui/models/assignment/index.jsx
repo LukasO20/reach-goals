@@ -4,8 +4,9 @@ import { useManageModel } from '../../../provider/model/manage-model-provider'
 import { useVisibility } from '../../../provider/ui/visibility-provider'
 import { useCheckbox } from '../../../provider/ui/checkbox-provider'
 
-import { displayModesMap, switchLayoutMap, visibilityMap } from '../../../utils/mapping/mappingUtils.js'
+import { switchLayoutMap, visibilityMap } from '../../../utils/mapping/mappingUtils.js'
 import { updateActiveModelMap, addToSelectedModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
+import { safeDisplay, safeSource } from './defaults.js'
 
 import CardRelation from './components/card-relation.jsx'
 
@@ -16,8 +17,8 @@ import CardRelation from './components/card-relation.jsx'
  */
 const Assignment = ({
     status,
-    display = displayModesMap,
-    source,
+    display = safeDisplay,
+    source = safeSource,
     selectableModel,
     detailsModel,
     draggable,
@@ -30,7 +31,7 @@ const Assignment = ({
     const { remove, removeSuccess, removing, removingVariables } = useAssignmentProvider()
     const { valuesCheckbox } = useCheckbox()
 
-    const sourceData = source?.assignments ?? source
+    const sourceData = source.assignments ?? source
 
     const sourceDataFiltered = sourceData.filter(item =>
         !(removeSuccess && removingVariables && item.id === removingVariables)

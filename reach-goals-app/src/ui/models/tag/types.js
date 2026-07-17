@@ -1,16 +1,16 @@
+/** @typedef {import('../../../utils/types.js').DisplayProps} DisplayProps */
+
+/**
+ * @typedef {Object} TagModelProps
+ * @property {number | string} id
+ * @property {string} name
+ * @property {string} color
+ */
+
 /**
  * @typedef {Object} TagProps
- * @property {Object} display
- * @property {('card'|'card-mini')[]} display.type
- * @property {('edit'|'delete'|'details'|'remove')[]} [display.actions]
- * @property {Object} source
- * @property {Object[]} source.tags
- * @property {number} [source.tags[].id]
- * @property {number} [source.tags[].tagID]
- * @property {Object} [source.tags[].tag]
- * @property {number} [source.tags[].tag.id]
- * @property {string} [source.tags[].tag.name]
- * @property {string} [source.tags[].tag.color]
+ * @property {DisplayProps} display
+ * @property {Array<TagModelProps>} source
  * @property {boolean} [selectableModel]
  */
 

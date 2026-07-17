@@ -49,6 +49,15 @@
  */
 
 /**
+ * @typedef {Object} FormFunctionsProps
+ * @property {() => void} mapHandleChange
+ * @property {() => void} mapHandleSubmit
+ * @property {() => void} [mapToggleVisibility]
+ * @property {() => void} [mapModelRelationAddMap]
+ * @property {() => void} [mapSetError]
+ */
+
+/**
  * @typedef {Object} FindEmptyFieldsProps
  * @property {Object} modelForm
  */
@@ -56,7 +65,7 @@
 /**
  * @typedef {Object} FormProps
  * @property {ModelTypeProps} typeForm
- * @property {Object} functionFormMap
+ * @property {FormFunctionsProps} functionFormMap
  * @property {Object} model
  * @property {Object} modelForm
  * @property {number} mainModelID
@@ -72,9 +81,7 @@
 /**
  * @typedef {Object} FormTagProps
  * @property {ModelTypeProps} type
- * @property {Object} functionFormMap
- * @property {Function} [functionFormMap.mapHandleChange]
- * @property {Function} [functionFormMap.mapHandleSubmit]
+ * @property {FormFunctionsProps} functionFormMap
  * @property {Object} model
  * @property {Object} modelForm
  * @property {number} mainModelID
@@ -84,12 +91,7 @@
 /**
  * @typedef {Object} FormStandardProps
  * @property {ModelTypeProps} type
- * @property {Object} functionFormMap
- * @property {Function} [functionFormMap.mapToggleVisibility]
- * @property {Function} [functionFormMap.mapHandleChange]
- * @property {Function} [functionFormMap.mapModelRelationAddMap]
- * @property {Function} [functionFormMap.mapHandleSubmit]
- * @property {Function} [functionFormMap.mapSetError]
+ * @property {FormFunctionsProps} functionFormMap
  * @property {Object} model
  * @property {Object} modelForm
  * @property {number} mainModelID
