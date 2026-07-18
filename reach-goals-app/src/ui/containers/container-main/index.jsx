@@ -116,18 +116,16 @@ const ContainerMain = () => {
                             title='create'
                             options={createDropdown}
                         />
-                        {
-                            (isPageCalendar || isPageHome || isPageObjectives) && !isSwichChart && (
-                                <ButtonDropdown
-                                    visibility='dropdown-visibility'
-                                    classBtn='visibility'
-                                    icon='icon-eye'
-                                    title='visibility'
-                                    options={visibilityDropdown}
-                                    renderTopChildren={true}
-                                />
-                            )
-                        }
+                        {(isPageCalendar || isPageHome || isPageObjectives) && !isSwichChart && (
+                            <ButtonDropdown
+                                visibility='dropdown-visibility'
+                                classBtn='visibility'
+                                icon='icon-eye'
+                                title='visibility'
+                                options={visibilityDropdown}
+                                renderTopChildren={true}
+                            />
+                        )}
                         {!isPageCalendar && !isSwichChart && (
                             <ButtonDropdown
                                 visibility='dropdown-action-more'
@@ -140,10 +138,12 @@ const ContainerMain = () => {
                     </div>
                 </div>
             </div>
-            {hasSelectedModel && (<PopupModelOptions type='pop-model' />)}
             <div className='body'>
                 <Routes />
             </div>
+            {hasSelectedModel && (
+                <PopupModelOptions type='pop-model' />
+            )}
         </div>
     )
 }

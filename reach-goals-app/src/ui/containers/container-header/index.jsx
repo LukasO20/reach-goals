@@ -37,9 +37,11 @@ const ContainerHeader = () => {
                 <div className='item-nav'>
                     <Tooltip title='Tags panel'>
                         <ButtonAction
-                            onClick={linkTagClick} visibility={visibilityMap(['modal-right', 'tag'])}
+                            onClick={linkTagClick} 
+                            visibility={visibilityMap(['modal-right', 'tag'])}
                             switchLayout={switchLayoutMap({ area: 'modal', layout: { modalName: 'modal-right', layoutName: 'tag' } })}
-                            classBtn='circle tag' icon='icon-tag'
+                            classBtn='circle tag' 
+                            icon='icon-tag'
                         />
                     </Tooltip>
                 </div>

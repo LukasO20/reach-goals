@@ -21,7 +21,7 @@
             cursor: pointer;
         }
 
-        .side-left {
+        .title {
             display: flex;
             align-items: center;
             gap: $spacing-gap-sm;
@@ -87,7 +87,7 @@
                 color: $color-pair-secondary;
             }
 
-            .side-right {
+            .right-content {
                 align-self: end;
                 display: flex;
                 align-items: end;
@@ -129,7 +129,7 @@
 
             .details {
 
-                .side-right {
+                .right-content {
 
                     .button-action {
                         opacity: 1;
@@ -147,7 +147,7 @@
 
             .details {
 
-                .side-right {
+                .right-content {
 
                     .button-action {
                         opacity: 1;

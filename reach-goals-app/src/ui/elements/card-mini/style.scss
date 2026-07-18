@@ -16,7 +16,7 @@
         justify-content: space-between;
         flex: 1;
 
-        .side-left {
+        .title {
             display: flex;
             align-items: center;
             gap: $spacing-gap-sm;
@@ -57,7 +57,7 @@
             }
         }
 
-        .side-right {
+        .right-content {
             display: flex;
             align-items: center;
             gap: $spacing-gap-sm;
@@ -80,7 +80,7 @@
 
         .body {
 
-            .side-left {
+            .title {
 
                 .button-checkbox {
                     display: flex;
@@ -89,12 +89,17 @@
         }
     }
 
+    &.pending {
+        pointer-events: none;
+        opacity: 0.8;
+    }
+
     &:hover {
         border-color: $color-accent-lightest;
 
         .body {
 
-            .side-left {
+            .title {
 
                 .button-checkbox {
                     display: flex;
@@ -102,7 +107,7 @@
             }
         }
 
-        .side-right {
+        .right-content {
 
             .button-action {
                 opacity: 1;

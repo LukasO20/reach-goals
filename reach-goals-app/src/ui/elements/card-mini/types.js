@@ -1,13 +1,27 @@
+/** @typedef {import('../../../utils/types.js').DisplayProps} DisplayProps */
+/** @typedef {import('../../../utils/types.js').ClickFunctionProps} ClickFunctionProps */
+/** @typedef {import('../../../utils/types.js').ModelTypeProps} ModelTypeProps */
+
+/**
+ * @typedef {Object} RightContentProps
+ * @property {ModelTypeProps} type
+ * @property {Object} item
+ * @property {DisplayProps} display
+ * @property {boolean} showTags
+ * @property {boolean} [pendingState]
+ * @property {ClickFunctionProps} [clickFunction]
+ */
+
 /**
  * @typedef {Object} CardMiniProps
- * @property {string} type
+ * @property {ModelTypeProps} type
  * @property {Object} item
  * @property {Object} dragProvided
- * @property {import('../../../utils/types.js').DisplayProps} display
+ * @property {DisplayProps} display
  * @property {boolean} [pendingState]
  * @property {Object} [checkboxState]
  * @property {boolean} [checkboxModel]
- * @property {import('../../../utils/types.js').ClickFunctionProps} [clickFunction]
+ * @property {ClickFunctionProps} [clickFunction]
  * @property {boolean} [showTags]
  */
 

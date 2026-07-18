@@ -20,17 +20,23 @@ const TagsPopover = ({ tags = [], visibility }) => {
 
     const showPopover = visibleElements.includes(visibility)
 
-    useOutsideClick(tagsPopoverRef ,() => {
+    useOutsideClick(tagsPopoverRef, () => {
         if (showPopover) toggleVisibility(visibilityMap(visibility))
     })
+
+    const hasTags = !!tags.length
+
+    if (!hasTags) return null
 
     return (
         <div className='tags-popover' ref={tagsPopoverRef}>
             {showPopover && (
                 <div className='popover scrollable'>
-                    {tags.map(data => {
+                    {tags.map((data) => {
                         if (data) {
-                            const styleProps = { backgroundColor: `${data.tag.color}` }
+                            const styleProps = {
+                                backgroundColor: `${data.tag.color}`,
+                            }
                             return (
                                 <label key={data.tag.name} style={styleProps}>
                                     {data.tag.name}
@@ -42,7 +48,11 @@ const TagsPopover = ({ tags = [], visibility }) => {
             )}
             <div className='icon'>
                 <span className='counter'>{quantity}</span>
-                <ButtonAction classBtn='tag-popover circle small' icon='icon-tag' visibility={visibilityMap(visibility)} />
+                <ButtonAction
+                    classBtn='tag-popover circle small'
+                    icon='icon-tag'
+                    visibility={visibilityMap(visibility)}
+                />
             </div>
         </div>
     )

@@ -12,43 +12,45 @@
         justify-content: center;
         background-color: $color-pair-secondary-light;
         padding: 0rem $spacing-padding-mini;
-        border-radius: $dimensions-border-radius-md;
+        border-radius: $dimensions-border-radius-st;
         height: 2.4rem;
         cursor: pointer;
         transition: $animation-transition-st;
 
         .tooltip {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
 
             .icon-st {
                 color: $color-white;
             }
-
-            .button-action {
-
-                &:hover {
-                    background-color: $color-white-o-30;
-                }
-            }
         }
 
-        .search-content {
-            border: none;
-            background-color: transparent;
-            font-weight: 600;
-            margin: 0;
-            padding: 0;
-            width: 0;
-            font-size: var(--font-size-st);
-            transition: $animation-transition-st;
-            opacity: 0;
-            color: $color-white;
+        .input-text-container {
+            flex: 0;
+            overflow: hidden;
+      
+            .search-content {
+                border: none;
+                background-color: transparent;
+                font-weight: 600;
+                margin: 0;
+                padding: 0;
+                width: auto;
+                font-size: $font-size-st;
+                transition: $animation-transition-st;
+                color: $color-white;
+                caret-color: $color-pair-secondary;
 
-            &:focus {
-                outline: none;
-            }
+                &:focus {
+                    outline: none;
+                }
 
-            &::placeholder {
-                color: $color-white-o-70;
+                &::placeholder {
+                    color: $color-white-o-70;
+                }
             }
         }
 
@@ -67,6 +69,7 @@
         flex-direction: column;
         max-height: 70dvh;
         overflow-y: auto;
+        overflow-x: hidden;
         background-color: $color-secondary;
         box-shadow: $shadow-st;
         padding: $spacing-padding-sm;
@@ -234,9 +237,8 @@
             gap: $spacing-gap-mini;
             cursor: default;
 
-            .search-content {
+            .input-text-container {
                 flex: 1;
-                opacity: 1;
 
                 &:focus {
                     outline: none;

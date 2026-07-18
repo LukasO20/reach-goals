@@ -18,7 +18,7 @@ const ButtonCheckbox = ({ classBtn, checkboxID, title, checkbox }) => {
     const { valuesCheckbox, toggleCheckbox, registerCheckbox, unregisterCheckbox } = useCheckbox()
     const { data: { layout = {} } } = useSwitchLayout()
 
-    const { page, modal} = layout
+    const { page, modal } = layout
 
     const checkboxScope = valuesCheckbox.scope
 
@@ -44,6 +44,7 @@ const ButtonCheckbox = ({ classBtn, checkboxID, title, checkbox }) => {
         Array.from(valuesCheckbox.checkboxRegistry[checkbox.scope]),
     )
     const isCheckboxMainID = checkboxMain === checkboxID
+    const hasTitle = !!title
 
     const buttonCheckboxClass = cx(
         `button-checkbox
@@ -54,9 +55,9 @@ const ButtonCheckbox = ({ classBtn, checkboxID, title, checkbox }) => {
 
     return (
         <span className={buttonCheckboxClass}
-            onClick={(e) => { 
-                toggleCheckbox(checkbox); 
-                e.stopPropagation() 
+            onClick={(e) => {
+                toggleCheckbox(checkbox);
+                e.stopPropagation()
             }}
             onKeyDown={(e) => e.key === 'Enter' ? toggleCheckbox(checkbox) : ''}
             role='button' tabIndex='0'
@@ -64,10 +65,13 @@ const ButtonCheckbox = ({ classBtn, checkboxID, title, checkbox }) => {
             <label className='checkbox-container'>
                 {
                     isCheckboxMainID && isParcialChecked ?
-                        <Icons icon='icon-square' /> : isChecked ? <Icons icon='icon-conclude' /> : null
+                        <Icons icon='icon-square' /> :
+                        isChecked ?
+                            <Icons icon='icon-conclude' /> :
+                            null
                 }
             </label>
-            {!!title && (
+            {hasTitle && (
                 <label className='title'>{title}</label>
             )}
         </span>
