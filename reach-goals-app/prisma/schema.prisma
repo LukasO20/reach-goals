@@ -63,3 +63,25 @@ model TagOnAssignment {
 
   @@unique([assignmentID, tagID])
 }
+
+model DemoVisitor {
+  id                 Int                  @id @default(autoincrement())
+  name               String
+  email              String               @unique
+  createdAt          DateTime             @default(now())
+  DemoVisitorSession DemoVisitorSession[]
+}
+
+model DemoVisitorSession {
+  id            Int                      @id @default(autoincrement())
+  demoVisitorId Int
+  demoVisitor   DemoVisitor              @relation(fields: [demoVisitorId], references: [id])
+  status        DemoVisitorSessionStatus
+  expiresAt     DateTime
+  createdAt     DateTime                 @default(now())
+}
+
+enum DemoVisitorSessionStatus {
+  ACTIVE
+  EXPIRED
+}
