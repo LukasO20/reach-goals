@@ -25,11 +25,14 @@ export const updateModelDragDrop = async (data) => {
         const response = await fetch(url, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
         })
 
         const result = await response.json()
-        if (!response.ok) throw new Error(result.error || 'Failed to update models drag-drop.')
+        if (!response.ok)
+            throw new Error(
+                result.error || 'Failed to update models drag-drop.'
+            )
 
         return result
     } catch (error) {
@@ -44,11 +47,12 @@ export const removeModels = async (data) => {
         const response = await fetch(url, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ data })
+            body: JSON.stringify({ data }),
         })
 
         const result = await response.json()
-        if (!response.ok) throw new Error(result.error || 'Failed to remove models.')
+        if (!response.ok)
+            throw new Error(result.error || 'Failed to remove models.')
 
         return result
     } catch (error) {
@@ -63,15 +67,36 @@ export const updateModelStatus = async (data, status) => {
         const response = await fetch(url, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ data, status })
+            body: JSON.stringify({ data, status }),
         })
 
         const result = await response.json()
-        if (!response.ok) throw new Error(result.error || 'Failed to update model status.')
+        if (!response.ok)
+            throw new Error(result.error || 'Failed to update model status.')
 
         return result
     } catch (error) {
         console.error('Error updating model status: ', error.message)
+        throw error
+    }
+}
+
+export const saveDemoVisitor = async () => {
+    try {
+        const url = `/api/common?action=demo-visitor`
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            // body: JSON.stringify({ data, status })
+        })
+
+        const result = await response.json()
+        if (!response.ok)
+            throw new Error(result.error || 'Failed to save a demo visitor.')
+
+        return result
+    } catch (error) {
+        console.error('Error save a demo visitor: ', error.message)
         throw error
     }
 }
