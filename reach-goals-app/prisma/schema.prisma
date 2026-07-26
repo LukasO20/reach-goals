@@ -81,6 +81,13 @@ model DemoVisitorSession {
   createdAt     DateTime                 @default(now())
 }
 
+model DemoVisitorValidation {
+  email String @id
+  code String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
 enum DemoVisitorSessionStatus {
   ACTIVE
   EXPIRED
