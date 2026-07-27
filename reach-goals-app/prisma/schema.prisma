@@ -81,7 +81,7 @@ model DemoVisitorSession {
   createdAt     DateTime                 @default(now())
 }
 
-model DemoVisitorValidation {
+model DemoVisitorVerification {
   email String @id
   code String
   expiresAt DateTime
