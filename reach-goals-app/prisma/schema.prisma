@@ -85,6 +85,7 @@ model DemoVisitorVerification {
   email String @id
   code String
   expiresAt DateTime
+  updatedAt DateTime?
   createdAt DateTime @default(now())
 }
 
