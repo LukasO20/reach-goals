@@ -36,8 +36,7 @@ export const updateModelDragDrop = async (data) => {
 
         return result
     } catch (error) {
-        console.error('Error get search results: ', error.message)
-        throw error
+        throw new Error(`Error get search results: ${error.message}`)
     }
 }
 
@@ -76,18 +75,17 @@ export const updateModelStatus = async (data, status) => {
 
         return result
     } catch (error) {
-        console.error('Error updating model status: ', error.message)
-        throw error
+        throw new Error('Error updating model status: ', error.message)
     }
 }
 
-export const saveDemoVisitor = async () => {
+export const demoVisitorSave = async (data) => {
     try {
         const url = `/api/common?action=demo-visitor`
         const response = await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            // body: JSON.stringify({ data, status })
+            body: JSON.stringify({ data }),
         })
 
         const result = await response.json()
@@ -96,7 +94,6 @@ export const saveDemoVisitor = async () => {
 
         return result
     } catch (error) {
-        console.error('Error save a demo visitor: ', error.message)
-        throw error
+        throw new Error('Error save a demo visitor: ', error.message)
     }
 }

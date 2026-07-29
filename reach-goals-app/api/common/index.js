@@ -1,6 +1,11 @@
 import prisma from '../connectdb.js'
 
-import { sendEmail } from '../utils/utils.js'
+import {
+    generateVerificationCode,
+    sendEmail,
+    TEN_MINUTES,
+    TWENTY_FOUR_HOURS,
+} from '../utils/utils.js'
 
 const searchResults = async (params = '') => {
     if (params) {
@@ -142,6 +147,99 @@ const updateModelStatus = async (ids = [], status = '') => {
     }
 }
 
+const addDemoVisitorVerification = async (email = '') => {
+    if (!email)
+        throw new Error(
+            `Email is necessary - email: ${email}, failed to process create demo-visitor-verification data`
+        )
+
+    try {
+        return await prisma.$transaction(async (tx) => {
+            const code = generateVerificationCode()
+            const verificationCreated = await tx.demoVisitorVerification.create(
+                {
+                    data: {
+                        email,
+                        code,
+                        expiresAt: new Date(Date.now() + TEN_MINUTES),
+                    },
+                }
+            )
+
+            if (!verificationCreated)
+                throw new Error(
+                    'Error to add demo-visitor-verification: Internal server error'
+                )
+
+            const emailSended = await sendEmail(email, code)
+
+            return {
+                verification: verificationCreated,
+            }
+        })
+    } catch (error) {
+        throw new Error(
+            `Error to add a demo-visitor-verification: ${error.message}`
+        )
+    }
+}
+
+const getDemoVisitorVerification = async (email = '') => {
+    try {
+        return await prisma.demoVisitorVerification.findUnique({
+            where: { email: email },
+        })
+    } catch (error) {
+        throw new Error('Error to get a demo-visitor-verification: ', error)
+    }
+}
+
+const addDemoVisitor = async (data) => {
+    const { name, email } = data
+
+    if (!name || !email)
+        throw new Error(
+            `Name and Email are necessary - name: ${name}, email: ${email},
+            failed to process create demo-visitor-verification data`
+        )
+
+    try {
+        return await prisma.$transaction(async (tx) => {
+            const demoVisitor = await tx.demoVisitor.create({
+                data: {
+                    name,
+                    email,
+                },
+            })
+
+            const demoVisitorSession = await tx.demoVisitorSession.create({
+                data: {
+                    demoVisitorId: demoVisitor.id,
+                    status: 'ACTIVE',
+                    expiresAt: new Date(Date.now() + TWENTY_FOUR_HOURS),
+                },
+            })
+
+            const verificationCreatedDeleted =
+                await tx.demoVisitorVerification.delete({
+                    where: { email },
+                })
+
+            if (!verificationCreatedDeleted)
+                throw new Error(
+                    `Error to delete a demo-visitor-verification: ${error.message}`
+                )
+
+            return {
+                visitor: demoVisitor,
+                session: demoVisitorSession,
+            }
+        })
+    } catch (error) {
+        throw new Error(`Error to add a demo-visitor: ${error.message}`)
+    }
+}
+
 const handler = async (req, res) => {
     const { action, params } = req.query
     const { data, typeModel, status } = req.body
@@ -181,8 +279,55 @@ const handler = async (req, res) => {
     if (req.method === 'POST') {
         try {
             if (action === 'demo-visitor') {
-                await sendEmail()
-                //TODO: SET LOGIC TO DEMO VISITORS
+                const { email } = data
+
+                if (!email)
+                    throw new Error(
+                        `Error to process data. Email is necessary. Data sended - email: ${email}`
+                    )
+
+                const demoVisitorVerification =
+                    await getDemoVisitorVerification(email)
+
+                if (
+                    demoVisitorVerification &&
+                    new Date() < demoVisitorVerification.expiresAt
+                ) {
+                    throw new Error(
+                        'Error to validate your e-mail. A code already sended, check your e-mail'
+                    )
+                }
+
+                const demoVisitorVerificationAdded =
+                    await addDemoVisitorVerification(email)
+
+                return res.status(200).json(demoVisitorVerificationAdded)
+            }
+
+            if (action === 'demo-visitor-verification') {
+                const { name, email, code } = data
+
+                if (!name || !email)
+                    throw new Error(
+                        `Error to process data. Name and Email is necessary. Data sended - name: ${name}, email: ${email}`
+                    )
+
+                const demoVisitorVerification =
+                    await getDemoVisitorVerification(email)
+
+                if (new Date() > demoVisitorVerification.expiresAt)
+                    throw new Error(
+                        'Error to validate your e-mail. Code expired, try a new one'
+                    )
+
+                if (code !== demoVisitorVerification.code)
+                    throw new Error(
+                        'Error to validate your e-mail. Invalid code, we sent a code to your e-mail. Check it and try again'
+                    )
+
+                const demoVisitorAdded = await addDemoVisitor(data)
+
+                return res.status(200).json(demoVisitorAdded)
             }
         } catch (error) {
             return res

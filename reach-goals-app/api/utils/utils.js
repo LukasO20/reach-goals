@@ -1,6 +1,9 @@
 import jwt from 'jsonwebtoken'
 import crypto from 'node:crypto'
 
+export const TEN_MINUTES = 10 * 60 * 1000
+export const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000
+
 export const formatObject = (objectData) => {
     return Object.fromEntries(
         Object.entries(objectData).filter(
@@ -50,7 +53,12 @@ const emailContent = (code = '') => `
     </html>
 `
 
-export const sendEmail = async () => {
+export const sendEmail = async (email = '', code = '') => {
+    if (!email || !code)
+        throw new Error(
+            `Failed at sendEmail Service. Email and Code is necessary - email: ${email}, code: ${code}`
+        )
+
     const response = await fetch('https://api.brevo.com/v3/smtp/email', {
         method: 'POST',
         headers: {
@@ -61,21 +69,22 @@ export const sendEmail = async () => {
         body: JSON.stringify({
             sender: {
                 email: 'lukinhaso2206@gmail.com',
-                name: 'Reach Goals Demo',
+                name: 'Reach Goals',
             },
             to: [
                 {
-                    email: 'lukinhass2206@outlook.com', //ONLY FOR TEST
+                    email: email,
                 },
             ],
             subject: 'Your verification code',
-            htmlContent: emailContent(),
+            htmlContent: emailContent(code),
         }),
     })
 
-    const result = await response.json()
-
     if (!response.ok) throw new Error(result.message || 'Failed to send email')
 
-    return result
+    return {
+        email,
+        code,
+    }
 }
