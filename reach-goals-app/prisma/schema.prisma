@@ -74,7 +74,7 @@ model DemoVisitor {
 
 model DemoVisitorSession {
   id            Int                      @id @default(autoincrement())
-  demoVisitorId Int
+  demoVisitorId Int                      @unique
   demoVisitor   DemoVisitor              @relation(fields: [demoVisitorId], references: [id])
   status        DemoVisitorSessionStatus
   expiresAt     DateTime
