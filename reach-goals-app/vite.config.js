@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
+    plugins: [react()],
     resolve: {
         alias: {
             '~': path.resolve(
@@ -23,7 +24,6 @@ export default defineConfig({
             },
         },
     },
-    plugins: [react()],
     server: {
         port: 3000,
         watch: {

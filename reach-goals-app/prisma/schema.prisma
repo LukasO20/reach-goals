@@ -82,8 +82,9 @@ model DemoVisitorSession {
 }
 
 model DemoVisitorVerification {
-  email String @id
-  code String
+  id        Int      @id @default(autoincrement())
+  email     String
+  code      String
   expiresAt DateTime
   updatedAt DateTime?
   createdAt DateTime @default(now())
