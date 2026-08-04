@@ -1,4 +1,15 @@
-import { addTag, getTag, getTagOnGoal, getTagOnAssignment, getTagNotGoal, getTagNotAssignment, unlinkTagOnGoal, unlinkAllTagOnGoal, unlinkTagOnAssignment, unlinkAllTagOnAssignment } from './service.js'
+import {
+    addTag,
+    getTag,
+    getTagNotAssignment,
+    getTagNotGoal,
+    getTagOnAssignment,
+    getTagOnGoal,
+    unlinkAllTagOnAssignment,
+    unlinkAllTagOnGoal,
+    unlinkTagOnAssignment,
+    unlinkTagOnGoal,
+} from '../../server/services/tag.service.js'
 import { formatObject } from '../utils/utils.js'
 
 const handler = async (req, res) => {
@@ -7,7 +18,9 @@ const handler = async (req, res) => {
     if (req.method === 'POST') {
         const { name, color } = req.body
 
-        if (!name || !color) { return res.status(400).json({ error: 'Name/Color is required.' }) }
+        if (!name || !color) {
+            return res.status(400).json({ error: 'Name/Color is required.' })
+        }
 
         const rawObject = { name, color }
 
@@ -16,10 +29,11 @@ const handler = async (req, res) => {
 
         try {
             if (tag) return res.status(201).json(tag)
-        }
-        catch (err) {
+        } catch (err) {
             console.error('Error adding tag:', err)
-            return res.status(500).json({ error: err.message || 'Failed to create tag' });
+            return res
+                .status(500)
+                .json({ error: err.message || 'Failed to create tag' })
         }
     }
 
@@ -27,32 +41,48 @@ const handler = async (req, res) => {
         let tag = undefined
 
         try {
-
             if (action === 'tag-get') {
                 tag = await getTag()
-                if (tag) return res.status(200).json(Array.isArray(tag) ? tag : [tag])
+                if (tag)
+                    return res
+                        .status(200)
+                        .json(Array.isArray(tag) ? tag : [tag])
             }
 
             if (action === 'tag-on-goal') {
                 const { goalID } = req.query
-                if (!goalID && isNaN(goalID)) return res.status(400).json({ error: "Parameter 'goalID' invalid." });
+                if (!goalID && isNaN(goalID))
+                    return res
+                        .status(400)
+                        .json({ error: "Parameter 'goalID' invalid." })
 
                 tag = await getTagOnGoal(goalID)
-                if (tag) return res.status(200).json(Array.isArray(tag) ? tag : [tag])
+                if (tag)
+                    return res
+                        .status(200)
+                        .json(Array.isArray(tag) ? tag : [tag])
             }
 
             if (action === 'tag-on-assignment') {
                 const { assignmentID } = req.query
-                if (!assignmentID && isNaN(assignmentID)) return res.status(400).json({ error: "Parameter 'assignmentID' invalid." });
+                if (!assignmentID && isNaN(assignmentID))
+                    return res
+                        .status(400)
+                        .json({ error: "Parameter 'assignmentID' invalid." })
 
                 tag = await getTagOnAssignment(assignmentID)
-                if (tag) return res.status(200).json(Array.isArray(tag) ? tag : [tag])
+                if (tag)
+                    return res
+                        .status(200)
+                        .json(Array.isArray(tag) ? tag : [tag])
             }
 
             if (action === 'tag-not-goal') {
                 const { goalID } = req.query
                 if (!goalID || isNaN(goalID)) {
-                    return res.status(400).json({ error: "Parameter 'goalID' invalid." })
+                    return res
+                        .status(400)
+                        .json({ error: "Parameter 'goalID' invalid." })
                 }
 
                 tag = await getTagNotGoal(goalID)
@@ -63,16 +93,19 @@ const handler = async (req, res) => {
             if (action === 'tag-not-assignment') {
                 const { assignmentID } = req.query
                 if (!assignmentID || isNaN(assignmentID)) {
-                    return res.status(400).json({ error: "Parameter 'assignmentID' invalid." });
+                    return res
+                        .status(400)
+                        .json({ error: "Parameter 'assignmentID' invalid." })
                 }
 
                 tag = await getTagNotAssignment(assignmentID)
 
                 if (tag) return res.status(200).json(tag)
             }
-        }
-        catch (err) {
-            return res.status(500).json({ error: err.message || 'Internal Server Error' });
+        } catch (err) {
+            return res
+                .status(500)
+                .json({ error: err.message || 'Internal Server Error' })
         }
     }
 
@@ -107,13 +140,16 @@ const handler = async (req, res) => {
 
                 if (tag) return res.status(200).json(tag)
             }
-        }
-        catch (err) {
-            return res.status(500).json({ error: err.message || 'Internal Server Error' });
+        } catch (err) {
+            return res
+                .status(500)
+                .json({ error: err.message || 'Internal Server Error' })
         }
     }
 
-    return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' })
+    return res
+        .status(405)
+        .json({ error: 'Method not allowed. Check the type of method sended' })
 }
 
 export default handler

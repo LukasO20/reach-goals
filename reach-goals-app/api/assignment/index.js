@@ -1,13 +1,30 @@
-import { addAssignment, getAssignment, getAssignmentOnGoal, getAssignmentOnTag, getAssignmentWithoutGoal } from './service.js'
+import {
+    addAssignment,
+    getAssignment,
+    getAssignmentOnGoal,
+    getAssignmentOnTag,
+    getAssignmentWithoutGoal,
+} from '../../server/services/assignment.service.js'
 import { formatObject } from '../utils/utils.js'
 
 const handler = async (req, res) => {
     const { action } = req.query
 
     if (req.method === 'POST') {
-        const { name, description, status, duration, start, end, goalID, tags } = req.body
-        
-        if (!name) { return res.status(400).json({ error: 'Name is required.' }) }
+        const {
+            name,
+            description,
+            status,
+            duration,
+            start,
+            end,
+            goalID,
+            tags,
+        } = req.body
+
+        if (!name) {
+            return res.status(400).json({ error: 'Name is required.' })
+        }
 
         const startDate = start ? start : new Date().toISOString()
         const endDate = end ? end : null
@@ -22,8 +39,12 @@ const handler = async (req, res) => {
             end: endDate,
             goalID: goalID ? Number(goalID) : null,
             tags: tags?.length
-                ? { create: tags.map(tag => ({ tag: { connect: { id: Number(tag.tagID) } } })) }
-                : undefined
+                ? {
+                      create: tags.map((tag) => ({
+                          tag: { connect: { id: Number(tag.tagID) } },
+                      })),
+                  }
+                : undefined,
         }
 
         const formattedData = formatObject(rawObject)
@@ -31,10 +52,11 @@ const handler = async (req, res) => {
 
         try {
             if (assignment) return res.status(201).json(assignment)
-        }
-        catch (err) {
+        } catch (err) {
             console.error('Error adding assignment:', err)
-            return res.status(500).json({ error: err.message || 'Failed to create assignment' })
+            return res
+                .status(500)
+                .json({ error: err.message || 'Failed to create assignment' })
         }
     }
 
@@ -45,7 +67,14 @@ const handler = async (req, res) => {
             if (action === 'assignment-get') {
                 assignment = await getAssignment()
 
-                if (assignment) return res.status(200).json(Array.isArray(assignment) ? assignment : [assignment])
+                if (assignment)
+                    return res
+                        .status(200)
+                        .json(
+                            Array.isArray(assignment)
+                                ? assignment
+                                : [assignment]
+                        )
             }
 
             if (action === 'assignment-on-goal') {
@@ -67,13 +96,16 @@ const handler = async (req, res) => {
 
                 if (assignment) return res.status(200).json(assignment)
             }
-        }
-        catch (err) {
-            return res.status(500).json({ error: err.message || 'Internal Server Error' });
+        } catch (err) {
+            return res
+                .status(500)
+                .json({ error: err.message || 'Internal Server Error' })
         }
     }
 
-    return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' })
+    return res
+        .status(405)
+        .json({ error: 'Method not allowed. Check the type of method sended' })
 }
 
 export default handler

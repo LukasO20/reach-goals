@@ -1,8 +1,23 @@
-import { getGoal, updateGoal, deleteGoal, handleUpdateTagOnGoal } from './service.js'
+import {
+    deleteGoal,
+    getGoal,
+    updateGoal,
+    updateTagOnGoal,
+} from '../../server/services/goal.service.js'
 import { extractIds, formatObject } from '../utils/utils.js'
 
-const handler = async (req, res) => {
+const handleUpdateTagOnGoal = async (goalID, tags) => {
+    try {
+        const hasInvalidTagRelation = !goalID || !tags || tags.length === 0
+        if (hasInvalidTagRelation) return
 
+        await updateTagOnGoal(goalID, tags)
+    } catch (error) {
+        throw new Error("Failed to update goal's tag relation")
+    }
+}
+
+const handler = async (req, res) => {
     if (req.method === 'GET') {
         const { goalID } = req.query
         const goal = await getGoal(goalID)
@@ -16,9 +31,12 @@ const handler = async (req, res) => {
 
     if (req.method === 'PUT') {
         const { goalID } = req.query
-        const { name, description, status, start, end, assignments, tags } = req.body
+        const { name, description, status, start, end, assignments, tags } =
+            req.body
 
-        if (!name) { return res.status(400).json({ error: 'Name is required.' }) }
+        if (!name) {
+            return res.status(400).json({ error: 'Name is required.' })
+        }
 
         const startDate = start ? start : new Date().toISOString()
         const endDate = end ? end : null
@@ -32,8 +50,8 @@ const handler = async (req, res) => {
             start: startDate,
             end: endDate,
             assignments: {
-                set: assignmentIds?.map(id => ({ id }))
-            }
+                set: assignmentIds?.map((id) => ({ id })),
+            },
         }
 
         const formattedData = formatObject(rawObject)
@@ -43,10 +61,11 @@ const handler = async (req, res) => {
 
         try {
             if (goal) return res.status(201).json(goal)
-        }
-        catch (err) {
+        } catch (err) {
             console.error('Error update goal:', err)
-            return res.status(500).json({ error: err.message || 'Failed updating goals' })
+            return res
+                .status(500)
+                .json({ error: err.message || 'Failed updating goals' })
         }
     }
 
@@ -59,10 +78,11 @@ const handler = async (req, res) => {
         } else {
             return res.status(500).json({ error: 'Failed to delete this goal' })
         }
-
     }
 
-    return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' })
+    return res
+        .status(405)
+        .json({ error: 'Method not allowed. Check the type of method sended' })
 }
 
 export default handler

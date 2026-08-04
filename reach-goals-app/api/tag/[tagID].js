@@ -1,8 +1,11 @@
-import { getTag, updateTag, deleteTag } from './service.js'
+import {
+    deleteTag,
+    getTag,
+    updateTag,
+} from '../../server/services/tag.service.js'
 import { formatObject } from '../utils/utils.js'
 
 const handler = async (req, res) => {
-
     if (req.method === 'GET') {
         const { tagID } = req.query
         const tag = await getTag(tagID)
@@ -12,14 +15,15 @@ const handler = async (req, res) => {
         } else {
             return res.status(500).json({ error: 'Failed to get a tag' })
         }
-
     }
 
     if (req.method === 'PUT') {
         const { tagID } = req.query
         const { name, color } = req.body
 
-        if (!name || !color) { return res.status(400).json({ error: 'Name/Color is required.' }) }
+        if (!name || !color) {
+            return res.status(400).json({ error: 'Name/Color is required.' })
+        }
 
         const rawObject = { name, color }
 
@@ -28,10 +32,11 @@ const handler = async (req, res) => {
 
         try {
             if (tag) return res.status(201).json(tag)
-        }
-        catch (err) {
+        } catch (err) {
             console.error('Error update tag:', err)
-            return res.status(500).json({ error: err.message || 'Failed updating tags' })
+            return res
+                .status(500)
+                .json({ error: err.message || 'Failed updating tags' })
         }
     }
 
@@ -44,10 +49,11 @@ const handler = async (req, res) => {
         } else {
             return res.status(500).json({ error: 'Failed to delete this tag' })
         }
-
     }
 
-    return res.status(405).json({ error: 'Method not allowed. Check the type of method sended' })
+    return res
+        .status(405)
+        .json({ error: 'Method not allowed. Check the type of method sended' })
 }
 
 export default handler
