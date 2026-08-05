@@ -17,72 +17,78 @@ const handleUpdateTagOnGoal = async (goalID, tags) => {
     }
 }
 
+const ALLOWED_METHODS = ['GET', 'PUT', 'DELETE']
+
 const handler = async (req, res) => {
-    if (req.method === 'GET') {
-        const { goalID } = req.query
-        const goal = await getGoal(goalID)
+    const { goalID } = req.query
 
-        if (goal) {
+    if (!ALLOWED_METHODS.includes(req.method)) {
+        return res.status(405).json({
+            error: 'Method not allowed. Check the type of method sended',
+        })
+    }
+
+    try {
+        if (req.method === 'GET') {
+            const goal = await getGoal(goalID)
             return res.status(200).json(Array.isArray(goal) ? goal : [goal])
-        } else {
-            return res.status(500).json({ error: 'Failed to get a goal' })
-        }
-    }
-
-    if (req.method === 'PUT') {
-        const { goalID } = req.query
-        const { name, description, status, start, end, assignments, tags } =
-            req.body
-
-        if (!name) {
-            return res.status(400).json({ error: 'Name is required.' })
         }
 
-        const startDate = start ? start : new Date().toISOString()
-        const endDate = end ? end : null
+        if (req.method === 'PUT') {
+            const { name, description, status, start, end, assignments, tags } =
+                req.body
 
-        const assignmentIds = extractIds(assignments, 'id')
+            if (!name) {
+                return res.status(400).json({ error: 'Name is required.' })
+            }
 
-        const rawObject = {
-            name,
-            description,
-            status,
-            start: startDate,
-            end: endDate,
-            assignments: {
-                set: assignmentIds?.map((id) => ({ id })),
-            },
+            const startDate = start ? start : new Date().toISOString()
+            const endDate = end ? end : null
+
+            const assignmentIds = extractIds(assignments, 'id')
+
+            const rawObject = {
+                name,
+                description,
+                status,
+                start: startDate,
+                end: endDate,
+                assignments: {
+                    set: assignmentIds?.map((id) => ({ id })),
+                },
+            }
+
+            const formattedData = formatObject(rawObject)
+
+            await handleUpdateTagOnGoal(goalID, tags)
+            const goal = await updateGoal(goalID, formattedData)
+
+            return res.status(201).json(goal)
         }
 
-        const formattedData = formatObject(rawObject)
-
-        await handleUpdateTagOnGoal(goalID, tags)
-        const goal = await updateGoal(goalID, formattedData)
-
-        try {
-            if (goal) return res.status(201).json(goal)
-        } catch (err) {
-            console.error('Error update goal:', err)
+        if (req.method === 'DELETE') {
+            await deleteGoal(goalID)
             return res
-                .status(500)
-                .json({ error: err.message || 'Failed updating goals' })
+                .status(200)
+                .json({ message: 'Goal deleted successfully' })
         }
-    }
+    } catch (error) {
+        const responseStatus = res.status
 
-    if (req.method === 'DELETE') {
-        const { goalID } = req.query
-        const goal = await deleteGoal(goalID)
-
-        if (goal) {
-            return res.status(200).json(goal)
-        } else {
-            return res.status(500).json({ error: 'Failed to delete this goal' })
+        if (responseStatus === '401') {
+            return res.status(401).json({
+                restartDemo: true,
+                message: 'Unauthorized. Demo session expired. Try a new login',
+                error,
+            })
         }
-    }
 
-    return res
-        .status(405)
-        .json({ error: 'Method not allowed. Check the type of method sended' })
+        return res.status(500).json({
+            error:
+                `Failed to process request - ${action}: ${error.message}` ||
+                'Internal Server Error',
+        })
+    }
 }
 
 export default handler

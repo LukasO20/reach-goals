@@ -35,7 +35,14 @@ export const deleteAssignment = async (assignmentID) => {
 
 export const getAssignment = async (assignmentID) => {
     try {
-        if (!isNaN(assignmentID) && typeof assignmentID !== 'number') {
+        const isUniqueAssignment =
+            !isNaN(assignmentID) && String(assignmentID).trim() !== ''
+        const isAllAssignment = assignmentID === 'all'
+
+        if (!isUniqueAssignment && !isAllAssignment)
+            throw new Error(`Invalid assignmentID: ${assignmentID}`)
+
+        if (isUniqueAssignment) {
             return await prisma.assignment.findUnique({
                 where: { id: Number(assignmentID) },
                 include: {
@@ -56,65 +63,42 @@ export const getAssignment = async (assignmentID) => {
                     },
                 },
             })
-        } else if (assignmentID === 'all') {
-            return await prisma.assignment.findMany({
-                include: {
-                    goal: {
-                        select: {
-                            id: true,
-                            name: true,
-                            start: true,
-                            end: true,
-                        },
+        }
+
+        return await prisma.assignment.findMany({
+            include: {
+                goal: {
+                    select: {
+                        id: true,
+                        name: true,
+                        start: true,
+                        end: true,
                     },
-                    tags: {
-                        include: {
-                            tag: {
-                                select: { id: true, name: true, color: true },
-                            },
+                },
+                tags: {
+                    include: {
+                        tag: {
+                            select: { id: true, name: true, color: true },
                         },
                     },
                 },
-            })
-        }
+            },
+        })
     } catch (error) {
-        throw new Error(`Failed to get assignment: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
 export const getAssignmentOnGoal = async (goalID) => {
     try {
-        const isAll = goalID === 'all'
-        const isNumber =
-            !isNaN(goalID) &&
-            goalID !== '' &&
-            goalID !== null &&
-            goalID !== undefined
+        const isUniqueAssignmentGoal =
+            !isNaN(goalID) && String(goalID).trim() !== ''
+        const isAllAssignmentGoal = goalID === 'all'
 
-        if (!isAll && !isNumber) return
+        if (!isUniqueAssignmentGoal && !isAllAssignmentGoal)
+            throw new Error(`Invalid goalID: ${goalID}`)
 
-        if (isAll) {
-            return await prisma.assignment.findMany({
-                where: { goalID: { not: null } },
-                include: {
-                    goal: {
-                        select: {
-                            id: true,
-                            name: true,
-                            start: true,
-                            end: true,
-                        },
-                    },
-                    tags: {
-                        include: {
-                            tag: {
-                                select: { id: true, name: true, color: true },
-                            },
-                        },
-                    },
-                },
-            })
-        } else if (isNumber) {
+        if (isUniqueAssignmentGoal) {
             return await prisma.assignment.findMany({
                 where: { goalID: Number(goalID) },
                 include: {
@@ -136,6 +120,27 @@ export const getAssignmentOnGoal = async (goalID) => {
                 },
             })
         }
+
+        return await prisma.assignment.findMany({
+            where: { goalID: { not: null } },
+            include: {
+                goal: {
+                    select: {
+                        id: true,
+                        name: true,
+                        start: true,
+                        end: true,
+                    },
+                },
+                tags: {
+                    include: {
+                        tag: {
+                            select: { id: true, name: true, color: true },
+                        },
+                    },
+                },
+            },
+        })
     } catch (error) {
         throw new Error(`Failed to get assignment-goal: ${error.message}`)
     }
@@ -143,37 +148,14 @@ export const getAssignmentOnGoal = async (goalID) => {
 
 export const getAssignmentOnTag = async (tagID) => {
     try {
-        const isAll = 'all'
-        const isNumber =
-            !isNaN(tagID) &&
-            tagID !== '' &&
-            tagID !== null &&
-            tagID !== undefined
+        const isUniqueAssignmentTag =
+            !isNaN(tagID) && String(tagID).trim() !== ''
+        const isAllAssignmentTag = tagID === 'all'
 
-        if (!isAll && !isNumber) return
+        if (!isUniqueAssignmentTag && !isAllAssignmentTag)
+            throw new Error(`Invalid tagID: ${tagID}`)
 
-        if (isAll) {
-            return await prisma.assignment.findMany({
-                where: { tags: { some: {} } },
-                include: {
-                    goal: {
-                        select: {
-                            id: true,
-                            name: true,
-                            start: true,
-                            end: true,
-                        },
-                    },
-                    tags: {
-                        include: {
-                            tag: {
-                                select: { id: true, name: true, color: true },
-                            },
-                        },
-                    },
-                },
-            })
-        } else if (isNumber) {
+        if (isUniqueAssignmentTag) {
             return await prisma.assignment.findMany({
                 where: { tags: { id: Number(tagID) } },
                 include: {
@@ -195,6 +177,27 @@ export const getAssignmentOnTag = async (tagID) => {
                 },
             })
         }
+
+        return await prisma.assignment.findMany({
+            where: { tags: { some: {} } },
+            include: {
+                goal: {
+                    select: {
+                        id: true,
+                        name: true,
+                        start: true,
+                        end: true,
+                    },
+                },
+                tags: {
+                    include: {
+                        tag: {
+                            select: { id: true, name: true, color: true },
+                        },
+                    },
+                },
+            },
+        })
     } catch (error) {
         throw new Error(`Failed to get assignment-tag: ${error.message}`)
     }

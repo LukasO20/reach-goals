@@ -11,10 +11,18 @@ import {
     updateModelStatus,
 } from '../../server/services/model.service.js'
 
+const ALLOWED_METHODS = ['GET', 'POST', 'PUT', 'DELETE']
+
 const handler = async (req, res) => {
     const { action, params } = req.query
     const { data, typeModel, status } = req.body
     let results = undefined
+
+    if (!ALLOWED_METHODS.includes(req.method)) {
+        return res.status(405).json({
+            error: 'Method not allowed. Check the type of method sended',
+        })
+    }
 
     try {
         await authenticateDemoSession(req, action)
@@ -108,7 +116,7 @@ const handler = async (req, res) => {
     } catch (error) {
         const responseStatus = res.status
 
-        if (responseStatus === 401) {
+        if (responseStatus === '401') {
             return res.status(401).json({
                 restartDemo: true,
                 message: 'Unauthorized. Demo session expired. Try a new login',

@@ -39,7 +39,13 @@ export const deleteTag = async (tagID) => {
 
 export const getTag = async (tagID) => {
     try {
-        if (tagID !== undefined && !isNaN(tagID)) {
+        const isUniqueTag = !isNaN(tagID) && String(tagID).trim() !== ''
+        const isAllTag = tagID === 'all'
+
+        if (!isUniqueTag && !isAllTag)
+            throw new Error(`Invalid tagID: ${tagID}`)
+
+        if (isUniqueTag) {
             return await prisma.tag.findUnique({
                 where: { id: Number(tagID) },
                 include: {
@@ -65,32 +71,32 @@ export const getTag = async (tagID) => {
                     },
                 },
             })
-        } else if (tagID === 'all') {
-            return await prisma.tag.findMany({
-                include: {
-                    goals: {
-                        include: {
-                            goal: {
-                                select: {
-                                    name: true,
-                                    status: true,
-                                },
-                            },
-                        },
-                    },
-                    assignments: {
-                        include: {
-                            assignment: {
-                                select: {
-                                    name: true,
-                                    status: true,
-                                },
+        }
+
+        return await prisma.tag.findMany({
+            include: {
+                goals: {
+                    include: {
+                        goal: {
+                            select: {
+                                name: true,
+                                status: true,
                             },
                         },
                     },
                 },
-            })
-        }
+                assignments: {
+                    include: {
+                        assignment: {
+                            select: {
+                                name: true,
+                                status: true,
+                            },
+                        },
+                    },
+                },
+            },
+        })
     } catch (error) {
         throw new Error(`Failed to get tag: ${error.message}`)
     }
@@ -98,32 +104,13 @@ export const getTag = async (tagID) => {
 
 export const getTagOnGoal = async (goalID) => {
     try {
-        const isAll = goalID === 'all'
-        const isNumber = !isNaN(goalID) && typeof goalID !== 'number'
+        const isUniqueTagGoal = !isNaN(goalID) && String(goalID).trim() !== ''
+        const isAllTagGoal = goalID === 'all'
 
-        if (!isAll && !isNumber) return
+        if (!isUniqueTagGoal && !isAllTagGoal)
+            throw new Error(`Invalid goalID: ${goalID}`)
 
-        if (isAll) {
-            return await prisma.tag.findMany({
-                where: {
-                    goals: {
-                        some: {},
-                    },
-                },
-                include: {
-                    goals: {
-                        include: {
-                            goal: {
-                                select: {
-                                    name: true,
-                                    status: true,
-                                },
-                            },
-                        },
-                    },
-                },
-            })
-        } else if (isNumber) {
+        if (isUniqueTagGoal) {
             return await prisma.tag.findMany({
                 where: {
                     goals: {
@@ -144,6 +131,26 @@ export const getTagOnGoal = async (goalID) => {
                 },
             })
         }
+
+        return await prisma.tag.findMany({
+            where: {
+                goals: {
+                    some: {},
+                },
+            },
+            include: {
+                goals: {
+                    include: {
+                        goal: {
+                            select: {
+                                name: true,
+                                status: true,
+                            },
+                        },
+                    },
+                },
+            },
+        })
     } catch (error) {
         throw new Error(`Failed to get tag-goal: ${error.message}`)
     }
@@ -151,33 +158,14 @@ export const getTagOnGoal = async (goalID) => {
 
 export const getTagOnAssignment = async (assignmentID) => {
     try {
-        const isAll = assignmentID === 'all'
-        const isNumber =
-            !isNaN(assignmentID) && typeof assignmentID !== 'number'
+        const isUniqueTagAssignment =
+            !isNaN(assignmentID) && String(assignmentID).trim() !== ''
+        const isAllTagAssignment = assignmentID === 'all'
 
-        if (!isAll && !isNumber) return
+        if (!isUniqueTagAssignment && !isAllTagAssignment)
+            throw new Error(`Invalid assignmentID: ${assignmentID}`)
 
-        if (isAll) {
-            return await prisma.tag.findMany({
-                where: {
-                    assignments: {
-                        some: {},
-                    },
-                },
-                include: {
-                    assignments: {
-                        include: {
-                            assignment: {
-                                select: {
-                                    name: true,
-                                    status: true,
-                                },
-                            },
-                        },
-                    },
-                },
-            })
-        } else if (isNumber) {
+        if (isUniqueTagAssignment) {
             return await prisma.tag.findMany({
                 where: {
                     assignments: {
@@ -198,6 +186,26 @@ export const getTagOnAssignment = async (assignmentID) => {
                 },
             })
         }
+
+        return await prisma.tag.findMany({
+            where: {
+                assignments: {
+                    some: {},
+                },
+            },
+            include: {
+                assignments: {
+                    include: {
+                        assignment: {
+                            select: {
+                                name: true,
+                                status: true,
+                            },
+                        },
+                    },
+                },
+            },
+        })
     } catch (error) {
         throw new Error(`Failed to get tag-assignment: ${error.message}`)
     }
@@ -205,29 +213,33 @@ export const getTagOnAssignment = async (assignmentID) => {
 
 export const getTagNotGoal = async (goalID) => {
     try {
-        const isNumber = !isNaN(goalID) && typeof goalID !== 'number'
+        const isValidGoalID = !isNaN(goalID) && String(goalID).trim() !== ''
 
-        if (isNumber) {
-            return await prisma.tag.findMany({
-                where: {
-                    NOT: {
-                        goals: {
-                            some: { goalID: Number(goalID) },
-                        },
+        if (!isValidGoalID) throw new Error(`Invalid goalID: ${goalID}`)
+
+        return await prisma.tag.findMany({
+            where: {
+                NOT: {
+                    goals: {
+                        some: { goalID: Number(goalID) },
                     },
                 },
-                select: { id: true, name: true, color: true },
-            })
-        }
+            },
+            select: { id: true, name: true, color: true },
+        })
     } catch (error) {
         throw new Error(`Failed to get tag-not-goal: ${error.message}`)
     }
 }
 
 export const getTagNotAssignment = async (assignmentID) => {
-    if (!assignmentID) return
-
     try {
+        const isValidAssignmentID =
+            !isNaN(assignmentID) && String(assignmentID).trim() !== ''
+
+        if (!isValidAssignmentID)
+            throw new Error(`Invalid assignmentID: ${assignmentID}`)
+
         return await prisma.tag.findMany({
             where: {
                 NOT: {
@@ -244,9 +256,13 @@ export const getTagNotAssignment = async (assignmentID) => {
 }
 
 export const unlinkTagOnGoal = async (tagID, goalID) => {
-    if (!tagID && !goalID) return
-
     try {
+        const isInvalidIds = isNaN(goalID) || isNaN(tagID)
+
+        if (isInvalidIds) {
+            throw new Error(`Invalid Ids - goalID: ${goalID}, tagID: ${tagID}`)
+        }
+
         return await prisma.tagOnGoal.delete({
             where: {
                 goalID_tagID: {
@@ -261,9 +277,13 @@ export const unlinkTagOnGoal = async (tagID, goalID) => {
 }
 
 export const unlinkAllTagOnGoal = async (goalID) => {
-    if (!goalID) return
-
     try {
+        const isInvalidGoalID = isNaN(goalID)
+
+        if (isInvalidGoalID) {
+            throw new Error(`Invalid goalID: ${goalID}`)
+        }
+
         return await prisma.tagOnGoal.deleteMany({
             where: {
                 goalID: Number(goalID),
@@ -276,6 +296,14 @@ export const unlinkAllTagOnGoal = async (goalID) => {
 
 export const unlinkTagOnAssignment = async (tagID, assignmentID) => {
     try {
+        const isInvalidIds = isNaN(assignmentID) || isNaN(tagID)
+
+        if (isInvalidIds) {
+            throw new Error(
+                `Invalid Ids - assignmentID: ${assignmentID}, tagID: ${tagID}`
+            )
+        }
+
         return await prisma.tagOnAssignment.delete({
             where: {
                 assignmentID_tagID: {
@@ -290,9 +318,13 @@ export const unlinkTagOnAssignment = async (tagID, assignmentID) => {
 }
 
 export const unlinkAllTagOnAssignment = async (assignmentID) => {
-    if (!assignmentID) return
-
     try {
+        const isInvalidAssignmentID = isNaN(assignmentID)
+
+        if (isInvalidAssignmentID) {
+            throw new Error(`Invalid assignmentID: ${assignmentID}`)
+        }
+
         return await prisma.tagOnAssignment.deleteMany({
             where: {
                 assignmentID: Number(assignmentID),

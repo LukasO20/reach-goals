@@ -41,7 +41,13 @@ export const deleteGoal = async (goalID) => {
 
 export const getGoal = async (goalID) => {
     try {
-        if (!isNaN(goalID) && typeof goalID !== 'number') {
+        const isUniqueGoal = !isNaN(goalID) && String(goalID).trim() !== ''
+        const isAllGoal = goalID === 'all'
+
+        if (!isUniqueGoal && !isAllGoal)
+            throw new Error(`Invalid goalID: ${goalID}`)
+
+        if (isUniqueGoal) {
             return await prisma.goal.findUnique({
                 where: { id: Number(goalID) },
                 include: {
@@ -65,30 +71,30 @@ export const getGoal = async (goalID) => {
                     },
                 },
             })
-        } else if (goalID === 'all') {
-            return await prisma.goal.findMany({
-                include: {
-                    assignments: {
-                        select: {
-                            id: true,
-                            name: true,
-                            start: true,
-                            end: true,
-                            status: true,
-                            description: true,
-                            duration: true,
-                        },
+        }
+
+        return await prisma.goal.findMany({
+            include: {
+                assignments: {
+                    select: {
+                        id: true,
+                        name: true,
+                        start: true,
+                        end: true,
+                        status: true,
+                        description: true,
+                        duration: true,
                     },
-                    tags: {
-                        include: {
-                            tag: {
-                                select: { id: true, name: true, color: true },
-                            },
+                },
+                tags: {
+                    include: {
+                        tag: {
+                            select: { id: true, name: true, color: true },
                         },
                     },
                 },
-            })
-        }
+            },
+        })
     } catch (error) {
         throw new Error(`Failed to get goal: ${error.message}`)
     }
@@ -96,30 +102,14 @@ export const getGoal = async (goalID) => {
 
 export const getGoalOnAssignment = async (assignmentID) => {
     try {
-        const isAll = assignmentID === 'all'
-        const isNumber =
-            !isNaN(assignmentID) && typeof assignmentID !== 'number'
+        const isUniqueGoalAssignment =
+            !isNaN(assignmentID) && String(assignmentID).trim() !== ''
+        const isAllGoalAssignment = assignmentID === 'all'
 
-        if (!isAll && !isNumber) return
+        if (!isUniqueGoalAssignment && !isAllGoalAssignment)
+            throw new Error(`Invalid assignmentID: ${assignmentID}`)
 
-        if (isAll) {
-            return await prisma.goal.findMany({
-                where: { assignments: { some: {} } },
-                include: {
-                    assignments: {
-                        select: {
-                            id: true,
-                            name: true,
-                            start: true,
-                            end: true,
-                            status: true,
-                            description: true,
-                            duration: true,
-                        },
-                    },
-                },
-            })
-        } else if (isNumber) {
+        if (isUniqueGoalAssignment) {
             return await prisma.goal.findMany({
                 where: { assignments: { some: { id: Number(assignmentID) } } },
                 include: {
@@ -137,6 +127,23 @@ export const getGoalOnAssignment = async (assignmentID) => {
                 },
             })
         }
+
+        return await prisma.goal.findMany({
+            where: { assignments: { some: {} } },
+            include: {
+                assignments: {
+                    select: {
+                        id: true,
+                        name: true,
+                        start: true,
+                        end: true,
+                        status: true,
+                        description: true,
+                        duration: true,
+                    },
+                },
+            },
+        })
     } catch (error) {
         throw new Error(`Failed to get goal-assignment: ${error.message}`)
     }
@@ -144,29 +151,13 @@ export const getGoalOnAssignment = async (assignmentID) => {
 
 export const getGoalOnTag = async (tagID) => {
     try {
-        const isAll = tagID === 'all'
-        const isNumber =
-            !isNaN(tagID) &&
-            tagID !== '' &&
-            tagID !== null &&
-            tagID !== undefined
+        const isUniqueGoalTag = !isNaN(tagID) && String(tagID).trim() !== ''
+        const isAllGoalTag = tagID === 'all'
 
-        if (!isAll && !isNumber) return
+        if (!isUniqueGoalTag && !isAllGoalTag)
+            throw new Error(`Invalid tagID: ${tagID}`)
 
-        if (isAll) {
-            return await prisma.goal.findMany({
-                where: { tags: { some: {} } },
-                include: {
-                    tags: {
-                        include: {
-                            tag: {
-                                select: { id: true, name: true, color: true },
-                            },
-                        },
-                    },
-                },
-            })
-        } else if (isNumber) {
+        if (isUniqueGoalTag) {
             return await prisma.goal.findMany({
                 where: { tags: { id: Number(tagID) } },
                 include: {
@@ -180,6 +171,19 @@ export const getGoalOnTag = async (tagID) => {
                 },
             })
         }
+
+        return await prisma.goal.findMany({
+            where: { tags: { some: {} } },
+            include: {
+                tags: {
+                    include: {
+                        tag: {
+                            select: { id: true, name: true, color: true },
+                        },
+                    },
+                },
+            },
+        })
     } catch (error) {
         throw new Error(`Failed to get goal-tag: ${error.message}`)
     }
@@ -187,26 +191,14 @@ export const getGoalOnTag = async (tagID) => {
 
 export const getGoalWithoutAssignment = async (assignmentID) => {
     try {
-        const isAll = assignmentID === 'all'
-        const isNumeric =
-            !isNaN(assignmentID) && typeof assignmentID !== 'boolean'
+        const isUniqueGoalNotAssignment =
+            !isNaN(assignmentID) && String(assignmentID).trim() !== ''
+        const isAllGoalNotAssignment = assignmentID === 'all'
 
-        if (!isAll && !isNumeric) return
+        if (!isUniqueGoalNotAssignment && !isAllGoalNotAssignment)
+            throw new Error(`Invalid assignmentID: ${assignmentID}`)
 
-        if (isAll) {
-            return await prisma.goal.findMany({
-                where: { assignments: { none: {} } },
-                include: {
-                    tags: {
-                        include: {
-                            tag: {
-                                select: { id: true, name: true, color: true },
-                            },
-                        },
-                    },
-                },
-            })
-        } else if (isNumeric) {
+        if (isUniqueGoalNotAssignment) {
             return await prisma.goal.findMany({
                 where: { assignments: { none: { id: Number(assignmentID) } } },
                 include: {
@@ -231,6 +223,19 @@ export const getGoalWithoutAssignment = async (assignmentID) => {
                 },
             })
         }
+
+        return await prisma.goal.findMany({
+            where: { assignments: { none: {} } },
+            include: {
+                tags: {
+                    include: {
+                        tag: {
+                            select: { id: true, name: true, color: true },
+                        },
+                    },
+                },
+            },
+        })
     } catch (error) {
         throw new Error(
             `Failed to get goal-without-assignment: ${error.message}`
