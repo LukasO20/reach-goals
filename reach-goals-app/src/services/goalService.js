@@ -1,4 +1,4 @@
-import { buildQueryParamsMap } from '../utils/mapping/mappingUtils.js' 
+import { buildQueryParamsMap } from '../utils/mapping/mappingUtils.js'
 
 // const apiURL = window.location.origin.includes("localhost")
 //     && "http://localhost:5000" //Standard URL to use with a local custom server. Insert it like ${apiURL}/api/...
@@ -8,7 +8,8 @@ export const addGoal = async (goal) => {
         const response = await fetch(`/api/goal`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(goal)
+            body: JSON.stringify(goal),
+            credentials: 'same-origin',
         })
 
         if (!response.ok) {
@@ -18,8 +19,7 @@ export const addGoal = async (goal) => {
 
         return await response.json()
     } catch (error) {
-        console.error('Error adding goal: ', error.message)
-        throw error
+        console.error(`Error adding goal: ${error.message}`)
     }
 }
 
@@ -29,23 +29,24 @@ export const updateGoal = async (goal) => {
         const response = await fetch(url, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(goal)
+            body: JSON.stringify(goal),
+            credentials: 'same-origin',
         })
 
         const result = await response.json()
-        if (!response.ok) throw new Error(result.error || 'Failed to update goal.')
+        if (!response.ok)
+            throw new Error(result.error || 'Failed to update goal.')
 
         return result
     } catch (error) {
-        console.error('Error update goal: ', error.message)
-        throw error
+        console.error(`Error update goal: ${error.message}`)
     }
 }
 
 export const deleteGoal = async (goalID) => {
     const queryParms = {
         action: 'tag-unlink-all-goal',
-        IDobject: { 'goalID': goalID }
+        IDobject: { goalID: goalID },
     }
 
     try {
@@ -53,12 +54,14 @@ export const deleteGoal = async (goalID) => {
         const responseUnlinkTag = await fetch(urlUnlinkTag, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
         })
 
         const urlDeletGoal = `/api/goal/${goalID}`
         const responseGoal = await fetch(urlDeletGoal, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
         })
 
         if (!responseUnlinkTag.ok) {
@@ -70,22 +73,19 @@ export const deleteGoal = async (goalID) => {
             const error = await responseGoal.json()
             throw new Error(error.error || 'Failed to delete goal.')
         }
-
     } catch (error) {
-        console.error('Error delete goal: ', error.message)
-        throw error
+        console.error(`Error delete goal: ${error.message}`)
     }
 }
 
 export const getGoal = async (goalID) => {
     try {
-        const url = (goalID)
-            ? `/api/goal/${goalID}`
-            : `/api/goal?action=goal-get`
+        const url = goalID ? `/api/goal/${goalID}` : `/api/goal?action=goal-get`
 
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
         })
 
         if (!response.ok) {
@@ -93,17 +93,16 @@ export const getGoal = async (goalID) => {
             throw new Error(error.error || 'Failed to fetch goals.')
         }
 
-       return await response.json()
+        return await response.json()
     } catch (error) {
-        console.error('Error get goal: ', error.message)
-        throw error
+        console.error(`Error get goal: ${error.message}`)
     }
 }
 
 export const getGoalOnTag = async (tagID) => {
     const queryParms = {
         action: 'goal-on-tag',
-        IDobject: { 'tagID': tagID }
+        IDobject: { tagID: tagID },
     }
 
     try {
@@ -111,6 +110,7 @@ export const getGoalOnTag = async (tagID) => {
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
         })
 
         if (!response.ok) {
@@ -120,15 +120,14 @@ export const getGoalOnTag = async (tagID) => {
 
         return await response.json()
     } catch (error) {
-        console.error('Error get goal: ', error.message)
-        throw error
+        console.error(`Error get goal: ${error.message}`)
     }
 }
 
 export const getGoalOnAssignment = async (assignmentID) => {
     const queryParms = {
         action: 'goal-on-assignment',
-        IDobject: { 'assignmentID': assignmentID }
+        IDobject: { assignmentID: assignmentID },
     }
 
     try {
@@ -136,6 +135,7 @@ export const getGoalOnAssignment = async (assignmentID) => {
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
         })
 
         if (!response.ok) {
@@ -145,15 +145,14 @@ export const getGoalOnAssignment = async (assignmentID) => {
 
         return await response.json()
     } catch (error) {
-        console.error('Error get goal: ', error.message)
-        throw error
+        console.error(`Error get goal: ${error.message}`)
     }
 }
 
 export const getGoalWithoutAssignment = async (assignmentID) => {
     const queryParms = {
         action: 'goal-not-assignment',
-        IDobject: { 'assignmentID': assignmentID }
+        IDobject: { assignmentID: assignmentID },
     }
 
     try {
@@ -161,6 +160,7 @@ export const getGoalWithoutAssignment = async (assignmentID) => {
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
         })
 
         if (!response.ok) {
@@ -170,7 +170,6 @@ export const getGoalWithoutAssignment = async (assignmentID) => {
 
         return await response.json()
     } catch (error) {
-        console.error('Error get goal: ', error.message)
-        throw error
+        console.error(`Error get goal: ${error.message}`)
     }
 }

@@ -1,3 +1,4 @@
+import { handlerAuthenticate } from '../../server/middleware/demo-session.middleware.js'
 import {
     addGoal,
     getGoal,
@@ -104,4 +105,4 @@ const handler = async (req, res) => {
     }
 }
 
-export default handler
+export default handlerAuthenticate(handler)

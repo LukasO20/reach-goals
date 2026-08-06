@@ -8,7 +8,8 @@ export const addTag = async (tag) => {
         const response = await fetch(`/api/tag`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(tag)
+            body: JSON.stringify(tag),
+            credentials: 'same-origin',
         })
 
         if (!response.ok) {
@@ -18,8 +19,7 @@ export const addTag = async (tag) => {
 
         return await response.json()
     } catch (error) {
-        console.error('Error adding tag: ', error.message)
-        throw error
+        console.error(`Error adding tag: ${error.message}`)
     }
 }
 
@@ -29,16 +29,17 @@ export const updateTag = async (tag) => {
         const response = await fetch(url, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(tag)
+            body: JSON.stringify(tag),
+            credentials: 'same-origin',
         })
 
         const result = await response.json()
-        if (!response.ok) throw new Error(result.error || 'Failed to update tag.')
+        if (!response.ok)
+            throw new Error(result.error || 'Failed to update tag.')
 
         return result
     } catch (error) {
-        console.error('Error update tag: ', error.message)
-        throw error
+        console.error(`Error update tag: ${error.message}`)
     }
 }
 
@@ -48,6 +49,7 @@ export const deleteTag = async (tagID) => {
         const response = await fetch(url, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
         })
 
         if (!response.ok) {
@@ -55,40 +57,41 @@ export const deleteTag = async (tagID) => {
             throw new Error(error.error || 'Failed to delete tag.')
         }
     } catch (error) {
-        console.error('Error delete tag: ', error.message)
-        throw error
+        console.error(`Error delete tag: ${error.message}`)
     }
 }
 
 export const getTag = async (tagID) => {
     try {
-        const url = (tagID)
-            ? `/api/tag/${tagID}`
-            : `/api/tag?action=tag-get`
+        const url = tagID ? `/api/tag/${tagID}` : `/api/tag?action=tag-get`
 
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
         })
 
         return await response.json()
     } catch (error) {
-        console.error('Error get tag: ', error.message)
-        throw error
+        console.error(`Error get tag: ${error.message}`)
     }
 }
 
 export const getTagOnGoal = async (goalID) => {
     const queryParms = {
         action: 'tag-on-goal',
-        IDobject: { 'goalID': goalID }
+        IDobject: { goalID: goalID },
     }
 
     try {
-        const response = await fetch(`/api/tag?${buildQueryParamsMap(queryParms)}`, {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-        })
+        const response = await fetch(
+            `/api/tag?${buildQueryParamsMap(queryParms)}`,
+            {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'same-origin',
+            }
+        )
 
         if (!response.ok) {
             const error = await response.json()
@@ -97,22 +100,25 @@ export const getTagOnGoal = async (goalID) => {
 
         return await response.json()
     } catch (error) {
-        console.error('Error get tag on goal: ', error.message)
-        throw error
+        console.error(`Error get tag on goal: ${error.message}`)
     }
 }
 
 export const getTagOnAssignment = async (assignmentID) => {
     const queryParms = {
         action: 'tag-on-assignment',
-        IDobject: { 'assignmentID': assignmentID }
+        IDobject: { assignmentID: assignmentID },
     }
 
     try {
-        const response = await fetch(`/api/tag?${buildQueryParamsMap(queryParms)}`, {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-        })
+        const response = await fetch(
+            `/api/tag?${buildQueryParamsMap(queryParms)}`,
+            {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'same-origin',
+            }
+        )
 
         if (!response.ok) {
             const error = await response.json()
@@ -122,22 +128,25 @@ export const getTagOnAssignment = async (assignmentID) => {
         const data = await response.json()
         return data
     } catch (error) {
-        console.error('Error get tag on goal: ', error.message)
-        throw error
+        console.error(`Error get tag on goal: ${error.message}`)
     }
 }
 
 export const getTagNotGoal = async (goalID) => {
     const queryParms = {
         action: 'tag-not-goal',
-        IDobject: { 'goalID': goalID }
+        IDobject: { goalID: goalID },
     }
 
     try {
-        const response = await fetch(`/api/tag?${buildQueryParamsMap(queryParms)}`, {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-        })
+        const response = await fetch(
+            `/api/tag?${buildQueryParamsMap(queryParms)}`,
+            {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'same-origin',
+            }
+        )
 
         if (!response.ok) {
             const error = await response.json()
@@ -146,22 +155,25 @@ export const getTagNotGoal = async (goalID) => {
 
         return await response.json()
     } catch (error) {
-        console.error('Error get tag without relation: ', error.message)
-        throw error
+        console.error(`Error get tag without relation: ${error.message}`)
     }
 }
 
 export const getTagNotAssignment = async (assignmentID) => {
     const queryParms = {
         action: 'tag-not-assignment',
-        IDobject: { 'assignmentID': assignmentID }
+        IDobject: { assignmentID: assignmentID },
     }
 
     try {
-        const response = await fetch(`/api/tag?${buildQueryParamsMap(queryParms)}`, {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-        })
+        const response = await fetch(
+            `/api/tag?${buildQueryParamsMap(queryParms)}`,
+            {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'same-origin',
+            }
+        )
 
         if (!response.ok) {
             const error = await response.json()
@@ -170,17 +182,20 @@ export const getTagNotAssignment = async (assignmentID) => {
 
         return await response.json()
     } catch (error) {
-        console.error('Error get tag without relation: ', error.message)
-        throw error
+        console.error(`Error get tag without relation: ${error.message}`)
     }
 }
 
 export const unlinkTagOnGoal = async (tagID, goalID) => {
     try {
-        const response = await fetch(`/api/tag/actions/unlink-goal/${tagID}/${goalID}`, {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-        })
+        const response = await fetch(
+            `/api/tag/actions/unlink-goal/${tagID}/${goalID}`,
+            {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'same-origin',
+            }
+        )
 
         if (!response.ok) {
             const error = await response.json()
@@ -189,7 +204,6 @@ export const unlinkTagOnGoal = async (tagID, goalID) => {
 
         return await response.json()
     } catch (error) {
-        console.error('Error to unlink tag: ', error.message)
-        throw error
+        console.error(`Error to unlink tag: ${error.message}`)
     }
 }

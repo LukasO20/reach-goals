@@ -4,6 +4,7 @@ export const searchResults = async (params = '') => {
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
         })
 
         if (!response.ok) {
@@ -26,6 +27,7 @@ export const updateModelDragDrop = async (data) => {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data),
+            credentials: 'same-origin',
         })
 
         const result = await response.json()
@@ -47,6 +49,7 @@ export const removeModels = async (data) => {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ data }),
+            credentials: 'same-origin',
         })
 
         const result = await response.json()
@@ -67,6 +70,7 @@ export const updateModelStatus = async (data, status) => {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ data, status }),
+            credentials: 'same-origin',
         })
 
         const result = await response.json()
@@ -86,6 +90,7 @@ export const demoVisitorSave = async (data) => {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ data }),
+            credentials: 'same-origin',
         })
 
         const result = await response.json()

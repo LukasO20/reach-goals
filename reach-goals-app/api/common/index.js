@@ -1,4 +1,4 @@
-import { authenticateDemoSession } from '../../server/middleware/demo-session.middleware.js'
+import { handlerAuthenticate } from '../../server/middleware/demo-session.middleware.js'
 import { searchResults } from '../../server/services/search.service.js'
 import {
     addDemoVisitorVerification,
@@ -25,8 +25,6 @@ const handler = async (req, res) => {
     }
 
     try {
-        await authenticateDemoSession(req, action)
-
         if (req.method === 'GET') {
             if (action === 'search-model') {
                 results = await searchResults(params)
@@ -114,16 +112,6 @@ const handler = async (req, res) => {
             }
         }
     } catch (error) {
-        const responseStatus = res.status
-
-        if (responseStatus === '401') {
-            return res.status(401).json({
-                restartDemo: true,
-                message: 'Unauthorized. Demo session expired. Try a new login',
-                error,
-            })
-        }
-
         return res.status(500).json({
             error:
                 `Failed to process request - ${action}: ${error.message}` ||
@@ -132,4 +120,4 @@ const handler = async (req, res) => {
     }
 }
 
-export default handler
+export default handlerAuthenticate(handler)

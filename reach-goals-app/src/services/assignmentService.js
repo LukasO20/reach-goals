@@ -8,7 +8,8 @@ export const addAssignment = async (assignment) => {
         const response = await fetch(`/api/assignment`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(assignment)
+            body: JSON.stringify(assignment),
+            credentials: 'same-origin',
         })
 
         if (!response.ok) {
@@ -18,8 +19,7 @@ export const addAssignment = async (assignment) => {
 
         return await response.json()
     } catch (error) {
-        console.error('Error adding assignment: ', error.message)
-        throw error
+        console.error(`Error adding assignment: ${error.message}`)
     }
 }
 
@@ -29,23 +29,24 @@ export const updateAssignment = async (assignment) => {
         const response = await fetch(url, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(assignment)
+            body: JSON.stringify(assignment),
+            credentials: 'same-origin',
         })
 
         const result = await response.json()
-        if (!response.ok) throw new Error(result.error || 'Failed to update assignment.')
+        if (!response.ok)
+            throw new Error(result.error || 'Failed to update assignment.')
 
         return result
     } catch (error) {
-        console.error('Error update assignment: ', error.message)
-        throw error
+        console.error(`Error update assignment: ${error.message}`)
     }
 }
 
 export const deleteAssignment = async (assignmentID) => {
     const queryParms = {
         action: 'tag-unlink-all-assignment',
-        IDobject: { 'assignmentID': assignmentID }
+        IDobject: { assignmentID: assignmentID },
     }
 
     try {
@@ -53,17 +54,21 @@ export const deleteAssignment = async (assignmentID) => {
         const responseUnlinkTag = await fetch(urlUnlinkTag, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
         })
 
         const urlDeletAssignment = `/api/assignment/${assignmentID}`
         const response = await fetch(urlDeletAssignment, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
         })
 
         if (!responseUnlinkTag.ok) {
             const error = await responseUnlinkTag.json()
-            throw new Error(error.error || 'Failed to unlink tags from assignment.')
+            throw new Error(
+                error.error || 'Failed to unlink tags from assignment.'
+            )
         }
 
         if (!response.ok) {
@@ -71,20 +76,20 @@ export const deleteAssignment = async (assignmentID) => {
             throw new Error(error.error || 'Failed to delete assignment.')
         }
     } catch (error) {
-        console.error('Error delete assignment: ', error.message)
-        throw error
+        console.error(`Error delete assignment: ${error.message}`)
     }
 }
 
 export const getAssignment = async (assignmentID) => {
     try {
-        const url = (assignmentID)
+        const url = assignmentID
             ? `/api/assignment/${assignmentID}`
             : `/api/assignment?action=assignment-get`
 
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
         })
 
         if (!response.ok) {
@@ -94,15 +99,14 @@ export const getAssignment = async (assignmentID) => {
 
         return await response.json()
     } catch (error) {
-        console.error('Error get assignment: ', error.message)
-        throw error
+        console.error(`Error get assignment: ${error.message}`)
     }
 }
 
 export const getAssignmentOnTag = async (tagID) => {
     const queryParms = {
         action: 'assignment-on-tag',
-        IDobject: { 'tagID': tagID }
+        IDobject: { tagID: tagID },
     }
 
     try {
@@ -110,6 +114,7 @@ export const getAssignmentOnTag = async (tagID) => {
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
         })
 
         if (!response.ok) {
@@ -119,15 +124,14 @@ export const getAssignmentOnTag = async (tagID) => {
 
         return await response.json()
     } catch (error) {
-        console.error('Error get assignment: ', error.message)
-        throw error
+        console.error(`Error get assignment: ${error.message}`)
     }
 }
 
 export const getAssignmentOnGoal = async (goalID) => {
     const queryParms = {
         action: 'assignment-on-goal',
-        IDobject: { 'goalID': goalID }
+        IDobject: { goalID: goalID },
     }
 
     try {
@@ -135,6 +139,7 @@ export const getAssignmentOnGoal = async (goalID) => {
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
         })
 
         if (!response.ok) {
@@ -144,8 +149,7 @@ export const getAssignmentOnGoal = async (goalID) => {
 
         return await response.json()
     } catch (error) {
-        console.error('Error get assignment: ', error.message)
-        throw error
+        console.error(`Error get assignment: ${error.message}`)
     }
 }
 
@@ -155,6 +159,7 @@ export const getAssignmentWithoutGoal = async () => {
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
         })
 
         if (!response.ok) {
@@ -164,7 +169,6 @@ export const getAssignmentWithoutGoal = async () => {
 
         return await response.json()
     } catch (error) {
-        console.error('Error get assignment: ', error.message)
-        throw error
+        console.error(`Error get assignment: ${error.message}`)
     }
 }
