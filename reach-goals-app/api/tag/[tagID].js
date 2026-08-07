@@ -46,16 +46,6 @@ const handler = async (req, res) => {
             return res.status(200).json({ message: 'Tag deleted successfully' })
         }
     } catch (error) {
-        const responseStatus = res.status
-
-        if (responseStatus === '401') {
-            return res.status(401).json({
-                restartDemo: true,
-                message: 'Unauthorized. Demo session expired. Try a new login',
-                error,
-            })
-        }
-
         return res.status(500).json({
             error:
                 `Failed to process request - ${action}: ${error.message}` ||

@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
-import * as assignmentService from '../../../services/assignmentService.js'
+import * as assignmentService from '../../../services/assignment-service.js'
 import * as commonService from '../../../services/common.js'
 
 import { useManageModel } from '../manage-model-provider/index.jsx'
@@ -18,7 +18,11 @@ import { createQueryFn, validFilter } from '../../../utils/utilsProvider.js'
 const AssignmentModelContext = createContext()
 
 export const AssignmentModelProvider = ({ children }) => {
-    const { model: { filter: filterModel }, updateDataModel, resetManageModel } = useManageModel()
+    const {
+        model: { filter: filterModel },
+        updateDataModel,
+        resetManageModel,
+    } = useManageModel()
     const { update } = useTitle()
 
     const queryClient = useQueryClient()
@@ -37,7 +41,7 @@ export const AssignmentModelProvider = ({ children }) => {
         queryKey: queryKeyPage,
         queryFn: createQueryFn(filterPage, assignmentService),
         enabled: validFilter(filterPage, 'some'),
-        staleTime: 1000 * 60 * 5 //5 minutes for new data
+        staleTime: 1000 * 60 * 5, //5 minutes for new data
     })
 
     const {
@@ -48,18 +52,22 @@ export const AssignmentModelProvider = ({ children }) => {
         queryKey: queryKeyModal,
         queryFn: createQueryFn(filterModal, assignmentService),
         enabled: validFilter(filterModal, 'some'),
-        staleTime: 1000 * 60 * 5 //5 minutes for new data
+        staleTime: 1000 * 60 * 5, //5 minutes for new data
     })
 
     const saveMutation = useMutation({
-        mutationFn: (model) => model.id ? assignmentService.updateAssignment(model) : assignmentService.addAssignment(model),
+        mutationFn: (model) =>
+            model.id
+                ? assignmentService.updateAssignment(model)
+                : assignmentService.addAssignment(model),
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ['assignment'] })
             update({ toast: 'Assignment save with success' })
             resetManageModel({ keys: ['activeModel', 'mainModelID'] })
 
             const shouldInvalidateTagQueries = data.tags?.length > 0
-            if (shouldInvalidateTagQueries) queryClient.invalidateQueries({ queryKey: ['tag', 'page'] })
+            if (shouldInvalidateTagQueries)
+                queryClient.invalidateQueries({ queryKey: ['tag', 'page'] })
         },
     })
 
@@ -67,8 +75,13 @@ export const AssignmentModelProvider = ({ children }) => {
         mutationFn: (dragDropResult) => {
             const updatedDataQuery = queryClient.getQueryData(queryKeyPage)
 
-            const updatedModel = updatedDataQuery.filter((item) => item.status === dragDropResult.destination.droppableId)
-            commonService.updateModelDragDrop({ data: updatedModel, typeModel: 'assignment' })
+            const updatedModel = updatedDataQuery.filter(
+                (item) => item.status === dragDropResult.destination.droppableId
+            )
+            commonService.updateModelDragDrop({
+                data: updatedModel,
+                typeModel: 'assignment',
+            })
         },
         onMutate: async (newData) => {
             await queryClient.cancelQueries({ queryKey: queryKeyPage })
@@ -82,7 +95,9 @@ export const AssignmentModelProvider = ({ children }) => {
 
                 let newArray = [...oldData]
 
-                const itemIndex = newArray.findIndex(i => i.id === Number(draggableId))
+                const itemIndex = newArray.findIndex(
+                    (i) => i.id === Number(draggableId)
+                )
                 const movedItem = { ...newArray[itemIndex] }
 
                 movedItem.status = destination.droppableId
@@ -90,7 +105,7 @@ export const AssignmentModelProvider = ({ children }) => {
                 newArray.splice(itemIndex, 1)
 
                 const columnItems = newArray
-                    .filter(i => i.status === destination.droppableId)
+                    .filter((i) => i.status === destination.droppableId)
                     .sort((a, b) => a.order - b.order)
 
                 columnItems.splice(destination.index, 0, movedItem)
@@ -99,7 +114,9 @@ export const AssignmentModelProvider = ({ children }) => {
                     item.order = idx
                 })
 
-                const otherItems = newArray.filter(i => !(i.status === destination.droppableId))
+                const otherItems = newArray.filter(
+                    (i) => !(i.status === destination.droppableId)
+                )
 
                 return [...otherItems, ...columnItems]
             })
@@ -108,7 +125,7 @@ export const AssignmentModelProvider = ({ children }) => {
         },
         onSuccess: () => {
             update({ toast: `Assignment status save with success` })
-        }
+        },
     })
 
     const removeMutation = useMutation({
@@ -122,40 +139,50 @@ export const AssignmentModelProvider = ({ children }) => {
 
     useEffect(() => {
         if (pageData) {
-            const dataUpdateDataModel = updateDataModelMap({ data: pageData, type: 'assignment', scope: 'core' })
+            const dataUpdateDataModel = updateDataModelMap({
+                data: pageData,
+                type: 'assignment',
+                scope: 'core',
+            })
             updateDataModel(dataUpdateDataModel)
         }
     }, [pageData, updateDataModel])
 
     useEffect(() => {
         if (modalData) {
-            const dataUpdateDataModel = updateDataModelMap({ data: modalData, type: 'assignment', scope: 'support' })
+            const dataUpdateDataModel = updateDataModelMap({
+                data: modalData,
+                type: 'assignment',
+                scope: 'support',
+            })
             updateDataModel(dataUpdateDataModel)
         }
     }, [modalData, updateDataModel])
 
     return (
-        <AssignmentModelContext.Provider value={{
-            page: {
-                data: pageData,
-                error: pageError,
-                loading: isPageLoading,
-            },
-            modal: {
-                data: modalData,
-                error: modalError,
-                loading: isModalLoading,
-            },
-            save: saveMutation.mutate,
-            saving: saveMutation.isPending,
-            saveSuccess: saveMutation.isSuccess,
-            saveDragDrop: saveDragDropMutation.mutate,
-            remove: removeMutation.mutate,
-            removeSuccess: removeMutation.isSuccess,
-            removing: removeMutation.isPending,
-            removingVariables: removeMutation.variables,
-            resetSave: saveMutation.reset
-        }}>
+        <AssignmentModelContext.Provider
+            value={{
+                page: {
+                    data: pageData,
+                    error: pageError,
+                    loading: isPageLoading,
+                },
+                modal: {
+                    data: modalData,
+                    error: modalError,
+                    loading: isModalLoading,
+                },
+                save: saveMutation.mutate,
+                saving: saveMutation.isPending,
+                saveSuccess: saveMutation.isSuccess,
+                saveDragDrop: saveDragDropMutation.mutate,
+                remove: removeMutation.mutate,
+                removeSuccess: removeMutation.isSuccess,
+                removing: removeMutation.isPending,
+                removingVariables: removeMutation.variables,
+                resetSave: saveMutation.reset,
+            }}
+        >
             {children}
         </AssignmentModelContext.Provider>
     )

@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
-import * as tagService from '../../../services/tagService.js'
+import * as tagService from '../../../services/tag-service.js'
 
 import { useManageModel } from '../manage-model-provider'
 import { useTitle } from '../../ui/title-provider'
@@ -17,7 +17,11 @@ import { createQueryFn, validFilter } from '../../../utils/utilsProvider.js'
 export const TagModelContext = createContext()
 
 export const TagModelProvider = ({ children }) => {
-    const { model: { filter: filterModel }, updateDataModel, resetManageModel } = useManageModel()
+    const {
+        model: { filter: filterModel },
+        updateDataModel,
+        resetManageModel,
+    } = useManageModel()
     const { update } = useTitle()
 
     const queryClient = useQueryClient()
@@ -36,7 +40,7 @@ export const TagModelProvider = ({ children }) => {
         queryKey: queryKeyPage,
         queryFn: createQueryFn(filterPage, tagService),
         enabled: validFilter(filterPage, 'some'),
-        staleTime: 1000 * 60 * 5 //5 minutes for new data
+        staleTime: 1000 * 60 * 5, //5 minutes for new data
     })
 
     const {
@@ -47,7 +51,7 @@ export const TagModelProvider = ({ children }) => {
         queryKey: queryKeyModal,
         queryFn: createQueryFn(filterModal, tagService),
         enabled: validFilter(filterModal, 'some'),
-        staleTime: 1000 * 60 * 5 //5 minutes for new data
+        staleTime: 1000 * 60 * 5, //5 minutes for new data
     })
 
     const saveMutation = useMutation({
@@ -74,39 +78,49 @@ export const TagModelProvider = ({ children }) => {
 
     useEffect(() => {
         if (pageData) {
-            const dataUpdateDataModel = updateDataModelMap({ data: pageData, type: 'tag', scope: 'core' })
+            const dataUpdateDataModel = updateDataModelMap({
+                data: pageData,
+                type: 'tag',
+                scope: 'core',
+            })
             updateDataModel(dataUpdateDataModel)
         }
     }, [pageData, updateDataModel])
 
     useEffect(() => {
         if (modalData) {
-            const dataUpdateDataModel = updateDataModelMap({ data: modalData, type: 'tag', scope: 'support' })
+            const dataUpdateDataModel = updateDataModelMap({
+                data: modalData,
+                type: 'tag',
+                scope: 'support',
+            })
             updateDataModel(dataUpdateDataModel)
         }
     }, [modalData, updateDataModel])
 
     return (
-        <TagModelContext.Provider value={{
-            page: {
-                data: pageData,
-                error: pageError,
-                loading: isPageLoading,
-            },
-            modal: {
-                data: modalData,
-                error: modalError,
-                loading: isModalLoading,
-            },
-            save: saveMutation.mutate,
-            saving: saveMutation.isPending,
-            saveSuccess: saveMutation.isSuccess,
-            remove: removeMutation.mutate,
-            removeSuccess: removeMutation.isSuccess,
-            removing: removeMutation.isPending,
-            removingVariables: removeMutation.variables,
-            resetSave: saveMutation.reset
-        }}>
+        <TagModelContext.Provider
+            value={{
+                page: {
+                    data: pageData,
+                    error: pageError,
+                    loading: isPageLoading,
+                },
+                modal: {
+                    data: modalData,
+                    error: modalError,
+                    loading: isModalLoading,
+                },
+                save: saveMutation.mutate,
+                saving: saveMutation.isPending,
+                saveSuccess: saveMutation.isSuccess,
+                remove: removeMutation.mutate,
+                removeSuccess: removeMutation.isSuccess,
+                removing: removeMutation.isPending,
+                removingVariables: removeMutation.variables,
+                resetSave: saveMutation.reset,
+            }}
+        >
             {children}
         </TagModelContext.Provider>
     )

@@ -2,6 +2,12 @@ import { verifyAccessToken } from '../auth/jwt.js'
 
 const ACTIONS_PASS = ['demo-visitor-verification', 'demo-visitor']
 
+const unauthorized = (message) => {
+    const error = new Error(message)
+    error.status = 401
+    return error
+}
+
 const authenticateDemoSession = async (req, action = '') => {
     if (!req)
         throw new Error(
@@ -12,13 +18,13 @@ const authenticateDemoSession = async (req, action = '') => {
 
     const cookie = req.headers.cookie
 
-    if (!cookie) throw new Error('Demo session not found. Unauthorized')
+    if (!cookie) throw unauthorized('Demo session not found. Unauthorized')
 
     const token = cookie
         .split(';')
         .find((item) => item.trim().startsWith('demo-session='))
 
-    if (!token) throw new Error('Demo session not found. Unauthorized')
+    if (!token) throw unauthorized('Demo session not found. Unauthorized')
 
     const jwt = token.split('=')[1]
 
@@ -36,14 +42,16 @@ export const handlerAuthenticate = (handler) => {
 
             return handler(req, res)
         } catch (error) {
-            if (error.status === 401) {
+            const { message, status } = error
+
+            if (status === 401) {
                 return res.status(401).json({
-                    message: error.message,
+                    message,
                 })
             }
 
             return res.status(500).json({
-                error: error.message,
+                error: message,
             })
         }
     }
