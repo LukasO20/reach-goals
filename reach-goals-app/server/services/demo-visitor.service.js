@@ -2,7 +2,7 @@ import prisma from '../config/connectdb.js'
 
 import { generateAccessToken } from '../auth/jwt.js'
 import { createAccessCookie } from '../auth/cookie.js'
-import { generateVerificationCode } from '../../api/utils/utils.js'
+import { generateVerificationCode } from '../utils/utils.js'
 import { sendEmail } from './email.service.js'
 
 const TEN_MINUTES = 10 * 60 * 1000
@@ -55,15 +55,15 @@ export const getDemoVisitorVerification = async (email = '') => {
     }
 }
 
-export const getDemoVisitor = async (email = '') => {
+export const getDemoVisitor = async (demoVisitorId) => {
     try {
         return await prisma.$transaction(async (tx) => {
             const demoVisitor = await tx.demoVisitor.findUnique({
-                where: { email: email },
+                where: { id: Number(demoVisitorId) },
             })
 
             const demoVisitorSession = await tx.demoVisitorSession.findUnique({
-                where: { email: email },
+                where: { demoVisitorId: demoVisitor.id },
             })
 
             return {
@@ -76,7 +76,7 @@ export const getDemoVisitor = async (email = '') => {
     }
 }
 
-export const addDemoVisitor = async (data) => {
+const addDemoVisitor = async (data) => {
     const { name, email } = data
 
     if (!name || !email)
