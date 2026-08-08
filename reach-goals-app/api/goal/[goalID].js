@@ -5,7 +5,7 @@ import {
     updateGoal,
     updateTagOnGoal,
 } from '../../server/services/goal.service.js'
-import { extractIds, formatObject } from '../utils/utils.js'
+import { extractIds, formatObject } from '../../server/utils/utils.js'
 
 const handleUpdateTagOnGoal = async (goalID, tags) => {
     try {

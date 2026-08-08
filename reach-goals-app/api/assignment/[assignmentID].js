@@ -5,7 +5,7 @@ import {
     updateAssignment,
     updateTagOnAssignment,
 } from '../../server/services/assignment.service.js'
-import { formatObject } from '../utils/utils.js'
+import { formatObject } from '../../server/utils/utils.js'
 
 const ALLOWED_METHODS = ['GET', 'PUT', 'DELETE']
 

@@ -4,7 +4,7 @@ import {
     getTag,
     updateTag,
 } from '../../server/services/tag.service.js'
-import { formatObject } from '../utils/utils.js'
+import { formatObject } from '../../server/utils/utils.js'
 
 const ALLOWED_METHODS = ['GET', 'PUT', 'DELETE']
 
