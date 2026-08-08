@@ -7,11 +7,13 @@ import { SwitchLayoutProvider } from './ui/switch-layout-provider'
 import { SearchBarProvider } from './ui/searchbar-provider'
 import { UtilityProvider } from './model/utility-provider'
 import { SwitchMonthsProvider } from './ui/switch-months-provider'
+import { DemoSessionProvider } from './model/demo-session-provider'
 
 const queryClient = new QueryClient()
 
 const providers = [
     [QueryClientProvider, { client: queryClient }],
+    [DemoSessionProvider],
     [ManageModelProvider],
     [TitleProvider],
     [VisibilityProvider],
@@ -34,11 +36,7 @@ const Compose = ({ providers, children }) => {
 }
 
 const ProviderApp = ({ children }) => {
-    return (
-        <Compose providers={providers}>
-            {children}
-        </Compose>
-    )
+    return <Compose providers={providers}>{children}</Compose>
 }
 
 export default ProviderApp

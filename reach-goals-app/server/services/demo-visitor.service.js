@@ -34,9 +34,7 @@ export const addDemoVisitorVerification = async (email = '') => {
 
             const emailSended = await sendEmail(email, code)
 
-            return {
-                verification: verificationCreated,
-            }
+            return verificationCreated
         })
     } catch (error) {
         throw new Error(

@@ -21,6 +21,25 @@ export const getAuthenticateDemoSession = async () => {
     }
 }
 
+export const getDemoVisitor = async (demoVisitorId) => {
+    try {
+        const url = `/api/demo-visitor/${demoVisitorId}`
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+        })
+
+        const result = await response.json()
+        if (!response.ok)
+            throw new Error(`Failed to get demo visitor: ${result.error}`)
+
+        return result
+    } catch (error) {
+        throw new Error(`Error getting demo visitor: ${error.message}`)
+    }
+}
+
 export const demoVisitorStart = async (data) => {
     try {
         const url = `/api/demo-visitor?action=send-code`
@@ -33,10 +52,30 @@ export const demoVisitorStart = async (data) => {
 
         const result = await response.json()
         if (!response.ok)
-            throw new Error(result.error || 'Failed to save a demo visitor.')
+            throw new Error(`Failed to send code: ${result.error}`)
 
         return result
     } catch (error) {
-        throw new Error('Error save a demo visitor: ', error.message)
+        throw new Error(`Error seinding code: ${error.message}`)
+    }
+}
+
+export const demoVisitorVerify = async (data) => {
+    try {
+        const url = `/api/demo-visitor?action=verification`
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ data }),
+            credentials: 'same-origin',
+        })
+
+        const result = await response.json()
+        if (!response.ok)
+            throw new Error(`Failed to verify demo session: ${result.error}`)
+
+        return result
+    } catch (error) {
+        throw new Error(`Error verifying demo visitor: ${error.message}`)
     }
 }

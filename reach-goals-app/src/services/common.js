@@ -82,23 +82,3 @@ export const updateModelStatus = async (data, status) => {
         throw new Error('Error updating model status: ', error.message)
     }
 }
-
-export const demoVisitorSave = async (data) => {
-    try {
-        const url = `/api/common?action=demo-visitor`
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ data }),
-            credentials: 'same-origin',
-        })
-
-        const result = await response.json()
-        if (!response.ok)
-            throw new Error(result.error || 'Failed to save a demo visitor.')
-
-        return result
-    } catch (error) {
-        throw new Error('Error save a demo visitor: ', error.message)
-    }
-}

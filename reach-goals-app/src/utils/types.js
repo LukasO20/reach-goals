@@ -1,18 +1,30 @@
 /* VISIBILITY-CONFIG-PROPS */
-/** 
+/**
  * @typedef {'progress' | 'conclude' | 'cancel'} StatusType
  */
 
-/** 
+/**
  * @typedef {'column-3x3' | 'column-2x2' | null} ColumnsType
  */
 
-/** 
+/**
  * @typedef {'goal' | 'assignment' | 'all-activities'} LayoutType
  */
 
-/** 
+/**
  * @typedef {'light' | 'dark'} ThemeType
+ */
+
+/**
+ * @typedef {Object} DemoSessionSendCode
+ * @property {string} email
+ */
+
+/**
+ * @typedef {Object} DemoSessionVerification
+ * @property {string} name
+ * @property {string} email
+ * @property {string} code
  */
 
 /**
