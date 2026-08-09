@@ -8,11 +8,13 @@ import { SearchBarProvider } from './ui/searchbar-provider'
 import { UtilityProvider } from './model/utility-provider'
 import { SwitchMonthsProvider } from './ui/switch-months-provider'
 import { DemoSessionProvider } from './model/demo-session-provider'
+import { ThemeProvider } from './ui/theme-provider'
 
 const queryClient = new QueryClient()
 
 const providers = [
     [QueryClientProvider, { client: queryClient }],
+    [ThemeProvider],
     [DemoSessionProvider],
     [ManageModelProvider],
     [TitleProvider],
