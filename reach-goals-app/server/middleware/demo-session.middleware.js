@@ -13,12 +13,14 @@ export const handlerAuthenticate = (handler) => {
 
             if (status === 401) {
                 return res.status(401).json({
-                    message,
+                    service: 'DemoSession - authentication',
+                    error: message,
                 })
             }
 
             return res.status(500).json({
-                error: message,
+                service: 'DemoSession - authentication',
+                error: message || 'Internal Server Error',
             })
         }
     }

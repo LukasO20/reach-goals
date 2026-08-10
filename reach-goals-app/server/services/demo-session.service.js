@@ -14,7 +14,7 @@ export const authenticateDemoSession = async (req, action = '') => {
             'Request object is necessary - failed to process authenticate demo-session'
         )
 
-    if (ACTIONS_PASS.includes(action)) return null
+    if (ACTIONS_PASS.includes(action)) return true
 
     const cookie = req.headers.cookie
 
