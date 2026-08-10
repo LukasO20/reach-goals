@@ -1,6 +1,6 @@
 import { verifyAccessToken } from '../auth/jwt.js'
 
-const ACTIONS_PASS = ['verification', 'send-code']
+const ACTIONS_PASS = ['verification', 'send-code', 'auth-session']
 
 const unauthorized = (message) => {
     const error = new Error(message)
@@ -14,7 +14,7 @@ export const authenticateDemoSession = async (req, action = '') => {
             'Request object is necessary - failed to process authenticate demo-session'
         )
 
-    if (ACTIONS_PASS.includes(action)) return true
+    if (ACTIONS_PASS.includes(action)) return null
 
     const cookie = req.headers.cookie
 

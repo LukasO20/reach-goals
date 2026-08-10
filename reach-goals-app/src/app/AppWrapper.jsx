@@ -10,6 +10,7 @@ import MessageToast from '../ui/elements/message-toast'
 import ModalSwitcherCenter from '../ui/modals/modal-switcher-center.jsx'
 import ModalSwitcherRight from '../ui/modals/modal-switcher-right.jsx'
 import ModalDemoseSession from '../ui/containers/container-introduction'
+import Loading from '../ui/elements/loading'
 
 const AppWrapper = () => {
     const {
@@ -18,11 +19,14 @@ const AppWrapper = () => {
         verifyDemoSession,
         sendCodeStatus,
         mutationLoading,
+        isLoading,
+        mutationError,
     } = useDemoSessionProvider()
 
-    const shouldRenderContainerIntroduction = visitor.status === 'EXPIRED'
+    const shouldRenderContainerIntroduction =
+        visitor.status === 'EXPIRED' && !isLoading
 
-    //TODO: ADD LOADING COMPONENT HERE WHEN useDemoSessionProvider is fetching DATA/ mutation loading (Not render ContainerIntroduction First)
+    if (isLoading) return <Loading title='Getting ready...' />
 
     if (shouldRenderContainerIntroduction)
         return (
@@ -32,6 +36,7 @@ const AppWrapper = () => {
                 sendCodeStatus={sendCodeStatus}
                 sendCode={sendCode}
                 verifyDemoSession={verifyDemoSession}
+                mutationError={mutationError}
             />
         )
 

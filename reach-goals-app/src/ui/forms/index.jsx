@@ -8,7 +8,14 @@ import './style.scss'
 /**
  * @param {Props} props
  */
-const Form = ({ typeForm, functionFormMap, model, modelForm, mainModelID, pendingState }) => {
+const Form = ({
+    typeForm,
+    functionFormMap,
+    model,
+    modelForm,
+    mainModelID,
+    pendingState,
+}) => {
     const isFormTag = typeForm === 'tag'
     const isFormStandard = typeForm === 'goal' || typeForm === 'assignment'
 

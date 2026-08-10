@@ -29,11 +29,11 @@ const handler = async (req, res) => {
 
         if (req.method === 'POST') {
             if (action === 'send-code') {
-                const { email } = data
+                const { name, email } = data
 
-                if (!email)
+                if (!name || !email)
                     throw new Error(
-                        `Error to process data. Email is necessary. Data sended - email: ${email}`
+                        `Error to process data. Name and Email is necessary. Data sended - name: ${name}, email: ${email}`
                     )
 
                 const demoVisitorVerification =

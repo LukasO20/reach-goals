@@ -43,6 +43,7 @@
  * @typedef {Object} DemoSessionContextValue
  * @property {DemoVisitorProps} visitor
  * @property {VerifyDemoSessionProps} verifyDemoSession
+ * @property {'error' | 'idle' | 'pending' | 'success'} sendCodeStatus
  * @property {SendCodeProps} sendCode
  * @property {Error | null} mutationError
  * @property {boolean} mutationLoading

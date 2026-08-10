@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import * as demoVisitorService from '../../../services/demo-visitor.js'
 
@@ -13,13 +13,20 @@ import { safeDemoSessionData, safeAuthDemoSessionData } from './defaults.js'
 const DemoSessionContext = createContext()
 
 export const DemoSessionProvider = ({ children }) => {
+    const queryClient = useQueryClient()
+
+    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
     const {
         data: authDemoSessionData = safeAuthDemoSessionData,
         error: authDemoSessionError,
         isLoading: authDemoSessionIsLoading,
     } = useQuery({
         queryKey: ['auth-demo-session'],
-        queryFn: demoVisitorService.getAuthenticateDemoSession,
+        queryFn: async () => {
+            await delay(5000)
+            return await demoVisitorService.getAuthenticateDemoSession
+        },
     })
 
     const {
@@ -30,6 +37,9 @@ export const DemoSessionProvider = ({ children }) => {
         queryKey: ['demo-session'],
         queryFn: () =>
             demoVisitorService.getDemoVisitor(authDemoSessionData.sub),
+        enabled:
+            !!authDemoSessionData?.sub &&
+            authDemoSessionData !== safeAuthDemoSessionData,
     })
 
     const sendCodeMutation = useMutation({
@@ -38,6 +48,11 @@ export const DemoSessionProvider = ({ children }) => {
 
     const verifyDemoSessionMutation = useMutation({
         mutationFn: (data) => demoVisitorService.demoVisitorVerify(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['auth-demo-session', 'demo-session'],
+            })
+        },
     })
 
     return (
@@ -50,6 +65,7 @@ export const DemoSessionProvider = ({ children }) => {
                 },
                 sendCode: sendCodeMutation.mutate,
                 verifyDemoSession: verifyDemoSessionMutation.mutate,
+                sendCodeStatus: sendCodeMutation.status,
                 mutationError:
                     sendCodeMutation.error ?? verifyDemoSessionMutation.error,
                 mutationLoading:

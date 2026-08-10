@@ -1,0 +1,49 @@
+.input-code-container {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-gap-sm;
+
+    .title {
+        color: $color-contrast;
+        margin: $spacing-margin-sm;
+        font-weight: 500;
+    }
+
+    > .input {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: $spacing-gap-sm;
+
+        .input-code {
+            background-color: $color-pair-primary;
+            border-radius: $dimensions-border-radius-sm;
+            border: 3px solid transparent;
+            box-sizing: border-box;
+            outline-color: $color-accent;
+            height: 2.5rem;
+            width: 2.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: $font-size-lg;
+            text-align: center;
+
+            &:hover {
+                border-color: $color-accent-light;
+                caret-color: $color-accent-light;
+            }
+
+            &.error {
+                border-color: $color-error;
+                outline-color: $color-error-dark;
+            }
+        }
+    }
+
+    .input-code-error {
+        font-size: $font-size-mini;
+        font-weight: 600;
+        color: $color-error;
+        padding: 0rem $spacing-padding-sm;
+    }
+}

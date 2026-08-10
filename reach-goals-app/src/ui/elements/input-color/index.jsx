@@ -4,12 +4,21 @@ import { cx } from '../../../utils/utils.js'
 
 import './style.scss'
 
-/** @typedef {import('./types.js').In} Props */
+/** @typedef {import('./types.js').InputColorProps} Props */
 
 /**
  * @param {Props} props
  */
-const InputColor = ({ id, className, placeholder, name, value, onChange, errorMessage, ...rest }) => {
+const InputColor = ({
+    id,
+    className,
+    placeholder,
+    name,
+    value,
+    onChange,
+    errorMessage,
+    ...rest
+}) => {
     const [valueColor, setValueColor] = useState(undefined)
 
     const handleChange = (e) => {
@@ -18,7 +27,7 @@ const InputColor = ({ id, className, placeholder, name, value, onChange, errorMe
         setValueColor(value)
 
         onChange?.({
-            target: { name: name, value: value }
+            target: { name: name, value: value },
         })
     }
 
@@ -46,7 +55,9 @@ const InputColor = ({ id, className, placeholder, name, value, onChange, errorMe
                 />
                 <span>{valueColor ?? value}</span>
             </div>
-            {hasErrorMessgae && <label className='input-color-error'>{errorMessage}</label>}
+            {hasErrorMessgae && (
+                <label className='input-color-error'>{errorMessage}</label>
+            )}
         </div>
     )
 }
