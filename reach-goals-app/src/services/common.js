@@ -9,7 +9,7 @@ export const searchResults = async (params = '') => {
 
         if (!response.ok) {
             const error = await response.json()
-            throw new Error(error.error || 'Failed to fetch results.')
+            throw new Error(error)
         }
 
         const data = await response.json()
@@ -53,8 +53,7 @@ export const removeModels = async (data) => {
         })
 
         const result = await response.json()
-        if (!response.ok)
-            throw new Error(result.error || 'Failed to remove models.')
+        if (!response.ok) throw new Error(error)
 
         return result
     } catch (error) {
@@ -74,8 +73,7 @@ export const updateModelStatus = async (data, status) => {
         })
 
         const result = await response.json()
-        if (!response.ok)
-            throw new Error(result.error || 'Failed to update model status.')
+        if (!response.ok) throw new Error(error)
 
         return result
     } catch (error) {

@@ -11,7 +11,7 @@ export const addGoal = async (goal) => {
 
         if (!response.ok) {
             const error = await response.json()
-            throw new Error(error.error || 'Failed to add goal.')
+            throw new Error(error)
         }
 
         return await response.json()
@@ -31,8 +31,7 @@ export const updateGoal = async (goal) => {
         })
 
         const result = await response.json()
-        if (!response.ok)
-            throw new Error(result.error || 'Failed to update goal.')
+        if (!response.ok) throw new Error(error)
 
         return result
     } catch (error) {
@@ -63,12 +62,12 @@ export const deleteGoal = async (goalID) => {
 
         if (!responseUnlinkTag.ok) {
             const error = await responseUnlinkTag.json()
-            throw new Error(error.error || 'Failed to unlink tags from goal.')
+            throw new Error(error)
         }
 
         if (!responseGoal.ok) {
             const error = await responseGoal.json()
-            throw new Error(error.error || 'Failed to delete goal.')
+            throw new Error(error)
         }
     } catch (error) {
         console.error(`Error delete goal: ${error.message}`)
@@ -87,7 +86,7 @@ export const getGoal = async (goalID) => {
 
         if (!response.ok) {
             const error = await response.json()
-            throw new Error(error.error || 'Failed to fetch goals.')
+            throw new Error(error)
         }
 
         return await response.json()
@@ -112,7 +111,7 @@ export const getGoalOnTag = async (tagID) => {
 
         if (!response.ok) {
             const error = await response.json()
-            throw new Error(error.error || 'Failed to fetch goals.')
+            throw new Error(error)
         }
 
         return await response.json()
@@ -137,7 +136,7 @@ export const getGoalOnAssignment = async (assignmentID) => {
 
         if (!response.ok) {
             const error = await response.json()
-            throw new Error(error.error || 'Failed to fetch goals.')
+            throw new Error(error)
         }
 
         return await response.json()
@@ -162,7 +161,7 @@ export const getGoalWithoutAssignment = async (assignmentID) => {
 
         if (!response.ok) {
             const error = await response.json()
-            throw new Error(error.error || 'Failed to fetch goals.')
+            throw new Error(error)
         }
 
         return await response.json()

@@ -89,9 +89,8 @@ const handler = async (req, res) => {
         }
     } catch (error) {
         return res.status(500).json({
-            error:
-                `Failed to process request - ${action}: ${error.message}` ||
-                'Internal Server Error',
+            service: `DemoVisitor - ${action}`,
+            error: error.message || 'Internal Server Error',
         })
     }
 }

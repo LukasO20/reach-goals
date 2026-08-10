@@ -73,7 +73,7 @@ export const getDemoVisitor = async (demoVisitorId) => {
             }
         })
     } catch (error) {
-        throw new Error(`Error to get a demo-visitor: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
@@ -119,7 +119,7 @@ const addDemoVisitor = async (data) => {
             }
         })
     } catch (error) {
-        throw new Error(`Error to add a demo-visitor: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 

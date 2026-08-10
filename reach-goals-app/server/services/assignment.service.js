@@ -7,7 +7,7 @@ export const addAssignment = async (data) => {
             include: { goal: true, tags: { include: { tag: true } } },
         })
     } catch (error) {
-        throw new Error(`Failed to create assignment: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
@@ -19,7 +19,7 @@ export const updateAssignment = async (assignmentID, data) => {
             include: { goal: true, tags: { include: { tag: true } } },
         })
     } catch (error) {
-        throw new Error(`Failed to update assignment: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
@@ -29,7 +29,7 @@ export const deleteAssignment = async (assignmentID) => {
             where: { id: Number(assignmentID) },
         })
     } catch (error) {
-        throw new Error(`Failed to delete assignment: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
@@ -142,7 +142,7 @@ export const getAssignmentOnGoal = async (goalID) => {
             },
         })
     } catch (error) {
-        throw new Error(`Failed to get assignment-goal: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
@@ -199,7 +199,7 @@ export const getAssignmentOnTag = async (tagID) => {
             },
         })
     } catch (error) {
-        throw new Error(`Failed to get assignment-tag: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
@@ -238,6 +238,6 @@ export const updateTagOnAssignment = async (assignmentID, tags) => {
             skipDuplicates: true,
         })
     } catch (error) {
-        throw new Error(`Failed to update tag on assignment: ${error.message}`)
+        throw new Error(error.message)
     }
 }

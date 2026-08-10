@@ -11,7 +11,7 @@ export const addTag = async (tag) => {
 
         if (!response.ok) {
             const error = await response.json()
-            throw new Error(error.error || 'Failed to add tag.')
+            throw new Error(error)
         }
 
         return await response.json()
@@ -31,8 +31,7 @@ export const updateTag = async (tag) => {
         })
 
         const result = await response.json()
-        if (!response.ok)
-            throw new Error(result.error || 'Failed to update tag.')
+        if (!response.ok) throw new Error(error)
 
         return result
     } catch (error) {
@@ -51,7 +50,7 @@ export const deleteTag = async (tagID) => {
 
         if (!response.ok) {
             const error = await response.json()
-            throw new Error(error.error || 'Failed to delete tag.')
+            throw new Error(error)
         }
     } catch (error) {
         console.error(`Error delete tag: ${error.message}`)
@@ -92,7 +91,7 @@ export const getTagOnGoal = async (goalID) => {
 
         if (!response.ok) {
             const error = await response.json()
-            throw new Error(error.error || 'Failed to fetch tags on goal.')
+            throw new Error(error)
         }
 
         return await response.json()
@@ -119,7 +118,7 @@ export const getTagOnAssignment = async (assignmentID) => {
 
         if (!response.ok) {
             const error = await response.json()
-            throw new Error(error.error || 'Failed to fetch tags on goal.')
+            throw new Error(error)
         }
 
         const data = await response.json()
@@ -147,7 +146,7 @@ export const getTagNotGoal = async (goalID) => {
 
         if (!response.ok) {
             const error = await response.json()
-            throw new Error(error.error || 'Failed to fetch tags.')
+            throw new Error(error)
         }
 
         return await response.json()
@@ -174,7 +173,7 @@ export const getTagNotAssignment = async (assignmentID) => {
 
         if (!response.ok) {
             const error = await response.json()
-            throw new Error(error.error || 'Failed to fetch tags.')
+            throw new Error(error)
         }
 
         return await response.json()
@@ -196,7 +195,7 @@ export const unlinkTagOnGoal = async (tagID, goalID) => {
 
         if (!response.ok) {
             const error = await response.json()
-            throw new Error(error.error || 'Failed to unlink this tag.')
+            throw new Error(error)
         }
 
         return await response.json()

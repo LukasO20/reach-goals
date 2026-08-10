@@ -9,7 +9,7 @@ export const addGoal = async (data) => {
             include: { assignments: true, tags: { include: { tag: true } } },
         })
     } catch (error) {
-        throw new Error(`Failed to create goal: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
@@ -23,7 +23,7 @@ export const updateGoal = async (goalID, data) => {
             include: { assignments: true, tags: { include: { tag: true } } },
         })
     } catch (error) {
-        throw new Error(`Failed to update goal: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
@@ -35,7 +35,7 @@ export const deleteGoal = async (goalID) => {
             where: { id: Number(goalID) },
         })
     } catch (error) {
-        throw new Error(`Failed to delete goal: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
@@ -96,7 +96,7 @@ export const getGoal = async (goalID) => {
             },
         })
     } catch (error) {
-        throw new Error(`Failed to get goal: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
@@ -145,7 +145,7 @@ export const getGoalOnAssignment = async (assignmentID) => {
             },
         })
     } catch (error) {
-        throw new Error(`Failed to get goal-assignment: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
@@ -185,7 +185,7 @@ export const getGoalOnTag = async (tagID) => {
             },
         })
     } catch (error) {
-        throw new Error(`Failed to get goal-tag: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
@@ -257,6 +257,6 @@ export const updateTagOnGoal = async (goalID, tags) => {
             skipDuplicates: true,
         })
     } catch (error) {
-        throw new Error(`Failed to update tag on goal: ${error.message}`)
+        throw new Error(error.message)
     }
 }

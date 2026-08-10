@@ -14,7 +14,7 @@ export const updateModelDragDrop = async (data = [], typeModel = '') => {
                 )
             )
         } catch (error) {
-            throw new Error(`Error updating drag-drop model: ${error.message}`)
+            throw new Error(error.message)
         }
     }
 
@@ -69,7 +69,7 @@ export const removeModels = async (data = []) => {
 
         return totalDeleted > 0
     } catch (error) {
-        throw new Error(`Error removing models: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
@@ -90,7 +90,7 @@ export const updateModelStatus = async (ids = [], status = '') => {
 
             return { goal: statusGoal, assignment: statusAssignment }
         } catch (error) {
-            throw new Error(`Error updating model status: ${error.message}`)
+            throw new Error(error.message)
         }
     }
 }

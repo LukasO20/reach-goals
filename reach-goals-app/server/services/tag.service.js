@@ -8,7 +8,7 @@ export const addTag = async (data) => {
             data: data,
         })
     } catch (error) {
-        throw new Error(`Failed to create tag: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
@@ -21,7 +21,7 @@ export const updateTag = async (tagID, data) => {
             data: data,
         })
     } catch (error) {
-        throw new Error(`Failed to update tag: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
@@ -33,7 +33,7 @@ export const deleteTag = async (tagID) => {
             where: { id: Number(tagID) },
         })
     } catch (error) {
-        throw new Error(`Failed to delete tag: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
@@ -98,7 +98,7 @@ export const getTag = async (tagID) => {
             },
         })
     } catch (error) {
-        throw new Error(`Failed to get tag: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
@@ -152,7 +152,7 @@ export const getTagOnGoal = async (goalID) => {
             },
         })
     } catch (error) {
-        throw new Error(`Failed to get tag-goal: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
@@ -207,7 +207,7 @@ export const getTagOnAssignment = async (assignmentID) => {
             },
         })
     } catch (error) {
-        throw new Error(`Failed to get tag-assignment: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
@@ -228,7 +228,7 @@ export const getTagNotGoal = async (goalID) => {
             select: { id: true, name: true, color: true },
         })
     } catch (error) {
-        throw new Error(`Failed to get tag-not-goal: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
@@ -251,7 +251,7 @@ export const getTagNotAssignment = async (assignmentID) => {
             select: { id: true, name: true, color: true },
         })
     } catch (error) {
-        throw new Error(`Failed to get tag-not-assignment: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
@@ -272,7 +272,7 @@ export const unlinkTagOnGoal = async (tagID, goalID) => {
             },
         })
     } catch (error) {
-        throw new Error(`Failed to unlink tag-goal: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
@@ -290,7 +290,7 @@ export const unlinkAllTagOnGoal = async (goalID) => {
             },
         })
     } catch (error) {
-        throw new Error(`Failed to unlink all tag-goal: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
@@ -313,7 +313,7 @@ export const unlinkTagOnAssignment = async (tagID, assignmentID) => {
             },
         })
     } catch (error) {
-        throw new Error(`Failed to unlink tag-assignment: ${error.message}`)
+        throw new Error(error.message)
     }
 }
 
@@ -331,6 +331,6 @@ export const unlinkAllTagOnAssignment = async (assignmentID) => {
             },
         })
     } catch (error) {
-        throw new Error(`Failed to unlink all tag-assignment: ${error.message}`)
+        throw new Error(error.message)
     }
 }

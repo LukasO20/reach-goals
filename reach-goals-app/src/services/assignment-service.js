@@ -11,7 +11,7 @@ export const addAssignment = async (assignment) => {
 
         if (!response.ok) {
             const error = await response.json()
-            throw new Error(error.error || 'Failed to add assignment.')
+            throw new Error(error)
         }
 
         return await response.json()
@@ -31,8 +31,7 @@ export const updateAssignment = async (assignment) => {
         })
 
         const result = await response.json()
-        if (!response.ok)
-            throw new Error(result.error || 'Failed to update assignment.')
+        if (!response.ok) throw new Error(error)
 
         return result
     } catch (error) {
@@ -70,7 +69,7 @@ export const deleteAssignment = async (assignmentID) => {
 
         if (!response.ok) {
             const error = await response.json()
-            throw new Error(error.error || 'Failed to delete assignment.')
+            throw new Error(error)
         }
     } catch (error) {
         console.error(`Error delete assignment: ${error.message}`)
@@ -91,7 +90,7 @@ export const getAssignment = async (assignmentID) => {
 
         if (!response.ok) {
             const error = await response.json()
-            throw new Error(error.error || 'Failed to fetch assignments.')
+            throw new Error(error)
         }
 
         return await response.json()
@@ -116,7 +115,7 @@ export const getAssignmentOnTag = async (tagID) => {
 
         if (!response.ok) {
             const error = await response.json()
-            throw new Error(error.error || 'Failed to fetch assignments.')
+            throw new Error(error)
         }
 
         return await response.json()
@@ -141,7 +140,7 @@ export const getAssignmentOnGoal = async (goalID) => {
 
         if (!response.ok) {
             const error = await response.json()
-            throw new Error(error.error || 'Failed to fetch assignments.')
+            throw new Error(error)
         }
 
         return await response.json()
@@ -161,7 +160,7 @@ export const getAssignmentWithoutGoal = async () => {
 
         if (!response.ok) {
             const error = await response.json()
-            throw new Error(error.error || 'Failed to fetch assignments.')
+            throw new Error(error)
         }
 
         return await response.json()
