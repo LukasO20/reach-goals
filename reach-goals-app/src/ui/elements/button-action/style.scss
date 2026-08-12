@@ -65,7 +65,8 @@
 
     &.text-icon {
         height: 1rem;
-        width: 1rem;
+        width: auto;
+        gap: $spacing-gap-mini;
     }
 
     &.chart {
@@ -98,7 +99,6 @@
         }
 
         .spinner-inline {
-
             .spinner {
                 border: 6px solid $color-accent-dark;
                 border-top-color: $color-white;
@@ -122,7 +122,6 @@
     &.plan-round,
     &.plan,
     &.add {
-
         &.small {
             height: 1.8rem;
             width: 5.75rem;

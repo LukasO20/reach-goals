@@ -2,7 +2,9 @@
 
 /** * @typedef {import('../../../utils/types.js').DemoSessionSendCode} DemoSessionSendCodeProps */
 
-/** * @typedef {import('../../../utils/types.js').DemoSessionVerification} DemoSessionVerificationrops */
+/** * @typedef {import('../../../utils/types.js').DemoSessionVerification} DemoSessionVerificationProps */
+
+/** * @typedef {import('../../../utils/types.js').HttpError} HttpErrorProps */
 
 /**
  * @typedef {Object} DemoVisitorProps
@@ -25,6 +27,11 @@
  */
 
 /**
+ * @callback ResetSendCodeProps
+ * @returns {void}
+ */
+
+/**
  * @typedef VerifyDemoSessionReturns
  * @property {string} id,
  * @property {string} email,
@@ -35,7 +42,7 @@
 
 /**
  * @callback VerifyDemoSessionProps
- * @param {DemoSessionVerificationrops} params
+ * @param {DemoSessionVerificationProps} params
  * @returns {VerifyDemoSessionReturns}
  */
 
@@ -45,10 +52,12 @@
  * @property {VerifyDemoSessionProps} verifyDemoSession
  * @property {'error' | 'idle' | 'pending' | 'success'} sendCodeStatus
  * @property {SendCodeProps} sendCode
- * @property {Error | null} mutationError
+ * @property {ResetSendCodeProps} resetSendCode
+ * @property {HttpErrorProps} mutationError
  * @property {boolean} mutationLoading
  * @property {Error | null} error
  * @property {boolean} isLoading
+ * @property {boolean} codeAlreadySent
  */
 
 export {}

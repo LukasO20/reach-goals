@@ -9,18 +9,19 @@ import ContainerIntroduction from '../ui/containers/container-introduction'
 import MessageToast from '../ui/elements/message-toast'
 import ModalSwitcherCenter from '../ui/modals/modal-switcher-center.jsx'
 import ModalSwitcherRight from '../ui/modals/modal-switcher-right.jsx'
-import ModalDemoseSession from '../ui/containers/container-introduction'
 import Loading from '../ui/elements/loading'
 
 const AppWrapper = () => {
     const {
         visitor,
         sendCode,
+        resetSendCode,
         verifyDemoSession,
         sendCodeStatus,
         mutationLoading,
         isLoading,
         mutationError,
+        codeAlreadySent,
     } = useDemoSessionProvider()
 
     const shouldRenderContainerIntroduction =
@@ -31,12 +32,13 @@ const AppWrapper = () => {
     if (shouldRenderContainerIntroduction)
         return (
             <ContainerIntroduction
-                visitor={visitor}
                 mutationLoading={mutationLoading}
+                mutationError={mutationError}
                 sendCodeStatus={sendCodeStatus}
                 sendCode={sendCode}
+                resetSendCode={resetSendCode}
                 verifyDemoSession={verifyDemoSession}
-                mutationError={mutationError}
+                codeAlreadySent={codeAlreadySent}
             />
         )
 
@@ -50,7 +52,6 @@ const AppWrapper = () => {
             <MessageToast />
             <ModalSwitcherCenter />
             <ModalSwitcherRight />
-            <ModalDemoseSession />
         </>
     )
 }

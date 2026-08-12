@@ -5,7 +5,7 @@
 export const findEmptyFields = ({ form }) => {
     const fieldsData = Object.fromEntries(
         Object.entries(form).filter(([key, value]) => {
-            const validFields = ['name', 'email']
+            const validFields = ['name', 'email', 'code']
             return !value && validFields.includes(key)
         })
     )

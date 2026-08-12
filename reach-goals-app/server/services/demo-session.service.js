@@ -1,6 +1,6 @@
 import { verifyAccessToken } from '../auth/jwt.js'
 
-const ACTIONS_PASS = ['verification', 'send-code', 'auth-session']
+const ACTIONS_PASS = ['verification', 'send-code']
 
 const unauthorized = (message) => {
     const error = new Error(message)
@@ -16,15 +16,16 @@ export const authenticateDemoSession = async (req, action = '') => {
 
     if (ACTIONS_PASS.includes(action)) return true
 
-    const cookie = req.headers.cookie
-
-    if (!cookie) throw unauthorized('Demo session not found. Unauthorized')
+    const cookie = req.headers.cookie ?? ''
 
     const token = cookie
         .split(';')
         .find((item) => item.trim().startsWith('demo-session='))
 
-    if (!token) throw unauthorized('Demo session not found. Unauthorized')
+    if (!token && action !== 'auth-session')
+        throw unauthorized('Demo session not found. Unauthorized')
+
+    if (!token && action === 'auth-session') return true
 
     const jwt = token.split('=')[1]
 

@@ -1,8 +1,10 @@
 /** @import * as React from 'react' */
 
 /** @typedef {import('../../../provider/model/demo-session-provider/types.js').SendCodeProps} OnDemoSessionFormProps */
+/** @typedef {import('../../../provider/model/demo-session-provider/types.js').ResetSendCodeProps} OnResetSendCodeProps */
 /** @typedef {import('../../../provider/model/demo-session-provider/types.js').VerifyDemoSessionProps} OnVerifyDemoSessionProps */
 /** @typedef {import('../../../provider/model/demo-session-provider/types.js').DemoSessionContextValue} ContainerIntroductionProps */
+/** @typedef {import('../../../provider/model/demo-session-provider/types.js').HttpErrorProps} HttpErrorProps */
 
 /**
  * @typedef {Object} EmptyFieldsStateProps
@@ -43,11 +45,13 @@
 /**
  * @typedef {Object} FormDemoSessionProps
  * @property {boolean} isCodeSended
+ * @property {HttpErrorProps} mutationError
  * @property {boolean} mutationLoading
  * @property {string} error
  * @property {DemoSessionForm} demoSessionForm
  * @property {SetDemoSessionFormProps} onDemoSessionForm
  * @property {OnDemoSessionFormProps} onSendCode
+ * @property {OnResetSendCodeProps} onResetSendCode
  * @property {OnVerifyDemoSessionProps} onVerifyDemoSession
  */
 

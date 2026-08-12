@@ -39,14 +39,17 @@ const handler = async (req, res) => {
                 const demoVisitorVerification =
                     await getDemoVisitorVerification(email)
 
-                const hasSomeValidCode = demoVisitorVerification.some(
+                const someValidCode = demoVisitorVerification.find(
                     (item) => new Date() < item.expiresAt
                 )
 
-                if (hasSomeValidCode) {
-                    throw new Error(
-                        'Error to validate your e-mail. A code already sended, check your e-mail'
-                    )
+                if (someValidCode) {
+                    return res.status(200).json({
+                        email: someValidCode.email,
+                        code: someValidCode.code,
+                        expiresAt: someValidCode.expiresAt,
+                        alreadySent: true,
+                    })
                 }
 
                 const demoVisitorVerificationAdded =
@@ -81,7 +84,7 @@ const handler = async (req, res) => {
 
                 if (isEveryInvalidCode)
                     throw new Error(
-                        'Error to validate your e-mail. Invalid code, we sent a code to your e-mail. Check it and try again'
+                        'Invalid code, we sent a code to your e-mail. Check it and try again'
                     )
 
                 return await authenticateDemoVisitor(req, res, data)

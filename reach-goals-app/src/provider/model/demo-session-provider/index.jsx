@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 
 import * as demoVisitorService from '../../../services/demo-visitor.js'
 
@@ -13,7 +13,7 @@ import { safeDemoSessionData, safeAuthDemoSessionData } from './defaults.js'
 const DemoSessionContext = createContext()
 
 export const DemoSessionProvider = ({ children }) => {
-    const queryClient = useQueryClient()
+    const [codeAlreadySent, setCodeAlreadySent] = useState(false)
 
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -24,8 +24,9 @@ export const DemoSessionProvider = ({ children }) => {
     } = useQuery({
         queryKey: ['auth-demo-session'],
         queryFn: async () => {
-            await delay(5000)
-            return await demoVisitorService.getAuthenticateDemoSession
+            await delay(3500)
+            const result = await demoVisitorService.getAuthenticateDemoSession()
+            return result
         },
     })
 
@@ -44,15 +45,14 @@ export const DemoSessionProvider = ({ children }) => {
 
     const sendCodeMutation = useMutation({
         mutationFn: (data) => demoVisitorService.demoVisitorStart(data),
+        onSuccess: ({ alreadySent }) => {
+            setCodeAlreadySent(alreadySent)
+        },
     })
 
     const verifyDemoSessionMutation = useMutation({
         mutationFn: (data) => demoVisitorService.demoVisitorVerify(data),
-        onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: ['auth-demo-session', 'demo-session'],
-            })
-        },
+        onSuccess: () => window.location.reload(),
     })
 
     return (
@@ -66,6 +66,7 @@ export const DemoSessionProvider = ({ children }) => {
                 sendCode: sendCodeMutation.mutate,
                 verifyDemoSession: verifyDemoSessionMutation.mutate,
                 sendCodeStatus: sendCodeMutation.status,
+                resetSendCode: sendCodeMutation.reset,
                 mutationError:
                     sendCodeMutation.error ?? verifyDemoSessionMutation.error,
                 mutationLoading:
@@ -73,6 +74,7 @@ export const DemoSessionProvider = ({ children }) => {
                     verifyDemoSessionMutation.isPending,
                 error: authDemoSessionError || demoSessionError,
                 isLoading: authDemoSessionIsLoading || demoSessionIsLoading,
+                codeAlreadySent,
             }}
         >
             {children}

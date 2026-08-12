@@ -3,3 +3,9 @@ export const safeDemoSessionForm = {
     email: '',
     code: '',
 }
+
+export const safeMutationError = {
+    error: undefined,
+    service: undefined,
+    status: undefined,
+}

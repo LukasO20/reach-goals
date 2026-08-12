@@ -1,3 +1,11 @@
+/* HTTP CATCH ERROR */
+/**
+ * @typedef {Object} HttpError
+ * @property {string} error
+ * @property {string} service
+ * @property {number} status
+ */
+
 /* VISIBILITY-CONFIG-PROPS */
 /**
  * @typedef {'progress' | 'conclude' | 'cancel'} StatusType

@@ -15,9 +15,7 @@ export const getAuthenticateDemoSession = async () => {
 
         return result
     } catch (error) {
-        throw new Error(
-            `Error getting authenticated demo session: ${error.message}`
-        )
+        throw new Error(error)
     }
 }
 
@@ -36,46 +34,51 @@ export const getDemoVisitor = async (demoVisitorId) => {
 
         return result
     } catch (error) {
-        throw new Error(`Error getting demo visitor: ${error.message}`)
+        throw new Error(error)
     }
 }
 
 export const demoVisitorStart = async (data) => {
-    try {
-        const url = `/api/demo-visitor?action=send-code`
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ data }),
-            credentials: 'same-origin',
-        })
+    const url = `/api/demo-visitor?action=send-code`
 
-        const result = await response.json()
-        if (!response.ok)
-            throw new Error(`Failed to send code: ${result.error}`)
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ data }),
+        credentials: 'same-origin',
+    })
 
-        return result
-    } catch (error) {
-        throw new Error(`Error seinding code: ${error.message}`)
+    const result = await response.json()
+
+    if (!response.ok) {
+        throw {
+            status: response.status,
+            ...result,
+        }
     }
+
+    return result
 }
 
 export const demoVisitorVerify = async (data) => {
-    try {
-        const url = `/api/demo-visitor?action=verification`
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ data }),
-            credentials: 'same-origin',
-        })
+    const url = `/api/demo-visitor?action=verification`
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data }),
+        credentials: 'same-origin',
+    })
 
-        const result = await response.json()
-        if (!response.ok)
-            throw new Error(`Failed to verify demo session: ${result.error}`)
+    const result = await response.json()
 
-        return result
-    } catch (error) {
-        throw new Error(`Error verifying demo visitor: ${error.message}`)
+    if (!response.ok) {
+        throw {
+            status: response.status,
+            ...result,
+        }
     }
+
+    return result
 }

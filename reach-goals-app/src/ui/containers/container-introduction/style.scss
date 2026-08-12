@@ -43,6 +43,23 @@
                 display: flex;
                 flex-direction: column;
                 gap: $spacing-gap-sm;
+
+                .button-action {
+                    align-self: center;
+                    background-color: transparent;
+                    margin: $spacing-margin-sm 0rem;
+
+                    * {
+                        color: $color-contrast;
+                        font-weight: 500;
+                    }
+
+                    &:hover {
+                        * {
+                            color: $color-contrast-o-70;
+                        }
+                    }
+                }
             }
 
             .actions {

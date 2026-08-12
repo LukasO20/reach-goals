@@ -52,7 +52,7 @@ export const getDemoVisitorVerification = async (email = '') => {
             where: { email: email },
         })
     } catch (error) {
-        throw new Error('Error to get a demo-visitor-verification: ', error)
+        throw new Error(`Error to get a demo-visitor-verification: ${error}`)
     }
 }
 

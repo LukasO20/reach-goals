@@ -19,8 +19,10 @@ const FormDemoSession = ({
     demoSessionForm,
     onDemoSessionForm,
     onSendCode,
+    onResetSendCode,
     onVerifyDemoSession,
     mutationLoading,
+    mutationError,
 }) => {
     /** @type {import('../types.js').SetEmptyFieldsProps} */
     const [emptyFields, setEmptyFields] = useState({
@@ -30,29 +32,31 @@ const FormDemoSession = ({
 
     console.log('form - ', demoSessionForm)
     const handleButtonActionClick = () => {
+        const formatFields = {
+            name: demoSessionForm.name,
+            email: demoSessionForm.email,
+            ...(isCodeSended && {
+                code: demoSessionForm.code,
+            }),
+        }
+
         const fields = findEmptyFields({
-            form: { name: demoSessionForm.name, email: demoSessionForm.email },
+            form: formatFields,
         })
         setEmptyFields(fields)
 
-        console.log('fields ', fields)
         if (fields.isEmptyFields) return
 
         !isCodeSended
-            ? onSendCode({
-                  name: demoSessionForm.name,
-                  email: demoSessionForm.email,
-              })
-            : onVerifyDemoSession({
-                  code: demoSessionForm.code,
-                  name: demoSessionForm.name,
-                  email: demoSessionForm.email,
-              })
+            ? onSendCode(formatFields)
+            : onVerifyDemoSession(formatFields)
     }
 
     const buttonTitle = isCodeSended ? 'Start a session' : 'Send code'
 
-    //TODO: IMPROVE InputCode ERROR MESSAGE WHEN WRONG CODE SCENARY HAPPENS
+    const inputCodeErrorMessage = emptyFields.fields.includes('code')
+        ? 'Code is required'
+        : mutationError.error
 
     return (
         <div className='demo-session-form'>
@@ -82,21 +86,23 @@ const FormDemoSession = ({
                     </>
                 )}
                 {isCodeSended && (
-                    <InputCode
-                        id='demo-session-code'
-                        name='code'
-                        length={6}
-                        title='Code'
-                        onChange={onDemoSessionForm}
-                        errorMessage={
-                            emptyFields.fields.includes('code') &&
-                            'Code is required'
-                        }
-                    />
+                    <>
+                        <InputCode
+                            id='demo-session-code'
+                            name='code'
+                            length={6}
+                            title='Code'
+                            onChange={onDemoSessionForm}
+                            errorMessage={inputCodeErrorMessage}
+                        />
+                        <ButtonAction
+                            classBtn='text-icon'
+                            title='Set new e-mail'
+                            onClick={onResetSendCode}
+                            icon='icon-arrow-left'
+                        />
+                    </>
                 )}
-                {
-                    //TODO: Need a button to go back (usefull when e-mail is wrong)
-                }
             </div>
             <div className='actions'>
                 <ButtonAction
