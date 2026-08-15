@@ -55,23 +55,33 @@ export const DemoSessionProvider = ({ children }) => {
         onSuccess: () => window.location.reload(),
     })
 
+    const logoutSessionMutation = useMutation({
+        mutationFn: (demoVisitorId) =>
+            demoVisitorService.logoutDemoSession(demoVisitorId),
+        onSuccess: () => window.location.reload(),
+    })
+
     return (
         <DemoSessionContext.Provider
             value={{
                 visitor: {
+                    id: demoSessionData.visitor.id,
                     name: demoSessionData.visitor.name,
                     email: demoSessionData.visitor.email,
                     status: demoSessionData.session.status,
+                    expiresAt: demoSessionData.session.expiresAt,
                 },
                 sendCode: sendCodeMutation.mutate,
                 verifyDemoSession: verifyDemoSessionMutation.mutate,
                 sendCodeStatus: sendCodeMutation.status,
                 resetSendCode: sendCodeMutation.reset,
+                logoutSession: logoutSessionMutation.mutate,
                 mutationError:
                     sendCodeMutation.error ?? verifyDemoSessionMutation.error,
                 mutationLoading:
                     sendCodeMutation.isPending ||
-                    verifyDemoSessionMutation.isPending,
+                    verifyDemoSessionMutation.isPending ||
+                    logoutSessionMutation.isPending,
                 error: authDemoSessionError || demoSessionError,
                 isLoading: authDemoSessionIsLoading || demoSessionIsLoading,
                 codeAlreadySent,

@@ -16,6 +16,7 @@ const AppWrapper = () => {
         visitor,
         sendCode,
         resetSendCode,
+        logoutSession,
         verifyDemoSession,
         sendCodeStatus,
         mutationLoading,
@@ -45,7 +46,11 @@ const AppWrapper = () => {
     return (
         <>
             <Navigate />
-            <ContainerHeader />
+            <ContainerHeader
+                visitor={visitor}
+                logoutSession={logoutSession}
+                mutationLoading={mutationLoading}
+            />
             <ContainerMain>
                 <AppRoutes />
             </ContainerMain>

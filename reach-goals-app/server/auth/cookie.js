@@ -11,3 +11,15 @@ export const createAccessCookie = (token) => {
         path: '/',
     })
 }
+
+export const removeAccessCookie = () => {
+    return stringifySetCookie({
+        name: 'demo-session',
+        value: '',
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 0,
+        path: '/',
+    })
+}

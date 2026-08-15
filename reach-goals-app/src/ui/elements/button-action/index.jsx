@@ -53,6 +53,7 @@ const ButtonAction = ({
     const isOn = statusButton(classBtnAction, visibleElements)
 
     const handleClick = (e) => {
+        if (pendingState) return
         e.stopPropagation()
 
         const dataResetManageModel = resetManageModelMap([

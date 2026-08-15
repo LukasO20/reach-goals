@@ -19,6 +19,27 @@ export const getAuthenticateDemoSession = async () => {
     }
 }
 
+export const logoutDemoSession = async (demoVisitorId) => {
+    try {
+        const url = `/api/demo-visitor/${demoVisitorId}?action=logout-session`
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+        })
+
+        const result = await response.json()
+        if (!response.ok)
+            throw new Error(
+                `Failed to get logout demo session: ${result.error}`
+            )
+
+        return result
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
 export const getDemoVisitor = async (demoVisitorId) => {
     try {
         const url = `/api/demo-visitor/${demoVisitorId}`

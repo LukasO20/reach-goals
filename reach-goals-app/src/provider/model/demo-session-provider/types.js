@@ -8,9 +8,11 @@
 
 /**
  * @typedef {Object} DemoVisitorProps
+ * @property {string | number} id
  * @property {string} name
  * @property {string} email
  * @property {'ACTIVE' | 'EXPIRED'} status
+ * @property {Date} expiresAt
  */
 
 /**
@@ -28,6 +30,12 @@
 
 /**
  * @callback ResetSendCodeProps
+ * @returns {void}
+ */
+
+/**
+ * @callback LogoutSessionProps
+ * @param {string | number} demoVisitorId
  * @returns {void}
  */
 
@@ -53,6 +61,7 @@
  * @property {'error' | 'idle' | 'pending' | 'success'} sendCodeStatus
  * @property {SendCodeProps} sendCode
  * @property {ResetSendCodeProps} resetSendCode
+ * @property {LogoutSessionProps} logoutSession
  * @property {HttpErrorProps} mutationError
  * @property {boolean} mutationLoading
  * @property {Error | null} error

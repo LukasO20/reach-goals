@@ -35,7 +35,7 @@ const ChartBar = ({ data, quantity, showLegend }) => {
     }
 
     /** @param {ModalChartCardsProps} */
-    const hancleOnModalChartCards = ({ icon, title, data }) => {
+    const handleOnModalChartCards = ({ icon, title, data }) => {
         setModalChartCards({ icon, title, data })
         setShowModalCards(true)
     }
@@ -54,46 +54,62 @@ const ChartBar = ({ data, quantity, showLegend }) => {
                 </div>
             )}
             <div className='body'>
-                {
-                    data.map((item) => {
-                        const hasActivity = item.quantity
-                        const percentLabel = calculatePercent(item.quantity, quantity)
-                        const labelMessage = hasActivity ? `${item.label} - ${item.quantity} ${activityLabel}` : `No ${item.label}s found`
-                        const iconModalChartCards = item.id
+                {data.map((item) => {
+                    const hasActivity = item.quantity
+                    const percentLabel = calculatePercent(
+                        item.quantity,
+                        quantity
+                    )
+                    const labelMessage = hasActivity
+                        ? `${item.label} - ${item.quantity} ${activityLabel}`
+                        : `No ${item.label}s found`
+                    const iconModalChartCards = item.id
 
-                        const barClass = cx(`
+                    const barClass = cx(`
                             bar
                             ${item.id}
                             ${!hasActivity && 'empty'}
                          `)
 
-                        return (
-                            <div className={barClass} key={item.id}>
-                                <div className={`bar-progress`} style={{ height: `${percentLabel}%` }}>
-                                    <div className='bar-title'>
-                                        <Icons icon={`icon-${item.id}`} />
-                                        <label className='label-message'>{labelMessage}</label>
-                                    </div>
-                                    {hasActivity && (
-                                        <label className='label-percent'>{percentLabel}%</label>
-                                    )}
+                    return (
+                        <div className={barClass} key={item.id}>
+                            <div
+                                className={`bar-progress`}
+                                style={{ height: `${percentLabel}%` }}
+                            >
+                                <div className='bar-title'>
+                                    <Icons icon={`icon-${item.id}`} />
+                                    <label className='label-message'>
+                                        {labelMessage}
+                                    </label>
                                 </div>
-                                <div className='bar-actions'>
-                                    {hasActivity && (
-                                        <ButtonAction
-                                            classBtn='details-activity circle'
-                                            icon='icon-plus'
-                                            onClick={(e) => {
-                                                hancleOnModalChartCards({ icon: iconModalChartCards, title: item.label, data: item.activities })
-                                                handleCalculatePosition(e.event.target)
-                                            }}
-                                        />
-                                    )}
-                                </div>
+                                {hasActivity && (
+                                    <label className='label-percent'>
+                                        {percentLabel}%
+                                    </label>
+                                )}
                             </div>
-                        )
-                    })
-                }
+                            <div className='bar-actions'>
+                                {hasActivity && (
+                                    <ButtonAction
+                                        classBtn='details-activity circle'
+                                        icon='icon-plus'
+                                        onClick={(e) => {
+                                            handleOnModalChartCards({
+                                                icon: iconModalChartCards,
+                                                title: item.label,
+                                                data: item.activities,
+                                            })
+                                            handleCalculatePosition(
+                                                e.event.target
+                                            )
+                                        }}
+                                    />
+                                )}
+                            </div>
+                        </div>
+                    )
+                })}
             </div>
             {showModalCards && (
                 <ModalCards
@@ -102,7 +118,10 @@ const ChartBar = ({ data, quantity, showLegend }) => {
                         left: `${coords.x}px`,
                         top: `${coords.y}px`,
                         minWidth: `${coords.width}px`,
-                        transform: getTransform(coords.placementX, coords.placementY),
+                        transform: getTransform(
+                            coords.placementX,
+                            coords.placementY
+                        ),
                     }}
                     data-placement-y={coords.placementY}
                     data-placement-x={coords.placementX}

@@ -1,10 +1,15 @@
 import { handlerAuthenticate } from '../../server/middleware/demo-session.middleware.js'
-import { getDemoVisitor } from '../../server/services/demo-visitor.service.js'
+import {
+    getDemoVisitor,
+    logoutDemoVisitor,
+} from '../../server/services/demo-visitor.service.js'
 
-const ALLOWED_METHODS = ['GET']
+import { formatObject } from '../../server/utils/utils.js'
+
+const ALLOWED_METHODS = ['GET', 'PUT']
 
 const handler = async (req, res) => {
-    const { demoVisitorId } = req.query
+    const { action, demoVisitorId } = req.query
 
     if (!ALLOWED_METHODS.includes(req.method)) {
         return res.status(405).json({
@@ -16,6 +21,12 @@ const handler = async (req, res) => {
         if (req.method === 'GET') {
             const demoVisitor = await getDemoVisitor(demoVisitorId)
             return res.status(200).json(demoVisitor)
+        }
+
+        if (req.method === 'PUT') {
+            if (action === 'logout-session') {
+                return await logoutDemoVisitor(res, demoVisitorId)
+            }
         }
     } catch (error) {
         return res.status(500).json({

@@ -87,7 +87,7 @@ const handler = async (req, res) => {
                         'Invalid code, we sent a code to your e-mail. Check it and try again'
                     )
 
-                return await authenticateDemoVisitor(req, res, data)
+                return await authenticateDemoVisitor(res, data)
             }
         }
     } catch (error) {
