@@ -36,6 +36,9 @@ import IconConcludeOff from './icon-conclude-off.jsx'
 import IconTagOff from './icon-tag-off.jsx'
 import IconHome from './icon-home.jsx'
 import IconColorPallet from './icon-color-pallet.jsx'
+import IconUser from './icon-user.jsx'
+import IconUserCircle from './icon-user-circle.jsx'
+import IconLogout from './icon-logout.jsx'
 
 export const iconMap = {
     'icon-goal': IconGoal,
@@ -75,5 +78,8 @@ export const iconMap = {
     'icon-conclude-off': IconConcludeOff,
     'icon-tag-off': IconTagOff,
     'icon-home': IconHome,
-    'icon-color-pallet': IconColorPallet
+    'icon-color-pallet': IconColorPallet,
+    'icon-user': IconUser,
+    'icon-user-circle': IconUserCircle,
+    'icon-logout': IconLogout,
 }
