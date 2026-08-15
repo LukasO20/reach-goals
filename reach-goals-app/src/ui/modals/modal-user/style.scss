@@ -1,0 +1,87 @@
+.container-modal-user {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-gap-mini;
+
+    .button-action {
+        &.user {
+            background-color: $color-accent;
+
+            /* DOUBLE APPLY */
+            &:hover,
+            &.active {
+                background-color: $color-accent-lightest;
+            }
+
+            &:active {
+                background-color: $color-accent-light;
+            }
+        }
+    }
+
+    .modal-user-content {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-gap-sm;
+        padding: $spacing-padding-sm;
+        border-radius: $dimensions-border-radius-mini;
+        box-shadow: $shadow-sm;
+        width: $dimensions-w-xmd;
+        z-index: 1;
+        background-color: $color-secondary;
+        overflow: hidden;
+
+        > .head {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-gap-mini;
+
+            * {
+                font-weight: 500;
+            }
+
+            > div {
+                display: flex;
+                align-items: center;
+                gap: $spacing-gap-mini;
+            }
+
+            > label {
+                font-size: $font-size-sm;
+                color: $color-contrast-o-70;
+            }
+        }
+
+        > .body {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-gap-sm;
+
+            .timer {
+                display: flex;
+                flex-direction: column;
+                background-color: $color-secondary-lightest;
+                gap: $spacing-gap-mini;
+                padding: $spacing-padding-sm;
+                border-radius: $dimensions-border-radius-sm;
+
+                > span {
+                    font-weight: 500;
+                }
+
+                > label {
+                    font-weight: 700;
+                    font-size: $font-size-m;
+                    color: $color-pair-secondary;
+                }
+            }
+
+            .button-action {
+                &.sign-out {
+                    align-self: flex-end;
+                }
+            }
+        }
+    }
+}
