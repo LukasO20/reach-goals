@@ -30,7 +30,6 @@ const FormDemoSession = ({
         isEmptyFields: false,
     })
 
-    console.log('form - ', demoSessionForm)
     const handleButtonActionClick = () => {
         const formatFields = {
             name: demoSessionForm.name,
@@ -93,6 +92,7 @@ const FormDemoSession = ({
                             length={6}
                             title='Code'
                             onChange={onDemoSessionForm}
+                            onPaste={onDemoSessionForm}
                             errorMessage={inputCodeErrorMessage}
                         />
                         <ButtonAction

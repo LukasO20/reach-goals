@@ -17,6 +17,7 @@ const InputCode = ({
     value,
     length = 4,
     onChange,
+    onPaste,
     errorMessage,
     ...rest
 }) => {
@@ -25,9 +26,11 @@ const InputCode = ({
 
     const handleChange = (e, index) => {
         const { name, value } = e.target
-        const newCode = [...code]
+        if (isNaN(value)) return
 
+        const newCode = [...code]
         newCode[index] = value.slice(-1)
+
         const updatedCodeString = newCode.join('')
 
         setCode(newCode)
@@ -49,29 +52,22 @@ const InputCode = ({
 
     const handlePaste = (e) => {
         e.preventDefault()
-        const pastedData = e.clipboardData
-            .getData('text')
-            .slice(0, length)
-            .split('')
+        const { name } = e.target
+        const value = e.clipboardData.getData('text').slice(0, length)
+        const pastedData = value.split('')
+
+        if (isNaN(value)) return
 
         const newCode = Array(length).fill('')
-        const updatedCodeString = newCode.join('')
+        pastedData.forEach((char, index) => (newCode[index] = char))
 
-        pastedData.forEach((char, index) => {
-            newCode[index] = char
-            if (inputsRef.current[index]) inputsRef.current[index].value = char
-        })
-
-        setCode(newCode)
-        onChange({
+        setCode(pastedData)
+        onPaste({
             target: {
-                name: e.target.name,
-                value: updatedCodeString,
+                name,
+                value,
             },
         })
-
-        const focusIndex = Math.min(pastedData.length, length - 1)
-        inputsRef.current[focusIndex]?.focus()
     }
 
     const hasErrorMessgae = !!errorMessage
@@ -101,8 +97,8 @@ const InputCode = ({
                         value={digit}
                         ref={(el) => (inputsRef.current[index] = el)}
                         onChange={(e) => handleChange(e, index)}
+                        onPaste={(e) => handlePaste(e)}
                         onKeyDown={(e) => handleKeyDown(e, index)}
-                        onPaste={handlePaste}
                     />
                 ))}
             </div>
