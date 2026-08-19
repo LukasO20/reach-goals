@@ -60,7 +60,7 @@ export const getDemoVisitor = async (demoVisitorID) => {
     try {
         return await prisma.$transaction(async (tx) => {
             const demoVisitor = await tx.demoVisitor.findUnique({
-                where: { id: Number(demoVisitorID) },
+                where: { id: demoVisitorID },
             })
 
             const demoVisitorSession = await tx.demoVisitorSession.findUnique({
@@ -88,7 +88,7 @@ const updateDemoVisitorStatus = async (demoVisitorID, data) => {
     try {
         return await prisma.$transaction(async (tx) => {
             const demoVisitor = await tx.demoVisitor.findUnique({
-                where: { id: Number(demoVisitorID) },
+                where: { id: demoVisitorID },
             })
 
             const demoVisitorSession = await tx.demoVisitorSession.update({
@@ -124,13 +124,6 @@ const addDemoVisitor = async (data) => {
                 create: { name, email },
                 update: {},
             })
-
-            const isDemoVisitorCreated = demoVisitor.id
-            if (isDemoVisitorCreated) {
-                await updateDemoVisitorStatus(demoVisitor.id, {
-                    status: 'ACTIVE',
-                })
-            }
 
             const expiresAt = new Date(Date.now() + ONE_DAY)
 
@@ -178,7 +171,7 @@ export const authenticateDemoVisitor = async (res, visitor) => {
 }
 
 export const logoutDemoVisitor = async (res, demoVisitorID) => {
-    const demo = await updateDemoVisitorStatus(Number(demoVisitorID), {
+    const demo = await updateDemoVisitorStatus(demoVisitorID, {
         status: 'EXPIRED',
     })
 

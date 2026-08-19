@@ -9,7 +9,7 @@ datasource db {
 }
 
 model Goal {
-  id          Int          @id @default(autoincrement())
+  id          String          @id @default(uuid())
   name        String
   description String?
   order       Int?
@@ -19,10 +19,12 @@ model Goal {
   status      String?
   assignments Assignment[]
   tags        TagOnGoal[]
+  visitorId   String
+  visitor     DemoVisitor @relation(fields: [visitorId], references: [id])
 }
 
 model Assignment {
-  id          Int               @id @default(autoincrement())
+  id          String               @id @default(uuid())
   name        String
   description String?
   duration    Int?
@@ -31,23 +33,27 @@ model Assignment {
   end         DateTime?
   start       DateTime          @default(now())
   status      String?
-  goalID      Int?
+  visitorId   String
+  visitor     DemoVisitor @relation(fields: [visitorId], references: [id])
+  goalID      String?
   goal        Goal?             @relation(fields: [goalID], references: [id])
   tags        TagOnAssignment[]
 }
 
 model Tag {
-  id          Int               @id @default(autoincrement())
+  id          String               @id @default(uuid())
   name        String
   color       String
   assignments TagOnAssignment[]
   goals       TagOnGoal[]
+  visitorId   String
+  visitor     DemoVisitor @relation(fields: [visitorId], references: [id])
 }
 
 model TagOnGoal {
-  id     Int  @id @default(autoincrement())
-  goalID Int
-  tagID  Int
+  id     String  @id @default(uuid())
+  goalID String
+  tagID  String
   goal   Goal @relation(fields: [goalID], references: [id])
   tag    Tag  @relation(fields: [tagID], references: [id], onDelete: Cascade)
 
@@ -55,9 +61,9 @@ model TagOnGoal {
 }
 
 model TagOnAssignment {
-  id           Int        @id @default(autoincrement())
-  assignmentID Int
-  tagID        Int
+  id           String        @id @default(uuid())
+  assignmentID String
+  tagID        String
   assignment   Assignment @relation(fields: [assignmentID], references: [id])
   tag          Tag        @relation(fields: [tagID], references: [id], onDelete: Cascade)
 
@@ -65,16 +71,19 @@ model TagOnAssignment {
 }
 
 model DemoVisitor {
-  id                 Int                  @id @default(autoincrement())
+  id                 String               @id @default(uuid())
   name               String
   email              String               @unique
   createdAt          DateTime             @default(now())
   DemoVisitorSession DemoVisitorSession[]
+  goals              Goal[]
+  assignments        Assignment[]
+  tags               Tag[]
 }
 
 model DemoVisitorSession {
-  id            Int                      @id @default(autoincrement())
-  demoVisitorId Int                      @unique
+  id            String                   @id @default(uuid())
+  demoVisitorId String                   @unique
   demoVisitor   DemoVisitor              @relation(fields: [demoVisitorId], references: [id])
   status        DemoVisitorSessionStatus
   expiresAt     DateTime
@@ -82,7 +91,7 @@ model DemoVisitorSession {
 }
 
 model DemoVisitorVerification {
-  id        Int      @id @default(autoincrement())
+  id        String      @id @default(uuid())
   email     String
   code      String
   expiresAt DateTime

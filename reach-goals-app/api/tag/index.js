@@ -51,7 +51,7 @@ const handler = async (req, res) => {
             }
 
             if (action === 'tag-on-goal') {
-                if (!goalID && isNaN(goalID))
+                if (!goalID)
                     return res
                         .status(400)
                         .json({ error: "Parameter 'goalID' invalid." })
@@ -62,7 +62,7 @@ const handler = async (req, res) => {
             }
 
             if (action === 'tag-on-assignment') {
-                if (!assignmentID && isNaN(assignmentID))
+                if (!assignmentID)
                     return res.status(400).json({
                         error: "Parameter 'assignmentID' invalid.",
                     })
@@ -73,7 +73,7 @@ const handler = async (req, res) => {
             }
 
             if (action === 'tag-not-goal') {
-                if (!goalID || isNaN(goalID)) {
+                if (!goalID) {
                     return res
                         .status(400)
                         .json({ error: "Parameter 'goalID' invalid." })
@@ -85,7 +85,7 @@ const handler = async (req, res) => {
             }
 
             if (action === 'tag-not-assignment') {
-                if (!assignmentID || isNaN(assignmentID)) {
+                if (!assignmentID) {
                     return res.status(400).json({
                         error: "Parameter 'assignmentID' invalid.",
                     })
