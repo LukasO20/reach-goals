@@ -10,7 +10,7 @@ import { formatObject } from '../../server/utils/utils.js'
 
 const ALLOWED_METHODS = ['GET', 'POST']
 
-const handler = async (req, res) => {
+const handler = async (req, res, authContext) => {
     const { action, assignmentID, goalID, tagID } = req.query
 
     if (!ALLOWED_METHODS.includes(req.method)) {
@@ -54,7 +54,7 @@ const handler = async (req, res) => {
             }
 
             const formattedData = formatObject(rawObject)
-            const goal = await addGoal(formattedData)
+            const goal = await addGoal(formattedData, authContext)
 
             return res.status(201).json(goal)
         }
@@ -63,25 +63,25 @@ const handler = async (req, res) => {
             let goal = undefined
 
             if (action === 'goal-get') {
-                goal = await getGoal(goalID)
+                goal = await getGoal(goalID, authContext)
 
                 return res.status(200).json(Array.isArray(goal) ? goal : [goal])
             }
 
             if (action === 'goal-on-assignment') {
-                goal = await getGoalOnAssignment(assignmentID)
+                goal = await getGoalOnAssignment(assignmentID, authContext)
 
                 return res.status(200).json(goal)
             }
 
             if (action === 'goal-on-tag') {
-                goal = await getGoalOnTag(tagID)
+                goal = await getGoalOnTag(tagID, authContext)
 
                 return res.status(200).json(goal)
             }
 
             if (action === 'goal-not-assignment') {
-                goal = await getGoalWithoutAssignment(assignmentID)
+                goal = await getGoalWithoutAssignment(assignmentID, authContext)
 
                 return res.status(200).json(goal)
             }

@@ -1,9 +1,12 @@
 import prisma from '../config/connectdb.js'
 
-export const addAssignment = async (data) => {
+export const addAssignment = async (data, authContext) => {
     try {
         return await prisma.assignment.create({
-            data: data,
+            data: {
+                ...data,
+                visitorId: authContext.visitorId,
+            },
             include: { goal: true, tags: { include: { tag: true } } },
         })
     } catch (error) {
@@ -33,7 +36,7 @@ export const deleteAssignment = async (assignmentID) => {
     }
 }
 
-export const getAssignment = async (assignmentID) => {
+export const getAssignment = async (assignmentID, authContext) => {
     try {
         const isAllAssignment = assignmentID === 'all'
         const isUniqueAssignment =
@@ -46,7 +49,7 @@ export const getAssignment = async (assignmentID) => {
 
         if (isUniqueAssignment) {
             return await prisma.assignment.findUnique({
-                where: { id: assignmentID },
+                where: { id: assignmentID, visitorId: authContext.visitorId },
                 include: {
                     goal: {
                         select: {
@@ -68,6 +71,7 @@ export const getAssignment = async (assignmentID) => {
         }
 
         return await prisma.assignment.findMany({
+            where: { visitorId: authContext.visitorId },
             include: {
                 goal: {
                     select: {
@@ -91,7 +95,7 @@ export const getAssignment = async (assignmentID) => {
     }
 }
 
-export const getAssignmentOnGoal = async (goalID) => {
+export const getAssignmentOnGoal = async (goalID, authContext) => {
     try {
         const isAllAssignmentGoal = goalID === 'all'
         const isUniqueAssignmentGoal =
@@ -102,7 +106,7 @@ export const getAssignmentOnGoal = async (goalID) => {
 
         if (isUniqueAssignmentGoal) {
             return await prisma.assignment.findMany({
-                where: { goalID: goalID },
+                where: { goalID: goalID, visitorId: authContext.visitorId },
                 include: {
                     goal: {
                         select: {
@@ -124,7 +128,7 @@ export const getAssignmentOnGoal = async (goalID) => {
         }
 
         return await prisma.assignment.findMany({
-            where: { goalID: { not: null } },
+            where: { goalID: { not: null }, visitorId: authContext.visitorId },
             include: {
                 goal: {
                     select: {
@@ -148,7 +152,7 @@ export const getAssignmentOnGoal = async (goalID) => {
     }
 }
 
-export const getAssignmentOnTag = async (tagID) => {
+export const getAssignmentOnTag = async (tagID, authContext) => {
     try {
         const isAllAssignmentTag = tagID === 'all'
         const isUniqueAssignmentTag =
@@ -159,7 +163,10 @@ export const getAssignmentOnTag = async (tagID) => {
 
         if (isUniqueAssignmentTag) {
             return await prisma.assignment.findMany({
-                where: { tags: { id: tagID } },
+                where: {
+                    tags: { id: tagID },
+                    visitorId: authContext.visitorId,
+                },
                 include: {
                     goal: {
                         select: {
@@ -181,7 +188,7 @@ export const getAssignmentOnTag = async (tagID) => {
         }
 
         return await prisma.assignment.findMany({
-            where: { tags: { some: {} } },
+            where: { tags: { some: {} }, visitorId: authContext.visitorId },
             include: {
                 goal: {
                     select: {
@@ -205,11 +212,12 @@ export const getAssignmentOnTag = async (tagID) => {
     }
 }
 
-export const getAssignmentWithoutGoal = async () => {
+export const getAssignmentWithoutGoal = async (authContext) => {
     try {
         return await prisma.assignment.findMany({
             where: {
                 goalID: null,
+                visitorId: authContext.visitorId,
             },
             include: {
                 tags: {

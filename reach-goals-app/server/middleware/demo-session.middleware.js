@@ -5,9 +5,14 @@ export const handlerAuthenticate = (handler) => {
         try {
             const { action } = req.query
 
-            await authenticateDemoSession(req, action)
+            const authDemoSessionData = await authenticateDemoSession(
+                req,
+                action
+            )
 
-            return handler(req, res)
+            const authContext = { visitorId: authDemoSessionData.sub }
+
+            return handler(req, res, authContext)
         } catch (error) {
             const { message, status } = error
 

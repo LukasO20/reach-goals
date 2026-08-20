@@ -15,7 +15,7 @@ import { formatObject } from '../../server/utils/utils.js'
 
 const ALLOWED_METHODS = ['GET', 'POST', 'DELETE']
 
-const handler = async (req, res) => {
+const handler = async (req, res, authContext) => {
     const { action, assignmentID, goalID, tagID } = req.query
 
     if (!ALLOWED_METHODS.includes(req.method)) {
@@ -37,7 +37,7 @@ const handler = async (req, res) => {
             const rawObject = { name, color }
 
             const formattedData = formatObject(rawObject)
-            const tag = await addTag(formattedData)
+            const tag = await addTag(formattedData, authContext)
 
             return res.status(201).json(tag)
         }
@@ -46,7 +46,7 @@ const handler = async (req, res) => {
             let tag = undefined
 
             if (action === 'tag-get') {
-                tag = await getTag()
+                tag = await getTag(tagID, authContext)
                 return res.status(200).json(Array.isArray(tag) ? tag : [tag])
             }
 
@@ -56,7 +56,7 @@ const handler = async (req, res) => {
                         .status(400)
                         .json({ error: "Parameter 'goalID' invalid." })
 
-                tag = await getTagOnGoal(goalID)
+                tag = await getTagOnGoal(goalID, authContext)
 
                 return res.status(200).json(Array.isArray(tag) ? tag : [tag])
             }
@@ -67,7 +67,7 @@ const handler = async (req, res) => {
                         error: "Parameter 'assignmentID' invalid.",
                     })
 
-                tag = await getTagOnAssignment(assignmentID)
+                tag = await getTagOnAssignment(assignmentID, authContext)
 
                 return res.status(200).json(Array.isArray(tag) ? tag : [tag])
             }
@@ -79,7 +79,7 @@ const handler = async (req, res) => {
                         .json({ error: "Parameter 'goalID' invalid." })
                 }
 
-                tag = await getTagNotGoal(goalID)
+                tag = await getTagNotGoal(goalID, authContext)
 
                 return res.status(200).json(tag)
             }
@@ -91,7 +91,7 @@ const handler = async (req, res) => {
                     })
                 }
 
-                tag = await getTagNotAssignment(assignmentID)
+                tag = await getTagNotAssignment(assignmentID, authContext)
 
                 return res.status(200).json(tag)
             }

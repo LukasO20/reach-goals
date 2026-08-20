@@ -1,19 +1,19 @@
 import prisma from '../config/connectdb.js'
 
-export const searchResults = async (params = '') => {
+export const searchResults = async (params = '', authContext) => {
     if (params) {
         const fieldsCommon = { name: { contains: params, mode: 'insensitive' } }
 
         const goals = await prisma.goal.findMany({
-            where: { ...fieldsCommon },
+            where: { ...fieldsCommon, visitorId: authContext.visitorId },
         })
 
         const assignments = await prisma.assignment.findMany({
-            where: { ...fieldsCommon },
+            where: { ...fieldsCommon, visitorId: authContext.visitorId },
         })
 
         const tags = await prisma.tag.findMany({
-            where: { ...fieldsCommon },
+            where: { ...fieldsCommon, visitorId: authContext.visitorId },
             include: {
                 goals: {
                     include: {

@@ -1,11 +1,14 @@
 import prisma from '../config/connectdb.js'
 
-export const addTag = async (data) => {
+export const addTag = async (data, authContext) => {
     if (!data) return
 
     try {
         return await prisma.tag.create({
-            data: data,
+            data: {
+                ...data,
+                visitorId: authContext.visitorId,
+            },
         })
     } catch (error) {
         throw new Error(error.message)
@@ -37,7 +40,7 @@ export const deleteTag = async (tagID) => {
     }
 }
 
-export const getTag = async (tagID) => {
+export const getTag = async (tagID, authContext) => {
     try {
         const isAllTag = tagID === 'all'
         const isUniqueTag = typeof tagID && tagID.trim() !== '' && !isAllTag
@@ -47,7 +50,7 @@ export const getTag = async (tagID) => {
 
         if (isUniqueTag) {
             return await prisma.tag.findUnique({
-                where: { id: tagID },
+                where: { id: tagID, visitorId: authContext.visitorId },
                 include: {
                     goals: {
                         include: {
@@ -74,6 +77,7 @@ export const getTag = async (tagID) => {
         }
 
         return await prisma.tag.findMany({
+            where: { visitorId: authContext.visitorId },
             include: {
                 goals: {
                     include: {
@@ -102,7 +106,7 @@ export const getTag = async (tagID) => {
     }
 }
 
-export const getTagOnGoal = async (goalID) => {
+export const getTagOnGoal = async (goalID, authContext) => {
     try {
         const isAllTagGoal = goalID === 'all'
         const isUniqueTagGoal =
@@ -117,6 +121,7 @@ export const getTagOnGoal = async (goalID) => {
                     goals: {
                         some: { goalID: goalID },
                     },
+                    visitorId: authContext.visitorId,
                 },
                 include: {
                     goals: {
@@ -138,6 +143,7 @@ export const getTagOnGoal = async (goalID) => {
                 goals: {
                     some: {},
                 },
+                visitorId: authContext.visitorId,
             },
             include: {
                 goals: {
@@ -157,7 +163,7 @@ export const getTagOnGoal = async (goalID) => {
     }
 }
 
-export const getTagOnAssignment = async (assignmentID) => {
+export const getTagOnAssignment = async (assignmentID, authContext) => {
     try {
         const isAllTagAssignment = assignmentID === 'all'
         const isUniqueTagAssignment =
@@ -174,6 +180,7 @@ export const getTagOnAssignment = async (assignmentID) => {
                     assignments: {
                         some: { assignmentID: assignmentID },
                     },
+                    visitorId: authContext.visitorId,
                 },
                 include: {
                     assignments: {
@@ -195,6 +202,7 @@ export const getTagOnAssignment = async (assignmentID) => {
                 assignments: {
                     some: {},
                 },
+                visitorId: authContext.visitorId,
             },
             include: {
                 assignments: {
@@ -214,7 +222,7 @@ export const getTagOnAssignment = async (assignmentID) => {
     }
 }
 
-export const getTagNotGoal = async (goalID) => {
+export const getTagNotGoal = async (goalID, authContext) => {
     try {
         const isValidGoalID = String(goalID).trim() !== ''
 
@@ -227,6 +235,7 @@ export const getTagNotGoal = async (goalID) => {
                         some: { goalID: goalID },
                     },
                 },
+                visitorId: authContext.visitorId,
             },
             select: { id: true, name: true, color: true },
         })
@@ -235,7 +244,7 @@ export const getTagNotGoal = async (goalID) => {
     }
 }
 
-export const getTagNotAssignment = async (assignmentID) => {
+export const getTagNotAssignment = async (assignmentID, authContext) => {
     try {
         const isValidAssignmentID = String(assignmentID).trim() !== ''
 
@@ -249,6 +258,7 @@ export const getTagNotAssignment = async (assignmentID) => {
                         some: { assignmentID: assignmentID },
                     },
                 },
+                visitorId: authContext.visitorId,
             },
             select: { id: true, name: true, color: true },
         })

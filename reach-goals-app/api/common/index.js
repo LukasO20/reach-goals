@@ -8,7 +8,7 @@ import {
 
 const ALLOWED_METHODS = ['GET', 'PUT', 'DELETE']
 
-const handler = async (req, res) => {
+const handler = async (req, res, authContext) => {
     const { action, params } = req.query
     const { data, typeModel, status } = req.body
     let results = undefined
@@ -22,7 +22,7 @@ const handler = async (req, res) => {
     try {
         if (req.method === 'GET') {
             if (action === 'search-model') {
-                results = await searchResults(params)
+                results = await searchResults(params, authContext)
                 return res.status(200).json(results)
             }
         }
