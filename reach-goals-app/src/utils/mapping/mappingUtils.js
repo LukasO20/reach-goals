@@ -11,7 +11,7 @@ export const visibilityMap = (classes, operator = {}) => {
     const data = Array.isArray(classes) ? classes : [classes]
     const attributes = {
         class: data,
-        operator: operator
+        operator: operator,
     }
     return attributes
 }
@@ -19,31 +19,38 @@ export const visibilityMap = (classes, operator = {}) => {
 export const switchLayoutMap = ({ area, layout }) => {
     return {
         area,
-        layout
+        layout,
     }
 }
 
-export const buildCheckboxMap = ({ checkboxID, scope, checkboxIDMain } = checkboxMap) => {
+export const buildCheckboxMap = ({
+    checkboxID,
+    scope,
+    checkboxIDMain,
+} = checkboxMap) => {
     return {
         scope,
         checkboxID,
-        checkboxIDMain
+        checkboxIDMain,
     }
 }
 
-export const buildQueryParamsMap = ({ IDobject, action }) => {
-    if (typeof action !== 'string' || !action.trim()) return console.error('"action" must be a non-empty string')
-    if (!IDobject || typeof IDobject !== 'object') return console.error('"IDobject" must be an object like { key: value }')
+export const buildQueryParamsMap = ({ baseUrl, id, action } = {}) => {
+    if (typeof action !== 'string' || !action.trim()) {
+        throw new Error('The "action" parameter must be a non-empty string.')
+    }
 
-    const hasValidKey = Object.entries(IDobject).some(([k, v]) =>
-        k.trim() !== '' && v !== undefined && v !== null && v !== ''
-    )
-    if (!hasValidKey) return console.error('"IDobject" must have at least one key with a non-empty value')
+    if (typeof baseUrl !== 'string' || !baseUrl.trim()) {
+        throw new Error('The "baseUrl" parameter must be a non-empty string.')
+    }
 
-    return new URLSearchParams({
-        action: action,
-        ...IDobject
-    }).toString()
+    if (id !== undefined && id !== null && id !== '') {
+        baseUrl += `/${String(id).trim()}`
+    }
+
+    const queryParams = new URLSearchParams({ action })
+
+    return `${baseUrl}?${queryParams.toString()}`
 }
 
 /* 
@@ -52,29 +59,40 @@ export const buildQueryParamsMap = ({ IDobject, action }) => {
     source => type of list according 'reduceModelMap'. 'support' to FETCH_SUPPORT_LIST or 'core' to FETCH_LIST
 */
 export const filterBuildModelMap = (props, type, source) => {
-    if (!typeModel.includes(type)) return console.error('"type" parameter is invalid. Send a string supported type ["goal", "tag", "assignment"]')
-    if (!typeReduceModel.includes(source)) return console.error('"source" parameter is invalid. Send a string supported source ["core", "support"]')
+    if (!typeModel.includes(type))
+        return console.error(
+            '"type" parameter is invalid. Send a string supported type ["goal", "tag", "assignment"]'
+        )
+    if (!typeReduceModel.includes(source))
+        return console.error(
+            '"source" parameter is invalid. Send a string supported source ["core", "support"]'
+        )
 
     if (typeof props === 'object') {
         const [key, value] = Object.entries(props).find(
-            ([k, v]) => typeFilterModel.includes(k) && (typeof v === 'number' || v === 'all')) ?? ['Without key', 'Without value']
+            ([k, v]) =>
+                typeFilterModel.includes(k) &&
+                (typeof v === 'number' || v === 'all')
+        ) ?? ['Without key', 'Without value']
 
         if (key === 'Without key' && value === 'Without value') {
             //This warn is used to show a function does not according with structure filter
             console.warn(`Current filter don't use an ID.`)
         }
 
-        return key && {
-            type: type,
-            source: source,
-            [key]: value,
-        }
+        return (
+            key && {
+                type: type,
+                source: source,
+                [key]: value,
+            }
+        )
     }
 }
 
 export const titleMap = {
     header: '',
-    toast: ''
+    toast: '',
 }
 
 export const modelTabsMap = {
@@ -112,7 +130,7 @@ export const modelTabsMap = {
         {
             filter: { assignmentSomeID: 'all' },
             label: 'every assignment',
-        }
+        },
     ],
     tag: [
         {
@@ -126,19 +144,19 @@ export const modelTabsMap = {
         {
             filter: { tagSomeID: 'all' },
             label: 'every tag',
-        }
-    ]
+        },
+    ],
 }
 
 export const displayModesMap = {
     type: ['card', 'card-mini'],
-    actions: ['edit', 'delete', 'details', 'remove']
+    actions: ['edit', 'delete', 'details', 'remove'],
 }
 
 export const persistedUserConfigKeysMap = {
     orderning: 'model-orderning',
     visibility: 'ui-visibility',
-    theme: 'ui-theme'
+    theme: 'ui-theme',
 }
 
 /** @type {GlobalTypes} */
@@ -153,7 +171,7 @@ export const persistedUserConfigMap = {
         layoutPopupModel: null,
         columns: null,
         tagsCard: true,
-        navigateBar: 'compact'
+        navigateBar: 'compact',
     },
-    theme: 'light'
+    theme: 'light',
 }

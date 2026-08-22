@@ -1,8 +1,10 @@
 import { buildQueryParamsMap } from '../utils/mapping/mappingUtils.js'
 
+const BASE_URL = '/api/goal'
+
 export const addGoal = async (goal) => {
     try {
-        const response = await fetch(`/api/goal`, {
+        const response = await fetch(BASE_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(goal),
@@ -22,7 +24,7 @@ export const addGoal = async (goal) => {
 
 export const updateGoal = async (goal) => {
     try {
-        const url = `/api/goal/${goal.id}`
+        const url = `${BASE_URL}/${goal.id}`
         const response = await fetch(url, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -53,7 +55,7 @@ export const deleteGoal = async (goalID) => {
             credentials: 'same-origin',
         })
 
-        const urlDeletGoal = `/api/goal/${goalID}`
+        const urlDeletGoal = `${BASE_URL}/${goalID}`
         const responseGoal = await fetch(urlDeletGoal, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
@@ -75,8 +77,14 @@ export const deleteGoal = async (goalID) => {
 }
 
 export const getGoal = async (goalID) => {
+    const queryParms = {
+        baseUrl: BASE_URL,
+        id: goalID,
+        action: 'goal-get',
+    }
+
     try {
-        const url = goalID ? `/api/goal/${goalID}` : `/api/goal?action=goal-get`
+        const url = buildQueryParamsMap(queryParms)
 
         const response = await fetch(url, {
             method: 'GET',
@@ -84,10 +92,7 @@ export const getGoal = async (goalID) => {
             credentials: 'same-origin',
         })
 
-        if (!response.ok) {
-            const error = await response.json()
-            throw new Error(error)
-        }
+        if (!response.ok) throw new Error(response.json())
 
         return await response.json()
     } catch (error) {
@@ -97,12 +102,13 @@ export const getGoal = async (goalID) => {
 
 export const getGoalOnTag = async (tagID) => {
     const queryParms = {
+        baseUrl: BASE_URL,
+        id: tagID,
         action: 'goal-on-tag',
-        IDobject: { tagID: tagID },
     }
 
     try {
-        const url = `/api/goal?${buildQueryParamsMap(queryParms)}`
+        const url = buildQueryParamsMap(queryParms)
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
@@ -122,12 +128,13 @@ export const getGoalOnTag = async (tagID) => {
 
 export const getGoalOnAssignment = async (assignmentID) => {
     const queryParms = {
+        baseUrl: BASE_URL,
+        id: assignmentID,
         action: 'goal-on-assignment',
-        IDobject: { assignmentID: assignmentID },
     }
 
     try {
-        const url = `/api/goal?${buildQueryParamsMap(queryParms)}`
+        const url = buildQueryParamsMap(queryParms)
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
@@ -147,12 +154,13 @@ export const getGoalOnAssignment = async (assignmentID) => {
 
 export const getGoalWithoutAssignment = async (assignmentID) => {
     const queryParms = {
+        baseUrl: BASE_URL,
+        id: assignmentID,
         action: 'goal-not-assignment',
-        IDobject: { assignmentID: assignmentID },
     }
 
     try {
-        const url = `/api/goal?${buildQueryParamsMap(queryParms)}`
+        const url = buildQueryParamsMap(queryParms)
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },

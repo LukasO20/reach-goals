@@ -2,8 +2,6 @@ import { handlerAuthenticate } from '../../server/middleware/demo-session.middle
 import {
     addTag,
     getTag,
-    getTagNotAssignment,
-    getTagNotGoal,
     getTagOnAssignment,
     getTagOnGoal,
     unlinkAllTagOnAssignment,
@@ -43,77 +41,39 @@ const handler = async (req, res, authContext) => {
         }
 
         if (req.method === 'GET') {
-            let tag = undefined
+            let tag
 
             if (action === 'tag-get') {
-                tag = await getTag(tagID, authContext)
+                tag = await getTag(authContext)
                 return res.status(200).json(Array.isArray(tag) ? tag : [tag])
             }
 
             if (action === 'tag-on-goal') {
-                if (!goalID)
-                    return res
-                        .status(400)
-                        .json({ error: "Parameter 'goalID' invalid." })
-
-                tag = await getTagOnGoal(goalID, authContext)
-
+                tag = await getTagOnGoal(authContext)
                 return res.status(200).json(Array.isArray(tag) ? tag : [tag])
             }
 
             if (action === 'tag-on-assignment') {
-                if (!assignmentID)
-                    return res.status(400).json({
-                        error: "Parameter 'assignmentID' invalid.",
-                    })
-
-                tag = await getTagOnAssignment(assignmentID, authContext)
-
+                tag = await getTagOnAssignment(authContext)
                 return res.status(200).json(Array.isArray(tag) ? tag : [tag])
-            }
-
-            if (action === 'tag-not-goal') {
-                if (!goalID) {
-                    return res
-                        .status(400)
-                        .json({ error: "Parameter 'goalID' invalid." })
-                }
-
-                tag = await getTagNotGoal(goalID, authContext)
-
-                return res.status(200).json(tag)
-            }
-
-            if (action === 'tag-not-assignment') {
-                if (!assignmentID) {
-                    return res.status(400).json({
-                        error: "Parameter 'assignmentID' invalid.",
-                    })
-                }
-
-                tag = await getTagNotAssignment(assignmentID, authContext)
-
-                return res.status(200).json(tag)
             }
         }
 
         if (req.method === 'DELETE') {
-            let tag = undefined
+            let tag
+
             if (action === 'tag-unlink-goal') {
                 tag = await unlinkTagOnGoal(tagID, goalID)
-
                 return res.status(200).json(tag)
             }
 
             if (action === 'tag-unlink-all-goal') {
                 tag = await unlinkAllTagOnGoal(goalID)
-
                 return res.status(200).json(tag)
             }
 
             if (action === 'tag-unlink-assignment') {
                 tag = await unlinkTagOnAssignment(tagID, assignmentID)
-
                 return res.status(200).json(tag)
             }
 

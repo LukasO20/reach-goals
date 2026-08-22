@@ -1,6 +1,6 @@
 import prisma from '../config/connectdb.js'
 
-export const addGoal = async (data, authContext) => {
+export const addGoal = async (data, authContext = {}) => {
     if (!data) return
 
     try {
@@ -42,13 +42,9 @@ export const deleteGoal = async (goalID) => {
     }
 }
 
-export const getGoal = async (goalID, authContext) => {
+export const getGoal = async (goalID, authContext = {}) => {
     try {
-        const isAllGoal = goalID === 'all'
-        const isUniqueGoal = typeof goalID && goalID.trim() !== '' && !isAllGoal
-
-        if (!isUniqueGoal && !isAllGoal)
-            throw new Error(`Invalid goalID: ${goalID}`)
+        const isUniqueGoal = typeof goalID === 'string'
 
         if (isUniqueGoal) {
             return await prisma.goal.findUnique({
@@ -104,16 +100,9 @@ export const getGoal = async (goalID, authContext) => {
     }
 }
 
-export const getGoalOnAssignment = async (assignmentID, authContext) => {
+export const getGoalOnAssignment = async (assignmentID, authContext = {}) => {
     try {
-        const isAllGoalAssignment = assignmentID === 'all'
-        const isUniqueGoalAssignment =
-            typeof assignmentID &&
-            assignmentID.trim() !== '' &&
-            !isAllGoalAssignment
-
-        if (!isUniqueGoalAssignment && !isAllGoalAssignment)
-            throw new Error(`Invalid assignmentID: ${assignmentID}`)
+        const isUniqueGoalAssignment = typeof assignmentID === 'string'
 
         if (isUniqueGoalAssignment) {
             return await prisma.goal.findMany({
@@ -161,14 +150,9 @@ export const getGoalOnAssignment = async (assignmentID, authContext) => {
     }
 }
 
-export const getGoalOnTag = async (tagID, authContext) => {
+export const getGoalOnTag = async (tagID, authContext = {}) => {
     try {
-        const isAllGoalTag = tagID === 'all'
-        const isUniqueGoalTag =
-            typeof tagID && tagID.trim() !== '' && !isAllGoalTag
-
-        if (!isUniqueGoalTag && !isAllGoalTag)
-            throw new Error(`Invalid tagID: ${tagID}`)
+        const isUniqueGoalTag = typeof tagID === 'string'
 
         if (isUniqueGoalTag) {
             return await prisma.goal.findMany({
@@ -205,16 +189,12 @@ export const getGoalOnTag = async (tagID, authContext) => {
     }
 }
 
-export const getGoalWithoutAssignment = async (assignmentID, authContext) => {
+export const getGoalWithoutAssignment = async (
+    assignmentID,
+    authContext = {}
+) => {
     try {
-        const isAllGoalNotAssignment = assignmentID === 'all'
-        const isUniqueGoalNotAssignment =
-            typeof assignmentID &&
-            assignmentID.trim() !== '' &&
-            !isAllGoalNotAssignment
-
-        if (!isUniqueGoalNotAssignment && !isAllGoalNotAssignment)
-            throw new Error(`Invalid assignmentID: ${assignmentID}`)
+        const isUniqueGoalNotAssignment = typeof assignmentID === 'string'
 
         if (isUniqueGoalNotAssignment) {
             return await prisma.goal.findMany({

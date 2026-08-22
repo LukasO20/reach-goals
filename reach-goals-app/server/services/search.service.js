@@ -1,6 +1,6 @@
 import prisma from '../config/connectdb.js'
 
-export const searchResults = async (params = '', authContext) => {
+export const searchResults = async (params = '', authContext = {}) => {
     if (params) {
         const fieldsCommon = { name: { contains: params, mode: 'insensitive' } }
 

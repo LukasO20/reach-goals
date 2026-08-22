@@ -1,16 +1,16 @@
 export const filerFetchModelMap = {
     goal: {
-        page: { goalSomeID: 'all' },
-        modal: null
+        page: { goalSomeID: undefined },
+        modal: undefined,
     },
     assignment: {
-        page: { assignmentSomeID: 'all' },
-        modal: null
+        page: { assignmentSomeID: undefined },
+        modal: undefined,
     },
     tag: {
-        page: { tagSomeID: 'all' },
-        modal: null
-    }
+        page: { tagSomeID: undefined },
+        modal: undefined,
+    },
 }
 
 export const manageModelMap = {
@@ -19,24 +19,24 @@ export const manageModelMap = {
     selectedModel: {
         tag: [],
         assignment: [],
-        goal: []
+        goal: [],
     },
     dataModel: {
         goal: {
             core: [],
-            support: []
+            support: [],
         },
         assignment: {
             core: [],
-            support: []
+            support: [],
         },
         tag: {
             core: [],
-            support: []
+            support: [],
         },
     },
     filter: filerFetchModelMap,
-    activeModel: undefined
+    activeModel: undefined,
 }
 
 export const filterServiceFnMap = {
@@ -52,7 +52,7 @@ export const filterServiceFnMap = {
     tagRelationGoal: 'getTagOnGoal',
     tagRelationAssignment: 'getTagOnAssignment',
     tagNotRelationGoal: 'getTagNotGoal',
-    tagNotRelationAssignment: 'getTagNotAssignment'
+    tagNotRelationAssignment: 'getTagNotAssignment',
 }
 
 export const initialStateMap = {
@@ -60,42 +60,42 @@ export const initialStateMap = {
     error: null,
     data: {
         core: [],
-        support: []
+        support: [],
     },
     selected: {},
     removed: {},
-    saved: {}
+    saved: {},
 }
 
 export const switchLayoutMap = {
     page: {
         pageName: 'home',
-        layoutName: 'column'
+        layoutName: 'column',
     },
     modal: {
         modalName: null,
-        layoutName: null
-    }
+        layoutName: null,
+    },
 }
 
 export const checkboxMap = {
     page: {
-        selected: []
+        selected: [],
     },
     modal: {
-        selected: []
+        selected: [],
     },
     scope: '',
     checkboxID: null,
     checkboxIDMain: null,
     checkboxRegistry: {
         page: [],
-        modal: []
-    }
+        modal: [],
+    },
 }
 
-/** 
- * @param {'goal' | 'assignment' | 'tag'} type 
+/**
+ * @param {'goal' | 'assignment' | 'tag'} type
  * @param {import('../reference').FETCH_MODELS} typeFetch
  * @param {'page' | 'modal'} source
  * @param {number | 'all'} value
@@ -104,13 +104,17 @@ export const buildFilterModelMap = (type, typeFetch, source, value) => {
     return {
         [type]: {
             [source]: {
-                [typeFetch]: value
-            }
+                [typeFetch]: value,
+            },
         },
     }
 }
 
-export const updateFilterModelMap = ({ filter = {}, model = '', scope = '' }) => {
+export const updateFilterModelMap = ({
+    filter = {},
+    model = '',
+    scope = '',
+}) => {
     return { filter, model, scope }
 }
 
@@ -122,7 +126,12 @@ export const resetManageModelMap = (keys = []) => {
     return { keys }
 }
 
-export const updateActiveModelMap = ({ keyObject = '', value, type = '', action = '' }) => {
+export const updateActiveModelMap = ({
+    keyObject = '',
+    value,
+    type = '',
+    action = '',
+}) => {
     return { keyObject, value, type, action }
 }
 
@@ -130,6 +139,12 @@ export const removeFromSelectedModelMap = ({ id, type = '' }) => {
     return { id, type }
 }
 
-export const addToSelectedModelMap = ({ id, name = '', type = '', color = '', custom }) => {
+export const addToSelectedModelMap = ({
+    id,
+    name = '',
+    type = '',
+    color = '',
+    custom,
+}) => {
     return { id, name, type, color, custom }
 }

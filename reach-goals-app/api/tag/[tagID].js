@@ -2,14 +2,18 @@ import { handlerAuthenticate } from '../../server/middleware/demo-session.middle
 import {
     deleteTag,
     getTag,
+    getTagNotAssignment,
+    getTagNotGoal,
+    getTagOnAssignment,
+    getTagOnGoal,
     updateTag,
 } from '../../server/services/tag.service.js'
 import { formatObject } from '../../server/utils/utils.js'
 
 const ALLOWED_METHODS = ['GET', 'PUT', 'DELETE']
 
-const handler = async (req, res) => {
-    const { tagID } = req.query
+const handler = async (req, res, authContext) => {
+    const { action, assignmentID, goalID, tagID } = req.query
 
     if (!ALLOWED_METHODS.includes(req.method)) {
         return res.status(405).json({
@@ -19,9 +23,32 @@ const handler = async (req, res) => {
 
     try {
         if (req.method === 'GET') {
-            const tag = await getTag(tagID)
+            let tag
 
-            return res.status(200).json(Array.isArray(tag) ? tag : [tag])
+            if (action === 'tag-get') {
+                tag = await getTag(tagID, authContext)
+                return res.status(200).json(Array.isArray(tag) ? tag : [tag])
+            }
+
+            if (action === 'tag-on-goal') {
+                tag = await getTagOnGoal(goalID, authContext)
+                return res.status(200).json(Array.isArray(tag) ? tag : [tag])
+            }
+
+            if (action === 'tag-on-assignment') {
+                tag = await getTagOnAssignment(assignmentID, authContext)
+                return res.status(200).json(Array.isArray(tag) ? tag : [tag])
+            }
+
+            if (action === 'tag-not-goal') {
+                tag = await getTagNotGoal(goalID, authContext)
+                return res.status(200).json(tag)
+            }
+
+            if (action === 'tag-not-assignment') {
+                tag = await getTagNotAssignment(assignmentID, authContext)
+                return res.status(200).json(tag)
+            }
         }
 
         if (req.method === 'PUT') {

@@ -2,6 +2,8 @@ import { handlerAuthenticate } from '../../server/middleware/demo-session.middle
 import {
     deleteAssignment,
     getAssignment,
+    getAssignmentOnGoal,
+    getAssignmentOnTag,
     updateAssignment,
     updateTagOnAssignment,
 } from '../../server/services/assignment.service.js'
@@ -23,8 +25,8 @@ const handleUpdateTagOnAssignment = async (assignmentID, tags) => {
     }
 }
 
-const handler = async (req, res) => {
-    const { assignmentID } = req.query
+const handler = async (req, res, authContext) => {
+    const { action, assignmentID, goalID, tagID } = req.query
 
     if (!ALLOWED_METHODS.includes(req.method)) {
         return res.status(405).json({
@@ -34,16 +36,23 @@ const handler = async (req, res) => {
 
     try {
         if (req.method === 'GET') {
-            const assignment = await getAssignment(assignmentID)
+            let assignment
 
-            if (assignment) {
+            if (action === 'assignment-get') {
+                assignment = await getAssignment(assignmentID, authContext)
                 return res
                     .status(200)
                     .json(Array.isArray(assignment) ? assignment : [assignment])
-            } else {
-                return res
-                    .status(500)
-                    .json({ error: 'Failed to fetch assignments' })
+            }
+
+            if (action === 'assignment-on-goal') {
+                assignment = await getAssignmentOnGoal(goalID, authContext)
+                return res.status(200).json(assignment)
+            }
+
+            if (action === 'assignment-on-tag') {
+                assignment = await getAssignmentOnTag(tagID, authContext)
+                return res.status(200).json(assignment)
             }
         }
 

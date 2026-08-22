@@ -1,8 +1,8 @@
 import { filterServiceFnMap } from './mapping/mappingUtilsProvider.js'
 
 /**
- * @param {Object} filter 
- * @param {'find' | 'some'} type 
+ * @param {Object} filter
+ * @param {'find' | 'some'} type
  */
 
 export const validFilter = (filter, type = 'find') => {
@@ -10,14 +10,14 @@ export const validFilter = (filter, type = 'find') => {
 
     return Object.entries(filter)[type](
         ([key, value]) =>
-            (typeof value === 'number' || value === 'all') &&
+            (typeof value === 'string' || typeof value === 'undefined') &&
             filterServiceFnMap[key]
     )
 }
 
 /**
- * @param {object} scopeFilter 
- * @param {object} service 
+ * @param {object} scopeFilter
+ * @param {object} service
  */
 
 export const createQueryFn = (scopeFilter, service) => {
@@ -26,4 +26,4 @@ export const createQueryFn = (scopeFilter, service) => {
     const [key, value] = valid
     const fnName = filterServiceFnMap[key]
     return () => service[fnName](value)
-  }
+}

@@ -1,6 +1,6 @@
 import prisma from '../config/connectdb.js'
 
-export const addAssignment = async (data, authContext) => {
+export const addAssignment = async (data, authContext = {}) => {
     try {
         return await prisma.assignment.create({
             data: {
@@ -36,16 +36,9 @@ export const deleteAssignment = async (assignmentID) => {
     }
 }
 
-export const getAssignment = async (assignmentID, authContext) => {
+export const getAssignment = async (assignmentID, authContext = {}) => {
     try {
-        const isAllAssignment = assignmentID === 'all'
-        const isUniqueAssignment =
-            typeof assignmentID &&
-            assignmentID.trim() !== '' &&
-            !isAllAssignment
-
-        if (!isUniqueAssignment && !isAllAssignment)
-            throw new Error(`Invalid assignmentID: ${assignmentID}`)
+        const isUniqueAssignment = typeof assignmentID === 'string'
 
         if (isUniqueAssignment) {
             return await prisma.assignment.findUnique({
@@ -95,14 +88,9 @@ export const getAssignment = async (assignmentID, authContext) => {
     }
 }
 
-export const getAssignmentOnGoal = async (goalID, authContext) => {
+export const getAssignmentOnGoal = async (goalID, authContext = {}) => {
     try {
-        const isAllAssignmentGoal = goalID === 'all'
-        const isUniqueAssignmentGoal =
-            typeof goalID && goalID.trim() !== '' && !isAllAssignmentGoal
-
-        if (!isUniqueAssignmentGoal && !isAllAssignmentGoal)
-            throw new Error(`Invalid goalID: ${goalID}`)
+        const isUniqueAssignmentGoal = typeof goalID === 'string'
 
         if (isUniqueAssignmentGoal) {
             return await prisma.assignment.findMany({
@@ -152,14 +140,9 @@ export const getAssignmentOnGoal = async (goalID, authContext) => {
     }
 }
 
-export const getAssignmentOnTag = async (tagID, authContext) => {
+export const getAssignmentOnTag = async (tagID, authContext = {}) => {
     try {
-        const isAllAssignmentTag = tagID === 'all'
-        const isUniqueAssignmentTag =
-            typeof tagID && tagID.trim() !== '' && !isAllAssignmentTag
-
-        if (!isUniqueAssignmentTag && !isAllAssignmentTag)
-            throw new Error(`Invalid tagID: ${tagID}`)
+        const isUniqueAssignmentTag = typeof tagID === 'string'
 
         if (isUniqueAssignmentTag) {
             return await prisma.assignment.findMany({
@@ -212,7 +195,7 @@ export const getAssignmentOnTag = async (tagID, authContext) => {
     }
 }
 
-export const getAssignmentWithoutGoal = async (authContext) => {
+export const getAssignmentWithoutGoal = async (authContext = {}) => {
     try {
         return await prisma.assignment.findMany({
             where: {

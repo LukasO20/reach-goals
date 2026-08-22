@@ -1,8 +1,10 @@
 import { buildQueryParamsMap } from '../utils/mapping/mappingUtils.js'
 
+const BASE_URL = '/api/assignment'
+
 export const addAssignment = async (assignment) => {
     try {
-        const response = await fetch(`/api/assignment`, {
+        const response = await fetch(BASE_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(assignment),
@@ -22,7 +24,7 @@ export const addAssignment = async (assignment) => {
 
 export const updateAssignment = async (assignment) => {
     try {
-        const url = `/api/assignment/${assignment.id}`
+        const url = `${BASE_URL}/${assignment.id}`
         const response = await fetch(url, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -53,7 +55,7 @@ export const deleteAssignment = async (assignmentID) => {
             credentials: 'same-origin',
         })
 
-        const urlDeletAssignment = `/api/assignment/${assignmentID}`
+        const urlDeletAssignment = `${BASE_URL}/${assignmentID}`
         const response = await fetch(urlDeletAssignment, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
@@ -77,10 +79,14 @@ export const deleteAssignment = async (assignmentID) => {
 }
 
 export const getAssignment = async (assignmentID) => {
+    const queryParms = {
+        baseUrl: BASE_URL,
+        id: assignmentID,
+        action: 'assignment-get',
+    }
+
     try {
-        const url = assignmentID
-            ? `/api/assignment/${assignmentID}`
-            : `/api/assignment?action=assignment-get`
+        const url = buildQueryParamsMap(queryParms)
 
         const response = await fetch(url, {
             method: 'GET',
@@ -101,12 +107,14 @@ export const getAssignment = async (assignmentID) => {
 
 export const getAssignmentOnTag = async (tagID) => {
     const queryParms = {
+        baseUrl: BASE_URL,
+        id: tagID,
         action: 'assignment-on-tag',
-        IDobject: { tagID: tagID },
     }
 
     try {
-        const url = `/api/assignment?${buildQueryParamsMap(queryParms)}`
+        const url = buildQueryParamsMap(queryParms)
+
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
@@ -126,12 +134,14 @@ export const getAssignmentOnTag = async (tagID) => {
 
 export const getAssignmentOnGoal = async (goalID) => {
     const queryParms = {
+        baseUrl: BASE_URL,
+        id: goalID,
         action: 'assignment-on-goal',
-        IDobject: { goalID: goalID },
     }
 
     try {
-        const url = `/api/assignment?${buildQueryParamsMap(queryParms)}`
+        const url = buildQueryParamsMap(queryParms)
+
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
@@ -150,8 +160,14 @@ export const getAssignmentOnGoal = async (goalID) => {
 }
 
 export const getAssignmentWithoutGoal = async () => {
+    const queryParms = {
+        baseUrl: BASE_URL,
+        action: 'assignment-not-goal',
+    }
+
     try {
-        const url = `/api/assignment?action=assignment-not-goal`
+        const url = buildQueryParamsMap(queryParms)
+
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },

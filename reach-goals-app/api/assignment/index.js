@@ -11,7 +11,7 @@ import { formatObject } from '../../server/utils/utils.js'
 const ALLOWED_METHODS = ['GET', 'POST']
 
 const handler = async (req, res, authContext) => {
-    const { action, assignmentID, goalID, tagID } = req.query
+    const { action } = req.query
 
     if (!ALLOWED_METHODS.includes(req.method)) {
         return res.status(405).json({
@@ -64,31 +64,27 @@ const handler = async (req, res, authContext) => {
         }
 
         if (req.method === 'GET') {
-            let assignment = undefined
+            let assignment
 
             if (action === 'assignment-get') {
-                assignment = await getAssignment(assignmentID, authContext)
-
+                assignment = await getAssignment(authContext)
                 return res
                     .status(200)
                     .json(Array.isArray(assignment) ? assignment : [assignment])
             }
 
             if (action === 'assignment-on-goal') {
-                assignment = await getAssignmentOnGoal(goalID, authContext)
-
+                assignment = await getAssignmentOnGoal(authContext)
                 return res.status(200).json(assignment)
             }
 
             if (action === 'assignment-on-tag') {
-                assignment = await getAssignmentOnTag(tagID, authContext)
-
+                assignment = await getAssignmentOnTag(authContext)
                 return res.status(200).json(assignment)
             }
 
             if (action === 'assignment-not-goal') {
                 assignment = await getAssignmentWithoutGoal(authContext)
-
                 return res.status(200).json(assignment)
             }
         }

@@ -1,8 +1,10 @@
 import { buildQueryParamsMap } from '../utils/mapping/mappingUtils.js'
 
+const BASE_URL = '/api/tag'
+
 export const addTag = async (tag) => {
     try {
-        const response = await fetch(`/api/tag`, {
+        const response = await fetch(BASE_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(tag),
@@ -22,7 +24,7 @@ export const addTag = async (tag) => {
 
 export const updateTag = async (tag) => {
     try {
-        const url = `/api/tag/${tag.id}`
+        const url = `${BASE_URL}/${tag.id}`
         const response = await fetch(url, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -41,7 +43,7 @@ export const updateTag = async (tag) => {
 
 export const deleteTag = async (tagID) => {
     try {
-        const url = `/api/tag/${tagID}`
+        const url = `${BASE_URL}/${tagID}`
         const response = await fetch(url, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
@@ -58,8 +60,14 @@ export const deleteTag = async (tagID) => {
 }
 
 export const getTag = async (tagID) => {
+    const queryParms = {
+        baseUrl: BASE_URL,
+        id: tagID,
+        action: 'tag-get',
+    }
+
     try {
-        const url = tagID ? `/api/tag/${tagID}` : `/api/tag?action=tag-get`
+        const url = buildQueryParamsMap(queryParms)
 
         const response = await fetch(url, {
             method: 'GET',
@@ -75,19 +83,19 @@ export const getTag = async (tagID) => {
 
 export const getTagOnGoal = async (goalID) => {
     const queryParms = {
+        baseUrl: BASE_URL,
+        id: goalID,
         action: 'tag-on-goal',
-        IDobject: { goalID: goalID },
     }
 
     try {
-        const response = await fetch(
-            `/api/tag?${buildQueryParamsMap(queryParms)}`,
-            {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'same-origin',
-            }
-        )
+        const url = buildQueryParamsMap(queryParms)
+
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+        })
 
         if (!response.ok) {
             const error = await response.json()
@@ -102,19 +110,19 @@ export const getTagOnGoal = async (goalID) => {
 
 export const getTagOnAssignment = async (assignmentID) => {
     const queryParms = {
+        baseUrl: BASE_URL,
+        id: assignmentID,
         action: 'tag-on-assignment',
-        IDobject: { assignmentID: assignmentID },
     }
 
     try {
-        const response = await fetch(
-            `/api/tag?${buildQueryParamsMap(queryParms)}`,
-            {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'same-origin',
-            }
-        )
+        const url = buildQueryParamsMap(queryParms)
+
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+        })
 
         if (!response.ok) {
             const error = await response.json()
@@ -130,19 +138,19 @@ export const getTagOnAssignment = async (assignmentID) => {
 
 export const getTagNotGoal = async (goalID) => {
     const queryParms = {
+        baseUrl: BASE_URL,
+        id: goalID,
         action: 'tag-not-goal',
-        IDobject: { goalID: goalID },
     }
 
     try {
-        const response = await fetch(
-            `/api/tag?${buildQueryParamsMap(queryParms)}`,
-            {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'same-origin',
-            }
-        )
+        const url = buildQueryParamsMap(queryParms)
+
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+        })
 
         if (!response.ok) {
             const error = await response.json()
@@ -157,19 +165,19 @@ export const getTagNotGoal = async (goalID) => {
 
 export const getTagNotAssignment = async (assignmentID) => {
     const queryParms = {
+        baseUrl: BASE_URL,
+        id: assignmentID,
         action: 'tag-not-assignment',
-        IDobject: { assignmentID: assignmentID },
     }
 
     try {
-        const response = await fetch(
-            `/api/tag?${buildQueryParamsMap(queryParms)}`,
-            {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'same-origin',
-            }
-        )
+        const url = buildQueryParamsMap(queryParms)
+
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+        })
 
         if (!response.ok) {
             const error = await response.json()

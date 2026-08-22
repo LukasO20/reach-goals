@@ -2,6 +2,9 @@ import { handlerAuthenticate } from '../../server/middleware/demo-session.middle
 import {
     deleteGoal,
     getGoal,
+    getGoalOnAssignment,
+    getGoalOnTag,
+    getGoalWithoutAssignment,
     updateGoal,
     updateTagOnGoal,
 } from '../../server/services/goal.service.js'
@@ -20,8 +23,8 @@ const handleUpdateTagOnGoal = async (goalID, tags) => {
 
 const ALLOWED_METHODS = ['GET', 'PUT', 'DELETE']
 
-const handler = async (req, res) => {
-    const { goalID } = req.query
+const handler = async (req, res, authContext) => {
+    const { action, goalID, assignmentID, tagID } = req.query
 
     if (!ALLOWED_METHODS.includes(req.method)) {
         return res.status(405).json({
@@ -31,8 +34,27 @@ const handler = async (req, res) => {
 
     try {
         if (req.method === 'GET') {
-            const goal = await getGoal(goalID)
-            return res.status(200).json(Array.isArray(goal) ? goal : [goal])
+            let goal
+
+            if (action === 'goal-get') {
+                goal = await getGoal(goalID, authContext)
+                return res.status(200).json(Array.isArray(goal) ? goal : [goal])
+            }
+
+            if (action === 'goal-on-assignment') {
+                goal = await getGoalOnAssignment(assignmentID, authContext)
+                return res.status(200).json(goal)
+            }
+
+            if (action === 'goal-on-tag') {
+                goal = await getGoalOnTag(tagID, authContext)
+                return res.status(200).json(goal)
+            }
+
+            if (action === 'goal-not-assignment') {
+                goal = await getGoalWithoutAssignment(assignmentID, authContext)
+                return res.status(200).json(goal)
+            }
         }
 
         if (req.method === 'PUT') {
