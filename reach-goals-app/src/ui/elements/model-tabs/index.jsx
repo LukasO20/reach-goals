@@ -1,7 +1,7 @@
 import { useSwitchLayout } from '../../../provider/ui/switch-layout-provider'
 
-import { modelTabsMap } from '../../../utils/mapping/mappingUtils.js'
 import { buildFilterModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
+import { modelTabsMap } from './defaults.js'
 
 import { cx } from '../../../utils/utils.js'
 
@@ -15,13 +15,25 @@ import './style.scss'
 /**
  * @param {Props} props
  */
-const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, filterTabs, onFilterTabs, loading }) => {
-    const { data: { visibility } } = useSwitchLayout()
+const ModelTabs = ({
+    type,
+    classModelTabs,
+    children,
+    headLeftChildren,
+    filterTabs,
+    onFilterTabs,
+    loading,
+}) => {
+    const {
+        data: { visibility },
+    } = useSwitchLayout()
     const { page } = filterTabs?.[type] ?? {}
 
     const isValidFilterTabsValue = !!page
 
-    const filterButtonActive = isValidFilterTabsValue ? Object.keys(page)[0] : null
+    const filterButtonActive = isValidFilterTabsValue
+        ? Object.keys(page)[0]
+        : null
 
     const columnsUserConfig = type !== 'tag' ? visibility.columns : null
 
@@ -40,7 +52,6 @@ const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, filterTab
         onFilterTabs(buildFilterModelMap(type, filerKey, source, filterValue))
     }
 
-    //TODO: FIND A GOOD WAY TO CHECK DATA TO AVOID STYLE CLASS VALIDATIONS
     const shouldRenderHeader = !classModelTabs?.includes('empty')
 
     return (
@@ -49,13 +60,18 @@ const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, filterTab
                 <div className='head'>
                     {headLeftChildren}
                     <div className='options-sections'>
-                        {
-                            modelTabsMap[type]?.map((tab, index) => {
-                                const currentButton = Object.keys(tab.filter)[0]
-                                const isNullFilter = !filterButtonActive && tab.label.includes('every')
-                                const activeButton =  isNullFilter ? 'active' : currentButton === filterButtonActive ? 'active' : null
+                        {modelTabsMap[type]?.map((tab, index) => {
+                            const currentButton = Object.keys(tab.filter)[0]
+                            const isNullFilter =
+                                !filterButtonActive &&
+                                tab.label.includes('every')
+                            const activeButton = isNullFilter
+                                ? 'active'
+                                : currentButton === filterButtonActive
+                                  ? 'active'
+                                  : null
 
-                                const buttonActionClass = cx(`
+                            const buttonActionClass = cx(`
                                     plan-round 
                                     max-width 
                                     small 
@@ -63,21 +79,22 @@ const ModelTabs = ({ type, classModelTabs, children, headLeftChildren, filterTab
                                     ${activeButton}
                                 `)
 
-                                return (
-                                    <ButtonAction
-                                        key={index}
-                                        classBtn={buttonActionClass}
-                                        title={tab.label}
-                                        onClick={() => { handleFilterClick(tab.filter) }}
-                                    />
-                                )
-                            })
-                        }
+                            return (
+                                <ButtonAction
+                                    key={index}
+                                    classBtn={buttonActionClass}
+                                    title={tab.label}
+                                    onClick={() => {
+                                        handleFilterClick(tab.filter)
+                                    }}
+                                />
+                            )
+                        })}
                     </div>
                 </div>
             )}
             <div className='body scrollable'>
-                {loading && (<Loading mode='block' />)}
+                {loading && <Loading mode='block' />}
                 {!loading && children}
             </div>
         </div>

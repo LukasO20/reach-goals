@@ -22,44 +22,51 @@ import './style.scss'
  * @param {Props} props
  */
 const Objectives = ({ filterTabs, onFilterTabs }) => {
-    const { data: { visibility } } = useSwitchLayout()
-    const { page: { data: dataGoal = [], loading: loadingGoal } } = useGoalProvider()
-    const { page: { data: dataAssignment = [], loading: loadingAssignment } } = useAssignmentProvider()
+    const {
+        data: { visibility },
+    } = useSwitchLayout()
+    const {
+        page: { data: dataGoal = [], loading: loadingGoal },
+    } = useGoalProvider()
+    const {
+        page: { data: dataAssignment = [], loading: loadingAssignment },
+    } = useAssignmentProvider()
 
     const typeLayout = visibility.layoutObjectives
 
     const propsReference = {
         display: {
             type: [visibility.cards],
-            actions: ['edit', 'delete']
+            actions: ['edit', 'delete'],
         },
         detailsModel: true,
         checkboxModel: true,
         status: visibility.status,
-        showTags: visibility.tagsCard
+        showTags: visibility.tagsCard,
     }
 
     const dataSingle = typeLayout === 'goal' ? dataGoal : dataAssignment
 
     const switchActivityPropsReference = {
         ...propsReference,
-        source: dataSingle
+        source: dataSingle,
     }
 
     const goalPropsReference = {
         ...propsReference,
-        source: dataGoal
+        source: dataGoal,
     }
 
     const assignmentPropsReference = {
         ...propsReference,
-        source: dataAssignment
+        source: dataAssignment,
     }
 
     const isAllModels = typeLayout === 'all-activities'
     const isOnlyTypeModel = typeLayout === 'goal' || typeLayout === 'assignment'
     const isLoading = !!loadingGoal || !!loadingAssignment
-    const isEmptyData = !dataGoal?.length && !dataAssignment?.length && !isLoading
+    const isEmptyData =
+        !dataGoal?.length && !dataAssignment?.length && !isLoading
 
     const modelTabsClass = cx(
         `objectives
@@ -75,7 +82,10 @@ const Objectives = ({ filterTabs, onFilterTabs }) => {
                 </>
             )}
             {isOnlyTypeModel && !isAllModels && !isEmptyData && (
-                <ModelSwitcher type={typeLayout} propsReference={switchActivityPropsReference} />
+                <ModelSwitcher
+                    type={typeLayout}
+                    propsReference={switchActivityPropsReference}
+                />
             )}
             {!isLoading && isEmptyData && (
                 <EmptyState
@@ -84,8 +94,8 @@ const Objectives = ({ filterTabs, onFilterTabs }) => {
                     imgSrc={emptyObjectivesImg}
                 >
                     <EmptyStateCreate />
-                </EmptyState>)
-            }
+                </EmptyState>
+            )}
         </>
     )
 
@@ -100,7 +110,12 @@ const Objectives = ({ filterTabs, onFilterTabs }) => {
             >
                 {renderContent}
             </ModelTabs>
-            <PopupModelOptions type='pop-switch-model' typeSwitchModelOptions='objectives' onFilterTabs={onFilterTabs} mode={visibility.layoutPopupModel} />
+            <PopupModelOptions
+                type='pop-switch-model'
+                typeSwitchModelOptions='objectives'
+                onFilterTabs={onFilterTabs}
+                mode={visibility.layoutPopupModel}
+            />
         </>
     )
 }

@@ -95,59 +95,6 @@ export const titleMap = {
     toast: '',
 }
 
-export const modelTabsMap = {
-    goal: [
-        {
-            filter: { notAssignmentRelation: 'all' },
-            label: 'without assignments',
-        },
-        {
-            filter: { goalAssignmentRelation: 'all' },
-            label: 'with assignments',
-        },
-        {
-            filter: { goalTagRelation: 'all' },
-            label: 'with tags',
-        },
-        {
-            filter: { goalSomeID: 'all' },
-            label: 'every goal',
-        },
-    ],
-    assignment: [
-        {
-            filter: { notGoalRelation: 'all' },
-            label: 'without goals',
-        },
-        {
-            filter: { assignmentGoalRelation: 'all' },
-            label: 'with goals',
-        },
-        {
-            filter: { assignmentTagRelation: 'all' },
-            label: 'with tags',
-        },
-        {
-            filter: { assignmentSomeID: 'all' },
-            label: 'every assignment',
-        },
-    ],
-    tag: [
-        {
-            filter: { tagRelationGoal: 'all' },
-            label: 'with goals',
-        },
-        {
-            filter: { tagRelationAssignment: 'all' },
-            label: 'with assignments',
-        },
-        {
-            filter: { tagSomeID: 'all' },
-            label: 'every tag',
-        },
-    ],
-}
-
 export const displayModesMap = {
     type: ['card', 'card-mini'],
     actions: ['edit', 'delete', 'details', 'remove'],
