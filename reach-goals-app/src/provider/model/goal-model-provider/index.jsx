@@ -96,7 +96,7 @@ export const GoalModelProvider = ({ children }) => {
                 let newArray = [...oldData]
 
                 const itemIndex = newArray.findIndex(
-                    (i) => i.id === Number(draggableId)
+                    (i) => i.id === draggableId
                 )
                 const movedItem = { ...newArray[itemIndex] }
 

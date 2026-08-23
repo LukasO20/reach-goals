@@ -1,4 +1,10 @@
-import { useContext, useState, createContext, useMemo, useCallback } from 'react'
+import {
+    useContext,
+    useState,
+    createContext,
+    useMemo,
+    useCallback,
+} from 'react'
 
 import { checkboxMap } from '../../../utils/mapping/mappingUtilsProvider'
 
@@ -23,7 +29,7 @@ export const CheckboxProvider = ({ children }) => {
 
     /** @type {import('./types.js').RegisterCheckboxProps}  */
     const registerCheckbox = useCallback((checkboxID, scope) => {
-        setCheckbox(prev => {
+        setCheckbox((prev) => {
             const registry = new Set(prev.checkboxRegistry[scope])
             registry.add(checkboxID)
 
@@ -31,15 +37,15 @@ export const CheckboxProvider = ({ children }) => {
                 ...prev,
                 checkboxRegistry: {
                     ...prev.checkboxRegistry,
-                    [scope]: registry
-                }
+                    [scope]: registry,
+                },
             }
         })
     }, [])
 
     /** @type {import('./types.js').UnregisterCheckboxProps}  */
     const unregisterCheckbox = useCallback((checkboxID, scope) => {
-        setCheckbox(prev => {
+        setCheckbox((prev) => {
             const registry = new Set(prev.checkboxRegistry[scope])
             registry.delete(checkboxID)
 
@@ -47,8 +53,8 @@ export const CheckboxProvider = ({ children }) => {
                 ...prev,
                 checkboxRegistry: {
                     ...prev.checkboxRegistry,
-                    [scope]: registry
-                }
+                    [scope]: registry,
+                },
             }
         })
     }, [])
@@ -63,17 +69,19 @@ export const CheckboxProvider = ({ children }) => {
         const nextCheckbox = new Set(previousCheckboxSelected)
         nextCheckbox.add(checkbox.checkboxID)
 
-        return ({
+        return {
             ...prev,
             scope: checkbox.scope,
             [checkbox.scope]: {
-                selected: checkboxIDMain ?
-                    Array.from(previousCheckboxRegistry[checkbox.scope])
-                    : checkboxID ? Array.from(nextCheckbox) : []
+                selected: checkboxIDMain
+                    ? Array.from(previousCheckboxRegistry[checkbox.scope])
+                    : checkboxID
+                      ? Array.from(nextCheckbox)
+                      : [],
             },
             checkboxID: checkbox.checkboxID,
-            checkboxIDMain: checkbox.checkboxIDMain
-        })
+            checkboxIDMain: checkbox.checkboxIDMain,
+        }
     }, [])
 
     /** @type {import('./types.js').RemoveCheckboxProps}  */
@@ -81,33 +89,47 @@ export const CheckboxProvider = ({ children }) => {
         const isValidCheckboxIDMain = !!checkbox.checkboxIDMain
         const previousCheckboxSelected = prev[checkbox.scope].selected
 
-        return ({
+        return {
             ...prev,
             scope: checkbox.scope,
             [checkbox.scope]: {
-                selected: isValidCheckboxIDMain ? [] : previousCheckboxSelected.filter((c) => c !== (checkbox.checkboxID))
+                selected: isValidCheckboxIDMain
+                    ? []
+                    : previousCheckboxSelected.filter(
+                          (c) => c !== checkbox.checkboxID
+                      ),
             },
-            checkboxIDMain: isValidCheckboxIDMain ? null : checkbox.checkboxIDMain,
-            checkboxID: checkbox.checkboxID
-        })
+            checkboxIDMain: isValidCheckboxIDMain
+                ? null
+                : checkbox.checkboxIDMain,
+            checkboxID: checkbox.checkboxID,
+        }
     }, [])
 
     /** @type {import('./types.js').ToggleCheckboxProps}  */
-    const toggleCheckbox = useCallback((checkbox) => {
-        setSafeCheckbox((prev) => {
-            const hasCheckboxID = !!prev[checkbox.scope]?.selected?.includes(checkbox.checkboxID || checkbox.checkboxIDMain)
+    const toggleCheckbox = useCallback(
+        (checkbox) => {
+            setSafeCheckbox((prev) => {
+                const hasCheckboxID = !!prev[
+                    checkbox.scope
+                ]?.selected?.includes(
+                    checkbox.checkboxID || checkbox.checkboxIDMain
+                )
 
-            return hasCheckboxID ?
-                removeCheckbox(prev, checkbox) : updateCheckbox(prev, checkbox)
-        })
-    }, [removeCheckbox, updateCheckbox])
+                return hasCheckboxID
+                    ? removeCheckbox(prev, checkbox)
+                    : updateCheckbox(prev, checkbox)
+            })
+        },
+        [removeCheckbox, updateCheckbox]
+    )
 
     /** @type {import('./types.js').ResetCheckboxProps}  */
     const resetCheckbox = useCallback(({ keys } = {}) => {
         if (Array.isArray(keys)) {
-            setCheckbox(prevCheckbox => {
+            setCheckbox((prevCheckbox) => {
                 const updated = { ...prevCheckbox }
-                keys.forEach(key => {
+                keys.forEach((key) => {
                     updated[key] = checkboxMap[key]
                 })
                 return updated
@@ -117,10 +139,24 @@ export const CheckboxProvider = ({ children }) => {
         }
     }, [])
 
-    const value = useMemo(() => ({ valuesCheckbox, toggleCheckbox, registerCheckbox, unregisterCheckbox, resetCheckbox }),
-        [valuesCheckbox, toggleCheckbox, registerCheckbox, unregisterCheckbox, resetCheckbox])
+    const value = useMemo(
+        () => ({
+            valuesCheckbox,
+            toggleCheckbox,
+            registerCheckbox,
+            unregisterCheckbox,
+            resetCheckbox,
+        }),
+        [
+            valuesCheckbox,
+            toggleCheckbox,
+            registerCheckbox,
+            unregisterCheckbox,
+            resetCheckbox,
+        ]
+    )
 
-    console.log('CheckboxProvider - valuesCheckbox:', valuesCheckbox)
+    //console.log('CheckboxProvider - valuesCheckbox:', valuesCheckbox)
 
     return (
         <CheckboxContext.Provider value={value}>
