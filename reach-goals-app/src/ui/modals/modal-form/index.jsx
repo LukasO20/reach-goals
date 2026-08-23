@@ -18,17 +18,32 @@ import FormModelRelationAdd from '../../forms/components/form-model-relation-add
 import './style.scss'
 
 const modelRelationAddMap = (type, children) => {
-    return (
-        <FormModelRelationAdd type={type}>
-            {children}
-        </FormModelRelationAdd>
-    )
+    return <FormModelRelationAdd type={type}>{children}</FormModelRelationAdd>
 }
 
 const ModalForm = () => {
-    const { modal: { data: dataAssignment, loading: loadingAssigment }, save: saveAssignment, saveSuccess: saveAssignmentSuccess, saving: savingAssignment, resetSave: resetSaveAssignment } = useAssignmentProvider()
-    const { modal: { data: dataGoal, loading: loadingGoal }, save: saveGoal, saveSuccess: saveGoalSuccess, saving: savingGoal, resetSave: resetSaveGoal } = useGoalProvider()
-    const { modal: { data: dataTag }, loading: loadingTag, save: saveTag, saveSuccess: saveTagSuccess, saving: savingTag, resetSave: resetSaveTag } = useTagProvider()
+    const {
+        modal: { data: dataAssignment, loading: loadingAssigment },
+        save: saveAssignment,
+        saveSuccess: saveAssignmentSuccess,
+        saving: savingAssignment,
+        resetSave: resetSaveAssignment,
+    } = useAssignmentProvider()
+    const {
+        modal: { data: dataGoal, loading: loadingGoal },
+        save: saveGoal,
+        saveSuccess: saveGoalSuccess,
+        saving: savingGoal,
+        resetSave: resetSaveGoal,
+    } = useGoalProvider()
+    const {
+        modal: { data: dataTag },
+        loading: loadingTag,
+        save: saveTag,
+        saveSuccess: saveTagSuccess,
+        saving: savingTag,
+        resetSave: resetSaveTag,
+    } = useTagProvider()
     const { visibleElements, toggleVisibility } = useVisibility()
     const { model, setModel, resetManageModel } = useManageModel()
     const { update } = useTitle()
@@ -39,11 +54,14 @@ const ModalForm = () => {
     const isLoading = !!loadingGoal || !!loadingAssigment || !!loadingTag
     const isSaving = !!savingGoal || !!savingAssignment || !!savingTag
     const isModalModelList = visibleElements.some(
-        classItem => classItem === 'modal-model-list-goal' ||
+        (classItem) =>
+            classItem === 'modal-model-list-goal' ||
             classItem === 'modal-model-list-assignment' ||
-            classItem === 'modal-model-list-tag')
+            classItem === 'modal-model-list-tag'
+    )
 
-    const isSaveSuccess = !!saveGoalSuccess || !!saveAssignmentSuccess || !!saveTagSuccess
+    const isSaveSuccess =
+        !!saveGoalSuccess || !!saveAssignmentSuccess || !!saveTagSuccess
 
     const resetMutation = useCallback(() => {
         const resetSaveMap = {
@@ -57,46 +75,44 @@ const ModalForm = () => {
     const handleChange = (e) => {
         const { name, value } = e.target || e
 
-        //Tag attributes
-        const tagsRelation = e.tags ?? model.activeModel.tags ?? []
+        const tagsRelation = e.tags ?? model.activeModel?.tags ?? []
 
         if (typeVisibility === 'goal') {
-            const assignmentsRelation = e.assignments ?? model.activeModel.assignments ?? []
+            const assignmentsRelation =
+                e.assignments ?? model.activeModel?.assignments ?? []
 
             const update = {
                 ...model.activeModel,
                 [name]: value,
                 assignments: [...assignmentsRelation],
-                tags: [...tagsRelation]
+                tags: [...tagsRelation],
             }
 
-            setModel(prevModel => ({
+            setModel((prevModel) => ({
                 ...prevModel,
-                activeModel: update
+                activeModel: update,
             }))
         } else if (typeVisibility === 'assignment') {
-
             const update = {
                 ...model.activeModel,
                 [name]: value,
                 goal: e.target === undefined ? Object.values(e)[0] : null,
-                tags: [...tagsRelation]
+                tags: [...tagsRelation],
             }
 
-            setModel(prevModel => ({
+            setModel((prevModel) => ({
                 ...prevModel,
-                activeModel: update
+                activeModel: update,
             }))
         } else {
-
             const update = {
                 ...model.activeModel,
-                [name]: value
+                [name]: value,
             }
 
-            setModel(prevModel => ({
+            setModel((prevModel) => ({
                 ...prevModel,
-                activeModel: update
+                activeModel: update,
             }))
         }
     }
@@ -105,13 +121,17 @@ const ModalForm = () => {
         setError(null)
 
         try {
-            typeVisibility === 'goal' && await saveGoal(structuredClone(model.activeModel))
-            typeVisibility === 'assignment' && await saveAssignment(structuredClone(model.activeModel))
-            typeVisibility === 'tag' && await saveTag(structuredClone(model.activeModel))
-
+            typeVisibility === 'goal' &&
+                saveGoal(structuredClone(model.activeModel))
+            typeVisibility === 'assignment' &&
+                saveAssignment(structuredClone(model.activeModel))
+            typeVisibility === 'tag' &&
+                saveTag(structuredClone(model.activeModel))
         } catch (exception) {
             setError(exception.message)
-            update({ toast: "Ops something went wrong during save. Reload page and try again later." })
+            update({
+                toast: 'Ops something went wrong during save. Reload page and try again later.',
+            })
             console.error(`Error during save: ${error}`)
         }
     }
@@ -121,60 +141,74 @@ const ModalForm = () => {
         mapHandleChange: handleChange,
         mapModelRelationAddMap: modelRelationAddMap,
         mapHandleSubmit: handleSubmit,
-        mapSetError: setError
+        mapSetError: setError,
     }
 
     useEffect(() => {
         if (isSaveSuccess) {
-            const visibility = typeVisibility === 'tag'
-                ? visibilityMap('near-modalForm', { remove: true })
-                : visibilityMap(['modal-center', typeVisibility], { remove: true })
+            const visibility =
+                typeVisibility === 'tag'
+                    ? visibilityMap('near-modalForm', { remove: true })
+                    : visibilityMap(['modal-center', typeVisibility], {
+                          remove: true,
+                      })
 
             toggleVisibility(visibility)
-            const resetKeys = resetManageModelMap(['activeModel', 'mainModelID', 'typeModel'])
+            const resetKeys = resetManageModelMap([
+                'activeModel',
+                'mainModelID',
+                'typeModel',
+            ])
             resetManageModel(resetKeys)
             resetMutation()
         }
-    }, [isSaveSuccess, toggleVisibility, typeVisibility, resetManageModel, resetMutation])
+    }, [
+        isSaveSuccess,
+        toggleVisibility,
+        typeVisibility,
+        resetManageModel,
+        resetMutation,
+    ])
 
     useEffect(() => {
-        if (typeof model.mainModelID === 'number' && !!model.typeModel) {
-            const typeSelected =
-                model.typeModel === 'goal' ?
-                    dataGoal :
-                    model.typeModel === 'assignment' ?
-                        dataAssignment :
-                        model.typeModel === 'tag' ?
-                            dataTag : null
+        if (typeof model.mainModelID === 'string' && !!model.typeModel) {
+            const data =
+                model.typeModel === 'goal'
+                    ? dataGoal
+                    : model.typeModel === 'assignment'
+                      ? dataAssignment
+                      : model.typeModel === 'tag'
+                        ? dataTag
+                        : null
 
-            const selectedFormModel = Array.isArray(typeSelected) ? typeSelected[0] : typeSelected
-            if (selectedFormModel && Object.keys(selectedFormModel).length) {
-                setModel(prevModel => ({
+            const selectedModel = Array.isArray(data) ? data[0] : data
+            if (selectedModel && Object.keys(selectedModel).length) {
+                setModel((prevModel) => ({
                     ...prevModel,
-                    activeModel: selectedFormModel
+                    activeModel: selectedModel,
                 }))
             }
         }
-    }, [dataGoal,
+    }, [
+        dataGoal,
         dataAssignment,
         dataTag,
         model.typeModel,
         model.mainModelID,
-        setModel])
+        setModel,
+    ])
 
-    return (
-        isLoading && !isModalModelList ? (
-            <Loading mode='block' />
-        ) : (
-            <Form
-                typeForm={typeVisibility}
-                functionFormMap={functionFormMap}
-                model={model}
-                modelForm={model.activeModel}
-                mainModelID={model.mainModelID}
-                pendingState={isSaving}
-            />
-        )
+    return isLoading && !isModalModelList ? (
+        <Loading mode='block' />
+    ) : (
+        <Form
+            typeForm={typeVisibility}
+            functionFormMap={functionFormMap}
+            model={model}
+            modelForm={model.activeModel}
+            mainModelID={model.mainModelID}
+            pendingState={isSaving}
+        />
     )
 }
 

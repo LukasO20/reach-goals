@@ -46,7 +46,7 @@
  */
 
 /**
- * @callback UpdateFormModelProps
+ * @callback UpdateActiveModelProps
  * @param {UpdateFormModelParams} params
  * @returns {void}
  */
@@ -112,11 +112,10 @@
  * @property {SetModelProps} setModel
  * @property {AddToSelectedModelProps} addToSelectedModel
  * @property {RemoveFromSelectedModelProps} removeFromSelectedModel
- * @property {UpdateFormModelProps} updateFormModel
+ * @property {UpdateActiveModelProps} updateFormModel
  * @property {SetFilterModelProps} setFilterModel
  * @property {UpdateDataModelProps} updateDataModel
  * @property {ResetManageModelProps} resetManageModel
  */
 
-export { }
-
+export {}

@@ -17,8 +17,16 @@ import { updateActiveModelMap } from '../../../utils/mapping/mappingUtilsProvide
 
 import { cx } from '../../../utils/utils.js'
 
-import { renderDropdownStatusTitle, renderModelTagEnviroment as renderModelTagEnviroment2, findEmptyFields } from '../helpers.js'
-import { safeFunctionFormMap, safeModel, safeModelFormStandard } from '../defaults.js'
+import {
+    renderDropdownStatusTitle,
+    renderModelTagEnviroment as renderModelTagEnviroment2,
+    findEmptyFields,
+} from '../helpers.js'
+import {
+    safeFunctionFormMap,
+    safeModel,
+    safeModelFormStandard,
+} from '../defaults.js'
 
 /** @typedef {import('../types.js').FormStandardProps} Props */
 
@@ -31,36 +39,66 @@ const FormStandard = ({
     modelForm = safeModelFormStandard,
     model = safeModel,
     mainModelID,
-    pendingState
-}) => {    
+    pendingState,
+}) => {
     const { visibleElements } = useVisibility()
     const { setModel, updateActiveModel } = useManageModel()
 
     /** @type {import('../types.js').SetEmptyFieldsProps} */
-    const [emptyFields, setEmptyFields] = useState({ fields: [], isEmptyFields: false })
+    const [emptyFields, setEmptyFields] = useState({
+        fields: [],
+        isEmptyFields: false,
+    })
 
     const modelCopyRegion = type === 'goal' ? 'assignment' : ''
     const icon = <Icons icon={`icon-${type || 'exclamation'}`} />
-    const isEmptyForm = typeof model.mainModelID === 'number'
+    const isEmptyForm = typeof model.mainModelID === 'string'
     const display = {
         type: ['card-mini'],
-        actions: ['remove']
+        actions: ['remove'],
     }
 
     const renderModelEnviroment = (goalForm = false) => {
         const goalEnviroment = !!isEmptyForm && goalForm
 
-        if (goalEnviroment && Object.keys(modelForm).length > 0) return <ModelSwitcher type='assignment' propsReference={modelSwitcherProps} />
-        else return <ModelCopy type={model.typeModel} region={modelCopyRegion} propsReference={modelCopyProps} />
+        if (goalEnviroment && Object.keys(modelForm).length > 0)
+            return (
+                <ModelSwitcher
+                    type='assignment'
+                    propsReference={modelSwitcherProps}
+                />
+            )
+        else
+            return (
+                <ModelCopy
+                    type={model.typeModel}
+                    region={modelCopyRegion}
+                    propsReference={modelCopyProps}
+                />
+            )
     }
 
     const renderModelTagEnviroment = () => {
-        if (!!isEmptyForm && Object.keys(modelForm).length > 0) return <ModelSwitcher type='tag' propsReference={modelSwitcherProps} />
-        else return <ModelCopy type={model.typeModel} region='tag' propsReference={modelCopyProps} />
+        if (!!isEmptyForm && Object.keys(modelForm).length > 0)
+            return (
+                <ModelSwitcher type='tag' propsReference={modelSwitcherProps} />
+            )
+        else
+            return (
+                <ModelCopy
+                    type={model.typeModel}
+                    region='tag'
+                    propsReference={modelCopyProps}
+                />
+            )
     }
 
     const dataUpdateFormStatusModel = (value = null) => {
-        return updateActiveModelMap({ keyObject: 'status', value: value, action: 'add' })
+        return updateActiveModelMap({
+            keyObject: 'status',
+            value: value,
+            action: 'add',
+        })
     }
 
     const handleFormSubmit = () => {
@@ -77,43 +115,52 @@ const FormStandard = ({
             icon: 'icon-progress',
             classBtn: modelForm.status === 'progress' ? 'active' : '',
             onClick: () => {
-                updateActiveModel(dataUpdateFormStatusModel('progress'));
-            }
+                updateActiveModel(dataUpdateFormStatusModel('progress'))
+            },
         },
         {
             title: 'conclude',
             icon: 'icon-conclude',
             classBtn: modelForm.status === 'conclude' ? 'active' : '',
             onClick: () => {
-                updateActiveModel(dataUpdateFormStatusModel('conclude'));
-            }
+                updateActiveModel(dataUpdateFormStatusModel('conclude'))
+            },
         },
         {
             title: 'cancel',
             icon: 'icon-cancel',
             classBtn: modelForm.status === 'cancel' ? 'active' : '',
             onClick: () => {
-                updateActiveModel(dataUpdateFormStatusModel('cancel'));
-            }
+                updateActiveModel(dataUpdateFormStatusModel('cancel'))
+            },
         },
     ]
 
-    const modalModelShowed = visibleElements.find(classItem => classItem?.includes('modal-model-list')) ?? ''
+    const modalModelShowed =
+        visibleElements.find((classItem) =>
+            classItem?.includes('modal-model-list')
+        ) ?? ''
     const modalModelListType = modalModelShowed.split('-')[3]
     const titlesModalModelList = {
         goal: 'Choose a goal',
         assignment: 'Choose an assignment',
-        tag: 'Choose a tag'
+        tag: 'Choose a tag',
     }
     const filtersKeys = {
         goal: 'goalSomeID',
         assignment: 'notGoalRelation',
-        tag: !isEmptyForm ? 'tagSomeID' : type === 'goal' ? 'tagNotRelationGoal' : 'tagNotRelationAssignment'
+        tag: !isEmptyForm
+            ? 'tagSomeID'
+            : type === 'goal'
+              ? 'tagNotRelationGoal'
+              : 'tagNotRelationAssignment',
     }
     const modelSwitcherProps = { source: modelForm, display }
     const modelCopyProps = { display }
 
-    const dropdownStatus = renderDropdownStatusTitle({ status: modelForm.status })
+    const dropdownStatus = renderDropdownStatusTitle({
+        status: modelForm.status,
+    })
 
     //TODO: IMPROVE A WAY TO RENDER COMPONENTS HERE
     // const tagEnviroment = renderModelTagEnviroment2({ type, mainModelID, modelForm, modelSwitcherProps, modelCopyProps })
@@ -146,18 +193,34 @@ const FormStandard = ({
                 <div className='objective-options'>
                     <div className='objective-op'>
                         <ButtonAction
-                            visibility={visibilityMap(['modal-center', 'assignment'], { maintain: true })}
+                            visibility={visibilityMap(
+                                ['modal-center', 'assignment'],
+                                { maintain: true }
+                            )}
                             classBtn={buttonAssignmentClass}
                             title='assignments'
                             nullForm={true}
-                            onClick={() => setModel(prev => ({ ...prev, typeModel: 'assignment' }))}
+                            onClick={() =>
+                                setModel((prev) => ({
+                                    ...prev,
+                                    typeModel: 'assignment',
+                                }))
+                            }
                         />
                         <ButtonAction
-                            visibility={visibilityMap(['modal-center', 'goal'], { maintain: true })}
+                            visibility={visibilityMap(
+                                ['modal-center', 'goal'],
+                                { maintain: true }
+                            )}
                             classBtn={buttonGoalClass}
                             title='goals'
                             nullForm={true}
-                            onClick={() => setModel(prev => ({ ...prev, typeModel: 'goal' }))}
+                            onClick={() =>
+                                setModel((prev) => ({
+                                    ...prev,
+                                    typeModel: 'goal',
+                                }))
+                            }
                         />
                     </div>
                     <div className='objective-color'>
@@ -188,7 +251,10 @@ const FormStandard = ({
                                 name='name'
                                 value={modelForm.name || ''}
                                 onChange={functionFormMap.mapHandleChange}
-                                errorMessage={emptyFields.fields.includes('name') && 'Name is required'}
+                                errorMessage={
+                                    emptyFields.fields.includes('name') &&
+                                    'Name is required'
+                                }
                             />
                         </div>
                         <div className='field-forms start-date'>
@@ -217,23 +283,21 @@ const FormStandard = ({
                                 onChange={functionFormMap.mapHandleChange}
                             />
                         </div>
-                        {
-                            type === 'assignment' && (
-                                <div className='field-forms duration'>
-                                    <label>
-                                        <Icons icon='icon-clock' />
-                                        <span>duration</span>
-                                    </label>
-                                    <InputTimer
-                                        id={`${type}-duration`}
-                                        className='input-form timer'
-                                        name='duration'
-                                        onChange={functionFormMap.mapHandleChange}
-                                        value={modelForm.duration ?? null}
-                                    />
-                                </div>
-                            )
-                        }
+                        {type === 'assignment' && (
+                            <div className='field-forms duration'>
+                                <label>
+                                    <Icons icon='icon-clock' />
+                                    <span>duration</span>
+                                </label>
+                                <InputTimer
+                                    id={`${type}-duration`}
+                                    className='input-form timer'
+                                    name='duration'
+                                    onChange={functionFormMap.mapHandleChange}
+                                    value={modelForm.duration ?? null}
+                                />
+                            </div>
+                        )}
                         <div className='field-forms status'>
                             <label>
                                 <Icons icon='icon-progress' />
@@ -251,10 +315,14 @@ const FormStandard = ({
                             />
                         </div>
                     </div>
-                    {functionFormMap.mapModelRelationAddMap('tag', renderModelTagEnviroment())}
-                    {functionFormMap
-                        .mapModelRelationAddMap(type, renderModelEnviroment(isGoalForm))
-                    }
+                    {functionFormMap.mapModelRelationAddMap(
+                        'tag',
+                        renderModelTagEnviroment()
+                    )}
+                    {functionFormMap.mapModelRelationAddMap(
+                        type,
+                        renderModelEnviroment(isGoalForm)
+                    )}
                     <div className='item-forms details'>
                         <div className='head'>
                             <div className='item'>
@@ -283,17 +351,16 @@ const FormStandard = ({
                     onClick={handleFormSubmit}
                     classBtn='plan max-width save'
                     icon='icon-save'
-                    title={typeof mainModelID === 'number' ? 'Save' : 'Create'}
+                    title={typeof mainModelID === 'string' ? 'Save' : 'Create'}
                 />
             </div>
-            {
-                !!modalModelShowed &&
+            {!!modalModelShowed && (
                 <ModalModelListWrapper
                     title={titlesModalModelList[modalModelListType]}
                     type={modalModelListType}
                     typeFilterKey={filtersKeys[modalModelListType]}
                 />
-            }
+            )}
         </div>
     )
 }

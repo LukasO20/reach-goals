@@ -1,7 +1,10 @@
 import { useNavigate } from 'react-router-dom'
 import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider'
 
-import { visibilityMap, switchLayoutMap } from '../../../../utils/mapping/mappingUtils'
+import {
+    visibilityMap,
+    switchLayoutMap,
+} from '../../../../utils/mapping/mappingUtils'
 
 import { cx } from '../../../../utils/utils.js'
 
@@ -27,9 +30,11 @@ const ModalDetailsContent = ({
     description,
     goal,
     assignments = [],
-    tags = []
+    tags = [],
 }) => {
-    const { data: { layout } } = useSwitchLayout()
+    const {
+        data: { layout },
+    } = useSwitchLayout()
     const navigate = useNavigate()
 
     const hasEndDate = !!end
@@ -53,9 +58,7 @@ const ModalDetailsContent = ({
                 <div>
                     <div className='title'>
                         <Icons icon={`icon-${type}`} size='big' />
-                        <h2>
-                            {name}
-                        </h2>
+                        <h2>{name}</h2>
                     </div>
                     {hasEndDate && (
                         <span className='sub-title'>
@@ -64,10 +67,15 @@ const ModalDetailsContent = ({
                     )}
                 </div>
                 <ButtonAction
-                    visibility={visibilityMap(['modal-center', type], { maintain: true })}
+                    visibility={visibilityMap(['modal-center', type], {
+                        maintain: true,
+                    })}
                     switchLayout={switchLayoutMap({
                         area: 'modal',
-                        layout: { modalName: 'modal-center', layoutName: 'form' }
+                        layout: {
+                            modalName: 'modal-center',
+                            layoutName: 'form',
+                        },
                     })}
                     classBtn='circle edit'
                     icon='icon-edit'
@@ -88,9 +96,7 @@ const ModalDetailsContent = ({
             <div className='body'>
                 {hasDescription && (
                     <div className='description'>
-                        <div className='body scrollable'>
-                            {description}
-                        </div>
+                        <div className='body scrollable'>{description}</div>
                     </div>
                 )}
                 <Line />
@@ -98,7 +104,11 @@ const ModalDetailsContent = ({
                     <ModalDetailsGoal assignments={assignments} tags={tags} />
                 )}
                 {shouldRenderAssignmentContent && (
-                    <ModalDetailsAssignment goal={goal} tags={tags} duration={duration} />
+                    <ModalDetailsAssignment
+                        goal={goal}
+                        tags={tags}
+                        duration={duration}
+                    />
                 )}
             </div>
         </>

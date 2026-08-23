@@ -11,15 +11,14 @@ import ModalDetails from '.'
 /**
  * @param {Props} props
  */
-export const ModalDetailsWrapper = ({ modelID, type }) => {
-    const { setFilterModel } = useManageModel()
+export const ModalDetailsWrapper = ({ modelID, type, setFilterModel }) => {
     const dataFilter = useMemo(() => {
         return buildFilterModelMap(type, `${type}SomeID`, 'modal', modelID)
     }, [modelID, type])
 
     useEffect(() => {
-        setFilterModel(dataFilter, type)
-    }, [dataFilter, setFilterModel, type])
+        setFilterModel({ filter: dataFilter, type })
+    }, [dataFilter, setFilterModel])
 
     return (
         <ModelQueryClientProvider>

@@ -1,9 +1,12 @@
 /** @import * as React from 'react' */
 
+/** @typedef {import('../../../provider/model/manage-model-provider/types.js').SetFilterModelProps} SetFilterModelProps */
+
 /**
  * @typedef {Object} ModalDetailsProps
- * @property {number | string} modelID
+ * @property {string} modelID
  * @property {'goal' | 'assignment'} type
+ * @property {SetFilterModelProps} setFilterModel
  */
 
 /**

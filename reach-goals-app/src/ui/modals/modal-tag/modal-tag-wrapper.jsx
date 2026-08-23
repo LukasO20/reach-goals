@@ -4,18 +4,34 @@ import { ModelQueryClientProvider } from '../../../provider/model/model-querycli
 
 import ModalTag from '.'
 
-export const ModalTagWrapper = () => {
-    const { model: { filter: filterModel }, setFilterModel, resetManageModel } = useManageModel()
+/** @typedef {import('./types.js').ModalTagWrapperProps} Props */
 
+/**
+ * @param {Props} props
+ */
+export const ModalTagWrapper = ({
+    type,
+    modelID,
+    filterModel,
+    setFilterModel,
+    resetManageModel,
+}) => {
     /** @param {Object} filter */
     const handleFilterTabs = (filter) => {
         if (!filter) return resetManageModel({ keys: ['filter'] })
-        setFilterModel(filter, 'tag')
+        setFilterModel({ filter: filter, type: 'tag' })
     }
 
     return (
         <ModelQueryClientProvider>
-            <ModalTag filterTabs={filterModel} onFilterTabs={handleFilterTabs} />
+            <ModalTag
+                type={type}
+                modelID={modelID}
+                filterTabs={filterModel}
+                onFilterTabs={handleFilterTabs}
+                setFilterModel={setFilterModel}
+                resetManageModel={resetManageModel}
+            />
         </ModelQueryClientProvider>
     )
 }

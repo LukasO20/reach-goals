@@ -4,7 +4,11 @@ import { useTagProvider } from '../../../provider/model/tag-model-provider/index
 import { visibilityMap } from '../../../utils/mapping/mappingUtils.js'
 import { findEmptyFields } from '../helpers.js'
 
-import { safeModelFormTag, safeFunctionFormMap, safeModel } from '../defaults.js'
+import {
+    safeModelFormTag,
+    safeFunctionFormMap,
+    safeModel,
+} from '../defaults.js'
 
 import ButtonAction from '../../elements/button-action'
 import InputText from '../../elements/input-text'
@@ -22,12 +26,17 @@ const FormTag = ({
     functionFormMap = safeFunctionFormMap,
     model = safeModel,
     modelForm = safeModelFormTag,
-    pendingState
+    pendingState,
 }) => {
-    const { modal: { loading } } = useTagProvider()
+    const {
+        modal: { loading },
+    } = useTagProvider()
 
     /** @type {import('../types.js').SetEmptyFieldsProps} */
-    const [emptyFields, setEmptyFields] = useState({ fields: [], isEmptyFields: false })
+    const [emptyFields, setEmptyFields] = useState({
+        fields: [],
+        isEmptyFields: false,
+    })
 
     const handleFormSubmit = () => {
         const fields = findEmptyFields({ modelForm })
@@ -39,8 +48,10 @@ const FormTag = ({
 
     return (
         <div className='container-form-modal near tag'>
-            {loading ? (<Loading mode='block' />)
-                : (<>
+            {loading ? (
+                <Loading mode='block' />
+            ) : (
+                <>
                     <div className='head'>
                         <div className='objective-title'>
                             <h2>
@@ -49,8 +60,13 @@ const FormTag = ({
                             </h2>
                         </div>
                         <div className='objective-buttons-options'>
-                            <ButtonAction classBtn='circle close' icon='icon-close'
-                                visibility={visibilityMap('near-modalForm', { remove: true })} />
+                            <ButtonAction
+                                classBtn='circle close'
+                                icon='icon-close'
+                                visibility={visibilityMap('near-modalForm', {
+                                    remove: true,
+                                })}
+                            />
                         </div>
                     </div>
                     <div className='body'>
@@ -65,9 +81,16 @@ const FormTag = ({
                                         id={`${type}-name`}
                                         className='input-form input-text name'
                                         placeholder={`${type} name`}
-                                        name='name' value={modelForm?.name || ''}
-                                        onChange={functionFormMap.mapHandleChange}
-                                        errorMessage={emptyFields.fields.includes('name') && 'Name is required'}
+                                        name='name'
+                                        value={modelForm?.name || ''}
+                                        onChange={
+                                            functionFormMap.mapHandleChange
+                                        }
+                                        errorMessage={
+                                            emptyFields.fields.includes(
+                                                'name'
+                                            ) && 'Name is required'
+                                        }
                                     />
                                 </div>
                                 <div className='field-forms color'>
@@ -81,8 +104,12 @@ const FormTag = ({
                                             className='color'
                                             placeholder={`${type} color`}
                                             name='color'
-                                            value={modelForm?.color || '#000000'}
-                                            onChange={functionFormMap.mapHandleChange}
+                                            value={
+                                                modelForm?.color || '#000000'
+                                            }
+                                            onChange={
+                                                functionFormMap.mapHandleChange
+                                            }
                                         />
                                     </div>
                                 </div>
@@ -93,12 +120,17 @@ const FormTag = ({
                         <ButtonAction
                             classBtn='plan max-width save'
                             icon='icon-save'
-                            title={typeof model.mainModelID === 'number' ? 'Save' : 'Create'}
+                            title={
+                                typeof model.mainModelID === 'string'
+                                    ? 'Save'
+                                    : 'Create'
+                            }
                             pendingState={pendingState}
                             onClick={handleFormSubmit}
                         />
                     </div>
-                </>)}
+                </>
+            )}
         </div>
     )
 }

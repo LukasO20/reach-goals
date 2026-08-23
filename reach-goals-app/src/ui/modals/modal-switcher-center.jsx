@@ -17,11 +17,15 @@ import './style.scss'
 
 const ModalSwitcherCenter = () => {
     const { visibleElements, toggleVisibility } = useVisibility()
-    const { data: { layout } } = useSwitchLayout()
-    const { resetManageModel } = useManageModel()
+    const {
+        data: { layout },
+    } = useSwitchLayout()
+    const { model, setFilterModel, resetManageModel } = useManageModel()
     const modalRef = useRef(null)
 
-    const showModalCenter = visibleElements.includes('modal-center') ? 'show' : ''
+    const showModalCenter = visibleElements.includes('modal-center')
+        ? 'show'
+        : ''
     const typeModalLayout = layout.modal.layoutName
     const typeVisibility = visibleElements[1]
 
@@ -33,15 +37,25 @@ const ModalSwitcherCenter = () => {
         ${typeVisibility}
         `)
 
-    const isVisible = !!typeModalLayout && !!typeVisibility && showModalCenter === 'show'
+    const isVisible =
+        !!typeModalLayout && !!typeVisibility && showModalCenter === 'show'
     const isModalForm = typeModalLayout === 'form'
 
     useOutsideClick(modalRef, () => {
         const allowedModalLayouts = ['modal-center', 'goal', 'assigment']
-        const shouldCloseModalCenter = visibleElements.some((elements) => allowedModalLayouts.includes(elements))
+        const shouldCloseModalCenter = visibleElements.some((elements) =>
+            allowedModalLayouts.includes(elements)
+        )
 
         if (shouldCloseModalCenter && isModalForm) {
-            if (isModalForm) resetManageModel(resetManageModelMap(['activeModel', 'mainModelID', 'selectedModel']))
+            if (isModalForm)
+                resetManageModel(
+                    resetManageModelMap([
+                        'activeModel',
+                        'mainModelID',
+                        'selectedModel',
+                    ])
+                )
             toggleVisibility(visibilityMap(null))
         }
     })
@@ -51,7 +65,13 @@ const ModalSwitcherCenter = () => {
             <>
                 <Overlay />
                 <div className={modalCenterClass} ref={modalRef}>
-                    {isModalForm && (<ModalFormWrapper />)}
+                    {isModalForm && (
+                        <ModalFormWrapper
+                            modelID={model.mainModelID}
+                            type={model.typeModel}
+                            setFilterModel={setFilterModel}
+                        />
+                    )}
                 </div>
             </>
         )
