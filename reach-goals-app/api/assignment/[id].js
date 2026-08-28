@@ -17,7 +17,7 @@ const handleUpdateTagOnAssignment = async (assignmentID, tags) => {
             !assignmentID || !tags || tags.length === 0
         if (hasInvalidTagRelation) return
 
-        await updateTagOnAssignment(assignmentID, tags)
+        await updateTagOnAssignment({ assignmentID, tags })
     } catch (error) {
         throw new Error(
             `Failed to update assignment's tag relation: ${error.message}`
@@ -26,7 +26,7 @@ const handleUpdateTagOnAssignment = async (assignmentID, tags) => {
 }
 
 const handler = async (req, res, authContext) => {
-    const { action, assignmentID, goalID, tagID } = req.query
+    const { action, id } = req.query
 
     if (!ALLOWED_METHODS.includes(req.method)) {
         return res.status(405).json({
@@ -39,19 +39,28 @@ const handler = async (req, res, authContext) => {
             let assignment
 
             if (action === 'assignment-get') {
-                assignment = await getAssignment(assignmentID, authContext)
+                assignment = await getAssignment({
+                    assignmentID: id,
+                    authContext,
+                })
                 return res
                     .status(200)
                     .json(Array.isArray(assignment) ? assignment : [assignment])
             }
 
             if (action === 'assignment-on-goal') {
-                assignment = await getAssignmentOnGoal(goalID, authContext)
+                assignment = await getAssignmentOnGoal({
+                    goalID: id,
+                    authContext,
+                })
                 return res.status(200).json(assignment)
             }
 
             if (action === 'assignment-on-tag') {
-                assignment = await getAssignmentOnTag(tagID, authContext)
+                assignment = await getAssignmentOnTag({
+                    tagID: id,
+                    authContext,
+                })
                 return res.status(200).json(assignment)
             }
         }
@@ -83,22 +92,22 @@ const handler = async (req, res, authContext) => {
                 duration: durationFormat,
                 start: startDate,
                 end: endDate,
-                goalID: goalID ? Number(goalID) : null,
+                goalID: goalID ? goalID : null,
             }
 
             const formattedData = formatObject(rawObject)
 
-            await handleUpdateTagOnAssignment(assignmentID, tags)
-            const assignment = await updateAssignment(
-                assignmentID,
-                formattedData
-            )
+            await handleUpdateTagOnAssignment(id, tags)
+            const assignment = await updateAssignment({
+                assignmentID: id,
+                data: formattedData,
+            })
 
             return res.status(201).json(assignment)
         }
 
         if (req.method === 'DELETE') {
-            await deleteAssignment(assignmentID)
+            await deleteAssignment({ assignmentID: id })
             return res
                 .status(200)
                 .json({ message: 'Assignment deleted successfully' })

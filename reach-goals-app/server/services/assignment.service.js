@@ -1,6 +1,6 @@
 import prisma from '../config/connectdb.js'
 
-export const addAssignment = async (data, authContext = {}) => {
+export const addAssignment = async ({ data, authContext = {} }) => {
     try {
         return await prisma.assignment.create({
             data: {
@@ -14,7 +14,7 @@ export const addAssignment = async (data, authContext = {}) => {
     }
 }
 
-export const updateAssignment = async (assignmentID, data) => {
+export const updateAssignment = async ({ assignmentID, data }) => {
     try {
         return await prisma.assignment.update({
             where: { id: assignmentID },
@@ -26,7 +26,7 @@ export const updateAssignment = async (assignmentID, data) => {
     }
 }
 
-export const deleteAssignment = async (assignmentID) => {
+export const deleteAssignment = async ({ assignmentID }) => {
     try {
         return await prisma.assignment.delete({
             where: { id: assignmentID },
@@ -36,7 +36,7 @@ export const deleteAssignment = async (assignmentID) => {
     }
 }
 
-export const getAssignment = async (assignmentID, authContext = {}) => {
+export const getAssignment = async ({ assignmentID, authContext = {} }) => {
     try {
         const isUniqueAssignment = typeof assignmentID === 'string'
 
@@ -88,7 +88,7 @@ export const getAssignment = async (assignmentID, authContext = {}) => {
     }
 }
 
-export const getAssignmentOnGoal = async (goalID, authContext = {}) => {
+export const getAssignmentOnGoal = async ({ goalID, authContext = {} }) => {
     try {
         const isUniqueAssignmentGoal = typeof goalID === 'string'
 
@@ -140,7 +140,7 @@ export const getAssignmentOnGoal = async (goalID, authContext = {}) => {
     }
 }
 
-export const getAssignmentOnTag = async (tagID, authContext = {}) => {
+export const getAssignmentOnTag = async ({ tagID, authContext = {} }) => {
     try {
         const isUniqueAssignmentTag = typeof tagID === 'string'
 
@@ -195,7 +195,7 @@ export const getAssignmentOnTag = async (tagID, authContext = {}) => {
     }
 }
 
-export const getAssignmentWithoutGoal = async (authContext = {}) => {
+export const getAssignmentWithoutGoal = async ({ authContext = {} }) => {
     try {
         return await prisma.assignment.findMany({
             where: {
@@ -217,7 +217,7 @@ export const getAssignmentWithoutGoal = async (authContext = {}) => {
     }
 }
 
-export const updateTagOnAssignment = async (assignmentID, tags) => {
+export const updateTagOnAssignment = async ({ assignmentID, tags }) => {
     try {
         await prisma.tagOnAssignment.deleteMany({
             where: { assignmentID: assignmentID },

@@ -40,21 +40,21 @@ const handler = async (req, res, authContext) => {
                 assignments: assignments?.length
                     ? {
                           connect: assignments.map((assignment) => ({
-                              id: Number(assignment.id),
+                              id: assignment.id,
                           })),
                       }
                     : undefined,
                 tags: tags?.length
                     ? {
                           create: tags.map((tag) => ({
-                              tag: { connect: { id: Number(tag.tagID) } },
+                              tag: { connect: { id: tag.tagID } },
                           })),
                       }
                     : undefined,
             }
 
             const formattedData = formatObject(rawObject)
-            const goal = await addGoal(formattedData, authContext)
+            const goal = await addGoal({ data: formattedData, authContext })
 
             return res.status(201).json(goal)
         }
@@ -63,22 +63,22 @@ const handler = async (req, res, authContext) => {
             let goal
 
             if (action === 'goal-get') {
-                goal = await getGoal(authContext)
+                goal = await getGoal({ authContext })
                 return res.status(200).json(Array.isArray(goal) ? goal : [goal])
             }
 
             if (action === 'goal-on-assignment') {
-                goal = await getGoalOnAssignment(authContext)
+                goal = await getGoalOnAssignment({ authContext })
                 return res.status(200).json(goal)
             }
 
             if (action === 'goal-on-tag') {
-                goal = await getGoalOnTag(authContext)
+                goal = await getGoalOnTag({ authContext })
                 return res.status(200).json(goal)
             }
 
             if (action === 'goal-not-assignment') {
-                goal = await getGoalWithoutAssignment(authContext)
+                goal = await getGoalWithoutAssignment({ authContext })
                 return res.status(200).json(goal)
             }
         }

@@ -6,6 +6,8 @@ import {
     getTagNotGoal,
     getTagOnAssignment,
     getTagOnGoal,
+    unlinkAllTagOnAssignment,
+    unlinkAllTagOnGoal,
     updateTag,
 } from '../../server/services/tag.service.js'
 import { formatObject } from '../../server/utils/utils.js'
@@ -13,7 +15,7 @@ import { formatObject } from '../../server/utils/utils.js'
 const ALLOWED_METHODS = ['GET', 'PUT', 'DELETE']
 
 const handler = async (req, res, authContext) => {
-    const { action, assignmentID, goalID, tagID } = req.query
+    const { action, id } = req.query
 
     if (!ALLOWED_METHODS.includes(req.method)) {
         return res.status(405).json({
@@ -26,27 +28,33 @@ const handler = async (req, res, authContext) => {
             let tag
 
             if (action === 'tag-get') {
-                tag = await getTag(tagID, authContext)
+                tag = await getTag({ tagID: id, authContext })
                 return res.status(200).json(Array.isArray(tag) ? tag : [tag])
             }
 
             if (action === 'tag-on-goal') {
-                tag = await getTagOnGoal(goalID, authContext)
+                tag = await getTagOnGoal({ goalID: id, authContext })
                 return res.status(200).json(Array.isArray(tag) ? tag : [tag])
             }
 
             if (action === 'tag-on-assignment') {
-                tag = await getTagOnAssignment(assignmentID, authContext)
+                tag = await getTagOnAssignment({
+                    assignmentID: id,
+                    authContext,
+                })
                 return res.status(200).json(Array.isArray(tag) ? tag : [tag])
             }
 
             if (action === 'tag-not-goal') {
-                tag = await getTagNotGoal(goalID, authContext)
+                tag = await getTagNotGoal({ goalID: id, authContext })
                 return res.status(200).json(tag)
             }
 
             if (action === 'tag-not-assignment') {
-                tag = await getTagNotAssignment(assignmentID, authContext)
+                tag = await getTagNotAssignment({
+                    assignmentID: id,
+                    authContext,
+                })
                 return res.status(200).json(tag)
             }
         }
@@ -63,13 +71,25 @@ const handler = async (req, res, authContext) => {
             const rawObject = { name, color }
 
             const formattedData = formatObject(rawObject)
-            const tag = await updateTag(tagID, formattedData)
+            const tag = await updateTag({ tagID: id, data: formattedData })
 
             return res.status(201).json(tag)
         }
 
         if (req.method === 'DELETE') {
-            await deleteTag(tagID)
+            let tag
+
+            if (action === 'tag-unlink-all-goal') {
+                tag = await unlinkAllTagOnGoal({ goalID: id })
+                return res.status(200).json(tag)
+            }
+
+            if (action === 'tag-unlink-all-assignment') {
+                tag = await unlinkAllTagOnAssignment({ assignmentID: id })
+                return res.status(200).json(tag)
+            }
+
+            await deleteTag({ tagID: id })
             return res.status(200).json({ message: 'Tag deleted successfully' })
         }
     } catch (error) {

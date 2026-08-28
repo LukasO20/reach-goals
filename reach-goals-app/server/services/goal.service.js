@@ -1,6 +1,6 @@
 import prisma from '../config/connectdb.js'
 
-export const addGoal = async (data, authContext = {}) => {
+export const addGoal = async ({ data, authContext = {} }) => {
     if (!data) return
 
     try {
@@ -16,7 +16,7 @@ export const addGoal = async (data, authContext = {}) => {
     }
 }
 
-export const updateGoal = async (goalID, data) => {
+export const updateGoal = async ({ goalID, data }) => {
     if (!data) return
 
     try {
@@ -30,7 +30,7 @@ export const updateGoal = async (goalID, data) => {
     }
 }
 
-export const deleteGoal = async (goalID) => {
+export const deleteGoal = async ({ goalID }) => {
     if (!goalID) return
 
     try {
@@ -42,7 +42,7 @@ export const deleteGoal = async (goalID) => {
     }
 }
 
-export const getGoal = async (goalID, authContext = {}) => {
+export const getGoal = async ({ goalID, authContext = {} }) => {
     try {
         const isUniqueGoal = typeof goalID === 'string'
 
@@ -100,7 +100,10 @@ export const getGoal = async (goalID, authContext = {}) => {
     }
 }
 
-export const getGoalOnAssignment = async (assignmentID, authContext = {}) => {
+export const getGoalOnAssignment = async ({
+    assignmentID,
+    authContext = {},
+}) => {
     try {
         const isUniqueGoalAssignment = typeof assignmentID === 'string'
 
@@ -150,7 +153,7 @@ export const getGoalOnAssignment = async (assignmentID, authContext = {}) => {
     }
 }
 
-export const getGoalOnTag = async (tagID, authContext = {}) => {
+export const getGoalOnTag = async ({ tagID, authContext = {} }) => {
     try {
         const isUniqueGoalTag = typeof tagID === 'string'
 
@@ -189,10 +192,10 @@ export const getGoalOnTag = async (tagID, authContext = {}) => {
     }
 }
 
-export const getGoalWithoutAssignment = async (
+export const getGoalWithoutAssignment = async ({
     assignmentID,
-    authContext = {}
-) => {
+    authContext = {},
+}) => {
     try {
         const isUniqueGoalNotAssignment = typeof assignmentID === 'string'
 
@@ -247,7 +250,7 @@ export const getGoalWithoutAssignment = async (
     }
 }
 
-export const updateTagOnGoal = async (goalID, tags) => {
+export const updateTagOnGoal = async ({ goalID, tags }) => {
     try {
         await prisma.tagOnGoal.deleteMany({
             where: { goalID: goalID },

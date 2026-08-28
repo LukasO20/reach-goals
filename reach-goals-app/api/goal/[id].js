@@ -15,7 +15,7 @@ const handleUpdateTagOnGoal = async (goalID, tags) => {
         const hasInvalidTagRelation = !goalID || !tags || tags.length === 0
         if (hasInvalidTagRelation) return
 
-        await updateTagOnGoal(goalID, tags)
+        await updateTagOnGoal({ goalID, tags })
     } catch (error) {
         throw new Error("Failed to update goal's tag relation")
     }
@@ -24,7 +24,7 @@ const handleUpdateTagOnGoal = async (goalID, tags) => {
 const ALLOWED_METHODS = ['GET', 'PUT', 'DELETE']
 
 const handler = async (req, res, authContext) => {
-    const { action, goalID, assignmentID, tagID } = req.query
+    const { action, id } = req.query
 
     if (!ALLOWED_METHODS.includes(req.method)) {
         return res.status(405).json({
@@ -37,22 +37,28 @@ const handler = async (req, res, authContext) => {
             let goal
 
             if (action === 'goal-get') {
-                goal = await getGoal(goalID, authContext)
+                goal = await getGoal({ goalID: id, authContext })
                 return res.status(200).json(Array.isArray(goal) ? goal : [goal])
             }
 
             if (action === 'goal-on-assignment') {
-                goal = await getGoalOnAssignment(assignmentID, authContext)
+                goal = await getGoalOnAssignment({
+                    assignmentID: id,
+                    authContext,
+                })
                 return res.status(200).json(goal)
             }
 
             if (action === 'goal-on-tag') {
-                goal = await getGoalOnTag(tagID, authContext)
+                goal = await getGoalOnTag({ tagID: id, authContext })
                 return res.status(200).json(goal)
             }
 
             if (action === 'goal-not-assignment') {
-                goal = await getGoalWithoutAssignment(assignmentID, authContext)
+                goal = await getGoalWithoutAssignment({
+                    assignmentID: id,
+                    authContext,
+                })
                 return res.status(200).json(goal)
             }
         }
@@ -83,14 +89,14 @@ const handler = async (req, res, authContext) => {
 
             const formattedData = formatObject(rawObject)
 
-            await handleUpdateTagOnGoal(goalID, tags)
-            const goal = await updateGoal(goalID, formattedData)
+            await handleUpdateTagOnGoal(id, tags)
+            const goal = await updateGoal({ goalID: id, data: formattedData })
 
             return res.status(201).json(goal)
         }
 
         if (req.method === 'DELETE') {
-            await deleteGoal(goalID)
+            await deleteGoal({ goalID: id })
             return res
                 .status(200)
                 .json({ message: 'Goal deleted successfully' })

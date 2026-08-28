@@ -1,6 +1,7 @@
 import { buildQueryParamsMap } from '../utils/mapping/mappingUtils.js'
 
 const BASE_URL = '/api/assignment'
+const TAG_URL = '/api/tag'
 
 export const addAssignment = async (assignment) => {
     try {
@@ -43,12 +44,13 @@ export const updateAssignment = async (assignment) => {
 
 export const deleteAssignment = async (assignmentID) => {
     const queryParms = {
+        baseUrl: TAG_URL,
         action: 'tag-unlink-all-assignment',
-        IDobject: { assignmentID: assignmentID },
+        id: assignmentID,
     }
 
     try {
-        const urlUnlinkTag = `/api/tag?${buildQueryParamsMap(queryParms)}`
+        const urlUnlinkTag = buildQueryParamsMap(queryParms)
         const responseUnlinkTag = await fetch(urlUnlinkTag, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },

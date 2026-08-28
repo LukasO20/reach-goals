@@ -1,6 +1,6 @@
 import prisma from '../config/connectdb.js'
 
-export const addTag = async (data, authContext = {}) => {
+export const addTag = async ({ data, authContext = {} }) => {
     if (!data) return
 
     try {
@@ -15,7 +15,7 @@ export const addTag = async (data, authContext = {}) => {
     }
 }
 
-export const updateTag = async (tagID, data) => {
+export const updateTag = async ({ tagID, data }) => {
     if (!tagID) return
 
     try {
@@ -28,7 +28,7 @@ export const updateTag = async (tagID, data) => {
     }
 }
 
-export const deleteTag = async (tagID) => {
+export const deleteTag = async ({ tagID }) => {
     if (!tagID) return
 
     try {
@@ -40,7 +40,7 @@ export const deleteTag = async (tagID) => {
     }
 }
 
-export const getTag = async (tagID, authContext = {}) => {
+export const getTag = async ({ tagID, authContext = {} }) => {
     try {
         const isUniqueTag = typeof tagID === 'string'
 
@@ -102,7 +102,7 @@ export const getTag = async (tagID, authContext = {}) => {
     }
 }
 
-export const getTagOnGoal = async (goalID, authContext = {}) => {
+export const getTagOnGoal = async ({ goalID, authContext = {} }) => {
     try {
         const isUniqueTagGoal = typeof goalID === 'string'
 
@@ -154,7 +154,10 @@ export const getTagOnGoal = async (goalID, authContext = {}) => {
     }
 }
 
-export const getTagOnAssignment = async (assignmentID, authContext = {}) => {
+export const getTagOnAssignment = async ({
+    assignmentID,
+    authContext = {},
+}) => {
     try {
         const isUniqueTagAssignment = typeof assignmentID === 'string'
 
@@ -206,7 +209,7 @@ export const getTagOnAssignment = async (assignmentID, authContext = {}) => {
     }
 }
 
-export const getTagNotGoal = async (goalID, authContext = {}) => {
+export const getTagNotGoal = async ({ goalID, authContext = {} }) => {
     try {
         const isValidGoalID = String(goalID).trim() !== ''
 
@@ -228,7 +231,10 @@ export const getTagNotGoal = async (goalID, authContext = {}) => {
     }
 }
 
-export const getTagNotAssignment = async (assignmentID, authContext = {}) => {
+export const getTagNotAssignment = async ({
+    assignmentID,
+    authContext = {},
+}) => {
     try {
         const isValidAssignmentID = String(assignmentID).trim() !== ''
 
@@ -251,7 +257,7 @@ export const getTagNotAssignment = async (assignmentID, authContext = {}) => {
     }
 }
 
-export const unlinkTagOnGoal = async (tagID, goalID) => {
+export const unlinkTagOnGoal = async ({ tagID, goalID }) => {
     try {
         const isInvalidIds = !goalID || !tagID
 
@@ -272,7 +278,7 @@ export const unlinkTagOnGoal = async (tagID, goalID) => {
     }
 }
 
-export const unlinkAllTagOnGoal = async (goalID) => {
+export const unlinkAllTagOnGoal = async ({ goalID }) => {
     try {
         const isInvalidGoalID = !goalID
 
@@ -290,7 +296,7 @@ export const unlinkAllTagOnGoal = async (goalID) => {
     }
 }
 
-export const unlinkTagOnAssignment = async (tagID, assignmentID) => {
+export const unlinkTagOnAssignment = async ({ tagID, assignmentID }) => {
     try {
         const isInvalidIds = !assignmentID || !tagID
 
@@ -313,7 +319,7 @@ export const unlinkTagOnAssignment = async (tagID, assignmentID) => {
     }
 }
 
-export const unlinkAllTagOnAssignment = async (assignmentID) => {
+export const unlinkAllTagOnAssignment = async ({ assignmentID }) => {
     try {
         const isInvalidAssignmentID = !assignmentID
 

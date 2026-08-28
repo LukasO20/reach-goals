@@ -4,12 +4,10 @@ import {
     logoutDemoVisitor,
 } from '../../server/services/demo-visitor.service.js'
 
-import { formatObject } from '../../server/utils/utils.js'
-
 const ALLOWED_METHODS = ['GET', 'PUT']
 
 const handler = async (req, res) => {
-    const { action, demoVisitorId } = req.query
+    const { action, id } = req.query
 
     if (!ALLOWED_METHODS.includes(req.method)) {
         return res.status(405).json({
@@ -19,13 +17,13 @@ const handler = async (req, res) => {
 
     try {
         if (req.method === 'GET') {
-            const demoVisitor = await getDemoVisitor(demoVisitorId)
+            const demoVisitor = await getDemoVisitor(id)
             return res.status(200).json(demoVisitor)
         }
 
         if (req.method === 'PUT') {
             if (action === 'logout-session') {
-                return await logoutDemoVisitor(res, demoVisitorId)
+                return await logoutDemoVisitor(res, id)
             }
         }
     } catch (error) {

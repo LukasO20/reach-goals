@@ -47,18 +47,21 @@ const handler = async (req, res, authContext) => {
                 duration: durationFormat,
                 start: startDate,
                 end: endDate,
-                goalID: goalID ? Number(goalID) : null,
+                goalID: goalID ? goalID : null,
                 tags: tags?.length
                     ? {
                           create: tags.map((tag) => ({
-                              tag: { connect: { id: Number(tag.tagID) } },
+                              tag: { connect: { id: tag.tagID } },
                           })),
                       }
                     : undefined,
             }
 
             const formattedData = formatObject(rawObject)
-            const assignment = await addAssignment(formattedData, authContext)
+            const assignment = await addAssignment({
+                data: formattedData,
+                authContext,
+            })
 
             return res.status(201).json(assignment)
         }
@@ -67,24 +70,24 @@ const handler = async (req, res, authContext) => {
             let assignment
 
             if (action === 'assignment-get') {
-                assignment = await getAssignment(authContext)
+                assignment = await getAssignment({ authContext })
                 return res
                     .status(200)
                     .json(Array.isArray(assignment) ? assignment : [assignment])
             }
 
             if (action === 'assignment-on-goal') {
-                assignment = await getAssignmentOnGoal(authContext)
+                assignment = await getAssignmentOnGoal({ authContext })
                 return res.status(200).json(assignment)
             }
 
             if (action === 'assignment-on-tag') {
-                assignment = await getAssignmentOnTag(authContext)
+                assignment = await getAssignmentOnTag({ authContext })
                 return res.status(200).json(assignment)
             }
 
             if (action === 'assignment-not-goal') {
-                assignment = await getAssignmentWithoutGoal(authContext)
+                assignment = await getAssignmentWithoutGoal({ authContext })
                 return res.status(200).json(assignment)
             }
         }
