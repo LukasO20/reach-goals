@@ -19,7 +19,7 @@
                 display: flex;
                 justify-content: space-between;
 
-                >div {
+                > div {
                     display: flex;
                     align-items: center;
                     gap: $spacing-gap-mini;
@@ -47,9 +47,7 @@
             background-color: $color-pair-secondary-lightest;
 
             .head {
-
-                >div {
-
+                > div {
                     * {
                         color: $color-pair-secondary-darkest;
                     }
@@ -57,7 +55,6 @@
             }
 
             .body {
-
                 .button-action {
                     background-color: $color-pair-secondary-darkest;
 
@@ -69,6 +66,16 @@
                         background-color: $color-pair-secondary-light;
                     }
                 }
+
+                .card-chart-empty {
+                    background-color: $color-white-o-30;
+
+                    /* DOUBLE APPLY */
+                    .message,
+                    .icon-st {
+                        color: $color-pair-secondary-dark;
+                    }
+                }
             }
         }
 
@@ -76,9 +83,7 @@
             background-color: $color-success-lightest;
 
             .head {
-
-                >div {
-
+                > div {
                     * {
                         color: $color-success-darkest;
                     }
@@ -86,7 +91,6 @@
             }
 
             .body {
-
                 .button-action {
                     background-color: $color-success-darkest;
 
@@ -98,6 +102,16 @@
                         background-color: $color-success-light;
                     }
                 }
+
+                .card-chart-empty {
+                    background-color: $color-white-o-30;
+
+                    /* DOUBLE APPLY */
+                    .message,
+                    .icon-st {
+                        color: $color-success-dark;
+                    }
+                }
             }
         }
 
@@ -105,9 +119,7 @@
             background-color: $color-neutral-lightest;
 
             .head {
-
-                >div {
-
+                > div {
                     * {
                         color: $color-secondary-darkest;
                     }
@@ -115,7 +127,6 @@
             }
 
             .body {
-
                 .button-action {
                     background-color: $color-neutral-darkest;
 
@@ -127,6 +138,16 @@
                         background-color: $color-secondary-light;
                     }
                 }
+
+                .card-chart-empty {
+                    background-color: $color-neutral-darkest;
+
+                    /* DOUBLE APPLY */
+                    .message,
+                    .icon-st {
+                        color: $color-white-o-70;
+                    }
+                }
             }
         }
 
@@ -134,9 +155,7 @@
             border: solid 3.25px $color-pair-secondary;
 
             .head {
-
-                >div {
-
+                > div {
                     * {
                         color: $color-pair-secondary;
                     }
@@ -144,7 +163,6 @@
             }
 
             .body {
-
                 .button-action {
                     background-color: $color-pair-secondary-darkest;
 
@@ -156,6 +174,33 @@
                         background-color: $color-pair-secondary-light;
                     }
                 }
+
+                .card-chart-empty {
+                    background-color: $color-pair-primary;
+
+                    .message {
+                        color: $color-pair-secondary;
+                    }
+                }
+            }
+        }
+
+        .card-chart-empty {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-gap-sm;
+            padding: $spacing-padding-sm;
+            border-radius: $dimensions-border-radius-sm;
+
+            .icon-st {
+                height: 40px;
+            }
+
+            .message {
+                display: inline-flex;
+                text-align: center;
+                font-size: $font-size-sm;
+                font-weight: 500;
             }
         }
     }

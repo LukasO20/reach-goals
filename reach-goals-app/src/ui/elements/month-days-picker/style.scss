@@ -6,7 +6,7 @@
     border-radius: $dimensions-border-radius-sm;
     padding: $spacing-padding-sm;
 
-    >.head {
+    > .head {
         display: flex;
         height: 1.5rem;
         padding: 0.5rem 0rem;
@@ -19,7 +19,7 @@
         }
     }
 
-    >.body {
+    > .body {
         display: grid;
         grid-template-columns: repeat(7, minmax(0, 1fr));
         grid-template-rows: repeat(6, 1fr);
@@ -46,7 +46,8 @@
                 justify-content: center;
                 width: 100%;
 
-                >label {
+                //TODO: Improve item card because don't render well depending internal content
+                > label {
                     display: inline-flex;
                     justify-content: center;
                     padding: $spacing-padding-x-mini $spacing-padding-sm;
@@ -68,7 +69,6 @@
                 }
 
                 .title-box {
-
                     .month-form {
                         display: flex;
                         flex-direction: column;
@@ -79,7 +79,7 @@
                         box-shadow: $shadow-sm;
                         z-index: 1;
 
-                        >.head {
+                        > .head {
                             display: flex;
                             justify-content: space-between;
                             gap: $spacing-gap-sm;
@@ -90,7 +90,7 @@
                             }
                         }
 
-                        >.body {
+                        > .body {
                             display: flex;
                             flex-direction: column;
                             gap: $spacing-gap-sm;
@@ -101,8 +101,7 @@
                             }
                         }
 
-                        >.button-action {
-
+                        > .button-action {
                             &.save {
                                 align-self: flex-end;
                             }
@@ -114,12 +113,11 @@
                         right: 0.25rem;
                         opacity: 0;
                         transition: $animation-transition-st;
-
                     }
                 }
             }
 
-            >.card-mini {
+            > .card-mini {
                 width: 85%;
                 overflow: hidden;
                 padding: 0rem $spacing-padding-mini;
@@ -136,7 +134,7 @@
                     .side-left {
                         gap: $spacing-gap-mini;
 
-                        >label {
+                        > label {
                             -webkit-line-clamp: 1;
                             line-clamp: 1;
                         }
@@ -155,10 +153,8 @@
             }
 
             &.today {
-
-                >.title {
-
-                    >label {
+                > .title {
+                    > label {
                         background-color: $color-pair-secondary;
                         color: $color-secondary;
                         padding: 0.15rem $spacing-padding-sm;
@@ -182,11 +178,8 @@
             }
 
             &:hover {
-
                 .title {
-
                     .title-box {
-
                         .tooltip {
                             opacity: 1;
 

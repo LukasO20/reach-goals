@@ -4,6 +4,7 @@ import { calculatePercent } from '../../../../utils/utils.js'
 
 import ButtonAction from '../../button-action'
 import Icons from '../../icons'
+import CardsEmpty from './cards.empty.jsx'
 
 /** @typedef {import('../types.js').CardProps} Props */
 
@@ -13,11 +14,12 @@ import Icons from '../../icons'
 const Cards = ({
     type,
     title,
+    messageEmpty,
     quantity,
     totalQuantity,
     renderBody,
     onModalChartCards,
-    anchorCalculatePosition
+    anchorCalculatePosition,
 }) => {
     const buttonRef = useRef(null)
 
@@ -27,10 +29,12 @@ const Cards = ({
     }
 
     const percentLabel = calculatePercent(quantity, totalQuantity)
-    const activityLabel = quantity === 1 ?
-        `${quantity} activity - ${totalQuantity} activities`
-        : `${quantity} activities - ${totalQuantity} activities`
-    const hasActivity = quantity
+    const activityLabel =
+        quantity === 1
+            ? `${quantity} activity - ${totalQuantity} activities`
+            : `${quantity} activities - ${totalQuantity} activities`
+
+    const hasActivity = !!quantity
 
     return (
         <div className={`card-chart ${type}`}>
@@ -40,29 +44,32 @@ const Cards = ({
                         <Icons icon={`icon-${type}`} />
                         {title}
                     </div>
-                    <label className='label-percent'>
-                        {percentLabel}%
-                    </label>
+                    <label className='label-percent'>{percentLabel}%</label>
                 </div>
                 {hasActivity && (
                     <div>
-                        <label className='label-activity'>{activityLabel}</label>
+                        <label className='label-activity'>
+                            {activityLabel}
+                        </label>
                     </div>
                 )}
             </div>
             {renderBody && (
                 <div className='body'>
-                    <ButtonAction
-                        innerRef={buttonRef}
-                        classBtn='cards-details plan-round max-width' 
-                        icon='icon-plus' 
-                        title='see details'
-                        onClick={handleButtonActionClick} 
-                    />
+                    {hasActivity && (
+                        <ButtonAction
+                            innerRef={buttonRef}
+                            classBtn='cards-details plan-round max-width'
+                            icon='icon-plus'
+                            title='see details'
+                            onClick={handleButtonActionClick}
+                        />
+                    )}
+                    {!hasActivity && <CardsEmpty message={messageEmpty} />}
                 </div>
             )}
         </div>
     )
 }
 
-export default Cards 
+export default Cards

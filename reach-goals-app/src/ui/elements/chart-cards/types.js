@@ -17,9 +17,15 @@
  */
 
 /**
+ * @typedef {Object} CardEmptyProps
+ * @property {string} message
+ */
+
+/**
  * @typedef {Object} CardProps
  * @property {'progress' | 'conclude' | 'cancel' | 'tag'} type
  * @property {string} title
+ * @property {string} messageEmpty
  * @property {number} quantity
  * @property {number} totalQuantity
  * @property {boolean} [renderBody]
@@ -28,4 +34,4 @@
  * @property {function(React.RefObject<HTMLElement>):void} [anchorCalculatePosition]
  */
 
-export { }
+export {}

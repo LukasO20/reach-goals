@@ -29,17 +29,27 @@ const ChartCards = ({ data }) => {
         setShowModalCards(true)
     }
 
-    const chartProgress = useTransformModel({ source: data, byStatus: 'progress' })
+    const chartProgress = useTransformModel({
+        source: data,
+        byStatus: 'progress',
+    })
     const chartCancel = useTransformModel({ source: data, byStatus: 'cancel' })
-    const chartConclude = useTransformModel({ source: data, byStatus: 'conclude' })
+    const chartConclude = useTransformModel({
+        source: data,
+        byStatus: 'conclude',
+    })
     const chartTags = useTransformModel({ source: data, byAttr: 'tags' })
 
     const totalQuantity = data.goal?.length + data.assignment?.length
 
-    const chartProgressQuantity = chartProgress.goal?.length + chartProgress.assignment?.length
-    const chartConcludeQuantity = chartConclude.goal?.length + chartConclude.assignment?.length
-    const chartCancelQuantity = chartCancel.goal?.length + chartCancel.assignment?.length
-    const chartTagsQuantity = chartTags.goal?.length + chartTags.assignment?.length
+    const chartProgressQuantity =
+        chartProgress.goal?.length + chartProgress.assignment?.length
+    const chartConcludeQuantity =
+        chartConclude.goal?.length + chartConclude.assignment?.length
+    const chartCancelQuantity =
+        chartCancel.goal?.length + chartCancel.assignment?.length
+    const chartTagsQuantity =
+        chartTags.goal?.length + chartTags.assignment?.length
 
     const containerRef = useRef(null)
     const modalCardsRef = useRef(null)
@@ -58,37 +68,65 @@ const ChartCards = ({ data }) => {
             <Cards
                 type='progress'
                 title='Progress'
+                messageEmpty='There are no activities in progress at the moment'
                 quantity={chartProgressQuantity}
                 totalQuantity={totalQuantity}
                 renderBody={true}
-                onModalChartCards={() => handleOnModalCards({ icon: 'progress', title: 'Progress', data: chartProgress })}
+                onModalChartCards={() =>
+                    handleOnModalCards({
+                        icon: 'progress',
+                        title: 'Progress',
+                        data: chartProgress,
+                    })
+                }
                 anchorCalculatePosition={handleCalculatePosition}
             />
             <Cards
                 type='conclude'
                 title='Conclude'
+                messageEmpty='There are no conclude activities at the moment'
                 quantity={chartConcludeQuantity}
                 totalQuantity={totalQuantity}
                 renderBody={true}
-                onModalChartCards={() => handleOnModalCards({ icon: 'check', title: 'Conclude', data: chartConclude })}
+                onModalChartCards={() =>
+                    handleOnModalCards({
+                        icon: 'check',
+                        title: 'Conclude',
+                        data: chartConclude,
+                    })
+                }
                 anchorCalculatePosition={handleCalculatePosition}
             />
             <Cards
                 type='cancel'
                 title='Cancel'
+                messageEmpty='There are no canceled activities at the moment'
                 quantity={chartCancelQuantity}
                 totalQuantity={totalQuantity}
                 renderBody={true}
-                onModalChartCards={() => handleOnModalCards({ icon: 'cancel', title: 'Canceled', data: chartCancel })}
+                onModalChartCards={() =>
+                    handleOnModalCards({
+                        icon: 'cancel',
+                        title: 'Canceled',
+                        data: chartCancel,
+                    })
+                }
                 anchorCalculatePosition={handleCalculatePosition}
             />
             <Cards
                 type='tag'
                 title='Tags'
+                messageEmpty='There are no activities with tags at the moment'
                 quantity={chartTagsQuantity}
                 totalQuantity={totalQuantity}
                 renderBody={true}
-                onModalChartCards={() => handleOnModalCards({ icon: 'tag', title: 'With tags', data: chartTags })}
+                onModalChartCards={() =>
+                    handleOnModalCards({
+                        icon: 'tag',
+                        title: 'With tags',
+                        data: chartTags,
+                    })
+                }
                 anchorCalculatePosition={handleCalculatePosition}
             />
             {showModalCards && (
@@ -98,7 +136,10 @@ const ChartCards = ({ data }) => {
                         left: `${coords.x}px`,
                         top: `${coords.y}px`,
                         minWidth: `${coords.width}px`,
-                        transform: getTransform(coords.placementX, coords.placementY),
+                        transform: getTransform(
+                            coords.placementX,
+                            coords.placementY
+                        ),
                     }}
                     data-placement-y={coords.placementY}
                     data-placement-x={coords.placementX}
