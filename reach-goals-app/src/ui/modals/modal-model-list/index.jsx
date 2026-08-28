@@ -4,9 +4,9 @@ import { useAssignmentProvider } from '../../../provider/model/assignment-model-
 
 import { visibilityMap } from '../../../utils/mapping/mappingUtils.js'
 
-import ButtonAction from '../../elements/button-action' 
-import Loading from '../../elements/loading' 
-import ModelSwitcher from '../../models/model-switcher' 
+import ButtonAction from '../../elements/button-action'
+import Loading from '../../elements/loading'
+import ModelSwitcher from '../../models/model-switcher'
 
 import './style.scss'
 
@@ -16,32 +16,60 @@ import './style.scss'
  * @param {Props} props
  */
 const ModalModelList = ({ title, type }) => {
-    const { modal: { data: dataGoal = [], loading: loadingGoal } } = useGoalProvider()
-    const { modal: { data: dataAssignment = [], loading: loadingAssigment } } = useAssignmentProvider()
-    const { modal: { data: dataTag = [], loading: loadingTag } } = useTagProvider()
+    const {
+        modal: { data: dataGoal = [], loading: loadingGoal },
+    } = useGoalProvider()
+    const {
+        modal: { data: dataAssignment = [], loading: loadingAssigment },
+    } = useAssignmentProvider()
+    const {
+        modal: { data: dataTag = [], loading: loadingTag },
+    } = useTagProvider()
 
-    const currentData = type === 'goal' ? dataGoal : type === 'assignment' ? dataAssignment : dataTag
+    const currentData =
+        type === 'goal'
+            ? dataGoal
+            : type === 'assignment'
+              ? dataAssignment
+              : dataTag
 
     const displayModesProps = {
         type: ['card-mini'],
-        actions: []
+        actions: [],
     }
+
     const propsReference = {
         display: displayModesProps,
-        source: currentData
+        source: currentData,
     }
 
     const isLoading = !!loadingGoal || !!loadingAssigment || !!loadingTag
 
     return (
-        <div className={`container-list-modal ${type}`} onClick={(e) => e.stopPropagation()}>
+        <div
+            className={`container-list-modal ${type}`}
+            onClick={(e) => e.stopPropagation()}
+        >
             <div className='head'>
                 <h2>{title}</h2>
-                <ButtonAction visibility={visibilityMap(`modal-model-list-${type}`, { remove: true })}
-                    classBtn='circle close' icon='icon-close' />
+                <ButtonAction
+                    visibility={visibilityMap(`modal-model-list-${type}`, {
+                        remove: true,
+                    })}
+                    classBtn='circle close'
+                    icon='icon-close'
+                />
             </div>
             <div className='body scrollable'>
-                {isLoading ? <Loading mode='block' /> : <ModelSwitcher type={type} selectableModel={true} propsReference={propsReference} />}
+                {isLoading ? (
+                    <Loading mode='block' />
+                ) : (
+                    <ModelSwitcher
+                        type={type}
+                        selectableModel={true}
+                        propsReference={propsReference}
+                    />
+                )}
             </div>
         </div>
     )

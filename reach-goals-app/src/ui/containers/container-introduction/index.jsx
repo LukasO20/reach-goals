@@ -1,11 +1,8 @@
 import { useState } from 'react'
 
-import { useDemoSessionProvider } from '../../../provider/model/demo-session-provider'
-
 import { safeDemoSessionForm, safeMutationError } from './defaults.js'
 
 import FormDemoSession from './components/form-demo-session.jsx'
-import Overlay from '../../elements/overlay/index.jsx'
 
 import './style.scss'
 
@@ -62,7 +59,7 @@ const ContainerIntroduction = ({
     }
 
     return (
-        <div className='container-demo-session'>
+        <div className='container-demo-session' {...rest}>
             <div className='head'>{Title(isCodeSended, codeAlreadySent)}</div>
             <div className='body'>
                 <FormDemoSession

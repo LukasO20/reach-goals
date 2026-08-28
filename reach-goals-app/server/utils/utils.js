@@ -10,9 +10,7 @@ export const formatObject = (objectData) => {
 
 export const extractIds = (arr, key = 'id') => {
     if (!Array.isArray(arr)) return []
-    return arr.map((item) =>
-        typeof item === 'object' ? Number(item[key]) : Number(item)
-    )
+    return arr.map((item) => (typeof item === 'object' ? item[key] : item))
 }
 
 export const generateVerificationCode = () => {
