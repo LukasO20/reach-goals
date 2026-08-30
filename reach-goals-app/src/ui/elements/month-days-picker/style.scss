@@ -9,7 +9,7 @@
     > .head {
         display: flex;
         height: 1.5rem;
-        padding: 0.5rem 0rem;
+        padding-bottom: $spacing-padding-sm;
         font-weight: 600;
 
         .day-name {
@@ -24,48 +24,33 @@
         grid-template-columns: repeat(7, minmax(0, 1fr));
         grid-template-rows: repeat(6, 1fr);
         height: 100%;
-        gap: $spacing-gap-sm;
+        gap: $spacing-gap-mini;
 
         .day {
             position: relative;
             display: flex;
             flex-direction: column;
-            align-items: center;
             gap: $spacing-gap-mini;
-            text-align: center;
-            font-weight: 600;
             color: $color-pair-secondary;
             background-color: $color-secondary;
             padding: $spacing-padding-sm;
             border-radius: $dimensions-border-radius-sm;
+            min-height: 0;
 
-            .title {
+            > .title {
                 position: relative;
-                display: flex;
-                align-items: center;
+                display: inline-flex;
                 justify-content: center;
-                width: 100%;
+                font-weight: 600;
 
-                //TODO: Improve item card because don't render well depending internal content
                 > label {
                     display: inline-flex;
                     justify-content: center;
                     padding: $spacing-padding-x-mini $spacing-padding-sm;
                     border-radius: 1rem;
                     width: 2rem;
-                    cursor: pointer;
                     transition: $animation-transition-st;
                     color: $color-pair-secondary;
-
-                    &:hover {
-                        color: $color-white;
-                        background-color: $color-pair-secondary-dark;
-                    }
-
-                    &:active {
-                        color: $color-white;
-                        background-color: $color-pair-secondary-darkest;
-                    }
                 }
 
                 .title-box {
@@ -115,39 +100,50 @@
                         transition: $animation-transition-st;
                     }
                 }
+
+                .tooltip-dots {
+                    position: absolute;
+                    left: 0.25rem;
+                    transition: $animation-transition-st;
+                }
             }
 
-            > .card-mini {
-                width: 85%;
+            > .body {
+                display: flex;
+                flex-direction: column;
+                gap: $spacing-gap-mini;
+                min-height: 0;
                 overflow: hidden;
-                padding: 0rem $spacing-padding-mini;
-                background-color: $color-pair-primary;
 
-                * {
-                    font-size: $font-size-mini;
-                    cursor: pointer;
-                }
+                > .card-mini {
+                    padding: $spacing-padding-x-mini $spacing-padding-mini;
+                    background-color: $color-pair-primary;
 
-                .body {
-                    overflow: hidden;
+                    * {
+                        cursor: pointer;
+                    }
 
-                    .side-left {
-                        gap: $spacing-gap-mini;
+                    .body {
+                        .title {
+                            .status {
+                                height: 1rem;
+                                width: 1rem;
+                            }
 
-                        > label {
-                            -webkit-line-clamp: 1;
-                            line-clamp: 1;
+                            .icon-st {
+                                height: 1rem;
+                            }
+
+                            > label {
+                                font-size: $font-size-mini;
+                                -webkit-line-clamp: 1;
+                                line-clamp: 1;
+                            }
                         }
+                    }
 
-                        .status {
-                            height: initial;
-                            width: initial;
-                        }
-
-                        .icon-st {
-                            height: 0.85rem;
-                            width: 0.85rem;
-                        }
+                    &.has-overflow {
+                        display: none;
                     }
                 }
             }
@@ -159,16 +155,6 @@
                         color: $color-secondary;
                         padding: 0.15rem $spacing-padding-sm;
                         border-radius: 1rem;
-
-                        &:hover {
-                            background-color: $color-pair-secondary-darkest;
-                            color: $color-secondary;
-                        }
-
-                        &:active {
-                            background-color: $color-pair-secondary-dark;
-                            color: $color-secondary;
-                        }
                     }
                 }
             }

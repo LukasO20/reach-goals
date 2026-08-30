@@ -1,11 +1,12 @@
 /** @import * as React from 'react' */
 
+/** * @typedef {import('../../../utils/types.js').VisibilityConfigProps} VisibilityConfigProps */
+
 /** * @typedef {import('../../../../utils/types.js').ModelProps} ModelProps */
 
 /**
  * @typedef {React.Dispatch<React.SetStateAction<ModelProps>>} SetModelProps
  */
-
 
 /**
  * @callback SaveGoalProps
@@ -39,13 +40,12 @@
  * @property {Array} [data.assignment]
  */
 
-
-
 /**
  * @typedef {Object} MonthsDaysTitleProps
  * @property {string} title
  * @property {Date} startDate
  * @property {CardsStructure} data
+ * @property {boolean} hasOverflowingCard
  */
 
 /**
@@ -56,6 +56,16 @@
  * @property {SaveGoalProps} saveGoal
  * @property {SaveAssignmentProps} saveAssignment
  * @property {boolean} pendingState
+ */
+
+/**
+ * @typedef {Object} MonthDaysProps
+ * @property {Date} day
+ * @property {boolean} isToday
+ * @property {boolean} isApproximateDay
+ * @property {number} todayDate
+ * @property {Array<Object>} modelsCalendar
+ * @property {VisibilityConfigProps} visibility
  */
 
 export {}

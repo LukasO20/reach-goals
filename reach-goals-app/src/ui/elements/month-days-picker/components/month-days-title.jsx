@@ -13,6 +13,7 @@ import ButtonAction from '../../button-action'
 import Tooltip from '../../tooltip'
 import MonthDaysForm from './month-days-form.jsx'
 import ModalCards from '../../../modals/modal-cards'
+import Dots from '../../dots'
 
 /** @typedef {import('../types.js').ModalCardsProps} ModalCardsProps */
 
@@ -21,12 +22,22 @@ import ModalCards from '../../../modals/modal-cards'
 /**
  * @param {Props} props
  */
-const MonthsDaysTitle = ({ title, startDate, data }) => {
+const MonthsDaysTitle = ({ title, startDate, data, hasOverflowingCard }) => {
     const { model, setModel } = useManageModel()
     const { visibleElements, toggleVisibility } = useVisibility()
     const { coords, calculatePosition } = useAnchorPosition()
-    const { save: saveAssignment, saveSuccess: saveAssignmentSuccess, saving: savingAssignment, resetSave: resetSaveAssignment } = useAssignmentProvider()
-    const { save: saveGoal, saveSuccess: saveGoalSuccess, saving: savingGoal, resetSave: resetSaveGoal } = useGoalProvider()
+    const {
+        save: saveAssignment,
+        saveSuccess: saveAssignmentSuccess,
+        saving: savingAssignment,
+        resetSave: resetSaveAssignment,
+    } = useAssignmentProvider()
+    const {
+        save: saveGoal,
+        saveSuccess: saveGoalSuccess,
+        saving: savingGoal,
+        resetSave: resetSaveGoal,
+    } = useGoalProvider()
 
     /** @type {[ModalCardsProps, React.Dispatch<React.SetStateAction<ModalCardsProps>>]} */
     const [modalCards, setModalCards] = useState()
@@ -35,11 +46,12 @@ const MonthsDaysTitle = ({ title, startDate, data }) => {
     const visibleModal = `month-modal-${startDate}`
     const containerRef = useRef(null)
     const monthDaysModalRef = useRef(null)
-    const labelRef = useRef(null)
+    const dotsRef = useRef(null)
     const buttonRef = useRef(null)
 
     /** * @param {React.RefObject<HTMLElement>} elementRef */
-    const handleCalculatePosition = (elementRef) => calculatePosition(elementRef.current, containerRef.current)
+    const handleCalculatePosition = (elementRef) =>
+        calculatePosition(elementRef.current, containerRef.current)
 
     const handleButtonActionClick = () => {
         handleCalculatePosition(buttonRef)
@@ -47,14 +59,15 @@ const MonthsDaysTitle = ({ title, startDate, data }) => {
     }
 
     /** @param {ModalCardsProps} */
-    const handleLabelClick = ({ icon, title, data }) => {
+    const handleDotsClick = ({ icon, title, data }) => {
         setModalCards({ icon, title, data })
         toggleVisibility(visibilityMap(visibleModal))
-        handleCalculatePosition(labelRef)
+        handleCalculatePosition(dotsRef)
     }
 
     const handleClickButtonModalCards = () => {
-        if (isMonthsModalVisible) toggleVisibility(visibilityMap(visibleModal, { remove: true }))
+        if (isMonthsModalVisible)
+            toggleVisibility(visibilityMap(visibleModal, { remove: true }))
     }
 
     const resetMutation = useCallback(() => {
@@ -71,8 +84,10 @@ const MonthsDaysTitle = ({ title, startDate, data }) => {
     const isSuccess = !!saveGoalSuccess || !!saveAssignmentSuccess
 
     useOutsideClick(monthDaysModalRef, () => {
-        if (isMonthsFormVisible) toggleVisibility(visibilityMap(visibleForm, { remove: true }))
-        if (isMonthsModalVisible) toggleVisibility(visibilityMap(visibleModal, { remove: true }))
+        if (isMonthsFormVisible)
+            toggleVisibility(visibilityMap(visibleForm, { remove: true }))
+        if (isMonthsModalVisible)
+            toggleVisibility(visibilityMap(visibleModal, { remove: true }))
     })
 
     useEffect(() => {
@@ -80,13 +95,32 @@ const MonthsDaysTitle = ({ title, startDate, data }) => {
             resetMutation()
             toggleVisibility(visibilityMap(visibleForm, { remove: true }))
         }
-    }, [isSuccess, isMonthsFormVisible, toggleVisibility, resetMutation, visibleForm])
+    }, [
+        isSuccess,
+        isMonthsFormVisible,
+        toggleVisibility,
+        resetMutation,
+        visibleForm,
+    ])
 
     return (
         <div className='title' ref={containerRef}>
-            <label onClick={() => handleLabelClick({ icon: 'objectives', title: 'Activities', data })} ref={labelRef}>
-                {title}
-            </label>
+            {hasOverflowingCard && (
+                <Tooltip title='See more activities' className='tooltip-dots'>
+                    <Dots
+                        quantity={3}
+                        onClick={() =>
+                            handleDotsClick({
+                                icon: 'objectives',
+                                title: 'Activities',
+                                data,
+                            })
+                        }
+                        ref={dotsRef}
+                    />
+                </Tooltip>
+            )}
+            <label>{title}</label>
             <div className='title-box'>
                 {isMonthsFormVisible && (
                     <MonthDaysForm
@@ -95,7 +129,10 @@ const MonthsDaysTitle = ({ title, startDate, data }) => {
                             left: `${coords.x}px`,
                             top: `${coords.y}px`,
                             minWidth: `${coords.width}px`,
-                            transform: getTransform(coords.placementX, coords.placementY),
+                            transform: getTransform(
+                                coords.placementX,
+                                coords.placementY
+                            ),
                         }}
                         data-placement-y={coords.placementY}
                         data-placement-x={coords.placementX}
@@ -109,13 +146,17 @@ const MonthsDaysTitle = ({ title, startDate, data }) => {
                     />
                 )}
                 {isMonthsModalVisible && (
+                    //TODO: SHOULD HAVE An optional function parameter to open a card to details modal (Shouldn't open right now)
                     <ModalCards
                         style={{
                             position: 'absolute',
                             left: `${coords.x}px`,
                             top: `${coords.y}px`,
                             minWidth: `${coords.width}px`,
-                            transform: getTransform(coords.placementX, coords.placementY),
+                            transform: getTransform(
+                                coords.placementX,
+                                coords.placementY
+                            ),
                         }}
                         data-placement-y={coords.placementY}
                         data-placement-x={coords.placementX}
@@ -135,8 +176,8 @@ const MonthsDaysTitle = ({ title, startDate, data }) => {
                             setModel((prev) => ({
                                 ...prev,
                                 typeModel: 'goal',
-                                activeModel: { name: null, start: startDate }
-                            }));
+                                activeModel: { name: null, start: startDate },
+                            }))
                             handleButtonActionClick()
                         }}
                     />
