@@ -18,6 +18,7 @@ import EmptyState from '../../elements/empty-state'
 
 import emptyTagImg from '../../../assets/empty-tag.svg'
 
+import { safeFilterTabs } from './defaults.js'
 import { cx } from '../../../utils/utils.js'
 
 import './style.scss'
@@ -32,16 +33,16 @@ const ModalTag = ({
     modelID,
     setFilterModel,
     resetManageModel,
-    filterTabs,
+    filterTabs = safeFilterTabs,
     onFilterTabs,
 }) => {
     const { visibleElements } = useVisibility()
     const {
-        page: { data, loading },
+        page: { data = [], loading },
     } = useTagProvider()
     const { valuesCheckbox } = useCheckbox()
 
-    const hasSelectedModel = !!valuesCheckbox.modal?.selected.length
+    const hasSelectedModel = !!valuesCheckbox.modal.selected.length
 
     const handleClickButtonActionCreate = () => {
         const resetKeys = resetManageModelMap(['activeModel'])
@@ -62,7 +63,10 @@ const ModalTag = ({
 
     const isModalForm = ['tag', 'near-modalForm']
     const isLoading = !!loading
-    const isEmptyData = !data?.length && !isLoading
+    const isEmptyData =
+        !data.length &&
+        !isLoading &&
+        Object.keys(filterTabs.tag.page)[0] === 'tagSomeID'
 
     const content = (
         <>
@@ -126,7 +130,7 @@ const ModalTag = ({
                     />
                 )}
                 <ModelTabs
-                    type='tag'
+                    type={type}
                     headLeftChildren={headLeftContent}
                     loading={isLoading}
                     filterTabs={filterTabs}

@@ -14,6 +14,7 @@
  * @property {string} title
  * @property {PositionsParams} [positions]
  * @property {number} [delay]
+ * @property {string} className
  */
 
 export {}

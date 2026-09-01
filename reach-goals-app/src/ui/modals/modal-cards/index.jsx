@@ -14,39 +14,51 @@ import './style.scss'
 const ModalCards = ({ data, icon, title, onShowModalCards, ...rest }) => {
     const dataRender = Object.entries(data).map(([key, itens]) => ({
         type: key,
-        data: itens.map((item) => item)
+        data: itens.map((item) => item),
     }))
 
     const displayModesProps = {
         type: ['card-mini'],
-        actions: []
+        actions: [],
     }
 
-    const hasMoreChartCards = dataRender.flatMap((item) => item.data).length >= 7
+    const hasMoreChartCards =
+        dataRender.flatMap((item) => item.data).length >= 7
 
-    const chartCardsModalBodyClass = cx(`
-        body
+    const chartCardsModalBodyClass = cx(
+        `body
         ${hasMoreChartCards && 'scrollable'}
-    `)
+        `
+    )
 
     return (
         <div className='container-chart-cards-modal' {...rest}>
             <div className='head'>
                 <span className='title'>
                     <Icons icon={`icon-${icon}`} />
-                    <span>
-                        {title}
-                    </span>
+                    <span>{title}</span>
                 </span>
-                <ButtonAction classBtn='circle close' icon='icon-close' onClick={() => onShowModalCards(false)} />
+                <ButtonAction
+                    classBtn='circle close'
+                    icon='icon-close'
+                    onClick={() => onShowModalCards(false)}
+                />
             </div>
             <div className={chartCardsModalBodyClass}>
                 {dataRender.map((model) => {
                     const propsReference = {
                         display: displayModesProps,
                         source: model.data,
+                        detailsModel: true,
                     }
-                    return <ModelSwitcher key={model.type} type={model.type} propsReference={propsReference} />
+
+                    return (
+                        <ModelSwitcher
+                            key={model.type}
+                            type={model.type}
+                            propsReference={propsReference}
+                        />
+                    )
                 })}
             </div>
         </div>

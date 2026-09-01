@@ -1,6 +1,5 @@
 /* MEDIA QUERY */
 @media screen and (min-width: 1920px) {
-
     .calendar-container {
         height: $dimensions-layout-h-md;
         width: $dimensions-layout-w-md;
@@ -9,7 +8,6 @@
 }
 
 @media screen and (min-width: 2560px) {
-
     .calendar-container {
         height: $dimensions-layout-h-lg;
         width: $dimensions-layout-w-lg;

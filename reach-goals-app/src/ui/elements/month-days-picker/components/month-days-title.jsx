@@ -146,7 +146,6 @@ const MonthsDaysTitle = ({ title, startDate, data, hasOverflowingCard }) => {
                     />
                 )}
                 {isMonthsModalVisible && (
-                    //TODO: SHOULD HAVE An optional function parameter to open a card to details modal (Shouldn't open right now)
                     <ModalCards
                         style={{
                             position: 'absolute',
