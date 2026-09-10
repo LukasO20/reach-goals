@@ -3,6 +3,7 @@ import {
     getDemoVisitor,
     logoutDemoVisitor,
 } from '../../server/services/demo-visitor.service.js'
+import { quotaModelGuard } from '../../server/services/demo-session.service.js'
 
 const ALLOWED_METHODS = ['GET', 'PUT']
 
@@ -17,8 +18,13 @@ const handler = async (req, res) => {
 
     try {
         if (req.method === 'GET') {
+            const demoVisitorQuotaModel = await quotaModelGuard(id)
+
             const demoVisitor = await getDemoVisitor(id)
-            return res.status(200).json(demoVisitor)
+            return res.status(200).json({
+                ...demoVisitor,
+                quotaModel: demoVisitorQuotaModel,
+            })
         }
 
         if (req.method === 'PUT') {

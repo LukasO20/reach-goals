@@ -32,7 +32,7 @@ export const addDemoVisitorVerification = async (email = '') => {
                     'Error to add demo-visitor-verification: Internal server error'
                 )
 
-            const emailSended = await sendEmail(email, code)
+            await sendEmail(email, code)
 
             return {
                 email: verificationCreated.email,

@@ -1,10 +1,20 @@
 import { verifyAccessToken } from '../auth/jwt.js'
+import { modelUserRegistry } from './model.service.js'
 
 const ACTIONS_PASS = ['verification', 'send-code']
+
+const QUOTAGOALEXCEEDED = 30
+const QUOTAMODELEXCEEDED = 50
 
 const unauthorized = (message) => {
     const error = new Error(message)
     error.status = 401
+    return error
+}
+
+const tooManyRequests = (message) => {
+    const error = new Error(message)
+    error.status = 429
     return error
 }
 
@@ -32,4 +42,46 @@ export const authenticateDemoSession = async (req, action = '') => {
     const payload = verifyAccessToken(jwt)
 
     return payload
+}
+
+export const authenticateQuotaModel = async (
+    visitorId = '',
+    req = { method: 'PASS', url: '' }
+) => {
+    const url = /\/api\/([^?]+)/
+    const type = req.url.match(url)[1]
+
+    if (req.method !== 'POST') return true
+
+    const quotaResult = await quotaModelGuard(visitorId)
+
+    const isQuotaExceeded =
+        (type === 'goal' && quotaResult.quotaExceeded.goal) ||
+        (type === 'assignment' && quotaResult.quotaExceeded.assignment) ||
+        (type === 'tag' && quotaResult.quotaExceeded.tag)
+
+    if (isQuotaExceeded) {
+        throw tooManyRequests(
+            `Quota exceeded - goal: ${quotaResult.registry.goal}/${QUOTAGOALEXCEEDED}, assignment: ${quotaResult.registry.assignment}/${QUOTAMODELEXCEEDED}, tag: ${quotaResult.registry.tag}/${QUOTAMODELEXCEEDED}`
+        )
+    }
+
+    return true
+}
+
+export const quotaModelGuard = async (visitorId = '') => {
+    const registry = await modelUserRegistry(visitorId)
+
+    const isGoalOver = registry.goal >= QUOTAGOALEXCEEDED
+    const isAssignmentOver = registry.assignment > QUOTAMODELEXCEEDED
+    const isTagOver = registry.tag > QUOTAMODELEXCEEDED
+
+    return {
+        quotaExceeded: {
+            goal: isGoalOver,
+            assignment: isAssignmentOver,
+            tag: isTagOver,
+        },
+        registry,
+    }
 }

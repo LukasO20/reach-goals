@@ -94,3 +94,29 @@ export const updateModelStatus = async (ids = [], status = '') => {
         }
     }
 }
+
+export const modelUserRegistry = async (visitorId = '') => {
+    try {
+        return await prisma.$transaction(async (tx) => {
+            const goals = await tx.goal.findMany({
+                where: { visitorId },
+            })
+
+            const assignments = await tx.assignment.findMany({
+                where: { visitorId },
+            })
+
+            const tags = await tx.tag.findMany({
+                where: { visitorId },
+            })
+
+            return {
+                goal: goals.length,
+                assignment: assignments.length,
+                tag: tags.length,
+            }
+        })
+    } catch (error) {
+        throw new Error(`Error to get a model-user-registry: ${error}`)
+    }
+}

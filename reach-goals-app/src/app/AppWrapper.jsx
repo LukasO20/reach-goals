@@ -1,6 +1,6 @@
-import AppRoutes from './Routes.jsx'
+import { useDemoSession } from '../provider/model/demo-session-provider'
 
-import { useDemoSessionProvider } from '../provider/model/demo-session-provider'
+import AppRoutes from './Routes.jsx'
 
 import Navigate from '../ui/navigate'
 import ContainerHeader from '../ui/containers/container-header'
@@ -23,7 +23,7 @@ const AppWrapper = () => {
         isLoading,
         mutationError,
         codeAlreadySent,
-    } = useDemoSessionProvider()
+    } = useDemoSession()
 
     const shouldRenderContainerIntroduction =
         visitor.status === 'EXPIRED' && !isLoading

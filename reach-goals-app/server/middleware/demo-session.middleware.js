@@ -1,4 +1,7 @@
-import { authenticateDemoSession } from '../services/demo-session.service.js'
+import {
+    authenticateDemoSession,
+    authenticateQuotaModel,
+} from '../services/demo-session.service.js'
 
 export const handlerAuthenticate = (handler) => {
     return async (req, res) => {
@@ -11,6 +14,8 @@ export const handlerAuthenticate = (handler) => {
             )
 
             const authContext = { visitorId: authDemoSessionData.sub }
+
+            await authenticateQuotaModel(authContext.visitorId, req)
 
             return handler(req, res, authContext)
         } catch (error) {
