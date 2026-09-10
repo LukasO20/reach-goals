@@ -1,4 +1,41 @@
 .container-form-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 44rem;
+    width: 52.5rem;
+
+    > .head {
+        display: flex;
+        align-items: center;
+        border-bottom: solid 1px $color-pair-primary;
+        padding: $spacing-padding-st;
+        gap: $spacing-gap-sm;
+
+        h2,
+        .objective-options {
+            flex: 2;
+
+            .objective-op {
+                display: flex;
+                align-items: center;
+                gap: $spacing-gap-sm;
+            }
+        }
+    }
+
+    > .body {
+        flex: 1;
+        margin: 0rem $spacing-margin-sm;
+        overflow: hidden;
+    }
+
+    > .bottom {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: $spacing-padding-st;
+    }
 
     &.tag {
         position: absolute;
@@ -6,7 +43,7 @@
         flex-direction: column;
         gap: $spacing-gap-md;
         width: 60%;
-        height: 20rem;
+        height: $dimensions-h-video-lg;
         margin: 0.5rem;
         padding: $spacing-padding-st;
         border-radius: $dimensions-border-radius-sm;
@@ -15,11 +52,12 @@
         right: 0;
         z-index: 1;
 
-        >.head {
+        > .head {
             display: flex;
             align-items: center;
             justify-content: space-between;
             border-bottom: solid 1px $color-pair-primary;
+            padding: 0;
 
             h2 {
                 display: inline-flex;
@@ -31,20 +69,15 @@
             }
         }
 
-        >.body {
-            flex: 1;
-        }
-
-        >.bottom {
+        > .bottom {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 3.5rem;
+            padding: 0;
         }
     }
 
     .container-list-modal {
-
         .card-mini {
             cursor: pointer;
         }

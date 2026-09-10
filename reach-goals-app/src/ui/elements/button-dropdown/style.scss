@@ -72,7 +72,7 @@
             left: 0;
         }
 
-        >span {
+        > span {
             color: $color-pair-secondary;
             text-align: center;
             font-weight: 600;
@@ -80,6 +80,12 @@
         }
 
         .item-option {
+            display: flex;
+            align-items: center;
+
+            .tooltip {
+                flex: 1;
+            }
 
             .button-action {
                 width: stretch;
@@ -95,7 +101,6 @@
             }
 
             &.group {
-
                 .groups {
                     display: flex;
                     flex-direction: column;
@@ -109,9 +114,7 @@
     }
 
     &.create {
-
         .dropdown-menu {
-
             .button-action {
                 background-color: $color-accent;
 

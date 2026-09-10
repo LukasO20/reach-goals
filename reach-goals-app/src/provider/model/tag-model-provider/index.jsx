@@ -61,6 +61,8 @@ export const TagModelProvider = ({ children }) => {
             queryClient.invalidateQueries({ queryKey: ['tag'] })
             queryClient.invalidateQueries({ queryKey: ['goal'] })
             queryClient.invalidateQueries({ queryKey: ['assignment'] })
+            queryClient.invalidateQueries({ queryKey: ['demo-session'] })
+
             update({ toast: 'Tag save with success' })
             resetManageModel({ keys: ['activeModel', 'mainModelID'] })
         },
@@ -72,6 +74,8 @@ export const TagModelProvider = ({ children }) => {
             queryClient.invalidateQueries({ queryKey: queryKeyPage })
             queryClient.invalidateQueries({ queryKey: ['goal'] })
             queryClient.invalidateQueries({ queryKey: ['assignment'] })
+            queryClient.invalidateQueries({ queryKey: ['demo-session'] })
+
             update({ toast: `Tag was deleted` })
         },
     })

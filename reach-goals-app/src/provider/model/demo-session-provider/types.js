@@ -7,12 +7,33 @@
 /** * @typedef {import('../../../utils/types.js').HttpError} HttpErrorProps */
 
 /**
+ * @typedef {Object} QuotaExceededProps
+ * @property {boolean} goal
+ * @property {boolean} assignment
+ * @property {boolean} tag
+ */
+
+/**
+ * @typedef {Object} QuotaModelRegistryProps
+ * @property {number} goal
+ * @property {number} assignment
+ * @property {number} tag
+ */
+
+/**
+ * @typedef {Object} QuotaModelProps
+ * @property {QuotaExceededProps} quotaExceeded
+ * @property {QuotaModelRegistryProps} registry
+ */
+
+/**
  * @typedef {Object} DemoVisitorProps
  * @property {string | number} id
  * @property {string} name
  * @property {string} email
  * @property {'ACTIVE' | 'EXPIRED'} status
  * @property {Date} expiresAt
+ * @property {QuotaModelProps} quotaModel
  */
 
 /**

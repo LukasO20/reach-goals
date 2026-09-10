@@ -60,14 +60,17 @@ export const GoalModelProvider = ({ children }) => {
             model.id
                 ? goalService.updateGoal(model)
                 : goalService.addGoal(model),
-        onSuccess: (data) => {
+        onSuccess: (data, o) => {
             queryClient.invalidateQueries({ queryKey: ['goal'] })
+            queryClient.invalidateQueries({ queryKey: ['demo-session'] })
+
             update({ toast: 'Goal save with success' })
             resetManageModel({ keys: ['activeModel', 'mainModelID'] })
 
             const shouldInvalidateTagQueries = data.tags?.length > 0
-            if (shouldInvalidateTagQueries)
+            if (shouldInvalidateTagQueries) {
                 queryClient.invalidateQueries({ queryKey: ['tag', 'page'] })
+            }
         },
     })
 
@@ -133,6 +136,8 @@ export const GoalModelProvider = ({ children }) => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeyPage })
             queryClient.invalidateQueries({ queryKey: ['tag', 'page'] })
+            queryClient.invalidateQueries({ queryKey: ['demo-session'] })
+
             update({ toast: `Goal was deleted` })
         },
     })

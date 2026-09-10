@@ -5,7 +5,7 @@ import { useSwitchLayout } from '../../../provider/ui/switch-layout-provider'
 import { useCheckbox } from '../../../provider/ui/checkbox-provider'
 import { useButtonDropdown } from '../../../hooks/useButtonDropdown.js'
 import { useSwitchMonths } from '../../../provider/ui/switch-months-provider'
-import { useDemoSessionProvider } from '../../../provider/model/demo-session-provider'
+import { useDemoSession } from '../../../provider/model/demo-session-provider'
 
 import {
     visibilityMap,
@@ -23,8 +23,8 @@ import Tooltip from '../../elements/tooltip'
 import './style.scss'
 
 const ContainerMain = () => {
+    const { visitor } = useDemoSession()
     const { toggleVisibility } = useVisibility()
-    const { visitor } = useDemoSessionProvider()
     const {
         data: { layout, visibility },
         setSwitchLayout,
@@ -53,6 +53,7 @@ const ContainerMain = () => {
                 toggleVisibility(visibilityMap(['modal-center', target])),
             setterUseSwitchLayout: () => setSwitchLayout(formRender),
         },
+        value: visitor.quotaModel,
     })
 
     const moreDropdown = useButtonDropdown({

@@ -1,6 +1,7 @@
 import { useVisibility } from '../../../provider/ui/visibility-provider'
 import { useTagProvider } from '../../../provider/model/tag-model-provider'
 import { useCheckbox } from '../../../provider/ui/checkbox-provider'
+import { useDemoSession } from '../../../provider/model/demo-session-provider'
 
 import {
     visibilityMap,
@@ -15,6 +16,7 @@ import ModelTabs from '../../elements/model-tabs'
 import RelationCard from '../../models/tag/components/relation-card'
 import PopupModelOptions from '../../elements/popup-model-options'
 import EmptyState from '../../elements/empty-state'
+import Tooltip from '../../elements/tooltip'
 
 import emptyTagImg from '../../../assets/empty-tag.svg'
 
@@ -36,6 +38,9 @@ const ModalTag = ({
     filterTabs = safeFilterTabs,
     onFilterTabs,
 }) => {
+    const {
+        visitor: { quotaModel },
+    } = useDemoSession()
     const { visibleElements } = useVisibility()
     const {
         page: { data = [], loading },
@@ -88,6 +93,7 @@ const ModalTag = ({
         plan
         max-width
         ${isModalForm.every((e) => visibleElements.includes(e)) && 'active'}
+        ${quotaModel.quotaExceeded.tag && 'disable'}
         `
     )
 
@@ -103,15 +109,28 @@ const ModalTag = ({
                     visibility={visibilityMap(null)}
                 />
                 <div className='options'>
-                    <ButtonAction
-                        classBtn={buttonCreateClass}
-                        onClick={handleClickButtonActionCreate}
-                        visibility={visibilityMap('near-modalForm', {
-                            add: true,
-                        })}
-                        icon='icon-plus'
-                        title='create'
-                    />
+                    <Tooltip
+                        title={
+                            quotaModel.quotaExceeded.tag
+                                ? 'Quota Exceeded to create some tag'
+                                : ''
+                        }
+                        positions={{
+                            left: '0%',
+                            top: 'calc(100% + 0.5rem)',
+                            transform: 'translateX(-55%)',
+                        }}
+                    >
+                        <ButtonAction
+                            classBtn={buttonCreateClass}
+                            onClick={handleClickButtonActionCreate}
+                            visibility={visibilityMap('near-modalForm', {
+                                add: true,
+                            })}
+                            icon='icon-plus'
+                            title='create'
+                        />
+                    </Tooltip>
                 </div>
             </div>
             <div className='body'>

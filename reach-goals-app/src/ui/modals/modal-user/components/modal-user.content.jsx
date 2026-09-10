@@ -1,9 +1,11 @@
 import { useCountdown } from '../../../../hooks/useCountDown.js'
 
-import ButtonAction from '../../../elements/button-action/index.jsx'
-import Icons from '../../../elements/icons/index.jsx'
+import ButtonAction from '../../../elements/button-action'
+import Icons from '../../../elements/icons'
+import ModalUserQuotaCard from './modal-user-quota.card.jsx'
 
 import { safeVisitor } from '../defaults.js'
+import ModalUserQuotaMessage from './modal-user-quota.message.jsx'
 
 /** @typedef {import('../types.js').ModalUserProps & React.HTMLAttributes<HTMLDivElement>} Props */
 
@@ -20,6 +22,10 @@ const ModalUserContent = ({
 
     const handleLogoutButtonClick = () => logoutSession(visitor.id)
 
+    const hasSomeQuotaExceeded = Object.values(
+        visitor.quotaModel.quotaExceeded
+    ).some((item) => item)
+
     return (
         <div className='modal-user-content' {...rest}>
             <div className='head'>
@@ -33,6 +39,8 @@ const ModalUserContent = ({
                     <span>Your session timer is:</span>
                     <label>{expiresTimer.formatted}</label>
                 </div>
+                <ModalUserQuotaCard quotaModel={visitor.quotaModel} />
+                {hasSomeQuotaExceeded && <ModalUserQuotaMessage />}
                 <ButtonAction
                     classBtn='sign-out plan-round max-width'
                     title='Sign out'

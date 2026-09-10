@@ -3,4 +3,9 @@ export const safeVisitor = {
     email: '',
     status: '',
     expiresAt: '',
+    quotaModel: {},
 }
+
+export const QUOTAGOALEXCEEDED = 30
+
+export const QUOTAMODELEXCEEDED = 50

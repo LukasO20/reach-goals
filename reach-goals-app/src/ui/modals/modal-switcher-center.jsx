@@ -9,6 +9,7 @@ import { visibilityMap } from '../../utils/mapping/mappingUtils.js'
 import { resetManageModelMap } from '../../utils/mapping/mappingUtilsProvider.js'
 
 import { ModalFormWrapper } from './modal-form/modal-form-wrapper.jsx'
+import ModalQuotaModel from './modal-quota-model'
 import Overlay from '../elements/overlay'
 
 import { cx } from '../../utils/utils.js'
@@ -37,9 +38,9 @@ const ModalSwitcherCenter = () => {
         ${typeVisibility}
         `)
 
-    const isVisible =
-        !!typeModalLayout && !!typeVisibility && showModalCenter === 'show'
+    const isVisible = !!typeVisibility && showModalCenter === 'show'
     const isModalForm = typeModalLayout === 'form'
+    const isModalQuotaModel = typeModalLayout === 'quota-model'
 
     useOutsideClick(modalRef, () => {
         const allowedModalLayouts = ['modal-center', 'goal', 'assigment']
@@ -65,6 +66,7 @@ const ModalSwitcherCenter = () => {
             <>
                 <Overlay />
                 <div className={modalCenterClass} ref={modalRef}>
+                    {isModalQuotaModel && <ModalQuotaModel />}
                     {isModalForm && (
                         <ModalFormWrapper
                             modelID={model.mainModelID}

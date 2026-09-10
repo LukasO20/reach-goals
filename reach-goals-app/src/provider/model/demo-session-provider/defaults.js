@@ -6,6 +6,10 @@ export const safeDemoSessionData = {
     session: {
         status: 'EXPIRED',
     },
+    quotaModel: {
+        isQuotaExceeded: false,
+        registry: {},
+    },
 }
 
 export const safeAuthDemoSessionData = {

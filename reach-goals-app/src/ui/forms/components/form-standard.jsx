@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useManageModel } from '../../../provider/model/manage-model-provider'
 import { useVisibility } from '../../../provider/ui/visibility-provider'
+import { useDemoSession } from '../../../provider/model/demo-session-provider'
 
 import ButtonAction from '../../elements/button-action'
 import ButtonDropdown from '../../elements/button-dropdown'
@@ -11,6 +12,7 @@ import InputTimer from '../../elements/input-timer'
 import InputText from '../../elements/input-text'
 import Icons from '../../elements/icons'
 import { ModalModelListWrapper } from '../../modals/modal-model-list/modal-model-list-wrapper.jsx'
+import Tooltip from '../../elements/tooltip'
 
 import { visibilityMap } from '../../../utils/mapping/mappingUtils.js'
 import { updateActiveModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
@@ -43,6 +45,9 @@ const FormStandard = ({
 }) => {
     const { visibleElements } = useVisibility()
     const { setModel, updateActiveModel } = useManageModel()
+    const {
+        visitor: { quotaModel },
+    } = useDemoSession()
 
     /** @type {import('../types.js').SetEmptyFieldsProps} */
     const [emptyFields, setEmptyFields] = useState({
@@ -173,6 +178,7 @@ const FormStandard = ({
         plan
         small
         ${type === 'assignment' && 'active'}
+        ${quotaModel.quotaExceeded.assignment && 'disable'}
         `
     )
 
@@ -181,47 +187,64 @@ const FormStandard = ({
         plan
         small
         ${type === 'goal' && 'active'}
+        ${quotaModel.quotaExceeded.goal && 'disable'}
         `
     )
 
     const isGoalForm = type === 'goal'
 
     return (
-        <div className='container-form-modal center-content'>
+        <div className='container-form-modal'>
             <div className='head'>
                 <div className='objective-icon'>{icon}</div>
                 <div className='objective-options'>
                     <div className='objective-op'>
-                        <ButtonAction
-                            visibility={visibilityMap(
-                                ['modal-center', 'assignment'],
-                                { maintain: true }
-                            )}
-                            classBtn={buttonAssignmentClass}
-                            title='assignments'
-                            nullForm={true}
-                            onClick={() =>
-                                setModel((prev) => ({
-                                    ...prev,
-                                    typeModel: 'assignment',
-                                }))
+                        <Tooltip
+                            title={
+                                quotaModel.quotaExceeded.assignment
+                                    ? 'Quota Exceeded to create some assignment'
+                                    : ''
                             }
-                        />
-                        <ButtonAction
-                            visibility={visibilityMap(
-                                ['modal-center', 'goal'],
-                                { maintain: true }
-                            )}
-                            classBtn={buttonGoalClass}
-                            title='goals'
-                            nullForm={true}
-                            onClick={() =>
-                                setModel((prev) => ({
-                                    ...prev,
-                                    typeModel: 'goal',
-                                }))
+                        >
+                            <ButtonAction
+                                visibility={visibilityMap(
+                                    ['modal-center', 'assignment'],
+                                    { maintain: true }
+                                )}
+                                classBtn={buttonAssignmentClass}
+                                title='assignments'
+                                nullForm={true}
+                                onClick={() =>
+                                    setModel((prev) => ({
+                                        ...prev,
+                                        typeModel: 'assignment',
+                                    }))
+                                }
+                            />
+                        </Tooltip>
+                        <Tooltip
+                            title={
+                                quotaModel.quotaExceeded.goal
+                                    ? 'Quota Exceeded to create some goal'
+                                    : ''
                             }
-                        />
+                        >
+                            <ButtonAction
+                                visibility={visibilityMap(
+                                    ['modal-center', 'goal'],
+                                    { maintain: true }
+                                )}
+                                classBtn={buttonGoalClass}
+                                title='goals'
+                                nullForm={true}
+                                onClick={() =>
+                                    setModel((prev) => ({
+                                        ...prev,
+                                        typeModel: 'goal',
+                                    }))
+                                }
+                            />
+                        </Tooltip>
                     </div>
                     <div className='objective-color'>
                         <label className='color'></label>

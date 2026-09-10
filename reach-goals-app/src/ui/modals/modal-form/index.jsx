@@ -199,7 +199,9 @@ const ModalForm = () => {
     ])
 
     return isLoading && !isModalModelList ? (
-        <Loading mode='block' />
+        <div className='container-form-modal'>
+            <Loading mode='block' />
+        </div>
     ) : (
         <Form
             typeForm={typeVisibility}

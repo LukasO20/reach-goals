@@ -70,6 +70,7 @@ export const DemoSessionProvider = ({ children }) => {
                     email: demoSessionData.visitor.email,
                     status: demoSessionData.session.status,
                     expiresAt: demoSessionData.session.expiresAt,
+                    quotaModel: demoSessionData.quotaModel,
                 },
                 sendCode: sendCodeMutation.mutate,
                 verifyDemoSession: verifyDemoSessionMutation.mutate,
@@ -92,4 +93,4 @@ export const DemoSessionProvider = ({ children }) => {
     )
 }
 
-export const useDemoSessionProvider = () => useContext(DemoSessionContext)
+export const useDemoSession = () => useContext(DemoSessionContext)

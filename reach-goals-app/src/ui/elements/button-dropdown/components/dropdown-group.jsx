@@ -17,7 +17,7 @@ const DropdownGroups = ({ options = [] }) => {
                         {uiMode === 'button-action' && (
                             <ButtonAction
                                 key={option.id}
-                                classBtn={`plan-round max-width dropdown-option ${option.classBtn}`}
+                                classBtn={`plan-round dropdown-option ${option.classBtn}`}
                                 title={option.title}
                                 icon={option.icon}
                                 onClick={() => option.onClick(option.id)}
@@ -32,7 +32,6 @@ const DropdownGroups = ({ options = [] }) => {
                             />
                         )}
                     </>
-
                 )
             })}
         </div>

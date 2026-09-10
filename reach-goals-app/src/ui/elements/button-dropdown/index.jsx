@@ -29,10 +29,12 @@ const ButtonDropdown = ({
     title,
     tooltip,
     uiMode,
-    renderTopChildren
+    renderTopChildren,
 }) => {
     const { visibleElements = [], toggleVisibility } = useVisibility()
-    const { data: { visibility: switchLayoutVisibility } } = useSwitchLayout()
+    const {
+        data: { visibility: switchLayoutVisibility },
+    } = useSwitchLayout()
     const buttonDropdownRef = useRef(null)
 
     const isShowDropdown = visibleElements.includes(visibility)
@@ -45,13 +47,20 @@ const ButtonDropdown = ({
     )
 
     useOutsideClick(buttonDropdownRef, () => {
-        if (isShowDropdown) toggleVisibility(visibilityMap(visibility, { remove: true }))
+        if (isShowDropdown)
+            toggleVisibility(visibilityMap(visibility, { remove: true }))
     })
 
     return (
-        <div className={`button-dropdown-container ${classBtn}`} ref={buttonDropdownRef}>
+        <div
+            className={`button-dropdown-container ${classBtn}`}
+            ref={buttonDropdownRef}
+        >
             {renderTopChildren && (
-                <DropdownVisibilityCount tagsCard={switchLayoutVisibility.tagsCard} status={switchLayoutVisibility.status} />
+                <DropdownVisibilityCount
+                    tagsCard={switchLayoutVisibility.tagsCard}
+                    status={switchLayoutVisibility.status}
+                />
             )}
             <Tooltip title={tooltip}>
                 <ButtonAction
@@ -61,7 +70,7 @@ const ButtonDropdown = ({
                     icon={icon}
                 />
             </Tooltip>
-            {isShowDropdown && (<Dropdown options={options} uiMode={uiMode} />)}
+            {isShowDropdown && <Dropdown options={options} uiMode={uiMode} />}
         </div>
     )
 }

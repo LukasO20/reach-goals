@@ -79,21 +79,18 @@
                             display: flex;
                             flex-direction: column;
                             gap: $spacing-gap-sm;
-                            padding: $spacing-padding-sm;
 
                             .input-date {
                                 width: 100%;
                             }
                         }
 
-                        > .button-action {
-                            &.save {
-                                align-self: flex-end;
-                            }
+                        .tooltip {
+                            justify-content: end;
                         }
                     }
 
-                    .tooltip {
+                    > .tooltip {
                         position: absolute;
                         right: 0.25rem;
                         opacity: 0;
@@ -166,7 +163,7 @@
             &:hover {
                 .title {
                     .title-box {
-                        .tooltip {
+                        > .tooltip {
                             opacity: 1;
 
                             .button-action {

@@ -1,12 +1,15 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { useOutsideClick } from '../../../hooks/useOutsideClick.js'
 import { useAnchorPosition } from '../../../hooks/useAnchorPosition.js'
+import { useVisibility } from '../../../provider/ui/visibility-provider'
 
 import { getTransform } from '../../../utils/utils.js'
+import { visibilityMap } from '../../../utils/mapping/mappingUtils.js'
 
 import ButtonAction from '../../elements/button-action'
 import ModalUserContent from './components/modal-user.content.jsx'
 import Tooltip from '../../elements/tooltip'
+import Dots from '../../elements/dots'
 
 import './style.scss'
 
@@ -16,33 +19,44 @@ import './style.scss'
  * @param {Props} props
  */
 const ModalUser = ({ visitor, mutationLoading, logoutSession, ...rest }) => {
-    const [showModalUserContent, setShowModalUserContent] = useState(false)
+    const { visibleElements = [], toggleVisibility } = useVisibility()
     const { coords, calculatePosition } = useAnchorPosition()
 
-    const modalUserContentRef = useRef(null)
     const containerRef = useRef(null)
     const buttonRef = useRef(null)
 
-    useOutsideClick(modalUserContentRef, () => {
-        setShowModalUserContent(false)
-    })
-
     const handleOnModalUserContent = (elementTarget) => {
         calculatePosition(elementTarget, containerRef.current)
-        setShowModalUserContent(true)
     }
+
+    const hasSomeQuotaExceeded = Object.values(
+        visitor.quotaModel.quotaExceeded
+    ).some((item) => item)
+
+    const isShowModalUserContent =
+        visibleElements.includes('modal-user-content')
+
+    useOutsideClick(buttonRef, () => {
+        if (isShowModalUserContent) {
+            toggleVisibility(
+                visibilityMap('modal-user-content', { remove: true })
+            )
+        }
+    })
 
     return (
         <div className='container-modal-user' ref={containerRef} {...rest}>
             <Tooltip title='Profile panel'>
+                {hasSomeQuotaExceeded && <Dots quantity={1} />}
                 <ButtonAction
                     classBtn='circle user'
                     icon='icon-user'
                     onClick={(e) => handleOnModalUserContent(e.event.target)}
                     innerRef={buttonRef}
+                    visibility={visibilityMap('modal-user-content')}
                 />
             </Tooltip>
-            {showModalUserContent && (
+            {isShowModalUserContent && (
                 <ModalUserContent
                     style={{
                         position: 'absolute',
@@ -57,7 +71,6 @@ const ModalUser = ({ visitor, mutationLoading, logoutSession, ...rest }) => {
                     visitor={visitor}
                     mutationLoading={mutationLoading}
                     logoutSession={logoutSession}
-                    ref={modalUserContentRef}
                 />
             )}
         </div>

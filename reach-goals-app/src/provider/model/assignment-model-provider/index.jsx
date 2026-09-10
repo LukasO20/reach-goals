@@ -62,6 +62,8 @@ export const AssignmentModelProvider = ({ children }) => {
                 : assignmentService.addAssignment(model),
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ['assignment'] })
+            queryClient.invalidateQueries({ queryKey: ['demo-session'] })
+
             update({ toast: 'Assignment save with success' })
             resetManageModel({ keys: ['activeModel', 'mainModelID'] })
 
@@ -133,6 +135,8 @@ export const AssignmentModelProvider = ({ children }) => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: queryKeyPage })
             queryClient.invalidateQueries({ queryKey: ['tag', 'page'] })
+            queryClient.invalidateQueries({ queryKey: ['demo-session'] })
+
             update({ toast: `Assignment was deleted` })
         },
     })
