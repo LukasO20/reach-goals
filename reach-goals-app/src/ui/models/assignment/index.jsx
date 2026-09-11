@@ -4,8 +4,14 @@ import { useManageModel } from '../../../provider/model/manage-model-provider'
 import { useVisibility } from '../../../provider/ui/visibility-provider'
 import { useCheckbox } from '../../../provider/ui/checkbox-provider'
 
-import { switchLayoutMap, visibilityMap } from '../../../utils/mapping/mappingUtils.js'
-import { updateActiveModelMap, addToSelectedModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
+import {
+    switchLayoutMap,
+    visibilityMap,
+} from '../../../utils/mapping/mappingUtils.js'
+import {
+    updateActiveModelMap,
+    addToSelectedModelMap,
+} from '../../../utils/mapping/mappingUtilsProvider.js'
 import { safeDisplay, safeSource } from './defaults.js'
 
 import CardRelation from './components/card-relation.jsx'
@@ -24,46 +30,65 @@ const Assignment = ({
     draggable,
     checkboxModel,
     showTags,
+    showRightContent,
 }) => {
-    const { model, setModel, updateActiveModel, addToSelectedModel } = useManageModel()
+    const { model, setModel, updateActiveModel, addToSelectedModel } =
+        useManageModel()
     const { toggleVisibility } = useVisibility()
     const { setSwitchLayout } = useSwitchLayout()
-    const { remove, removeSuccess, removing, removingVariables } = useAssignmentProvider()
+    const { remove, removeSuccess, removing, removingVariables } =
+        useAssignmentProvider()
     const { valuesCheckbox } = useCheckbox()
 
     const sourceData = source.assignments ?? source
 
-    const sourceDataFiltered = sourceData.filter(item =>
-        !(removeSuccess && removingVariables && item.id === removingVariables)
+    const sourceDataFiltered = sourceData.filter(
+        (item) =>
+            !(
+                removeSuccess &&
+                removingVariables &&
+                item.id === removingVariables
+            )
     )
 
     const pendingState = {
         removing: removing,
-        removingVariables: removingVariables
+        removingVariables: removingVariables,
     }
 
-    const deleteAssignment = async (id) => { remove(id) }
+    const deleteAssignment = async (id) => {
+        remove(id)
+    }
 
     const editAssignment = (id) => {
-        try { setModel(prev => ({ ...prev, mainModelID: id, typeModel: 'assignment' })) }
-        catch (error) { console.error(`Failed to edit this assignment: ${error}`) }
+        try {
+            setModel((prev) => ({
+                ...prev,
+                mainModelID: id,
+                typeModel: 'assignment',
+            }))
+        } catch (error) {
+            console.error(`Failed to edit this assignment: ${error}`)
+        }
     }
 
     const assignmentClick = (assignment, e) => {
         e.stopPropagation()
 
         if (selectableModel) {
-            const selected = model.dataModel.assignment.support.data.find(m => m.id === assignment.id)
+            const selected = model.dataModel.assignment.support.data.find(
+                (m) => m.id === assignment.id
+            )
             const dataUpdateActiveModel = updateActiveModelMap({
                 keyObject: 'assignments',
                 value: { id: assignment.id, name: assignment.name },
                 action: 'add',
-                type: 'array'
+                type: 'array',
             })
             const dataAddToSelectedModel = addToSelectedModelMap({
                 id: selected.id,
                 name: selected.name,
-                type: 'assignment'
+                type: 'assignment',
             })
 
             addToSelectedModel(dataAddToSelectedModel)
@@ -71,9 +96,17 @@ const Assignment = ({
         }
 
         if (detailsModel) {
-            const dataSwitchLayout = switchLayoutMap({ area: 'modal', layout: { modalName: 'modal-right', layoutName: 'details' } })
+            const dataSwitchLayout = switchLayoutMap({
+                area: 'modal',
+                layout: { modalName: 'modal-right', layoutName: 'details' },
+            })
 
-            setModel(prev => ({ ...prev, mainModelID: assignment.id, activeModel: assignment, typeModel: 'assignment' }))
+            setModel((prev) => ({
+                ...prev,
+                mainModelID: assignment.id,
+                activeModel: assignment,
+                typeModel: 'assignment',
+            }))
             setSwitchLayout(dataSwitchLayout)
             toggleVisibility(visibilityMap(['modal-right', 'assignment']))
         }
@@ -85,7 +118,7 @@ const Assignment = ({
                 keyObject: 'assignments',
                 value: { id },
                 type: 'array',
-                action: 'remove'
+                action: 'remove',
             })
             updateActiveModel(dataUpdateActiveModelMap)
         }
@@ -95,29 +128,28 @@ const Assignment = ({
         card: assignmentClick,
         edit: editAssignment,
         delete: deleteAssignment,
-        aux: removeElDOMClick
+        aux: removeElDOMClick,
     }
 
-    return (
-        sourceDataFiltered
-            .filter((item) => !status || status.includes(item.status))
-            .sort((a, b) => a.order - b.order)
-            .map((item, index) => (
-                <CardRelation
-                    type='assignment'
-                    item={item}
-                    itemID={item.id}
-                    index={index}
-                    pendingState={pendingState}
-                    checkboxState={valuesCheckbox}
-                    clickFunction={clickEvents}
-                    display={display}
-                    draggable={draggable}
-                    checkboxModel={checkboxModel}
-                    showTags={showTags}
-                    key={index}
-                />
-            )
+    return sourceDataFiltered
+        .filter((item) => !status || status.includes(item.status))
+        .sort((a, b) => a.order - b.order)
+        .map((item, index) => (
+            <CardRelation
+                type='assignment'
+                item={item}
+                itemID={item.id}
+                index={index}
+                pendingState={pendingState}
+                checkboxState={valuesCheckbox}
+                clickFunction={clickEvents}
+                display={display}
+                draggable={draggable}
+                checkboxModel={checkboxModel}
+                showTags={showTags}
+                showRightContent={showRightContent}
+                key={index}
+            />
         ))
 }
 

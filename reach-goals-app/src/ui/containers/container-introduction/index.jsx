@@ -1,33 +1,15 @@
 import { useState } from 'react'
+import { useTheme } from '../../../provider/ui/theme-provider'
 
 import { safeDemoSessionForm, safeMutationError } from './defaults.js'
 
 import FormDemoSession from './components/form-demo-session.jsx'
+import Title from './components/title.jsx'
+
+import LogoLight from '../../../assets/logo-light.svg'
+import LogoDark from '../../../assets/logo-dark.svg'
 
 import './style.scss'
-
-const Title = (isCodeSended = false, someCodeAlreadySent = false) => {
-    const titleContent = someCodeAlreadySent
-        ? 'A verification code has already been sent'
-        : isCodeSended
-          ? 'The Verification code sent to email'
-          : 'Fill all the fields to start a session'
-
-    const subTitle =
-        isCodeSended || someCodeAlreadySent ? (
-            <label className='sub-title'>
-                Please also check your spam or trash folders
-            </label>
-        ) : null
-    const title = <label className='title'>{titleContent}</label>
-
-    return (
-        <>
-            {title}
-            {subTitle}
-        </>
-    )
-}
 
 /** @typedef {import('./types.js').ContainerIntroductionProps & React.HTMLAttributes<HTMLDivElement>} Props */
 
@@ -44,8 +26,12 @@ const ContainerIntroduction = ({
     codeAlreadySent,
     ...rest
 }) => {
+    const { theme } = useTheme()
+
     /** @type {import('./types.js').SetDemoSessionFormStateProps} */
     const [demoSessionForm, setDemoSessionForm] = useState(safeDemoSessionForm)
+
+    const logoImgTheme = theme === 'light' ? LogoLight : LogoDark
 
     const isCodeSended = sendCodeStatus === 'success'
 
@@ -60,7 +46,13 @@ const ContainerIntroduction = ({
 
     return (
         <div className='container-demo-session' {...rest}>
-            <div className='head'>{Title(isCodeSended, codeAlreadySent)}</div>
+            <div className='head'>
+                <img className='logo' src={logoImgTheme} alt={'Logo'} />
+                <Title
+                    isCodeSended={isCodeSended}
+                    someCodeAlreadySent={codeAlreadySent}
+                />
+            </div>
             <div className='body'>
                 <FormDemoSession
                     demoSessionForm={demoSessionForm}

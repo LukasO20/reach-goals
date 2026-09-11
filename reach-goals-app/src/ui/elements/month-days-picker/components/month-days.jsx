@@ -76,6 +76,7 @@ const MonthDays = ({
         },
         detailsModel: true,
         status: visibility.status,
+        showRightContent: false,
     }
 
     const monthsDaysTitlePropsReference = {

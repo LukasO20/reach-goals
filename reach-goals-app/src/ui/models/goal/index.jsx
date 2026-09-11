@@ -33,6 +33,7 @@ const Goal = ({
     checkboxModel,
     showTags,
     status,
+    showRightContent,
 }) => {
     const { model, setModel, updateActiveModel, addToSelectedModel } =
         useManageModel()
@@ -131,6 +132,7 @@ const Goal = ({
                 display: display,
                 checkboxModel: checkboxModel,
                 showTags: showTags,
+                showRightContent: showRightContent,
             }
 
             return draggable ? (

@@ -7,6 +7,7 @@
  * @property {boolean} [draggable]
  * @property {boolean} [checkboxModel]
  * @property {boolean} [showTags]
+ * @property {boolean} [showRightContent]
  * @property {boolean} [status]
  */
 

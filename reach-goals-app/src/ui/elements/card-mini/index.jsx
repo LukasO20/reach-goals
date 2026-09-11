@@ -32,6 +32,7 @@ const CardMini = ({
     clickFunction = safeClickFunction,
     checkboxModel,
     showTags,
+    showRightContent = true,
 }) => {
     const itemID = item.id || item.tagID
     const tagCardStyle =
@@ -84,14 +85,16 @@ const CardMini = ({
                     <Icons icon={`icon-${type}`} />
                     <label>{item.name}</label>
                 </div>
-                <RightContent
-                    type={type}
-                    item={item}
-                    display={display}
-                    showTags={showTags}
-                    pendingState={pendingState}
-                    clickFunction={clickFunction}
-                />
+                {showRightContent && (
+                    <RightContent
+                        type={type}
+                        item={item}
+                        display={display}
+                        showTags={showTags}
+                        pendingState={pendingState}
+                        clickFunction={clickFunction}
+                    />
+                )}
             </div>
         </div>
     )

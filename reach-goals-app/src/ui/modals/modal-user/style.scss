@@ -57,6 +57,7 @@
 
             * {
                 font-weight: 500;
+                color: $color-contrast-o-70;
             }
 
             > div {
@@ -67,7 +68,6 @@
 
             > label {
                 font-size: $font-size-sm;
-                color: $color-contrast-o-70;
             }
         }
 
@@ -79,10 +79,11 @@
             .timer {
                 display: flex;
                 flex-direction: column;
-                background-color: $color-secondary-lightest;
+                background-color: $color-pair-secondary-light;
                 gap: $spacing-gap-mini;
                 padding: $spacing-padding-sm;
                 border-radius: $dimensions-border-radius-sm;
+                color: $color-white;
 
                 > span {
                     font-weight: 500;
@@ -91,7 +92,7 @@
                 > label {
                     font-weight: 700;
                     font-size: $font-size-m;
-                    color: $color-pair-secondary;
+                    color: $color-white;
                 }
             }
 
@@ -107,7 +108,7 @@
         display: flex;
         flex-direction: column;
         gap: $spacing-gap-mini;
-        background-color: $color-pair-secondary-lightest;
+        background-color: $color-contrast-o-05;
         padding: $spacing-padding-sm;
         border-radius: $dimensions-border-radius-sm;
 
@@ -116,18 +117,20 @@
             justify-content: space-between;
             align-items: center;
 
+            * {
+                color: $color-contrast-o-70;
+            }
+
             .title {
                 display: inline-flex;
                 align-items: center;
                 gap: $spacing-gap-mini;
                 font-size: $font-size-sm;
                 font-weight: 500;
-                color: $color-pair-secondary;
             }
 
             .quota-label {
                 font-weight: 500;
-                color: $color-pair-secondary;
                 font-size: $font-size-sm;
             }
         }
@@ -141,7 +144,7 @@
             font-weight: 500;
             font-size: $font-size-mini;
             text-align: center;
-            color: $color-contrast-o-50;
+            color: $color-contrast-o-70;
         }
     }
 }

@@ -29,6 +29,17 @@
             }
 
             .button-link {
+                justify-content: start;
+                padding: $spacing-padding-mini $spacing-padding-st;
+
+                .icon-st {
+                    flex-shrink: 0;
+                    margin: 0.575rem;
+                }
+
+                img {
+                    margin: 0.25rem;
+                }
 
                 &.logo {
                     background: transparent;
@@ -48,7 +59,6 @@
             width: $dimensions-w-xmd;
 
             .item-nav {
-
                 .button-link {
                     width: $dimensions-w-golden-md;
 

@@ -23,6 +23,7 @@
  * @property {boolean} [checkboxModel]
  * @property {ClickFunctionProps} [clickFunction]
  * @property {boolean} [showTags]
+ * @property {boolean} [showRightContent]
  */
 
 export {}

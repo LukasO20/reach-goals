@@ -23,7 +23,6 @@ const ModalUser = ({ visitor, mutationLoading, logoutSession, ...rest }) => {
     const { coords, calculatePosition } = useAnchorPosition()
 
     const containerRef = useRef(null)
-    const buttonRef = useRef(null)
 
     const handleOnModalUserContent = (elementTarget) => {
         calculatePosition(elementTarget, containerRef.current)
@@ -36,7 +35,7 @@ const ModalUser = ({ visitor, mutationLoading, logoutSession, ...rest }) => {
     const isShowModalUserContent =
         visibleElements.includes('modal-user-content')
 
-    useOutsideClick(buttonRef, () => {
+    useOutsideClick(containerRef, () => {
         if (isShowModalUserContent) {
             toggleVisibility(
                 visibilityMap('modal-user-content', { remove: true })
@@ -52,7 +51,6 @@ const ModalUser = ({ visitor, mutationLoading, logoutSession, ...rest }) => {
                     classBtn='circle user'
                     icon='icon-user'
                     onClick={(e) => handleOnModalUserContent(e.event.target)}
-                    innerRef={buttonRef}
                     visibility={visibilityMap('modal-user-content')}
                 />
             </Tooltip>

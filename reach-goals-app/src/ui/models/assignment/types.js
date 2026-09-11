@@ -26,6 +26,7 @@
  * @property {boolean} [draggable]
  * @property {boolean} [checkboxModel]
  * @property {boolean} [showTags]
+ * @property {boolean} [showRightContent]
  */
 
 export {}

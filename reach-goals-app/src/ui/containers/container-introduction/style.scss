@@ -2,26 +2,31 @@
     display: flex;
     flex-direction: column;
     position: absolute;
-    border-radius: $dimensions-border-radius-sm;
+    border-radius: $dimensions-border-radius-st;
+    background-color: $color-contrast-o-05;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 22.5rem;
-    width: 18.5rem;
-    padding: $spacing-padding-st;
+    height: 25.5rem;
+    width: $dimensions-w-xl;
+    padding: $spacing-padding-xlg;
     z-index: 2;
     gap: $spacing-gap-st;
 
     > .head {
         display: flex;
         flex-direction: column;
-        gap: $spacing-gap-sm;
+        gap: $spacing-gap-lg;
+
+        .logo {
+            height: $dimensions-h-sm;
+        }
 
         .title {
             flex: 1;
             text-align: center;
-            color: $color-contrast;
-            font-size: $font-size-lg;
+            color: $color-contrast-o-70;
+            font-size: $font-size-m;
             font-weight: 500;
         }
 
@@ -43,6 +48,19 @@
                 display: flex;
                 flex-direction: column;
                 gap: $spacing-gap-sm;
+                align-items: center;
+
+                .input-text-container {
+                    width: $dimensions-w-md;
+                }
+
+                .input-code-container {
+                    .input {
+                        > input {
+                            color: $color-contrast;
+                        }
+                    }
+                }
 
                 .button-action {
                     align-self: center;

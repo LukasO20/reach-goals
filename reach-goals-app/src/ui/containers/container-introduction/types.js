@@ -43,6 +43,12 @@
  */
 
 /**
+ * @typedef {Object} TitleProps
+ * @property {boolean} isCodeSended
+ * @property {boolean} someCodeAlreadySent
+ */
+
+/**
  * @typedef {Object} FormDemoSessionProps
  * @property {boolean} isCodeSended
  * @property {HttpErrorProps} mutationError
