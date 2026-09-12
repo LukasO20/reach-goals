@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
-import { useAnchorPosition } from '../../../hooks/useAnchorPosition.js'
-import { useOutsideClick } from '../../../hooks/useOutsideClick.js'
+import { useAnchorPosition } from '../../../hooks/use-anchor-position.js'
+import { useOutsideClick } from '../../../hooks/use-outside-click.js'
 
 import ButtonAction from '../button-action'
 import ModalCards from '../../modals/modal-cards'

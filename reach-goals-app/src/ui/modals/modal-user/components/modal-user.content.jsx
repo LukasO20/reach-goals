@@ -1,4 +1,4 @@
-import { useCountdown } from '../../../../hooks/useCountDown.js'
+import { useCountdown } from '../../../../hooks/use-count-down.js'
 
 import ButtonAction from '../../../elements/button-action'
 import Icons from '../../../elements/icons'

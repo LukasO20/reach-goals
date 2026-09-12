@@ -5,7 +5,7 @@ import Tooltip from '../../tooltip'
 import {
     visibilityMap,
     switchLayoutMap,
-} from '../../../../utils/mapping/mappingUtils'
+} from '../../../../utils/mapping/mapping-utils.js'
 
 /** @typedef {import('../types.js').RightContentProps} Props */
 

@@ -1,6 +1,6 @@
 import { useSwitchLayout } from '../../../provider/ui/switch-layout-provider'
 
-import { buildFilterModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
+import { buildFilterModelMap } from '../../../utils/mapping/mapping-utils-provider.js'
 import { modelTabsMap } from './defaults.js'
 
 import { cx } from '../../../utils/utils.js'

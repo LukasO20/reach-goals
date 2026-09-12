@@ -1,12 +1,12 @@
 import { useManageModel } from '../../../provider/model/manage-model-provider'
 import { useTitle } from '../../../provider/ui/title-provider'
 import { useTheme } from '../../../provider/ui/theme-provider'
-import { useButtonDropdown } from '../../../hooks/useButtonDropdown.js'
+import { useButtonDropdown } from '../../../hooks/use-button-dropdown.js'
 
 import {
     visibilityMap,
     switchLayoutMap,
-} from '../../../utils/mapping/mappingUtils.js'
+} from '../../../utils/mapping/mapping-utils.js'
 
 import ButtonAction from '../../elements/button-action'
 import ButtonDropdown from '../../elements/button-dropdown'

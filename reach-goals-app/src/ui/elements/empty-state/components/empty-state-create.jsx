@@ -1,11 +1,14 @@
-import { switchLayoutMap, visibilityMap } from '../../../../utils/mapping/mappingUtils'
+import {
+    switchLayoutMap,
+    visibilityMap,
+} from '../../../../utils/mapping/mapping-utils.js'
 
 import ButtonAction from '../../button-action'
 
 const EmptyStateCreate = () => {
     const formRender = switchLayoutMap({
         area: 'modal',
-        layout: { modalName: 'modal-center', layoutName: 'form' }
+        layout: { modalName: 'modal-center', layoutName: 'form' },
     })
 
     return (

@@ -1,6 +1,12 @@
-import { useState, useContext, useCallback, useMemo, createContext } from 'react'
+import {
+    useState,
+    useContext,
+    useCallback,
+    useMemo,
+    createContext,
+} from 'react'
 
-import { titleMap } from '../../../utils/mapping/mappingUtils'
+import { titleMap } from '../../../utils/mapping/mapping-utils.js'
 
 /** @import * as React from 'react' */
 
@@ -14,10 +20,10 @@ export const TitleProvider = ({ children }) => {
 
     /** @type {import('./types.js').UpdateTitleProps} */
     const update = useCallback(({ header, toast }) => {
-        setTitle(prevTitle => ({
+        setTitle((prevTitle) => ({
             ...prevTitle,
             header: header || `Welcome. Let's produce`,
-            toast
+            toast,
         }))
     }, [])
 
@@ -26,9 +32,7 @@ export const TitleProvider = ({ children }) => {
     //console.log('TitleProvider - title:', title)
 
     return (
-        <TitleContext.Provider value={value}>
-            {children}
-        </TitleContext.Provider>
+        <TitleContext.Provider value={value}>{children}</TitleContext.Provider>
     )
 }
 

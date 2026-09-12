@@ -2,13 +2,13 @@ import { useRef } from 'react'
 
 import { useVisibility } from '../../provider/ui/visibility-provider'
 import { useSwitchLayout } from '../../provider/ui/switch-layout-provider'
-import { useOutsideClick } from '../../hooks/useOutsideClick.js'
+import { useOutsideClick } from '../../hooks/use-outside-click.js'
 import { useManageModel } from '../../provider/model/manage-model-provider'
 
 import {
     visibilityMap,
     switchLayoutMap,
-} from '../../utils/mapping/mappingUtils.js'
+} from '../../utils/mapping/mapping-utils.js'
 
 import { ModalTagWrapper } from './modal-tag/modal-tag-wrapper.jsx'
 import { ModalDetailsWrapper } from './modal-details/modal-details-wrapper.jsx'

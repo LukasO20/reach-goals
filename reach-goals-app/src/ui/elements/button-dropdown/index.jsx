@@ -1,9 +1,9 @@
 import { useRef } from 'react'
-import { useOutsideClick } from '../../../hooks/useOutsideClick.js'
+import { useOutsideClick } from '../../../hooks/use-outside-click.js'
 import { useVisibility } from '../../../provider/ui/visibility-provider'
 import { useSwitchLayout } from '../../../provider/ui/switch-layout-provider/index.jsx'
 
-import { visibilityMap } from '../../../utils/mapping/mappingUtils.js'
+import { visibilityMap } from '../../../utils/mapping/mapping-utils.js'
 
 import { cx } from '../../../utils/utils.js'
 

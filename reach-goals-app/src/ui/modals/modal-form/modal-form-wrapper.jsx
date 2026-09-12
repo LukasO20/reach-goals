@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react'
 import { ModelQueryClientProvider } from '../../../provider/model/model-queryclient-provider'
 
-import { buildFilterModelMap } from '../../../utils/mapping/mappingUtilsProvider'
+import { buildFilterModelMap } from '../../../utils/mapping/mapping-utils-provider.js'
 
 import ModalForm from '.'
 

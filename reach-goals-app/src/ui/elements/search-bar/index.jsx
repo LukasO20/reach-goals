@@ -1,9 +1,9 @@
 import { useEffect, useState, useMemo, useRef } from 'react'
 import { useVisibility } from '../../../provider/ui/visibility-provider'
 import { useSearchBarProvider } from '../../../provider/ui/searchbar-provider'
-import { useOutsideClick } from '../../../hooks/useOutsideClick.js'
+import { useOutsideClick } from '../../../hooks/use-outside-click.js'
 
-import { visibilityMap } from '../../../utils/mapping/mappingUtils.js'
+import { visibilityMap } from '../../../utils/mapping/mapping-utils.js'
 import { cx, debounce } from '../../../utils/utils.js'
 
 import SearchBoxResults from './searchbox-results.jsx'
@@ -19,19 +19,32 @@ import './style.scss'
 /**
  * @param {Props} props
  */
-const SearchBar = ({ mode = 'service', placeholder = 'search', tooltip = 'Search' }) => {
+const SearchBar = ({
+    mode = 'service',
+    placeholder = 'search',
+    tooltip = 'Search',
+}) => {
     const [param, setParam] = useState('')
     const { visibleElements, toggleVisibility } = useVisibility()
     const { data, search, reset, isSearching, status } = useSearchBarProvider()
 
-    const isShowSearchBoxResults = visibleElements.includes('search-bar') && mode === 'service'
+    const isShowSearchBoxResults =
+        visibleElements.includes('search-bar') && mode === 'service'
 
     const handleSearchBarClick = (e) => {
         e.stopPropagation()
-        toggleVisibility(visibilityMap('search-bar', isShowSearchBoxResults ? { maintain: true } : { add: true }))
+        toggleVisibility(
+            visibilityMap(
+                'search-bar',
+                isShowSearchBoxResults ? { maintain: true } : { add: true }
+            )
+        )
     }
 
-    const handleCleanSearchBar = () => { reset(); setParam('') }
+    const handleCleanSearchBar = () => {
+        reset()
+        setParam('')
+    }
 
     const debounceSearch = useMemo(() => debounce(search, 1000), [search])
 
@@ -44,11 +57,16 @@ const SearchBar = ({ mode = 'service', placeholder = 'search', tooltip = 'Search
     )
 
     useOutsideClick(searchBoxRef, () => {
-        if (isShowSearchBoxResults) toggleVisibility(visibilityMap('search-bar'))
+        if (isShowSearchBoxResults)
+            toggleVisibility(visibilityMap('search-bar'))
     })
 
     useEffect(() => {
-        const isValidParam = param.trim() && param.length > 1 && param !== lastParamRef.current && isShowSearchBoxResults
+        const isValidParam =
+            param.trim() &&
+            param.length > 1 &&
+            param !== lastParamRef.current &&
+            isShowSearchBoxResults
         if (isValidParam && mode === 'service') {
             debounceSearch(param)
             lastParamRef.current = param
@@ -74,14 +92,22 @@ const SearchBar = ({ mode = 'service', placeholder = 'search', tooltip = 'Search
                     <Tooltip title='Clear search'>
                         <ButtonAction
                             onClick={handleCleanSearchBar}
-                            visibility={visibilityMap('search-bar', { remove: true })}
+                            visibility={visibilityMap('search-bar', {
+                                remove: true,
+                            })}
                             classBtn='clean-search circle medium'
                             icon='icon-cancel'
                         />
                     </Tooltip>
                 )}
             </label>
-            {isShowSearchBoxResults && (<SearchBoxResults data={data} loading={isSearching} status={status} />)}
+            {isShowSearchBoxResults && (
+                <SearchBoxResults
+                    data={data}
+                    loading={isSearching}
+                    status={status}
+                />
+            )}
         </div>
     )
 }

@@ -3,7 +3,7 @@ import Routes from '../../../app/Routes'
 import { useVisibility } from '../../../provider/ui/visibility-provider'
 import { useSwitchLayout } from '../../../provider/ui/switch-layout-provider'
 import { useCheckbox } from '../../../provider/ui/checkbox-provider'
-import { useButtonDropdown } from '../../../hooks/useButtonDropdown.js'
+import { useButtonDropdown } from '../../../hooks/use-button-dropdown.js'
 import { useSwitchMonths } from '../../../provider/ui/switch-months-provider'
 import { useDemoSession } from '../../../provider/model/demo-session-provider'
 
@@ -11,7 +11,7 @@ import {
     visibilityMap,
     switchLayoutMap,
     buildCheckboxMap,
-} from '../../../utils/mapping/mappingUtils.js'
+} from '../../../utils/mapping/mapping-utils.js'
 
 import ButtonAction from '../../elements/button-action'
 import ButtonDropdown from '../../elements/button-dropdown'

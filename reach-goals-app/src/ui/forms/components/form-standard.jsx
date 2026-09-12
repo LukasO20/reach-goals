@@ -14,8 +14,8 @@ import Icons from '../../elements/icons'
 import { ModalModelListWrapper } from '../../modals/modal-model-list/modal-model-list-wrapper.jsx'
 import Tooltip from '../../elements/tooltip'
 
-import { visibilityMap } from '../../../utils/mapping/mappingUtils.js'
-import { updateActiveModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
+import { visibilityMap } from '../../../utils/mapping/mapping-utils.js'
+import { updateActiveModelMap } from '../../../utils/mapping/mapping-utils-provider.js'
 
 import { cx } from '../../../utils/utils.js'
 

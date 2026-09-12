@@ -7,11 +7,11 @@ import { useCheckbox } from '../../../provider/ui/checkbox-provider'
 import {
     switchLayoutMap,
     visibilityMap,
-} from '../../../utils/mapping/mappingUtils.js'
+} from '../../../utils/mapping/mapping-utils.js'
 import {
     updateActiveModelMap,
     addToSelectedModelMap,
-} from '../../../utils/mapping/mappingUtilsProvider.js'
+} from '../../../utils/mapping/mapping-utils-provider.js'
 import { safeDisplay, safeSource } from './defaults.js'
 
 import CardRelation from './components/card-relation.jsx'

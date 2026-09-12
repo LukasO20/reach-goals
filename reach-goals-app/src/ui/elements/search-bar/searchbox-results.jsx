@@ -3,17 +3,20 @@ import { useManageModel } from '../../../provider/model/manage-model-provider'
 import { useVisibility } from '../../../provider/ui/visibility-provider'
 import { useSwitchLayout } from '../../../provider/ui/switch-layout-provider'
 
-import Loading from '../loading' 
+import Loading from '../loading'
 import SearchItem from './components/search-item'
 import SearchItemTag from './components/search-item-tag'
 
-import { switchLayoutMap, visibilityMap } from '../../../utils/mapping/mappingUtils.js'
+import {
+    switchLayoutMap,
+    visibilityMap,
+} from '../../../utils/mapping/mapping-utils.js'
 
 const SearchBoxResultsMap = {
     data: {
         goals: [],
         assignments: [],
-        tags: []
+        tags: [],
     },
 }
 
@@ -22,12 +25,11 @@ const SearchBoxResultsMap = {
 /**
  * @param {Props} props
  */
-const SearchBoxResults = ({ 
-    data = SearchBoxResultsMap.data, 
-    loading, 
-    status
-}) => { 
-    
+const SearchBoxResults = ({
+    data = SearchBoxResultsMap.data,
+    loading,
+    status,
+}) => {
     const { setModel } = useManageModel()
     const { toggleVisibility } = useVisibility()
     const { setSwitchLayout } = useSwitchLayout()
@@ -36,60 +38,79 @@ const SearchBoxResults = ({
     const dataResult = [
         ...goals.map((g) => ({ ...g, type: 'goal' })),
         ...assignments.map((a) => ({ ...a, type: 'assignment' })),
-        ...tags.map((t) => ({ ...t, type: 'tag' }))
+        ...tags.map((t) => ({ ...t, type: 'tag' })),
     ]
 
     const handleEditModel = (id, type = '') => {
-        try { setModel(prev => ({ ...prev, mainModelID: id, typeModel: type })) }
-        catch (error) { console.error(`Failed to edit this ${type}: ${error}`) }
+        try {
+            setModel((prev) => ({ ...prev, mainModelID: id, typeModel: type }))
+        } catch (error) {
+            console.error(`Failed to edit this ${type}: ${error}`)
+        }
     }
 
     const handleItemClick = (id, type = '', model = {}) => {
-        const dataSwitchLayout = switchLayoutMap({ area: 'modal', layout: { modalName: 'modal-right', layoutName: 'details' } })
-        setModel(prev => ({ ...prev, mainModelID: id, activeModel: model, typeModel: type }))
+        const dataSwitchLayout = switchLayoutMap({
+            area: 'modal',
+            layout: { modalName: 'modal-right', layoutName: 'details' },
+        })
+        setModel((prev) => ({
+            ...prev,
+            mainModelID: id,
+            activeModel: model,
+            typeModel: type,
+        }))
         setSwitchLayout(dataSwitchLayout)
         toggleVisibility(visibilityMap(['modal-right', type]))
     }
 
     const showMessage = !dataResult.length
-    const message = status === 'idle' ? 'Start some search. Ex: a goal name.' : 'No results found.'
+    const message =
+        status === 'idle'
+            ? 'Start some search. Ex: a goal name.'
+            : 'No results found.'
 
     return (
-        <div className='search-box scrollable' onClick={(e) => e.stopPropagation()}>
-            {
-                loading ? (<Loading mode='inline' title='searching results' />) :
-                    showMessage ?
-                        (<div className='item'>
-                            <div className='item-info'>
-                                <label className='message'>{message}</label>
-                            </div>
-                        </div>) :
-                        (dataResult.map((item) => {
-                            const type = item.type
-                            const useSearchItem = type === 'assignment' || type === 'goal'
-                            const useResourcesTag = type === 'tag'
+        <div
+            className='search-box scrollable'
+            onClick={(e) => e.stopPropagation()}
+        >
+            {loading ? (
+                <Loading mode='inline' title='searching results' />
+            ) : showMessage ? (
+                <div className='item'>
+                    <div className='item-info'>
+                        <label className='message'>{message}</label>
+                    </div>
+                </div>
+            ) : (
+                dataResult.map((item) => {
+                    const type = item.type
+                    const useSearchItem =
+                        type === 'assignment' || type === 'goal'
+                    const useResourcesTag = type === 'tag'
 
-                            return (
-                                <React.Fragment key={item.id}>
-                                    {
-                                        useSearchItem && (
-                                            <SearchItem type={type} item={item}
-                                                onItemClick={handleItemClick}
-                                                onButtonClick={handleEditModel}
-                                            />
-                                        )
-                                    }
-                                    {
-                                        useResourcesTag && (
-                                            <SearchItemTag type={type} item={item}
-                                                onButtonClick={handleEditModel}
-                                            />
-                                        )
-                                    }
-                                </React.Fragment>
-                            )
-                        }))
-            }
+                    return (
+                        <React.Fragment key={item.id}>
+                            {useSearchItem && (
+                                <SearchItem
+                                    type={type}
+                                    item={item}
+                                    onItemClick={handleItemClick}
+                                    onButtonClick={handleEditModel}
+                                />
+                            )}
+                            {useResourcesTag && (
+                                <SearchItemTag
+                                    type={type}
+                                    item={item}
+                                    onButtonClick={handleEditModel}
+                                />
+                            )}
+                        </React.Fragment>
+                    )
+                })
+            )}
         </div>
     )
 }

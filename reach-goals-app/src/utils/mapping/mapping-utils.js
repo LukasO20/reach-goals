@@ -1,5 +1,5 @@
 import { typeModel, typeReduceModel, typeFilterModel } from '../reference.js'
-import { checkboxMap } from './mappingUtilsProvider.js'
+import { checkboxMap } from './mapping-utils-provider.js'
 
 /**
  * @typedef {Object} GlobalTypes

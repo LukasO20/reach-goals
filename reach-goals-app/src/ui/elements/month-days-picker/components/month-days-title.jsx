@@ -3,10 +3,10 @@ import { useAssignmentProvider } from '../../../../provider/model/assignment-mod
 import { useGoalProvider } from '../../../../provider/model/goal-model-provider'
 import { useManageModel } from '../../../../provider/model/manage-model-provider'
 import { useVisibility } from '../../../../provider/ui/visibility-provider/index.jsx'
-import { useOutsideClick } from '../../../../hooks/useOutsideClick.js'
-import { useAnchorPosition } from '../../../../hooks/useAnchorPosition.js'
+import { useOutsideClick } from '../../../../hooks/use-outside-click.js'
+import { useAnchorPosition } from '../../../../hooks/use-anchor-position.js'
 
-import { visibilityMap } from '../../../../utils/mapping/mappingUtils.js'
+import { visibilityMap } from '../../../../utils/mapping/mapping-utils.js'
 import { getTransform } from '../../../../utils/utils.js'
 
 import ButtonAction from '../../button-action'

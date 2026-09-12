@@ -1,6 +1,6 @@
 import { useManageModel } from '../../../provider/model/manage-model-provider'
 
-import { visibilityMap } from '../../../utils/mapping/mappingUtils.js'
+import { visibilityMap } from '../../../utils/mapping/mapping-utils.js'
 
 import { cx } from '../../../utils/utils.js'
 
@@ -18,7 +18,11 @@ import Icons from '../../elements/icons'
 const FormModelRelationAdd = ({ type, children }) => {
     const { model } = useManageModel()
     const tittleRelation = type === 'goal' ? 'assignments' : 'goals'
-    const visibilityRelation = { goal: 'assignment', assignment: 'goal', tag: 'tag' }
+    const visibilityRelation = {
+        goal: 'assignment',
+        assignment: 'goal',
+        tag: 'tag',
+    }
 
     const hasChildren = children
 
@@ -36,7 +40,10 @@ const FormModelRelationAdd = ({ type, children }) => {
             default:
                 return (
                     <ButtonAction
-                        visibility={visibilityMap(`modal-model-list-${visibilityRelation[currentType ?? type]}`, { add: true })}
+                        visibility={visibilityMap(
+                            `modal-model-list-${visibilityRelation[currentType ?? type]}`,
+                            { add: true }
+                        )}
                         classBtn={`modal-model-list-${currentType} button-action plan-round add max-width small`}
                         icon='icon-plus'
                         title='Add'
@@ -64,19 +71,27 @@ const FormModelRelationAdd = ({ type, children }) => {
                         <label>
                             <Icons icon='icon-goal' />
                             {tittleRelation}
-                            {validGoal &&
-                                (<>
+                            {validGoal && (
+                                <>
                                     <Line direction='vertical' />
-                                    <span className='name-goal'>{goalData.name}</span>
-                                </>)}
+                                    <span className='name-goal'>
+                                        {goalData.name}
+                                    </span>
+                                </>
+                            )}
                         </label>
                         {renderButtonAction(validGoal ? 'assignment' : null)}
                     </div>
-                    {!!validGoal && goalData.end && goalData.end !== 'Invalid date' && (
-                        <div className='item'>
-                            <span className='schedule'>schedule to end on {moment(goalData.end).format('MMMM DD')}</span>
-                        </div>
-                    )}
+                    {!!validGoal &&
+                        goalData.end &&
+                        goalData.end !== 'Invalid date' && (
+                            <div className='item'>
+                                <span className='schedule'>
+                                    schedule to end on{' '}
+                                    {moment(goalData.end).format('MMMM DD')}
+                                </span>
+                            </div>
+                        )}
                 </div>
             </div>
         )
@@ -94,11 +109,7 @@ const FormModelRelationAdd = ({ type, children }) => {
                         {renderButtonAction()}
                     </div>
                 </div>
-                {hasChildren && (
-                    <div className='body'>
-                        {children}
-                    </div>
-                )}
+                {hasChildren && <div className='body'>{children}</div>}
             </div>
         )
     }
@@ -116,11 +127,7 @@ const FormModelRelationAdd = ({ type, children }) => {
                     </div>
                     <div className='item'></div>
                 </div>
-                {hasChildren && (
-                    <div className='body'>
-                        {children}
-                    </div>
-                )}
+                {hasChildren && <div className='body'>{children}</div>}
             </div>
         )
     }

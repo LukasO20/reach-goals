@@ -6,7 +6,7 @@ import {
     useCallback,
 } from 'react'
 
-import { checkboxMap } from '../../../utils/mapping/mappingUtilsProvider'
+import { checkboxMap } from '../../../utils/mapping/mapping-utils-provider.js'
 
 /** @import * as React from 'react' */
 

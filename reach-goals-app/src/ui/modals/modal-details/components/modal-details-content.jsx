@@ -4,7 +4,7 @@ import { useSwitchLayout } from '../../../../provider/ui/switch-layout-provider'
 import {
     visibilityMap,
     switchLayoutMap,
-} from '../../../../utils/mapping/mappingUtils'
+} from '../../../../utils/mapping/mapping-utils.js'
 
 import { cx } from '../../../../utils/utils.js'
 

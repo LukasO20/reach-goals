@@ -1,5 +1,5 @@
-import { checkboxMap } from '../../../utils/mapping/mappingUtilsProvider.js'
-import { buildCheckboxMap } from '../../../utils/mapping/mappingUtils.js'
+import { checkboxMap } from '../../../utils/mapping/mapping-utils-provider.js'
+import { buildCheckboxMap } from '../../../utils/mapping/mapping-utils.js'
 
 import Icons from '../icons'
 import ButtonCheckbox from '../button-checkbox'

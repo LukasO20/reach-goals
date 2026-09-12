@@ -1,4 +1,4 @@
-import { buildCheckboxMap } from '../../../utils/mapping/mappingUtils.js'
+import { buildCheckboxMap } from '../../../utils/mapping/mapping-utils.js'
 
 import ButtonAction from '../button-action'
 import ButtonCheckbox from '../button-checkbox'

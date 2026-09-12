@@ -8,8 +8,8 @@ import { useAssignmentProvider } from '../../../provider/model/assignment-model-
 import { useTagProvider } from '../../../provider/model/tag-model-provider'
 import { useTitle } from '../../../provider/ui/title-provider'
 
-import { visibilityMap } from '../../../utils/mapping/mappingUtils.js'
-import { resetManageModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
+import { visibilityMap } from '../../../utils/mapping/mapping-utils.js'
+import { resetManageModelMap } from '../../../utils/mapping/mapping-utils-provider.js'
 
 import Form from '../../forms'
 import Loading from '../../elements/loading'

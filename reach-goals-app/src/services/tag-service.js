@@ -1,4 +1,4 @@
-import { buildQueryParamsMap } from '../utils/mapping/mappingUtils.js'
+import { buildQueryParamsMap } from '../utils/mapping/mapping-utils.js'
 
 const BASE_URL = '/api/tag'
 

@@ -1,7 +1,10 @@
 import { createContext, useMemo, useContext } from 'react'
-import { usePersistedUserConfig } from '../../../hooks/usePersistedUserConfig'
+import { usePersistedUserConfig } from '../../../hooks/use-persisted-user-config.js'
 
-import { persistedUserConfigKeysMap, persistedUserConfigMap } from '../../../utils/mapping/mappingUtils.js'
+import {
+    persistedUserConfigKeysMap,
+    persistedUserConfigMap,
+} from '../../../utils/mapping/mapping-utils.js'
 
 /** @import * as React from 'react' */
 
@@ -12,20 +15,24 @@ const ThemeContext = createContext()
 
 export const ThemeProvider = ({ children }) => {
     /** @type {import('./types.js').SetThemeStateProps} */
-    const [theme, setTheme] = usePersistedUserConfig(persistedUserConfigKeysMap.theme, persistedUserConfigMap.theme)
+    const [theme, setTheme] = usePersistedUserConfig(
+        persistedUserConfigKeysMap.theme,
+        persistedUserConfigMap.theme
+    )
 
     const output = useMemo(() => {
         return theme
     }, [theme])
 
-    const value = useMemo(() => ({ theme: output, setTheme }), [setTheme, output])
-    
+    const value = useMemo(
+        () => ({ theme: output, setTheme }),
+        [setTheme, output]
+    )
+
     //console.log('ThemeProvider - output:', output)
 
     return (
-        <ThemeContext.Provider value={value}>
-            {children}
-        </ThemeContext.Provider>
+        <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
     )
 }
 

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useTagProvider } from '../../../provider/model/tag-model-provider/index.jsx'
 
-import { visibilityMap } from '../../../utils/mapping/mappingUtils.js'
+import { visibilityMap } from '../../../utils/mapping/mapping-utils.js'
 import { findEmptyFields } from '../helpers.js'
 
 import {

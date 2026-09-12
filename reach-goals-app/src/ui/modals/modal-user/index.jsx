@@ -1,10 +1,10 @@
 import { useRef } from 'react'
-import { useOutsideClick } from '../../../hooks/useOutsideClick.js'
-import { useAnchorPosition } from '../../../hooks/useAnchorPosition.js'
+import { useOutsideClick } from '../../../hooks/use-outside-click.js'
+import { useAnchorPosition } from '../../../hooks/use-anchor-position.js'
 import { useVisibility } from '../../../provider/ui/visibility-provider'
 
 import { getTransform } from '../../../utils/utils.js'
-import { visibilityMap } from '../../../utils/mapping/mappingUtils.js'
+import { visibilityMap } from '../../../utils/mapping/mapping-utils.js'
 
 import ButtonAction from '../../elements/button-action'
 import ModalUserContent from './components/modal-user.content.jsx'

@@ -4,8 +4,11 @@ import { useTagProvider } from '../../../provider/model/tag-model-provider'
 import { useManageModel } from '../../../provider/model/manage-model-provider'
 import { useVisibility } from '../../../provider/ui/visibility-provider'
 
-import { visibilityMap } from '../../../utils/mapping/mappingUtils.js'
-import { addToSelectedModelMap, updateActiveModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
+import { visibilityMap } from '../../../utils/mapping/mapping-utils.js'
+import {
+    addToSelectedModelMap,
+    updateActiveModelMap,
+} from '../../../utils/mapping/mapping-utils-provider.js'
 
 import { safeDisplay, safeSource } from './defaults.js'
 
@@ -16,42 +19,67 @@ import CardMini from '../../elements/card-mini'
 /**
  * @param {Props} props
  */
-const Tag = ({ display = safeDisplay, source = safeSource, selectableModel }) => {
+const Tag = ({
+    display = safeDisplay,
+    source = safeSource,
+    selectableModel,
+}) => {
     const { toggleVisibility } = useVisibility()
-    const { model, setModel, updateActiveModel, addToSelectedModel } = useManageModel()
+    const { model, setModel, updateActiveModel, addToSelectedModel } =
+        useManageModel()
     const { remove, removeSuccess, removingVariables } = useTagProvider()
 
     const target = visibilityMap(['panel-right', 'tag'])
 
-    const sourceData = source.tags ? source.tags.map(item => (item.tag)) : source
+    const sourceData = source.tags
+        ? source.tags.map((item) => item.tag)
+        : source
 
-    const sourceDataFiltered = sourceData.filter(item =>
-        !(removeSuccess && removingVariables && item.id === removingVariables)
+    const sourceDataFiltered = sourceData.filter(
+        (item) =>
+            !(
+                removeSuccess &&
+                removingVariables &&
+                item.id === removingVariables
+            )
     )
 
-    const deleteTag = async (id) => { remove(id) }
+    const deleteTag = async (id) => {
+        remove(id)
+    }
 
-    const editTag = useCallback((id) => {
-        try { setModel({ ...model, mainModelID: id, typeModel: 'tag' }) }
-        catch (error) { console.error(`Failed to edit this tag: ${error.message}`) }
-    }, [setModel, model])
+    const editTag = useCallback(
+        (id) => {
+            try {
+                setModel({ ...model, mainModelID: id, typeModel: 'tag' })
+            } catch (error) {
+                console.error(`Failed to edit this tag: ${error.message}`)
+            }
+        },
+        [setModel, model]
+    )
 
     const tagClick = (tag, e) => {
         e.stopPropagation()
 
         if (selectableModel) {
-            const selected = model.dataModel.tag.support.data.find(m => m.id === tag.id)
+            const selected = model.dataModel.tag.support.data.find(
+                (m) => m.id === tag.id
+            )
             const dataUpdateActiveModelMap = updateActiveModelMap({
                 keyObject: 'tags',
-                value: { tagID: tag.id, tag: { id: tag.id, name: tag.name, color: tag.color } },
+                value: {
+                    tagID: tag.id,
+                    tag: { id: tag.id, name: tag.name, color: tag.color },
+                },
                 type: 'array',
-                action: 'add'
+                action: 'add',
             })
             const dataAddToSelectedModel = addToSelectedModelMap({
                 id: selected.id,
                 name: selected.name,
                 type: 'tag',
-                color: selected.color
+                color: selected.color,
             })
 
             addToSelectedModel(dataAddToSelectedModel)
@@ -68,7 +96,7 @@ const Tag = ({ display = safeDisplay, source = safeSource, selectableModel }) =>
                 keyObject: 'tags',
                 value: { tagID: id },
                 type: 'array',
-                action: 'remove'
+                action: 'remove',
             })
             updateActiveModel(dataUpdateActiveModelMap)
         }
@@ -78,7 +106,7 @@ const Tag = ({ display = safeDisplay, source = safeSource, selectableModel }) =>
         card: tagClick,
         edit: editTag,
         delete: deleteTag,
-        aux: removeElDOMClick
+        aux: removeElDOMClick,
     }
 
     return sourceDataFiltered.map((item, index) => (

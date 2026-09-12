@@ -7,7 +7,7 @@ import {
     resetManageModelMap,
     updateActiveModelMap,
     removeFromSelectedModelMap,
-} from '../../../utils/mapping/mappingUtilsProvider.js'
+} from '../../../utils/mapping/mapping-utils-provider.js'
 
 import Loading from '../loading'
 import Icons from '../icons'

@@ -1,4 +1,4 @@
-import { filterServiceFnMap } from './mapping/mappingUtilsProvider.js'
+import { filterServiceFnMap } from './mapping/mapping-utils-provider.js'
 
 /**
  * @param {Object} filter

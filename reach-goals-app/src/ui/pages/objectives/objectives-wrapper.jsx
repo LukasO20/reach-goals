@@ -6,7 +6,7 @@ import { useManageModel } from '../../../provider/model/manage-model-provider/in
 
 import { ModelQueryClientProvider } from '../../../provider/model/model-queryclient-provider'
 
-import { switchLayoutMap } from '../../../utils/mapping/mappingUtils.js'
+import { switchLayoutMap } from '../../../utils/mapping/mapping-utils.js'
 
 import Objectives from '.'
 

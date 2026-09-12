@@ -6,8 +6,8 @@ import { useDemoSession } from '../../../provider/model/demo-session-provider'
 import {
     visibilityMap,
     buildCheckboxMap,
-} from '../../../utils/mapping/mappingUtils.js'
-import { resetManageModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
+} from '../../../utils/mapping/mapping-utils.js'
+import { resetManageModelMap } from '../../../utils/mapping/mapping-utils-provider.js'
 
 import { ModalFormWrapper } from '../modal-form/modal-form-wrapper'
 import ButtonAction from '../../elements/button-action'

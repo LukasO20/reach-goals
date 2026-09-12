@@ -2,7 +2,7 @@ import { useMemo, useEffect } from 'react'
 import { useManageModel } from '../../../provider/model/manage-model-provider/index.jsx'
 import { ModelQueryClientProvider } from '../../../provider/model/model-queryclient-provider.jsx'
 
-import { buildFilterModelMap } from '../../../utils/mapping/mappingUtilsProvider'
+import { buildFilterModelMap } from '../../../utils/mapping/mapping-utils-provider.js'
 
 import ModalDetails from '.'
 

@@ -1,10 +1,10 @@
 import { useRef } from 'react'
 import { useVisibility } from '../../../provider/ui/visibility-provider'
-import { useOutsideClick } from '../../../hooks/useOutsideClick.js'
+import { useOutsideClick } from '../../../hooks/use-outside-click.js'
 
 import ButtonAction from '../button-action/index.jsx'
 
-import { visibilityMap } from '../../../utils/mapping/mappingUtils.js'
+import { visibilityMap } from '../../../utils/mapping/mapping-utils.js'
 
 import './style.scss'
 

@@ -5,7 +5,7 @@ import { useSwitchLayout } from '../../provider/ui/switch-layout-provider'
 import { useTheme } from '../../provider/ui/theme-provider'
 import { useManageModel } from '../../provider/model/manage-model-provider'
 
-import { switchLayoutMap } from '../../utils/mapping/mappingUtils.js'
+import { switchLayoutMap } from '../../utils/mapping/mapping-utils.js'
 
 import { cx } from '../../utils/utils.js'
 

@@ -1,5 +1,5 @@
-import { displayModesMap } from '../../../utils/mapping/mappingUtils'
-import { checkboxMap } from '../../../utils/mapping/mappingUtilsProvider'
+import { displayModesMap } from '../../../utils/mapping/mapping-utils.js'
+import { checkboxMap } from '../../../utils/mapping/mapping-utils-provider.js'
 
 export const safeItem = {}
 

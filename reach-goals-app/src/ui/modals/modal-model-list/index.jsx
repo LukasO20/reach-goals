@@ -2,7 +2,7 @@ import { useGoalProvider } from '../../../provider/model/goal-model-provider'
 import { useTagProvider } from '../../../provider/model/tag-model-provider'
 import { useAssignmentProvider } from '../../../provider/model/assignment-model-provider'
 
-import { visibilityMap } from '../../../utils/mapping/mappingUtils.js'
+import { visibilityMap } from '../../../utils/mapping/mapping-utils.js'
 
 import ButtonAction from '../../elements/button-action'
 import Loading from '../../elements/loading'

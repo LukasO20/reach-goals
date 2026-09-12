@@ -3,10 +3,10 @@ import { useRef } from 'react'
 import { useVisibility } from '../../provider/ui/visibility-provider'
 import { useManageModel } from '../../provider/model/manage-model-provider'
 import { useSwitchLayout } from '../../provider/ui/switch-layout-provider'
-import { useOutsideClick } from '../../hooks/useOutsideClick.js'
+import { useOutsideClick } from '../../hooks/use-outside-click.js'
 
-import { visibilityMap } from '../../utils/mapping/mappingUtils.js'
-import { resetManageModelMap } from '../../utils/mapping/mappingUtilsProvider.js'
+import { visibilityMap } from '../../utils/mapping/mapping-utils.js'
+import { resetManageModelMap } from '../../utils/mapping/mapping-utils-provider.js'
 
 import { ModalFormWrapper } from './modal-form/modal-form-wrapper.jsx'
 import ModalQuotaModel from './modal-quota-model'

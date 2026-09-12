@@ -7,8 +7,8 @@ import * as commonService from '../../../services/common.js'
 import { useManageModel } from '../manage-model-provider'
 import { useTitle } from '../../ui/title-provider'
 
-import { updateDataModelMap } from '../../../utils/mapping/mappingUtilsProvider.js'
-import { createQueryFn, validFilter } from '../../../utils/utilsProvider.js'
+import { updateDataModelMap } from '../../../utils/mapping/mapping-utils-provider.js'
+import { createQueryFn, validFilter } from '../../../utils/utils-provider.js'
 
 /** @import * as React from 'react' */
 

@@ -1,12 +1,11 @@
-import { displayModesMap } from '../../../utils/mapping/mappingUtils'
+import { displayModesMap } from '../../../utils/mapping/mapping-utils.js'
 
 export const safeSource = [
     {
         id: null,
         name: '',
-        status: ''
-    }
+        status: '',
+    },
 ]
-
 
 export const safeDisplay = displayModesMap

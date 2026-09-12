@@ -1,7 +1,7 @@
 import {
     visibilityMap,
     switchLayoutMap,
-} from '../../../../utils/mapping/mappingUtils'
+} from '../../../../utils/mapping/mapping-utils.js'
 
 import ButtonAction from '../../button-action'
 import Icons from '../../icons'

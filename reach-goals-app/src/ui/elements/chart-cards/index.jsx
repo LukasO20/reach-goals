@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
-import { useTransformModel } from '../../../hooks/useTransformModel.js'
-import { useAnchorPosition } from '../../../hooks/useAnchorPosition.js'
-import { useOutsideClick } from '../../../hooks/useOutsideClick.js'
+import { useTransformModel } from '../../../hooks/use-transform-model.js'
+import { useAnchorPosition } from '../../../hooks/use-anchor-position.js'
+import { useOutsideClick } from '../../../hooks/use-outside-click.js'
 
 import { getTransform } from '../../../utils/utils.js'
 

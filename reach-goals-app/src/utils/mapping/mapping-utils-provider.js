@@ -1,4 +1,4 @@
-export const filerFetchModelMap = {
+const filerFetchModelMap = {
     goal: {
         page: { goalSomeID: undefined },
         modal: undefined,

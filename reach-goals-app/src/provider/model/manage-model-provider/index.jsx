@@ -6,7 +6,7 @@ import {
     createContext,
 } from 'react'
 
-import { manageModelMap } from '../../../utils/mapping/mappingUtilsProvider'
+import { manageModelMap } from '../../../utils/mapping/mapping-utils-provider.js'
 
 /** @import * as React from 'react' */
 
