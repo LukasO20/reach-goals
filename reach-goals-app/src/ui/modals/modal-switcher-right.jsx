@@ -68,7 +68,6 @@ const ModalSwitcherRight = () => {
                     {isModalTag && (
                         <ModalTagWrapper
                             modelID={model.mainModelID}
-                            type={model.typeModel}
                             filterModel={model.filter}
                             setFilterModel={setFilterModel}
                             resetManageModel={resetManageModel}

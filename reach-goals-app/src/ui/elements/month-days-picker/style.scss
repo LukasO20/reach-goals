@@ -5,6 +5,7 @@
     background-color: $color-pair-primary;
     border-radius: $dimensions-border-radius-sm;
     padding: $spacing-padding-sm;
+    min-height: 0;
 
     > .head {
         display: flex;
@@ -23,8 +24,10 @@
         display: grid;
         grid-template-columns: repeat(7, minmax(0, 1fr));
         grid-template-rows: repeat(6, 1fr);
-        height: 100%;
         gap: $spacing-gap-mini;
+        min-height: 0;
+        overflow: hidden;
+        flex: 1;
 
         .day {
             position: relative;
@@ -112,8 +115,7 @@
                 min-height: 0;
                 overflow: hidden;
 
-                > .card-mini {
-                    padding: $spacing-padding-x-mini $spacing-padding-mini;
+                .card-mini {
                     background-color: $color-pair-primary;
 
                     * {
@@ -142,6 +144,26 @@
                     &.has-overflow {
                         display: none;
                     }
+                }
+
+                .card-relation {
+                    .head {
+                        .icon-st {
+                            height: 1rem;
+                        }
+
+                        > label {
+                            font-size: $font-size-mini;
+                            -webkit-line-clamp: 1;
+                            line-clamp: 1;
+                        }
+                    }
+                }
+
+                /* DOUBLE APPLY */
+                .card-mini,
+                .card-relation {
+                    padding: $spacing-padding-x-mini $spacing-padding-mini;
                 }
             }
 

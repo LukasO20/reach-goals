@@ -10,7 +10,6 @@ import ModalTag from '.'
  * @param {Props} props
  */
 export const ModalTagWrapper = ({
-    type,
     modelID,
     filterModel,
     setFilterModel,
@@ -25,7 +24,6 @@ export const ModalTagWrapper = ({
     return (
         <ModelQueryClientProvider>
             <ModalTag
-                type={type}
                 modelID={modelID}
                 filterTabs={filterModel}
                 onFilterTabs={handleFilterTabs}

@@ -61,15 +61,16 @@ export const GoalModelProvider = ({ children }) => {
                 ? goalService.updateGoal(model)
                 : goalService.addGoal(model),
         onSuccess: (data, o) => {
-            queryClient.invalidateQueries({ queryKey: ['goal'] })
-            queryClient.invalidateQueries({ queryKey: ['demo-session'] })
+            queryClient.invalidateQueries({
+                queryKey: ['goal', 'assignment', 'demo-session'],
+            })
 
             update({ toast: 'Goal save with success' })
             resetManageModel({ keys: ['activeModel', 'mainModelID'] })
 
             const shouldInvalidateTagQueries = data.tags?.length > 0
             if (shouldInvalidateTagQueries) {
-                queryClient.invalidateQueries({ queryKey: ['tag', 'page'] })
+                queryClient.invalidateQueries({ queryKey: ['tag'] })
             }
         },
     })
@@ -134,10 +135,9 @@ export const GoalModelProvider = ({ children }) => {
     const removeMutation = useMutation({
         mutationFn: (id) => goalService.deleteGoal(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: queryKeyPage })
-            queryClient.invalidateQueries({ queryKey: ['tag', 'page'] })
-            queryClient.invalidateQueries({ queryKey: ['demo-session'] })
-
+            queryClient.invalidateQueries({
+                queryKey: [queryKeyPage, 'assignment', 'tag', 'demo-session'],
+            })
             update({ toast: `Goal was deleted` })
         },
     })

@@ -31,7 +31,6 @@ import './style.scss'
  * @param {Props} props
  */
 const ModalTag = ({
-    type,
     modelID,
     setFilterModel,
     resetManageModel,
@@ -136,7 +135,7 @@ const ModalTag = ({
             <div className='body'>
                 {isModalForm.every((e) => visibleElements.includes(e)) && (
                     <ModalFormWrapper
-                        type={type}
+                        type='tag'
                         modelID={modelID}
                         setFilterModel={setFilterModel}
                     />
@@ -149,7 +148,7 @@ const ModalTag = ({
                     />
                 )}
                 <ModelTabs
-                    type={type}
+                    type='tag'
                     headLeftChildren={headLeftContent}
                     loading={isLoading}
                     filterTabs={filterTabs}

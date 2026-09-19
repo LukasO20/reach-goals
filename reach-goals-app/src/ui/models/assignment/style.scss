@@ -5,28 +5,29 @@
     border-radius: $spacing-gap-sm;
     background-color: $color-pair-secondary-light;
 
-    >.head {
+    > .head {
         padding: $spacing-padding-mini;
         display: flex;
         align-items: center;
         gap: $spacing-gap-mini;
-        
+
         * {
             color: $color-white;
         }
 
-        >label {
+        > label {
             font-weight: 600;
         }
     }
 
-    >.body {
+    > .body {
         display: flex;
         background-color: $color-pair-primary;
         border-radius: $spacing-gap-sm;
-        flex: 1;
 
-        >.card {
+        /* DOUBLE APPLY */
+        .card-mini,
+        .card {
             flex: 1;
         }
     }

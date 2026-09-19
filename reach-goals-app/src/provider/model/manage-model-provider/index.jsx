@@ -236,7 +236,7 @@ export const ManageModelProvider = ({ children }) => {
         ]
     )
 
-    console.log('ManageModelProvider - model:', model)
+    //console.log('ManageModelProvider - model:', model)
 
     return (
         <ManageModelContext.Provider value={value}>

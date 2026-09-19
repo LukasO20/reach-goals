@@ -7,6 +7,7 @@ import Assignment from '../../../models/assignment'
 import Goal from '../../../models/goal'
 import PopupModelOptions from '../../../elements/popup-model-options'
 import Icons from '../../../elements/icons'
+import EmptyStateModel from '../../../elements/empty-state-model'
 import { DragDrop, DragDropDroppable } from '../../../elements/drag-drop'
 
 /** @typedef {import('../types').HomeProps} Props */
@@ -15,7 +16,9 @@ import { DragDrop, DragDropDroppable } from '../../../elements/drag-drop'
  * @param {Props} props
  */
 const HomeColumn = ({ data }) => {
-    const { data: { visibility } } = useSwitchLayout()
+    const {
+        data: { visibility },
+    } = useSwitchLayout()
     const { update } = useTitle()
     const { saveDragDrop: saveDragDropGoal } = useGoalProvider()
     const { saveDragDrop: saveDragDropAssignment } = useAssignmentProvider()
@@ -23,39 +26,48 @@ const HomeColumn = ({ data }) => {
     const { goal: dataGoal = [], assignment: dataAssignment = [] } = data
 
     const dataColumn = {
-        progress: { goal: dataGoal.filter(g => g.status === 'progress'), assignment: dataAssignment.filter(a => a.status === 'progress') },
-        conclude: { goal: dataGoal.filter(g => g.status === 'conclude'), assignment: dataAssignment.filter(a => a.status === 'conclude') },
-        cancel: { goal: dataGoal.filter(g => g.status === 'cancel'), assignment: dataAssignment.filter(a => a.status === 'cancel') }
+        progress: {
+            goal: dataGoal.filter((g) => g.status === 'progress'),
+            assignment: dataAssignment.filter((a) => a.status === 'progress'),
+        },
+        conclude: {
+            goal: dataGoal.filter((g) => g.status === 'conclude'),
+            assignment: dataAssignment.filter((a) => a.status === 'conclude'),
+        },
+        cancel: {
+            goal: dataGoal.filter((g) => g.status === 'cancel'),
+            assignment: dataAssignment.filter((a) => a.status === 'cancel'),
+        },
     }
 
     const columnPropsReference = {
         display: {
             type: [visibility.cards],
-            actions: ['edit', 'delete']
+            actions: ['edit', 'delete'],
         },
         detailsModel: true,
         draggable: true,
         showTags: visibility.tagsCard,
         status: visibility.status,
-        checkboxModel: true
+        checkboxModel: true,
     }
 
     const columnMap = [
         {
             icon: 'icon-progress',
             type: 'progress',
-            title: 'in progress'
+            title: 'in progress',
         },
         {
             icon: 'icon-conclude',
             type: 'conclude',
-            title: 'conclude'
+            title: 'conclude',
         },
         {
             icon: 'icon-cancel',
             type: 'cancel',
-            title: 'canceled'
-        }
+            title: 'canceled',
+        },
     ]
 
     const updateDragDropItem = ({ source, destination, draggableId }) => {
@@ -65,48 +77,86 @@ const HomeColumn = ({ data }) => {
 
         try {
             visibility.layoutHome === 'goal' && saveDragDropGoal(dragDropData)
-            visibility.layoutHome === 'assignment' && saveDragDropAssignment(dragDropData)
-
+            visibility.layoutHome === 'assignment' &&
+                saveDragDropAssignment(dragDropData)
         } catch (exception) {
-            update({ toast: 'Ops something went wrong during save. Reload page and try again later.' })
+            update({
+                toast: 'Ops something went wrong during save. Reload page and try again later.',
+            })
             console.error(`Error during save: ${exception}`)
         }
     }
 
     const handleOnEndDrag = (result) => updateDragDropItem(result)
 
+    const isGoalEmpty = !dataGoal.length && visibility.layoutHome === 'goal'
+    const isAssignmentEmpty =
+        !dataAssignment.length && visibility.layoutHome === 'assignment'
+
+    const shoulRenderDragDop = !isGoalEmpty && !isAssignmentEmpty
+
+    const shoulRenderEmptyStateModel = isGoalEmpty || isAssignmentEmpty
+
     return (
         <div className='column home'>
-            <DragDrop onDragEnd={handleOnEndDrag}>
-                <div className='list-container'>
-                    {columnMap
-                        .filter((item) => visibility.status?.includes(item.type))
-                        .map((item) => {
-                            const dataGoal = dataColumn[item.type].goal
-                            const dataAssignment = dataColumn[item.type].assignment
-
-                            return (
-                                <div className={`column ${item.type}`} key={item.type}>
-                                    <div className='head'>
-                                        <Icons icon={item.icon} />
-                                        <label>{item.title}</label>
-                                    </div>
-                                    <div className='body scrollable'>
-                                        <DragDropDroppable dragDropID={item.type} className='list'>
-                                            {
-                                                visibility.layoutHome === 'goal' ?
-                                                    <Goal source={dataGoal} {...columnPropsReference} />
-                                                    :
-                                                    <Assignment source={dataAssignment} {...columnPropsReference} />
-                                            }
-                                        </DragDropDroppable>
-                                    </div>
-                                </div>
+            {shoulRenderEmptyStateModel && (
+                <EmptyStateModel
+                    type={visibility.layoutHome}
+                    title={`There's nothing a ${visibility.layoutHome} yet`}
+                    description={`You can create a ${visibility.layoutHome} to start your productivity day :)`}
+                />
+            )}
+            {shoulRenderDragDop && (
+                <DragDrop onDragEnd={handleOnEndDrag}>
+                    <div className='list-container'>
+                        {columnMap
+                            .filter((item) =>
+                                visibility.status?.includes(item.type)
                             )
-                        })}
-                </div>
-            </DragDrop>
-            <PopupModelOptions type='pop-switch-model' typeSwitchModelOptions='home' mode={visibility.layoutPopupModel} />
+                            .map((item) => {
+                                const dataGoal = dataColumn[item.type].goal
+                                const dataAssignment =
+                                    dataColumn[item.type].assignment
+
+                                return (
+                                    <div
+                                        className={`column ${item.type}`}
+                                        key={item.type}
+                                    >
+                                        <div className='head'>
+                                            <Icons icon={item.icon} />
+                                            <label>{item.title}</label>
+                                        </div>
+                                        <div className='body scrollable'>
+                                            <DragDropDroppable
+                                                dragDropID={item.type}
+                                                className='list'
+                                            >
+                                                {visibility.layoutHome ===
+                                                'goal' ? (
+                                                    <Goal
+                                                        source={dataGoal}
+                                                        {...columnPropsReference}
+                                                    />
+                                                ) : (
+                                                    <Assignment
+                                                        source={dataAssignment}
+                                                        {...columnPropsReference}
+                                                    />
+                                                )}
+                                            </DragDropDroppable>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                    </div>
+                </DragDrop>
+            )}
+            <PopupModelOptions
+                type='pop-switch-model'
+                typeSwitchModelOptions='home'
+                mode={visibility.layoutPopupModel}
+            />
         </div>
     )
 }

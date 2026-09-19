@@ -61,15 +61,16 @@ export const AssignmentModelProvider = ({ children }) => {
                 ? assignmentService.updateAssignment(model)
                 : assignmentService.addAssignment(model),
         onSuccess: (data) => {
-            queryClient.invalidateQueries({ queryKey: ['assignment'] })
-            queryClient.invalidateQueries({ queryKey: ['demo-session'] })
+            queryClient.invalidateQueries({
+                queryKey: ['assignment', 'goal', 'demo-session'],
+            })
 
             update({ toast: 'Assignment save with success' })
             resetManageModel({ keys: ['activeModel', 'mainModelID'] })
 
             const shouldInvalidateTagQueries = data.tags?.length > 0
             if (shouldInvalidateTagQueries)
-                queryClient.invalidateQueries({ queryKey: ['tag', 'page'] })
+                queryClient.invalidateQueries({ queryKey: ['tag'] })
         },
     })
 
@@ -133,10 +134,9 @@ export const AssignmentModelProvider = ({ children }) => {
     const removeMutation = useMutation({
         mutationFn: (id) => assignmentService.deleteAssignment(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: queryKeyPage })
-            queryClient.invalidateQueries({ queryKey: ['tag', 'page'] })
-            queryClient.invalidateQueries({ queryKey: ['demo-session'] })
-
+            queryClient.invalidateQueries({
+                queryKey: [queryKeyPage, 'goal', 'tag', 'demo-session'],
+            })
             update({ toast: `Assignment was deleted` })
         },
     })

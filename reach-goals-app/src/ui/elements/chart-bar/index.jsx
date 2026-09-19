@@ -55,14 +55,14 @@ const ChartBar = ({ data, quantity, showLegend }) => {
             )}
             <div className='body'>
                 {data.map((item) => {
-                    const hasActivity = item.quantity
+                    const hasActivity = !!item.quantity
                     const percentLabel = calculatePercent(
                         item.quantity,
                         quantity
                     )
                     const labelMessage = hasActivity
                         ? `${item.label} - ${item.quantity} ${activityLabel}`
-                        : `No ${item.label}s found`
+                        : `No ${item.label} found`
                     const iconModalChartCards = item.id
 
                     const barClass = cx(`

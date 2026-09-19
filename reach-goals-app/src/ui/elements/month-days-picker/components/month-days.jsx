@@ -56,7 +56,7 @@ const MonthDays = ({
         }
 
         return checkOverflow()
-    }, [])
+    }, [containerRef])
 
     const type = visibility.layoutCalendar
 

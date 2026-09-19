@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1254 1254" width="240" height="240" fill="none">
+
+  <!-- soft ambient glow -->
+  <ellipse cx="627" cy="655" rx="390" ry="285"/>
+
+  <!-- ground shadow -->
+
+  <!-- target -->
+  <g stroke="#71809f" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="627" cy="609" r="183"/>
+    <circle cx="627" cy="609" r="112"/>
+    <circle cx="627" cy="609" r="47"/>
+  </g>
+  <circle cx="627" cy="609" r="13" fill="#71809f"/>
+
+  <!-- accent rays -->
+  <g stroke="#aab9dd" stroke-width="13" stroke-linecap="round">
+    <path d="M355 456L319 424"/>
+    <path d="M329 579L278 582"/>
+    <path d="M899 456L935 424"/>
+    <path d="M925 579L976 582"/>
+  </g>
+
+  <!-- empty badge -->
+  <circle cx="823" cy="747" r="68" fill="#eef3ff"/>
+  <circle cx="823" cy="747" r="51"/>
+  <path d="M795 747H851" stroke="#71809f" stroke-width="13" stroke-linecap="round"/>
+</svg>

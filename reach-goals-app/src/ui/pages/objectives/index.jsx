@@ -11,6 +11,7 @@ import ModelSwitcher from '../../models/model-switcher'
 import PopupModelOptions from '../../elements/popup-model-options/index.jsx'
 import EmptyState from '../../elements/empty-state'
 import EmptyStateCreate from '../../elements/empty-state/components/empty-state-create.jsx'
+import EmptyStateModel from '../../elements/empty-state-model'
 
 import emptyObjectivesImg from '../../../assets/empty-activity-objectives.svg'
 
@@ -65,12 +66,21 @@ const Objectives = ({ filterTabs, onFilterTabs }) => {
     const isAllModels = typeLayout === 'all-activities'
     const isOnlyTypeModel = typeLayout === 'goal' || typeLayout === 'assignment'
     const isLoading = !!loadingGoal || !!loadingAssignment
-    const isEmptyData =
-        !dataGoal?.length && !dataAssignment?.length && !isLoading
+    const isEmptyData = !dataGoal.length && !dataAssignment.length && !isLoading
+
+    const isGoalEmpty =
+        !dataGoal.length && visibility.layoutObjectives === 'goal'
+    const isAssignmentEmpty =
+        !dataAssignment.length && visibility.layoutObjectives === 'assignment'
+
+    const shoulRenderEmptyStateModel =
+        (isGoalEmpty || isAssignmentEmpty) && !isEmptyData
 
     const modelTabsClass = cx(
         `objectives
-        ${isEmptyData && 'empty'}`
+        ${isEmptyData && 'empty'}
+        ${shoulRenderEmptyStateModel && 'no-model'}
+        `
     )
 
     const renderContent = (
@@ -85,6 +95,14 @@ const Objectives = ({ filterTabs, onFilterTabs }) => {
                 <ModelSwitcher
                     type={typeLayout}
                     propsReference={switchActivityPropsReference}
+                />
+            )}
+            {shoulRenderEmptyStateModel && (
+                <EmptyStateModel
+                    type={visibility.layoutHome}
+                    title='No results found'
+                    description={`There are no ${visibility.layoutHome}s to display here`}
+                    showButtonAction={false}
                 />
             )}
             {!isLoading && isEmptyData && (
@@ -110,12 +128,14 @@ const Objectives = ({ filterTabs, onFilterTabs }) => {
             >
                 {renderContent}
             </ModelTabs>
-            <PopupModelOptions
-                type='pop-switch-model'
-                typeSwitchModelOptions='objectives'
-                onFilterTabs={onFilterTabs}
-                mode={visibility.layoutPopupModel}
-            />
+            {!isEmptyData && (
+                <PopupModelOptions
+                    type='pop-switch-model'
+                    typeSwitchModelOptions='objectives'
+                    onFilterTabs={onFilterTabs}
+                    mode={visibility.layoutPopupModel}
+                />
+            )}
         </>
     )
 }

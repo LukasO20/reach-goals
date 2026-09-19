@@ -58,10 +58,9 @@ export const TagModelProvider = ({ children }) => {
         mutationFn: (model) =>
             model.id ? tagService.updateTag(model) : tagService.addTag(model),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['tag'] })
-            queryClient.invalidateQueries({ queryKey: ['goal'] })
-            queryClient.invalidateQueries({ queryKey: ['assignment'] })
-            queryClient.invalidateQueries({ queryKey: ['demo-session'] })
+            queryClient.invalidateQueries({
+                queryKey: ['tag', 'goal', 'assignment', 'demo-session'],
+            })
 
             update({ toast: 'Tag save with success' })
             resetManageModel({ keys: ['activeModel', 'mainModelID'] })
@@ -71,11 +70,9 @@ export const TagModelProvider = ({ children }) => {
     const removeMutation = useMutation({
         mutationFn: (id) => tagService.deleteTag(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: queryKeyPage })
-            queryClient.invalidateQueries({ queryKey: ['goal'] })
-            queryClient.invalidateQueries({ queryKey: ['assignment'] })
-            queryClient.invalidateQueries({ queryKey: ['demo-session'] })
-
+            queryClient.invalidateQueries({
+                queryKey: [queryKeyPage, 'goal', 'assignment', 'demo-session'],
+            })
             update({ toast: `Tag was deleted` })
         },
     })

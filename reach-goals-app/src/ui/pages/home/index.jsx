@@ -13,20 +13,32 @@ import emptyHomeImg from '../../../assets/empty-activity.svg'
 import './style.scss'
 
 const Home = () => {
-    const { data: { layout } } = useSwitchLayout()
-    const { page: { data: dataGoal, loading: loadingGoal } } = useGoalProvider()
-    const { page: { data: dataAssignment, loading: loadingAssignment } } = useAssignmentProvider()
+    const {
+        data: { layout },
+    } = useSwitchLayout()
+    const {
+        page: { data: dataGoal, loading: loadingGoal },
+    } = useGoalProvider()
+    const {
+        page: { data: dataAssignment, loading: loadingAssignment },
+    } = useAssignmentProvider()
 
     const dataPage = {
         goal: dataGoal,
-        assignment: dataAssignment
+        assignment: dataAssignment,
     }
     const layoutHome = layout.page.layoutName
 
-    const renderHomePage = layoutHome === 'chart' ? <HomeChart data={dataPage} /> : <HomeColumn data={dataPage} />
+    const renderHomePage =
+        layoutHome === 'chart' ? (
+            <HomeChart data={dataPage} />
+        ) : (
+            <HomeColumn data={dataPage} />
+        )
 
     const isLoading = !!loadingGoal || !!loadingAssignment
-    const isEmptyData = !dataGoal?.length && !dataAssignment?.length && !isLoading
+    const isEmptyData =
+        !dataGoal?.length && !dataAssignment?.length && !isLoading
 
     return (
         <>

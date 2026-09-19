@@ -3,7 +3,7 @@
 /**
  * @typedef {Object} ModalFormProps
  * @property {string} modelID
- * @property {'goal' | 'assignment'} type
+ * @property {'goal' | 'assignment' | 'tag'} type
  * @property {SetFilterModelProps} setFilterModel
  */
 

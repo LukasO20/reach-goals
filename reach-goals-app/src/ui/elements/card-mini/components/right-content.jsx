@@ -87,7 +87,7 @@ const RightContent = ({
                     icon='icon-close'
                 />
             )}
-            {hasTags && (
+            {hasTags && showTags && (
                 <TagsPopover
                     tags={item.tags}
                     visibility={`tag-popover-${item.id}`}

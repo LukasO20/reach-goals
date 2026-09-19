@@ -5,7 +5,7 @@
     align-items: stretch;
     gap: $spacing-gap-sm;
 
-    >.head {
+    > .head {
         padding: $spacing-padding-sm;
         border-radius: $dimensions-border-radius-sm;
         background-color: $color-pair-primary-darkest;
@@ -16,7 +16,7 @@
         }
     }
 
-    >.body {
+    > .body {
         display: flex;
         flex: 1;
         gap: $spacing-gap-md;
@@ -79,8 +79,6 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
                 justify-self: flex-start;
-
-                
             }
 
             &.goal {
@@ -89,13 +87,12 @@
                 .bar-progress {
                     background-color: $color-pair-secondary;
 
-                   * {
+                    * {
                         color: $color-white;
                     }
                 }
 
                 .bar-actions {
-
                     .button-action {
                         background-color: $color-white;
 
@@ -112,13 +109,6 @@
                         }
                     }
                 }
-
-                &.empty {
-
-                    * {
-                        color: $color-pair-secondary;
-                    }
-                }
             }
 
             &.assignment {
@@ -127,13 +117,12 @@
                 .bar-progress {
                     background-color: $color-accent;
 
-                   * {
+                    * {
                         color: $color-white;
                     }
                 }
 
                 .bar-actions {
-
                     .button-action {
                         background-color: $color-white;
 
@@ -152,7 +141,6 @@
                 }
 
                 &.empty {
-
                     * {
                         color: $color-primary;
                     }

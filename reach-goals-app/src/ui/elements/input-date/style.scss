@@ -33,13 +33,13 @@
     .react-datepicker__navigation {
         height: 2.4rem;
         border-radius: 0.5em;
-        background-color: $color-pair-primary-dark;
+        background-color: $color-pair-primary;
         transition: $animation-transition-st;
         cursor: pointer;
         border: none;
 
         span {
-            color: $color-secondary;
+            color: $color-pair-secondary;
             font-weight: 600;
         }
 
@@ -48,7 +48,11 @@
         }
 
         &:hover {
-            background-color: $color-pair-secondary-lightest;
+            background-color: $color-pair-secondary-dark;
+
+            span {
+                color: $color-white;
+            }
         }
 
         &:active {
@@ -57,16 +61,14 @@
     }
 
     .react-datepicker__month-container {
-
         .react-datepicker__header {
-
             h2 {
                 color: $color-pair-secondary;
                 padding: 0.85rem 0rem;
             }
         }
 
-        div[role="table"] {
+        div[role='table'] {
             display: flex;
             flex-direction: column;
 
@@ -76,7 +78,7 @@
                 padding: 0.5rem 0rem;
                 font-size: 0.95rem;
                 font-weight: 600;
-                color: $color-pair-secondary-lightest;
+                color: $color-pair-secondary;
                 justify-content: space-between;
 
                 .react-datepicker__day-name {
@@ -106,9 +108,9 @@
                         justify-content: center;
                         padding: $spacing-padding-sm;
                         border-radius: $dimensions-border-radius-mini;
-                        background-color: $color-pair-primary-dark;
+                        background-color: $color-pair-primary;
                         cursor: pointer;
-                        color: $color-secondary;
+                        color: $color-pair-secondary;
                         font-weight: 500;
                         transition: $animation-transition-st;
 
@@ -127,7 +129,8 @@
                         }
 
                         &:hover {
-                            background-color: $color-pair-secondary-lightest;
+                            background-color: $color-pair-secondary-dark;
+                            color: $color-white;
                         }
 
                         &:active {

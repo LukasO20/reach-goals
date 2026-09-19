@@ -13,33 +13,49 @@ import emptyCalendarImg from '../../../assets/empty-activity-calendar.svg'
 import './style.scss'
 
 const Calendar = () => {
-    const { page: { loading: loadingGoal, data: dataGoal } } = useGoalProvider()
-    const { page: { loading: loadingAssignment, data: dataAssignment } } = useAssignmentProvider()
-    const { data: { visibility } } = useSwitchLayout()
+    const {
+        page: { loading: loadingGoal, data: dataGoal },
+    } = useGoalProvider()
+    const {
+        page: { loading: loadingAssignment, data: dataAssignment },
+    } = useAssignmentProvider()
+    const {
+        data: { visibility },
+    } = useSwitchLayout()
 
     const dataPage = {
         goal: dataGoal,
-        assignment: dataAssignment
+        assignment: dataAssignment,
     }
 
     const isLoading = !!loadingGoal || !!loadingAssignment
-    const isValidData = Array.isArray(dataPage.goal) || Array.isArray(dataPage.assignment)
-    const isEmptyData = !dataGoal?.length && !dataAssignment?.length && !isLoading
+    const isValidData =
+        Array.isArray(dataPage.goal) || Array.isArray(dataPage.assignment)
+    const isEmptyData =
+        !dataGoal?.length && !dataAssignment?.length && !isLoading
 
     return (
         <>
             {isLoading && !isEmptyData && <Loading mode='block' />}
-            {!isLoading && !isEmptyData && isValidData && <MonthDaysPicker data={dataPage} />}
+            {!isLoading && !isEmptyData && isValidData && (
+                <>
+                    <MonthDaysPicker data={dataPage} />
+                    <PopupModelOptions
+                        type='pop-switch-model'
+                        typeSwitchModelOptions='calendar'
+                        mode={visibility.layoutPopupModel}
+                    />
+                </>
+            )}
             {!isLoading && isEmptyData && (
                 <EmptyState
-                title="There's nothing an activity yet"
-                description='You can create a goal or assignment to set a date and start your schedule'
-                imgSrc={emptyCalendarImg}
-            >
-                <EmptyStateCreate />
-            </EmptyState>)
-            }
-            <PopupModelOptions type='pop-switch-model' typeSwitchModelOptions='calendar' mode={visibility.layoutPopupModel} />
+                    title="There's nothing an activity yet"
+                    description='You can create a goal or assignment to set a date and start your schedule'
+                    imgSrc={emptyCalendarImg}
+                >
+                    <EmptyStateCreate />
+                </EmptyState>
+            )}
         </>
     )
 }
