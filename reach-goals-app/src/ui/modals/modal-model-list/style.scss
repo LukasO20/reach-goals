@@ -11,7 +11,7 @@
     overflow: hidden;
     height: 26rem;
 
-    >.head {
+    > .head {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -19,13 +19,12 @@
         border-bottom: solid 1px $color-pair-primary;
 
         h2 {
-            font-size: 1.05rem;
+            font-size: $font-size-m;
             color: $color-pair-secondary;
         }
     }
 
-    >.body {
-        position: relative;
+    > .body {
         display: flex;
         flex-direction: column;
         overflow-y: auto;
@@ -34,5 +33,28 @@
         padding: $spacing-padding-sm;
         border-radius: $dimensions-border-radius-sm;
         flex: 1;
+    }
+
+    &.empty {
+        > .body {
+            background-color: transparent;
+            align-items: center;
+
+            .empty-state-model {
+                height: max-content;
+
+                .title {
+                    font-size: $font-size-m;
+                }
+
+                .description {
+                    font-size: $font-size-st;
+                }
+
+                img {
+                    height: $dimensions-h-lg;
+                }
+            }
+        }
     }
 }

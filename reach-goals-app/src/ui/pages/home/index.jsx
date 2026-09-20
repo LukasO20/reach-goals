@@ -17,10 +17,18 @@ const Home = () => {
         data: { layout },
     } = useSwitchLayout()
     const {
-        page: { data: dataGoal, loading: loadingGoal },
+        page: {
+            data: dataGoal = [],
+            loading: loadingGoal,
+            fetching: fetchingGoal,
+        },
     } = useGoalProvider()
     const {
-        page: { data: dataAssignment, loading: loadingAssignment },
+        page: {
+            data: dataAssignment = [],
+            loading: loadingAssignment,
+            fetching: fetchingAssignment,
+        },
     } = useAssignmentProvider()
 
     const dataPage = {
@@ -37,12 +45,12 @@ const Home = () => {
         )
 
     const isLoading = !!loadingGoal || !!loadingAssignment
-    const isEmptyData =
-        !dataGoal?.length && !dataAssignment?.length && !isLoading
+    const isEmptyData = !dataGoal.length && !dataAssignment.length && !isLoading
 
+    //TODO: CHECK GOOD USE OF FETCHING boolean
     return (
         <>
-            {isLoading && !isEmptyData && <Loading mode='block' />}
+            {isLoading && <Loading mode='block' />}
             {!isLoading && !isEmptyData && renderHomePage}
             {!isLoading && isEmptyData && (
                 <EmptyState

@@ -1,7 +1,7 @@
 /**
  * @typedef {Object} ModalModelListProps
  * @property {string} title
- * @property {string} type
+ * @property {'goal' | 'assignment' | 'tag'} type
  */
 
 /**

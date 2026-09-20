@@ -33,10 +33,19 @@ export const GoalModelProvider = ({ children }) => {
     const queryKeyPage = ['goal', 'page', filterPage]
     const queryKeyModal = ['goal', 'modal', filterModal]
 
+    const invalidateTargetQueries = (invalidTag = false) => {
+        queryClient.invalidateQueries({ queryKey: ['goal'] })
+        queryClient.invalidateQueries({ queryKey: ['assignment'] })
+        queryClient.invalidateQueries({ queryKey: ['demo-session'] })
+
+        if (invalidTag) queryClient.invalidateQueries({ queryKey: ['tag'] })
+    }
+
     const {
         data: pageData,
         error: pageError,
         isLoading: isPageLoading,
+        isFetching: isPageFetching,
     } = useQuery({
         queryKey: queryKeyPage,
         queryFn: createQueryFn(filterPage, goalService),
@@ -60,18 +69,12 @@ export const GoalModelProvider = ({ children }) => {
             model.id
                 ? goalService.updateGoal(model)
                 : goalService.addGoal(model),
-        onSuccess: (data, o) => {
-            queryClient.invalidateQueries({
-                queryKey: ['goal', 'assignment', 'demo-session'],
-            })
+        onSuccess: (data) => {
+            const shouldInvalidateTagQueries = data.tags.length > 0
 
             update({ toast: 'Goal save with success' })
             resetManageModel({ keys: ['activeModel', 'mainModelID'] })
-
-            const shouldInvalidateTagQueries = data.tags?.length > 0
-            if (shouldInvalidateTagQueries) {
-                queryClient.invalidateQueries({ queryKey: ['tag'] })
-            }
+            invalidateTargetQueries(shouldInvalidateTagQueries)
         },
     })
 
@@ -135,10 +138,8 @@ export const GoalModelProvider = ({ children }) => {
     const removeMutation = useMutation({
         mutationFn: (id) => goalService.deleteGoal(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: [queryKeyPage, 'assignment', 'tag', 'demo-session'],
-            })
             update({ toast: `Goal was deleted` })
+            invalidateTargetQueries(true)
         },
     })
 
@@ -171,6 +172,7 @@ export const GoalModelProvider = ({ children }) => {
                     data: pageData,
                     error: pageError,
                     loading: isPageLoading,
+                    fetching: isPageFetching,
                 },
                 modal: {
                     data: modalData,

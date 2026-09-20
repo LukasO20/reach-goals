@@ -117,6 +117,7 @@ const Objectives = ({ filterTabs, onFilterTabs }) => {
         </>
     )
 
+    //TODO: CHECK GOOD USE OF FETCHING boolean
     return (
         <>
             <ModelTabs

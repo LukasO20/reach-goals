@@ -34,6 +34,7 @@ const Calendar = () => {
     const isEmptyData =
         !dataGoal?.length && !dataAssignment?.length && !isLoading
 
+    //TODO: CHECK GOOD USE OF FETCHING boolean
     return (
         <>
             {isLoading && !isEmptyData && <Loading mode='block' />}

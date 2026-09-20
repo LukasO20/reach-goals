@@ -33,10 +33,19 @@ export const AssignmentModelProvider = ({ children }) => {
     const queryKeyPage = ['assignment', 'page', filterPage]
     const queryKeyModal = ['assignment', 'modal', filterModal]
 
+    const invalidateTargetQueries = (invalidTag = false) => {
+        queryClient.invalidateQueries({ queryKey: ['assignment'] })
+        queryClient.invalidateQueries({ queryKey: ['goal'] })
+        queryClient.invalidateQueries({ queryKey: ['demo-session'] })
+
+        if (invalidTag) queryClient.invalidateQueries({ queryKey: ['tag'] })
+    }
+
     const {
         data: pageData,
         error: pageError,
         isLoading: isPageLoading,
+        isFetching: isPageFetching,
     } = useQuery({
         queryKey: queryKeyPage,
         queryFn: createQueryFn(filterPage, assignmentService),
@@ -61,16 +70,11 @@ export const AssignmentModelProvider = ({ children }) => {
                 ? assignmentService.updateAssignment(model)
                 : assignmentService.addAssignment(model),
         onSuccess: (data) => {
-            queryClient.invalidateQueries({
-                queryKey: ['assignment', 'goal', 'demo-session'],
-            })
+            const shouldInvalidateTagQueries = data.tags?.length > 0
 
+            invalidateTargetQueries(shouldInvalidateTagQueries)
             update({ toast: 'Assignment save with success' })
             resetManageModel({ keys: ['activeModel', 'mainModelID'] })
-
-            const shouldInvalidateTagQueries = data.tags?.length > 0
-            if (shouldInvalidateTagQueries)
-                queryClient.invalidateQueries({ queryKey: ['tag'] })
         },
     })
 
@@ -134,10 +138,8 @@ export const AssignmentModelProvider = ({ children }) => {
     const removeMutation = useMutation({
         mutationFn: (id) => assignmentService.deleteAssignment(id),
         onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: [queryKeyPage, 'goal', 'tag', 'demo-session'],
-            })
             update({ toast: `Assignment was deleted` })
+            invalidateTargetQueries(true)
         },
     })
 
@@ -170,6 +172,7 @@ export const AssignmentModelProvider = ({ children }) => {
                     data: pageData,
                     error: pageError,
                     loading: isPageLoading,
+                    fetching: isPageFetching,
                 },
                 modal: {
                     data: modalData,

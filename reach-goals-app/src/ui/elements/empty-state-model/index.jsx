@@ -1,5 +1,6 @@
 import emptyGoal from '../../../assets/empty-goal.svg'
 import emptyAssignment from '../../../assets/empty-assignment.svg'
+import emptyTag from '../../../assets/empty-tag.svg'
 
 import {
     switchLayoutMap,
@@ -31,7 +32,12 @@ const EmptyStateModel = ({
         `
     )
 
-    const imgSrc = type === 'goal' ? emptyGoal : emptyAssignment
+    const imgSrc =
+        type === 'goal'
+            ? emptyGoal
+            : type === 'assignment'
+              ? emptyAssignment
+              : emptyTag
 
     const formRender = switchLayoutMap({
         area: 'modal',
