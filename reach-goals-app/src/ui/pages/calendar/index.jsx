@@ -14,14 +14,20 @@ import './style.scss'
 
 const Calendar = () => {
     const {
-        page: { loading: loadingGoal, data: dataGoal },
+        page: { loading: loadingGoal, data: dataGoal, fetching: fetchingGoal },
     } = useGoalProvider()
     const {
-        page: { loading: loadingAssignment, data: dataAssignment },
+        page: {
+            loading: loadingAssignment,
+            data: dataAssignment,
+            fetching: fetchingAssignment,
+        },
     } = useAssignmentProvider()
     const {
         data: { visibility },
     } = useSwitchLayout()
+
+    const visibilityCalendar = visibility.layoutCalendar
 
     const dataPage = {
         goal: dataGoal,
@@ -33,12 +39,15 @@ const Calendar = () => {
         Array.isArray(dataPage.goal) || Array.isArray(dataPage.assignment)
     const isEmptyData =
         !dataGoal?.length && !dataAssignment?.length && !isLoading
+    const isEmptyModelData =
+        (!dataGoal.length && visibilityCalendar === 'goal') ||
+        (!dataAssignment.length && visibilityCalendar === 'assignment')
+    const isFetching = (fetchingGoal || fetchingAssignment) && isEmptyModelData
 
-    //TODO: CHECK GOOD USE OF FETCHING boolean
     return (
         <>
-            {isLoading && !isEmptyData && <Loading mode='block' />}
-            {!isLoading && !isEmptyData && isValidData && (
+            {(isLoading || isFetching) && <Loading mode='block' />}
+            {!isLoading && !isEmptyData && isValidData && !isFetching && (
                 <>
                     <MonthDaysPicker data={dataPage} />
                     <PopupModelOptions
@@ -48,7 +57,7 @@ const Calendar = () => {
                     />
                 </>
             )}
-            {!isLoading && isEmptyData && (
+            {!isLoading && isEmptyData && !isFetching && (
                 <EmptyState
                     title="There's nothing an activity yet"
                     description='You can create a goal or assignment to set a date and start your schedule'

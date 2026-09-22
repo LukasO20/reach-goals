@@ -14,7 +14,7 @@ import './style.scss'
 
 const Home = () => {
     const {
-        data: { layout },
+        data: { layout, visibility },
     } = useSwitchLayout()
     const {
         page: {
@@ -36,6 +36,7 @@ const Home = () => {
         assignment: dataAssignment,
     }
     const layoutHome = layout.page.layoutName
+    const visibilityHome = visibility.layoutHome
 
     const renderHomePage =
         layoutHome === 'chart' ? (
@@ -46,13 +47,16 @@ const Home = () => {
 
     const isLoading = !!loadingGoal || !!loadingAssignment
     const isEmptyData = !dataGoal.length && !dataAssignment.length && !isLoading
+    const isEmptyModelData =
+        (!dataGoal.length && visibilityHome === 'goal') ||
+        (!dataAssignment.length && visibilityHome === 'assignment')
+    const isFetching = (fetchingGoal || fetchingAssignment) && isEmptyModelData
 
-    //TODO: CHECK GOOD USE OF FETCHING boolean
     return (
         <>
-            {isLoading && <Loading mode='block' />}
-            {!isLoading && !isEmptyData && renderHomePage}
-            {!isLoading && isEmptyData && (
+            {(isLoading || isFetching) && <Loading mode='block' />}
+            {!isLoading && !isEmptyData && !isFetching && renderHomePage}
+            {!isLoading && isEmptyData && !isFetching && (
                 <EmptyState
                     title="There's nothing an activity yet"
                     description='You can create a goal or assignment to start your productivity day :)'

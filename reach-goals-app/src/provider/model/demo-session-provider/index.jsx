@@ -24,7 +24,7 @@ export const DemoSessionProvider = ({ children }) => {
     } = useQuery({
         queryKey: ['auth-demo-session'],
         queryFn: async () => {
-            await delay(3500)
+            await delay(2000)
             const result = await demoVisitorService.getAuthenticateDemoSession()
             return result
         },

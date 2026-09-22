@@ -27,13 +27,21 @@ const Objectives = ({ filterTabs, onFilterTabs }) => {
         data: { visibility },
     } = useSwitchLayout()
     const {
-        page: { data: dataGoal = [], loading: loadingGoal },
+        page: {
+            data: dataGoal = [],
+            loading: loadingGoal,
+            fetching: fetchingGoal,
+        },
     } = useGoalProvider()
     const {
-        page: { data: dataAssignment = [], loading: loadingAssignment },
+        page: {
+            data: dataAssignment = [],
+            loading: loadingAssignment,
+            fetching: fetchingAssignment,
+        },
     } = useAssignmentProvider()
 
-    const typeLayout = visibility.layoutObjectives
+    const visibilityObjectives = visibility.layoutObjectives
 
     const propsReference = {
         display: {
@@ -46,7 +54,8 @@ const Objectives = ({ filterTabs, onFilterTabs }) => {
         showTags: visibility.tagsCard,
     }
 
-    const dataSingle = typeLayout === 'goal' ? dataGoal : dataAssignment
+    const dataSingle =
+        visibilityObjectives === 'goal' ? dataGoal : dataAssignment
 
     const switchActivityPropsReference = {
         ...propsReference,
@@ -63,18 +72,17 @@ const Objectives = ({ filterTabs, onFilterTabs }) => {
         source: dataAssignment,
     }
 
-    const isAllModels = typeLayout === 'all-activities'
-    const isOnlyTypeModel = typeLayout === 'goal' || typeLayout === 'assignment'
+    const isAllModels = visibilityObjectives === 'all-activities'
+    const isOnlyTypeModel =
+        visibilityObjectives === 'goal' || visibilityObjectives === 'assignment'
     const isLoading = !!loadingGoal || !!loadingAssignment
     const isEmptyData = !dataGoal.length && !dataAssignment.length && !isLoading
+    const isEmptyModelData =
+        (!dataGoal.length && visibilityObjectives === 'goal') ||
+        (!dataAssignment.length && visibilityObjectives === 'assignment')
+    const isFetching = (fetchingGoal || fetchingAssignment) && isEmptyModelData
 
-    const isGoalEmpty =
-        !dataGoal.length && visibility.layoutObjectives === 'goal'
-    const isAssignmentEmpty =
-        !dataAssignment.length && visibility.layoutObjectives === 'assignment'
-
-    const shoulRenderEmptyStateModel =
-        (isGoalEmpty || isAssignmentEmpty) && !isEmptyData
+    const shoulRenderEmptyStateModel = isEmptyModelData && !isEmptyData
 
     const modelTabsClass = cx(
         `objectives
@@ -85,27 +93,27 @@ const Objectives = ({ filterTabs, onFilterTabs }) => {
 
     const renderContent = (
         <>
-            {isAllModels && !isOnlyTypeModel && !isEmptyData && (
+            {isAllModels && !isOnlyTypeModel && !isEmptyData && !isFetching && (
                 <>
                     <Goal {...goalPropsReference} />
                     <Assignment {...assignmentPropsReference} />
                 </>
             )}
-            {isOnlyTypeModel && !isAllModels && !isEmptyData && (
+            {isOnlyTypeModel && !isAllModels && !isEmptyData && !isFetching && (
                 <ModelSwitcher
-                    type={typeLayout}
+                    type={visibilityObjectives}
                     propsReference={switchActivityPropsReference}
                 />
             )}
-            {shoulRenderEmptyStateModel && (
+            {shoulRenderEmptyStateModel && !isFetching && (
                 <EmptyStateModel
-                    type={visibility.layoutHome}
+                    type={visibilityObjectives}
                     title='No results found'
-                    description={`There are no ${visibility.layoutHome}s to display here`}
+                    description={`There are no ${visibilityObjectives}s to display here`}
                     showButtonAction={false}
                 />
             )}
-            {!isLoading && isEmptyData && (
+            {!isLoading && isEmptyData && !isFetching && (
                 <EmptyState
                     title="There's nothing an activity yet"
                     description='You can create a goal or assignment to manage your activities'
@@ -117,12 +125,11 @@ const Objectives = ({ filterTabs, onFilterTabs }) => {
         </>
     )
 
-    //TODO: CHECK GOOD USE OF FETCHING boolean
     return (
         <>
             <ModelTabs
-                type={typeLayout}
-                loading={isLoading}
+                type={visibilityObjectives}
+                loading={isLoading || isFetching}
                 classModelTabs={modelTabsClass}
                 filterTabs={filterTabs}
                 onFilterTabs={onFilterTabs}

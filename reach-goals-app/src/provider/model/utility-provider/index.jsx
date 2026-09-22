@@ -2,7 +2,6 @@ import { createContext, useContext } from 'react'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 
 import { useTitle } from '../../ui/title-provider'
-import { useManageModel } from '../manage-model-provider'
 import { useCheckbox } from '../../ui/checkbox-provider'
 import { useVisibility } from '../../ui/visibility-provider'
 
@@ -18,46 +17,52 @@ const UtilityContext = createContext()
 export const UtilityProvider = ({ children }) => {
     const queryClient = useQueryClient()
     const { update } = useTitle()
-    const { model } = useManageModel()
     const { resetCheckbox } = useCheckbox()
     const { visibleElements } = useVisibility()
 
-    const queryKeyGoalPage = ['goals', 'page', model.filter.goal.page]
-    const queryKeyAssignmentPage = ['assignments', 'page', model.filter.assignment.page]
-    const queryKeyTagModal = ['tags', 'modal', model.filter.tag.modal]
+    const invalidateTargetQueries = (invalidDemoSession = false) => {
+        queryClient.invalidateQueries({ queryKey: ['tag'] })
+        queryClient.invalidateQueries({ queryKey: ['goal'] })
+        queryClient.invalidateQueries({ queryKey: ['assignment'] })
+
+        if (invalidDemoSession)
+            queryClient.invalidateQueries({ queryKey: ['demo-session'] })
+    }
 
     const saveModelStatus = useMutation({
-        mutationFn: ({ data, status }) => commonService.updateModelStatus(data, status),
+        mutationFn: ({ data, status }) =>
+            commonService.updateModelStatus(data, status),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: queryKeyGoalPage })
-            queryClient.invalidateQueries({ queryKey: queryKeyAssignmentPage })
+            invalidateTargetQueries()
             resetCheckbox({ keys: ['page'] })
             update({ toast: 'Status save with success' })
-        }
+        },
     })
 
     const removeModels = useMutation({
         mutationFn: ({ data }) => commonService.removeModels(data),
         onSuccess: () => {
-            const isTagScope = !!visibleElements.includes('modal-right') && !!visibleElements.includes('tag')
+            const isTagScope =
+                !!visibleElements.includes('modal-right') &&
+                !!visibleElements.includes('tag')
             const resetKey = isTagScope ? 'modal' : 'page'
 
-            queryClient.invalidateQueries({ queryKey: queryKeyGoalPage })
-            queryClient.invalidateQueries({ queryKey: queryKeyAssignmentPage })
-            queryClient.invalidateQueries({ queryKey: queryKeyTagModal })
+            invalidateTargetQueries(true)
             resetCheckbox({ keys: [resetKey] })
             update({ toast: `Activities removed` })
-        }
+        },
     })
 
     return (
-        <UtilityContext.Provider value={{
-            saveStatus: saveModelStatus.mutate,
-            savingStatus: saveModelStatus.isPending,
-            savedStatusData: saveModelStatus.variables,
-            removeModels: removeModels.mutate,
-            removingModels: removeModels.isPending
-        }}>
+        <UtilityContext.Provider
+            value={{
+                saveStatus: saveModelStatus.mutate,
+                savingStatus: saveModelStatus.isPending,
+                savedStatusData: saveModelStatus.variables,
+                removeModels: removeModels.mutate,
+                removingModels: removeModels.isPending,
+            }}
+        >
             {children}
         </UtilityContext.Provider>
     )
