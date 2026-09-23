@@ -17,6 +17,7 @@ import RelationCard from '../../models/tag/components/relation-card'
 import PopupModelOptions from '../../elements/popup-model-options'
 import EmptyState from '../../elements/empty-state'
 import Tooltip from '../../elements/tooltip'
+import EmptyStateModel from '../../elements/empty-state-model'
 
 import emptyTagImg from '../../../assets/empty-tag.svg'
 
@@ -42,7 +43,7 @@ const ModalTag = ({
     } = useDemoSession()
     const { visibleElements } = useVisibility()
     const {
-        page: { data = [], loading },
+        page: { data = [], loading, fetching },
     } = useTagProvider()
     const { valuesCheckbox } = useCheckbox()
 
@@ -66,22 +67,35 @@ const ModalTag = ({
     ) : null
 
     const isModalForm = ['tag', 'near-modalForm']
-    const isLoading = !!loading
+
+    const isEmptyModelData =
+        (!data.length &&
+            Object.keys(filterTabs.tag.page)[0] === 'tagRelationAssignment') ||
+        (!data.length &&
+            Object.keys(filterTabs.tag.page)[0] === 'tagRelationGoal')
     const isEmptyData =
-        !data.length &&
-        !isLoading &&
-        Object.keys(filterTabs.tag.page)[0] === 'tagSomeID'
+        !data.length && Object.keys(filterTabs.tag.page)[0] === 'tagSomeID'
+
+    const shoulRenderEmptyStateModel = isEmptyModelData && !isEmptyData
 
     const content = (
         <>
-            {!isLoading && isEmptyData && (
+            {shoulRenderEmptyStateModel && !fetching && (
+                <EmptyStateModel
+                    type='tag'
+                    title='No results found'
+                    description='There are no tags to display here'
+                    showButtonAction={false}
+                />
+            )}
+            {!loading && isEmptyData && !fetching && (
                 <EmptyState
                     title="There's nothing a tag yet"
                     description='You can create a tag to classify your activities'
                     imgSrc={emptyTagImg}
                 />
             )}
-            {!isLoading && !isEmptyData && (
+            {!loading && !isEmptyData && !fetching && (
                 <RelationCard checkboxState={valuesCheckbox} data={data} />
             )}
         </>
@@ -150,7 +164,7 @@ const ModalTag = ({
                 <ModelTabs
                     type='tag'
                     headLeftChildren={headLeftContent}
-                    loading={isLoading}
+                    loading={loading || fetching}
                     filterTabs={filterTabs}
                     onFilterTabs={onFilterTabs}
                     classModelTabs={modelTabsClass}

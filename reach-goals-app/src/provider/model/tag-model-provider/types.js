@@ -5,6 +5,7 @@
  * @property {Array<Object>} data
  * @property {Error | null} error
  * @property {boolean} loading
+ * @property {boolean} fetching
  */
 
 /**

@@ -43,6 +43,7 @@ export const TagModelProvider = ({ children }) => {
         data: pageData,
         error: pageError,
         isLoading: isPageLoading,
+        isFetching: isPageFetching,
     } = useQuery({
         queryKey: queryKeyPage,
         queryFn: createQueryFn(filterPage, tagService),
@@ -108,6 +109,7 @@ export const TagModelProvider = ({ children }) => {
                     data: pageData,
                     error: pageError,
                     loading: isPageLoading,
+                    fetching: isPageFetching,
                 },
                 modal: {
                     data: modalData,
