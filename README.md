@@ -1,5 +1,5 @@
 # Reach Goals - A Web App to Help You Manage Your Personal Tasks
-🌐 [Acesse a Demonstração](https://reach-goals.vercel.app)
+🌐 [Try the Demo](https://reach-goals.vercel.app)
 
 <img width="2086" height="754" alt="reach-goals-banner" src="https://github.com/user-attachments/assets/9293a883-2344-4c2e-8471-4f96ea15b23f" />
 
